@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>AI-Native · 方向二：学习刊物</title>
+  <!--
+  方向：学习刊物 / Learning Journal
+  叙事角色：首页先给出可理解的学习坡度，再提供查词入口。
+  观众距离：笔记本阅读，强调中文长文舒适度。
+  视觉温度：温暖、可信、有人带路。
+  视觉母题：一册不断展开的 AI 学习手册；form 来自「由浅入深的个人学习系统」。
+  配色来源：教育与出版语境中的奶油纸、低饱和朱砂、深墨，避免通用科技蓝紫。
+  -->
+  <style>
+    *{box-sizing:border-box}
+    :root{--paper:#f3eee4;--sheet:#fbf8f1;--ink:#24211d;--muted:#70685f;--clay:#a8422d;--line:#cec4b6;--green:#315a48}
+    body{margin:0;background:var(--paper);color:var(--ink);font-family:"Noto Sans SC","PingFang SC",sans-serif;font-synthesis:none;line-break:strict}
+    header{height:76px;display:flex;align-items:center;padding:0 42px;border-bottom:1px solid var(--line)}
+    .wordmark{font-family:"Songti SC","Noto Serif SC",serif;font-size:25px;font-weight:700}.wordmark i{font-style:normal;color:var(--clay)}
+    nav{margin-left:auto;display:flex;gap:28px;font-size:14px}.search-link{color:var(--clay);font-weight:700}
+    main{max-width:1220px;margin:0 auto;padding:48px 38px 60px}
+    .hero{display:grid;grid-template-columns:1.08fr .92fr;gap:56px;align-items:start}
+    .eyebrow{font-size:12px;letter-spacing:.13em;color:var(--clay);margin-bottom:18px}
+    h1{font-family:"Songti SC","Noto Serif SC",serif;font-size:clamp(48px,5.2vw,78px);line-height:1.12;letter-spacing:-.01em;margin:0 0 22px;text-wrap:balance}
+    .lead{font-size:18px;line-height:1.9;color:#514b44;max-width:33em;margin:0 0 28px;text-wrap:pretty}
+    .search{display:flex;border-bottom:2px solid var(--ink);padding:13px 0}.search input{flex:1;border:0;background:transparent;font-size:16px;outline:none}.search button{border:0;background:transparent;font-weight:700;color:var(--clay)}
+    .route-card{background:var(--sheet);border:1px solid var(--line);padding:28px 30px}
+    .route-head{display:flex;justify-content:space-between;align-items:start}.route-head span{font-size:12px;color:var(--muted)}
+    .route-card h2{font-family:"Songti SC","Noto Serif SC",serif;font-size:28px;margin:6px 0 18px}
+    .step{display:grid;grid-template-columns:34px 1fr;gap:14px;padding:14px 0;border-top:1px solid var(--line)}.num{font-family:monospace;color:var(--clay);font-size:12px}.step strong{display:block;margin-bottom:4px}.step small{color:var(--muted);line-height:1.6}
+    .section-head{display:flex;justify-content:space-between;align-items:end;margin:54px 0 18px}.section-head h2{font-family:"Songti SC","Noto Serif SC",serif;font-size:26px;margin:0}.section-head span{font-size:13px;color:var(--muted)}
+    .shelf{display:grid;grid-template-columns:1.25fr 1fr 1fr;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink)}
+    article{padding:22px 20px 24px 0;min-height:190px}.shelf article+article{border-left:1px solid var(--line);padding-left:20px}.tag{font-size:11px;letter-spacing:.09em;color:var(--clay)}article h3{font-family:"Songti SC","Noto Serif SC",serif;font-size:24px;margin:14px 0 10px}article p{font-size:14px;line-height:1.8;color:var(--muted);margin:0}
+    .case{margin-top:28px;background:var(--green);color:#f8f3ea;display:grid;grid-template-columns:1fr 2fr;padding:24px 28px;gap:30px}.case strong{font-family:"Songti SC","Noto Serif SC",serif;font-size:24px}.case p{margin:0;line-height:1.8;color:#dbe6df}
+    @media(max-width:850px){.hero{grid-template-columns:1fr}.shelf{grid-template-columns:1fr}.shelf article+article{border-left:0;border-top:1px solid var(--line);padding-left:0}nav{display:none}}
+  </style>
+</head>
+<body>
+  <header><div class="wordmark"><i>AI</i>-Native</div><nav><span>从这里开始</span><span>知识图鉴</span><span>概念关系</span><span class="search-link">搜索</span></nav></header>
+  <main>
+    <section class="hero">
+      <div>
+        <div class="eyebrow">给 AI 初学者与产品人的知识图鉴</div>
+        <h1>不止会用 AI，<br>还要知道为什么。</h1>
+        <p class="lead">从日常工作里遇到的困惑出发，逐步理解模型、提示词、产品判断与 RAG。每个术语都有来源、关系和真实场景。</p>
+        <div class="search"><input aria-label="搜索术语" placeholder="你最近遇到了哪个 AI 黑话？"><button>开始查找</button></div>
+      </div>
+      <div class="route-card">
+        <div class="route-head"><span>推荐路线 01</span><span>由浅到深</span></div>
+        <h2>建立你的 AI 产品认知</h2>
+        <div class="step"><div class="num">01</div><div><strong>先听懂 AI</strong><small>大模型、Token、上下文、幻觉与能力边界</small></div></div>
+        <div class="step"><div class="num">02</div><div><strong>再学会协作</strong><small>提示词、任务拆解、结构化输出与结果核验</small></div></div>
+        <div class="step"><div class="num">03</div><div><strong>最后判断场景</strong><small>需求价值、模型选型、人机边界与基本方案</small></div></div>
+      </div>
+    </section>
+    <div class="section-head"><h2>本周从三个概念开始</h2><span>每个词条都能继续沿关系深入</span></div>
+    <section class="shelf">
+      <article><div class="tag">基础认知 · 01</div><h3>上下文窗口</h3><p>为什么聊得越久，模型越容易忘记前面的信息？从“它一次能看见多少”开始理解。</p></article>
+      <article><div class="tag">使用方法 · 02</div><h3>上下文工程</h3><p>不只写一句提示词，而是为模型组织完成任务所需的信息环境。</p></article>
+      <article><div class="tag">产品判断 · 03</div><h3>模型选型</h3><p>在效果、速度、成本、隐私与部署方式之间做真正的产品取舍。</p></article>
+    </section>
+    <section class="case"><strong>进阶样板：RAG</strong><p>从“让 AI 回答公司文档”这个真实问题出发，逐步拆开 Embedding、切片、检索、向量数据库、重排和引用溯源。</p></section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>AI-Native · 方向三：关系场</title>
+  <!--
+  方向：关系场 / Relation Field
+  叙事角色：首页先展示概念连接，让“知识不是孤岛”成为品牌签名。
+  观众距离：笔记本浏览，图谱与词条并行。
+  视觉温度：大胆、清晰、探索感强。
+  视觉母题：节点、连接与层级；form 来自「概念关系图谱」本身。
+  配色来源：知识标注工具的黑白基础，加一枚高可见黄绿作为“当前节点”状态，不采用霓虹发光。
+  -->
+  <style>
+    *{box-sizing:border-box}
+    :root{--bone:#f4f2e9;--ink:#10110f;--muted:#66685f;--line:#b9bbaf;--signal:#cbea46;--white:#fff}
+    body{margin:0;background:var(--bone);color:var(--ink);font-family:"IBM Plex Sans","Noto Sans SC","PingFang SC",sans-serif;font-synthesis:none;line-break:strict}
+    header{height:74px;background:var(--ink);color:var(--bone);display:grid;grid-template-columns:230px 1fr auto;align-items:center;padding:0 32px;border-bottom:1px solid #30312d}
+    .wordmark{font-size:23px;font-weight:800;letter-spacing:-.04em}.wordmark span{color:var(--signal)}
+    .prompt{font-family:"IBM Plex Mono",monospace;font-size:12px;color:#a9aba3}.nav{display:flex;gap:22px;font-size:13px}.nav b{color:var(--signal)}
+    main{display:grid;grid-template-columns:1.35fr .65fr;min-height:calc(100vh - 74px)}
+    .field{position:relative;min-height:720px;border-right:1px solid var(--ink);overflow:hidden;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:48px 48px}
+    .field-title{position:absolute;left:40px;top:34px;max-width:520px}.kicker{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.1em}.field h1{font-size:46px;line-height:1.1;margin:12px 0 12px;letter-spacing:-.05em;text-wrap:balance}.field-title p{margin:0;color:var(--muted);line-height:1.7}
+    .node{position:absolute;border:2px solid var(--ink);background:var(--bone);padding:11px 14px;font-weight:700;box-shadow:5px 5px 0 var(--ink)}.node small{display:block;font-family:monospace;font-size:9px;font-weight:400;margin-top:3px;color:var(--muted)}
+    .node.active{background:var(--signal)}.n1{left:55px;top:285px}.n2{left:250px;top:235px}.n3{left:475px;top:300px}.n4{left:680px;top:225px}.n5{left:290px;top:430px}.n6{left:540px;top:480px}.n7{left:745px;top:405px}
+    .line{position:absolute;height:2px;background:var(--ink);transform-origin:left center}.l1{left:157px;top:304px;width:106px;transform:rotate(-12deg)}.l2{left:358px;top:268px;width:132px;transform:rotate(17deg)}.l3{left:583px;top:306px;width:114px;transform:rotate(-27deg)}.l4{left:344px;top:292px;width:147px;transform:rotate(72deg)}.l5{left:407px;top:452px;width:145px;transform:rotate(16deg)}.l6{left:654px;top:502px;width:110px;transform:rotate(-32deg)}
+    .legend{position:absolute;left:40px;bottom:32px;display:flex;gap:18px;font-size:11px;font-family:monospace}.dot{display:inline-block;width:10px;height:10px;border:1px solid var(--ink);margin-right:6px}.dot.current{background:var(--signal)}
+    .panel{background:var(--white);padding:32px 30px}.search{border:2px solid var(--ink);padding:13px 14px;font-size:14px;width:100%;box-shadow:4px 4px 0 var(--ink)}
+    .panel h2{font-size:18px;margin:34px 0 12px}.route{border-top:1px solid var(--ink)}.route-row{display:grid;grid-template-columns:34px 1fr;padding:15px 0;border-bottom:1px solid var(--line)}.route-row b{font-family:monospace;color:var(--muted);font-size:11px}.route-row strong{display:block;font-size:14px}.route-row small{display:block;margin-top:5px;color:var(--muted);line-height:1.5}
+    .lookup{margin-top:28px;background:var(--signal);border:2px solid var(--ink);padding:18px;box-shadow:5px 5px 0 var(--ink)}.lookup .label{font-family:monospace;font-size:10px}.lookup h3{font-size:24px;margin:8px 0}.lookup p{font-size:13px;line-height:1.6;margin:0}
+    @media(max-width:960px){main{grid-template-columns:1fr}.field{min-height:650px;border-right:0;border-bottom:1px solid var(--ink)}.panel{display:none}}
+  </style>
+</head>
+<body>
+  <header><div class="wordmark"><span>AI</span>-Native</div><div class="prompt">KNOWLEDGE IS A RELATION, NOT A LIST.</div><div class="nav"><b>图谱</b><span>图鉴</span><span>路线</span><span>搜索</span></div></header>
+  <main>
+    <section class="field">
+      <div class="field-title"><div class="kicker">AI KNOWLEDGE FIELD · 01</div><h1>理解一个词，<br>也要看见它连接什么。</h1><p>选择任意节点，查看它的前置知识、组成关系、相似概念与实际应用。</p></div>
+      <div class="line l1"></div><div class="line l2"></div><div class="line l3"></div><div class="line l4"></div><div class="line l5"></div><div class="line l6"></div>
+      <div class="node n1">大语言模型<small>FOUNDATION</small></div>
+      <div class="node n2">上下文<small>INPUT ENVIRONMENT</small></div>
+      <div class="node n3 active">Embedding<small>CURRENT NODE</small></div>
+      <div class="node n4">向量数据库<small>STORAGE</small></div>
+      <div class="node n5">文档切片<small>PREPARATION</small></div>
+      <div class="node n6">检索<small>RETRIEVAL</small></div>
+      <div class="node n7">RAG<small>APPLICATION</small></div>
+      <div class="legend"><span><i class="dot current"></i>当前概念</span><span><i class="dot"></i>关联概念</span><span>连线表示前置或组成关系</span></div>
+    </section>
+    <aside class="panel">
+      <input class="search" aria-label="搜索" placeholder="搜索 AI 专业词汇">
+      <h2>从这里开始</h2>
+      <div class="route">
+        <div class="route-row"><b>01</b><div><strong>听懂 AI</strong><small>模型、Token、上下文与幻觉</small></div></div>
+        <div class="route-row"><b>02</b><div><strong>学会协作</strong><small>提示词、任务拆解与结果核验</small></div></div>
+        <div class="route-row"><b>03</b><div><strong>判断场景</strong><small>需求价值、人机边界与模型选型</small></div></div>
+      </div>
+      <div class="lookup"><div class="label">当前节点</div><h3>Embedding</h3><p>把文本、图片等内容转换为可比较的向量表示，是语义检索和 RAG 的关键基础。</p></div>
+    </aside>
+  </main>
+</body>
+</html>

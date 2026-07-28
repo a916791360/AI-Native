@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>AI-Native · 方向一：索引台</title>
+  <!--
+  方向：索引台 / Atlas Desk
+  叙事角色：首页直接进入查找与浏览。
+  观众距离：笔记本 1 米阅读，信息密度中高。
+  视觉温度：冷静、清楚、可靠。
+  视觉母题：知识目录与索引标签；form 来自「图鉴首先要易查」。
+  配色来源：参考站的工具效率感，收敛为纸白、墨黑、信息蓝三色，不沿用其渐变或卡片语言。
+  -->
+  <style>
+    *{box-sizing:border-box}
+    :root{--paper:#f7f8fa;--ink:#111318;--muted:#68707d;--line:#dfe3e8;--blue:#1f57d6;--blue-soft:#eaf0ff}
+    body{margin:0;background:var(--paper);color:var(--ink);font-family:"Hanken Grotesk","Noto Sans SC","PingFang SC",sans-serif;font-synthesis:none;line-break:strict}
+    button,input{font:inherit}
+    header{height:72px;display:flex;align-items:center;border-bottom:1px solid var(--line);background:#fff;padding:0 34px;gap:30px}
+    .wordmark{font-size:22px;font-weight:800;letter-spacing:-.03em}.wordmark b{color:var(--blue)}
+    nav{display:flex;gap:24px;font-size:14px}.active{font-weight:700;color:var(--blue)}
+    .search{margin-left:auto;width:410px;height:42px;border:1px solid var(--line);background:var(--paper);padding:0 16px;color:var(--muted)}
+    .shell{display:grid;grid-template-columns:220px 1fr;height:calc(100vh - 72px)}
+    aside{background:#fff;border-right:1px solid var(--line);padding:28px 22px}
+    .aside-label{font-size:11px;letter-spacing:.11em;color:var(--muted);margin-bottom:14px}
+    .section-link{display:block;padding:10px 12px;margin:3px 0;font-size:14px;border:0;background:transparent;width:100%;text-align:left;color:var(--ink)}
+    .section-link.current{background:var(--blue-soft);color:var(--blue);font-weight:700}
+    main{padding:38px 42px;overflow:auto}
+    .topline{display:flex;align-items:end;justify-content:space-between;margin-bottom:28px}
+    h1{font-size:38px;line-height:1.25;letter-spacing:-.04em;margin:0 0 8px;text-wrap:balance}
+    .sub{margin:0;color:var(--muted);font-size:15px}
+    .route{border:1px solid var(--ink);background:#fff;padding:11px 16px;font-size:13px}
+    .chapter{display:flex;align-items:center;gap:12px;margin:18px 0 14px}
+    .chapter h2{font-size:18px;margin:0}.count{font-size:12px;color:var(--muted)}
+    .grid{display:grid;grid-template-columns:repeat(3,minmax(210px,1fr));gap:14px}
+    article{background:#fff;border:1px solid var(--line);min-height:214px;padding:20px;display:flex;flex-direction:column}
+    article:hover{border-color:var(--blue)}
+    .term-en{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--blue);margin-bottom:12px}
+    article h3{font-size:22px;margin:0 0 10px}article p{font-size:14px;line-height:1.75;color:#4e5560;margin:0;text-wrap:pretty}
+    .links{margin-top:auto;padding-top:16px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+    @media(max-width:900px){.shell{grid-template-columns:1fr}aside{display:none}.grid{grid-template-columns:1fr 1fr}.search{width:280px}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wordmark"><b>AI</b>-Native</div>
+    <nav><span class="active">知识图鉴</span><span>学习路线</span><span>关系图谱</span><span>关于</span></nav>
+    <input class="search" aria-label="搜索" placeholder="搜索：RAG、向量数据库、幻觉……">
+  </header>
+  <div class="shell">
+    <aside>
+      <div class="aside-label">核心应用圈</div>
+      <button class="section-link current">AI 通识与模型认知</button>
+      <button class="section-link">提示词与人机协作</button>
+      <button class="section-link">AI 产品与场景判断</button>
+      <button class="section-link">RAG 与知识系统</button>
+      <div class="aside-label" style="margin-top:28px">扩展圈</div>
+      <button class="section-link">模型原理</button>
+      <button class="section-link">训练与对齐</button>
+      <button class="section-link">推理与算力</button>
+    </aside>
+    <main>
+      <div class="topline">
+        <div><h1>从听懂 AI 开始</h1><p class="sub">用自然语言解释专业概念，再沿关系深入一层。</p></div>
+        <button class="route">查看入门路线　→</button>
+      </div>
+      <div class="chapter"><h2>AI 通识与模型认知</h2><span class="count">入门章节</span></div>
+      <section class="grid">
+        <article><div class="term-en">Large Language Model</div><h3>大语言模型</h3><p>为什么模型看起来像懂了你的问题？先理解它在做什么，以及它没有在做什么。</p><div class="links">前置：生成式 AI　·　相关：Token</div></article>
+        <article><div class="term-en">Token</div><h3>Token</h3><p>模型不是逐字阅读。Token 是文本被模型处理、计费和限制上下文长度的基本单位。</p><div class="links">相关：上下文窗口　·　推理成本</div></article>
+        <article><div class="term-en">Context Window</div><h3>上下文窗口</h3><p>它决定模型一次能“看见”多少信息，也解释了为什么长对话会遗忘或混乱。</p><div class="links">相关：上下文工程　·　记忆</div></article>
+        <article><div class="term-en">Hallucination</div><h3>幻觉</h3><p>模型为什么会一本正经地给出错误答案？理解生成机制，才能设计有效的核验方式。</p><div class="links">相关：事实核验　·　RAG</div></article>
+        <article><div class="term-en">Multimodal</div><h3>多模态</h3><p>同一个模型如何处理文字、图片、语音和视频，以及不同模态之间如何协同。</p><div class="links">相关：视觉理解　·　语音模型</div></article>
+        <article><div class="term-en">Model Selection</div><h3>模型选型</h3><p>不是越强越好。任务质量、速度、价格、隐私和部署方式共同决定选择。</p><div class="links">相关：评估　·　延迟　·　成本</div></article>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
