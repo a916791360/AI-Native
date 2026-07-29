@@ -1051,6 +1051,26 @@
       ]
     },
     {
+      "id": "deep-learning",
+      "url": "/terms/deep-learning/",
+      "nameZh": "深度学习",
+      "nameEn": "Deep Learning",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "使用多层神经网络从大量数据中自动学习复杂表示和任务规律的机器学习方法。",
+      "domain": "machine-learning-deep-learning",
+      "domainNameZh": "机器学习与深度学习",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "verified",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "深度学习",
+        "deep learning"
+      ]
+    },
+    {
       "id": "diffusion-model",
       "url": "/terms/diffusion-model/",
       "nameZh": "扩散模型",
@@ -2506,6 +2526,26 @@
       ]
     },
     {
+      "id": "neural-network",
+      "url": "/terms/neural-network/",
+      "nameZh": "神经网络",
+      "nameEn": "Neural Network",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "由分层连接的计算单元组成、通过调整权重学习输入与输出关系的模型结构。",
+      "domain": "machine-learning-deep-learning",
+      "domainNameZh": "机器学习与深度学习",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "verified",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "神经网络",
+        "neural network"
+      ]
+    },
+    {
       "id": "npu",
       "url": "/terms/npu/",
       "nameZh": "神经网络处理器",
@@ -3422,6 +3462,26 @@
       ]
     },
     {
+      "id": "supervised-learning",
+      "url": "/terms/supervised-learning/",
+      "nameZh": "监督学习",
+      "nameEn": "Supervised Learning",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "使用带有目标标签的样本训练模型，使其学习输入与期望输出之间映射关系的机器学习方法。",
+      "domain": "machine-learning-deep-learning",
+      "domainNameZh": "机器学习与深度学习",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "verified",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "监督学习",
+        "supervised learning"
+      ]
+    },
+    {
       "id": "system-prompt",
       "url": "/terms/system-prompt/",
       "nameZh": "系统提示词",
@@ -3659,6 +3719,26 @@
       "searchKeys": [
         "训练算力",
         "training compute"
+      ]
+    },
+    {
+      "id": "training-data",
+      "url": "/terms/training-data/",
+      "nameZh": "训练数据",
+      "nameEn": "Training Data",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "用于让模型学习参数、模式或行为的数据集合，其范围和质量直接影响模型能力与偏差。",
+      "domain": "machine-learning-deep-learning",
+      "domainNameZh": "机器学习与深度学习",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "verified",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "训练数据",
+        "training data"
       ]
     },
     {
@@ -5483,6 +5563,26 @@
       "searchKeys": [
         "撤销操作",
         "undo action"
+      ]
+    },
+    {
+      "id": "unsupervised-learning",
+      "url": "/terms/unsupervised-learning/",
+      "nameZh": "无监督学习",
+      "nameEn": "Unsupervised Learning",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "在没有明确目标标签的数据中发现结构、分组或表示规律的机器学习方法。",
+      "domain": "machine-learning-deep-learning",
+      "domainNameZh": "机器学习与深度学习",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "verified",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "无监督学习",
+        "unsupervised learning"
       ]
     },
     {

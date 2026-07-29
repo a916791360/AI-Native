@@ -17,7 +17,7 @@ batches:
       - compute
   - id: foundation-1
     kind: foundation
-    status: draft
+    status: research
     terms:
       - supervised-learning
       - unsupervised-learning
@@ -42,7 +42,7 @@ batches:
     waves:
       - id: learning-foundations
         focus: 建立机器学习的学习范式、模型结构与数据基础。
-        status: draft
+        status: verified
         terms:
           - supervised-learning
           - unsupervised-learning
