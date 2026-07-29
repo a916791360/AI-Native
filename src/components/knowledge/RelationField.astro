@@ -1,0 +1,324 @@
+---
+const nodes = [
+  { id: 'document-chunking', label: '文档切片', meta: '前置', className: 'chunking' },
+  { id: 'token', label: 'Token', meta: '相关基础', className: 'token' },
+  { id: 'context-window', label: '上下文窗口', meta: '前置', className: 'context' },
+  { id: 'large-language-model', label: '大语言模型', meta: '组成', className: 'llm' },
+  { id: 'retrieval', label: '检索', meta: '组成', className: 'retrieval' },
+  { id: 'embedding', label: 'Embedding', meta: '应用', className: 'embedding' },
+  { id: 'hallucination', label: '幻觉', meta: '比较', className: 'hallucination' },
+] as const;
+---
+
+<figure class="relation-field" aria-labelledby="relation-title">
+  <figcaption id="relation-title">Fig. 06 / 数据、检索与 RAG</figcaption>
+  <div class="graph">
+    <svg viewBox="0 0 800 600" preserveAspectRatio="none" aria-hidden="true">
+      <line class="prerequisite" x1="145" y1="120" x2="405" y2="300"></line>
+      <line class="application" x1="385" y1="90" x2="405" y2="300"></line>
+      <line class="prerequisite" x1="675" y1="145" x2="405" y2="300"></line>
+      <line class="component dashed" x1="700" y1="315" x2="405" y2="300"></line>
+      <line class="component dashed" x1="635" y1="510" x2="405" y2="300"></line>
+      <line class="application dashed" x1="185" y1="520" x2="405" y2="300"></line>
+      <line class="comparison dotted" x1="120" y1="330" x2="405" y2="300"></line>
+    </svg>
+    {
+      nodes.map((node) => (
+        <a class={`node ${node.className}`} href={`/terms/${node.id}/`}>
+          <strong>{node.label}</strong>
+          <small>{node.meta}</small>
+        </a>
+      ))
+    }
+    <a class="node focal" href="/terms/retrieval-augmented-generation/">
+      <strong>检索增强生成</strong>
+      <small>RAG / catalogued</small>
+    </a>
+  </div>
+  <aside class="field-note">
+    <p class="meta-label">焦点词条 · 已收录，待完善</p>
+    <p>在模型生成回答前检索外部资料，并把候选证据作为上下文提供给生成模型的方法。</p>
+  </aside>
+  <a class="route-rail" href="/routes/rag-from-zero/">
+    <span>
+      <small>学习路线 · Draft</small>
+      <strong>RAG 从零到理解与应用</strong>
+    </span>
+    <span aria-hidden="true">进入路线 →</span>
+  </a>
+</figure>
+
+<style>
+  .relation-field {
+    position: relative;
+    min-width: 0;
+    min-height: 100%;
+    margin: 0;
+    overflow: hidden;
+    background: var(--color-black);
+  }
+
+  figcaption {
+    position: absolute;
+    z-index: 4;
+    top: 1.65rem;
+    left: 1.9rem;
+    color: var(--color-quiet);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .graph {
+    position: absolute;
+    inset: 0 0 7.4rem;
+    min-height: 34rem;
+  }
+
+  svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  line {
+    stroke-width: 1.2;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .prerequisite {
+    stroke: var(--color-prerequisite);
+  }
+  .component {
+    stroke: var(--color-component);
+  }
+  .comparison {
+    stroke: var(--color-comparison);
+  }
+  .application {
+    stroke: var(--color-application);
+  }
+  .dashed {
+    stroke-dasharray: 8 7;
+  }
+  .dotted {
+    stroke-dasharray: 2 8;
+  }
+
+  .node {
+    position: absolute;
+    z-index: 2;
+    min-width: 7rem;
+    min-height: 3.5rem;
+    display: grid;
+    place-content: center;
+    transform: translate(-50%, -50%);
+    border: 1px solid var(--color-line);
+    border-radius: 50%;
+    background: var(--color-black);
+    padding: 0.5rem 0.8rem;
+    text-align: center;
+    text-decoration: none;
+    transition:
+      border-color var(--transition-fast),
+      transform var(--transition-fast);
+  }
+
+  .node:hover {
+    transform: translate(-50%, -50%) scale(1.04);
+    border-color: var(--color-ink);
+  }
+
+  .node strong {
+    font-size: var(--text-sm);
+    line-height: 1.2;
+  }
+
+  .node small {
+    margin-top: 0.25rem;
+    color: var(--color-quiet);
+    font-size: 0.75rem;
+  }
+
+  .focal {
+    left: 51%;
+    top: 50%;
+    width: min(14rem, 31%);
+    min-height: 7.6rem;
+    border-color: var(--color-ink);
+    background: var(--color-ink);
+    color: var(--color-black);
+  }
+
+  .focal strong {
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 2vw, 1.75rem);
+    font-weight: 400;
+  }
+
+  .focal small {
+    color: var(--color-panel);
+    font-family: var(--font-mono);
+  }
+  .chunking {
+    left: 18%;
+    top: 21%;
+  }
+  .token {
+    left: 48%;
+    top: 14%;
+  }
+  .context {
+    left: 84%;
+    top: 24%;
+  }
+  .llm {
+    left: 86%;
+    top: 52%;
+  }
+  .retrieval {
+    left: 80%;
+    top: 82%;
+  }
+  .embedding {
+    left: 22%;
+    top: 84%;
+  }
+  .hallucination {
+    left: 14%;
+    top: 54%;
+  }
+
+  .field-note {
+    position: absolute;
+    z-index: 3;
+    right: 1.8rem;
+    bottom: 7.35rem;
+    width: min(19rem, 42%);
+    border-top: 1px solid var(--color-line);
+    background: color-mix(in oklch, var(--color-black) 90%, transparent);
+    padding: 0.75rem 0 1rem;
+  }
+
+  .field-note p {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+  }
+  .field-note .meta-label {
+    margin-bottom: 0.35rem;
+    color: var(--color-component);
+    font-size: 0.6875rem;
+  }
+
+  .route-rail {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    min-height: 7.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    border-top: 1px solid var(--color-line);
+    padding: var(--space-3) 1.9rem;
+    text-decoration: none;
+  }
+
+  .route-rail:hover {
+    background: var(--color-panel);
+  }
+  .route-rail span:first-child {
+    display: grid;
+    gap: 0.25rem;
+  }
+  .route-rail small {
+    color: var(--color-quiet);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+  }
+  .route-rail strong {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 400;
+  }
+  .route-rail > span:last-child {
+    color: var(--color-prerequisite);
+    font-size: var(--text-sm);
+  }
+
+  @media (max-width: 760px) {
+    .relation-field {
+      min-height: 47rem;
+      border-top: 1px solid var(--color-line);
+    }
+    figcaption {
+      left: var(--page-gutter);
+    }
+    .graph {
+      bottom: 9rem;
+      min-height: 37rem;
+    }
+    .node {
+      min-width: 5.8rem;
+      min-height: 3.25rem;
+      padding-inline: 0.45rem;
+    }
+    .node strong {
+      font-size: 0.75rem;
+    }
+    .node small {
+      font-size: 0.75rem;
+    }
+    .focal {
+      width: 9.3rem;
+      min-height: 6.6rem;
+    }
+    .focal strong {
+      font-size: 1.2rem;
+    }
+    .chunking {
+      left: 17%;
+      top: 22%;
+    }
+    .token {
+      left: 48%;
+      top: 14%;
+    }
+    .context {
+      left: 82%;
+      top: 25%;
+    }
+    .llm {
+      left: 84%;
+      top: 52%;
+    }
+    .retrieval {
+      left: 78%;
+      top: 79%;
+    }
+    .embedding {
+      left: 22%;
+      top: 81%;
+    }
+    .hallucination {
+      left: 14%;
+      top: 53%;
+    }
+    .field-note {
+      display: none;
+    }
+    .route-rail {
+      min-height: 9rem;
+      align-items: flex-start;
+      padding: var(--space-3) var(--page-gutter);
+    }
+    .route-rail > span:last-child {
+      display: none;
+    }
+  }
+</style>

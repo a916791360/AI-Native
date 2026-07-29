@@ -1,0 +1,67 @@
+---
+id: generative-ai
+nameZh: 生成式 AI
+nameEn: Generative AI
+abbreviations:
+  - GenAI
+aliases:
+  - value: 生成式人工智能
+    language: zh-CN
+summary: 根据训练中学到的模式生成文本、图像、音频或其他新内容的一类人工智能方法。
+domain: large-language-models-generative-ai
+difficulty: beginner
+ring: core
+status: verified
+priority: 1
+featured: true
+publishedAt: '2026-07-29'
+updatedAt: '2026-07-29'
+verifiedAt: '2026-07-29'
+sources:
+  - id: nist-generative-ai-profile
+    type: standard
+    title: Artificial Intelligence Risk Management Framework - Generative Artificial Intelligence Profile
+    url: https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf
+    publisher: NIST
+    publishedAt: '2024-07-26'
+    accessedAt: '2026-07-29'
+  - id: nist-trustworthy-ai-glossary
+    type: standard
+    title: The Language of Trustworthy AI - An In-Depth Glossary of Terms
+    url: https://doi.org/10.6028/NIST.AI.100-3
+    publisher: NIST
+    publishedAt: '2023-03-29'
+    accessedAt: '2026-07-29'
+---
+
+<h2 id="what-it-is">它是什么</h2>
+
+生成式 AI 是能够根据输入生成文本、图像、音频、代码或其他内容的 AI。它从训练数据中学习统计模式，并据此构造新的输出，而不是从数据库里原样取回一条固定答案。[S1][S2]
+
+<h2 id="why-it-matters">为什么需要它</h2>
+
+它把许多“从空白开始”的工作变成“给出意图并审阅结果”：起草、改写、摘要、构思和多模态制作都可更快迭代。它的产出仍需要目标、约束和验收标准。
+
+<h2 id="how-it-works">它如何工作</h2>
+
+以文本模型为例，输入先被切成 Token，模型根据已有上下文反复预测后续 Token。采样策略决定从候选分布中如何选择，因此同一提示可能得到不同结果。
+
+<h2 id="example">真实例子</h2>
+
+产品经理输入访谈笔记和固定模板，模型生成需求草稿。草稿节省整理时间，但数字、承诺和用户原话仍要回到原始材料核对。
+
+<h2 id="tradeoffs">什么时候适合与不适合</h2>
+
+适合需要多个候选、允许人工审阅、质量可以迭代的任务。不适合把未经核验的输出直接用于医疗诊断、法律结论、财务指令或不可逆操作。
+
+<h2 id="try-it">亲自试一下</h2>
+
+让模型为同一段材料分别写“忠实摘要”和“创意改写”，比较两次任务的容错范围。标出哪些句子能由原文支持，哪些是模型新增。
+
+<h2 id="next">接下来学什么</h2>
+
+阅读 [Token](/terms/token/) 理解模型处理文本的单位，再阅读[大语言模型](/terms/large-language-model/)理解生成能力从何而来。
+
+<h2 id="sources-and-revisions">来源与修订</h2>
+
+风险与生成机制参考 NIST 生成式 AI 风险管理框架画像 [S1]，术语边界参考可信 AI 术语表 [S2]。本词条不把生成能力等同于事实可靠性。

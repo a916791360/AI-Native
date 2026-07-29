@@ -1,0 +1,82 @@
+# AI-Native 设计方向确认
+
+## 已展示的三个真实方向
+
+1. 方向 A「索引台」
+   - HTML：design-demos/01-atlas-desk.html
+   - 截图：design-demos/01-atlas-desk.png
+   - 核心价值：分类、搜索、卡片索引和查找效率。
+2. 方向 B「学习刊物」
+   - HTML：design-demos/02-learning-journal.html
+   - 截图：design-demos/02-learning-journal.png
+   - 核心价值：由浅入深的学习引导与中文阅读体验。
+3. 方向 C「关系场」
+   - HTML：design-demos/03-relation-field.html
+   - 截图：design-demos/03-relation-field.png
+   - 核心价值：概念连接、知识图谱与独立品牌辨识度。
+
+## 用户选择
+
+在确认「C 的视觉身份 + A 的索引效率 + B 的学习路线」这一混合方案后，用户原话为：
+
+> 好
+
+## 后续设计约束
+
+- 首页与品牌视觉：以 C「关系场」为母题。
+- 知识图鉴和全局搜索：以 A「索引台」的效率为骨架。
+- 学习路线和长内容阅读：以 B「学习刊物」的节奏为基础。
+- 词条详情页：融合小白解释、来源证据、可视化示例和局部关系图。
+- 不允许把整站简化成只有节点图，也不允许退化成 VibeHub 换皮卡片站。
+- 当前记录只批准产品设计方向，不批准生产开发或技术实现。
+
+## 正式视觉 Gate 状态
+
+- 当前 C+A+B 记录是产品级视觉母题确认，不等同于生产视觉稿确认。
+- 正式视觉工作必须在阶段 3 使用 `$huashu-design` skill。
+- 必须基于相同真实内容产出三套完整 HTML 初稿和截图，展示后等待用户选择，不得自行决定。
+- 三套方向必须在现有 C+A+B 约束内形成不同的生产级诠释，而不是重新改变产品定位。
+- 用户选择后，在本文件追加三版文件、截图路径、方向说明和用户选择原话。
+- 上述记录完成前，不得将阶段 1 烟雾测试页或任何单一探索稿升级为正式生产视觉。
+
+## 2026-07-29 正式生产视觉 Gate
+
+### 已展示方向与交付文件
+
+1. 方向 1「深空知识展柜」
+   - HTML：`design-demos/production-visual/01-dark-knowledge-gallery.html`
+   - 桌面截图：`design-demos/production-visual/01-dark-knowledge-gallery-desktop.png`
+   - 移动截图：`design-demos/production-visual/01-dark-knowledge-gallery-mobile.png`
+   - 说明：以 Gallery Dark 为视觉逻辑，把真实 RAG 关系场作为知识展品；采用深黑负空间、克制衬线标题和按关系类型区分的线条。
+2. 方向 2「关系索引报」
+   - HTML：`design-demos/production-visual/02-relational-index-journal.html`
+   - 桌面截图：`design-demos/production-visual/02-relational-index-journal-desktop.png`
+   - 移动截图：`design-demos/production-visual/02-relational-index-journal-mobile.png`
+   - 说明：以数据出版为逻辑，用问题、视觉证据与术语索引形成高密度编辑结构。
+3. 方向 3「人文学习地图」
+   - HTML：`design-demos/production-visual/03-humanist-learning-map.html`
+   - 桌面截图：`design-demos/production-visual/03-humanist-learning-map-desktop.png`
+   - 移动截图：`design-demos/production-visual/03-humanist-learning-map-mobile.png`
+   - 说明：以 Data Humanism 为逻辑，把学习顺序、关系编号与解释组织成暖纸质感的可阅读地图。
+
+### 用户选择原话
+
+> 方向 1 吧
+
+### 正式执行约束
+
+- 正式生产视觉唯一主方向为方向 1「深空知识展柜」。
+- 首页以暗场关系展柜为第一视觉信号；关系颜色只用于表达真实的前置、组成、比较和应用类型。
+- 知识索引、路线与长文页面可以调整信息密度和阅读节奏，但必须继承同一颜色角色、字体层级、边框、焦点和暗场基底，不拼接方向 2 或方向 3 的视觉骨架。
+- 本次选择批准将方向 1 转译为 Astro Token、Layout 和生产组件，不批准直接复制原型的单文件架构。
+
+### 生产转译结果
+
+- 共享 Token：`src/styles/tokens.css`
+- 共享 Layout：`src/layouts/BaseLayout.astro`
+- 正式首页：`src/pages/index.astro`
+- 桌面验收截图：`design-demos/production-visual/production-home-desktop.png`
+- 移动验收截图：`design-demos/production-visual/production-home-mobile.png`
+- 图鉴抽查截图：`design-demos/production-visual/production-atlas-desktop.png`
+- 词条抽查截图：`design-demos/production-visual/production-term-mobile.png`
+- 验收结论：方向 1 已转译为六类页面和 404 的共享生产视觉系统；桌面、移动、无障碍和完整 CI 均通过。

@@ -1,0 +1,66 @@
+---
+id: retrieval-augmented-generation
+nameZh: 检索增强生成
+nameEn: Retrieval-Augmented Generation
+abbreviations:
+  - RAG
+aliases:
+  - value: 检索增强生成技术
+    language: zh-CN
+summary: 在模型生成回答前检索外部资料，并把候选证据作为上下文提供给生成模型的方法。
+domain: data-retrieval-rag
+difficulty: intermediate
+ring: core
+status: verified
+priority: 1
+featured: true
+publishedAt: '2026-07-29'
+updatedAt: '2026-07-29'
+verifiedAt: '2026-07-29'
+sources:
+  - id: rag-original-paper
+    type: paper
+    title: Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks
+    url: https://arxiv.org/abs/2005.11401
+    publisher: arXiv
+    publishedAt: '2020-05-22'
+    accessedAt: '2026-07-29'
+  - id: aws-understanding-rag
+    type: official-doc
+    title: Understanding Retrieval Augmented Generation
+    url: https://docs.aws.amazon.com/prescriptive-guidance/latest/retrieval-augmented-generation-options/what-is-rag.html
+    publisher: AWS
+    accessedAt: '2026-07-29'
+---
+
+<h2 id="what-it-is">它是什么</h2>
+
+检索增强生成是在回答前从外部知识源取回相关资料，并把资料与问题共同提供给生成模型的方法。它把模型参数中的语言能力与可更新、可追溯的外部知识结合起来。[S1][S2]
+
+<h2 id="why-it-matters">为什么需要它</h2>
+
+模型训练知识可能过时、缺少企业内部资料，也难以逐句追溯。RAG 让应用在不重新训练基础模型的情况下更新知识，并为回答展示证据来源。
+
+<h2 id="how-it-works">它如何工作</h2>
+
+离线阶段解析文档、切片、生成嵌入并建立索引；在线阶段处理问题、召回候选、可选重排，再把精选片段放进上下文生成答案和引用。权限与评测贯穿两阶段。
+
+<h2 id="example">真实例子</h2>
+
+员工询问最新报销规则。系统只检索其有权访问且仍有效的制度片段，重排后将额度与例外条款交给模型；回答附上原文链接和生效日期。
+
+<h2 id="tradeoffs">什么时候适合与不适合</h2>
+
+适合知识分散、经常更新、需要引用和权限控制的问答。不适合主要依赖实时交易、复杂计算或确定性流程的任务；这些应直接调用数据库、规则或工具。
+
+<h2 id="try-it">亲自试一下</h2>
+
+为一个二十页知识集建立十个有答案和五个无答案的问题。分别评测切片召回、重排、引用支持度、拒答和最终答案，不要只看一段演示。
+
+<h2 id="next">接下来学什么</h2>
+
+回到[RAG 学习路线](/routes/rag-from-zero/)复盘十二个环节，并把自己的数据源、权限、评测集和失败处理画成一条可执行链路。
+
+<h2 id="sources-and-revisions">来源与修订</h2>
+
+原始方法与参数知识、外部记忆的组合参考 RAG 论文 [S1]，工程链路参考 AWS 指南 [S2]。RAG 不保证答案正确，质量取决于数据、检索、上下文与生成的共同表现。

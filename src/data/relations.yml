@@ -1,0 +1,119 @@
+- id: ai-precedes-generative-ai
+  source: artificial-intelligence
+  target: generative-ai
+  type: prerequisite
+  explanation: 先理解人工智能的整体范围，才能判断生成式 AI 在其中解决的是哪一类问题。
+
+- id: generative-ai-precedes-llm
+  source: generative-ai
+  target: large-language-model
+  type: prerequisite
+  explanation: 大语言模型是生成式 AI 的重要分支，先理解生成任务有助于把握模型目标。
+
+- id: token-precedes-context-window
+  source: token
+  target: context-window
+  type: prerequisite
+  explanation: 上下文窗口通常按 Token 数量计量，因此理解 Token 是判断容量与成本的前提。
+
+- id: llm-precedes-hallucination
+  source: large-language-model
+  target: hallucination
+  type: prerequisite
+  explanation: 先理解语言模型如何预测下一个 Token，才能理解它为何会生成流畅但错误的内容。
+
+- id: embedding-precedes-vector-database
+  source: embedding
+  target: vector-database
+  type: prerequisite
+  explanation: 向量数据库存储和检索嵌入向量，先理解 Embedding 才能理解相似度搜索。
+
+- id: chunking-precedes-rag
+  source: document-chunking
+  target: retrieval-augmented-generation
+  type: prerequisite
+  explanation: 文档切片决定可被检索的知识单元，是理解 RAG 检索质量的重要前提。
+
+- id: context-window-precedes-rag
+  source: context-window
+  target: retrieval-augmented-generation
+  type: prerequisite
+  explanation: RAG 需要把检索结果放入有限上下文，理解窗口限制才能判断取舍与成本。
+
+- id: retrieval-precedes-rag
+  source: retrieval
+  target: retrieval-augmented-generation
+  type: prerequisite
+  explanation: 先理解检索如何找到相关资料，才能理解 RAG 如何为生成阶段提供上下文。
+
+- id: token-component-of-llm
+  source: token
+  target: large-language-model
+  type: component
+  explanation: 大语言模型读取和生成的基本离散单位是 Token，它连接文本与模型内部计算。
+
+- id: token-component-of-context-window
+  source: token
+  target: context-window
+  type: component
+  explanation: 上下文窗口的容量以 Token 数量表达，输入、输出和工具信息共同占用这段空间。
+
+- id: llm-component-of-rag
+  source: large-language-model
+  target: retrieval-augmented-generation
+  type: component
+  explanation: RAG 在检索之后仍需要大语言模型根据问题与外部资料组织并生成最终回答。
+
+- id: chunking-component-of-rag
+  source: document-chunking
+  target: retrieval-augmented-generation
+  type: component
+  explanation: 文档切片把长资料转成可索引和召回的单元，是 RAG 数据准备阶段的组成部分。
+
+- id: retrieval-component-of-rag
+  source: retrieval
+  target: retrieval-augmented-generation
+  type: component
+  explanation: 检索负责从外部知识中找到候选资料，是 RAG 区别于纯模型生成的核心组成部分。
+
+- id: vector-database-component-of-retrieval
+  source: vector-database
+  target: retrieval
+  type: component
+  explanation: 向量数据库可作为语义检索的存储与查询组件，但检索系统也可以使用其他索引方式。
+
+- id: reranking-component-of-retrieval
+  source: reranking
+  target: retrieval
+  type: component
+  explanation: 重排对初次召回的候选结果再次评分，帮助更相关的资料进入最终上下文。
+
+- id: ai-compared-with-generative-ai
+  source: artificial-intelligence
+  target: generative-ai
+  type: comparison
+  explanation: 人工智能是更广泛的领域，生成式 AI 专注于根据已有模式产生新的内容或表示。
+
+- id: hallucination-compared-with-rag
+  source: hallucination
+  target: retrieval-augmented-generation
+  type: comparison
+  explanation: 幻觉描述生成结果可能失真，RAG 是降低部分知识性错误风险的方法而不是彻底消除机制。
+
+- id: reranking-compared-with-retrieval
+  source: reranking
+  target: retrieval
+  type: comparison
+  explanation: 检索先扩大范围找到候选资料，重排再以更精细的标准调整这些候选的顺序。
+
+- id: embedding-applied-to-retrieval
+  source: embedding
+  target: retrieval
+  type: application
+  explanation: 检索系统可以用嵌入向量表示语义，并通过相似度找到表达不同但含义接近的资料。
+
+- id: llm-applied-to-rag
+  source: large-language-model
+  target: retrieval-augmented-generation
+  type: application
+  explanation: RAG 把大语言模型的生成能力用于整合检索证据，使回答能够利用模型参数之外的知识。

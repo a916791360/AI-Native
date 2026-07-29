@@ -1,0 +1,720 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI-Native · 深空知识展柜</title>
+    <!--
+      Assumptions:
+      - This is a direction study, not production code.
+      - The relationship field is the primary content object; no decorative imagery is needed.
+      - All terms, summaries, and relation labels come from the Stage 2 project data.
+      - Dark Gallery is interpreted as a focused knowledge exhibition, not neon tech styling.
+    -->
+    <style>
+      :root {
+        --ink: oklch(0.96 0.01 85);
+        --muted: oklch(0.7 0.02 80);
+        --quiet: oklch(0.48 0.02 80);
+        --black: oklch(0.12 0.01 255);
+        --panel: oklch(0.16 0.012 255);
+        --line: oklch(0.3 0.015 255);
+        --prerequisite: oklch(0.8 0.14 80);
+        --component: oklch(0.73 0.12 205);
+        --comparison: oklch(0.72 0.16 28);
+        --application: oklch(0.74 0.13 145);
+        --focus: oklch(0.9 0.16 95);
+        color-scheme: dark;
+        font-synthesis: none;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        background: var(--black);
+        line-break: strict;
+      }
+
+      body {
+        min-width: 320px;
+        margin: 0;
+        overflow-x: hidden;
+        background: var(--black);
+        color: var(--ink);
+        font-family: "Avenir Next", "PingFang SC", "Microsoft YaHei", sans-serif;
+        font-size: 16px;
+        line-height: 1.65;
+      }
+
+      button,
+      input {
+        font: inherit;
+      }
+
+      button,
+      a,
+      input {
+        outline-offset: 4px;
+      }
+
+      :focus-visible {
+        outline: 2px solid var(--focus);
+      }
+
+      .site-header {
+        height: 72px;
+        display: grid;
+        grid-template-columns: minmax(200px, 0.75fr) 1.5fr auto;
+        align-items: center;
+        border-bottom: 1px solid var(--line);
+        padding: 0 32px;
+      }
+
+      .wordmark {
+        color: var(--ink);
+        font-family: "Baskerville", "Songti SC", serif;
+        font-size: 24px;
+        text-decoration: none;
+      }
+
+      .header-context {
+        color: var(--quiet);
+        font-family: "SFMono-Regular", "Menlo", monospace;
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .header-nav {
+        display: flex;
+        gap: 22px;
+      }
+
+      .header-nav a {
+        color: var(--muted);
+        font-size: 14px;
+        text-decoration: none;
+      }
+
+      .header-nav a:hover {
+        color: var(--ink);
+      }
+
+      .hero {
+        min-height: calc(100vh - 72px);
+        display: grid;
+        grid-template-columns: minmax(390px, 0.42fr) minmax(640px, 0.58fr);
+      }
+
+      .intro {
+        display: flex;
+        flex-direction: column;
+        border-right: 1px solid var(--line);
+        padding: 54px 48px 30px;
+      }
+
+      .eyebrow,
+      .figure-index,
+      .relation-type,
+      .route-kicker {
+        font-family: "SFMono-Regular", "Menlo", monospace;
+        font-size: 11px;
+        letter-spacing: 0.11em;
+        text-transform: uppercase;
+      }
+
+      .eyebrow {
+        color: var(--prerequisite);
+      }
+
+      h1 {
+        max-width: 520px;
+        margin: 30px 0 22px;
+        font-family: "Baskerville", "Songti SC", serif;
+        font-size: 56px;
+        font-weight: 400;
+        line-height: 1.14;
+        letter-spacing: 0;
+        text-wrap: balance;
+      }
+
+      .promise {
+        max-width: 460px;
+        margin: 0;
+        color: var(--muted);
+        font-size: 17px;
+        text-wrap: pretty;
+      }
+
+      .search {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        margin-top: 42px;
+        border-bottom: 1px solid var(--ink);
+      }
+
+      .search input {
+        min-width: 0;
+        height: 52px;
+        border: 0;
+        background: transparent;
+        color: var(--ink);
+        font-size: 17px;
+      }
+
+      .search input::placeholder {
+        color: var(--quiet);
+      }
+
+      .search button {
+        min-width: 68px;
+        min-height: 44px;
+        border: 0;
+        background: transparent;
+        color: var(--ink);
+        cursor: pointer;
+      }
+
+      .search button:hover {
+        color: var(--prerequisite);
+      }
+
+      .legend {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px 20px;
+        margin-top: auto;
+        padding-top: 38px;
+      }
+
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .legend-line {
+        width: 24px;
+        height: 2px;
+        background: currentColor;
+      }
+
+      .legend-item[data-type="prerequisite"] {
+        color: var(--prerequisite);
+      }
+
+      .legend-item[data-type="component"] {
+        color: var(--component);
+      }
+
+      .legend-item[data-type="comparison"] {
+        color: var(--comparison);
+      }
+
+      .legend-item[data-type="application"] {
+        color: var(--application);
+      }
+
+      .field {
+        position: relative;
+        min-height: 690px;
+        overflow: hidden;
+      }
+
+      .figure-index {
+        position: absolute;
+        z-index: 3;
+        top: 28px;
+        left: 30px;
+        color: var(--quiet);
+      }
+
+      .graph {
+        position: absolute;
+        inset: 0 0 118px;
+      }
+
+      .graph svg {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+      }
+
+      .graph line {
+        stroke-width: 1.25;
+        vector-effect: non-scaling-stroke;
+      }
+
+      .graph line.prerequisite {
+        stroke: var(--prerequisite);
+      }
+
+      .graph line.component {
+        stroke: var(--component);
+        stroke-dasharray: 8 6;
+      }
+
+      .graph line.comparison {
+        stroke: var(--comparison);
+        stroke-dasharray: 2 7;
+      }
+
+      .graph line.application {
+        stroke: var(--application);
+      }
+
+      .node {
+        position: absolute;
+        z-index: 2;
+        min-width: 114px;
+        min-height: 54px;
+        transform: translate(-50%, -50%);
+        border: 1px solid var(--line);
+        border-radius: 50%;
+        background: var(--black);
+        color: var(--ink);
+        cursor: pointer;
+        padding: 10px 16px;
+        transition:
+          border-color 160ms ease,
+          background 160ms ease,
+          transform 160ms ease;
+      }
+
+      .node:hover,
+      .node[aria-pressed="true"] {
+        transform: translate(-50%, -50%) scale(1.04);
+        border-color: var(--ink);
+        background: var(--panel);
+      }
+
+      .node strong {
+        display: block;
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      .node small {
+        display: block;
+        margin-top: 2px;
+        color: var(--quiet);
+        font-family: "SFMono-Regular", "Menlo", monospace;
+        font-size: 9px;
+        letter-spacing: 0.03em;
+      }
+
+      .node.center {
+        width: 206px;
+        min-height: 122px;
+        border-color: var(--ink);
+        background: var(--ink);
+        color: var(--black);
+      }
+
+      .node.center strong {
+        font-family: "Baskerville", "Songti SC", serif;
+        font-size: 24px;
+      }
+
+      .node.center small {
+        color: oklch(0.38 0.02 255);
+        font-size: 10px;
+      }
+
+      .detail {
+        position: absolute;
+        z-index: 4;
+        right: 22px;
+        bottom: 138px;
+        width: min(310px, 40%);
+        border-top: 1px solid var(--line);
+        padding-top: 14px;
+        pointer-events: none;
+      }
+
+      .relation-type {
+        color: var(--component);
+      }
+
+      .detail p {
+        margin: 7px 0 0;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.6;
+      }
+
+      .route {
+        position: absolute;
+        inset: auto 0 0;
+        height: 118px;
+        display: grid;
+        grid-template-columns: 170px 1fr;
+        align-items: center;
+        border-top: 1px solid var(--line);
+        background: var(--black);
+        padding: 0 30px;
+      }
+
+      .route-kicker {
+        color: var(--quiet);
+      }
+
+      .route-name {
+        margin-top: 6px;
+        font-size: 15px;
+      }
+
+      .route-track {
+        display: grid;
+        grid-template-columns: repeat(6, minmax(50px, 1fr));
+        align-items: center;
+      }
+
+      .route-step {
+        position: relative;
+        color: var(--quiet);
+        font-size: 11px;
+        text-align: center;
+      }
+
+      .route-step::before {
+        content: "";
+        display: block;
+        width: 7px;
+        height: 7px;
+        margin: 0 auto 9px;
+        border: 1px solid var(--muted);
+        border-radius: 50%;
+        background: var(--black);
+      }
+
+      .route-step:not(:last-child)::after {
+        content: "";
+        position: absolute;
+        top: 4px;
+        left: calc(50% + 5px);
+        width: calc(100% - 10px);
+        height: 1px;
+        background: var(--line);
+      }
+
+      .route-step:last-child {
+        color: var(--ink);
+      }
+
+      .route-step:last-child::before {
+        border-color: var(--prerequisite);
+        background: var(--prerequisite);
+      }
+
+      .next-band {
+        min-height: 160px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-top: 1px solid var(--line);
+        padding: 30px 48px;
+      }
+
+      .next-band h2 {
+        margin: 0;
+        font-family: "Baskerville", "Songti SC", serif;
+        font-size: 30px;
+        font-weight: 400;
+      }
+
+      .next-band a {
+        color: var(--ink);
+      }
+
+      @media (max-width: 980px) {
+        .site-header {
+          grid-template-columns: 1fr auto;
+          padding: 0 20px;
+        }
+
+        .header-context,
+        .header-nav a:not(:last-child) {
+          display: none;
+        }
+
+        .hero {
+          grid-template-columns: 1fr;
+        }
+
+        .intro {
+          min-height: 520px;
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+          padding: 42px 24px 28px;
+        }
+
+        h1 {
+          font-size: 46px;
+        }
+
+        .legend {
+          margin-top: 40px;
+        }
+
+        .field {
+          min-height: 720px;
+        }
+      }
+
+      @media (max-width: 560px) {
+        .site-header {
+          height: 64px;
+        }
+
+        .wordmark {
+          font-size: 21px;
+        }
+
+        .hero {
+          min-height: 0;
+        }
+
+        .intro {
+          min-height: 500px;
+          padding: 32px 20px 24px;
+        }
+
+        h1 {
+          margin-top: 22px;
+          font-size: 39px;
+        }
+
+        .promise {
+          font-size: 16px;
+        }
+
+        .search {
+          margin-top: 28px;
+        }
+
+        .legend {
+          gap: 8px 10px;
+          padding-top: 28px;
+        }
+
+        .field {
+          min-height: 760px;
+        }
+
+        .graph {
+          bottom: 158px;
+        }
+
+        .figure-index {
+          left: 20px;
+        }
+
+        .node {
+          min-width: 94px;
+          min-height: 46px;
+          padding: 8px 10px;
+        }
+
+        .node strong {
+          font-size: 12px;
+        }
+
+        .node.center {
+          width: 164px;
+          min-height: 104px;
+        }
+
+        .node.center strong {
+          font-size: 20px;
+        }
+
+        .detail {
+          right: 18px;
+          bottom: 172px;
+          left: 18px;
+          width: auto;
+          background: color-mix(in oklch, var(--black) 92%, transparent);
+        }
+
+        .route {
+          height: 158px;
+          grid-template-columns: 1fr;
+          align-content: center;
+          gap: 18px;
+          padding: 18px 20px;
+        }
+
+        .route-track {
+          overflow: hidden;
+        }
+
+        .route-step:nth-child(2n) span {
+          display: none;
+        }
+
+        .next-band {
+          align-items: flex-start;
+          flex-direction: column;
+          gap: 16px;
+          padding: 32px 20px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          scroll-behavior: auto !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="wordmark" href="#">AI-Native</a>
+      <div class="header-context">Progressive AI Knowledge Atlas / zh-CN</div>
+      <nav class="header-nav" aria-label="主要导航">
+        <a href="#field">知识图鉴</a>
+        <a href="#route">学习路线</a>
+        <a href="#field">进入关系场</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="intro">
+          <div class="eyebrow">一套可以沿关系继续学习的 AI 知识体系</div>
+          <h1 id="hero-title">从听懂 AI，<br />到判断与设计。</h1>
+          <p class="promise">
+            查到一个概念，理解它为什么出现、如何工作、与什么相连，再进入有顺序的学习路线。
+          </p>
+
+          <form class="search" id="search-form">
+            <input
+              id="search-input"
+              aria-label="搜索 AI 术语"
+              autocomplete="off"
+              placeholder="搜索 RAG、向量数据库、AI 幻觉"
+            />
+            <button type="submit">搜索</button>
+          </form>
+
+          <div class="legend" aria-label="关系类型图例">
+            <div class="legend-item" data-type="prerequisite"><span class="legend-line"></span>前置</div>
+            <div class="legend-item" data-type="component"><span class="legend-line"></span>组成</div>
+            <div class="legend-item" data-type="comparison"><span class="legend-line"></span>比较</div>
+            <div class="legend-item" data-type="application"><span class="legend-line"></span>应用</div>
+          </div>
+        </div>
+
+        <div class="field" id="field">
+          <div class="figure-index">FIG. 06 / 数据、检索与 RAG</div>
+          <div class="graph" aria-label="检索增强生成的一层概念关系">
+            <svg viewBox="0 0 800 610" preserveAspectRatio="none" aria-hidden="true">
+              <line class="prerequisite" x1="400" y1="298" x2="112" y2="105" />
+              <line class="prerequisite" x1="400" y1="298" x2="680" y2="120" />
+              <line class="component" x1="400" y1="298" x2="690" y2="310" />
+              <line class="component" x1="400" y1="298" x2="640" y2="500" />
+              <line class="component" x1="400" y1="298" x2="180" y2="505" />
+              <line class="comparison" x1="400" y1="298" x2="108" y2="330" />
+              <line class="application" x1="400" y1="298" x2="380" y2="78" />
+            </svg>
+
+            <button class="node center" style="left: 50%; top: 49%" data-key="rag" aria-pressed="true">
+              <strong>检索增强生成</strong>
+              <small>RAG / CATALOGUED</small>
+            </button>
+            <button class="node" style="left: 14%; top: 17%" data-key="chunking" aria-pressed="false">
+              <strong>文档切片</strong><small>前置</small>
+            </button>
+            <button class="node" style="left: 85%; top: 20%" data-key="context" aria-pressed="false">
+              <strong>上下文窗口</strong><small>前置</small>
+            </button>
+            <button class="node" style="left: 86%; top: 51%" data-key="llm" aria-pressed="false">
+              <strong>大语言模型</strong><small>组成</small>
+            </button>
+            <button class="node" style="left: 80%; top: 82%" data-key="retrieval" aria-pressed="false">
+              <strong>检索</strong><small>组成</small>
+            </button>
+            <button class="node" style="left: 23%; top: 83%" data-key="embedding" aria-pressed="false">
+              <strong>Embedding</strong><small>应用</small>
+            </button>
+            <button class="node" style="left: 14%; top: 54%" data-key="hallucination" aria-pressed="false">
+              <strong>幻觉</strong><small>比较</small>
+            </button>
+            <button class="node" style="left: 48%; top: 13%" data-key="token" aria-pressed="false">
+              <strong>Token</strong><small>相关基础</small>
+            </button>
+          </div>
+
+          <aside class="detail" aria-live="polite">
+            <div class="relation-type" id="detail-type">焦点词条 · 已收录，待完善</div>
+            <p id="detail-copy">在模型生成回答前检索外部资料，并把候选证据作为上下文提供给生成模型的方法。</p>
+          </aside>
+
+          <div class="route" id="route">
+            <div>
+              <div class="route-kicker">学习路线 · Draft</div>
+              <div class="route-name">RAG 从零到理解与应用</div>
+            </div>
+            <div class="route-track" aria-label="路线节选">
+              <div class="route-step"><span>人工智能</span></div>
+              <div class="route-step"><span>生成式 AI</span></div>
+              <div class="route-step"><span>Token</span></div>
+              <div class="route-step"><span>大语言模型</span></div>
+              <div class="route-step"><span>检索</span></div>
+              <div class="route-step"><span>RAG</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="next-band">
+        <h2>按十二个领域，建立完整的 AI 认知坐标。</h2>
+        <a href="#field">浏览知识图鉴</a>
+      </section>
+    </main>
+
+    <script>
+      const details = {
+        rag: ['焦点词条 · 已收录，待完善', '在模型生成回答前检索外部资料，并把候选证据作为上下文提供给生成模型的方法。'],
+        chunking: ['前置 · 文档切片', '文档切片决定可被检索的知识单元，是理解 RAG 检索质量的重要前提。'],
+        context: ['前置 · 上下文窗口', 'RAG 需要把检索结果放入有限上下文，理解窗口限制才能判断取舍与成本。'],
+        llm: ['组成 · 大语言模型', 'RAG 在检索之后仍需要大语言模型根据问题与外部资料组织并生成最终回答。'],
+        retrieval: ['组成 · 检索', '检索负责从外部知识中找到候选资料，是 RAG 区别于纯模型生成的核心组成部分。'],
+        embedding: ['应用 · Embedding', '检索系统可以用嵌入向量表示语义，并通过相似度找到含义接近的资料。'],
+        hallucination: ['比较 · 幻觉', 'RAG 能降低部分知识性错误风险，但不等于彻底消除模型幻觉。'],
+        token: ['相关基础 · Token', '模型读取和生成文本时使用的离散单位，也是上下文容量与成本的计量基础。'],
+      };
+
+      const nodes = [...document.querySelectorAll('.node')];
+      const detailType = document.querySelector('#detail-type');
+      const detailCopy = document.querySelector('#detail-copy');
+
+      function selectNode(node) {
+        nodes.forEach((item) => item.setAttribute('aria-pressed', String(item === node)));
+        const [type, copy] = details[node.dataset.key];
+        detailType.textContent = type;
+        detailCopy.textContent = copy;
+      }
+
+      nodes.forEach((node) => node.addEventListener('click', () => selectNode(node)));
+
+      document.querySelector('#search-form').addEventListener('submit', (event) => {
+        event.preventDefault();
+        const query = document.querySelector('#search-input').value.trim().toLocaleLowerCase('zh-CN');
+        if (!query) return;
+        const match = nodes.find((node) => node.textContent.toLocaleLowerCase('zh-CN').includes(query));
+        if (match) selectNode(match);
+      });
+    </script>
+  </body>
+</html>

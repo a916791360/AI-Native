@@ -1,0 +1,55 @@
+---
+interface Props {
+  status:
+    'catalogued' | 'deprecated' | 'draft' | 'needs-review' | 'planned' | 'published' | 'verified';
+}
+
+const { status } = Astro.props;
+const labels = {
+  catalogued: '已收录，待完善',
+  draft: '路线草稿',
+  'needs-review': '需要复核',
+  planned: '规划中',
+  published: '已发布',
+  verified: '已核验',
+  deprecated: '已弃用',
+} as const;
+---
+
+<span class={`status-tag status-${status}`}>{labels[status]}</span>
+
+<style>
+  .status-tag {
+    display: inline-flex;
+    align-items: center;
+    min-height: 1.75rem;
+    border: 1px solid var(--color-line);
+    padding: 0.1rem 0.55rem;
+    color: var(--color-muted);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    line-height: 1.3;
+    text-transform: uppercase;
+  }
+
+  .status-draft {
+    border-color: var(--color-prerequisite);
+    color: var(--color-prerequisite);
+  }
+
+  .status-planned {
+    border-style: dashed;
+  }
+
+  .status-verified,
+  .status-published {
+    border-color: var(--color-application);
+    color: var(--color-application);
+  }
+
+  .status-needs-review,
+  .status-deprecated {
+    border-color: var(--color-comparison);
+    color: var(--color-comparison);
+  }
+</style>

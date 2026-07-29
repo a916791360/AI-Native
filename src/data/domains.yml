@@ -1,0 +1,95 @@
+- id: ai-foundations-history
+  order: 1
+  nameZh: AI 基础与发展史
+  nameEn: AI Foundations and History
+  shortNameZh: AI 基础
+  description: 理解人工智能的基本边界、关键阶段与核心问题。
+  ring: core
+
+- id: machine-learning-deep-learning
+  order: 2
+  nameZh: 机器学习与深度学习
+  nameEn: Machine Learning and Deep Learning
+  shortNameZh: 机器学习
+  description: 理解模型如何从数据中学习以及神经网络的基础机制。
+  ring: extended
+
+- id: large-language-models-generative-ai
+  order: 3
+  nameZh: 大语言模型与生成式 AI
+  nameEn: Large Language Models and Generative AI
+  shortNameZh: 大模型与生成
+  description: 理解生成式模型、语言模型及其能力与边界。
+  ring: core
+
+- id: prompt-context-engineering
+  order: 4
+  nameZh: 提示词与上下文工程
+  nameEn: Prompt and Context Engineering
+  shortNameZh: 提示与上下文
+  description: 学习如何组织指令、信息与上下文来提高协作质量。
+  ring: core
+
+- id: multimodal-ai
+  order: 5
+  nameZh: 多模态
+  nameEn: Multimodal AI
+  shortNameZh: 多模态
+  description: 理解文本、图像、音频和视频如何被联合处理与生成。
+  ring: core
+
+- id: data-retrieval-rag
+  order: 6
+  nameZh: 数据、检索与 RAG
+  nameEn: Data, Retrieval and RAG
+  shortNameZh: 检索与 RAG
+  description: 理解外部知识如何被整理、找到并提供给生成模型。
+  ring: core
+
+- id: agents-tool-use-automation
+  order: 7
+  nameZh: Agent、工具调用与自动化
+  nameEn: Agents, Tool Use and Automation
+  shortNameZh: Agent 与自动化
+  description: 理解模型如何规划任务、调用工具并形成自动化流程。
+  ring: core
+
+- id: ai-product-ux
+  order: 8
+  nameZh: AI 产品与用户体验
+  nameEn: AI Product and User Experience
+  shortNameZh: AI 产品体验
+  description: 学习判断 AI 产品机会并设计可靠的人机协作体验。
+  ring: core
+
+- id: evaluation-observability-quality
+  order: 9
+  nameZh: 评估、可观测性与质量
+  nameEn: Evaluation, Observability and Quality
+  shortNameZh: 评估与质量
+  description: 理解如何衡量、观察和持续改进 AI 系统表现。
+  ring: core
+
+- id: ai-engineering-deployment-operations
+  order: 10
+  nameZh: AI 工程、部署与运维
+  nameEn: AI Engineering, Deployment and Operations
+  shortNameZh: AI 工程运维
+  description: 理解 AI 应用从原型走向稳定生产系统的工程要求。
+  ring: extended
+
+- id: safety-ethics-governance
+  order: 11
+  nameZh: 安全、伦理与治理
+  nameEn: Safety, Ethics and Governance
+  shortNameZh: 安全与治理
+  description: 理解 AI 风险、责任边界以及组织和社会治理方法。
+  ring: core
+
+- id: compute-chips-industry
+  order: 12
+  nameZh: 算力、芯片与产业生态
+  nameEn: Compute, Chips and Industry
+  shortNameZh: 算力与产业
+  description: 理解训练与推理所需算力、硬件和产业协作结构。
+  ring: extended

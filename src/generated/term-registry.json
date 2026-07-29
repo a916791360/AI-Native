@@ -1,0 +1,347 @@
+{
+  "version": 1,
+  "terms": [
+    {
+      "id": "artificial-intelligence",
+      "url": "/terms/artificial-intelligence/",
+      "nameZh": "人工智能",
+      "nameEn": "Artificial Intelligence",
+      "abbreviations": [
+        "AI"
+      ],
+      "aliases": [
+        {
+          "value": "人工智能技术",
+          "language": "zh-CN"
+        }
+      ],
+      "summary": "让机器执行通常需要人类感知、推理、学习或决策能力的技术与研究领域。",
+      "domain": "ai-foundations-history",
+      "domainNameZh": "AI 基础与发展史",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "verified",
+      "priority": 1,
+      "featured": true,
+      "searchKeys": [
+        "人工智能",
+        "artificial intelligence",
+        "ai",
+        "人工智能技术"
+      ]
+    },
+    {
+      "id": "context-window",
+      "url": "/terms/context-window/",
+      "nameZh": "上下文窗口",
+      "nameEn": "Context Window",
+      "abbreviations": [],
+      "aliases": [
+        {
+          "value": "上下文长度",
+          "language": "zh-CN"
+        }
+      ],
+      "summary": "模型一次推理能够共同处理的输入、历史信息、工具结果和输出所占 Token 范围。",
+      "domain": "prompt-context-engineering",
+      "domainNameZh": "提示词与上下文工程",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "verified",
+      "priority": 1,
+      "featured": true,
+      "searchKeys": [
+        "上下文窗口",
+        "context window",
+        "上下文长度"
+      ]
+    },
+    {
+      "id": "document-chunking",
+      "url": "/terms/document-chunking/",
+      "nameZh": "文档切片",
+      "nameEn": "Document Chunking",
+      "abbreviations": [],
+      "aliases": [
+        {
+          "value": "文档分块",
+          "language": "zh-CN"
+        },
+        {
+          "value": "Chunking",
+          "language": "en"
+        }
+      ],
+      "summary": "按结构或语义把长文档拆成较小知识单元，以便建立索引、检索和放入上下文。",
+      "domain": "data-retrieval-rag",
+      "domainNameZh": "数据、检索与 RAG",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "verified",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "文档切片",
+        "document chunking",
+        "文档分块",
+        "chunking"
+      ]
+    },
+    {
+      "id": "embedding",
+      "url": "/terms/embedding/",
+      "nameZh": "嵌入",
+      "nameEn": "Embedding",
+      "abbreviations": [],
+      "aliases": [
+        {
+          "value": "向量嵌入",
+          "language": "zh-CN"
+        },
+        {
+          "value": "Embeddings",
+          "language": "en"
+        }
+      ],
+      "summary": "把文本、图像或其他对象表示为数值向量，使语义或特征关系可以被计算和比较。",
+      "domain": "data-retrieval-rag",
+      "domainNameZh": "数据、检索与 RAG",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "verified",
+      "priority": 1,
+      "featured": true,
+      "searchKeys": [
+        "嵌入",
+        "embedding",
+        "向量嵌入",
+        "embeddings"
+      ]
+    },
+    {
+      "id": "generative-ai",
+      "url": "/terms/generative-ai/",
+      "nameZh": "生成式 AI",
+      "nameEn": "Generative AI",
+      "abbreviations": [
+        "GenAI"
+      ],
+      "aliases": [
+        {
+          "value": "生成式人工智能",
+          "language": "zh-CN"
+        }
+      ],
+      "summary": "根据训练中学到的模式生成文本、图像、音频或其他新内容的一类人工智能方法。",
+      "domain": "large-language-models-generative-ai",
+      "domainNameZh": "大语言模型与生成式 AI",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "verified",
+      "priority": 1,
+      "featured": true,
+      "searchKeys": [
+        "生成式 ai",
+        "generative ai",
+        "genai",
+        "生成式人工智能"
+      ]
+    },
+    {
+      "id": "hallucination",
+      "url": "/terms/hallucination/",
+      "nameZh": "幻觉",
+      "nameEn": "Hallucination",
+      "abbreviations": [],
+      "aliases": [
+        {
+          "value": "AI 幻觉",
+          "language": "zh-CN"
+        }
+      ],
+      "summary": "生成模型给出看似合理但无法由事实、输入或可靠证据支持的内容这一现象。",
+      "domain": "evaluation-observability-quality",
+      "domainNameZh": "评估、可观测性与质量",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "verified",
+      "priority": 1,
+      "featured": true,
+      "searchKeys": [
+        "幻觉",
+        "hallucination",
+        "ai 幻觉"
+      ]
+    },
+    {
+      "id": "large-language-model",
+      "url": "/terms/large-language-model/",
+      "nameZh": "大语言模型",
+      "nameEn": "Large Language Model",
+      "abbreviations": [
+        "LLM"
+      ],
+      "aliases": [
+        {
+          "value": "大型语言模型",
+          "language": "zh-CN"
+        }
+      ],
+      "summary": "在大量文本或多模态数据上训练、能够理解和生成语言序列的深度学习模型。",
+      "domain": "large-language-models-generative-ai",
+      "domainNameZh": "大语言模型与生成式 AI",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "verified",
+      "priority": 1,
+      "featured": true,
+      "searchKeys": [
+        "大语言模型",
+        "large language model",
+        "llm",
+        "大型语言模型"
+      ]
+    },
+    {
+      "id": "reranking",
+      "url": "/terms/reranking/",
+      "nameZh": "重排",
+      "nameEn": "Reranking",
+      "abbreviations": [],
+      "aliases": [
+        {
+          "value": "重新排序",
+          "language": "zh-CN"
+        }
+      ],
+      "summary": "使用更精细的相关性模型对初次召回结果再次评分并调整顺序的检索步骤。",
+      "domain": "data-retrieval-rag",
+      "domainNameZh": "数据、检索与 RAG",
+      "difficulty": "advanced",
+      "ring": "core",
+      "status": "verified",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "重排",
+        "reranking",
+        "重新排序"
+      ]
+    },
+    {
+      "id": "retrieval",
+      "url": "/terms/retrieval/",
+      "nameZh": "检索",
+      "nameEn": "Retrieval",
+      "abbreviations": [],
+      "aliases": [
+        {
+          "value": "信息检索",
+          "language": "zh-CN"
+        }
+      ],
+      "summary": "根据查询从文档、数据库或其他知识源中找到相关候选信息的过程。",
+      "domain": "data-retrieval-rag",
+      "domainNameZh": "数据、检索与 RAG",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "verified",
+      "priority": 1,
+      "featured": true,
+      "searchKeys": [
+        "检索",
+        "retrieval",
+        "信息检索"
+      ]
+    },
+    {
+      "id": "retrieval-augmented-generation",
+      "url": "/terms/retrieval-augmented-generation/",
+      "nameZh": "检索增强生成",
+      "nameEn": "Retrieval-Augmented Generation",
+      "abbreviations": [
+        "RAG"
+      ],
+      "aliases": [
+        {
+          "value": "检索增强生成技术",
+          "language": "zh-CN"
+        }
+      ],
+      "summary": "在模型生成回答前检索外部资料，并把候选证据作为上下文提供给生成模型的方法。",
+      "domain": "data-retrieval-rag",
+      "domainNameZh": "数据、检索与 RAG",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "verified",
+      "priority": 1,
+      "featured": true,
+      "searchKeys": [
+        "检索增强生成",
+        "retrieval-augmented generation",
+        "rag",
+        "检索增强生成技术"
+      ]
+    },
+    {
+      "id": "token",
+      "url": "/terms/token/",
+      "nameZh": "Token",
+      "nameEn": "Token",
+      "abbreviations": [],
+      "aliases": [
+        {
+          "value": "词元",
+          "language": "zh-CN"
+        },
+        {
+          "value": "文本令牌",
+          "language": "zh-CN"
+        }
+      ],
+      "summary": "模型读取和生成文本时使用的离散单位，一个 Token 不一定对应一个完整汉字或单词。",
+      "domain": "large-language-models-generative-ai",
+      "domainNameZh": "大语言模型与生成式 AI",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "verified",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "token",
+        "token",
+        "词元",
+        "文本令牌"
+      ]
+    },
+    {
+      "id": "vector-database",
+      "url": "/terms/vector-database/",
+      "nameZh": "向量数据库",
+      "nameEn": "Vector Database",
+      "abbreviations": [
+        "VDB"
+      ],
+      "aliases": [
+        {
+          "value": "向量库",
+          "language": "zh-CN"
+        }
+      ],
+      "summary": "专门存储、索引并按相似度查询高维向量的数据系统，常用于语义检索。",
+      "domain": "data-retrieval-rag",
+      "domainNameZh": "数据、检索与 RAG",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "verified",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "向量数据库",
+        "vector database",
+        "vdb",
+        "向量库"
+      ]
+    }
+  ]
+}

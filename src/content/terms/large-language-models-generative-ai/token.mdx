@@ -1,0 +1,67 @@
+---
+id: token
+nameZh: Token
+nameEn: Token
+aliases:
+  - value: 词元
+    language: zh-CN
+  - value: 文本令牌
+    language: zh-CN
+summary: 模型读取和生成文本时使用的离散单位，一个 Token 不一定对应一个完整汉字或单词。
+domain: large-language-models-generative-ai
+difficulty: beginner
+ring: core
+status: verified
+priority: 1
+featured: false
+publishedAt: '2026-07-29'
+updatedAt: '2026-07-29'
+verifiedAt: '2026-07-29'
+sources:
+  - id: sentencepiece-paper
+    type: paper
+    title: SentencePiece - A simple and language independent subword tokenizer and detokenizer for Neural Text Processing
+    url: https://arxiv.org/abs/1808.06226
+    publisher: arXiv
+    publishedAt: '2018-08-19'
+    accessedAt: '2026-07-29'
+  - id: attention-is-all-you-need
+    type: paper
+    title: Attention Is All You Need
+    url: https://arxiv.org/abs/1706.03762
+    publisher: arXiv
+    publishedAt: '2017-06-12'
+    accessedAt: '2026-07-29'
+---
+
+<h2 id="what-it-is">它是什么</h2>
+
+Token 是模型处理序列时使用的离散编号单位。分词器把原始文本切成词、子词、字符或符号片段，再映射为数字；它不等于“一个字”或“一个英文单词”。[S1]
+
+<h2 id="why-it-matters">为什么需要它</h2>
+
+神经网络不能直接计算任意文本，需要有限词表中的编号。Token 数也直接影响上下文占用、生成时延与使用成本，因此字符数只能作为粗略估计。
+
+<h2 id="how-it-works">它如何工作</h2>
+
+分词器依据既定词表把文本编码成 Token ID，模型把 ID 转成向量并在序列上计算注意力，最后输出下一个 Token 的概率；解码器再把 ID 还原为可读文本。[S1][S2]
+
+<h2 id="example">真实例子</h2>
+
+“AI-Native 很好”可能被拆成英文片段、连字符、空格和汉字等多个 Token。换一种模型或分词器，切分结果和总数可能不同。
+
+<h2 id="tradeoffs">什么时候适合与不适合</h2>
+
+估算提示长度、上下文容量和成本时必须关注 Token。不要用固定的“一个汉字等于多少 Token”作为精确规则，也不要假定不同模型的计数一致。
+
+<h2 id="try-it">亲自试一下</h2>
+
+准备一段中英混合文本，用目标模型官方提供的 tokenizer 计数工具查看切分结果。尝试加入空格、数字和代码，观察 Token 数如何变化。
+
+<h2 id="next">接下来学什么</h2>
+
+阅读[大语言模型](/terms/large-language-model/)理解 Token 如何进入模型，再阅读[上下文窗口](/terms/context-window/)理解一次请求能容纳多少 Token。
+
+<h2 id="sources-and-revisions">来源与修订</h2>
+
+分词与可逆编码参考 SentencePiece 论文 [S1]；序列和注意力的模型背景参考 Transformer 论文 [S2]。具体计数必须以目标模型分词器为准。

@@ -1,0 +1,180 @@
+---
+import PageIntro from '@/components/layout/PageIntro.astro';
+import StatusTag from '@/components/ui/StatusTag.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="内容方法" description="AI-Native 的内容状态、关系规则与核验原则。">
+  <main id="main-content">
+    <PageIntro
+      eyebrow="Editorial methodology · transparent by default"
+      title="内容方法"
+      description="知识工具的可信度不来自语气，而来自能否看见内容处于什么状态、关系为何成立，以及哪些断言有来源支持。"
+    />
+    <section class="method-section" aria-labelledby="states-title">
+      <header>
+        <p class="eyebrow">01 / Content states</p><h2 id="states-title">
+          不把“已收录”写成“已核验”
+        </h2>
+      </header>
+      <div class="state-list">
+        <article>
+          <StatusTag status="catalogued" /><h3>目录已收录</h3><p>
+            名称、摘要、领域与基础关系已进入结构化系统，但深度正文尚未完成。
+          </p>
+        </article>
+        <article>
+          <StatusTag status="draft" /><h3>草稿</h3><p>
+            内容结构可以被内部使用和审查，仍可能调整顺序、解释与边界。
+          </p>
+        </article>
+        <article>
+          <StatusTag status="verified" /><h3>已核验</h3><p>
+            只有来源、事实、例子与适用边界都通过门禁后，才允许使用这一状态。
+          </p>
+        </article>
+      </div>
+    </section>
+    <section class="method-section" aria-labelledby="relations-title">
+      <header>
+        <p class="eyebrow">02 / Relation rules</p><h2 id="relations-title">
+          每条关系都要回答“为什么”
+        </h2>
+      </header>
+      <div class="principle-list">
+        <article class="prerequisite">
+          <span>前置</span><h3>学习顺序</h3><p>先理解 A，才能减少理解 B 时的悬空假设。</p>
+        </article>
+        <article class="component">
+          <span>组成</span><h3>系统结构</h3><p>
+            A 是 B 工作链路中的关键组成，而不是仅仅经常一起出现。
+          </p>
+        </article>
+        <article class="comparison">
+          <span>比较</span><h3>边界与差异</h3><p>
+            并列概念需要说明相似处、差异处和不能互换的条件。
+          </p>
+        </article>
+        <article class="application">
+          <span>应用</span><h3>实际使用</h3><p>A 被 B 用来完成某个具体步骤，并说明它发挥的作用。</p>
+        </article>
+      </div>
+    </section>
+    <section class="method-section source-policy" aria-labelledby="sources-title">
+      <header>
+        <p class="eyebrow">03 / Source policy</p><h2 id="sources-title">来源优先级与修订</h2>
+      </header>
+      <div>
+        <p>
+          优先使用论文、标准、法律、官方文档、教材、研究机构和可复核的工程实践。来源必须记录标题、发布者、链接与访问日期；会快速变化的事实需要记录发布时间。
+        </p>
+        <p>
+          内容发现错误时，修订关系、摘要和正文必须回到同一份结构化数据，避免图谱、搜索和文章各自维护不同结论。
+        </p>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .method-section {
+    display: grid;
+    grid-template-columns: minmax(20rem, 0.36fr) 1fr;
+    border-bottom: 1px solid var(--color-line);
+  }
+  .method-section > header {
+    border-right: 1px solid var(--color-line);
+    padding: var(--space-7) var(--page-gutter);
+  }
+  .method-section h2 {
+    max-width: 12em;
+    margin: var(--space-3) 0 0;
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 4vw, 3.6rem);
+    font-weight: 400;
+    line-height: 1.08;
+  }
+  .state-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .state-list article,
+  .principle-list article {
+    min-height: 22rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    border-right: 1px solid var(--color-line-soft);
+    padding: var(--space-5);
+  }
+  .state-list h3,
+  .principle-list h3 {
+    margin: auto 0 var(--space-3);
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 400;
+  }
+  .state-list p,
+  .principle-list p {
+    margin: 0;
+    color: var(--color-muted);
+  }
+  .principle-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .principle-list article {
+    min-height: 16rem;
+    border-bottom: 1px solid var(--color-line-soft);
+  }
+  .principle-list span {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+  }
+  .prerequisite span {
+    color: var(--color-prerequisite);
+  }
+  .component span {
+    color: var(--color-component);
+  }
+  .comparison span {
+    color: var(--color-comparison);
+  }
+  .application span {
+    color: var(--color-application);
+  }
+  .source-policy > div {
+    max-width: 56rem;
+    padding: var(--space-7) var(--page-gutter);
+  }
+  .source-policy p {
+    margin: 0 0 var(--space-4);
+    color: var(--color-muted);
+    font-size: var(--text-lead);
+  }
+
+  @media (max-width: 840px) {
+    .method-section {
+      grid-template-columns: 1fr;
+    }
+    .method-section > header {
+      border-right: 0;
+      border-bottom: 1px solid var(--color-line);
+    }
+    .state-list {
+      grid-template-columns: 1fr;
+    }
+    .state-list article {
+      min-height: 12rem;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .principle-list {
+      grid-template-columns: 1fr;
+    }
+    .principle-list article {
+      min-height: 12rem;
+    }
+  }
+</style>

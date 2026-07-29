@@ -1,0 +1,585 @@
+{
+  "version": 1,
+  "nodes": [
+    {
+      "id": "artificial-intelligence",
+      "label": "人工智能",
+      "labelEn": "Artificial Intelligence",
+      "url": "/terms/artificial-intelligence/",
+      "summary": "让机器执行通常需要人类感知、推理、学习或决策能力的技术与研究领域。",
+      "domain": "ai-foundations-history",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "verified"
+    },
+    {
+      "id": "context-window",
+      "label": "上下文窗口",
+      "labelEn": "Context Window",
+      "url": "/terms/context-window/",
+      "summary": "模型一次推理能够共同处理的输入、历史信息、工具结果和输出所占 Token 范围。",
+      "domain": "prompt-context-engineering",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "verified"
+    },
+    {
+      "id": "document-chunking",
+      "label": "文档切片",
+      "labelEn": "Document Chunking",
+      "url": "/terms/document-chunking/",
+      "summary": "按结构或语义把长文档拆成较小知识单元，以便建立索引、检索和放入上下文。",
+      "domain": "data-retrieval-rag",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "verified"
+    },
+    {
+      "id": "embedding",
+      "label": "嵌入",
+      "labelEn": "Embedding",
+      "url": "/terms/embedding/",
+      "summary": "把文本、图像或其他对象表示为数值向量，使语义或特征关系可以被计算和比较。",
+      "domain": "data-retrieval-rag",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "verified"
+    },
+    {
+      "id": "generative-ai",
+      "label": "生成式 AI",
+      "labelEn": "Generative AI",
+      "url": "/terms/generative-ai/",
+      "summary": "根据训练中学到的模式生成文本、图像、音频或其他新内容的一类人工智能方法。",
+      "domain": "large-language-models-generative-ai",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "verified"
+    },
+    {
+      "id": "hallucination",
+      "label": "幻觉",
+      "labelEn": "Hallucination",
+      "url": "/terms/hallucination/",
+      "summary": "生成模型给出看似合理但无法由事实、输入或可靠证据支持的内容这一现象。",
+      "domain": "evaluation-observability-quality",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "verified"
+    },
+    {
+      "id": "large-language-model",
+      "label": "大语言模型",
+      "labelEn": "Large Language Model",
+      "url": "/terms/large-language-model/",
+      "summary": "在大量文本或多模态数据上训练、能够理解和生成语言序列的深度学习模型。",
+      "domain": "large-language-models-generative-ai",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "verified"
+    },
+    {
+      "id": "reranking",
+      "label": "重排",
+      "labelEn": "Reranking",
+      "url": "/terms/reranking/",
+      "summary": "使用更精细的相关性模型对初次召回结果再次评分并调整顺序的检索步骤。",
+      "domain": "data-retrieval-rag",
+      "difficulty": "advanced",
+      "ring": "core",
+      "status": "verified"
+    },
+    {
+      "id": "retrieval",
+      "label": "检索",
+      "labelEn": "Retrieval",
+      "url": "/terms/retrieval/",
+      "summary": "根据查询从文档、数据库或其他知识源中找到相关候选信息的过程。",
+      "domain": "data-retrieval-rag",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "verified"
+    },
+    {
+      "id": "retrieval-augmented-generation",
+      "label": "检索增强生成",
+      "labelEn": "Retrieval-Augmented Generation",
+      "url": "/terms/retrieval-augmented-generation/",
+      "summary": "在模型生成回答前检索外部资料，并把候选证据作为上下文提供给生成模型的方法。",
+      "domain": "data-retrieval-rag",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "verified"
+    },
+    {
+      "id": "token",
+      "label": "Token",
+      "labelEn": "Token",
+      "url": "/terms/token/",
+      "summary": "模型读取和生成文本时使用的离散单位，一个 Token 不一定对应一个完整汉字或单词。",
+      "domain": "large-language-models-generative-ai",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "verified"
+    },
+    {
+      "id": "vector-database",
+      "label": "向量数据库",
+      "labelEn": "Vector Database",
+      "url": "/terms/vector-database/",
+      "summary": "专门存储、索引并按相似度查询高维向量的数据系统，常用于语义检索。",
+      "domain": "data-retrieval-rag",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "verified"
+    }
+  ],
+  "edges": [
+    {
+      "id": "ai-compared-with-generative-ai",
+      "source": "artificial-intelligence",
+      "target": "generative-ai",
+      "type": "comparison",
+      "explanation": "人工智能是更广泛的领域，生成式 AI 专注于根据已有模式产生新的内容或表示。"
+    },
+    {
+      "id": "ai-precedes-generative-ai",
+      "source": "artificial-intelligence",
+      "target": "generative-ai",
+      "type": "prerequisite",
+      "explanation": "先理解人工智能的整体范围，才能判断生成式 AI 在其中解决的是哪一类问题。"
+    },
+    {
+      "id": "chunking-component-of-rag",
+      "source": "document-chunking",
+      "target": "retrieval-augmented-generation",
+      "type": "component",
+      "explanation": "文档切片把长资料转成可索引和召回的单元，是 RAG 数据准备阶段的组成部分。"
+    },
+    {
+      "id": "chunking-precedes-rag",
+      "source": "document-chunking",
+      "target": "retrieval-augmented-generation",
+      "type": "prerequisite",
+      "explanation": "文档切片决定可被检索的知识单元，是理解 RAG 检索质量的重要前提。"
+    },
+    {
+      "id": "context-window-precedes-rag",
+      "source": "context-window",
+      "target": "retrieval-augmented-generation",
+      "type": "prerequisite",
+      "explanation": "RAG 需要把检索结果放入有限上下文，理解窗口限制才能判断取舍与成本。"
+    },
+    {
+      "id": "embedding-applied-to-retrieval",
+      "source": "embedding",
+      "target": "retrieval",
+      "type": "application",
+      "explanation": "检索系统可以用嵌入向量表示语义，并通过相似度找到表达不同但含义接近的资料。"
+    },
+    {
+      "id": "embedding-precedes-vector-database",
+      "source": "embedding",
+      "target": "vector-database",
+      "type": "prerequisite",
+      "explanation": "向量数据库存储和检索嵌入向量，先理解 Embedding 才能理解相似度搜索。"
+    },
+    {
+      "id": "generative-ai-precedes-llm",
+      "source": "generative-ai",
+      "target": "large-language-model",
+      "type": "prerequisite",
+      "explanation": "大语言模型是生成式 AI 的重要分支，先理解生成任务有助于把握模型目标。"
+    },
+    {
+      "id": "hallucination-compared-with-rag",
+      "source": "hallucination",
+      "target": "retrieval-augmented-generation",
+      "type": "comparison",
+      "explanation": "幻觉描述生成结果可能失真，RAG 是降低部分知识性错误风险的方法而不是彻底消除机制。"
+    },
+    {
+      "id": "llm-applied-to-rag",
+      "source": "large-language-model",
+      "target": "retrieval-augmented-generation",
+      "type": "application",
+      "explanation": "RAG 把大语言模型的生成能力用于整合检索证据，使回答能够利用模型参数之外的知识。"
+    },
+    {
+      "id": "llm-component-of-rag",
+      "source": "large-language-model",
+      "target": "retrieval-augmented-generation",
+      "type": "component",
+      "explanation": "RAG 在检索之后仍需要大语言模型根据问题与外部资料组织并生成最终回答。"
+    },
+    {
+      "id": "llm-precedes-hallucination",
+      "source": "large-language-model",
+      "target": "hallucination",
+      "type": "prerequisite",
+      "explanation": "先理解语言模型如何预测下一个 Token，才能理解它为何会生成流畅但错误的内容。"
+    },
+    {
+      "id": "reranking-compared-with-retrieval",
+      "source": "reranking",
+      "target": "retrieval",
+      "type": "comparison",
+      "explanation": "检索先扩大范围找到候选资料，重排再以更精细的标准调整这些候选的顺序。"
+    },
+    {
+      "id": "reranking-component-of-retrieval",
+      "source": "reranking",
+      "target": "retrieval",
+      "type": "component",
+      "explanation": "重排对初次召回的候选结果再次评分，帮助更相关的资料进入最终上下文。"
+    },
+    {
+      "id": "retrieval-component-of-rag",
+      "source": "retrieval",
+      "target": "retrieval-augmented-generation",
+      "type": "component",
+      "explanation": "检索负责从外部知识中找到候选资料，是 RAG 区别于纯模型生成的核心组成部分。"
+    },
+    {
+      "id": "retrieval-precedes-rag",
+      "source": "retrieval",
+      "target": "retrieval-augmented-generation",
+      "type": "prerequisite",
+      "explanation": "先理解检索如何找到相关资料，才能理解 RAG 如何为生成阶段提供上下文。"
+    },
+    {
+      "id": "token-component-of-context-window",
+      "source": "token",
+      "target": "context-window",
+      "type": "component",
+      "explanation": "上下文窗口的容量以 Token 数量表达，输入、输出和工具信息共同占用这段空间。"
+    },
+    {
+      "id": "token-component-of-llm",
+      "source": "token",
+      "target": "large-language-model",
+      "type": "component",
+      "explanation": "大语言模型读取和生成的基本离散单位是 Token，它连接文本与模型内部计算。"
+    },
+    {
+      "id": "token-precedes-context-window",
+      "source": "token",
+      "target": "context-window",
+      "type": "prerequisite",
+      "explanation": "上下文窗口通常按 Token 数量计量，因此理解 Token 是判断容量与成本的前提。"
+    },
+    {
+      "id": "vector-database-component-of-retrieval",
+      "source": "vector-database",
+      "target": "retrieval",
+      "type": "component",
+      "explanation": "向量数据库可作为语义检索的存储与查询组件，但检索系统也可以使用其他索引方式。"
+    }
+  ],
+  "local": {
+    "artificial-intelligence": [
+      {
+        "edgeId": "ai-compared-with-generative-ai",
+        "neighbor": "generative-ai",
+        "type": "comparison",
+        "direction": "symmetric",
+        "explanation": "人工智能是更广泛的领域，生成式 AI 专注于根据已有模式产生新的内容或表示。"
+      },
+      {
+        "edgeId": "ai-precedes-generative-ai",
+        "neighbor": "generative-ai",
+        "type": "prerequisite",
+        "direction": "outgoing",
+        "explanation": "先理解人工智能的整体范围，才能判断生成式 AI 在其中解决的是哪一类问题。"
+      }
+    ],
+    "context-window": [
+      {
+        "edgeId": "token-component-of-context-window",
+        "neighbor": "token",
+        "type": "component",
+        "direction": "incoming",
+        "explanation": "上下文窗口的容量以 Token 数量表达，输入、输出和工具信息共同占用这段空间。"
+      },
+      {
+        "edgeId": "context-window-precedes-rag",
+        "neighbor": "retrieval-augmented-generation",
+        "type": "prerequisite",
+        "direction": "outgoing",
+        "explanation": "RAG 需要把检索结果放入有限上下文，理解窗口限制才能判断取舍与成本。"
+      },
+      {
+        "edgeId": "token-precedes-context-window",
+        "neighbor": "token",
+        "type": "prerequisite",
+        "direction": "incoming",
+        "explanation": "上下文窗口通常按 Token 数量计量，因此理解 Token 是判断容量与成本的前提。"
+      }
+    ],
+    "document-chunking": [
+      {
+        "edgeId": "chunking-component-of-rag",
+        "neighbor": "retrieval-augmented-generation",
+        "type": "component",
+        "direction": "outgoing",
+        "explanation": "文档切片把长资料转成可索引和召回的单元，是 RAG 数据准备阶段的组成部分。"
+      },
+      {
+        "edgeId": "chunking-precedes-rag",
+        "neighbor": "retrieval-augmented-generation",
+        "type": "prerequisite",
+        "direction": "outgoing",
+        "explanation": "文档切片决定可被检索的知识单元，是理解 RAG 检索质量的重要前提。"
+      }
+    ],
+    "embedding": [
+      {
+        "edgeId": "embedding-applied-to-retrieval",
+        "neighbor": "retrieval",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "检索系统可以用嵌入向量表示语义，并通过相似度找到表达不同但含义接近的资料。"
+      },
+      {
+        "edgeId": "embedding-precedes-vector-database",
+        "neighbor": "vector-database",
+        "type": "prerequisite",
+        "direction": "outgoing",
+        "explanation": "向量数据库存储和检索嵌入向量，先理解 Embedding 才能理解相似度搜索。"
+      }
+    ],
+    "generative-ai": [
+      {
+        "edgeId": "ai-compared-with-generative-ai",
+        "neighbor": "artificial-intelligence",
+        "type": "comparison",
+        "direction": "symmetric",
+        "explanation": "人工智能是更广泛的领域，生成式 AI 专注于根据已有模式产生新的内容或表示。"
+      },
+      {
+        "edgeId": "ai-precedes-generative-ai",
+        "neighbor": "artificial-intelligence",
+        "type": "prerequisite",
+        "direction": "incoming",
+        "explanation": "先理解人工智能的整体范围，才能判断生成式 AI 在其中解决的是哪一类问题。"
+      },
+      {
+        "edgeId": "generative-ai-precedes-llm",
+        "neighbor": "large-language-model",
+        "type": "prerequisite",
+        "direction": "outgoing",
+        "explanation": "大语言模型是生成式 AI 的重要分支，先理解生成任务有助于把握模型目标。"
+      }
+    ],
+    "hallucination": [
+      {
+        "edgeId": "hallucination-compared-with-rag",
+        "neighbor": "retrieval-augmented-generation",
+        "type": "comparison",
+        "direction": "symmetric",
+        "explanation": "幻觉描述生成结果可能失真，RAG 是降低部分知识性错误风险的方法而不是彻底消除机制。"
+      },
+      {
+        "edgeId": "llm-precedes-hallucination",
+        "neighbor": "large-language-model",
+        "type": "prerequisite",
+        "direction": "incoming",
+        "explanation": "先理解语言模型如何预测下一个 Token，才能理解它为何会生成流畅但错误的内容。"
+      }
+    ],
+    "large-language-model": [
+      {
+        "edgeId": "llm-applied-to-rag",
+        "neighbor": "retrieval-augmented-generation",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "RAG 把大语言模型的生成能力用于整合检索证据，使回答能够利用模型参数之外的知识。"
+      },
+      {
+        "edgeId": "llm-component-of-rag",
+        "neighbor": "retrieval-augmented-generation",
+        "type": "component",
+        "direction": "outgoing",
+        "explanation": "RAG 在检索之后仍需要大语言模型根据问题与外部资料组织并生成最终回答。"
+      },
+      {
+        "edgeId": "token-component-of-llm",
+        "neighbor": "token",
+        "type": "component",
+        "direction": "incoming",
+        "explanation": "大语言模型读取和生成的基本离散单位是 Token，它连接文本与模型内部计算。"
+      },
+      {
+        "edgeId": "generative-ai-precedes-llm",
+        "neighbor": "generative-ai",
+        "type": "prerequisite",
+        "direction": "incoming",
+        "explanation": "大语言模型是生成式 AI 的重要分支，先理解生成任务有助于把握模型目标。"
+      },
+      {
+        "edgeId": "llm-precedes-hallucination",
+        "neighbor": "hallucination",
+        "type": "prerequisite",
+        "direction": "outgoing",
+        "explanation": "先理解语言模型如何预测下一个 Token，才能理解它为何会生成流畅但错误的内容。"
+      }
+    ],
+    "reranking": [
+      {
+        "edgeId": "reranking-compared-with-retrieval",
+        "neighbor": "retrieval",
+        "type": "comparison",
+        "direction": "symmetric",
+        "explanation": "检索先扩大范围找到候选资料，重排再以更精细的标准调整这些候选的顺序。"
+      },
+      {
+        "edgeId": "reranking-component-of-retrieval",
+        "neighbor": "retrieval",
+        "type": "component",
+        "direction": "outgoing",
+        "explanation": "重排对初次召回的候选结果再次评分，帮助更相关的资料进入最终上下文。"
+      }
+    ],
+    "retrieval": [
+      {
+        "edgeId": "embedding-applied-to-retrieval",
+        "neighbor": "embedding",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "检索系统可以用嵌入向量表示语义，并通过相似度找到表达不同但含义接近的资料。"
+      },
+      {
+        "edgeId": "reranking-compared-with-retrieval",
+        "neighbor": "reranking",
+        "type": "comparison",
+        "direction": "symmetric",
+        "explanation": "检索先扩大范围找到候选资料，重排再以更精细的标准调整这些候选的顺序。"
+      },
+      {
+        "edgeId": "reranking-component-of-retrieval",
+        "neighbor": "reranking",
+        "type": "component",
+        "direction": "incoming",
+        "explanation": "重排对初次召回的候选结果再次评分，帮助更相关的资料进入最终上下文。"
+      },
+      {
+        "edgeId": "retrieval-component-of-rag",
+        "neighbor": "retrieval-augmented-generation",
+        "type": "component",
+        "direction": "outgoing",
+        "explanation": "检索负责从外部知识中找到候选资料，是 RAG 区别于纯模型生成的核心组成部分。"
+      },
+      {
+        "edgeId": "vector-database-component-of-retrieval",
+        "neighbor": "vector-database",
+        "type": "component",
+        "direction": "incoming",
+        "explanation": "向量数据库可作为语义检索的存储与查询组件，但检索系统也可以使用其他索引方式。"
+      },
+      {
+        "edgeId": "retrieval-precedes-rag",
+        "neighbor": "retrieval-augmented-generation",
+        "type": "prerequisite",
+        "direction": "outgoing",
+        "explanation": "先理解检索如何找到相关资料，才能理解 RAG 如何为生成阶段提供上下文。"
+      }
+    ],
+    "retrieval-augmented-generation": [
+      {
+        "edgeId": "llm-applied-to-rag",
+        "neighbor": "large-language-model",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "RAG 把大语言模型的生成能力用于整合检索证据，使回答能够利用模型参数之外的知识。"
+      },
+      {
+        "edgeId": "hallucination-compared-with-rag",
+        "neighbor": "hallucination",
+        "type": "comparison",
+        "direction": "symmetric",
+        "explanation": "幻觉描述生成结果可能失真，RAG 是降低部分知识性错误风险的方法而不是彻底消除机制。"
+      },
+      {
+        "edgeId": "chunking-component-of-rag",
+        "neighbor": "document-chunking",
+        "type": "component",
+        "direction": "incoming",
+        "explanation": "文档切片把长资料转成可索引和召回的单元，是 RAG 数据准备阶段的组成部分。"
+      },
+      {
+        "edgeId": "llm-component-of-rag",
+        "neighbor": "large-language-model",
+        "type": "component",
+        "direction": "incoming",
+        "explanation": "RAG 在检索之后仍需要大语言模型根据问题与外部资料组织并生成最终回答。"
+      },
+      {
+        "edgeId": "retrieval-component-of-rag",
+        "neighbor": "retrieval",
+        "type": "component",
+        "direction": "incoming",
+        "explanation": "检索负责从外部知识中找到候选资料，是 RAG 区别于纯模型生成的核心组成部分。"
+      },
+      {
+        "edgeId": "context-window-precedes-rag",
+        "neighbor": "context-window",
+        "type": "prerequisite",
+        "direction": "incoming",
+        "explanation": "RAG 需要把检索结果放入有限上下文，理解窗口限制才能判断取舍与成本。"
+      },
+      {
+        "edgeId": "chunking-precedes-rag",
+        "neighbor": "document-chunking",
+        "type": "prerequisite",
+        "direction": "incoming",
+        "explanation": "文档切片决定可被检索的知识单元，是理解 RAG 检索质量的重要前提。"
+      },
+      {
+        "edgeId": "retrieval-precedes-rag",
+        "neighbor": "retrieval",
+        "type": "prerequisite",
+        "direction": "incoming",
+        "explanation": "先理解检索如何找到相关资料，才能理解 RAG 如何为生成阶段提供上下文。"
+      }
+    ],
+    "token": [
+      {
+        "edgeId": "token-component-of-context-window",
+        "neighbor": "context-window",
+        "type": "component",
+        "direction": "outgoing",
+        "explanation": "上下文窗口的容量以 Token 数量表达，输入、输出和工具信息共同占用这段空间。"
+      },
+      {
+        "edgeId": "token-component-of-llm",
+        "neighbor": "large-language-model",
+        "type": "component",
+        "direction": "outgoing",
+        "explanation": "大语言模型读取和生成的基本离散单位是 Token，它连接文本与模型内部计算。"
+      },
+      {
+        "edgeId": "token-precedes-context-window",
+        "neighbor": "context-window",
+        "type": "prerequisite",
+        "direction": "outgoing",
+        "explanation": "上下文窗口通常按 Token 数量计量，因此理解 Token 是判断容量与成本的前提。"
+      }
+    ],
+    "vector-database": [
+      {
+        "edgeId": "vector-database-component-of-retrieval",
+        "neighbor": "retrieval",
+        "type": "component",
+        "direction": "outgoing",
+        "explanation": "向量数据库可作为语义检索的存储与查询组件，但检索系统也可以使用其他索引方式。"
+      },
+      {
+        "edgeId": "embedding-precedes-vector-database",
+        "neighbor": "embedding",
+        "type": "prerequisite",
+        "direction": "incoming",
+        "explanation": "向量数据库存储和检索嵌入向量，先理解 Embedding 才能理解相似度搜索。"
+      }
+    ]
+  }
+}

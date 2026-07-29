@@ -1,0 +1,68 @@
+---
+import { NAVIGATION } from '@/config/navigation';
+import { SITE } from '@/config/site';
+---
+
+<footer class="site-footer">
+  <div>
+    <a class="footer-wordmark" href="/">{SITE.name}</a>
+    <p>{SITE.description}</p>
+  </div>
+  <nav aria-label="页脚导航">
+    {NAVIGATION.map((item) => <a href={item.href}>{item.label}</a>)}
+  </nav>
+  <p class="footer-state">静态首版 · 内容持续校订</p>
+</footer>
+
+<style>
+  .site-footer {
+    display: grid;
+    grid-template-columns: 1fr auto minmax(12rem, 0.5fr);
+    gap: var(--space-6);
+    align-items: start;
+    border-top: 1px solid var(--color-line);
+    padding: var(--space-6) var(--page-gutter);
+    color: var(--color-muted);
+  }
+
+  .site-footer p {
+    max-width: 30rem;
+    margin: var(--space-2) 0 0;
+    font-size: var(--text-sm);
+  }
+
+  .footer-wordmark {
+    color: var(--color-ink);
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    text-decoration: none;
+  }
+
+  .site-footer nav {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    gap: var(--space-1) var(--space-4);
+  }
+
+  .site-footer nav a {
+    font-size: var(--text-sm);
+  }
+
+  .footer-state {
+    justify-self: end;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs) !important;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 760px) {
+    .site-footer {
+      grid-template-columns: 1fr;
+      gap: var(--space-4);
+    }
+
+    .footer-state {
+      justify-self: start;
+    }
+  }
+</style>

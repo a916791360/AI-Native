@@ -1,0 +1,740 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI-Native · 关系索引报</title>
+    <!--
+      Assumptions:
+      - This direction borrows data-storytelling principles from digital publishing, not brand styling.
+      - The page is an issue-like front page: question, visual explanation, index, and learning route.
+      - Color identifies information roles and never replaces labels.
+      - All counts and terms shown are from current Stage 2 data.
+    -->
+    <style>
+      :root {
+        --paper: oklch(0.97 0.018 88);
+        --paper-2: oklch(0.93 0.03 88);
+        --ink: oklch(0.17 0.015 40);
+        --muted: oklch(0.45 0.025 50);
+        --rule: oklch(0.25 0.02 40);
+        --red: oklch(0.61 0.2 27);
+        --blue: oklch(0.5 0.19 255);
+        --yellow: oklch(0.86 0.16 92);
+        --green: oklch(0.55 0.12 155);
+        --focus: oklch(0.48 0.2 255);
+        font-synthesis: none;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        background: var(--paper);
+        color: var(--ink);
+        line-break: strict;
+      }
+
+      body {
+        min-width: 320px;
+        margin: 0;
+        background: var(--paper);
+        font-family: "Avenir Next", "PingFang SC", "Microsoft YaHei", sans-serif;
+        font-size: 16px;
+        line-height: 1.65;
+      }
+
+      a,
+      button,
+      input {
+        color: inherit;
+        font: inherit;
+        outline-offset: 3px;
+      }
+
+      :focus-visible {
+        outline: 3px solid var(--focus);
+      }
+
+      .masthead {
+        display: grid;
+        grid-template-columns: 190px 1fr auto;
+        align-items: end;
+        gap: 24px;
+        min-height: 112px;
+        border-bottom: 3px solid var(--ink);
+        padding: 20px 28px 16px;
+      }
+
+      .issue {
+        font-family: "SFMono-Regular", "Menlo", monospace;
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        line-height: 1.45;
+        text-transform: uppercase;
+      }
+
+      .wordmark {
+        justify-self: center;
+        font-family: "Baskerville", "Songti SC", serif;
+        font-size: 58px;
+        font-weight: 700;
+        line-height: 0.9;
+        text-decoration: none;
+      }
+
+      .mast-nav {
+        display: flex;
+        gap: 18px;
+        font-size: 13px;
+      }
+
+      .mast-nav a {
+        text-decoration-thickness: 1px;
+        text-underline-offset: 4px;
+      }
+
+      .promise-strip {
+        display: grid;
+        grid-template-columns: 190px 1fr auto;
+        align-items: center;
+        gap: 24px;
+        border-bottom: 1px solid var(--rule);
+        padding: 12px 28px;
+      }
+
+      .promise-strip strong {
+        color: var(--red);
+        font-family: "SFMono-Regular", "Menlo", monospace;
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .promise-strip p {
+        margin: 0;
+        font-family: "Baskerville", "Songti SC", serif;
+        font-size: 17px;
+        text-align: center;
+      }
+
+      .promise-strip span {
+        font-family: "SFMono-Regular", "Menlo", monospace;
+        font-size: 11px;
+      }
+
+      .front-page {
+        display: grid;
+        grid-template-columns: 220px minmax(560px, 1fr) 330px;
+        min-height: 688px;
+        border-bottom: 3px solid var(--ink);
+      }
+
+      .route-column,
+      .index-column {
+        min-width: 0;
+        padding: 22px 20px;
+      }
+
+      .route-column {
+        border-right: 1px solid var(--rule);
+      }
+
+      .index-column {
+        border-left: 1px solid var(--rule);
+      }
+
+      .column-kicker,
+      .story-kicker,
+      .relation-label,
+      .term-status {
+        font-family: "SFMono-Regular", "Menlo", monospace;
+        font-size: 10px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      .column-kicker {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid var(--rule);
+        padding-bottom: 9px;
+      }
+
+      .column-kicker b {
+        width: 23px;
+        height: 23px;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        background: var(--ink);
+        color: var(--paper);
+        font-weight: 500;
+      }
+
+      .route-title {
+        margin: 24px 0 9px;
+        font-family: "Baskerville", "Songti SC", serif;
+        font-size: 29px;
+        font-weight: 700;
+        line-height: 1.25;
+      }
+
+      .route-note {
+        margin: 0 0 28px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .chapter-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        counter-reset: chapter;
+      }
+
+      .chapter-list li {
+        counter-increment: chapter;
+        display: grid;
+        grid-template-columns: 28px 1fr;
+        gap: 8px;
+        border-top: 1px solid color-mix(in oklch, var(--rule) 32%, transparent);
+        padding: 13px 0;
+        font-size: 13px;
+      }
+
+      .chapter-list li::before {
+        content: "0" counter(chapter);
+        color: var(--red);
+        font-family: "SFMono-Regular", "Menlo", monospace;
+        font-size: 10px;
+      }
+
+      .route-state {
+        display: inline-block;
+        margin-top: 20px;
+        background: var(--yellow);
+        padding: 5px 8px;
+        font-family: "SFMono-Regular", "Menlo", monospace;
+        font-size: 10px;
+        text-transform: uppercase;
+      }
+
+      .story {
+        min-width: 0;
+        padding: 20px 28px 24px;
+      }
+
+      .story-head {
+        display: grid;
+        grid-template-columns: 1fr minmax(250px, 0.75fr);
+        gap: 26px;
+        align-items: end;
+        border-bottom: 1px solid var(--rule);
+        padding-bottom: 18px;
+      }
+
+      .story-kicker {
+        color: var(--blue);
+      }
+
+      .story h1 {
+        max-width: 620px;
+        margin: 10px 0 0;
+        font-family: "Baskerville", "Songti SC", serif;
+        font-size: 50px;
+        line-height: 1.05;
+        letter-spacing: 0;
+        text-wrap: balance;
+      }
+
+      .search {
+        display: grid;
+        grid-template-columns: 1fr 74px;
+        border: 1px solid var(--rule);
+        background: var(--paper);
+      }
+
+      .search input {
+        width: 100%;
+        min-height: 50px;
+        border: 0;
+        border-right: 1px solid var(--rule);
+        background: transparent;
+        padding: 0 13px;
+      }
+
+      .search button {
+        min-height: 50px;
+        border: 0;
+        background: var(--yellow);
+        cursor: pointer;
+        font-size: 13px;
+      }
+
+      .search button:hover {
+        background: var(--ink);
+        color: var(--paper);
+      }
+
+      .explainer {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        min-height: 488px;
+      }
+
+      .diagram {
+        position: relative;
+        min-height: 468px;
+        border-right: 1px solid var(--rule);
+      }
+
+      .diagram::after {
+        content: "关系不是装饰：点选术语，阅读它为什么与 RAG 相连。";
+        position: absolute;
+        right: 18px;
+        bottom: 14px;
+        left: 18px;
+        border-top: 1px solid var(--rule);
+        padding-top: 9px;
+        color: var(--muted);
+        font-family: "SFMono-Regular", "Menlo", monospace;
+        font-size: 10px;
+      }
+
+      .diagram svg {
+        position: absolute;
+        inset: 0 0 48px;
+        width: 100%;
+        height: calc(100% - 48px);
+        pointer-events: none;
+      }
+
+      .diagram line {
+        stroke: var(--ink);
+        stroke-width: 1.2;
+      }
+
+      .diagram line.dashed {
+        stroke-dasharray: 5 5;
+      }
+
+      .dot-node {
+        position: absolute;
+        transform: translate(-50%, -50%);
+        border: 1px solid var(--ink);
+        border-radius: 50%;
+        background: var(--paper);
+        cursor: pointer;
+        padding: 9px 13px;
+        font-size: 12px;
+        font-weight: 600;
+      }
+
+      .dot-node:hover,
+      .dot-node[aria-pressed="true"] {
+        background: var(--yellow);
+      }
+
+      .dot-node.center {
+        width: 154px;
+        height: 154px;
+        background: var(--red);
+        color: white;
+        font-family: "Baskerville", "Songti SC", serif;
+        font-size: 25px;
+        line-height: 1.15;
+      }
+
+      .annotation {
+        min-width: 0;
+        padding: 20px;
+      }
+
+      .annotation h2 {
+        margin: 9px 0 12px;
+        font-family: "Baskerville", "Songti SC", serif;
+        font-size: 27px;
+        line-height: 1.25;
+      }
+
+      .annotation p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .relation-label {
+        display: inline-block;
+        background: var(--blue);
+        color: white;
+        padding: 4px 7px;
+      }
+
+      .relation-stack {
+        margin: 24px 0 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .relation-stack li {
+        display: grid;
+        grid-template-columns: 74px 1fr;
+        gap: 9px;
+        border-top: 1px solid color-mix(in oklch, var(--rule) 30%, transparent);
+        padding: 10px 0;
+        font-size: 11px;
+      }
+
+      .relation-stack b {
+        font-family: "SFMono-Regular", "Menlo", monospace;
+        font-size: 9px;
+        font-weight: 500;
+        text-transform: uppercase;
+      }
+
+      .term-list {
+        list-style: none;
+        margin: 16px 0 0;
+        padding: 0;
+      }
+
+      .term-list li {
+        border-top: 1px solid color-mix(in oklch, var(--rule) 32%, transparent);
+      }
+
+      .term-list button {
+        width: 100%;
+        min-height: 52px;
+        display: grid;
+        grid-template-columns: 28px 1fr;
+        gap: 8px;
+        align-items: center;
+        border: 0;
+        background: transparent;
+        cursor: pointer;
+        padding: 7px 0;
+        text-align: left;
+      }
+
+      .term-list button:hover {
+        color: var(--blue);
+      }
+
+      .term-number {
+        color: var(--muted);
+        font-family: "SFMono-Regular", "Menlo", monospace;
+        font-size: 10px;
+      }
+
+      .term-name {
+        display: block;
+        font-family: "Baskerville", "Songti SC", serif;
+        font-size: 18px;
+        font-weight: 700;
+        line-height: 1.15;
+      }
+
+      .term-en {
+        display: block;
+        color: var(--muted);
+        font-size: 10px;
+      }
+
+      .term-status {
+        display: block;
+        margin-top: 3px;
+        color: var(--red);
+        font-size: 8px;
+      }
+
+      .next-strip {
+        min-height: 138px;
+        display: grid;
+        grid-template-columns: 220px 1fr 330px;
+        background: var(--ink);
+        color: var(--paper);
+      }
+
+      .next-strip > * {
+        padding: 24px 28px;
+      }
+
+      .next-strip p {
+        margin: 0;
+        color: color-mix(in oklch, var(--paper) 65%, transparent);
+        font-size: 12px;
+      }
+
+      .next-strip h2 {
+        margin: 0;
+        font-family: "Baskerville", "Songti SC", serif;
+        font-size: 31px;
+      }
+
+      .next-strip a {
+        color: var(--yellow);
+      }
+
+      @media (max-width: 1050px) {
+        .masthead,
+        .promise-strip {
+          grid-template-columns: 140px 1fr auto;
+        }
+
+        .wordmark {
+          font-size: 48px;
+        }
+
+        .front-page {
+          grid-template-columns: 190px minmax(540px, 1fr);
+        }
+
+        .index-column {
+          grid-column: 1 / -1;
+          border-top: 1px solid var(--rule);
+          border-left: 0;
+        }
+
+        .term-list {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 0 22px;
+        }
+
+        .next-strip {
+          grid-template-columns: 190px 1fr;
+        }
+
+        .next-strip > :last-child {
+          display: none;
+        }
+      }
+
+      @media (max-width: 700px) {
+        .masthead {
+          min-height: 86px;
+          grid-template-columns: 1fr auto;
+          align-items: center;
+          padding: 14px 18px;
+        }
+
+        .issue,
+        .mast-nav a:not(:last-child) {
+          display: none;
+        }
+
+        .wordmark {
+          justify-self: start;
+          font-size: 34px;
+        }
+
+        .promise-strip {
+          grid-template-columns: 1fr;
+          gap: 4px;
+          padding: 10px 18px;
+        }
+
+        .promise-strip p {
+          font-size: 15px;
+          text-align: left;
+        }
+
+        .promise-strip span {
+          display: none;
+        }
+
+        .front-page {
+          display: flex;
+          flex-direction: column;
+        }
+
+        .story {
+          order: 1;
+          padding: 20px 18px;
+        }
+
+        .route-column {
+          order: 2;
+          border-top: 1px solid var(--rule);
+          border-right: 0;
+          padding: 22px 18px;
+        }
+
+        .index-column {
+          order: 3;
+          padding: 22px 18px;
+        }
+
+        .story-head {
+          grid-template-columns: 1fr;
+          gap: 18px;
+        }
+
+        .story h1 {
+          font-size: 40px;
+        }
+
+        .explainer {
+          grid-template-columns: 1fr;
+        }
+
+        .diagram {
+          min-height: 430px;
+          border-right: 0;
+          border-bottom: 1px solid var(--rule);
+        }
+
+        .annotation {
+          padding: 20px 0;
+        }
+
+        .term-list {
+          grid-template-columns: 1fr 1fr;
+        }
+
+        .next-strip {
+          grid-template-columns: 1fr;
+        }
+
+        .next-strip > :first-child {
+          display: none;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          scroll-behavior: auto !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="masthead">
+      <div class="issue">Issue 001<br />知识关系特刊</div>
+      <a class="wordmark" href="#">AI-Native</a>
+      <nav class="mast-nav" aria-label="主要导航">
+        <a href="#atlas">知识图鉴</a>
+        <a href="#route">学习路线</a>
+        <a href="#atlas">搜索</a>
+      </nav>
+    </header>
+
+    <div class="promise-strip">
+      <strong>Progressive AI Atlas</strong>
+      <p>从听懂 AI，到判断业务场景并设计基础 AI 方案。</p>
+      <span>ZH-CN / 2026</span>
+    </div>
+
+    <main>
+      <section class="front-page" id="atlas">
+        <aside class="route-column" id="route">
+          <div class="column-kicker"><span>从这里开始</span><b>1</b></div>
+          <h2 class="route-title">RAG 从零到理解与应用</h2>
+          <p class="route-note">从模型基础出发，逐步进入数据准备、检索、重排和增强生成。</p>
+          <ol class="chapter-list">
+            <li>从 AI 到语言模型</li>
+            <li>准备并找到资料</li>
+            <li>组成 RAG 系统</li>
+          </ol>
+          <span class="route-state">Draft · 路线草稿</span>
+        </aside>
+
+        <article class="story">
+          <div class="story-head">
+            <div>
+              <div class="story-kicker">本期焦点 / 数据、检索与 RAG</div>
+              <h1>一个回答，为什么需要先找到资料？</h1>
+            </div>
+            <form class="search" id="journal-search">
+              <input aria-label="搜索 AI 术语" placeholder="RAG、向量数据库、AI 幻觉" />
+              <button type="submit">搜索</button>
+            </form>
+          </div>
+
+          <div class="explainer">
+            <div class="diagram" aria-label="RAG 关系解释图">
+              <svg viewBox="0 0 520 420" preserveAspectRatio="none" aria-hidden="true">
+                <line x1="260" y1="210" x2="95" y2="75" />
+                <line x1="260" y1="210" x2="420" y2="68" />
+                <line class="dashed" x1="260" y1="210" x2="445" y2="260" />
+                <line x1="260" y1="210" x2="340" y2="365" />
+                <line class="dashed" x1="260" y1="210" x2="88" y2="320" />
+              </svg>
+              <button class="dot-node center" style="left: 50%; top: 45%" data-topic="rag" aria-pressed="true">
+                检索增强<br />生成
+              </button>
+              <button class="dot-node" style="left: 18%; top: 16%" data-topic="chunking" aria-pressed="false">文档切片</button>
+              <button class="dot-node" style="left: 81%; top: 15%" data-topic="context" aria-pressed="false">上下文窗口</button>
+              <button class="dot-node" style="left: 85%; top: 55%" data-topic="llm" aria-pressed="false">大语言模型</button>
+              <button class="dot-node" style="left: 66%; top: 78%" data-topic="retrieval" aria-pressed="false">检索</button>
+              <button class="dot-node" style="left: 17%; top: 68%" data-topic="hallucination" aria-pressed="false">幻觉</button>
+            </div>
+
+            <div class="annotation" aria-live="polite">
+              <span class="relation-label" id="journal-label">焦点词条</span>
+              <h2 id="journal-title">检索增强生成 / RAG</h2>
+              <p id="journal-copy">在模型生成回答前检索外部资料，并把候选证据作为上下文提供给生成模型的方法。</p>
+              <ul class="relation-stack">
+                <li><b>前置</b><span>切片、上下文、检索</span></li>
+                <li><b>组成</b><span>大语言模型与检索链路</span></li>
+                <li><b>比较</b><span>降低幻觉风险，不等于消除</span></li>
+                <li><b>状态</b><span>已收录，待完善</span></li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <aside class="index-column">
+          <div class="column-kicker"><span>本期术语索引</span><b>12</b></div>
+          <ol class="term-list">
+            <li><button data-query="人工智能"><span class="term-number">01</span><span><span class="term-name">人工智能</span><span class="term-en">Artificial Intelligence</span><span class="term-status">已收录，待完善</span></span></button></li>
+            <li><button data-query="生成式 AI"><span class="term-number">02</span><span><span class="term-name">生成式 AI</span><span class="term-en">Generative AI</span><span class="term-status">已收录，待完善</span></span></button></li>
+            <li><button data-query="大语言模型"><span class="term-number">03</span><span><span class="term-name">大语言模型</span><span class="term-en">Large Language Model</span><span class="term-status">已收录，待完善</span></span></button></li>
+            <li><button data-query="Token"><span class="term-number">04</span><span><span class="term-name">Token</span><span class="term-en">Token</span><span class="term-status">已收录，待完善</span></span></button></li>
+            <li><button data-query="Embedding"><span class="term-number">05</span><span><span class="term-name">Embedding</span><span class="term-en">向量嵌入</span><span class="term-status">已收录，待完善</span></span></button></li>
+            <li><button data-query="RAG"><span class="term-number">06</span><span><span class="term-name">RAG</span><span class="term-en">Retrieval-Augmented Generation</span><span class="term-status">已收录，待完善</span></span></button></li>
+          </ol>
+        </aside>
+      </section>
+
+      <section class="next-strip">
+        <p>下一版面<br />十二领域索引</p>
+        <h2>知识不是列表。每个词条都指向理解它所需的上下文。</h2>
+        <p><a href="#atlas">继续浏览知识图鉴</a></p>
+      </section>
+    </main>
+
+    <script>
+      const journalTopics = {
+        rag: ['焦点词条', '检索增强生成 / RAG', '在模型生成回答前检索外部资料，并把候选证据作为上下文提供给生成模型的方法。'],
+        chunking: ['前置关系', '文档切片', '文档切片决定可被检索的知识单元，是理解 RAG 检索质量的重要前提。'],
+        context: ['前置关系', '上下文窗口', 'RAG 需要把检索结果放入有限上下文，窗口限制决定证据数量与生成空间。'],
+        llm: ['组成关系', '大语言模型', '检索之后仍需要语言模型结合问题与资料组织最终回答。'],
+        retrieval: ['组成关系', '检索', '检索从外部知识中找到候选资料，是 RAG 区别于纯模型生成的核心环节。'],
+        hallucination: ['比较关系', '幻觉', 'RAG 可降低部分知识性错误风险，但无法保证模型永远不产生幻觉。'],
+      };
+
+      const journalNodes = [...document.querySelectorAll('.dot-node')];
+      function selectJournalTopic(node) {
+        journalNodes.forEach((item) => item.setAttribute('aria-pressed', String(item === node)));
+        const [label, title, copy] = journalTopics[node.dataset.topic];
+        document.querySelector('#journal-label').textContent = label;
+        document.querySelector('#journal-title').textContent = title;
+        document.querySelector('#journal-copy').textContent = copy;
+      }
+
+      journalNodes.forEach((node) => node.addEventListener('click', () => selectJournalTopic(node)));
+      document.querySelector('#journal-search').addEventListener('submit', (event) => event.preventDefault());
+      document.querySelectorAll('[data-query]').forEach((button) =>
+        button.addEventListener('click', () => {
+          const input = document.querySelector('#journal-search input');
+          input.value = button.dataset.query;
+          input.focus();
+        }),
+      );
+    </script>
+  </body>
+</html>

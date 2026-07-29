@@ -1,0 +1,65 @@
+---
+id: document-chunking
+nameZh: 文档切片
+nameEn: Document Chunking
+aliases:
+  - value: 文档分块
+    language: zh-CN
+  - value: Chunking
+    language: en
+summary: 按结构或语义把长文档拆成较小知识单元，以便建立索引、检索和放入上下文。
+domain: data-retrieval-rag
+difficulty: intermediate
+ring: core
+status: verified
+priority: 1
+featured: false
+publishedAt: '2026-07-29'
+updatedAt: '2026-07-29'
+verifiedAt: '2026-07-29'
+sources:
+  - id: aws-rag-writing-practices
+    type: official-doc
+    title: Writing best practices to optimize RAG applications
+    url: https://docs.aws.amazon.com/prescriptive-guidance/latest/writing-best-practices-rag/introduction.html
+    publisher: AWS
+    accessedAt: '2026-07-29'
+  - id: digitalocean-chunking-strategies
+    type: official-doc
+    title: Data Services Chunking Strategies
+    url: https://docs.digitalocean.com/products/knowledge-bases/reference/data-services-chunking-strategies/
+    publisher: DigitalOcean
+    accessedAt: '2026-07-29'
+---
+
+<h2 id="what-it-is">它是什么</h2>
+
+文档切片是把长文档拆成可独立索引和取回的小单元。切片可以遵循标题、段落、句子或语义边界，并可保留来源、章节和权限等元数据。[S1][S2]
+
+<h2 id="why-it-matters">为什么需要它</h2>
+
+整份长文档会让向量过于笼统，也可能占满上下文；切得太碎又会丢失条件和例外。切片质量决定检索结果能否既聚焦又完整。
+
+<h2 id="how-it-works">它如何工作</h2>
+
+解析器先识别文档结构，再按长度与边界规则建立 chunk。相邻块可适度重叠，标题和父级路径随块保存，之后每块单独生成嵌入并建立索引。
+
+<h2 id="example">真实例子</h2>
+
+一份报销制度可按“适用范围、额度、所需凭证、审批流程、例外”切成五块。查询住宿上限时，系统只需取回额度块及其适用条件。
+
+<h2 id="tradeoffs">什么时候适合与不适合</h2>
+
+说明书、制度和知识库适合按结构切片。表格、代码和跨页论证需要专门解析，不能只按固定字符数硬切；否则标题与数据容易分离。
+
+<h2 id="try-it">亲自试一下</h2>
+
+选一篇有三级标题的文档，分别按固定长度和标题结构切片。对五个问题检查召回块是否包含完整答案及必要条件，并比较两种策略。
+
+<h2 id="next">接下来学什么</h2>
+
+阅读[向量数据库](/terms/vector-database/)理解切片如何进入索引，再学习[检索](/terms/retrieval/)设计从问题找到候选片段的过程。
+
+<h2 id="sources-and-revisions">来源与修订</h2>
+
+自包含写作与结构化知识单元参考 AWS 指南 [S1]，切片定义与策略参考 DigitalOcean 文档 [S2]。最佳尺寸依赖文档、模型和问题分布，应通过评测确定。

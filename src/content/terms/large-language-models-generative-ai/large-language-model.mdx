@@ -1,0 +1,67 @@
+---
+id: large-language-model
+nameZh: 大语言模型
+nameEn: Large Language Model
+abbreviations:
+  - LLM
+aliases:
+  - value: 大型语言模型
+    language: zh-CN
+summary: 在大量文本或多模态数据上训练、能够理解和生成语言序列的深度学习模型。
+domain: large-language-models-generative-ai
+difficulty: beginner
+ring: core
+status: verified
+priority: 1
+featured: true
+publishedAt: '2026-07-29'
+updatedAt: '2026-07-29'
+verifiedAt: '2026-07-29'
+sources:
+  - id: attention-is-all-you-need
+    type: paper
+    title: Attention Is All You Need
+    url: https://arxiv.org/abs/1706.03762
+    publisher: arXiv
+    publishedAt: '2017-06-12'
+    accessedAt: '2026-07-29'
+  - id: foundation-models-report
+    type: research-institute
+    title: On the Opportunities and Risks of Foundation Models
+    url: https://arxiv.org/abs/2108.07258
+    publisher: Stanford CRFM
+    publishedAt: '2021-08-16'
+    accessedAt: '2026-07-29'
+---
+
+<h2 id="what-it-is">它是什么</h2>
+
+大语言模型是在大规模数据上训练、以 Token 序列为主要输入和输出的模型。许多现代 LLM 使用 Transformer 架构，可在同一上下文中建模远近 Token 之间的关系。[S1]
+
+<h2 id="why-it-matters">为什么需要它</h2>
+
+同一个基础模型能通过提示、示例或进一步训练支持摘要、问答、翻译、代码和信息提取等多种任务，减少为每个语言任务单独训练模型的门槛。[S2]
+
+<h2 id="how-it-works">它如何工作</h2>
+
+预训练让模型反复预测被遮盖或后续的 Token，从大量样本中学习语言模式。使用时，模型依据当前上下文计算候选 Token 概率并逐步生成；后训练可进一步塑造指令遵循和安全行为。
+
+<h2 id="example">真实例子</h2>
+
+给模型一封客户来信和结构化字段，它可以生成问题类别、紧急程度与回复草稿。分类和草稿来自同一上下文，但都应由业务规则或人工复核。
+
+<h2 id="tradeoffs">什么时候适合与不适合</h2>
+
+适合语言边界较宽、规则难以穷举、允许评估和复核的任务。不适合把内部参数当成可审计知识库，也不应默认其输出最新、完整或真实。
+
+<h2 id="try-it">亲自试一下</h2>
+
+用同一材料测试三个提示：自由问答、要求引用原文、要求输出固定 JSON。比较准确性、稳定性和可验证性，记录哪种约束最有效。
+
+<h2 id="next">接下来学什么</h2>
+
+继续阅读[上下文窗口](/terms/context-window/)了解模型当前能看到什么，再阅读[幻觉](/terms/hallucination/)理解语言流畅与事实正确为何不同。
+
+<h2 id="sources-and-revisions">来源与修订</h2>
+
+架构背景参考 Transformer 论文 [S1]，通用基础模型的机会与风险参考 Stanford CRFM 报告 [S2]。本文不以参数规模单独定义“Large”。

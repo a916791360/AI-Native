@@ -1,0 +1,205 @@
+---
+import PageIntro from '@/components/layout/PageIntro.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { loadProjectContent } from '@/lib/content/io';
+
+const { terms, relations } = await loadProjectContent();
+const termMap = Object.fromEntries(terms.map(({ data }) => [data.id, data]));
+const groups = [
+  { type: 'prerequisite', label: '前置关系', description: '先理解什么，后面的概念才不至于悬空。' },
+  { type: 'component', label: '组成关系', description: '一个方法或系统由哪些关键部分协同构成。' },
+  {
+    type: 'comparison',
+    label: '比较关系',
+    description: '概念之间哪里相近、哪里不同，以及不能混用的边界。',
+  },
+  { type: 'application', label: '应用关系', description: '一个概念如何被另一个方法实际使用。' },
+] as const;
+---
+
+<BaseLayout title="概念图谱" description="查看 AI-Native 当前收录的真实概念关系。">
+  <main id="main-content">
+    <PageIntro
+      eyebrow={`Knowledge graph · ${terms.length} nodes · ${relations.length} relations`}
+      title="概念图谱"
+      description="图谱不是装饰性的节点云。每一条线都必须有关系类型、方向与文字解释；脚本不可用时，这份结构化关系表仍然完整可读。"
+    />
+    <section class="graph-overview" aria-labelledby="overview-title">
+      <div>
+        <p class="eyebrow">Current graph</p>
+        <h2 class="section-heading" id="overview-title">12 个代表词条的关系骨架</h2>
+      </div>
+      <div class="node-strip">
+        {
+          terms.map(({ data }, index) => (
+            <a href={`/terms/${data.id}/`}>
+              <>
+                <span>{String(index + 1).padStart(2, '0')}</span>
+                <strong>{data.nameZh}</strong>
+                <small>{data.nameEn}</small>
+              </>
+            </a>
+          ))
+        }
+      </div>
+    </section>
+    <div class="relation-groups">
+      {
+        groups.map((group) => {
+          const groupRelations = relations.filter((relation) => relation.type === group.type);
+          return (
+            <section class={`relation-group type-${group.type}`}>
+              <header>
+                <p class="meta-label">
+                  {group.type} · {groupRelations.length}
+                </p>
+                <h2>{group.label}</h2>
+                <p>{group.description}</p>
+              </header>
+              <div>
+                {groupRelations.map((relation) => (
+                  <article>
+                    <p class="relation-path">
+                      <a href={`/terms/${relation.source}/`}>{termMap[relation.source]?.nameZh}</a>
+                      <span>→</span>
+                      <a href={`/terms/${relation.target}/`}>{termMap[relation.target]?.nameZh}</a>
+                    </p>
+                    <p>{relation.explanation}</p>
+                  </article>
+                ))}
+              </div>
+            </section>
+          );
+        })
+      }
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  .graph-overview {
+    display: grid;
+    grid-template-columns: minmax(18rem, 0.3fr) 1fr;
+    border-bottom: 1px solid var(--color-line);
+  }
+  .graph-overview > div:first-child {
+    border-right: 1px solid var(--color-line);
+    padding: var(--space-6) var(--page-gutter);
+  }
+  .node-strip {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .node-strip a {
+    min-height: 8rem;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid var(--color-line-soft);
+    border-bottom: 1px solid var(--color-line-soft);
+    padding: var(--space-3);
+    text-decoration: none;
+  }
+  .node-strip a:hover {
+    background: var(--color-panel);
+  }
+  .node-strip span {
+    color: var(--color-quiet);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+  }
+  .node-strip strong {
+    margin-top: auto;
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 400;
+  }
+  .node-strip small {
+    color: var(--color-quiet);
+    font-size: 0.6875rem;
+  }
+  .relation-group {
+    display: grid;
+    grid-template-columns: minmax(18rem, 0.3fr) 1fr;
+    border-bottom: 1px solid var(--color-line);
+  }
+  .relation-group > header {
+    border-right: 1px solid var(--color-line);
+    padding: var(--space-6) var(--page-gutter);
+  }
+  .relation-group h2 {
+    margin: var(--space-3) 0;
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 400;
+  }
+  .relation-group header > p:last-child {
+    margin: 0;
+    color: var(--color-muted);
+  }
+  .relation-group article {
+    min-height: 7.5rem;
+    display: grid;
+    grid-template-columns: minmax(15rem, 0.5fr) 1fr;
+    gap: var(--space-4);
+    align-items: center;
+    border-bottom: 1px solid var(--color-line-soft);
+    padding: var(--space-3) var(--page-gutter);
+  }
+  .relation-group article > p {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+  }
+  .relation-path {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--color-ink) !important;
+    font-family: var(--font-display);
+    font-size: 1.15rem !important;
+  }
+  .relation-path span {
+    font-family: var(--font-mono);
+  }
+  .type-prerequisite .relation-path span,
+  .type-prerequisite .meta-label {
+    color: var(--color-prerequisite);
+  }
+  .type-component .relation-path span,
+  .type-component .meta-label {
+    color: var(--color-component);
+  }
+  .type-comparison .relation-path span,
+  .type-comparison .meta-label {
+    color: var(--color-comparison);
+  }
+  .type-application .relation-path span,
+  .type-application .meta-label {
+    color: var(--color-application);
+  }
+
+  @media (max-width: 800px) {
+    .graph-overview,
+    .relation-group {
+      grid-template-columns: 1fr;
+    }
+    .graph-overview > div:first-child,
+    .relation-group > header {
+      border-right: 0;
+      border-bottom: 1px solid var(--color-line);
+    }
+    .node-strip {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 560px) {
+    .relation-group article {
+      grid-template-columns: 1fr;
+      gap: var(--space-2);
+    }
+    .relation-group article > p {
+      font-size: 1rem;
+    }
+  }
+</style>

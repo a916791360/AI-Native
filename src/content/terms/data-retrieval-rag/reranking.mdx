@@ -1,0 +1,65 @@
+---
+id: reranking
+nameZh: 重排
+nameEn: Reranking
+aliases:
+  - value: 重新排序
+    language: zh-CN
+summary: 使用更精细的相关性模型对初次召回结果再次评分并调整顺序的检索步骤。
+domain: data-retrieval-rag
+difficulty: advanced
+ring: core
+status: verified
+priority: 1
+featured: false
+publishedAt: '2026-07-29'
+updatedAt: '2026-07-29'
+verifiedAt: '2026-07-29'
+sources:
+  - id: monot5-paper
+    type: paper
+    title: Document Ranking with a Pretrained Sequence-to-Sequence Model
+    url: https://arxiv.org/abs/2003.06713
+    publisher: arXiv
+    publishedAt: '2020-03-14'
+    accessedAt: '2026-07-29'
+  - id: colbert-paper
+    type: paper
+    title: ColBERT - Efficient and Effective Passage Search via Contextualized Late Interaction over BERT
+    url: https://arxiv.org/abs/2004.12832
+    publisher: arXiv
+    publishedAt: '2020-04-27'
+    accessedAt: '2026-07-29'
+---
+
+<h2 id="what-it-is">它是什么</h2>
+
+重排是在快速检索召回一批候选后，使用更精细的模型重新计算查询与候选的相关性，并选出更小、更优顺序的结果集。[S1][S2]
+
+<h2 id="why-it-matters">为什么需要它</h2>
+
+第一阶段检索强调速度和不漏掉答案，可能带来噪声。重排允许花更多计算比较查询与候选，减少无关片段占用有限上下文。
+
+<h2 id="how-it-works">它如何工作</h2>
+
+检索器先返回较大的 Top-K；重排模型逐对或交互式读取查询与候选并输出新分数，最后截取较小 Top-N。模型越精细，通常延迟和成本越高。
+
+<h2 id="example">真实例子</h2>
+
+“取消后多久到账”会召回取消流程、退款时效和账户注销。重排器结合整句问题，把明确说明退款到账时间的片段排到第一位。
+
+<h2 id="tradeoffs">什么时候适合与不适合</h2>
+
+适合候选相似、上下文预算紧、答案质量值得额外延迟的任务。候选本来就很少或首阶段没有召回答案时，重排无法创造缺失证据。
+
+<h2 id="try-it">亲自试一下</h2>
+
+保存检索器的前二十个结果，用人工相关性标注比较重排前后的前三名。除准确率外，同时记录新增延迟和每次请求成本。
+
+<h2 id="next">接下来学什么</h2>
+
+进入[检索增强生成](/terms/retrieval-augmented-generation/)，观察重排后的片段如何连同来源一起组成模型上下文并支持最终回答。
+
+<h2 id="sources-and-revisions">来源与修订</h2>
+
+序列到序列重排方法参考 monoT5 [S1]，高效细粒度交互参考 ColBERT [S2]。具体模型不是定义的一部分，是否采用应由端到端评测决定。

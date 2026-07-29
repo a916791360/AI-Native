@@ -1,0 +1,4 @@
+site: dist
+output_subdir: pagefind
+keep_index_url: false
+write_playground: false

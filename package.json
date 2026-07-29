@@ -1,0 +1,52 @@
+{
+  "name": "ai-native",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.9.0",
+  "engines": {
+    "node": ">=24 <25",
+    "pnpm": ">=11 <12"
+  },
+  "scripts": {
+    "dev": "cross-env ASTRO_TELEMETRY_DISABLED=1 astro dev",
+    "build": "pnpm build:site && pnpm index:search",
+    "build:site": "cross-env ASTRO_TELEMETRY_DISABLED=1 astro build",
+    "index:search": "pagefind --site dist",
+    "preview": "cross-env ASTRO_TELEMETRY_DISABLED=1 astro preview",
+    "sync": "cross-env ASTRO_TELEMETRY_DISABLED=1 astro sync",
+    "check": "cross-env ASTRO_TELEMETRY_DISABLED=1 astro check",
+    "lint": "eslint .",
+    "format": "prettier --write . --ignore-unknown",
+    "format:check": "prettier --check . --ignore-unknown",
+    "validate:data": "pnpm sync && node --import tsx scripts/check-content.ts",
+    "generate:data": "node --import tsx scripts/build-registry.ts && node --import tsx scripts/build-graph.ts",
+    "check:generated": "node --import tsx scripts/check-generated.ts",
+    "test": "pnpm test:unit && pnpm test:e2e",
+    "test:unit": "vitest run",
+    "test:e2e": "playwright test",
+    "ci": "pnpm format:check && pnpm lint && pnpm check && pnpm validate:data && pnpm check:generated && pnpm generate:data && git diff --exit-code -- src/generated && pnpm test:unit && pnpm build && pnpm test:e2e"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "7.0.5",
+    "astro": "7.1.5"
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.10",
+    "@axe-core/playwright": "4.12.1",
+    "@eslint/js": "9.39.5",
+    "@playwright/test": "1.62.0",
+    "@types/node": "24.13.3",
+    "cross-env": "10.1.0",
+    "eslint": "9.39.5",
+    "eslint-plugin-astro": "1.7.0",
+    "pagefind": "1.5.2",
+    "prettier": "3.9.6",
+    "prettier-plugin-astro": "0.14.1",
+    "tsx": "4.23.1",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.65.0",
+    "vitest": "4.1.10",
+    "yaml": "2.9.0"
+  }
+}

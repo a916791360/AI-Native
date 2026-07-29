@@ -1,0 +1,669 @@
+---
+import { getCollection, render } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
+
+import StatusTag from '@/components/ui/StatusTag.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { loadProjectContent } from '@/lib/content/io';
+
+export const getStaticPaths = (async () => {
+  const [entries, { relations, domains, routes }] = await Promise.all([
+    getCollection('terms'),
+    loadProjectContent(),
+  ]);
+  const termMap = Object.fromEntries(entries.map(({ data }) => [data.id, data]));
+  const domainMap = Object.fromEntries(domains.map((domain) => [domain.id, domain]));
+
+  return entries.map((entry) => {
+    const route = routes.find(({ data }) =>
+      data.chapters.some((chapter) => chapter.terms.some((step) => step.id === entry.data.id)),
+    );
+    const routeTerms = route?.data.chapters.flatMap((chapter) => chapter.terms) ?? [];
+    const routeIndex = routeTerms.findIndex((step) => step.id === entry.data.id);
+
+    return {
+      params: { id: entry.data.id },
+      props: {
+        entry,
+        domain: domainMap[entry.data.domain],
+        relations: relations.filter(
+          (relation) => relation.source === entry.data.id || relation.target === entry.data.id,
+        ),
+        termMap,
+        routeNav:
+          route && routeIndex >= 0
+            ? {
+                id: route.data.id,
+                name: route.data.nameZh,
+                index: routeIndex + 1,
+                total: routeTerms.length,
+                previous: routeTerms[routeIndex - 1]?.id,
+                next: routeTerms[routeIndex + 1]?.id,
+              }
+            : undefined,
+      },
+    };
+  });
+}) satisfies GetStaticPaths;
+
+const { entry, domain, relations, termMap, routeNav } = Astro.props;
+const term = entry.data;
+const { Content } = await render(entry);
+const relationLabels = {
+  prerequisite: '前置概念',
+  component: '组成部分',
+  comparison: '易混概念',
+  application: '实际应用',
+} as const;
+const difficultyLabels = { beginner: '入门', intermediate: '进阶', advanced: '深入' } as const;
+const sectionLinks = [
+  ['what-it-is', '它是什么'],
+  ['why-it-matters', '为什么需要它'],
+  ['how-it-works', '它如何工作'],
+  ['example', '真实例子'],
+  ['tradeoffs', '适合与不适合'],
+  ['try-it', '亲自试一下'],
+  ['next', '接下来学什么'],
+  ['sources-and-revisions', '来源与修订'],
+] as const;
+const relationGroups = Object.entries(relationLabels).map(([type, label]) => ({
+  type,
+  label,
+  items: relations.filter((relation) => relation.type === type),
+}));
+const correctionUrl = `https://github.com/a916791360/AI-Native/issues/new?title=${encodeURIComponent(
+  `词条修订：${term.nameZh}`,
+)}&body=${encodeURIComponent(`词条：/terms/${term.id}/\n\n问题或建议：`)}`;
+const statusNotice = {
+  catalogued: '这个词条已进入目录与关系系统，但深度正文尚未完成来源核验。',
+  draft: '这个词条已有正文草稿，内容仍在编辑，暂不能视为已核验结论。',
+  'needs-review': '这个词条因来源或时效变化需要重新复核，请谨慎引用。',
+  deprecated: term.deprecationReason ?? '这个词条已停止维护，请优先阅读替代词条。',
+  verified: '',
+}[term.status];
+const hasDeepContent = term.status !== 'catalogued';
+---
+
+<BaseLayout
+  title={term.nameZh}
+  description={term.summary}
+  searchMetadata={{
+    id: term.id,
+    nameEn: term.nameEn,
+    lookup: [
+      term.nameZh,
+      term.nameEn,
+      ...term.abbreviations,
+      ...term.aliases.map((alias) => alias.value),
+    ].join(' '),
+    domain: term.domain,
+    domainNameZh: domain?.nameZh ?? term.domain,
+    difficulty: term.difficulty,
+    status: term.status,
+  }}
+>
+  <main id="main-content" data-pagefind-body>
+    <header class="term-hero">
+      <div class="term-title">
+        <p class="eyebrow">{domain?.nameZh ?? term.domain} · {difficultyLabels[term.difficulty]}</p>
+        <h1 data-pagefind-meta="title" data-pagefind-weight="10">{term.nameZh}</h1>
+        <p class="term-en">
+          {term.nameEn}{term.abbreviations.length ? ` · ${term.abbreviations.join(' / ')}` : ''}
+        </p>
+      </div>
+      <div class="term-summary">
+        <StatusTag status={term.status} />
+        <p>{term.summary}</p>
+        <div class="term-actions">
+          <a href={`/graph/?focus=${term.id}`}>在概念图谱中查看</a>
+          <a href={correctionUrl}>提交修订建议</a>
+        </div>
+      </div>
+    </header>
+
+    <section class="term-meta" aria-label="词条元数据">
+      <dl>
+        <div><dt>领域</dt><dd>{domain?.shortNameZh ?? term.domain}</dd></div>
+        <div><dt>难度</dt><dd>{difficultyLabels[term.difficulty]}</dd></div>
+        <div>
+          <dt>别名</dt><dd>{term.aliases.map((alias) => alias.value).join('、') || '无'}</dd>
+        </div>
+        <div><dt>最近核验</dt><dd>{term.verifiedAt ?? '待核验'}</dd></div>
+      </dl>
+    </section>
+
+    {
+      statusNotice && (
+        <aside class={`status-notice notice-${term.status}`} aria-label="内容状态提示">
+          <StatusTag status={term.status} />
+          <p>{statusNotice}</p>
+          {term.replacedBy && <a href={`/terms/${term.replacedBy}/`}>阅读替代词条</a>}
+        </aside>
+      )
+    }
+
+    <div class="term-layout">
+      <aside class="term-index">
+        <p class="meta-label">本页结构</p>
+        <nav aria-label="词条页目录">
+          {
+            hasDeepContent ? (
+              sectionLinks.map(([id, label]) => <a href={`#${id}`}>{label}</a>)
+            ) : (
+              <>
+                <a href="#overview">内容概览</a>
+                <a href="#relations">概念关系</a>
+              </>
+            )
+          }
+        </nav>
+      </aside>
+
+      <article class="term-article">
+        {
+          hasDeepContent ? (
+            <div class="term-content">
+              <Content />
+            </div>
+          ) : (
+            <section id="overview" class="catalogued-copy">
+              <p class="section-number">01 / Catalogue entry</p>
+              <h2>内容概览</h2>
+              <p class="lead">{term.summary}</p>
+              <p>
+                名称、摘要、领域和关系已经通过结构校验。完整解释、真实例子、适用边界和来源证据会在深度内容阶段补充。
+              </p>
+            </section>
+          )
+        }
+
+        <section id="relations" class="relations-section">
+          <p class="section-number">Relations</p>
+          <h2>概念关系</h2>
+          {
+            relationGroups.map(
+              (group) =>
+                group.items.length > 0 && (
+                  <div class="relation-group">
+                    <h3>{group.label}</h3>
+                    <div class="relation-list">
+                      {group.items.map((relation) => {
+                        const relatedId =
+                          relation.source === term.id ? relation.target : relation.source;
+                        const related = termMap[relatedId];
+                        return (
+                          <a
+                            class={`relation-row type-${group.type}`}
+                            href={`/terms/${relatedId}/`}
+                          >
+                            <strong>{related?.nameZh ?? relatedId}</strong>
+                            <p>{relation.explanation}</p>
+                          </a>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ),
+            )
+          }
+        </section>
+
+        {
+          term.sources.length > 0 && (
+            <section id="source-register" class="source-register">
+              <p class="section-number">Source register</p>
+              <h2>核验来源</h2>
+              <ol>
+                {term.sources.map((source) => (
+                  <li id={`source-${source.id}`}>
+                    <a href={source.url}>{source.title}</a>
+                    <span>
+                      {source.publisher} · 访问于 {source.accessedAt}
+                    </span>
+                  </li>
+                ))}
+              </ol>
+              <p class="revision-line">
+                发布 {term.publishedAt} · 更新 {term.updatedAt} · 核验 {term.verifiedAt}
+              </p>
+            </section>
+          )
+        }
+      </article>
+    </div>
+
+    {
+      routeNav && (
+        <nav class="route-navigation" aria-label="学习路线前后篇">
+          <div class="route-position">
+            <span>所属路线</span>
+            <a href={`/routes/${routeNav.id}/`}>{routeNav.name}</a>
+            <strong>
+              {String(routeNav.index).padStart(2, '0')} / {routeNav.total}
+            </strong>
+          </div>
+          <div class="route-links">
+            {routeNav.previous ? (
+              <a href={`/terms/${routeNav.previous}/`} rel="prev">
+                <span>上一篇</span>
+                {termMap[routeNav.previous]?.nameZh}
+              </a>
+            ) : (
+              <span class="route-edge">这是路线起点</span>
+            )}
+            {routeNav.next ? (
+              <a href={`/terms/${routeNav.next}/`} rel="next">
+                <span>下一篇</span>
+                {termMap[routeNav.next]?.nameZh}
+              </a>
+            ) : (
+              <span class="route-edge">路线已完成</span>
+            )}
+          </div>
+        </nav>
+      )
+    }
+  </main>
+</BaseLayout>
+
+<style>
+  .term-hero {
+    min-height: 31rem;
+    display: grid;
+    grid-template-columns: minmax(24rem, 1fr) minmax(22rem, 0.46fr);
+    border-bottom: 1px solid var(--color-line);
+  }
+  .term-hero > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: var(--space-7) var(--page-gutter);
+  }
+  .term-title {
+    border-right: 1px solid var(--color-line);
+  }
+  .term-title h1 {
+    max-width: 9em;
+    margin: var(--space-3) 0 0;
+    font-family: var(--font-display);
+    font-size: 6rem;
+    font-weight: 400;
+    line-height: 0.98;
+  }
+  .term-en {
+    margin: var(--space-3) 0 0;
+    color: var(--color-muted);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+  }
+  .term-summary {
+    align-items: flex-start;
+  }
+  .term-summary > p {
+    margin: var(--space-4) 0;
+    color: var(--color-muted);
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    line-height: 1.65;
+  }
+  .term-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+  .term-actions a {
+    color: var(--color-prerequisite);
+    font-size: var(--text-sm);
+  }
+  .term-meta {
+    border-bottom: 1px solid var(--color-line);
+    padding-inline: var(--page-gutter);
+  }
+  .term-meta dl {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    margin: 0;
+  }
+  .term-meta dl > div {
+    min-width: 0;
+    border-right: 1px solid var(--color-line-soft);
+    padding: var(--space-3);
+  }
+  .term-meta dl > div:first-child {
+    padding-left: 0;
+  }
+  .term-meta dl > div:last-child {
+    border-right: 0;
+  }
+  .term-meta dt {
+    color: var(--color-quiet);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+  }
+  .term-meta dd {
+    margin: var(--space-1) 0 0;
+    overflow-wrap: anywhere;
+  }
+  .status-notice {
+    display: flex;
+    gap: var(--space-3);
+    align-items: center;
+    border-bottom: 1px solid var(--color-line);
+    padding: var(--space-3) var(--page-gutter);
+  }
+  .status-notice p {
+    flex: 1;
+    margin: 0;
+    color: var(--color-muted);
+  }
+  .status-notice a {
+    color: var(--color-comparison);
+  }
+  .term-layout {
+    display: grid;
+    grid-template-columns: minmax(14rem, 0.25fr) minmax(0, 1fr);
+  }
+  .term-index {
+    position: sticky;
+    top: 0;
+    height: max-content;
+    border-right: 1px solid var(--color-line);
+    padding: var(--space-5) var(--page-gutter);
+  }
+  .term-index nav {
+    display: grid;
+    margin-top: var(--space-3);
+  }
+  .term-index a {
+    min-height: 2.75rem;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--color-line-soft);
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+    text-decoration: none;
+  }
+  .term-index a:hover {
+    color: var(--color-ink);
+  }
+  .term-article {
+    min-width: 0;
+  }
+  .catalogued-copy,
+  .relations-section,
+  .source-register {
+    border-bottom: 1px solid var(--color-line);
+    padding: var(--space-7) max(var(--page-gutter), calc((100% - var(--reading-max)) / 2));
+    scroll-margin-top: 1rem;
+  }
+  .section-number {
+    margin: 0;
+    color: var(--color-component);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+  }
+  .term-article h2 {
+    margin: var(--space-3) 0 var(--space-4);
+    font-family: var(--font-display);
+    font-size: 3rem;
+    font-weight: 400;
+    line-height: 1.1;
+  }
+  .lead {
+    color: var(--color-ink);
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+  }
+  .relation-group + .relation-group {
+    margin-top: var(--space-5);
+  }
+  .relation-group h3 {
+    color: var(--color-muted);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 400;
+  }
+  .relation-list {
+    border-top: 1px solid var(--color-line);
+  }
+  .relation-row {
+    display: grid;
+    grid-template-columns: minmax(9rem, 0.35fr) minmax(16rem, 1fr);
+    gap: var(--space-3);
+    align-items: start;
+    border-bottom: 1px solid var(--color-line-soft);
+    padding: var(--space-3) 0;
+    text-decoration: none;
+  }
+  .relation-row:hover strong {
+    text-decoration: underline;
+    text-underline-offset: 0.35rem;
+  }
+  .relation-row strong {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 400;
+  }
+  .relation-row p {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+  }
+  .type-prerequisite strong {
+    color: var(--color-prerequisite);
+  }
+  .type-component strong {
+    color: var(--color-component);
+  }
+  .type-comparison strong {
+    color: var(--color-comparison);
+  }
+  .type-application strong {
+    color: var(--color-application);
+  }
+  .source-register ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .source-register li {
+    display: grid;
+    gap: var(--space-1);
+    border-top: 1px solid var(--color-line-soft);
+    padding: var(--space-3) 0;
+  }
+  .source-register li span,
+  .revision-line {
+    color: var(--color-quiet);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+  }
+  .revision-line {
+    margin: var(--space-4) 0 0;
+  }
+  .route-navigation {
+    display: grid;
+    grid-template-columns: minmax(16rem, 0.35fr) 1fr;
+    border-bottom: 1px solid var(--color-line);
+  }
+  .route-position {
+    display: grid;
+    gap: var(--space-1);
+    border-right: 1px solid var(--color-line);
+    padding: var(--space-5) var(--page-gutter);
+  }
+  .route-position span,
+  .route-links a span {
+    color: var(--color-quiet);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+  }
+  .route-position strong {
+    color: var(--color-prerequisite);
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 400;
+  }
+  .route-links {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .route-links a,
+  .route-edge {
+    min-height: 9rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--space-1);
+    padding: var(--space-4) var(--page-gutter);
+  }
+  .route-links a + a,
+  .route-edge + a,
+  .route-links a + .route-edge {
+    border-left: 1px solid var(--color-line-soft);
+  }
+  .route-edge {
+    color: var(--color-quiet);
+  }
+
+  .term-content :global(h2) {
+    margin: 0;
+    border-bottom: 1px solid var(--color-line);
+    padding: var(--space-7) max(var(--page-gutter), calc((100% - var(--reading-max)) / 2))
+      var(--space-4);
+    font-family: var(--font-display);
+    font-size: 3rem;
+    font-weight: 400;
+    line-height: 1.1;
+    scroll-margin-top: 1rem;
+  }
+  .term-content :global(h2::before) {
+    display: block;
+    margin-bottom: var(--space-3);
+    color: var(--color-component);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+  }
+  .term-content :global(#what-it-is::before) {
+    content: '01 / What it is';
+  }
+  .term-content :global(#why-it-matters::before) {
+    content: '02 / Why it matters';
+  }
+  .term-content :global(#how-it-works::before) {
+    content: '03 / How it works';
+  }
+  .term-content :global(#example::before) {
+    content: '04 / Example';
+  }
+  .term-content :global(#tradeoffs::before) {
+    content: '05 / Trade-offs';
+  }
+  .term-content :global(#try-it::before) {
+    content: '06 / Try it';
+  }
+  .term-content :global(#next::before) {
+    content: '07 / Next';
+  }
+  .term-content :global(#sources-and-revisions::before) {
+    content: '08 / Sources';
+  }
+  .term-content :global(h2 ~ p),
+  .term-content :global(h2 ~ ul),
+  .term-content :global(h2 ~ ol),
+  .term-content :global(h2 ~ blockquote),
+  .term-content :global(h2 ~ pre) {
+    max-width: var(--reading-max);
+    margin-inline: auto;
+  }
+  .term-content :global(h2 + p) {
+    margin-top: var(--space-4);
+  }
+  .term-content :global(p),
+  .term-content :global(li) {
+    color: var(--color-muted);
+  }
+  .term-content :global(strong) {
+    color: var(--color-ink);
+  }
+  .term-content :global(code) {
+    color: var(--color-prerequisite);
+    font-family: var(--font-mono);
+  }
+  .term-content :global(blockquote) {
+    border-left: 2px solid var(--color-prerequisite);
+    padding-left: var(--space-3);
+  }
+  .term-content :global(h2:not(:first-child)) {
+    margin-top: var(--space-6);
+  }
+  .term-content :global(:last-child) {
+    margin-bottom: var(--space-7);
+  }
+
+  @media (max-width: 760px) {
+    .term-hero,
+    .term-layout,
+    .route-navigation {
+      grid-template-columns: 1fr;
+    }
+    .term-title,
+    .term-index,
+    .route-position {
+      position: static;
+      border-right: 0;
+      border-bottom: 1px solid var(--color-line);
+    }
+    .term-title h1 {
+      font-size: 3.5rem;
+    }
+    .term-meta dl {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .term-meta dl > div:nth-child(2) {
+      border-right: 0;
+    }
+    .term-meta dl > div:nth-child(n + 3) {
+      border-top: 1px solid var(--color-line-soft);
+    }
+    .relation-row {
+      grid-template-columns: 1fr;
+    }
+    .relation-row p {
+      font-size: 1rem;
+    }
+    .term-article h2,
+    .term-content :global(h2) {
+      font-size: 2.25rem;
+    }
+    .route-links {
+      grid-template-columns: 1fr;
+    }
+    .route-links a + a,
+    .route-edge + a,
+    .route-links a + .route-edge {
+      border-left: 0;
+      border-top: 1px solid var(--color-line-soft);
+    }
+  }
+
+  @media print {
+    .term-index,
+    .term-actions,
+    .route-navigation {
+      display: none;
+    }
+    .term-hero {
+      min-height: 0;
+      grid-template-columns: 1fr;
+    }
+    .term-title {
+      border-right: 0;
+    }
+    .term-layout {
+      display: block;
+    }
+  }
+</style>

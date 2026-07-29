@@ -1,0 +1,70 @@
+---
+interface Props {
+  action?: string;
+  label?: string;
+  placeholder?: string;
+  value?: string;
+  compact?: boolean;
+}
+
+const {
+  action = '/search/',
+  label = '搜索词条',
+  placeholder = 'RAG、向量数据库、AI 幻觉',
+  value = '',
+  compact = false,
+} = Astro.props;
+---
+
+<form class:list={['search-form', { compact }]} action={action} method="get" role="search">
+  <label class="screen-reader-only" for="global-search">{label}</label>
+  <input id="global-search" name="q" type="search" placeholder={placeholder} value={value} />
+  <button type="submit">搜索</button>
+</form>
+
+<style>
+  .search-form {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    border-bottom: 1px solid var(--color-ink);
+  }
+
+  input {
+    min-width: 0;
+    min-height: 3.35rem;
+    border: 0;
+    background: transparent;
+    color: var(--color-ink);
+    font-size: 1.0625rem;
+  }
+
+  input::placeholder {
+    color: var(--color-quiet);
+  }
+
+  button {
+    min-width: 4.25rem;
+    min-height: 2.75rem;
+    border: 0;
+    background: transparent;
+    color: var(--color-ink);
+    cursor: pointer;
+    font-weight: 600;
+  }
+
+  button:hover {
+    color: var(--color-prerequisite);
+  }
+
+  .compact {
+    border: 1px solid var(--color-line);
+  }
+
+  .compact input {
+    padding-inline: var(--space-3);
+  }
+
+  .compact button {
+    border-left: 1px solid var(--color-line);
+  }
+</style>

@@ -1,0 +1,66 @@
+---
+id: embedding
+nameZh: 嵌入
+nameEn: Embedding
+aliases:
+  - value: 向量嵌入
+    language: zh-CN
+  - value: Embeddings
+    language: en
+summary: 把文本、图像或其他对象表示为数值向量，使语义或特征关系可以被计算和比较。
+domain: data-retrieval-rag
+difficulty: intermediate
+ring: core
+status: verified
+priority: 1
+featured: true
+publishedAt: '2026-07-29'
+updatedAt: '2026-07-29'
+verifiedAt: '2026-07-29'
+sources:
+  - id: sentence-bert-paper
+    type: paper
+    title: Sentence-BERT - Sentence Embeddings using Siamese BERT-Networks
+    url: https://arxiv.org/abs/1908.10084
+    publisher: arXiv
+    accessedAt: '2026-07-29'
+  - id: dense-passage-retrieval-paper
+    type: paper
+    title: Dense Passage Retrieval for Open-Domain Question Answering
+    url: https://arxiv.org/abs/2004.04906
+    publisher: arXiv
+    publishedAt: '2020-04-10'
+    accessedAt: '2026-07-29'
+---
+
+<h2 id="what-it-is">它是什么</h2>
+
+嵌入是把文本、图像或其他对象映射为固定维度数值向量的表示方法。经过合适训练后，语义或用途相近的对象通常会在向量空间中更接近。[S1][S2]
+
+<h2 id="why-it-matters">为什么需要它</h2>
+
+关键词只能匹配表面字词，嵌入则让系统计算“意思是否接近”。它是语义搜索、相似内容推荐、聚类和许多 RAG 检索器的基础。
+
+<h2 id="how-it-works">它如何工作</h2>
+
+编码模型接收一段内容并输出一组浮点数。系统用余弦相似度、点积或距离比较查询向量与文档向量，再按得分选择候选。[S1][S2]
+
+<h2 id="example">真实例子</h2>
+
+用户搜索“怎么把买错的东西退掉”，知识库写的是“退货流程”。两段文字没有完全相同的关键词，但嵌入模型可能判断它们语义接近。
+
+<h2 id="tradeoffs">什么时候适合与不适合</h2>
+
+适合自然语言表达多样、近义匹配重要的任务。不适合单独处理精确编号、日期或必须逐字匹配的查询；这些场景常需关键词或结构化过滤配合。
+
+<h2 id="try-it">亲自试一下</h2>
+
+准备十条短句，其中包含三组近义表达和两个相似但答案不同的陷阱。生成嵌入后查看最近邻，记录模型把哪些语义混在了一起。
+
+<h2 id="next">接下来学什么</h2>
+
+阅读[文档切片](/terms/document-chunking/)决定什么内容成为一个向量，再阅读[向量数据库](/terms/vector-database/)了解如何存储和查询这些表示。
+
+<h2 id="sources-and-revisions">来源与修订</h2>
+
+句子级向量表示参考 Sentence-BERT [S1]，稠密检索的查询与段落编码参考 DPR [S2]。相似度表示相关线索，不等于事实一致或业务正确。

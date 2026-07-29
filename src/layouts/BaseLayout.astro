@@ -1,0 +1,54 @@
+---
+import { SITE } from '@/config/site';
+import SiteFooter from '@/components/layout/SiteFooter.astro';
+import SiteHeader from '@/components/layout/SiteHeader.astro';
+import '@/styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  searchMetadata?: {
+    id: string;
+    nameEn: string;
+    lookup: string;
+    domain: string;
+    domainNameZh: string;
+    difficulty: string;
+    status: string;
+  };
+}
+
+const { title = SITE.name, description = SITE.description, searchMetadata } = Astro.props;
+const pageTitle = title === SITE.name ? title : `${title} | ${SITE.name}`;
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    {
+      searchMetadata && (
+        <>
+          <meta data-pagefind-meta="termId[content]" content={searchMetadata.id} />
+          <meta data-pagefind-meta="nameEn[content]" content={searchMetadata.nameEn} />
+          <meta data-pagefind-meta="lookup[content]" content={searchMetadata.lookup} />
+          <meta data-pagefind-meta="domainNameZh[content]" content={searchMetadata.domainNameZh} />
+          <meta data-pagefind-meta="status[content]" content={searchMetadata.status} />
+          <meta data-pagefind-filter="domain[content]" content={searchMetadata.domain} />
+          <meta data-pagefind-filter="difficulty[content]" content={searchMetadata.difficulty} />
+          <meta data-pagefind-filter="status[content]" content={searchMetadata.status} />
+        </>
+      )
+    }
+    <title>{pageTitle}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+    <SiteHeader currentPath={Astro.url.pathname} />
+    <slot />
+    <SiteFooter />
+  </body>
+</html>

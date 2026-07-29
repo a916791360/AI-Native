@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI-Native · 人文学习地图</title>
+    <!--
+      All terms, descriptions, counts, and route chapters come from current project data.
+      The visual language draws on Data Humanism principles without copying a specific work.
+    -->
+    <style>
+      :root {
+        --paper: oklch(0.965 0.025 85);
+        --paper-deep: oklch(0.92 0.038 82);
+        --ink: oklch(0.2 0.035 34);
+        --muted: oklch(0.43 0.035 50);
+        --rule: oklch(0.66 0.055 70);
+        --oxblood: oklch(0.45 0.12 28);
+        --teal: oklch(0.48 0.085 190);
+        --mustard: oklch(0.66 0.12 82);
+        --violet: oklch(0.47 0.09 315);
+        --green: oklch(0.5 0.08 145);
+        --focus: oklch(0.42 0.16 250);
+        font-synthesis: none;
+      }
+
+      * { box-sizing: border-box; }
+
+      html {
+        background: var(--paper);
+        color: var(--ink);
+        line-break: strict;
+      }
+
+      body {
+        min-width: 320px;
+        margin: 0;
+        overflow-x: hidden;
+        background:
+          linear-gradient(90deg, transparent 47px, color-mix(in oklch, var(--oxblood) 16%, transparent) 48px, transparent 49px),
+          var(--paper);
+        font-family: "Avenir Next", "PingFang SC", "Microsoft YaHei", sans-serif;
+        font-size: 16px;
+        line-height: 1.65;
+      }
+
+      a, button, input {
+        color: inherit;
+        font: inherit;
+        outline-offset: 4px;
+      }
+
+      :focus-visible { outline: 3px solid var(--focus); }
+
+      .site-header {
+        height: 68px;
+        display: grid;
+        grid-template-columns: 220px 1fr auto;
+        align-items: center;
+        gap: 28px;
+        border-bottom: 1px solid var(--rule);
+        padding: 0 34px 0 64px;
+      }
+
+      .wordmark {
+        font-family: "Baskerville", "Songti SC", serif;
+        font-size: 25px;
+        font-weight: 700;
+        text-decoration: none;
+      }
+
+      .promise {
+        margin: 0;
+        color: var(--muted);
+        font-family: "Baskerville", "Songti SC", serif;
+        font-size: 15px;
+        text-align: center;
+      }
+
+      .site-nav { display: flex; gap: 22px; }
+      .site-nav a { font-size: 13px; text-decoration-color: var(--rule); text-underline-offset: 5px; }
+
+      .spread {
+        min-height: 756px;
+        display: grid;
+        grid-template-columns: 84px minmax(650px, 1fr) 356px;
+        border-bottom: 1px solid var(--ink);
+      }
+
+      .spine {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-right: 1px solid var(--rule);
+        color: var(--oxblood);
+        font-family: "SFMono-Regular", "Menlo", monospace;
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        writing-mode: vertical-rl;
+        transform: rotate(180deg);
+        text-transform: uppercase;
+      }
+
+      .atlas {
+        min-width: 0;
+        display: grid;
+        grid-template-rows: 178px 1fr;
+        border-right: 1px solid var(--rule);
+      }
+
+      .atlas-head {
+        display: grid;
+        grid-template-columns: minmax(380px, 1fr) minmax(300px, 0.72fr);
+        align-items: end;
+        gap: 40px;
+        border-bottom: 1px solid var(--rule);
+        padding: 22px 32px 24px;
+      }
+
+      .kicker, .map-index, .relation-type, .margin-label, .chapter-no, .status {
+        font-family: "SFMono-Regular", "Menlo", monospace;
+        font-size: 10px;
+        letter-spacing: 0.11em;
+        text-transform: uppercase;
+      }
+
+      .kicker { color: var(--oxblood); }
+
+      h1 {
+        max-width: 710px;
+        margin: 7px 0 0;
+        font-family: "Baskerville", "Songti SC", serif;
+        font-size: 42px;
+        font-weight: 600;
+        line-height: 1.13;
+        letter-spacing: 0;
+        text-wrap: balance;
+      }
+
+      .search-wrap label {
+        display: block;
+        margin-bottom: 7px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .search {
+        display: grid;
+        grid-template-columns: 1fr 54px;
+        border-bottom: 2px solid var(--ink);
+      }
+
+      .search input {
+        width: 100%;
+        min-width: 0;
+        min-height: 48px;
+        border: 0;
+        background: transparent;
+        font-size: 15px;
+      }
+
+      .search input::placeholder { color: var(--muted); }
+
+      .search button {
+        min-height: 48px;
+        border: 0;
+        background: transparent;
+        color: var(--oxblood);
+        cursor: pointer;
+        font-family: "SFMono-Regular", "Menlo", monospace;
+        font-size: 12px;
+      }
+
+      .search button:hover { background: var(--oxblood); color: var(--paper); }
+
+      .map {
+        position: relative;
+        min-height: 576px;
+        overflow: hidden;
+        background-image:
+          linear-gradient(color-mix(in oklch, var(--rule) 15%, transparent) 1px, transparent 1px),
+          linear-gradient(90deg, color-mix(in oklch, var(--rule) 15%, transparent) 1px, transparent 1px);
+        background-size: 40px 40px;
+      }
+
+      .map::after {
+        content: "关系不是一次看完的图，而是一条可以沿着问题慢慢走的路。";
+        position: absolute;
+        right: 24px;
+        bottom: 15px;
+        max-width: 330px;
+        color: var(--muted);
+        font-family: "Baskerville", "Songti SC", serif;
+        font-size: 13px;
+        font-style: italic;
+        text-align: right;
+      }
+
+      .map-index { position: absolute; top: 18px; left: 24px; color: var(--muted); }
+      .map svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+      .connector { fill: none; stroke-width: 1.4; vector-effect: non-scaling-stroke; }
+      .connector.prerequisite { stroke: var(--oxblood); }
+      .connector.component { stroke: var(--teal); stroke-dasharray: 8 5; }
+      .connector.comparison { stroke: var(--violet); stroke-dasharray: 2 6; }
+      .route-line { fill: none; stroke: color-mix(in oklch, var(--mustard) 80%, var(--ink)); stroke-width: 8; stroke-linecap: round; opacity: 0.28; }
+
+      .node {
+        position: absolute;
+        z-index: 2;
+        min-width: 112px;
+        min-height: 58px;
+        transform: translate(-50%, -50%);
+        border: 1px solid var(--ink);
+        border-radius: 50%;
+        background: var(--paper);
+        padding: 8px 14px;
+        cursor: pointer;
+        text-align: center;
+        transition: background 140ms ease, color 140ms ease, transform 140ms ease;
+      }
+
+      .node:hover, .node[aria-pressed="true"] {
+        transform: translate(-50%, -50%) scale(1.035);
+        background: var(--ink);
+        color: var(--paper);
+      }
+
+      .node strong { display: block; font-family: "Baskerville", "Songti SC", serif; font-size: 15px; line-height: 1.2; }
+      .node small { display: block; margin-top: 2px; font-family: "SFMono-Regular", "Menlo", monospace; font-size: 9px; line-height: 1.2; }
+      .node.rag { width: 174px; min-height: 90px; border: 2px solid var(--oxblood); background: var(--oxblood); color: var(--paper); }
+      .node.rag strong { font-size: 21px; }
+      .n-chunking { left: 19%; top: 31%; }
+      .n-context { left: 49%; top: 17%; }
+      .n-llm { left: 79%; top: 29%; }
+      .n-rag { left: 53%; top: 52%; }
+      .n-retrieval { left: 20%; top: 69%; }
+      .n-embedding { left: 48%; top: 84%; }
+      .n-hallucination { left: 82%; top: 72%; }
+
+      .number {
+        position: absolute;
+        z-index: 3;
+        width: 25px;
+        height: 25px;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        background: var(--mustard);
+        color: var(--ink);
+        font-family: "SFMono-Regular", "Menlo", monospace;
+        font-size: 10px;
+      }
+
+      .no-1 { left: 12%; top: 20%; }
+      .no-2 { left: 41%; top: 8%; }
+      .no-3 { left: 85%; top: 17%; }
+      .no-4 { left: 43%; top: 43%; }
+      .no-5 { left: 12%; top: 58%; }
+      .no-6 { left: 39%; top: 76%; }
+      .no-7 { left: 89%; top: 61%; }
+
+      .margin { min-width: 0; display: grid; grid-template-rows: auto 1fr auto; }
+      .focus-note { border-bottom: 1px solid var(--rule); padding: 24px 24px 22px; }
+      .margin-label { display: flex; align-items: center; justify-content: space-between; color: var(--oxblood); }
+      .status { color: var(--muted); }
+
+      .focus-note h2 {
+        margin: 16px 0 2px;
+        font-family: "Baskerville", "Songti SC", serif;
+        font-size: 28px;
+        line-height: 1.2;
+      }
+
+      .term-en { margin: 0 0 14px; color: var(--muted); font-size: 12px; }
+      .summary { min-height: 78px; margin: 0; font-family: "Baskerville", "Songti SC", serif; font-size: 15px; line-height: 1.75; }
+      .relation-note { display: grid; align-content: start; gap: 16px; padding: 22px 24px; }
+      .relation-note h3 { margin: 0; font-family: "Baskerville", "Songti SC", serif; font-size: 18px; }
+      .relation-copy { min-height: 102px; margin: 0; color: var(--muted); font-size: 13px; }
+
+      .legend {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px 8px;
+        border-top: 1px solid var(--rule);
+        padding-top: 16px;
+      }
+
+      .legend span { display: flex; align-items: center; gap: 7px; font-size: 11px; }
+      .legend i { width: 20px; height: 2px; display: inline-block; background: var(--oxblood); }
+      .legend span:nth-child(2) i { background: var(--teal); }
+      .legend span:nth-child(3) i { background: var(--violet); }
+      .legend span:nth-child(4) i { background: var(--green); }
+
+      .route { border-top: 1px solid var(--rule); background: var(--paper-deep); padding: 18px 24px 20px; }
+      .route h3 { margin: 7px 0 12px; font-family: "Baskerville", "Songti SC", serif; font-size: 20px; line-height: 1.25; }
+      .chapters { display: grid; gap: 8px; }
+      .chapter { display: grid; grid-template-columns: 26px 1fr; align-items: start; gap: 8px; font-size: 12px; line-height: 1.35; }
+      .chapter-no { color: var(--oxblood); }
+
+      .next-band { min-height: 176px; display: grid; grid-template-columns: 84px 1fr; border-bottom: 1px solid var(--rule); }
+      .next-number { display: grid; place-items: center; border-right: 1px solid var(--rule); color: var(--oxblood); font-family: "Baskerville", "Songti SC", serif; font-size: 34px; }
+      .domain-row { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); }
+      .domain-row a { min-height: 128px; display: flex; align-items: flex-end; border-right: 1px solid var(--rule); padding: 18px; font-family: "Baskerville", "Songti SC", serif; font-size: 16px; text-decoration: none; }
+      .domain-row a:hover { background: var(--ink); color: var(--paper); }
+
+      @media (max-width: 980px) {
+        body { background: var(--paper); }
+        .site-header { height: auto; grid-template-columns: 1fr auto; padding: 15px 18px; }
+        .promise { grid-column: 1 / -1; grid-row: 2; text-align: left; }
+        .site-nav a:not(:last-child) { display: none; }
+        .spread { display: block; }
+        .spine { height: 32px; justify-content: flex-start; border-right: 0; border-bottom: 1px solid var(--rule); padding: 0 18px; writing-mode: horizontal-tb; transform: none; }
+        .atlas { display: block; border-right: 0; }
+        .atlas-head { grid-template-columns: 1fr; gap: 20px; padding: 22px 18px 24px; }
+        h1 { font-size: 34px; }
+        .map { min-height: 500px; }
+        .margin { border-top: 1px solid var(--ink); }
+        .next-band { grid-template-columns: 52px 1fr; }
+        .domain-row { grid-template-columns: 1fr; }
+        .domain-row a { min-height: 72px; border-bottom: 1px solid var(--rule); }
+      }
+
+      @media (max-width: 560px) {
+        body { font-size: 16px; }
+        .site-header { gap: 10px; }
+        .wordmark { font-size: 22px; }
+        .site-nav { gap: 0; }
+        .promise { font-size: 14px; line-height: 1.45; }
+        .atlas-head { min-height: 310px; align-content: center; }
+        h1 { font-size: 31px; line-height: 1.18; }
+        .search-wrap label { font-size: 13px; }
+        .search input { font-size: 16px; }
+        .map { min-height: 520px; background-size: 32px 32px; }
+        .map::after { right: 16px; left: 16px; max-width: none; font-size: 12px; }
+        .node { min-width: 94px; min-height: 52px; padding: 7px 9px; }
+        .node strong { font-size: 14px; }
+        .node.rag { width: 142px; min-height: 78px; }
+        .node.rag strong { font-size: 18px; }
+        .n-chunking { left: 21%; top: 31%; }
+        .n-context { left: 54%; top: 15%; }
+        .n-llm { left: 79%; top: 34%; }
+        .n-rag { left: 50%; top: 53%; }
+        .n-retrieval { left: 20%; top: 69%; }
+        .n-embedding { left: 48%; top: 85%; }
+        .n-hallucination { left: 79%; top: 72%; }
+        .number { display: none; }
+        .focus-note, .relation-note, .route { padding-right: 18px; padding-left: 18px; }
+        .summary, .relation-copy { min-height: 0; font-size: 16px; }
+        .legend span { font-size: 13px; }
+        .next-number { font-size: 24px; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="wordmark" href="#">AI-Native</a>
+      <p class="promise">从听懂 AI，到判断业务场景并设计基础 AI 方案。</p>
+      <nav class="site-nav" aria-label="主导航">
+        <a href="#map">知识地图</a><a href="#route">学习路线</a><a href="#domains">领域</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="spread" aria-labelledby="page-title">
+        <aside class="spine">Learning atlas · 12 terms · 20 relations</aside>
+
+        <div class="atlas">
+          <header class="atlas-head">
+            <div>
+              <span class="kicker">一张为学习者绘制的关系图 · 01</span>
+              <h1 id="page-title">从一个术语，走进一张可以阅读的知识地图</h1>
+            </div>
+            <form class="search-wrap" id="search-form">
+              <label for="search-input">从现在的问题开始</label>
+              <div class="search">
+                <input id="search-input" type="search" placeholder="RAG、向量数据库、AI 幻觉" />
+                <button type="submit" aria-label="搜索">查找</button>
+              </div>
+            </form>
+          </header>
+
+          <div class="map" id="map" aria-label="检索增强生成关系地图">
+            <span class="map-index">Map 01 · 点选节点阅读关系</span>
+            <svg viewBox="0 0 900 580" preserveAspectRatio="none" aria-hidden="true">
+              <path class="route-line" d="M168 181 C270 90 390 90 445 100 C570 95 650 140 710 170 C730 255 635 290 478 300 C372 360 255 350 180 400 C260 495 370 495 430 488" />
+              <path class="connector prerequisite" d="M171 180 C270 220 360 260 477 300" />
+              <path class="connector prerequisite" d="M441 98 C450 170 470 220 477 300" />
+              <path class="connector component" d="M711 168 C620 195 565 250 477 300" />
+              <path class="connector prerequisite" d="M180 400 C278 390 385 335 477 300" />
+              <path class="connector component" d="M180 400 C285 380 395 332 477 300" />
+              <path class="connector component" d="M711 168 C620 215 560 260 477 300" />
+              <path class="connector comparison" d="M738 418 C660 385 580 340 477 300" />
+              <path class="connector" style="stroke: var(--green)" d="M430 488 C348 462 260 430 180 400" />
+            </svg>
+
+            <span class="number no-1">01</span><span class="number no-2">02</span><span class="number no-3">03</span>
+            <span class="number no-4">04</span><span class="number no-5">05</span><span class="number no-6">06</span><span class="number no-7">07</span>
+
+            <button class="node n-chunking" type="button" data-key="chunking" aria-pressed="false"><strong>文档切片</strong><small>Document chunking</small></button>
+            <button class="node n-context" type="button" data-key="context" aria-pressed="false"><strong>上下文窗口</strong><small>Context window</small></button>
+            <button class="node n-llm" type="button" data-key="llm" aria-pressed="false"><strong>大语言模型</strong><small>LLM</small></button>
+            <button class="node rag n-rag" type="button" data-key="rag" aria-pressed="true"><strong>检索增强生成</strong><small>RAG</small></button>
+            <button class="node n-retrieval" type="button" data-key="retrieval" aria-pressed="false"><strong>检索</strong><small>Retrieval</small></button>
+            <button class="node n-embedding" type="button" data-key="embedding" aria-pressed="false"><strong>Embedding</strong><small>嵌入</small></button>
+            <button class="node n-hallucination" type="button" data-key="hallucination" aria-pressed="false"><strong>幻觉</strong><small>Hallucination</small></button>
+          </div>
+        </div>
+
+        <aside class="margin" aria-live="polite">
+          <article class="focus-note">
+            <div class="margin-label"><span>当前阅读</span><span class="status">已收录，待完善</span></div>
+            <h2 id="term-name">检索增强生成</h2>
+            <p class="term-en" id="term-en">Retrieval-Augmented Generation · RAG</p>
+            <p class="summary" id="term-summary">在模型生成回答前检索外部资料，并把候选证据作为上下文提供给生成模型的方法。</p>
+          </article>
+
+          <article class="relation-note">
+            <span class="relation-type" id="relation-type">关系注释 · 中心词条</span>
+            <h3 id="relation-title">先找到证据，再组织回答</h3>
+            <p class="relation-copy" id="relation-copy">RAG 把检索、上下文和生成连成一条链路。理解它时，需要同时看到资料如何被准备、找到并交给大语言模型。</p>
+            <div class="legend" aria-label="关系图例">
+              <span><i></i>前置关系</span><span><i></i>组成关系</span><span><i></i>比较关系</span><span><i></i>应用关系</span>
+            </div>
+          </article>
+
+          <section class="route" id="route" aria-labelledby="route-title">
+            <span class="margin-label">Draft route · 12 terms</span>
+            <h3 id="route-title">RAG 从零到理解与应用</h3>
+            <div class="chapters">
+              <div class="chapter"><span class="chapter-no">01</span><span>从 AI 到语言模型</span></div>
+              <div class="chapter"><span class="chapter-no">02</span><span>准备并找到资料</span></div>
+              <div class="chapter"><span class="chapter-no">03</span><span>组成 RAG 系统</span></div>
+            </div>
+          </section>
+        </aside>
+      </section>
+
+      <section class="next-band" id="domains" aria-label="继续探索领域">
+        <div class="next-number">02</div>
+        <nav class="domain-row" aria-label="领域入口">
+          <a href="#">AI 基础</a><a href="#">大模型与生成</a><a href="#">提示与上下文</a><a href="#">检索与 RAG</a><a href="#">评估与质量</a>
+        </nav>
+      </section>
+    </main>
+
+    <script>
+      const details = {
+        rag: ["检索增强生成", "Retrieval-Augmented Generation · RAG", "在模型生成回答前检索外部资料，并把候选证据作为上下文提供给生成模型的方法。", "关系注释 · 中心词条", "先找到证据，再组织回答", "RAG 把检索、上下文和生成连成一条链路。理解它时，需要同时看到资料如何被准备、找到并交给大语言模型。"],
+        chunking: ["文档切片", "Document chunking", "把长资料拆分成适合索引、检索和放入模型上下文的较小知识单元。", "前置 + 组成关系 · 01", "知识单元决定检索质量", "文档切片决定可被检索的知识单元，也是 RAG 数据准备阶段的组成部分。切得过大或过小，都会改变召回和上下文效果。"],
+        context: ["上下文窗口", "Context window", "模型在一次请求中能够接收和处理的输入、输出与工具信息总范围。", "前置关系 · 02", "检索结果最终要放进有限空间", "RAG 需要把检索结果放入有限上下文。理解窗口限制，才能判断需要放多少资料，以及容量、成本和信息取舍。"],
+        llm: ["大语言模型", "Large Language Model · LLM", "在大量文本数据上训练、用于理解与生成语言内容的模型。", "组成 + 应用关系 · 03", "证据仍需模型组织成回答", "RAG 在检索之后仍需要大语言模型根据问题与外部资料生成回答，并利用模型的语言能力整合参数之外的知识。"],
+        retrieval: ["检索", "Retrieval", "从外部知识集合中找到与当前问题相关候选资料的过程。", "前置 + 组成关系 · 05", "找到候选资料是增强生成的起点", "先理解检索如何找到相关资料，才能理解 RAG 如何提供上下文。检索也是 RAG 区别于纯模型生成的核心组成部分。"],
+        embedding: ["Embedding", "嵌入", "把文本等对象表示为可计算向量，使相似含义能够在向量空间中接近。", "应用关系 · 06", "用语义相似度找到不同表达", "检索系统可以用嵌入向量表示语义，并通过相似度找到表达不同但含义接近的资料。"],
+        hallucination: ["幻觉", "Hallucination", "生成结果看似合理，却包含事实错误、虚构信息或没有证据支持内容的现象。", "比较关系 · 07", "RAG 能降低风险，但不能彻底消除", "幻觉描述生成结果可能失真。RAG 是降低部分知识性错误风险的方法，而不是彻底消除错误的机制。"],
+      };
+
+      const fields = ["#term-name", "#term-en", "#term-summary", "#relation-type", "#relation-title", "#relation-copy"].map((selector) => document.querySelector(selector));
+      const nodes = [...document.querySelectorAll(".node")];
+
+      function selectTerm(key) {
+        const detail = details[key] || details.rag;
+        fields.forEach((field, index) => { field.textContent = detail[index]; });
+        nodes.forEach((node) => node.setAttribute("aria-pressed", String(node.dataset.key === key)));
+      }
+
+      nodes.forEach((node) => node.addEventListener("click", () => selectTerm(node.dataset.key)));
+      document.querySelector("#search-form").addEventListener("submit", (event) => {
+        event.preventDefault();
+        const query = document.querySelector("#search-input").value.toLowerCase();
+        const match = Object.keys(details).find((key) => details[key].slice(0, 2).join(" ").toLowerCase().includes(query));
+        selectTerm(match || "rag");
+      });
+    </script>
+  </body>
+</html>

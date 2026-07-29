@@ -1,0 +1,47 @@
+---
+id: rag-from-zero
+nameZh: RAG 从零到理解与应用
+summary: 从人工智能与大语言模型基础出发，逐步理解数据准备、检索、重排和增强生成的完整链路。
+audience:
+  - 希望理解 RAG 工作机制的中文 AI 初学者
+  - 需要判断知识型 AI 产品方案的产品与业务人员
+prerequisites:
+  - artificial-intelligence
+learningGoals:
+  - 解释 RAG 的主要组成部分和数据流
+  - 判断检索、上下文和生成阶段的常见质量问题
+  - 识别适合与不适合采用 RAG 的基础场景
+estimatedTerms: 12
+chapters:
+  - id: model-foundations
+    title: 从 AI 到语言模型
+    transition: 先建立生成模型的共同语言，再进入外部知识与检索机制。
+    terms:
+      - id: artificial-intelligence
+      - id: generative-ai
+      - id: token
+      - id: large-language-model
+      - id: context-window
+      - id: hallucination
+  - id: retrieval-foundations
+    title: 准备并找到资料
+    transition: 理解知识如何被切分、表示、存储与召回，为增强生成准备可靠候选。
+    terms:
+      - id: embedding
+      - id: document-chunking
+      - id: vector-database
+      - id: retrieval
+      - id: reranking
+  - id: rag-system
+    title: 组成 RAG 系统
+    transition: 把模型、上下文与检索链路合并，形成可解释和可评估的完整方法。
+    terms:
+      - id: retrieval-augmented-generation
+outcomes:
+  - 能用通俗语言说明一次 RAG 请求从问题到回答的过程
+  - 能指出切片、召回、重排、上下文和生成阶段的主要取舍
+prerequisiteExceptions: []
+status: published
+---
+
+这条路线把 RAG 拆成三段：先理解生成模型，再建立可检索的资料基础，最后把证据和生成连接成可评估系统。按顺序阅读能看到每个环节怎样限制下一环节。

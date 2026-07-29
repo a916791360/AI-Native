@@ -1,0 +1,65 @@
+---
+id: hallucination
+nameZh: 幻觉
+nameEn: Hallucination
+aliases:
+  - value: AI 幻觉
+    language: zh-CN
+summary: 生成模型给出看似合理但无法由事实、输入或可靠证据支持的内容这一现象。
+domain: evaluation-observability-quality
+difficulty: beginner
+ring: core
+status: verified
+priority: 1
+featured: true
+publishedAt: '2026-07-29'
+updatedAt: '2026-07-29'
+verifiedAt: '2026-07-29'
+sources:
+  - id: nist-generative-ai-profile
+    type: standard
+    title: Artificial Intelligence Risk Management Framework - Generative Artificial Intelligence Profile
+    url: https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf
+    publisher: NIST
+    publishedAt: '2024-07-26'
+    accessedAt: '2026-07-29'
+  - id: rag-original-paper
+    type: paper
+    title: Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks
+    url: https://arxiv.org/abs/2005.11401
+    publisher: arXiv
+    publishedAt: '2020-05-22'
+    accessedAt: '2026-07-29'
+---
+
+<h2 id="what-it-is">它是什么</h2>
+
+幻觉是生成内容看似自然、具体，却与输入、可验证事实或可靠来源不一致的现象。NIST 在生成式 AI 风险画像中使用“confabulation”描述这类自信但错误的内容。[S1]
+
+<h2 id="why-it-matters">为什么需要它</h2>
+
+模型的语言流畅度容易让人高估可靠性。若错误进入客服承诺、研究结论或业务流程，后续系统可能把它当作事实继续传播。
+
+<h2 id="how-it-works">它如何工作</h2>
+
+生成模型优化的是在上下文中产生合适序列，并非逐句查询事实数据库。问题含糊、知识缺失、上下文冲突或解码波动时，模型仍可能生成概率上合理的回答。
+
+<h2 id="example">真实例子</h2>
+
+用户询问一份不存在的公司制度，模型编造了文件标题、发布日期和条款编号。格式很像真实制度，但任何内部来源都无法支持这些细节。
+
+<h2 id="tradeoffs">什么时候适合与不适合</h2>
+
+创意草稿可容忍一定新颖性；事实问答则应要求证据、允许拒答并设置复核。检索增强能提供外部资料，但检索错误或生成忽略证据时仍会失败。[S2]
+
+<h2 id="try-it">亲自试一下</h2>
+
+准备五个有答案和五个无答案的问题，要求模型引用给定材料。记录答案正确率、引用是否支持结论，以及模型在缺少证据时能否明确说不知道。
+
+<h2 id="next">接下来学什么</h2>
+
+继续学习[嵌入](/terms/embedding/)和[检索](/terms/retrieval/)，理解如何提供外部证据；最终在[检索增强生成](/terms/retrieval-augmented-generation/)中组合整条链路。
+
+<h2 id="sources-and-revisions">来源与修订</h2>
+
+风险定义依据 NIST 生成式 AI 画像 [S1]，外部知识增强的原始方法依据 RAG 论文 [S2]。本文明确：RAG 是缓解手段，不是消除幻觉的保证。

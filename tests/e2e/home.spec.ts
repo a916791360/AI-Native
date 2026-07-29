@@ -1,0 +1,272 @@
+import AxeBuilder from '@axe-core/playwright';
+import { expect, test } from '@playwright/test';
+
+import { SEARCH_CASES } from '../fixtures/search/queries';
+
+test('renders the approved direction 1 identity and primary paths', async ({ page, isMobile }) => {
+  await page.goto('/');
+
+  await expect(page).toHaveTitle('AI-Native');
+  await expect(
+    page.getByRole('heading', { level: 1, name: /从听懂 AI.*到判断与设计/ }),
+  ).toBeVisible();
+  await expect(page.getByText('判断业务场景并设计基础 AI 方案').first()).toBeVisible();
+  await expect(page.getByRole('figure', { name: 'Fig. 06 / 数据、检索与 RAG' })).toBeVisible();
+
+  if (isMobile) {
+    await expect(page.locator('summary', { hasText: '菜单' })).toBeVisible();
+  } else {
+    const header = page.getByRole('banner');
+    await expect(header.getByRole('link', { name: '知识图鉴' })).toHaveAttribute('href', '/atlas/');
+    await expect(header.getByRole('link', { name: '学习路线' })).toHaveAttribute(
+      'href',
+      '/routes/',
+    );
+    await expect(header.getByRole('link', { name: '概念图谱' })).toHaveAttribute('href', '/graph/');
+  }
+});
+
+test('provides stable skeletons for all primary page types', async ({ page }) => {
+  const pages = [
+    ['/atlas/', '知识图鉴'],
+    ['/search/', '搜索'],
+    ['/routes/', '学习路线'],
+    ['/routes/rag-from-zero/', 'RAG 从零到理解与应用'],
+    ['/terms/retrieval-augmented-generation/', '检索增强生成'],
+    ['/graph/', '概念图谱'],
+    ['/methodology/', '内容方法'],
+  ] as const;
+
+  for (const [url, heading] of pages) {
+    await page.goto(url);
+    await expect(page.getByRole('heading', { level: 1, name: heading })).toBeVisible();
+    await expect(page.locator('#main-content')).toBeVisible();
+  }
+});
+
+test('routes the homepage search into the shared search experience', async ({ page }) => {
+  await page.goto('/');
+
+  await page.getByRole('searchbox', { name: '搜索词条' }).fill('RAG');
+  await page.getByRole('button', { name: '搜索' }).click();
+
+  await expect(page).toHaveURL(/\/search\/\?q=RAG$/);
+  await expect(page.locator('[data-search-results] li').first()).toHaveAttribute(
+    'data-result-id',
+    'retrieval-augmented-generation',
+  );
+});
+
+test('passes the fixed production search relevance gate', async ({ page, isMobile }) => {
+  test.skip(isMobile, 'the relevance gate is viewport-independent and runs once');
+  test.setTimeout(120_000);
+  await page.goto('/search/');
+
+  const input = page.getByRole('searchbox', { name: '搜索词条' });
+  const outcomes: { expected: string; actual: string | null; kind: string; query: string }[] = [];
+
+  for (const searchCase of SEARCH_CASES) {
+    await input.fill(searchCase.query);
+    await input.press('Enter');
+    await expect(page.locator('[data-search-output]')).toHaveAttribute('aria-busy', 'false');
+    await expect(page.locator('[data-search-index-state]')).toHaveText('词条索引 + 正文索引');
+    const firstResult = page.locator('[data-search-results] li').first();
+    outcomes.push({
+      ...searchCase,
+      expected: searchCase.expectedId,
+      actual: (await firstResult.count()) ? await firstResult.getAttribute('data-result-id') : null,
+    });
+  }
+
+  const exactFailures = outcomes.filter(
+    (outcome) => ['exact', 'alias'].includes(outcome.kind) && outcome.actual !== outcome.expected,
+  );
+  const correct = outcomes.filter((outcome) => outcome.actual === outcome.expected).length;
+
+  expect(exactFailures, 'all exact names, abbreviations and aliases must rank first').toEqual([]);
+  expect(
+    correct / outcomes.length,
+    JSON.stringify(
+      outcomes.filter((item) => item.actual !== item.expected),
+      null,
+      2,
+    ),
+  ).toBeGreaterThanOrEqual(0.9);
+});
+
+test('combines domain, difficulty and status filters', async ({ page }) => {
+  await page.goto('/search/');
+
+  await page.getByLabel('领域').selectOption('data-retrieval-rag');
+  await page.getByLabel('难度').selectOption('advanced');
+  await page.getByLabel('状态').selectOption('verified');
+
+  await expect(page.getByText('显示 1 个词条')).toBeVisible();
+  await expect(page.locator('[data-search-results] li')).toHaveCount(1);
+  await expect(page.locator('[data-search-results] li')).toHaveAttribute(
+    'data-result-id',
+    'reranking',
+  );
+});
+
+test('keeps metadata search available when the body index cannot load', async ({ page }) => {
+  await page.route('**/pagefind/**', (route) => route.abort());
+  await page.goto('/search/?q=RAG');
+
+  await expect(page.locator('[data-search-index-state]')).toContainText('正文索引暂不可用');
+  await expect(page.locator('[data-search-results] li').first()).toHaveAttribute(
+    'data-result-id',
+    'retrieval-augmented-generation',
+  );
+});
+
+test('publishes the complete RAG route with twelve sequential terms', async ({ page }) => {
+  await page.goto('/routes/rag-from-zero/');
+
+  await expect(page.getByText('已发布', { exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: '从第一篇开始阅读' })).toHaveAttribute(
+    'href',
+    '/terms/artificial-intelligence/',
+  );
+  await expect(page.locator('.chapter-terms a')).toHaveCount(12);
+  await expect(page.locator('.chapter-terms span')).toHaveText([
+    '01',
+    '02',
+    '03',
+    '04',
+    '05',
+    '06',
+    '07',
+    '08',
+    '09',
+    '10',
+    '11',
+    '12',
+  ]);
+});
+
+test('renders every representative term as a verified eight-section article', async ({ page }) => {
+  const termIds = [
+    'artificial-intelligence',
+    'generative-ai',
+    'token',
+    'large-language-model',
+    'context-window',
+    'hallucination',
+    'embedding',
+    'document-chunking',
+    'vector-database',
+    'retrieval',
+    'reranking',
+    'retrieval-augmented-generation',
+  ];
+
+  for (const termId of termIds) {
+    await page.goto(`/terms/${termId}/`);
+    await expect(page.getByText('已核验', { exact: true }).first()).toBeVisible();
+    await expect(page.locator('.term-content h2')).toHaveCount(8);
+    await expect(page.locator('#what-it-is')).toHaveText('它是什么');
+    await expect(page.locator('#sources-and-revisions')).toHaveText('来源与修订');
+    await expect(page.locator('.source-register li')).toHaveCount(2);
+  }
+});
+
+test('connects a term to its previous and next route entries', async ({ page }) => {
+  await page.goto('/terms/context-window/');
+
+  await expect(page.getByText('05 / 12', { exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: /上一篇.*大语言模型/ })).toHaveAttribute(
+    'href',
+    '/terms/large-language-model/',
+  );
+  await expect(page.getByRole('link', { name: /下一篇.*幻觉/ })).toHaveAttribute(
+    'href',
+    '/terms/hallucination/',
+  );
+});
+
+test('keeps the published reading path usable without JavaScript', async ({ browser }) => {
+  const context = await browser.newContext({ javaScriptEnabled: false });
+  const page = await context.newPage();
+
+  await page.goto('http://127.0.0.1:4321/routes/rag-from-zero/');
+  await page.getByRole('link', { name: '从第一篇开始阅读' }).click();
+  await expect(page.getByRole('heading', { level: 1, name: '人工智能' })).toBeVisible();
+  await expect(page.locator('#what-it-is')).toHaveText('它是什么');
+
+  await context.close();
+});
+
+test('uses the shared search aggregator from the term atlas', async ({ page }) => {
+  await page.goto('/atlas/?q=RAG');
+
+  await expect(page.locator('[data-search-output]')).toHaveAttribute('aria-busy', 'false');
+  await expect(page.locator('#atlas-index')).toBeHidden();
+  await expect(page.locator('[data-search-results] li').first()).toHaveAttribute(
+    'data-result-id',
+    'retrieval-augmented-generation',
+  );
+
+  await page.getByRole('searchbox', { name: '搜索词条' }).fill('Token');
+  await page.getByRole('button', { name: '搜索' }).click();
+  await expect(page.locator('[data-search-output]')).toHaveAttribute('aria-busy', 'false');
+  await expect(page.locator('[data-search-results] li').first()).toHaveAttribute(
+    'data-result-id',
+    'token',
+  );
+
+  await page.locator('[data-search-clear]').click();
+  await expect(page.locator('#atlas-index')).toBeVisible();
+});
+
+test('keeps key pages within the viewport without horizontal overflow', async ({ page }) => {
+  for (const url of [
+    '/',
+    '/atlas/',
+    '/search/?q=RAG',
+    '/routes/',
+    '/terms/retrieval-augmented-generation/',
+  ]) {
+    await page.goto(url);
+    const dimensions = await page.evaluate(() => ({
+      clientWidth: document.documentElement.clientWidth,
+      scrollWidth: document.documentElement.scrollWidth,
+    }));
+    expect(dimensions.scrollWidth).toBeLessThanOrEqual(dimensions.clientWidth);
+  }
+});
+
+test('exposes the navigation on narrow screens', async ({ page, isMobile }) => {
+  test.skip(!isMobile, 'mobile navigation is only rendered as a control on narrow viewports');
+  await page.goto('/');
+
+  const menu = page.locator('summary', { hasText: '菜单' });
+  await menu.click();
+  await expect(page.getByRole('navigation', { name: '移动端主导航' })).toBeVisible();
+  await page
+    .getByRole('navigation', { name: '移动端主导航' })
+    .getByRole('link', { name: '内容方法' })
+    .click();
+  await expect(page.getByRole('heading', { level: 1, name: '内容方法' })).toBeVisible();
+});
+
+test('renders the designed 404 state', async ({ page }) => {
+  const response = await page.goto('/not-a-real-concept/');
+
+  expect(response?.status()).toBe(404);
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('路径还没有连接');
+});
+
+test('has no serious or critical automated accessibility violations', async ({ page }) => {
+  for (const url of ['/', '/atlas/', '/search/?q=RAG', '/terms/retrieval-augmented-generation/']) {
+    await page.goto(url);
+    const results = await new AxeBuilder({ page })
+      .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
+      .analyze();
+    const blockingViolations = results.violations.filter(({ impact }) =>
+      ['serious', 'critical'].includes(impact ?? ''),
+    );
+
+    expect(blockingViolations, `${url} has blocking axe violations`).toEqual([]);
+  }
+});

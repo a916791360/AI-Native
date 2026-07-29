@@ -1,0 +1,64 @@
+---
+id: retrieval
+nameZh: 检索
+nameEn: Retrieval
+aliases:
+  - value: 信息检索
+    language: zh-CN
+summary: 根据查询从文档、数据库或其他知识源中找到相关候选信息的过程。
+domain: data-retrieval-rag
+difficulty: intermediate
+ring: core
+status: verified
+priority: 1
+featured: true
+publishedAt: '2026-07-29'
+updatedAt: '2026-07-29'
+verifiedAt: '2026-07-29'
+sources:
+  - id: stanford-ir-book
+    type: textbook
+    title: Introduction to Information Retrieval
+    url: https://nlp.stanford.edu/IR-book/html/htmledition/irbook.html
+    publisher: Stanford University
+    accessedAt: '2026-07-29'
+  - id: dense-passage-retrieval-paper
+    type: paper
+    title: Dense Passage Retrieval for Open-Domain Question Answering
+    url: https://arxiv.org/abs/2004.04906
+    publisher: arXiv
+    publishedAt: '2020-04-10'
+    accessedAt: '2026-07-29'
+---
+
+<h2 id="what-it-is">它是什么</h2>
+
+检索是根据查询从一个集合中找出相关候选并排序的过程。它可以基于关键词、稠密向量、结构化条件，或组合多种信号形成混合检索。[S1][S2]
+
+<h2 id="why-it-matters">为什么需要它</h2>
+
+RAG 无法让生成模型阅读整个知识库，必须先缩小到少量候选。检索决定正确证据有没有机会进入上下文，是后续重排和生成的上限。
+
+<h2 id="how-it-works">它如何工作</h2>
+
+系统解析查询，应用权限与业务过滤，在索引中召回 Top-K 候选并给出初始分数。评测常分别观察相关内容是否被召回，以及无关内容占了多少位置。
+
+<h2 id="example">真实例子</h2>
+
+查询“差旅住宿标准”时，关键词检索能命中准确术语，向量检索能覆盖“出差住酒店能报多少”等口语表达；混合检索合并两类候选。
+
+<h2 id="tradeoffs">什么时候适合与不适合</h2>
+
+关键词适合专有名词、编号和精确短语，向量适合语义改写。只有一个小型结构化表时直接查询更清楚；不要为所有数据都增加语义检索层。
+
+<h2 id="try-it">亲自试一下</h2>
+
+从真实问题中建立二十条评测集并标注正确片段。分别运行关键词、向量和混合检索，比较 Top-3 与 Top-10 的召回率和噪声。
+
+<h2 id="next">接下来学什么</h2>
+
+阅读[重排](/terms/reranking/)学习如何精细判断候选相关性，然后进入[检索增强生成](/terms/retrieval-augmented-generation/)把证据交给模型。
+
+<h2 id="sources-and-revisions">来源与修订</h2>
+
+经典索引、评分和评测框架参考 Stanford IR 教材 [S1]，稠密段落检索参考 DPR 论文 [S2]。本文把召回与最终回答质量分开评价。

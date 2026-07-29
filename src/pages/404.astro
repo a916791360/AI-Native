@@ -1,0 +1,72 @@
+---
+import SearchForm from '@/components/ui/SearchForm.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="页面未找到" description="请求的 AI-Native 页面不存在。">
+  <main id="main-content" class="not-found">
+    <div class="error-code" aria-hidden="true">404</div>
+    <section>
+      <p class="eyebrow">Unknown relation</p>
+      <h1>这条路径还没有连接到知识图谱。</h1>
+      <p>页面可能已经移动，或者对应词条尚未进入当前目录。你可以重新搜索，或返回知识图鉴。</p>
+      <SearchForm compact={true} />
+      <a class="atlas-link" href="/atlas/">返回知识图鉴 →</a>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .not-found {
+    min-height: calc(100svh - var(--header-height));
+    display: grid;
+    grid-template-columns: minmax(16rem, 0.34fr) 1fr;
+  }
+  .error-code {
+    display: grid;
+    place-items: center;
+    border-right: 1px solid var(--color-line);
+    color: var(--color-line);
+    font-family: var(--font-display);
+    font-size: clamp(7rem, 20vw, 18rem);
+    line-height: 1;
+    writing-mode: vertical-rl;
+  }
+  .not-found section {
+    max-width: 50rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: var(--space-7) var(--page-gutter);
+  }
+  h1 {
+    margin: var(--space-3) 0;
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 7vw, 6rem);
+    font-weight: 400;
+    line-height: 1.02;
+  }
+  section > p:not(.eyebrow) {
+    max-width: 35rem;
+    margin: 0 0 var(--space-5);
+    color: var(--color-muted);
+    font-size: var(--text-lead);
+  }
+  .atlas-link {
+    margin-top: var(--space-4);
+    color: var(--color-prerequisite);
+  }
+
+  @media (max-width: 620px) {
+    .not-found {
+      grid-template-columns: 1fr;
+    }
+    .error-code {
+      min-height: 10rem;
+      border-right: 0;
+      border-bottom: 1px solid var(--color-line);
+      font-size: 7rem;
+      writing-mode: horizontal-tb;
+    }
+  }
+</style>
