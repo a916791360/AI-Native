@@ -10,12 +10,21 @@ import { stableIdSchema } from './schema';
 
 const dateSchema = z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'must use YYYY-MM-DD');
 
+const productionWaveSchema = z
+  .object({
+    id: stableIdSchema,
+    focus: z.string().min(10),
+    terms: z.array(stableIdSchema).min(1),
+  })
+  .strict();
+
 const productionBatchSchema = z
   .object({
     id: stableIdSchema,
     kind: z.enum(['sample', 'foundation', 'collaboration', 'product', 'rag']),
     status: z.enum(['planned', 'research', 'draft', 'verified']),
     terms: z.array(stableIdSchema).min(1),
+    waves: z.array(productionWaveSchema).min(1).optional(),
   })
   .strict();
 
@@ -91,7 +100,9 @@ export async function loadResearchPackets(root = process.cwd()): Promise<Researc
 }
 
 export function deepContentTermIds(plan: ContentProductionPlan): Set<string> {
-  return new Set(plan.batches.flatMap((batch) => batch.terms));
+  return new Set(
+    plan.batches.filter((batch) => batch.status !== 'planned').flatMap((batch) => batch.terms),
+  );
 }
 
 export function validateContentProduction(
@@ -110,6 +121,22 @@ export function validateContentProduction(
         code: 'PRODUCTION_SAMPLE_SIZE',
         filePath: 'src/data/content-production.yml',
         message: `sample batch ${batch.id} must contain 8-12 terms`,
+      });
+    }
+    if (batch.kind === 'foundation' && (batch.terms.length < 20 || batch.terms.length > 30)) {
+      diagnostics.push({
+        code: 'PRODUCTION_FOUNDATION_SIZE',
+        filePath: 'src/data/content-production.yml',
+        message: `foundation batch ${batch.id} must contain 20-30 terms`,
+      });
+    }
+
+    const waveTerms = batch.waves?.flatMap((wave) => wave.terms);
+    if (waveTerms && waveTerms.join('\n') !== batch.terms.join('\n')) {
+      diagnostics.push({
+        code: 'PRODUCTION_WAVE_SEQUENCE',
+        filePath: 'src/data/content-production.yml',
+        message: `waves in ${batch.id} must contain every batch term once and in production order`,
       });
     }
 
@@ -141,6 +168,16 @@ export function validateContentProduction(
       }
 
       const packet = packetsByTerm.get(id);
+      if (batch.status === 'planned') {
+        if (packet) {
+          diagnostics.push({
+            code: 'PRODUCTION_PACKET_PREMATURE',
+            filePath: packet.filePath,
+            message: `${id} has a research packet but batch ${batch.id} is still planned`,
+          });
+        }
+        continue;
+      }
       if (!packet) {
         diagnostics.push({
           code: 'PRODUCTION_PACKET_MISSING',

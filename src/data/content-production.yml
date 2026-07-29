@@ -15,3 +15,60 @@ batches:
       - evaluation
       - ai-safety
       - compute
+  - id: foundation-1
+    kind: foundation
+    status: planned
+    terms:
+      - supervised-learning
+      - unsupervised-learning
+      - neural-network
+      - deep-learning
+      - training-data
+      - classification
+      - regression
+      - gradient-descent
+      - overfitting
+      - generalization
+      - foundation-model
+      - attention-mechanism
+      - self-attention
+      - tokenizer
+      - pretraining
+      - post-training
+      - instruction-tuning
+      - fine-tuning
+      - inference
+      - temperature
+    waves:
+      - id: learning-foundations
+        focus: 建立机器学习的学习范式、模型结构与数据基础。
+        terms:
+          - supervised-learning
+          - unsupervised-learning
+          - neural-network
+          - deep-learning
+          - training-data
+      - id: training-and-generalization
+        focus: 连接任务类型、优化过程与模型泛化质量。
+        terms:
+          - classification
+          - regression
+          - gradient-descent
+          - overfitting
+          - generalization
+      - id: language-model-foundations
+        focus: 解释基础模型、注意力、分词与预训练的核心机制。
+        terms:
+          - foundation-model
+          - attention-mechanism
+          - self-attention
+          - tokenizer
+          - pretraining
+      - id: generation-and-adaptation
+        focus: 串联后训练、模型适配、推理与生成控制。
+        terms:
+          - post-training
+          - instruction-tuning
+          - fine-tuning
+          - inference
+          - temperature
