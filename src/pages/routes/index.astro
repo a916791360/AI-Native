@@ -20,11 +20,11 @@ const route = routes[0]?.data;
       route && (
         <section class="featured-route" aria-labelledby="featured-route-title">
           <div class="route-index">
-            <span class="meta-label">Route 01 / Draft</span>
+            <span class="meta-label">Route 01 / {route.status}</span>
             <span class="route-mark">01</span>
           </div>
           <div class="route-copy">
-            <StatusTag status="draft" />
+            <StatusTag status={route.status} />
             <h2 id="featured-route-title">{route.nameZh}</h2>
             <p>{route.summary}</p>
             <a href={`/routes/${route.id}/`}>查看 3 章学习顺序 →</a>
