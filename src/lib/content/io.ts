@@ -116,12 +116,13 @@ async function loadYaml<T>(root: string, filePath: string, schema: ZodType<T>): 
 }
 
 export async function loadProjectContent(root = process.cwd()): Promise<ProjectContent> {
-  const [domains, relations, terms, routes] = await Promise.all([
+  const [domains, relations, catalogRelations, terms, routes] = await Promise.all([
     loadYaml(root, 'src/data/domains.yml', domainsSchema),
     loadYaml(root, 'src/data/relations.yml', relationsSchema),
+    loadYaml(root, 'src/data/catalog-relations.yml', relationsSchema),
     loadDocuments(root, 'src/content/terms', termSchema),
     loadDocuments(root, 'src/content/routes', routeSchema),
   ]);
 
-  return { domains, relations, terms, routes };
+  return { domains, relations: [...relations, ...catalogRelations], terms, routes };
 }

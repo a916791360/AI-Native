@@ -1,0 +1,686 @@
+version: 1
+targetCount: 300
+
+# Tuple: [id, nameZh, nameEn, difficulty, ring, batch, scores(F/S/R/B), routeCodes]
+groups:
+  - domain: ai-foundations-history
+    terms:
+      - [artificial-intelligence, 人工智能, Artificial Intelligence, beginner, core, A, '5555', FHP]
+      - [turing-test, 图灵测试, Turing Test, beginner, core, B, '4443', F]
+      - [expert-system, 专家系统, Expert System, beginner, core, B, '4343', F]
+      - [symbolic-ai, 符号主义人工智能, Symbolic AI, intermediate, core, B, '4333', F]
+      - [connectionism, 连接主义, Connectionism, intermediate, core, B, '4322', F]
+      - [ai-winter, 人工智能寒冬, AI Winter, beginner, core, B, '3432', F]
+      - [narrow-ai, 弱人工智能, Narrow AI, beginner, core, B, '4554', FP]
+      - [
+          artificial-general-intelligence,
+          通用人工智能,
+          Artificial General Intelligence,
+          beginner,
+          core,
+          B,
+          '4554',
+          FP,
+        ]
+      - [machine-intelligence, 机器智能, Machine Intelligence, beginner, core, B, '4333', F]
+      - [
+          knowledge-representation,
+          知识表示,
+          Knowledge Representation,
+          intermediate,
+          core,
+          B,
+          '4433',
+          F,
+        ]
+      - [search-algorithm, 搜索算法, Search Algorithm, intermediate, core, C, '4333', F]
+      - [reasoning-system, 推理系统, Reasoning System, intermediate, core, C, '4434', FP]
+      - [heuristic, 启发式方法, Heuristic, intermediate, core, C, '4333', F]
+      - [perception, 机器感知, Machine Perception, beginner, core, C, '4434', FP]
+      - [
+          natural-language-processing,
+          自然语言处理,
+          Natural Language Processing,
+          beginner,
+          core,
+          C,
+          '5555',
+          FHP,
+        ]
+      - [
+          computer-vision-field,
+          计算机视觉领域,
+          Computer Vision Field,
+          beginner,
+          core,
+          C,
+          '4444',
+          FP,
+        ]
+      - [speech-technology, 语音技术, Speech Technology, beginner, core, C, '3434', FP]
+      - [robotics, 机器人学, Robotics, beginner, core, C, '4444', FP]
+      - [cognitive-computing, 认知计算, Cognitive Computing, intermediate, extended, C, '2322', F]
+      - [ai-effect, AI 效应, AI Effect, intermediate, extended, C, '2232', F]
+      - [dartmouth-workshop, 达特茅斯会议, Dartmouth Workshop, beginner, extended, D, '3322', F]
+      - [perceptron-history, 感知机历史, Perceptron History, intermediate, extended, D, '3222', F]
+      - [deep-learning-boom, 深度学习浪潮, Deep Learning Boom, beginner, extended, D, '3333', F]
+      - [
+          foundation-model-era,
+          基础模型时代,
+          Foundation Model Era,
+          beginner,
+          extended,
+          D,
+          '3444',
+          FP,
+        ]
+      - [
+          ai-capability-boundary,
+          AI 能力边界,
+          AI Capability Boundary,
+          beginner,
+          core,
+          D,
+          '5555',
+          FHP,
+        ]
+
+  - domain: machine-learning-deep-learning
+    terms:
+      - [machine-learning, 机器学习, Machine Learning, beginner, core, B, '5555', FP]
+      - [supervised-learning, 监督学习, Supervised Learning, beginner, core, B, '5554', F]
+      - [unsupervised-learning, 无监督学习, Unsupervised Learning, beginner, core, B, '4543', F]
+      - [
+          reinforcement-learning,
+          强化学习,
+          Reinforcement Learning,
+          intermediate,
+          core,
+          B,
+          '4554',
+          FP,
+        ]
+      - [neural-network, 神经网络, Neural Network, beginner, core, B, '5554', F]
+      - [deep-learning, 深度学习, Deep Learning, beginner, core, B, '5555', FP]
+      - [training-data, 训练数据, Training Data, beginner, core, B, '5555', FHP]
+      - [feature-engineering, 特征工程, Feature Engineering, intermediate, core, B, '4444', FP]
+      - [classification, 分类任务, Classification, beginner, core, B, '4544', FP]
+      - [regression, 回归任务, Regression, beginner, core, B, '4434', FP]
+      - [clustering, 聚类, Clustering, beginner, core, C, '4443', FP]
+      - [gradient-descent, 梯度下降, Gradient Descent, intermediate, core, C, '4543', F]
+      - [backpropagation, 反向传播, Backpropagation, intermediate, core, C, '4543', F]
+      - [overfitting, 过拟合, Overfitting, beginner, core, C, '5555', FHP]
+      - [underfitting, 欠拟合, Underfitting, beginner, core, C, '4444', F]
+      - [generalization, 泛化能力, Generalization, intermediate, core, C, '5555', FHP]
+      - [loss-function, 损失函数, Loss Function, intermediate, core, C, '4443', F]
+      - [optimizer, 优化器, Optimizer, intermediate, core, C, '4443', F]
+      - [epoch, 训练轮次, Epoch, beginner, core, C, '4433', F]
+      - [batch-size, 批大小, Batch Size, intermediate, core, C, '4433', F]
+      - [learning-rate, 学习率, Learning Rate, intermediate, extended, D, '4543', F]
+      - [transfer-learning, 迁移学习, Transfer Learning, intermediate, extended, D, '4444', FP]
+      - [model-parameter, 模型参数, Model Parameter, beginner, core, D, '5554', F]
+      - [hyperparameter, 超参数, Hyperparameter, intermediate, extended, D, '4443', F]
+      - [
+          train-validation-test-split,
+          训练验证测试集划分,
+          Train Validation Test Split,
+          beginner,
+          core,
+          D,
+          '4555',
+          FP,
+        ]
+
+  - domain: large-language-models-generative-ai
+    terms:
+      - [generative-ai, 生成式 AI, Generative AI, beginner, core, A, '5555', FHP]
+      - [large-language-model, 大语言模型, Large Language Model, beginner, core, A, '5555', FHPR]
+      - [token, Token, Token, beginner, core, A, '5554', FHR]
+      - [foundation-model, 基础模型, Foundation Model, beginner, core, B, '5555', FP]
+      - [transformer, Transformer 架构, Transformer, intermediate, core, B, '5554', FR]
+      - [attention-mechanism, 注意力机制, Attention Mechanism, intermediate, core, B, '5554', F]
+      - [self-attention, 自注意力, Self-Attention, intermediate, core, B, '4543', F]
+      - [tokenizer, 分词器, Tokenizer, intermediate, core, B, '4554', FR]
+      - [pretraining, 预训练, Pretraining, intermediate, core, B, '5554', FP]
+      - [post-training, 后训练, Post-Training, intermediate, core, B, '5555', FHP]
+      - [instruction-tuning, 指令微调, Instruction Tuning, intermediate, core, C, '4555', FHP]
+      - [fine-tuning, 微调, Fine-Tuning, intermediate, core, C, '5555', FHP]
+      - [
+          parameter-efficient-fine-tuning,
+          参数高效微调,
+          Parameter-Efficient Fine-Tuning,
+          advanced,
+          core,
+          C,
+          '3444',
+          FP,
+        ]
+      - [lora, 低秩适配, Low-Rank Adaptation, advanced, core, C, '3544', FP]
+      - [inference, 模型推理, Model Inference, beginner, core, C, '5555', FHPR]
+      - [decoding, 解码策略, Decoding Strategy, intermediate, core, C, '4444', FH]
+      - [temperature, 温度参数, Temperature, beginner, core, C, '5555', FHP]
+      - [top-p, 核采样, Top-p Sampling, intermediate, core, C, '4544', FH]
+      - [sampling, 采样, Sampling, intermediate, core, C, '4444', FH]
+      - [quantization, 模型量化, Model Quantization, advanced, core, C, '3544', FP]
+      - [
+          next-token-prediction,
+          下一词元预测,
+          Next-Token Prediction,
+          intermediate,
+          extended,
+          D,
+          '4443',
+          F,
+        ]
+      - [mixture-of-experts, 混合专家模型, Mixture of Experts, advanced, extended, D, '3443', FP]
+      - [distillation, 模型蒸馏, Model Distillation, advanced, extended, D, '3444', FP]
+      - [open-weight-model, 开放权重模型, Open-Weight Model, intermediate, core, D, '4555', FP]
+      - [model-capability, 模型能力, Model Capability, beginner, core, D, '5555', FHP]
+
+  - domain: prompt-context-engineering
+    terms:
+      - [context-window, 上下文窗口, Context Window, beginner, core, A, '5555', FHR]
+      - [prompt, 提示词, Prompt, beginner, core, B, '5555', FH]
+      - [system-prompt, 系统提示词, System Prompt, beginner, core, B, '5555', FHP]
+      - [user-prompt, 用户提示词, User Prompt, beginner, core, B, '4554', FH]
+      - [zero-shot-prompting, 零样本提示, Zero-Shot Prompting, beginner, core, B, '4544', FH]
+      - [few-shot-prompting, 少样本提示, Few-Shot Prompting, beginner, core, B, '5555', FH]
+      - [
+          chain-of-thought,
+          思维链提示,
+          Chain-of-Thought Prompting,
+          intermediate,
+          core,
+          B,
+          '4554',
+          FH,
+        ]
+      - [prompt-template, 提示词模板, Prompt Template, beginner, core, B, '4555', HP]
+      - [context-engineering, 上下文工程, Context Engineering, intermediate, core, B, '5555', FHPR]
+      - [grounding, 事实依据约束, Grounding, intermediate, core, B, '5555', HPR]
+      - [structured-output, 结构化输出, Structured Output, intermediate, core, C, '5555', HP]
+      - [role-prompting, 角色提示, Role Prompting, beginner, core, C, '4444', H]
+      - [prompt-chaining, 提示链, Prompt Chaining, intermediate, core, C, '4545', H]
+      - [retrieval-context, 检索上下文, Retrieval Context, intermediate, core, C, '4555', HR]
+      - [conversation-context, 对话上下文, Conversation Context, beginner, core, C, '4555', H]
+      - [context-compression, 上下文压缩, Context Compression, advanced, core, C, '3444', HR]
+      - [long-context, 长上下文, Long Context, intermediate, core, C, '4555', FHR]
+      - [prompt-evaluation, 提示词评测, Prompt Evaluation, intermediate, core, C, '4555', HP]
+      - [prompt-versioning, 提示词版本管理, Prompt Versioning, intermediate, core, C, '3445', HP]
+      - [instruction-hierarchy, 指令层级, Instruction Hierarchy, intermediate, core, C, '4545', FH]
+      - [
+          in-context-learning,
+          上下文学习,
+          In-Context Learning,
+          intermediate,
+          extended,
+          D,
+          '4544',
+          FH,
+        ]
+      - [negative-prompt, 负向提示词, Negative Prompt, beginner, extended, D, '3443', H]
+      - [prompt-constraint, 提示约束, Prompt Constraint, beginner, core, D, '4445', H]
+      - [context-relevance, 上下文相关性, Context Relevance, intermediate, core, D, '4445', HPR]
+      - [prompt-debugging, 提示词调试, Prompt Debugging, intermediate, core, D, '4555', H]
+
+  - domain: multimodal-ai
+    terms:
+      - [multimodal-ai, 多模态人工智能, Multimodal AI, beginner, core, B, '5555', FP]
+      - [
+          vision-language-model,
+          视觉语言模型,
+          Vision-Language Model,
+          intermediate,
+          core,
+          B,
+          '4555',
+          FP,
+        ]
+      - [image-generation, 图像生成, Image Generation, beginner, core, B, '5555', FP]
+      - [text-to-image, 文生图, Text-to-Image, beginner, core, B, '5555', FP]
+      - [image-to-image, 图生图, Image-to-Image, beginner, core, B, '4444', P]
+      - [diffusion-model, 扩散模型, Diffusion Model, intermediate, core, B, '5554', FP]
+      - [computer-vision, 计算机视觉, Computer Vision, beginner, core, B, '5555', FP]
+      - [image-understanding, 图像理解, Image Understanding, beginner, core, B, '4555', FP]
+      - [
+          optical-character-recognition,
+          光学字符识别,
+          Optical Character Recognition,
+          beginner,
+          core,
+          B,
+          '4555',
+          P,
+        ]
+      - [speech-recognition, 语音识别, Speech Recognition, beginner, core, B, '5555', FP]
+      - [text-to-speech, 文本转语音, Text-to-Speech, beginner, core, C, '4555', P]
+      - [speech-synthesis, 语音合成, Speech Synthesis, intermediate, core, C, '4444', P]
+      - [audio-understanding, 音频理解, Audio Understanding, intermediate, core, C, '4444', P]
+      - [video-generation, 视频生成, Video Generation, beginner, core, C, '4555', FP]
+      - [video-understanding, 视频理解, Video Understanding, intermediate, core, C, '4445', FP]
+      - [multimodal-embedding, 多模态嵌入, Multimodal Embedding, advanced, core, C, '3444', PR]
+      - [cross-modal-retrieval, 跨模态检索, Cross-Modal Retrieval, advanced, core, C, '3444', PR]
+      - [
+          visual-question-answering,
+          视觉问答,
+          Visual Question Answering,
+          intermediate,
+          core,
+          C,
+          '4444',
+          FP,
+        ]
+      - [image-captioning, 图像描述生成, Image Captioning, intermediate, core, C, '4444', FP]
+      - [
+          document-understanding,
+          文档理解,
+          Document Understanding,
+          intermediate,
+          core,
+          C,
+          '4555',
+          PR,
+        ]
+      - [voice-cloning, 声音克隆, Voice Cloning, intermediate, extended, D, '3444', P]
+      - [lip-sync, 唇形同步, Lip Sync, intermediate, extended, D, '2333', P]
+      - [multimodal-fusion, 多模态融合, Multimodal Fusion, advanced, extended, D, '3433', F]
+      - [
+          native-multimodal-model,
+          原生多模态模型,
+          Native Multimodal Model,
+          intermediate,
+          extended,
+          D,
+          '3444',
+          FP,
+        ]
+      - [modality, 模态, Modality, beginner, core, D, '4433', F]
+
+  - domain: data-retrieval-rag
+    terms:
+      - [document-chunking, 文档切片, Document Chunking, intermediate, core, A, '5555', R]
+      - [embedding, 嵌入, Embedding, intermediate, core, A, '5555', FR]
+      - [reranking, 重排, Reranking, advanced, core, A, '4555', R]
+      - [
+          retrieval-augmented-generation,
+          检索增强生成,
+          Retrieval-Augmented Generation,
+          intermediate,
+          core,
+          A,
+          '5555',
+          FHPR,
+        ]
+      - [retrieval, 检索, Retrieval, intermediate, core, A, '5555', R]
+      - [vector-database, 向量数据库, Vector Database, intermediate, core, A, '4555', PR]
+      - [data-ingestion, 数据接入, Data Ingestion, intermediate, core, B, '4555', R]
+      - [document-parsing, 文档解析, Document Parsing, intermediate, core, B, '4555', R]
+      - [metadata-filtering, 元数据过滤, Metadata Filtering, intermediate, core, B, '4555', R]
+      - [keyword-search, 关键词检索, Keyword Search, beginner, core, B, '4554', R]
+      - [semantic-search, 语义检索, Semantic Search, intermediate, core, C, '5555', R]
+      - [hybrid-search, 混合检索, Hybrid Search, intermediate, core, C, '4555', R]
+      - [sparse-vector, 稀疏向量, Sparse Vector, advanced, core, C, '3433', R]
+      - [dense-vector, 稠密向量, Dense Vector, intermediate, core, C, '4444', R]
+      - [similarity-search, 相似度检索, Similarity Search, intermediate, core, C, '4554', R]
+      - [vector-index, 向量索引, Vector Index, advanced, core, C, '3544', R]
+      - [
+          approximate-nearest-neighbor,
+          近似最近邻搜索,
+          Approximate Nearest Neighbor Search,
+          advanced,
+          core,
+          C,
+          '3544',
+          R,
+        ]
+      - [top-k, Top-K 召回, Top-K Retrieval, intermediate, core, C, '4444', R]
+      - [query-rewriting, 查询改写, Query Rewriting, intermediate, core, C, '4555', R]
+      - [query-expansion, 查询扩展, Query Expansion, intermediate, core, C, '3444', R]
+      - [context-retrieval, 上下文检索, Context Retrieval, intermediate, core, D, '4555', HR]
+      - [citation-generation, 引用生成, Citation Generation, intermediate, core, D, '4555', PR]
+      - [knowledge-base, 知识库, Knowledge Base, beginner, core, D, '5555', PR]
+      - [indexing-pipeline, 索引管线, Indexing Pipeline, advanced, extended, D, '3444', R]
+      - [retrieval-query, 检索查询, Retrieval Query, beginner, extended, D, '3434', R]
+
+  - domain: agents-tool-use-automation
+    terms:
+      - [ai-agent, AI Agent, AI Agent, beginner, core, B, '5555', FHP]
+      - [autonomous-agent, 自主智能体, Autonomous Agent, intermediate, core, B, '4554', FP]
+      - [agentic-workflow, Agent 工作流, Agentic Workflow, intermediate, core, B, '5555', HP]
+      - [tool-use, 工具调用, Tool Use, beginner, core, B, '5555', FHP]
+      - [function-calling, 函数调用, Function Calling, intermediate, core, B, '5555', HP]
+      - [
+          model-context-protocol,
+          模型上下文协议,
+          Model Context Protocol,
+          intermediate,
+          core,
+          B,
+          '4555',
+          HP,
+        ]
+      - [computer-use, 计算机操作, Computer Use, intermediate, core, B, '4555', HP]
+      - [browser-use, 浏览器操作, Browser Use, intermediate, core, B, '4555', HP]
+      - [code-execution, 代码执行, Code Execution, intermediate, core, B, '4555', HP]
+      - [api-call, API 调用, API Call, beginner, core, B, '4555', HP]
+      - [agent-planning, Agent 规划, Agent Planning, intermediate, core, C, '4555', HP]
+      - [task-decomposition, 任务拆解, Task Decomposition, beginner, core, C, '5555', HP]
+      - [reflection, 反思机制, Reflection, intermediate, core, C, '3444', H]
+      - [self-correction, 自我纠错, Self-Correction, intermediate, core, C, '4555', HP]
+      - [agent-memory, Agent 记忆, Agent Memory, intermediate, core, C, '4555', HP]
+      - [short-term-memory, 短期记忆, Short-Term Memory, intermediate, core, C, '3444', H]
+      - [long-term-memory, 长期记忆, Long-Term Memory, intermediate, core, C, '4555', HP]
+      - [state-management, 状态管理, State Management, intermediate, core, C, '4555', HP]
+      - [agent-orchestration, Agent 编排, Agent Orchestration, advanced, core, C, '3545', P]
+      - [multi-agent-system, 多智能体系统, Multi-Agent System, advanced, core, C, '3544', FP]
+      - [human-in-the-loop, 人在回路, Human in the Loop, beginner, core, D, '5555', HP]
+      - [workflow-automation, 工作流自动化, Workflow Automation, beginner, core, D, '4555', HP]
+      - [automation-trigger, 自动化触发器, Automation Trigger, beginner, extended, D, '3434', P]
+      - [retry-policy, 重试策略, Retry Policy, intermediate, extended, D, '3445', P]
+      - [agent-sandbox, Agent 沙箱, Agent Sandbox, advanced, extended, D, '3445', P]
+
+  - domain: ai-product-ux
+    terms:
+      - [ai-product, AI 产品, AI Product, beginner, core, B, '5555', P]
+      - [ai-use-case, AI 应用场景, AI Use Case, beginner, core, B, '5555', P]
+      - [problem-solution-fit, 问题方案匹配, Problem-Solution Fit, beginner, core, B, '4555', P]
+      - [human-ai-collaboration, 人机协作, Human-AI Collaboration, beginner, core, B, '5555', HP]
+      - [copilot-pattern, 副驾驶模式, Copilot Pattern, beginner, core, B, '4555', HP]
+      - [autopilot-pattern, 自动驾驶模式, Autopilot Pattern, intermediate, core, B, '4554', P]
+      - [
+          progressive-disclosure,
+          渐进披露,
+          Progressive Disclosure,
+          intermediate,
+          core,
+          B,
+          '3445',
+          HP,
+        ]
+      - [
+          confidence-calibration,
+          置信度校准,
+          Confidence Calibration,
+          intermediate,
+          core,
+          B,
+          '4555',
+          HP,
+        ]
+      - [uncertainty-display, 不确定性呈现, Uncertainty Display, intermediate, core, B, '4555', HP]
+      - [explanation-interface, 解释界面, Explanation Interface, intermediate, core, B, '4555', HP]
+      - [user-control, 用户控制权, User Control, beginner, core, C, '5555', HP]
+      - [undo-action, 撤销操作, Undo Action, beginner, core, C, '3445', HP]
+      - [fallback-experience, 降级体验, Fallback Experience, intermediate, core, C, '4555', HP]
+      - [human-escalation, 人工升级处理, Human Escalation, intermediate, core, C, '4555', HP]
+      - [feedback-loop, 反馈闭环, Feedback Loop, beginner, core, C, '4555', HP]
+      - [prompt-interface, 提示词界面, Prompt Interface, beginner, core, C, '4555', HP]
+      - [conversational-ui, 对话式界面, Conversational UI, beginner, core, C, '5555', HP]
+      - [generative-ui, 生成式界面, Generative UI, intermediate, core, C, '4555', HP]
+      - [latency-budget, 延迟预算, Latency Budget, intermediate, core, C, '4555', P]
+      - [perceived-latency, 感知延迟, Perceived Latency, intermediate, core, C, '3445', P]
+      - [user-trust, 用户信任, User Trust, beginner, core, D, '5555', HP]
+      - [ai-adoption, AI 采用, AI Adoption, beginner, extended, D, '4555', P]
+      - [task-success-rate, 任务成功率, Task Success Rate, intermediate, core, D, '4555', P]
+      - [ai-onboarding, AI 产品引导, AI Onboarding, beginner, extended, D, '3445', P]
+      - [error-recovery, 错误恢复, Error Recovery, intermediate, core, D, '4555', HP]
+
+  - domain: evaluation-observability-quality
+    terms:
+      - [hallucination, 幻觉, Hallucination, beginner, core, A, '5555', FHPR]
+      - [evaluation, AI 评估, AI Evaluation, beginner, core, B, '5555', HP]
+      - [eval-set, 评测集, Evaluation Set, intermediate, core, B, '5555', HP]
+      - [benchmark, 基准测试, Benchmark, beginner, core, B, '5555', FP]
+      - [golden-dataset, 黄金数据集, Golden Dataset, intermediate, core, B, '4555', HP]
+      - [offline-evaluation, 离线评估, Offline Evaluation, intermediate, core, B, '4555', HP]
+      - [online-evaluation, 在线评估, Online Evaluation, intermediate, core, B, '4555', HP]
+      - [human-evaluation, 人工评估, Human Evaluation, beginner, core, B, '5555', HP]
+      - [automatic-evaluation, 自动评估, Automatic Evaluation, intermediate, core, B, '4555', HP]
+      - [llm-as-judge, 大模型裁判, LLM-as-a-Judge, intermediate, core, B, '4555', HP]
+      - [pairwise-comparison, 成对比较, Pairwise Comparison, intermediate, core, C, '3444', HP]
+      - [evaluation-rubric, 评估量规, Evaluation Rubric, beginner, core, C, '4555', HP]
+      - [groundedness, 依据一致性, Groundedness, intermediate, core, C, '4555', HPR]
+      - [factuality, 事实性, Factuality, intermediate, core, C, '5555', HPR]
+      - [relevance, 相关性, Relevance, beginner, core, C, '5555', HPR]
+      - [answer-correctness, 答案正确性, Answer Correctness, intermediate, core, C, '5555', HP]
+      - [retrieval-recall, 检索召回率, Retrieval Recall, advanced, core, C, '4555', R]
+      - [retrieval-precision, 检索精确率, Retrieval Precision, advanced, core, C, '4555', R]
+      - [faithfulness, 忠实度, Faithfulness, intermediate, core, C, '4555', HPR]
+      - [toxicity-evaluation, 毒性评估, Toxicity Evaluation, intermediate, core, C, '3445', P]
+      - [bias-evaluation, 偏见评估, Bias Evaluation, intermediate, core, D, '4555', P]
+      - [latency, 延迟, Latency, beginner, core, D, '5555', P]
+      - [throughput, 吞吐量, Throughput, intermediate, extended, D, '3444', P]
+      - [observability, 可观测性, Observability, intermediate, core, D, '4555', P]
+      - [trace, 调用追踪, Trace, intermediate, extended, D, '3444', P]
+
+  - domain: ai-engineering-deployment-operations
+    terms:
+      - [ai-application, AI 应用, AI Application, beginner, core, B, '5555', P]
+      - [model-api, 模型 API, Model API, beginner, core, B, '5555', HP]
+      - [inference-server, 推理服务器, Inference Server, intermediate, core, B, '4555', P]
+      - [model-serving, 模型服务, Model Serving, intermediate, core, B, '5555', P]
+      - [model-deployment, 模型部署, Model Deployment, intermediate, core, B, '5555', P]
+      - [containerization, 容器化, Containerization, intermediate, core, B, '4444', P]
+      - [gpu-serving, GPU 推理服务, GPU Serving, advanced, core, B, '3445', P]
+      - [request-batching, 请求批处理, Request Batching, advanced, core, B, '3444', P]
+      - [streaming-response, 流式响应, Streaming Response, intermediate, core, B, '4555', HP]
+      - [response-caching, 响应缓存, Response Caching, intermediate, core, B, '4555', P]
+      - [rate-limiting, 限流, Rate Limiting, intermediate, core, C, '4555', P]
+      - [load-balancing, 负载均衡, Load Balancing, intermediate, core, C, '4445', P]
+      - [autoscaling, 自动扩缩容, Autoscaling, intermediate, core, C, '4445', P]
+      - [latency-optimization, 延迟优化, Latency Optimization, advanced, core, C, '4555', P]
+      - [cost-optimization, 成本优化, Cost Optimization, intermediate, core, C, '5555', P]
+      - [fallback-model, 备用模型, Fallback Model, intermediate, core, C, '4555', P]
+      - [model-routing, 模型路由, Model Routing, intermediate, core, C, '4555', P]
+      - [prompt-cache, 提示词缓存, Prompt Cache, intermediate, core, C, '4555', HP]
+      - [semantic-cache, 语义缓存, Semantic Cache, advanced, core, C, '3444', PR]
+      - [model-registry, 模型注册表, Model Registry, intermediate, core, C, '4444', P]
+      - [experiment-tracking, 实验追踪, Experiment Tracking, intermediate, extended, D, '4444', P]
+      - [continuous-delivery, 持续交付, Continuous Delivery, intermediate, extended, D, '3444', P]
+      - [canary-release, 金丝雀发布, Canary Release, advanced, extended, D, '3444', P]
+      - [rollback, 回滚, Rollback, intermediate, core, D, '4555', P]
+      - [
+          service-level-objective,
+          服务等级目标,
+          Service Level Objective,
+          advanced,
+          extended,
+          D,
+          '3445',
+          P,
+        ]
+
+  - domain: safety-ethics-governance
+    terms:
+      - [ai-safety, AI 安全, AI Safety, beginner, core, B, '5555', FP]
+      - [responsible-ai, 负责任人工智能, Responsible AI, beginner, core, B, '5555', FP]
+      - [ai-governance, AI 治理, AI Governance, beginner, core, B, '5555', FP]
+      - [ai-risk-management, AI 风险管理, AI Risk Management, beginner, core, B, '5555', FP]
+      - [privacy, 隐私, Privacy, beginner, core, B, '5555', FP]
+      - [data-protection, 数据保护, Data Protection, beginner, core, B, '5555', FP]
+      - [data-governance, 数据治理, Data Governance, intermediate, core, B, '5555', FP]
+      - [informed-consent, 知情同意, Informed Consent, beginner, core, B, '4555', P]
+      - [algorithmic-bias, 算法偏见, Algorithmic Bias, beginner, core, B, '5555', FP]
+      - [fairness, 公平性, Fairness, intermediate, core, B, '5555', FP]
+      - [transparency, 透明度, Transparency, beginner, core, C, '5555', FP]
+      - [explainable-ai, 可解释人工智能, Explainable AI, intermediate, core, C, '5555', FP]
+      - [accountability, 问责, Accountability, intermediate, core, C, '4555', P]
+      - [auditability, 可审计性, Auditability, intermediate, core, C, '4555', P]
+      - [human-oversight, 人工监督, Human Oversight, beginner, core, C, '5555', HP]
+      - [red-teaming, 红队测试, Red Teaming, intermediate, core, C, '4555', P]
+      - [adversarial-testing, 对抗测试, Adversarial Testing, advanced, core, C, '3445', P]
+      - [prompt-injection, 提示词注入, Prompt Injection, intermediate, core, C, '5555', HP]
+      - [jailbreak, 越狱提示, Jailbreak, intermediate, core, C, '4555', HP]
+      - [data-poisoning, 数据投毒, Data Poisoning, advanced, core, C, '4555', FP]
+      - [model-theft, 模型窃取, Model Theft, advanced, extended, D, '3444', P]
+      - [content-moderation, 内容审核, Content Moderation, beginner, core, D, '5555', P]
+      - [safety-filter, 安全过滤器, Safety Filter, intermediate, core, D, '4555', P]
+      - [ai-guardrail, AI 护栏, AI Guardrail, intermediate, core, D, '4555', HP]
+      - [copyright, 著作权, Copyright, beginner, core, D, '5555', FP]
+
+  - domain: compute-chips-industry
+    terms:
+      - [compute, 算力, Compute, beginner, core, B, '5555', FP]
+      - [gpu, 图形处理器, Graphics Processing Unit, beginner, core, B, '5555', FP]
+      - [cpu, 中央处理器, Central Processing Unit, beginner, core, B, '4444', F]
+      - [tpu, 张量处理器, Tensor Processing Unit, intermediate, core, B, '3444', F]
+      - [npu, 神经网络处理器, Neural Processing Unit, intermediate, core, B, '4554', FP]
+      - [ai-accelerator, AI 加速器, AI Accelerator, intermediate, core, B, '4554', FP]
+      - [memory-bandwidth, 内存带宽, Memory Bandwidth, intermediate, core, B, '4444', F]
+      - [
+          high-bandwidth-memory,
+          高带宽内存,
+          High Bandwidth Memory,
+          intermediate,
+          core,
+          B,
+          '4554',
+          FP,
+        ]
+      - [
+          flops,
+          每秒浮点运算次数,
+          Floating-Point Operations per Second,
+          intermediate,
+          core,
+          B,
+          '4553',
+          F,
+        ]
+      - [parameter-count, 参数量, Parameter Count, beginner, core, B, '5554', F]
+      - [training-compute, 训练算力, Training Compute, intermediate, core, C, '4554', FP]
+      - [inference-compute, 推理算力, Inference Compute, intermediate, core, C, '4555', FP]
+      - [data-center, 数据中心, Data Center, beginner, core, C, '4554', P]
+      - [cloud-computing, 云计算, Cloud Computing, beginner, core, C, '5555', FP]
+      - [edge-ai, 边缘人工智能, Edge AI, intermediate, core, C, '4555', FP]
+      - [on-device-ai, 端侧人工智能, On-Device AI, intermediate, core, C, '4555', FP]
+      - [semiconductor, 半导体, Semiconductor, beginner, core, C, '4554', F]
+      - [chip-fabrication, 芯片制造, Chip Fabrication, intermediate, core, C, '3444', F]
+      - [foundry, 晶圆代工, Semiconductor Foundry, intermediate, core, C, '3444', F]
+      - [advanced-packaging, 先进封装, Advanced Packaging, advanced, core, C, '3444', F]
+      - [chip-interconnect, 芯片互连, Chip Interconnect, advanced, extended, D, '3444', F]
+      - [cuda, CUDA, Compute Unified Device Architecture, intermediate, extended, D, '4554', FP]
+      - [distributed-training, 分布式训练, Distributed Training, advanced, extended, D, '4554', FP]
+      - [tensor-parallelism, 张量并行, Tensor Parallelism, advanced, extended, D, '3443', F]
+      - [energy-efficiency, 能源效率, Energy Efficiency, intermediate, core, D, '4555', FP]
+
+mergeReviews:
+  - canonical: artificial-intelligence
+    variants:
+      - { value: AI, language: en, kind: abbreviation }
+      - { value: 人工智能技术, language: zh-CN, kind: alias }
+    reason: 中英文缩写和技术称呼均指向同一个人工智能总概念。
+  - canonical: artificial-general-intelligence
+    variants:
+      - { value: AGI, language: en, kind: abbreviation }
+    reason: 通用人工智能的行业通用缩写归入同一个规范目录词条。
+  - canonical: generative-ai
+    variants:
+      - { value: GenAI, language: en, kind: abbreviation }
+      - { value: AIGC, language: en, kind: alias }
+      - { value: 生成式人工智能, language: zh-CN, kind: alias }
+    reason: 常见缩写和中文全称描述同一类生成式人工智能方法。
+  - canonical: large-language-model
+    variants:
+      - { value: LLM, language: en, kind: abbreviation }
+      - { value: 大型语言模型, language: zh-CN, kind: alias }
+    reason: 缩写与另一常见译名不需要建立独立的目录词条。
+  - canonical: token
+    variants:
+      - { value: 词元, language: zh-CN, kind: alias }
+      - { value: 文本令牌, language: zh-CN, kind: alias }
+    reason: 两种中文译法都表示模型处理序列时使用的离散单位。
+  - canonical: context-window
+    variants:
+      - { value: 上下文长度, language: zh-CN, kind: alias }
+    reason: 常见中文用语与上下文窗口在当前入门目录中采用同一解释范围。
+  - canonical: document-chunking
+    variants:
+      - { value: 文档分块, language: zh-CN, kind: alias }
+      - { value: Chunking, language: en, kind: alias }
+    reason: 两种名称都表示为索引与检索拆分文档知识单元的过程。
+  - canonical: embedding
+    variants:
+      - { value: 向量嵌入, language: zh-CN, kind: alias }
+      - { value: Embeddings, language: en, kind: alias }
+    reason: 单复数英文形式与中文扩展名称均归入嵌入这一规范概念。
+  - canonical: retrieval
+    variants:
+      - { value: 信息检索, language: zh-CN, kind: alias }
+    reason: 当前产品范围以检索作为规范短名称，信息检索作为搜索别名。
+  - canonical: retrieval-augmented-generation
+    variants:
+      - { value: RAG, language: en, kind: abbreviation }
+      - { value: 检索增强生成技术, language: zh-CN, kind: alias }
+    reason: 缩写和扩展中文名称都指向检索增强生成这一完整流程。
+  - canonical: reranking
+    variants:
+      - { value: 重新排序, language: zh-CN, kind: alias }
+    reason: 中文动作说法与检索系统中的重排阶段采用同一规范词条。
+  - canonical: vector-database
+    variants:
+      - { value: VDB, language: en, kind: abbreviation }
+      - { value: 向量库, language: zh-CN, kind: alias }
+    reason: 简称和缩写均指向存储索引并查询向量的数据库系统。
+  - canonical: hallucination
+    variants:
+      - { value: AI 幻觉, language: zh-CN, kind: alias }
+    reason: 带 AI 前缀的常见说法不构成新的质量问题类型。
+  - canonical: ai-agent
+    variants:
+      - { value: Agent, language: en, kind: alias }
+      - { value: 智能体, language: zh-CN, kind: alias }
+    reason: 在本产品语境中未加限定的 Agent 和智能体均指 AI Agent。
+  - canonical: model-context-protocol
+    variants:
+      - { value: MCP, language: en, kind: abbreviation }
+    reason: 协议缩写作为搜索入口保留，但不建立另一个规范词条。
+  - canonical: optical-character-recognition
+    variants:
+      - { value: OCR, language: en, kind: abbreviation }
+    reason: 行业通用缩写与光学字符识别全称属于同一概念。
+  - canonical: speech-recognition
+    variants:
+      - { value: ASR, language: en, kind: abbreviation }
+      - { value: 语音转文字, language: zh-CN, kind: alias }
+    reason: 自动语音识别缩写和面向用户的功能名称归入同一词条。
+  - canonical: text-to-speech
+    variants:
+      - { value: TTS, language: en, kind: abbreviation }
+      - { value: 文字转语音, language: zh-CN, kind: alias }
+    reason: 缩写与常见中文功能名称均表示文本到语音的转换任务。
+  - canonical: reinforcement-learning
+    variants:
+      - { value: RL, language: en, kind: abbreviation }
+    reason: 学科通用缩写作为别名处理，不需要重复建立目录身份。
+  - canonical: parameter-efficient-fine-tuning
+    variants:
+      - { value: PEFT, language: en, kind: abbreviation }
+    reason: 参数高效微调的行业缩写直接归入其规范全称词条。
+  - canonical: lora
+    variants:
+      - { value: LoRA, language: en, kind: abbreviation }
+    reason: 大小写形式统一归入低秩适配这一规范目录身份。
+  - canonical: approximate-nearest-neighbor
+    variants:
+      - { value: ANN, language: en, kind: abbreviation }
+      - { value: 近似近邻搜索, language: zh-CN, kind: alias }
+    reason: 缩写和简化译名都表示近似最近邻搜索方法。
+  - canonical: llm-as-judge
+    variants:
+      - { value: LLM Judge, language: en, kind: alias }
+      - { value: 模型裁判, language: zh-CN, kind: alias }
+    reason: 口语化英文和中文简称统一归入大模型裁判评估方法。
+  - canonical: explainable-ai
+    variants:
+      - { value: XAI, language: en, kind: abbreviation }
+      - { value: 可解释性 AI, language: zh-CN, kind: alias }
+    reason: 学术缩写和另一中文表述都指向可解释人工智能研究方向。
+  - canonical: high-bandwidth-memory
+    variants:
+      - { value: HBM, language: en, kind: abbreviation }
+    reason: 硬件行业缩写作为搜索别名归入高带宽内存词条。
+  - canonical: gpu
+    variants:
+      - { value: GPU, language: en, kind: abbreviation }
+    reason: 图形处理器的通用缩写应归入同一规范硬件概念。

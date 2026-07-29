@@ -37,8 +37,12 @@ test('derives the homepage routes, domains and content scale from project data',
 
   await expect(page.locator('.route-list .route-item')).toHaveCount(4);
   await expect(page.locator('.domain-list a')).toHaveCount(12);
-  await expect(page.locator('.scope-band')).toContainText('已核验词条');
-  await expect(page.locator('.scope-band')).toContainText('20');
+  await expect(
+    page.locator('.scope-heading dl div', { hasText: '已核验词条' }).locator('dd'),
+  ).toHaveText('12');
+  await expect(
+    page.locator('.scope-heading dl div', { hasText: '概念关系' }).locator('dd'),
+  ).toHaveText('128');
   await expect(page.locator('.featured-register a')).toHaveCount(6);
 });
 
@@ -292,8 +296,9 @@ test('uses the shared search aggregator from the term atlas', async ({ page }) =
 test('filters and sorts the structured atlas index', async ({ page }) => {
   await page.goto('/atlas/');
 
+  await expect(page.locator('[data-atlas-visible]')).toHaveText('120');
   await page.getByLabel('领域范围').selectOption('core');
-  await expect(page.locator('[data-atlas-visible]')).toHaveText('12');
+  await expect(page.locator('[data-atlas-visible]')).toHaveText('90');
   await expect(page.locator('[data-atlas-domain]:visible')).toHaveCount(9);
   await page.getByLabel('排序方式').selectOption('name');
   await expect(page).toHaveURL(/ring=core/);
@@ -354,7 +359,7 @@ test('loads the full graph lazily and supports focus, filters and viewport contr
     await page.locator('[data-graph-load]').click();
   }
   await expect(graph).toHaveAttribute('data-graph-state', 'ready');
-  await expect(graph).toHaveAttribute('data-graph-node-count', '12');
+  await expect(graph).toHaveAttribute('data-graph-node-count', '120');
   await expect(graph).toHaveAttribute('data-graph-selected', 'token');
   await expect(graph.locator('[data-graph-detail-title]')).toHaveText('Token');
   expect(cytoscapeRequests).toHaveLength(1);
@@ -399,6 +404,7 @@ test('explains an empty graph filter without removing structured navigation', as
   await expect(graph).toHaveAttribute('data-graph-state', 'ready');
 
   await graph.locator('[data-graph-domain]').selectOption('machine-learning-deep-learning');
+  await graph.locator('[data-graph-relation][value="application"]').uncheck();
   await expect(graph).toHaveAttribute('data-graph-state', 'empty');
   await expect(graph.getByText('当前筛选没有可显示的词条关系')).toBeVisible();
   await expect(

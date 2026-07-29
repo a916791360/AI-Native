@@ -29,11 +29,11 @@ describe('site metadata', () => {
 
     expect(metrics).toMatchObject({
       domainCount: 12,
-      termCount: 12,
+      termCount: 120,
       verifiedTermCount: 12,
       routeCount: 4,
       publishedRouteCount: 4,
-      relationCount: 20,
+      relationCount: 128,
       latestVerifiedAt: '2026-07-29',
     });
   });
