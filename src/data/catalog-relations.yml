@@ -93,6 +93,31 @@
   target: artificial-intelligence
   type: application
   explanation: AI 效应是理解和应用人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: dartmouth-workshop-connected-to-artificial-intelligence
+  source: dartmouth-workshop
+  target: artificial-intelligence
+  type: application
+  explanation: 达特茅斯会议是理解和应用人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: perceptron-history-connected-to-artificial-intelligence
+  source: perceptron-history
+  target: artificial-intelligence
+  type: application
+  explanation: 感知机历史是理解和应用人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: deep-learning-boom-connected-to-artificial-intelligence
+  source: deep-learning-boom
+  target: artificial-intelligence
+  type: application
+  explanation: 深度学习浪潮是理解和应用人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: foundation-model-era-connected-to-artificial-intelligence
+  source: foundation-model-era
+  target: artificial-intelligence
+  type: application
+  explanation: 基础模型时代是理解和应用人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: ai-capability-boundary-connected-to-artificial-intelligence
+  source: ai-capability-boundary
+  target: artificial-intelligence
+  type: application
+  explanation: AI 能力边界是理解和应用人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。
 - id: machine-learning-connected-to-artificial-intelligence
   source: machine-learning
   target: artificial-intelligence
@@ -193,6 +218,31 @@
   target: machine-learning
   type: application
   explanation: 批大小是理解和应用机器学习时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: learning-rate-connected-to-machine-learning
+  source: learning-rate
+  target: machine-learning
+  type: application
+  explanation: 学习率是理解和应用机器学习时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: transfer-learning-connected-to-machine-learning
+  source: transfer-learning
+  target: machine-learning
+  type: application
+  explanation: 迁移学习是理解和应用机器学习时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: model-parameter-connected-to-machine-learning
+  source: model-parameter
+  target: machine-learning
+  type: application
+  explanation: 模型参数是理解和应用机器学习时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: hyperparameter-connected-to-machine-learning
+  source: hyperparameter
+  target: machine-learning
+  type: application
+  explanation: 超参数是理解和应用机器学习时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: train-validation-test-split-connected-to-machine-learning
+  source: train-validation-test-split
+  target: machine-learning
+  type: application
+  explanation: 训练验证测试集划分是理解和应用机器学习时的重要概念，可帮助判断相关机制、场景或实现取舍。
 - id: foundation-model-connected-to-large-language-model
   source: foundation-model
   target: large-language-model
@@ -278,6 +328,31 @@
   target: large-language-model
   type: application
   explanation: 模型量化是理解和应用大语言模型时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: next-token-prediction-connected-to-large-language-model
+  source: next-token-prediction
+  target: large-language-model
+  type: application
+  explanation: 下一词元预测是理解和应用大语言模型时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: mixture-of-experts-connected-to-large-language-model
+  source: mixture-of-experts
+  target: large-language-model
+  type: application
+  explanation: 混合专家模型是理解和应用大语言模型时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: distillation-connected-to-large-language-model
+  source: distillation
+  target: large-language-model
+  type: application
+  explanation: 模型蒸馏是理解和应用大语言模型时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: open-weight-model-connected-to-large-language-model
+  source: open-weight-model
+  target: large-language-model
+  type: application
+  explanation: 开放权重模型是理解和应用大语言模型时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: model-capability-connected-to-large-language-model
+  source: model-capability
+  target: large-language-model
+  type: application
+  explanation: 模型能力是理解和应用大语言模型时的重要概念，可帮助判断相关机制、场景或实现取舍。
 - id: prompt-connected-to-context-window
   source: prompt
   target: context-window
@@ -373,6 +448,31 @@
   target: context-window
   type: application
   explanation: 指令层级是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: in-context-learning-connected-to-context-window
+  source: in-context-learning
+  target: context-window
+  type: application
+  explanation: 上下文学习是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: negative-prompt-connected-to-context-window
+  source: negative-prompt
+  target: context-window
+  type: application
+  explanation: 负向提示词是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: prompt-constraint-connected-to-context-window
+  source: prompt-constraint
+  target: context-window
+  type: application
+  explanation: 提示约束是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: context-relevance-connected-to-context-window
+  source: context-relevance
+  target: context-window
+  type: application
+  explanation: 上下文相关性是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: prompt-debugging-connected-to-context-window
+  source: prompt-debugging
+  target: context-window
+  type: application
+  explanation: 提示词调试是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。
 - id: multimodal-ai-connected-to-generative-ai
   source: multimodal-ai
   target: generative-ai
@@ -473,6 +573,31 @@
   target: multimodal-ai
   type: application
   explanation: 文档理解是理解和应用多模态人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: voice-cloning-connected-to-multimodal-ai
+  source: voice-cloning
+  target: multimodal-ai
+  type: application
+  explanation: 声音克隆是理解和应用多模态人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: lip-sync-connected-to-multimodal-ai
+  source: lip-sync
+  target: multimodal-ai
+  type: application
+  explanation: 唇形同步是理解和应用多模态人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: multimodal-fusion-connected-to-multimodal-ai
+  source: multimodal-fusion
+  target: multimodal-ai
+  type: application
+  explanation: 多模态融合是理解和应用多模态人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: native-multimodal-model-connected-to-multimodal-ai
+  source: native-multimodal-model
+  target: multimodal-ai
+  type: application
+  explanation: 原生多模态模型是理解和应用多模态人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: modality-connected-to-multimodal-ai
+  source: modality
+  target: multimodal-ai
+  type: application
+  explanation: 模态是理解和应用多模态人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。
 - id: data-ingestion-connected-to-retrieval-augmented-generation
   source: data-ingestion
   target: retrieval-augmented-generation
@@ -543,6 +668,31 @@
   target: retrieval-augmented-generation
   type: application
   explanation: 查询扩展是理解和应用检索增强生成时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: context-retrieval-connected-to-retrieval-augmented-generation
+  source: context-retrieval
+  target: retrieval-augmented-generation
+  type: application
+  explanation: 上下文检索是理解和应用检索增强生成时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: citation-generation-connected-to-retrieval-augmented-generation
+  source: citation-generation
+  target: retrieval-augmented-generation
+  type: application
+  explanation: 引用生成是理解和应用检索增强生成时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: knowledge-base-connected-to-retrieval-augmented-generation
+  source: knowledge-base
+  target: retrieval-augmented-generation
+  type: application
+  explanation: 知识库是理解和应用检索增强生成时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: indexing-pipeline-connected-to-retrieval-augmented-generation
+  source: indexing-pipeline
+  target: retrieval-augmented-generation
+  type: application
+  explanation: 索引管线是理解和应用检索增强生成时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: retrieval-query-connected-to-retrieval-augmented-generation
+  source: retrieval-query
+  target: retrieval-augmented-generation
+  type: application
+  explanation: 检索查询是理解和应用检索增强生成时的重要概念，可帮助判断相关机制、场景或实现取舍。
 - id: ai-agent-connected-to-large-language-model
   source: ai-agent
   target: large-language-model
@@ -643,6 +793,31 @@
   target: ai-agent
   type: application
   explanation: 多智能体系统是理解和应用AI Agent时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: human-in-the-loop-connected-to-ai-agent
+  source: human-in-the-loop
+  target: ai-agent
+  type: application
+  explanation: 人在回路是理解和应用AI Agent时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: workflow-automation-connected-to-ai-agent
+  source: workflow-automation
+  target: ai-agent
+  type: application
+  explanation: 工作流自动化是理解和应用AI Agent时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: automation-trigger-connected-to-ai-agent
+  source: automation-trigger
+  target: ai-agent
+  type: application
+  explanation: 自动化触发器是理解和应用AI Agent时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: retry-policy-connected-to-ai-agent
+  source: retry-policy
+  target: ai-agent
+  type: application
+  explanation: 重试策略是理解和应用AI Agent时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: agent-sandbox-connected-to-ai-agent
+  source: agent-sandbox
+  target: ai-agent
+  type: application
+  explanation: Agent 沙箱是理解和应用AI Agent时的重要概念，可帮助判断相关机制、场景或实现取舍。
 - id: ai-product-connected-to-artificial-intelligence
   source: ai-product
   target: artificial-intelligence
@@ -743,6 +918,31 @@
   target: ai-product
   type: application
   explanation: 感知延迟是理解和应用AI 产品时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: user-trust-connected-to-ai-product
+  source: user-trust
+  target: ai-product
+  type: application
+  explanation: 用户信任是理解和应用AI 产品时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: ai-adoption-connected-to-ai-product
+  source: ai-adoption
+  target: ai-product
+  type: application
+  explanation: AI 采用是理解和应用AI 产品时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: task-success-rate-connected-to-ai-product
+  source: task-success-rate
+  target: ai-product
+  type: application
+  explanation: 任务成功率是理解和应用AI 产品时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: ai-onboarding-connected-to-ai-product
+  source: ai-onboarding
+  target: ai-product
+  type: application
+  explanation: AI 产品引导是理解和应用AI 产品时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: error-recovery-connected-to-ai-product
+  source: error-recovery
+  target: ai-product
+  type: application
+  explanation: 错误恢复是理解和应用AI 产品时的重要概念，可帮助判断相关机制、场景或实现取舍。
 - id: evaluation-connected-to-hallucination
   source: evaluation
   target: hallucination
@@ -838,6 +1038,31 @@
   target: evaluation
   type: application
   explanation: 毒性评估是理解和应用AI 评估时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: bias-evaluation-connected-to-evaluation
+  source: bias-evaluation
+  target: evaluation
+  type: application
+  explanation: 偏见评估是理解和应用AI 评估时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: latency-connected-to-evaluation
+  source: latency
+  target: evaluation
+  type: application
+  explanation: 延迟是理解和应用AI 评估时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: throughput-connected-to-evaluation
+  source: throughput
+  target: evaluation
+  type: application
+  explanation: 吞吐量是理解和应用AI 评估时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: observability-connected-to-evaluation
+  source: observability
+  target: evaluation
+  type: application
+  explanation: 可观测性是理解和应用AI 评估时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: trace-connected-to-evaluation
+  source: trace
+  target: evaluation
+  type: application
+  explanation: 调用追踪是理解和应用AI 评估时的重要概念，可帮助判断相关机制、场景或实现取舍。
 - id: ai-application-connected-to-artificial-intelligence
   source: ai-application
   target: artificial-intelligence
@@ -938,6 +1163,31 @@
   target: ai-application
   type: application
   explanation: 模型注册表是理解和应用AI 应用时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: experiment-tracking-connected-to-ai-application
+  source: experiment-tracking
+  target: ai-application
+  type: application
+  explanation: 实验追踪是理解和应用AI 应用时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: continuous-delivery-connected-to-ai-application
+  source: continuous-delivery
+  target: ai-application
+  type: application
+  explanation: 持续交付是理解和应用AI 应用时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: canary-release-connected-to-ai-application
+  source: canary-release
+  target: ai-application
+  type: application
+  explanation: 金丝雀发布是理解和应用AI 应用时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: rollback-connected-to-ai-application
+  source: rollback
+  target: ai-application
+  type: application
+  explanation: 回滚是理解和应用AI 应用时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: service-level-objective-connected-to-ai-application
+  source: service-level-objective
+  target: ai-application
+  type: application
+  explanation: 服务等级目标是理解和应用AI 应用时的重要概念，可帮助判断相关机制、场景或实现取舍。
 - id: ai-safety-connected-to-artificial-intelligence
   source: ai-safety
   target: artificial-intelligence
@@ -1038,6 +1288,31 @@
   target: ai-safety
   type: application
   explanation: 数据投毒是理解和应用AI 安全时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: model-theft-connected-to-ai-safety
+  source: model-theft
+  target: ai-safety
+  type: application
+  explanation: 模型窃取是理解和应用AI 安全时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: content-moderation-connected-to-ai-safety
+  source: content-moderation
+  target: ai-safety
+  type: application
+  explanation: 内容审核是理解和应用AI 安全时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: safety-filter-connected-to-ai-safety
+  source: safety-filter
+  target: ai-safety
+  type: application
+  explanation: 安全过滤器是理解和应用AI 安全时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: ai-guardrail-connected-to-ai-safety
+  source: ai-guardrail
+  target: ai-safety
+  type: application
+  explanation: AI 护栏是理解和应用AI 安全时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: copyright-connected-to-ai-safety
+  source: copyright
+  target: ai-safety
+  type: application
+  explanation: 著作权是理解和应用AI 安全时的重要概念，可帮助判断相关机制、场景或实现取舍。
 - id: compute-connected-to-artificial-intelligence
   source: compute
   target: artificial-intelligence
@@ -1138,3 +1413,28 @@
   target: compute
   type: application
   explanation: 先进封装是理解和应用算力时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: chip-interconnect-connected-to-compute
+  source: chip-interconnect
+  target: compute
+  type: application
+  explanation: 芯片互连是理解和应用算力时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: cuda-connected-to-compute
+  source: cuda
+  target: compute
+  type: application
+  explanation: CUDA是理解和应用算力时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: distributed-training-connected-to-compute
+  source: distributed-training
+  target: compute
+  type: application
+  explanation: 分布式训练是理解和应用算力时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: tensor-parallelism-connected-to-compute
+  source: tensor-parallelism
+  target: compute
+  type: application
+  explanation: 张量并行是理解和应用算力时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: energy-efficiency-connected-to-compute
+  source: energy-efficiency
+  target: compute
+  type: application
+  explanation: 能源效率是理解和应用算力时的重要概念，可帮助判断相关机制、场景或实现取舍。

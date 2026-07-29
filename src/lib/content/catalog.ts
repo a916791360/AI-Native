@@ -62,7 +62,7 @@ export const catalogPlanSchema = z
 
 export type CatalogPlan = z.infer<typeof catalogPlanSchema>;
 export type CatalogCandidateTuple = z.infer<typeof candidateTupleSchema>;
-export const PUBLISHED_CATALOG_BATCHES = ['B', 'C'] as const;
+export const PUBLISHED_CATALOG_BATCHES = ['B', 'C', 'D'] as const;
 
 const catalogSummariesSchema = z.record(stableIdSchema, z.string().min(10).max(160));
 export type CatalogSummaries = z.infer<typeof catalogSummariesSchema>;
@@ -303,7 +303,7 @@ export function validatePublishedCatalogSummaries(
   const diagnostics: CatalogDiagnostic[] = [];
   const publishedIds = new Set(
     flattenCatalogCandidates(catalog)
-      .filter((candidate) => PUBLISHED_CATALOG_BATCHES.includes(candidate.batch as 'B' | 'C'))
+      .filter((candidate) => PUBLISHED_CATALOG_BATCHES.includes(candidate.batch as 'B' | 'C' | 'D'))
       .map((candidate) => candidate.id),
   );
 

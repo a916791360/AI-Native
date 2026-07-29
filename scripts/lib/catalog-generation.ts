@@ -55,7 +55,7 @@ function variantsFor(catalog: CatalogPlan, id: string) {
 
 export function buildPublishedCatalogTerms(catalog: CatalogPlan, summaries: CatalogSummaries) {
   return flattenCatalogCandidates(catalog)
-    .filter((candidate) => PUBLISHED_CATALOG_BATCHES.includes(candidate.batch as 'B' | 'C'))
+    .filter((candidate) => PUBLISHED_CATALOG_BATCHES.includes(candidate.batch as 'B' | 'C' | 'D'))
     .map((candidate) => {
       const variants = variantsFor(catalog, candidate.id);
       const data: Term = {

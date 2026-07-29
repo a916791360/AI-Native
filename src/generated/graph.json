@@ -12,8 +12,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 637,
-        "y": 71
+        "x": 610,
+        "y": 65
       }
     },
     {
@@ -27,8 +27,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 648,
-        "y": 74
+        "x": 619,
+        "y": 67
       }
     },
     {
@@ -42,8 +42,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 659,
-        "y": 77
+        "x": 628,
+        "y": 69
       }
     },
     {
@@ -57,8 +57,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 670,
-        "y": 80
+        "x": 636,
+        "y": 71
       }
     },
     {
@@ -72,8 +72,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 681,
-        "y": 83
+        "x": 645,
+        "y": 73
       }
     },
     {
@@ -87,8 +87,23 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 691,
-        "y": 87
+        "x": 654,
+        "y": 75
+      }
+    },
+    {
+      "id": "agent-sandbox",
+      "label": "Agent 沙箱",
+      "labelEn": "Agent Sandbox",
+      "url": "/terms/agent-sandbox/",
+      "summary": "限制 Agent 可访问资源、工具和执行范围的隔离环境，用于降低错误或恶意指令造成的影响。",
+      "domain": "agents-tool-use-automation",
+      "difficulty": "advanced",
+      "ring": "extended",
+      "status": "catalogued",
+      "position": {
+        "x": 662,
+        "y": 78
       }
     },
     {
@@ -102,8 +117,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 701,
-        "y": 91
+        "x": 671,
+        "y": 80
       }
     },
     {
@@ -117,8 +132,23 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 712,
-        "y": 94
+        "x": 679,
+        "y": 83
+      }
+    },
+    {
+      "id": "ai-adoption",
+      "label": "AI 采用",
+      "labelEn": "AI Adoption",
+      "url": "/terms/ai-adoption/",
+      "summary": "用户或组织把 AI 能力纳入实际工作流程并持续使用的过程，受价值、成本、风险和变革管理影响。",
+      "domain": "ai-product-ux",
+      "difficulty": "beginner",
+      "ring": "extended",
+      "status": "catalogued",
+      "position": {
+        "x": 688,
+        "y": 86
       }
     },
     {
@@ -152,6 +182,21 @@
       }
     },
     {
+      "id": "ai-capability-boundary",
+      "label": "AI 能力边界",
+      "labelEn": "AI Capability Boundary",
+      "url": "/terms/ai-capability-boundary/",
+      "summary": "AI 系统在特定输入、任务和运行条件下能够可靠完成工作的范围，以及超出范围后的失败方式。",
+      "domain": "ai-foundations-history",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "catalogued",
+      "position": {
+        "x": 696,
+        "y": 89
+      }
+    },
+    {
       "id": "ai-effect",
       "label": "AI 效应",
       "labelEn": "AI Effect",
@@ -162,8 +207,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 722,
-        "y": 99
+        "x": 704,
+        "y": 92
       }
     },
     {
@@ -177,8 +222,38 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 732,
-        "y": 103
+        "x": 712,
+        "y": 95
+      }
+    },
+    {
+      "id": "ai-guardrail",
+      "label": "AI 护栏",
+      "labelEn": "AI Guardrail",
+      "url": "/terms/ai-guardrail/",
+      "summary": "对 AI 系统输入、工具权限、输出和执行结果施加的运行时约束与检查，用于降低已知风险。",
+      "domain": "safety-ethics-governance",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "position": {
+        "x": 720,
+        "y": 98
+      }
+    },
+    {
+      "id": "ai-onboarding",
+      "label": "AI 产品引导",
+      "labelEn": "AI Onboarding",
+      "url": "/terms/ai-onboarding/",
+      "summary": "帮助新用户理解 AI 产品适用场景、输入方式、能力边界和控制机制的首次使用引导。",
+      "domain": "ai-product-ux",
+      "difficulty": "beginner",
+      "ring": "extended",
+      "status": "catalogued",
+      "position": {
+        "x": 728,
+        "y": 102
       }
     },
     {
@@ -207,8 +282,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 741,
-        "y": 108
+        "x": 736,
+        "y": 105
       }
     },
     {
@@ -237,8 +312,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 751,
-        "y": 112
+        "x": 744,
+        "y": 109
       }
     },
     {
@@ -252,8 +327,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 760,
-        "y": 117
+        "x": 751,
+        "y": 112
       }
     },
     {
@@ -267,8 +342,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 769,
-        "y": 122
+        "x": 759,
+        "y": 116
       }
     },
     {
@@ -282,8 +357,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 778,
-        "y": 128
+        "x": 766,
+        "y": 120
       }
     },
     {
@@ -297,8 +372,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 787,
-        "y": 133
+        "x": 773,
+        "y": 124
       }
     },
     {
@@ -312,8 +387,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 796,
-        "y": 139
+        "x": 780,
+        "y": 129
       }
     },
     {
@@ -327,8 +402,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 804,
-        "y": 144
+        "x": 787,
+        "y": 133
       }
     },
     {
@@ -357,8 +432,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 812,
-        "y": 150
+        "x": 794,
+        "y": 137
       }
     },
     {
@@ -372,8 +447,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 820,
-        "y": 156
+        "x": 801,
+        "y": 142
       }
     },
     {
@@ -387,8 +462,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 828,
-        "y": 163
+        "x": 807,
+        "y": 147
       }
     },
     {
@@ -402,8 +477,23 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 835,
-        "y": 169
+        "x": 814,
+        "y": 151
+      }
+    },
+    {
+      "id": "automation-trigger",
+      "label": "自动化触发器",
+      "labelEn": "Automation Trigger",
+      "url": "/terms/automation-trigger/",
+      "summary": "启动自动化流程的事件或条件，例如定时、数据变化、用户操作或外部系统回调。",
+      "domain": "agents-tool-use-automation",
+      "difficulty": "beginner",
+      "ring": "extended",
+      "status": "catalogued",
+      "position": {
+        "x": 820,
+        "y": 156
       }
     },
     {
@@ -417,8 +507,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 842,
-        "y": 175
+        "x": 826,
+        "y": 161
       }
     },
     {
@@ -432,8 +522,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 849,
-        "y": 182
+        "x": 832,
+        "y": 166
       }
     },
     {
@@ -447,8 +537,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 856,
-        "y": 189
+        "x": 838,
+        "y": 171
       }
     },
     {
@@ -462,8 +552,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 862,
-        "y": 196
+        "x": 843,
+        "y": 177
       }
     },
     {
@@ -477,8 +567,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 868,
-        "y": 203
+        "x": 849,
+        "y": 182
       }
     },
     {
@@ -492,8 +582,23 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 874,
-        "y": 210
+        "x": 854,
+        "y": 187
+      }
+    },
+    {
+      "id": "bias-evaluation",
+      "label": "偏见评估",
+      "labelEn": "Bias Evaluation",
+      "url": "/terms/bias-evaluation/",
+      "summary": "检查模型或系统对不同群体、语言和场景是否产生系统性不公平差异的评估过程。",
+      "domain": "evaluation-observability-quality",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "position": {
+        "x": 859,
+        "y": 193
       }
     },
     {
@@ -507,8 +612,23 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 880,
-        "y": 217
+        "x": 864,
+        "y": 198
+      }
+    },
+    {
+      "id": "canary-release",
+      "label": "金丝雀发布",
+      "labelEn": "Canary Release",
+      "url": "/terms/canary-release/",
+      "summary": "先向少量流量或用户发布新版本并观察指标，再决定扩大范围或回退的渐进发布策略。",
+      "domain": "ai-engineering-deployment-operations",
+      "difficulty": "advanced",
+      "ring": "extended",
+      "status": "catalogued",
+      "position": {
+        "x": 869,
+        "y": 204
       }
     },
     {
@@ -522,8 +642,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 885,
-        "y": 224
+        "x": 874,
+        "y": 209
       }
     },
     {
@@ -537,8 +657,38 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 890,
-        "y": 232
+        "x": 878,
+        "y": 215
+      }
+    },
+    {
+      "id": "chip-interconnect",
+      "label": "芯片互连",
+      "labelEn": "Chip Interconnect",
+      "url": "/terms/chip-interconnect/",
+      "summary": "在芯片内部、芯粒之间或芯片与内存之间传输数据的连接技术，直接影响带宽、延迟和能耗。",
+      "domain": "compute-chips-industry",
+      "difficulty": "advanced",
+      "ring": "extended",
+      "status": "catalogued",
+      "position": {
+        "x": 883,
+        "y": 221
+      }
+    },
+    {
+      "id": "citation-generation",
+      "label": "引用生成",
+      "labelEn": "Citation Generation",
+      "url": "/terms/citation-generation/",
+      "summary": "为回答中的主张生成或附加来源指向的过程，需要确保引用内容真实存在并支持对应陈述。",
+      "domain": "data-retrieval-rag",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "position": {
+        "x": 887,
+        "y": 227
       }
     },
     {
@@ -552,8 +702,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 895,
-        "y": 239
+        "x": 891,
+        "y": 233
       }
     },
     {
@@ -567,8 +717,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 899,
-        "y": 247
+        "x": 895,
+        "y": 239
       }
     },
     {
@@ -582,8 +732,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 904,
-        "y": 255
+        "x": 898,
+        "y": 245
       }
     },
     {
@@ -597,8 +747,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 907,
-        "y": 263
+        "x": 902,
+        "y": 251
       }
     },
     {
@@ -612,8 +762,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 911,
-        "y": 270
+        "x": 905,
+        "y": 257
       }
     },
     {
@@ -642,8 +792,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 914,
-        "y": 278
+        "x": 908,
+        "y": 263
       }
     },
     {
@@ -657,8 +807,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 917,
-        "y": 286
+        "x": 911,
+        "y": 270
       }
     },
     {
@@ -672,8 +822,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 920,
-        "y": 294
+        "x": 913,
+        "y": 276
       }
     },
     {
@@ -687,8 +837,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 922,
-        "y": 303
+        "x": 916,
+        "y": 282
       }
     },
     {
@@ -702,8 +852,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 924,
-        "y": 311
+        "x": 918,
+        "y": 288
       }
     },
     {
@@ -717,8 +867,23 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 926,
-        "y": 319
+        "x": 920,
+        "y": 295
+      }
+    },
+    {
+      "id": "content-moderation",
+      "label": "内容审核",
+      "labelEn": "Content Moderation",
+      "url": "/terms/content-moderation/",
+      "summary": "根据法律、平台规则和场景标准识别、限制或处理不适当内容的流程，可结合模型与人工审核。",
+      "domain": "safety-ethics-governance",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "catalogued",
+      "position": {
+        "x": 922,
+        "y": 301
       }
     },
     {
@@ -732,8 +897,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 927,
-        "y": 327
+        "x": 924,
+        "y": 308
       }
     },
     {
@@ -747,8 +912,38 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 929,
-        "y": 335
+        "x": 925,
+        "y": 314
+      }
+    },
+    {
+      "id": "context-relevance",
+      "label": "上下文相关性",
+      "labelEn": "Context Relevance",
+      "url": "/terms/context-relevance/",
+      "summary": "提供给模型的信息与当前任务和问题的相关程度，低相关上下文会增加噪声、成本和误导风险。",
+      "domain": "prompt-context-engineering",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "position": {
+        "x": 926,
+        "y": 321
+      }
+    },
+    {
+      "id": "context-retrieval",
+      "label": "上下文检索",
+      "labelEn": "Context Retrieval",
+      "url": "/terms/context-retrieval/",
+      "summary": "围绕当前任务从外部数据源寻找可用上下文的过程，强调结果能直接支持后续生成或决策。",
+      "domain": "data-retrieval-rag",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "position": {
+        "x": 928,
+        "y": 327
       }
     },
     {
@@ -767,6 +962,21 @@
       }
     },
     {
+      "id": "continuous-delivery",
+      "label": "持续交付",
+      "labelEn": "Continuous Delivery",
+      "url": "/terms/continuous-delivery/",
+      "summary": "让通过验证的软件变更持续保持可发布状态的工程实践，通常结合自动构建、测试和审批。",
+      "domain": "ai-engineering-deployment-operations",
+      "difficulty": "intermediate",
+      "ring": "extended",
+      "status": "catalogued",
+      "position": {
+        "x": 928,
+        "y": 334
+      }
+    },
+    {
       "id": "conversation-context",
       "label": "对话上下文",
       "labelEn": "Conversation Context",
@@ -778,7 +988,7 @@
       "status": "catalogued",
       "position": {
         "x": 929,
-        "y": 343
+        "y": 340
       }
     },
     {
@@ -793,7 +1003,7 @@
       "status": "catalogued",
       "position": {
         "x": 930,
-        "y": 352
+        "y": 347
       }
     },
     {
@@ -803,6 +1013,21 @@
       "url": "/terms/copilot-pattern/",
       "summary": "由 AI 提供建议或草稿、用户保留关键决策与最终控制权的人机协作模式。",
       "domain": "ai-product-ux",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "catalogued",
+      "position": {
+        "x": 930,
+        "y": 353
+      }
+    },
+    {
+      "id": "copyright",
+      "label": "著作权",
+      "labelEn": "Copyright",
+      "url": "/terms/copyright/",
+      "summary": "保护原创表达及相关权利的法律制度，AI 数据使用、生成内容和产品发布都需要评估其适用范围。",
+      "domain": "safety-ethics-governance",
       "difficulty": "beginner",
       "ring": "core",
       "status": "catalogued",
@@ -823,7 +1048,7 @@
       "status": "catalogued",
       "position": {
         "x": 930,
-        "y": 368
+        "y": 367
       }
     },
     {
@@ -837,8 +1062,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 929,
-        "y": 377
+        "x": 930,
+        "y": 373
       }
     },
     {
@@ -853,7 +1078,37 @@
       "status": "catalogued",
       "position": {
         "x": 929,
-        "y": 385
+        "y": 380
+      }
+    },
+    {
+      "id": "cuda",
+      "label": "CUDA",
+      "labelEn": "Compute Unified Device Architecture",
+      "url": "/terms/cuda/",
+      "summary": "NVIDIA 提供的并行计算平台与编程模型，使开发者能够使用 GPU 加速通用计算和 AI 工作负载。",
+      "domain": "compute-chips-industry",
+      "difficulty": "intermediate",
+      "ring": "extended",
+      "status": "catalogued",
+      "position": {
+        "x": 928,
+        "y": 386
+      }
+    },
+    {
+      "id": "dartmouth-workshop",
+      "label": "达特茅斯会议",
+      "labelEn": "Dartmouth Workshop",
+      "url": "/terms/dartmouth-workshop/",
+      "summary": "1956 年召集研究者讨论机器智能的学术会议，常被视为人工智能成为独立研究领域的重要起点。",
+      "domain": "ai-foundations-history",
+      "difficulty": "beginner",
+      "ring": "extended",
+      "status": "catalogued",
+      "position": {
+        "x": 928,
+        "y": 393
       }
     },
     {
@@ -867,8 +1122,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 927,
-        "y": 393
+        "x": 926,
+        "y": 399
       }
     },
     {
@@ -882,8 +1137,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 926,
-        "y": 401
+        "x": 925,
+        "y": 406
       }
     },
     {
@@ -898,7 +1153,7 @@
       "status": "catalogued",
       "position": {
         "x": 924,
-        "y": 409
+        "y": 412
       }
     },
     {
@@ -913,7 +1168,7 @@
       "status": "catalogued",
       "position": {
         "x": 922,
-        "y": 417
+        "y": 419
       }
     },
     {
@@ -928,7 +1183,7 @@
       "status": "catalogued",
       "position": {
         "x": 920,
-        "y": 426
+        "y": 425
       }
     },
     {
@@ -942,8 +1197,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 917,
-        "y": 434
+        "x": 918,
+        "y": 432
       }
     },
     {
@@ -957,8 +1212,23 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 914,
-        "y": 442
+        "x": 916,
+        "y": 438
+      }
+    },
+    {
+      "id": "deep-learning-boom",
+      "label": "深度学习浪潮",
+      "labelEn": "Deep Learning Boom",
+      "url": "/terms/deep-learning-boom/",
+      "summary": "深度学习在数据、算力和算法共同推动下快速突破并广泛应用的时期，重塑了现代 AI 技术路线。",
+      "domain": "ai-foundations-history",
+      "difficulty": "beginner",
+      "ring": "extended",
+      "status": "catalogued",
+      "position": {
+        "x": 913,
+        "y": 444
       }
     },
     {
@@ -987,8 +1257,38 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 907,
+        "x": 908,
         "y": 457
+      }
+    },
+    {
+      "id": "distillation",
+      "label": "模型蒸馏",
+      "labelEn": "Model Distillation",
+      "url": "/terms/distillation/",
+      "summary": "使用较大教师模型的输出或中间表示训练较小学生模型，以压缩成本并尽量保留能力的方法。",
+      "domain": "large-language-models-generative-ai",
+      "difficulty": "advanced",
+      "ring": "extended",
+      "status": "catalogued",
+      "position": {
+        "x": 905,
+        "y": 463
+      }
+    },
+    {
+      "id": "distributed-training",
+      "label": "分布式训练",
+      "labelEn": "Distributed Training",
+      "url": "/terms/distributed-training/",
+      "summary": "把模型训练计算和数据分配到多个加速器或节点协同完成的方法，需要处理通信与一致性开销。",
+      "domain": "compute-chips-industry",
+      "difficulty": "advanced",
+      "ring": "extended",
+      "status": "catalogued",
+      "position": {
+        "x": 902,
+        "y": 469
       }
     },
     {
@@ -1002,8 +1302,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 592,
-        "y": 62
+        "x": 574,
+        "y": 60
       }
     },
     {
@@ -1017,8 +1317,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 904,
-        "y": 465
+        "x": 898,
+        "y": 475
       }
     },
     {
@@ -1032,8 +1332,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 899,
-        "y": 473
+        "x": 895,
+        "y": 481
       }
     },
     {
@@ -1047,8 +1347,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 895,
-        "y": 481
+        "x": 891,
+        "y": 487
       }
     },
     {
@@ -1062,8 +1362,23 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 604,
-        "y": 64
+        "x": 583,
+        "y": 61
+      }
+    },
+    {
+      "id": "energy-efficiency",
+      "label": "能源效率",
+      "labelEn": "Energy Efficiency",
+      "url": "/terms/energy-efficiency/",
+      "summary": "完成单位计算、训练任务或推理请求所消耗能源的效率，影响成本、容量和环境负担。",
+      "domain": "compute-chips-industry",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "position": {
+        "x": 887,
+        "y": 493
       }
     },
     {
@@ -1077,8 +1392,23 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 890,
-        "y": 488
+        "x": 883,
+        "y": 499
+      }
+    },
+    {
+      "id": "error-recovery",
+      "label": "错误恢复",
+      "labelEn": "Error Recovery",
+      "url": "/terms/error-recovery/",
+      "summary": "系统出错后帮助用户理解状态、保留已有工作并重试、撤销或转人工的产品与工程能力。",
+      "domain": "ai-product-ux",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "position": {
+        "x": 878,
+        "y": 505
       }
     },
     {
@@ -1092,8 +1422,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 885,
-        "y": 496
+        "x": 874,
+        "y": 511
       }
     },
     {
@@ -1107,7 +1437,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 535,
+        "x": 528,
         "y": 56
       }
     },
@@ -1122,8 +1452,23 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 880,
-        "y": 503
+        "x": 869,
+        "y": 516
+      }
+    },
+    {
+      "id": "experiment-tracking",
+      "label": "实验追踪",
+      "labelEn": "Experiment Tracking",
+      "url": "/terms/experiment-tracking/",
+      "summary": "记录训练或评测实验的配置、数据、代码、指标和产物，使结果能够比较、复现和追溯。",
+      "domain": "ai-engineering-deployment-operations",
+      "difficulty": "intermediate",
+      "ring": "extended",
+      "status": "catalogued",
+      "position": {
+        "x": 864,
+        "y": 522
       }
     },
     {
@@ -1137,8 +1482,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 874,
-        "y": 510
+        "x": 859,
+        "y": 527
       }
     },
     {
@@ -1152,8 +1497,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 868,
-        "y": 517
+        "x": 854,
+        "y": 533
       }
     },
     {
@@ -1167,8 +1512,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 862,
-        "y": 524
+        "x": 849,
+        "y": 538
       }
     },
     {
@@ -1182,8 +1527,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 856,
-        "y": 531
+        "x": 843,
+        "y": 543
       }
     },
     {
@@ -1197,8 +1542,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 849,
-        "y": 538
+        "x": 838,
+        "y": 549
       }
     },
     {
@@ -1212,8 +1557,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 842,
-        "y": 545
+        "x": 832,
+        "y": 554
       }
     },
     {
@@ -1227,8 +1572,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 835,
-        "y": 551
+        "x": 826,
+        "y": 559
       }
     },
     {
@@ -1242,8 +1587,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 828,
-        "y": 557
+        "x": 820,
+        "y": 564
       }
     },
     {
@@ -1257,8 +1602,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 820,
-        "y": 564
+        "x": 814,
+        "y": 569
       }
     },
     {
@@ -1272,8 +1617,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 812,
-        "y": 570
+        "x": 807,
+        "y": 573
       }
     },
     {
@@ -1287,8 +1632,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 804,
-        "y": 576
+        "x": 801,
+        "y": 578
       }
     },
     {
@@ -1302,8 +1647,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 796,
-        "y": 581
+        "x": 794,
+        "y": 583
       }
     },
     {
@@ -1332,8 +1677,23 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 778,
-        "y": 592
+        "x": 780,
+        "y": 591
+      }
+    },
+    {
+      "id": "foundation-model-era",
+      "label": "基础模型时代",
+      "labelEn": "Foundation Model Era",
+      "url": "/terms/foundation-model-era/",
+      "summary": "大规模预训练模型成为通用能力底座，并通过提示、检索或微调适配多类任务的发展阶段。",
+      "domain": "ai-foundations-history",
+      "difficulty": "beginner",
+      "ring": "extended",
+      "status": "catalogued",
+      "position": {
+        "x": 773,
+        "y": 596
       }
     },
     {
@@ -1347,8 +1707,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 769,
-        "y": 598
+        "x": 766,
+        "y": 600
       }
     },
     {
@@ -1362,8 +1722,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 760,
-        "y": 603
+        "x": 759,
+        "y": 604
       }
     },
     {
@@ -1392,8 +1752,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 558,
-        "y": 58
+        "x": 546,
+        "y": 57
       }
     },
     {
@@ -1407,8 +1767,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 741,
-        "y": 612
+        "x": 744,
+        "y": 611
       }
     },
     {
@@ -1422,8 +1782,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 732,
-        "y": 617
+        "x": 736,
+        "y": 615
       }
     },
     {
@@ -1437,8 +1797,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 722,
-        "y": 621
+        "x": 728,
+        "y": 618
       }
     },
     {
@@ -1452,8 +1812,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 712,
-        "y": 626
+        "x": 720,
+        "y": 622
       }
     },
     {
@@ -1467,8 +1827,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 701,
-        "y": 629
+        "x": 712,
+        "y": 625
       }
     },
     {
@@ -1482,8 +1842,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 691,
-        "y": 633
+        "x": 704,
+        "y": 628
       }
     },
     {
@@ -1497,8 +1857,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 681,
-        "y": 637
+        "x": 696,
+        "y": 631
       }
     },
     {
@@ -1512,8 +1872,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 570,
-        "y": 59
+        "x": 555,
+        "y": 58
       }
     },
     {
@@ -1527,8 +1887,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 670,
-        "y": 640
+        "x": 688,
+        "y": 634
       }
     },
     {
@@ -1542,8 +1902,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 659,
-        "y": 643
+        "x": 679,
+        "y": 637
       }
     },
     {
@@ -1557,8 +1917,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 648,
-        "y": 646
+        "x": 671,
+        "y": 640
       }
     },
     {
@@ -1572,8 +1932,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 637,
-        "y": 649
+        "x": 662,
+        "y": 642
       }
     },
     {
@@ -1587,8 +1947,23 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 626,
-        "y": 652
+        "x": 654,
+        "y": 645
+      }
+    },
+    {
+      "id": "human-in-the-loop",
+      "label": "人在回路",
+      "labelEn": "Human in the Loop",
+      "url": "/terms/human-in-the-loop/",
+      "summary": "在 AI 工作流的关键判断、审核或异常环节引入人员参与，以提高控制力和责任清晰度。",
+      "domain": "agents-tool-use-automation",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "catalogued",
+      "position": {
+        "x": 645,
+        "y": 647
       }
     },
     {
@@ -1602,8 +1977,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 615,
-        "y": 654
+        "x": 636,
+        "y": 649
       }
     },
     {
@@ -1617,8 +1992,23 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 604,
-        "y": 656
+        "x": 628,
+        "y": 651
+      }
+    },
+    {
+      "id": "hyperparameter",
+      "label": "超参数",
+      "labelEn": "Hyperparameter",
+      "url": "/terms/hyperparameter/",
+      "summary": "在训练前或训练过程中由人员或搜索策略设定的配置，例如学习率、批大小和网络层数。",
+      "domain": "machine-learning-deep-learning",
+      "difficulty": "intermediate",
+      "ring": "extended",
+      "status": "catalogued",
+      "position": {
+        "x": 619,
+        "y": 653
       }
     },
     {
@@ -1632,8 +2022,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 592,
-        "y": 658
+        "x": 610,
+        "y": 655
       }
     },
     {
@@ -1647,8 +2037,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 581,
-        "y": 660
+        "x": 601,
+        "y": 656
       }
     },
     {
@@ -1662,8 +2052,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 570,
-        "y": 661
+        "x": 592,
+        "y": 658
       }
     },
     {
@@ -1677,7 +2067,37 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 558,
+        "x": 583,
+        "y": 659
+      }
+    },
+    {
+      "id": "in-context-learning",
+      "label": "上下文学习",
+      "labelEn": "In-Context Learning",
+      "url": "/terms/in-context-learning/",
+      "summary": "模型仅依据当前上下文中的指令和示例适应任务，而不更新模型参数的学习表现。",
+      "domain": "prompt-context-engineering",
+      "difficulty": "intermediate",
+      "ring": "extended",
+      "status": "catalogued",
+      "position": {
+        "x": 574,
+        "y": 660
+      }
+    },
+    {
+      "id": "indexing-pipeline",
+      "label": "索引管线",
+      "labelEn": "Indexing Pipeline",
+      "url": "/terms/indexing-pipeline/",
+      "summary": "将原始内容解析、清洗、切片、标注并写入检索索引的处理流程，需要支持更新和失败恢复。",
+      "domain": "data-retrieval-rag",
+      "difficulty": "advanced",
+      "ring": "extended",
+      "status": "catalogued",
+      "position": {
+        "x": 565,
         "y": 662
       }
     },
@@ -1692,8 +2112,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 546,
-        "y": 663
+        "x": 555,
+        "y": 662
       }
     },
     {
@@ -1707,8 +2127,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 535,
-        "y": 664
+        "x": 546,
+        "y": 663
       }
     },
     {
@@ -1722,8 +2142,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 523,
-        "y": 665
+        "x": 537,
+        "y": 664
       }
     },
     {
@@ -1737,8 +2157,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 512,
-        "y": 665
+        "x": 528,
+        "y": 664
       }
     },
     {
@@ -1752,7 +2172,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 500,
+        "x": 518,
         "y": 665
       }
     },
@@ -1767,7 +2187,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 488,
+        "x": 509,
         "y": 665
       }
     },
@@ -1782,7 +2202,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 477,
+        "x": 500,
         "y": 665
       }
     },
@@ -1797,8 +2217,23 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 465,
-        "y": 664
+        "x": 491,
+        "y": 665
+      }
+    },
+    {
+      "id": "knowledge-base",
+      "label": "知识库",
+      "labelEn": "Knowledge Base",
+      "url": "/terms/knowledge-base/",
+      "summary": "按一定结构保存领域事实、文档和关系的数据集合，为搜索、问答和业务规则提供可维护依据。",
+      "domain": "data-retrieval-rag",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "catalogued",
+      "position": {
+        "x": 482,
+        "y": 665
       }
     },
     {
@@ -1812,8 +2247,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 454,
-        "y": 663
+        "x": 472,
+        "y": 664
       }
     },
     {
@@ -1832,6 +2267,21 @@
       }
     },
     {
+      "id": "latency",
+      "label": "延迟",
+      "labelEn": "Latency",
+      "url": "/terms/latency/",
+      "summary": "从请求发出到系统返回首个或完整结果所经历的时间，是影响 AI 产品体验和容量设计的重要指标。",
+      "domain": "evaluation-observability-quality",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "catalogued",
+      "position": {
+        "x": 463,
+        "y": 664
+      }
+    },
+    {
       "id": "latency-budget",
       "label": "延迟预算",
       "labelEn": "Latency Budget",
@@ -1842,8 +2292,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 442,
-        "y": 662
+        "x": 454,
+        "y": 663
       }
     },
     {
@@ -1857,8 +2307,38 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 430,
-        "y": 661
+        "x": 445,
+        "y": 662
+      }
+    },
+    {
+      "id": "learning-rate",
+      "label": "学习率",
+      "labelEn": "Learning Rate",
+      "url": "/terms/learning-rate/",
+      "summary": "控制每次参数更新幅度的训练超参数，过高可能导致不稳定，过低则会使收敛缓慢。",
+      "domain": "machine-learning-deep-learning",
+      "difficulty": "intermediate",
+      "ring": "extended",
+      "status": "catalogued",
+      "position": {
+        "x": 435,
+        "y": 662
+      }
+    },
+    {
+      "id": "lip-sync",
+      "label": "唇形同步",
+      "labelEn": "Lip Sync",
+      "url": "/terms/lip-sync/",
+      "summary": "调整人物口型运动使其与语音内容和时间对齐的技术，常用于配音、虚拟人和视频本地化。",
+      "domain": "multimodal-ai",
+      "difficulty": "intermediate",
+      "ring": "extended",
+      "status": "catalogued",
+      "position": {
+        "x": 426,
+        "y": 660
       }
     },
     {
@@ -1872,8 +2352,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 419,
-        "y": 660
+        "x": 417,
+        "y": 659
       }
     },
     {
@@ -1902,7 +2382,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 396,
+        "x": 399,
         "y": 656
       }
     },
@@ -1917,8 +2397,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 385,
-        "y": 654
+        "x": 390,
+        "y": 655
       }
     },
     {
@@ -1932,8 +2412,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 374,
-        "y": 652
+        "x": 381,
+        "y": 653
       }
     },
     {
@@ -1947,8 +2427,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 363,
-        "y": 649
+        "x": 372,
+        "y": 651
       }
     },
     {
@@ -1962,8 +2442,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 352,
-        "y": 646
+        "x": 364,
+        "y": 649
       }
     },
     {
@@ -1977,7 +2457,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 512,
+        "x": 509,
         "y": 55
       }
     },
@@ -1992,8 +2472,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 341,
-        "y": 643
+        "x": 355,
+        "y": 647
       }
     },
     {
@@ -2007,7 +2487,37 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 330,
+        "x": 346,
+        "y": 645
+      }
+    },
+    {
+      "id": "mixture-of-experts",
+      "label": "混合专家模型",
+      "labelEn": "Mixture of Experts",
+      "url": "/terms/mixture-of-experts/",
+      "summary": "通过路由机制为每个输入只激活部分专家子网络的模型结构，可扩大参数规模而控制单次计算量。",
+      "domain": "large-language-models-generative-ai",
+      "difficulty": "advanced",
+      "ring": "extended",
+      "status": "catalogued",
+      "position": {
+        "x": 338,
+        "y": 642
+      }
+    },
+    {
+      "id": "modality",
+      "label": "模态",
+      "labelEn": "Modality",
+      "url": "/terms/modality/",
+      "summary": "信息表达和感知的形式，例如文本、图像、语音或视频，不同模态具有不同结构与处理要求。",
+      "domain": "multimodal-ai",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "catalogued",
+      "position": {
+        "x": 329,
         "y": 640
       }
     },
@@ -2022,8 +2532,23 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 319,
+        "x": 321,
         "y": 637
+      }
+    },
+    {
+      "id": "model-capability",
+      "label": "模型能力",
+      "labelEn": "Model Capability",
+      "url": "/terms/model-capability/",
+      "summary": "模型在给定任务、语言、模态和约束下表现出的可测能力，不等同于所有场景中的系统效果。",
+      "domain": "large-language-models-generative-ai",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "catalogued",
+      "position": {
+        "x": 312,
+        "y": 634
       }
     },
     {
@@ -2037,8 +2562,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 309,
-        "y": 633
+        "x": 304,
+        "y": 631
       }
     },
     {
@@ -2052,8 +2577,23 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 299,
-        "y": 629
+        "x": 296,
+        "y": 628
+      }
+    },
+    {
+      "id": "model-parameter",
+      "label": "模型参数",
+      "labelEn": "Model Parameter",
+      "url": "/terms/model-parameter/",
+      "summary": "模型在训练中从数据学习得到的数值变量，例如神经网络中的权重和偏置。",
+      "domain": "machine-learning-deep-learning",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "catalogued",
+      "position": {
+        "x": 288,
+        "y": 625
       }
     },
     {
@@ -2067,8 +2607,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 288,
-        "y": 626
+        "x": 280,
+        "y": 622
       }
     },
     {
@@ -2082,8 +2622,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 278,
-        "y": 621
+        "x": 272,
+        "y": 618
       }
     },
     {
@@ -2097,8 +2637,23 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 268,
-        "y": 617
+        "x": 264,
+        "y": 615
+      }
+    },
+    {
+      "id": "model-theft",
+      "label": "模型窃取",
+      "labelEn": "Model Theft",
+      "url": "/terms/model-theft/",
+      "summary": "未经授权复制模型权重、能力或服务行为的攻击与侵权风险，可能通过文件窃取或大量查询实施。",
+      "domain": "safety-ethics-governance",
+      "difficulty": "advanced",
+      "ring": "extended",
+      "status": "catalogued",
+      "position": {
+        "x": 256,
+        "y": 611
       }
     },
     {
@@ -2112,8 +2667,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 259,
-        "y": 612
+        "x": 249,
+        "y": 608
       }
     },
     {
@@ -2127,7 +2682,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 523,
+        "x": 518,
         "y": 55
       }
     },
@@ -2142,8 +2697,23 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 249,
-        "y": 608
+        "x": 241,
+        "y": 604
+      }
+    },
+    {
+      "id": "multimodal-fusion",
+      "label": "多模态融合",
+      "labelEn": "Multimodal Fusion",
+      "url": "/terms/multimodal-fusion/",
+      "summary": "将文本、图像、音频等不同模态的特征或决策信息组合起来形成统一表示或输出的方法。",
+      "domain": "multimodal-ai",
+      "difficulty": "advanced",
+      "ring": "extended",
+      "status": "catalogued",
+      "position": {
+        "x": 234,
+        "y": 600
       }
     },
     {
@@ -2157,8 +2727,23 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 240,
-        "y": 603
+        "x": 227,
+        "y": 596
+      }
+    },
+    {
+      "id": "native-multimodal-model",
+      "label": "原生多模态模型",
+      "labelEn": "Native Multimodal Model",
+      "url": "/terms/native-multimodal-model/",
+      "summary": "从训练阶段就联合处理多种模态并在统一模型中学习跨模态关系的模型体系。",
+      "domain": "multimodal-ai",
+      "difficulty": "intermediate",
+      "ring": "extended",
+      "status": "catalogued",
+      "position": {
+        "x": 220,
+        "y": 591
       }
     },
     {
@@ -2172,8 +2757,23 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 231,
-        "y": 598
+        "x": 213,
+        "y": 587
+      }
+    },
+    {
+      "id": "negative-prompt",
+      "label": "负向提示词",
+      "labelEn": "Negative Prompt",
+      "url": "/terms/negative-prompt/",
+      "summary": "在生成任务中描述不希望出现的内容或属性的提示输入，其实际效果取决于模型与生成管线。",
+      "domain": "prompt-context-engineering",
+      "difficulty": "beginner",
+      "ring": "extended",
+      "status": "catalogued",
+      "position": {
+        "x": 206,
+        "y": 583
       }
     },
     {
@@ -2187,8 +2787,23 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 222,
-        "y": 592
+        "x": 199,
+        "y": 578
+      }
+    },
+    {
+      "id": "next-token-prediction",
+      "label": "下一词元预测",
+      "labelEn": "Next-Token Prediction",
+      "url": "/terms/next-token-prediction/",
+      "summary": "根据已有上下文预测下一个 Token 概率分布的训练与生成任务，是多数自回归语言模型的基础目标。",
+      "domain": "large-language-models-generative-ai",
+      "difficulty": "intermediate",
+      "ring": "extended",
+      "status": "catalogued",
+      "position": {
+        "x": 193,
+        "y": 573
       }
     },
     {
@@ -2202,8 +2817,23 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 213,
-        "y": 587
+        "x": 186,
+        "y": 569
+      }
+    },
+    {
+      "id": "observability",
+      "label": "可观测性",
+      "labelEn": "Observability",
+      "url": "/terms/observability/",
+      "summary": "通过指标、日志和追踪理解系统内部状态及问题原因的能力，是定位 AI 应用质量与运行故障的基础。",
+      "domain": "evaluation-observability-quality",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "position": {
+        "x": 180,
+        "y": 564
       }
     },
     {
@@ -2217,8 +2847,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 204,
-        "y": 581
+        "x": 174,
+        "y": 559
       }
     },
     {
@@ -2232,8 +2862,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 196,
-        "y": 576
+        "x": 168,
+        "y": 554
       }
     },
     {
@@ -2247,8 +2877,23 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 188,
-        "y": 570
+        "x": 162,
+        "y": 549
+      }
+    },
+    {
+      "id": "open-weight-model",
+      "label": "开放权重模型",
+      "labelEn": "Open-Weight Model",
+      "url": "/terms/open-weight-model/",
+      "summary": "向使用者提供可下载模型权重的模型，具体修改、分发和商业使用范围仍由许可证决定。",
+      "domain": "large-language-models-generative-ai",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "position": {
+        "x": 157,
+        "y": 543
       }
     },
     {
@@ -2262,8 +2907,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 180,
-        "y": 564
+        "x": 151,
+        "y": 538
       }
     },
     {
@@ -2277,8 +2922,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 172,
-        "y": 557
+        "x": 146,
+        "y": 533
       }
     },
     {
@@ -2292,8 +2937,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 165,
-        "y": 551
+        "x": 141,
+        "y": 527
       }
     },
     {
@@ -2307,8 +2952,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 158,
-        "y": 545
+        "x": 136,
+        "y": 522
       }
     },
     {
@@ -2322,8 +2967,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 151,
-        "y": 538
+        "x": 131,
+        "y": 516
       }
     },
     {
@@ -2337,8 +2982,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 144,
-        "y": 531
+        "x": 126,
+        "y": 511
       }
     },
     {
@@ -2352,8 +2997,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 138,
-        "y": 524
+        "x": 122,
+        "y": 505
       }
     },
     {
@@ -2367,8 +3012,23 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 132,
-        "y": 517
+        "x": 117,
+        "y": 499
+      }
+    },
+    {
+      "id": "perceptron-history",
+      "label": "感知机历史",
+      "labelEn": "Perceptron History",
+      "url": "/terms/perceptron-history/",
+      "summary": "感知机从早期线性分类模型、能力争议到神经网络复兴的历史脉络，揭示了模型边界与研究周期。",
+      "domain": "ai-foundations-history",
+      "difficulty": "intermediate",
+      "ring": "extended",
+      "status": "catalogued",
+      "position": {
+        "x": 113,
+        "y": 493
       }
     },
     {
@@ -2382,8 +3042,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 126,
-        "y": 510
+        "x": 109,
+        "y": 487
       }
     },
     {
@@ -2397,8 +3057,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 120,
-        "y": 503
+        "x": 105,
+        "y": 481
       }
     },
     {
@@ -2412,8 +3072,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 115,
-        "y": 496
+        "x": 102,
+        "y": 475
       }
     },
     {
@@ -2427,8 +3087,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 110,
-        "y": 488
+        "x": 98,
+        "y": 469
       }
     },
     {
@@ -2442,8 +3102,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 105,
-        "y": 481
+        "x": 95,
+        "y": 463
       }
     },
     {
@@ -2457,8 +3117,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 101,
-        "y": 473
+        "x": 92,
+        "y": 457
       }
     },
     {
@@ -2472,8 +3132,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 96,
-        "y": 465
+        "x": 89,
+        "y": 450
       }
     },
     {
@@ -2487,8 +3147,38 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 93,
-        "y": 457
+        "x": 87,
+        "y": 444
+      }
+    },
+    {
+      "id": "prompt-constraint",
+      "label": "提示约束",
+      "labelEn": "Prompt Constraint",
+      "url": "/terms/prompt-constraint/",
+      "summary": "对输出内容、格式、范围或行为设置的明确限制，用于降低歧义并支持后续校验。",
+      "domain": "prompt-context-engineering",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "catalogued",
+      "position": {
+        "x": 84,
+        "y": 438
+      }
+    },
+    {
+      "id": "prompt-debugging",
+      "label": "提示词调试",
+      "labelEn": "Prompt Debugging",
+      "url": "/terms/prompt-debugging/",
+      "summary": "通过复现、分离变量、检查上下文和比较输出定位提示问题，并用评测验证修改效果的过程。",
+      "domain": "prompt-context-engineering",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "position": {
+        "x": 82,
+        "y": 432
       }
     },
     {
@@ -2502,8 +3192,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 89,
-        "y": 450
+        "x": 80,
+        "y": 425
       }
     },
     {
@@ -2517,8 +3207,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 86,
-        "y": 442
+        "x": 78,
+        "y": 419
       }
     },
     {
@@ -2532,8 +3222,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 83,
-        "y": 434
+        "x": 76,
+        "y": 412
       }
     },
     {
@@ -2547,8 +3237,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 80,
-        "y": 426
+        "x": 75,
+        "y": 406
       }
     },
     {
@@ -2562,8 +3252,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 78,
-        "y": 417
+        "x": 74,
+        "y": 399
       }
     },
     {
@@ -2577,8 +3267,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 76,
-        "y": 409
+        "x": 72,
+        "y": 393
       }
     },
     {
@@ -2592,8 +3282,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 74,
-        "y": 401
+        "x": 72,
+        "y": 386
       }
     },
     {
@@ -2607,8 +3297,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 73,
-        "y": 393
+        "x": 71,
+        "y": 380
       }
     },
     {
@@ -2622,8 +3312,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 71,
-        "y": 385
+        "x": 70,
+        "y": 373
       }
     },
     {
@@ -2637,8 +3327,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 71,
-        "y": 377
+        "x": 70,
+        "y": 367
       }
     },
     {
@@ -2653,7 +3343,7 @@
       "status": "catalogued",
       "position": {
         "x": 70,
-        "y": 368
+        "y": 360
       }
     },
     {
@@ -2668,7 +3358,7 @@
       "status": "catalogued",
       "position": {
         "x": 70,
-        "y": 360
+        "y": 353
       }
     },
     {
@@ -2683,7 +3373,7 @@
       "status": "catalogued",
       "position": {
         "x": 70,
-        "y": 352
+        "y": 347
       }
     },
     {
@@ -2698,7 +3388,7 @@
       "status": "catalogued",
       "position": {
         "x": 71,
-        "y": 343
+        "y": 340
       }
     },
     {
@@ -2712,8 +3402,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 71,
-        "y": 335
+        "x": 72,
+        "y": 334
       }
     },
     {
@@ -2727,7 +3417,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 73,
+        "x": 72,
         "y": 327
       }
     },
@@ -2742,8 +3432,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 615,
-        "y": 66
+        "x": 592,
+        "y": 62
       }
     },
     {
@@ -2758,7 +3448,7 @@
       "status": "catalogued",
       "position": {
         "x": 74,
-        "y": 319
+        "y": 321
       }
     },
     {
@@ -2772,8 +3462,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 76,
-        "y": 311
+        "x": 75,
+        "y": 314
       }
     },
     {
@@ -2787,8 +3477,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 546,
-        "y": 57
+        "x": 537,
+        "y": 56
       }
     },
     {
@@ -2817,8 +3507,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 78,
-        "y": 303
+        "x": 76,
+        "y": 308
       }
     },
     {
@@ -2832,8 +3522,23 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
+        "x": 78,
+        "y": 301
+      }
+    },
+    {
+      "id": "retrieval-query",
+      "label": "检索查询",
+      "labelEn": "Retrieval Query",
+      "url": "/terms/retrieval-query/",
+      "summary": "提交给检索系统的结构化或自然语言请求，可包含关键词、向量、过滤条件与排序参数。",
+      "domain": "data-retrieval-rag",
+      "difficulty": "beginner",
+      "ring": "extended",
+      "status": "catalogued",
+      "position": {
         "x": 80,
-        "y": 294
+        "y": 295
       }
     },
     {
@@ -2847,8 +3552,23 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 83,
-        "y": 286
+        "x": 82,
+        "y": 288
+      }
+    },
+    {
+      "id": "retry-policy",
+      "label": "重试策略",
+      "labelEn": "Retry Policy",
+      "url": "/terms/retry-policy/",
+      "summary": "规定操作失败后是否重试、等待多久和最多尝试几次的策略，需要避免重复副作用和无限循环。",
+      "domain": "agents-tool-use-automation",
+      "difficulty": "intermediate",
+      "ring": "extended",
+      "status": "catalogued",
+      "position": {
+        "x": 84,
+        "y": 282
       }
     },
     {
@@ -2862,8 +3582,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 86,
-        "y": 278
+        "x": 87,
+        "y": 276
       }
     },
     {
@@ -2882,6 +3602,36 @@
       }
     },
     {
+      "id": "rollback",
+      "label": "回滚",
+      "labelEn": "Rollback",
+      "url": "/terms/rollback/",
+      "summary": "在新版本出现故障或指标恶化时恢复到先前稳定版本的操作，需要数据与配置兼容支持。",
+      "domain": "ai-engineering-deployment-operations",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "position": {
+        "x": 92,
+        "y": 263
+      }
+    },
+    {
+      "id": "safety-filter",
+      "label": "安全过滤器",
+      "labelEn": "Safety Filter",
+      "url": "/terms/safety-filter/",
+      "summary": "在输入或输出环节检测并阻止高风险内容的控制组件，需要评估漏判、误判和绕过风险。",
+      "domain": "safety-ethics-governance",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "position": {
+        "x": 95,
+        "y": 257
+      }
+    },
+    {
       "id": "sampling",
       "label": "采样",
       "labelEn": "Sampling",
@@ -2892,8 +3642,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 93,
-        "y": 263
+        "x": 98,
+        "y": 251
       }
     },
     {
@@ -2907,8 +3657,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 96,
-        "y": 255
+        "x": 102,
+        "y": 245
       }
     },
     {
@@ -2922,8 +3672,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 101,
-        "y": 247
+        "x": 105,
+        "y": 239
       }
     },
     {
@@ -2937,8 +3687,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 105,
-        "y": 239
+        "x": 109,
+        "y": 233
       }
     },
     {
@@ -2952,8 +3702,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 110,
-        "y": 232
+        "x": 113,
+        "y": 227
       }
     },
     {
@@ -2967,8 +3717,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 115,
-        "y": 224
+        "x": 117,
+        "y": 221
       }
     },
     {
@@ -2982,8 +3732,23 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 120,
-        "y": 217
+        "x": 122,
+        "y": 215
+      }
+    },
+    {
+      "id": "service-level-objective",
+      "label": "服务等级目标",
+      "labelEn": "Service Level Objective",
+      "url": "/terms/service-level-objective/",
+      "summary": "围绕可用性、延迟或正确率设定的服务目标，用于平衡可靠性投入、风险和迭代速度。",
+      "domain": "ai-engineering-deployment-operations",
+      "difficulty": "advanced",
+      "ring": "extended",
+      "status": "catalogued",
+      "position": {
+        "x": 126,
+        "y": 209
       }
     },
     {
@@ -2997,8 +3762,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 126,
-        "y": 210
+        "x": 131,
+        "y": 204
       }
     },
     {
@@ -3012,8 +3777,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 132,
-        "y": 203
+        "x": 136,
+        "y": 198
       }
     },
     {
@@ -3027,8 +3792,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 138,
-        "y": 196
+        "x": 141,
+        "y": 193
       }
     },
     {
@@ -3042,8 +3807,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 144,
-        "y": 189
+        "x": 146,
+        "y": 187
       }
     },
     {
@@ -3072,8 +3837,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 158,
-        "y": 175
+        "x": 157,
+        "y": 177
       }
     },
     {
@@ -3087,8 +3852,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 165,
-        "y": 169
+        "x": 162,
+        "y": 171
       }
     },
     {
@@ -3102,8 +3867,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 172,
-        "y": 163
+        "x": 168,
+        "y": 166
       }
     },
     {
@@ -3117,8 +3882,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 180,
-        "y": 156
+        "x": 174,
+        "y": 161
       }
     },
     {
@@ -3132,8 +3897,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 188,
-        "y": 150
+        "x": 180,
+        "y": 156
       }
     },
     {
@@ -3147,8 +3912,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 196,
-        "y": 144
+        "x": 186,
+        "y": 151
       }
     },
     {
@@ -3162,8 +3927,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 204,
-        "y": 139
+        "x": 193,
+        "y": 147
       }
     },
     {
@@ -3177,8 +3942,23 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 213,
-        "y": 133
+        "x": 199,
+        "y": 142
+      }
+    },
+    {
+      "id": "task-success-rate",
+      "label": "任务成功率",
+      "labelEn": "Task Success Rate",
+      "url": "/terms/task-success-rate/",
+      "summary": "在预先定义的成功标准下正确完成任务的次数占总尝试次数的比例，应结合失败类型解释。",
+      "domain": "ai-product-ux",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "position": {
+        "x": 206,
+        "y": 137
       }
     },
     {
@@ -3192,8 +3972,23 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 222,
-        "y": 128
+        "x": 213,
+        "y": 133
+      }
+    },
+    {
+      "id": "tensor-parallelism",
+      "label": "张量并行",
+      "labelEn": "Tensor Parallelism",
+      "url": "/terms/tensor-parallelism/",
+      "summary": "将单个张量运算或模型层拆分到多个设备并行执行的训练与推理技术。",
+      "domain": "compute-chips-industry",
+      "difficulty": "advanced",
+      "ring": "extended",
+      "status": "catalogued",
+      "position": {
+        "x": 220,
+        "y": 129
       }
     },
     {
@@ -3207,8 +4002,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 231,
-        "y": 122
+        "x": 227,
+        "y": 124
       }
     },
     {
@@ -3222,8 +4017,23 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 240,
-        "y": 117
+        "x": 234,
+        "y": 120
+      }
+    },
+    {
+      "id": "throughput",
+      "label": "吞吐量",
+      "labelEn": "Throughput",
+      "url": "/terms/throughput/",
+      "summary": "系统在单位时间内能够处理的请求、Token 或任务数量，用于衡量服务容量与资源效率。",
+      "domain": "evaluation-observability-quality",
+      "difficulty": "intermediate",
+      "ring": "extended",
+      "status": "catalogued",
+      "position": {
+        "x": 241,
+        "y": 116
       }
     },
     {
@@ -3237,8 +4047,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 581,
-        "y": 60
+        "x": 565,
+        "y": 58
       }
     },
     {
@@ -3267,8 +4077,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 259,
-        "y": 108
+        "x": 256,
+        "y": 109
       }
     },
     {
@@ -3282,8 +4092,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 268,
-        "y": 103
+        "x": 264,
+        "y": 105
       }
     },
     {
@@ -3297,8 +4107,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 278,
-        "y": 99
+        "x": 272,
+        "y": 102
       }
     },
     {
@@ -3312,8 +4122,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 288,
-        "y": 94
+        "x": 280,
+        "y": 98
       }
     },
     {
@@ -3327,8 +4137,38 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 299,
-        "y": 91
+        "x": 288,
+        "y": 95
+      }
+    },
+    {
+      "id": "trace",
+      "label": "调用追踪",
+      "labelEn": "Trace",
+      "url": "/terms/trace/",
+      "summary": "记录一次请求跨模型、检索、工具和服务的完整调用链及时间信息，便于调试和审计。",
+      "domain": "evaluation-observability-quality",
+      "difficulty": "intermediate",
+      "ring": "extended",
+      "status": "catalogued",
+      "position": {
+        "x": 296,
+        "y": 92
+      }
+    },
+    {
+      "id": "train-validation-test-split",
+      "label": "训练验证测试集划分",
+      "labelEn": "Train Validation Test Split",
+      "url": "/terms/train-validation-test-split/",
+      "summary": "将数据划分为训练、调参与最终评估集合的方法，用于减少信息泄漏并衡量泛化能力。",
+      "domain": "machine-learning-deep-learning",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "catalogued",
+      "position": {
+        "x": 304,
+        "y": 89
       }
     },
     {
@@ -3342,8 +4182,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 309,
-        "y": 87
+        "x": 312,
+        "y": 86
       }
     },
     {
@@ -3357,8 +4197,23 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 319,
+        "x": 321,
         "y": 83
+      }
+    },
+    {
+      "id": "transfer-learning",
+      "label": "迁移学习",
+      "labelEn": "Transfer Learning",
+      "url": "/terms/transfer-learning/",
+      "summary": "将一个任务或数据集上学到的表示与参数迁移到新任务，以减少训练数据和计算需求的方法。",
+      "domain": "machine-learning-deep-learning",
+      "difficulty": "intermediate",
+      "ring": "extended",
+      "status": "catalogued",
+      "position": {
+        "x": 329,
+        "y": 80
       }
     },
     {
@@ -3372,8 +4227,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 330,
-        "y": 80
+        "x": 338,
+        "y": 78
       }
     },
     {
@@ -3387,8 +4242,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 341,
-        "y": 77
+        "x": 346,
+        "y": 75
       }
     },
     {
@@ -3402,8 +4257,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 352,
-        "y": 74
+        "x": 355,
+        "y": 73
       }
     },
     {
@@ -3417,7 +4272,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 363,
+        "x": 364,
         "y": 71
       }
     },
@@ -3432,8 +4287,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 374,
-        "y": 68
+        "x": 372,
+        "y": 69
       }
     },
     {
@@ -3447,8 +4302,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 385,
-        "y": 66
+        "x": 381,
+        "y": 67
       }
     },
     {
@@ -3462,8 +4317,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 396,
-        "y": 64
+        "x": 390,
+        "y": 65
       }
     },
     {
@@ -3477,8 +4332,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 408,
-        "y": 62
+        "x": 399,
+        "y": 64
       }
     },
     {
@@ -3492,8 +4347,23 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 419,
-        "y": 60
+        "x": 408,
+        "y": 62
+      }
+    },
+    {
+      "id": "user-trust",
+      "label": "用户信任",
+      "labelEn": "User Trust",
+      "url": "/terms/user-trust/",
+      "summary": "用户基于系统能力、透明度、可靠性和可控性形成的信任判断，需要通过持续真实表现建立。",
+      "domain": "ai-product-ux",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "catalogued",
+      "position": {
+        "x": 417,
+        "y": 61
       }
     },
     {
@@ -3507,8 +4377,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 626,
-        "y": 68
+        "x": 601,
+        "y": 64
       }
     },
     {
@@ -3522,8 +4392,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 430,
-        "y": 59
+        "x": 426,
+        "y": 60
       }
     },
     {
@@ -3537,7 +4407,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 442,
+        "x": 435,
         "y": 58
       }
     },
@@ -3552,8 +4422,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 454,
-        "y": 57
+        "x": 445,
+        "y": 58
       }
     },
     {
@@ -3567,8 +4437,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 465,
-        "y": 56
+        "x": 454,
+        "y": 57
       }
     },
     {
@@ -3582,7 +4452,37 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 477,
+        "x": 463,
+        "y": 56
+      }
+    },
+    {
+      "id": "voice-cloning",
+      "label": "声音克隆",
+      "labelEn": "Voice Cloning",
+      "url": "/terms/voice-cloning/",
+      "summary": "根据目标说话人的语音样本合成相似音色语音的技术，使用时需要获得授权并防范冒用。",
+      "domain": "multimodal-ai",
+      "difficulty": "intermediate",
+      "ring": "extended",
+      "status": "catalogued",
+      "position": {
+        "x": 472,
+        "y": 56
+      }
+    },
+    {
+      "id": "workflow-automation",
+      "label": "工作流自动化",
+      "labelEn": "Workflow Automation",
+      "url": "/terms/workflow-automation/",
+      "summary": "用规则、事件和工具调用自动执行重复业务步骤的方式，适合边界明确且结果可检查的流程。",
+      "domain": "agents-tool-use-automation",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "catalogued",
+      "position": {
+        "x": 482,
         "y": 55
       }
     },
@@ -3597,7 +4497,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 488,
+        "x": 491,
         "y": 55
       }
     }
@@ -3646,6 +4546,13 @@
       "explanation": "Agent 规划是理解和应用AI Agent时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
+      "id": "agent-sandbox-connected-to-ai-agent",
+      "source": "agent-sandbox",
+      "target": "ai-agent",
+      "type": "application",
+      "explanation": "Agent 沙箱是理解和应用AI Agent时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
       "id": "agentic-workflow-connected-to-ai-agent",
       "source": "agentic-workflow",
       "target": "ai-agent",
@@ -3660,6 +4567,13 @@
       "explanation": "AI 加速器是理解和应用算力时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
+      "id": "ai-adoption-connected-to-ai-product",
+      "source": "ai-adoption",
+      "target": "ai-product",
+      "type": "application",
+      "explanation": "AI 采用是理解和应用AI 产品时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
       "id": "ai-agent-connected-to-large-language-model",
       "source": "ai-agent",
       "target": "large-language-model",
@@ -3672,6 +4586,13 @@
       "target": "artificial-intelligence",
       "type": "application",
       "explanation": "AI 应用是理解和应用人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
+      "id": "ai-capability-boundary-connected-to-artificial-intelligence",
+      "source": "ai-capability-boundary",
+      "target": "artificial-intelligence",
+      "type": "application",
+      "explanation": "AI 能力边界是理解和应用人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
       "id": "ai-compared-with-generative-ai",
@@ -3693,6 +4614,20 @@
       "target": "ai-safety",
       "type": "application",
       "explanation": "AI 治理是理解和应用AI 安全时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
+      "id": "ai-guardrail-connected-to-ai-safety",
+      "source": "ai-guardrail",
+      "target": "ai-safety",
+      "type": "application",
+      "explanation": "AI 护栏是理解和应用AI 安全时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
+      "id": "ai-onboarding-connected-to-ai-product",
+      "source": "ai-onboarding",
+      "target": "ai-product",
+      "type": "application",
+      "explanation": "AI 产品引导是理解和应用AI 产品时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
       "id": "ai-precedes-generative-ai",
@@ -3800,6 +4735,13 @@
       "explanation": "自动评估是理解和应用AI 评估时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
+      "id": "automation-trigger-connected-to-ai-agent",
+      "source": "automation-trigger",
+      "target": "ai-agent",
+      "type": "application",
+      "explanation": "自动化触发器是理解和应用AI Agent时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
       "id": "autonomous-agent-connected-to-ai-agent",
       "source": "autonomous-agent",
       "target": "ai-agent",
@@ -3842,11 +4784,25 @@
       "explanation": "基准测试是理解和应用AI 评估时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
+      "id": "bias-evaluation-connected-to-evaluation",
+      "source": "bias-evaluation",
+      "target": "evaluation",
+      "type": "application",
+      "explanation": "偏见评估是理解和应用AI 评估时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
       "id": "browser-use-connected-to-ai-agent",
       "source": "browser-use",
       "target": "ai-agent",
       "type": "application",
       "explanation": "浏览器操作是理解和应用AI Agent时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
+      "id": "canary-release-connected-to-ai-application",
+      "source": "canary-release",
+      "target": "ai-application",
+      "type": "application",
+      "explanation": "金丝雀发布是理解和应用AI 应用时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
       "id": "chain-of-thought-connected-to-context-window",
@@ -3863,6 +4819,13 @@
       "explanation": "芯片制造是理解和应用算力时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
+      "id": "chip-interconnect-connected-to-compute",
+      "source": "chip-interconnect",
+      "target": "compute",
+      "type": "application",
+      "explanation": "芯片互连是理解和应用算力时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
       "id": "chunking-component-of-rag",
       "source": "document-chunking",
       "target": "retrieval-augmented-generation",
@@ -3875,6 +4838,13 @@
       "target": "retrieval-augmented-generation",
       "type": "prerequisite",
       "explanation": "文档切片决定可被检索的知识单元，是理解 RAG 检索质量的重要前提。"
+    },
+    {
+      "id": "citation-generation-connected-to-retrieval-augmented-generation",
+      "source": "citation-generation",
+      "target": "retrieval-augmented-generation",
+      "type": "application",
+      "explanation": "引用生成是理解和应用检索增强生成时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
       "id": "classification-connected-to-machine-learning",
@@ -3961,6 +4931,13 @@
       "explanation": "容器化是理解和应用AI 应用时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
+      "id": "content-moderation-connected-to-ai-safety",
+      "source": "content-moderation",
+      "target": "ai-safety",
+      "type": "application",
+      "explanation": "内容审核是理解和应用AI 安全时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
       "id": "context-compression-connected-to-context-window",
       "source": "context-compression",
       "target": "context-window",
@@ -3975,11 +4952,32 @@
       "explanation": "上下文工程是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
+      "id": "context-relevance-connected-to-context-window",
+      "source": "context-relevance",
+      "target": "context-window",
+      "type": "application",
+      "explanation": "上下文相关性是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
+      "id": "context-retrieval-connected-to-retrieval-augmented-generation",
+      "source": "context-retrieval",
+      "target": "retrieval-augmented-generation",
+      "type": "application",
+      "explanation": "上下文检索是理解和应用检索增强生成时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
       "id": "context-window-precedes-rag",
       "source": "context-window",
       "target": "retrieval-augmented-generation",
       "type": "prerequisite",
       "explanation": "RAG 需要把检索结果放入有限上下文，理解窗口限制才能判断取舍与成本。"
+    },
+    {
+      "id": "continuous-delivery-connected-to-ai-application",
+      "source": "continuous-delivery",
+      "target": "ai-application",
+      "type": "application",
+      "explanation": "持续交付是理解和应用AI 应用时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
       "id": "conversation-context-connected-to-context-window",
@@ -4003,6 +5001,13 @@
       "explanation": "副驾驶模式是理解和应用AI 产品时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
+      "id": "copyright-connected-to-ai-safety",
+      "source": "copyright",
+      "target": "ai-safety",
+      "type": "application",
+      "explanation": "著作权是理解和应用AI 安全时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
       "id": "cost-optimization-connected-to-ai-application",
       "source": "cost-optimization",
       "target": "ai-application",
@@ -4022,6 +5027,20 @@
       "target": "multimodal-ai",
       "type": "application",
       "explanation": "跨模态检索是理解和应用多模态人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
+      "id": "cuda-connected-to-compute",
+      "source": "cuda",
+      "target": "compute",
+      "type": "application",
+      "explanation": "CUDA是理解和应用算力时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
+      "id": "dartmouth-workshop-connected-to-artificial-intelligence",
+      "source": "dartmouth-workshop",
+      "target": "artificial-intelligence",
+      "type": "application",
+      "explanation": "达特茅斯会议是理解和应用人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
       "id": "data-center-connected-to-compute",
@@ -4066,6 +5085,13 @@
       "explanation": "解码策略是理解和应用大语言模型时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
+      "id": "deep-learning-boom-connected-to-artificial-intelligence",
+      "source": "deep-learning-boom",
+      "target": "artificial-intelligence",
+      "type": "application",
+      "explanation": "深度学习浪潮是理解和应用人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
       "id": "deep-learning-connected-to-machine-learning",
       "source": "deep-learning",
       "target": "machine-learning",
@@ -4085,6 +5111,20 @@
       "target": "multimodal-ai",
       "type": "application",
       "explanation": "扩散模型是理解和应用多模态人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
+      "id": "distillation-connected-to-large-language-model",
+      "source": "distillation",
+      "target": "large-language-model",
+      "type": "application",
+      "explanation": "模型蒸馏是理解和应用大语言模型时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
+      "id": "distributed-training-connected-to-compute",
+      "source": "distributed-training",
+      "target": "compute",
+      "type": "application",
+      "explanation": "分布式训练是理解和应用算力时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
       "id": "document-parsing-connected-to-retrieval-augmented-generation",
@@ -4122,11 +5162,25 @@
       "explanation": "向量数据库存储和检索嵌入向量，先理解 Embedding 才能理解相似度搜索。"
     },
     {
+      "id": "energy-efficiency-connected-to-compute",
+      "source": "energy-efficiency",
+      "target": "compute",
+      "type": "application",
+      "explanation": "能源效率是理解和应用算力时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
       "id": "epoch-connected-to-machine-learning",
       "source": "epoch",
       "target": "machine-learning",
       "type": "application",
       "explanation": "训练轮次是理解和应用机器学习时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
+      "id": "error-recovery-connected-to-ai-product",
+      "source": "error-recovery",
+      "target": "ai-product",
+      "type": "application",
+      "explanation": "错误恢复是理解和应用AI 产品时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
       "id": "eval-set-connected-to-evaluation",
@@ -4148,6 +5202,13 @@
       "target": "evaluation",
       "type": "application",
       "explanation": "评估量规是理解和应用AI 评估时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
+      "id": "experiment-tracking-connected-to-ai-application",
+      "source": "experiment-tracking",
+      "target": "ai-application",
+      "type": "application",
+      "explanation": "实验追踪是理解和应用AI 应用时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
       "id": "expert-system-connected-to-artificial-intelligence",
@@ -4246,6 +5307,13 @@
       "target": "large-language-model",
       "type": "application",
       "explanation": "基础模型是理解和应用大语言模型时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
+      "id": "foundation-model-era-connected-to-artificial-intelligence",
+      "source": "foundation-model-era",
+      "target": "artificial-intelligence",
+      "type": "application",
+      "explanation": "基础模型时代是理解和应用人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
       "id": "foundry-connected-to-compute",
@@ -4367,6 +5435,13 @@
       "explanation": "人工评估是理解和应用AI 评估时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
+      "id": "human-in-the-loop-connected-to-ai-agent",
+      "source": "human-in-the-loop",
+      "target": "ai-agent",
+      "type": "application",
+      "explanation": "人在回路是理解和应用AI Agent时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
       "id": "human-oversight-connected-to-ai-safety",
       "source": "human-oversight",
       "target": "ai-safety",
@@ -4379,6 +5454,13 @@
       "target": "retrieval-augmented-generation",
       "type": "application",
       "explanation": "混合检索是理解和应用检索增强生成时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
+      "id": "hyperparameter-connected-to-machine-learning",
+      "source": "hyperparameter",
+      "target": "machine-learning",
+      "type": "application",
+      "explanation": "超参数是理解和应用机器学习时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
       "id": "image-captioning-connected-to-multimodal-ai",
@@ -4407,6 +5489,20 @@
       "target": "multimodal-ai",
       "type": "application",
       "explanation": "图像理解是理解和应用多模态人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
+      "id": "in-context-learning-connected-to-context-window",
+      "source": "in-context-learning",
+      "target": "context-window",
+      "type": "application",
+      "explanation": "上下文学习是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
+      "id": "indexing-pipeline-connected-to-retrieval-augmented-generation",
+      "source": "indexing-pipeline",
+      "target": "retrieval-augmented-generation",
+      "type": "application",
+      "explanation": "索引管线是理解和应用检索增强生成时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
       "id": "inference-compute-connected-to-compute",
@@ -4465,6 +5561,13 @@
       "explanation": "关键词检索是理解和应用检索增强生成时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
+      "id": "knowledge-base-connected-to-retrieval-augmented-generation",
+      "source": "knowledge-base",
+      "target": "retrieval-augmented-generation",
+      "type": "application",
+      "explanation": "知识库是理解和应用检索增强生成时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
       "id": "knowledge-representation-connected-to-artificial-intelligence",
       "source": "knowledge-representation",
       "target": "artificial-intelligence",
@@ -4479,11 +5582,32 @@
       "explanation": "延迟预算是理解和应用AI 产品时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
+      "id": "latency-connected-to-evaluation",
+      "source": "latency",
+      "target": "evaluation",
+      "type": "application",
+      "explanation": "延迟是理解和应用AI 评估时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
       "id": "latency-optimization-connected-to-ai-application",
       "source": "latency-optimization",
       "target": "ai-application",
       "type": "application",
       "explanation": "延迟优化是理解和应用AI 应用时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
+      "id": "learning-rate-connected-to-machine-learning",
+      "source": "learning-rate",
+      "target": "machine-learning",
+      "type": "application",
+      "explanation": "学习率是理解和应用机器学习时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
+      "id": "lip-sync-connected-to-multimodal-ai",
+      "source": "lip-sync",
+      "target": "multimodal-ai",
+      "type": "application",
+      "explanation": "唇形同步是理解和应用多模态人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
       "id": "llm-applied-to-rag",
@@ -4577,11 +5701,32 @@
       "explanation": "元数据过滤是理解和应用检索增强生成时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
+      "id": "mixture-of-experts-connected-to-large-language-model",
+      "source": "mixture-of-experts",
+      "target": "large-language-model",
+      "type": "application",
+      "explanation": "混合专家模型是理解和应用大语言模型时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
+      "id": "modality-connected-to-multimodal-ai",
+      "source": "modality",
+      "target": "multimodal-ai",
+      "type": "application",
+      "explanation": "模态是理解和应用多模态人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
       "id": "model-api-connected-to-ai-application",
       "source": "model-api",
       "target": "ai-application",
       "type": "application",
       "explanation": "模型 API是理解和应用AI 应用时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
+      "id": "model-capability-connected-to-large-language-model",
+      "source": "model-capability",
+      "target": "large-language-model",
+      "type": "application",
+      "explanation": "模型能力是理解和应用大语言模型时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
       "id": "model-context-protocol-connected-to-ai-agent",
@@ -4596,6 +5741,13 @@
       "target": "ai-application",
       "type": "application",
       "explanation": "模型部署是理解和应用AI 应用时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
+      "id": "model-parameter-connected-to-machine-learning",
+      "source": "model-parameter",
+      "target": "machine-learning",
+      "type": "application",
+      "explanation": "模型参数是理解和应用机器学习时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
       "id": "model-registry-connected-to-ai-application",
@@ -4619,6 +5771,13 @@
       "explanation": "模型服务是理解和应用AI 应用时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
+      "id": "model-theft-connected-to-ai-safety",
+      "source": "model-theft",
+      "target": "ai-safety",
+      "type": "application",
+      "explanation": "模型窃取是理解和应用AI 安全时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
       "id": "multi-agent-system-connected-to-ai-agent",
       "source": "multi-agent-system",
       "target": "ai-agent",
@@ -4640,11 +5799,25 @@
       "explanation": "多模态嵌入是理解和应用多模态人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
+      "id": "multimodal-fusion-connected-to-multimodal-ai",
+      "source": "multimodal-fusion",
+      "target": "multimodal-ai",
+      "type": "application",
+      "explanation": "多模态融合是理解和应用多模态人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
       "id": "narrow-ai-connected-to-artificial-intelligence",
       "source": "narrow-ai",
       "target": "artificial-intelligence",
       "type": "application",
       "explanation": "弱人工智能是理解和应用人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
+      "id": "native-multimodal-model-connected-to-multimodal-ai",
+      "source": "native-multimodal-model",
+      "target": "multimodal-ai",
+      "type": "application",
+      "explanation": "原生多模态模型是理解和应用多模态人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
       "id": "natural-language-processing-connected-to-artificial-intelligence",
@@ -4654,6 +5827,13 @@
       "explanation": "自然语言处理是理解和应用人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
+      "id": "negative-prompt-connected-to-context-window",
+      "source": "negative-prompt",
+      "target": "context-window",
+      "type": "application",
+      "explanation": "负向提示词是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
       "id": "neural-network-connected-to-machine-learning",
       "source": "neural-network",
       "target": "machine-learning",
@@ -4661,11 +5841,25 @@
       "explanation": "神经网络是理解和应用机器学习时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
+      "id": "next-token-prediction-connected-to-large-language-model",
+      "source": "next-token-prediction",
+      "target": "large-language-model",
+      "type": "application",
+      "explanation": "下一词元预测是理解和应用大语言模型时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
       "id": "npu-connected-to-compute",
       "source": "npu",
       "target": "compute",
       "type": "application",
       "explanation": "神经网络处理器是理解和应用算力时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
+      "id": "observability-connected-to-evaluation",
+      "source": "observability",
+      "target": "evaluation",
+      "type": "application",
+      "explanation": "可观测性是理解和应用AI 评估时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
       "id": "offline-evaluation-connected-to-evaluation",
@@ -4687,6 +5881,13 @@
       "target": "evaluation",
       "type": "application",
       "explanation": "在线评估是理解和应用AI 评估时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
+      "id": "open-weight-model-connected-to-large-language-model",
+      "source": "open-weight-model",
+      "target": "large-language-model",
+      "type": "application",
+      "explanation": "开放权重模型是理解和应用大语言模型时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
       "id": "optical-character-recognition-connected-to-multimodal-ai",
@@ -4745,6 +5946,13 @@
       "explanation": "机器感知是理解和应用人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
+      "id": "perceptron-history-connected-to-artificial-intelligence",
+      "source": "perceptron-history",
+      "target": "artificial-intelligence",
+      "type": "application",
+      "explanation": "感知机历史是理解和应用人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
       "id": "post-training-connected-to-large-language-model",
       "source": "post-training",
       "target": "large-language-model",
@@ -4799,6 +6007,20 @@
       "target": "context-window",
       "type": "application",
       "explanation": "提示词是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
+      "id": "prompt-constraint-connected-to-context-window",
+      "source": "prompt-constraint",
+      "target": "context-window",
+      "type": "application",
+      "explanation": "提示约束是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
+      "id": "prompt-debugging-connected-to-context-window",
+      "source": "prompt-debugging",
+      "target": "context-window",
+      "type": "application",
+      "explanation": "提示词调试是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
       "id": "prompt-evaluation-connected-to-context-window",
@@ -4969,11 +6191,25 @@
       "explanation": "检索精确率是理解和应用AI 评估时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
+      "id": "retrieval-query-connected-to-retrieval-augmented-generation",
+      "source": "retrieval-query",
+      "target": "retrieval-augmented-generation",
+      "type": "application",
+      "explanation": "检索查询是理解和应用检索增强生成时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
       "id": "retrieval-recall-connected-to-evaluation",
       "source": "retrieval-recall",
       "target": "evaluation",
       "type": "application",
       "explanation": "检索召回率是理解和应用AI 评估时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
+      "id": "retry-policy-connected-to-ai-agent",
+      "source": "retry-policy",
+      "target": "ai-agent",
+      "type": "application",
+      "explanation": "重试策略是理解和应用AI Agent时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
       "id": "robotics-connected-to-artificial-intelligence",
@@ -4988,6 +6224,20 @@
       "target": "context-window",
       "type": "application",
       "explanation": "角色提示是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
+      "id": "rollback-connected-to-ai-application",
+      "source": "rollback",
+      "target": "ai-application",
+      "type": "application",
+      "explanation": "回滚是理解和应用AI 应用时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
+      "id": "safety-filter-connected-to-ai-safety",
+      "source": "safety-filter",
+      "target": "ai-safety",
+      "type": "application",
+      "explanation": "安全过滤器是理解和应用AI 安全时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
       "id": "sampling-connected-to-large-language-model",
@@ -5037,6 +6287,13 @@
       "target": "compute",
       "type": "application",
       "explanation": "半导体是理解和应用算力时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
+      "id": "service-level-objective-connected-to-ai-application",
+      "source": "service-level-objective",
+      "target": "ai-application",
+      "type": "application",
+      "explanation": "服务等级目标是理解和应用AI 应用时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
       "id": "short-term-memory-connected-to-ai-agent",
@@ -5130,11 +6387,25 @@
       "explanation": "任务拆解是理解和应用AI Agent时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
+      "id": "task-success-rate-connected-to-ai-product",
+      "source": "task-success-rate",
+      "target": "ai-product",
+      "type": "application",
+      "explanation": "任务成功率是理解和应用AI 产品时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
       "id": "temperature-connected-to-large-language-model",
       "source": "temperature",
       "target": "large-language-model",
       "type": "application",
       "explanation": "温度参数是理解和应用大语言模型时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
+      "id": "tensor-parallelism-connected-to-compute",
+      "source": "tensor-parallelism",
+      "target": "compute",
+      "type": "application",
+      "explanation": "张量并行是理解和应用算力时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
       "id": "text-to-image-connected-to-multimodal-ai",
@@ -5149,6 +6420,13 @@
       "target": "multimodal-ai",
       "type": "application",
       "explanation": "文本转语音是理解和应用多模态人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
+      "id": "throughput-connected-to-evaluation",
+      "source": "throughput",
+      "target": "evaluation",
+      "type": "application",
+      "explanation": "吞吐量是理解和应用AI 评估时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
       "id": "token-component-of-context-window",
@@ -5214,6 +6492,20 @@
       "explanation": "张量处理器是理解和应用算力时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
+      "id": "trace-connected-to-evaluation",
+      "source": "trace",
+      "target": "evaluation",
+      "type": "application",
+      "explanation": "调用追踪是理解和应用AI 评估时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
+      "id": "train-validation-test-split-connected-to-machine-learning",
+      "source": "train-validation-test-split",
+      "target": "machine-learning",
+      "type": "application",
+      "explanation": "训练验证测试集划分是理解和应用机器学习时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
       "id": "training-compute-connected-to-compute",
       "source": "training-compute",
       "target": "compute",
@@ -5226,6 +6518,13 @@
       "target": "machine-learning",
       "type": "application",
       "explanation": "训练数据是理解和应用机器学习时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
+      "id": "transfer-learning-connected-to-machine-learning",
+      "source": "transfer-learning",
+      "target": "machine-learning",
+      "type": "application",
+      "explanation": "迁移学习是理解和应用机器学习时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
       "id": "transformer-connected-to-large-language-model",
@@ -5291,6 +6590,13 @@
       "explanation": "用户提示词是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
+      "id": "user-trust-connected-to-ai-product",
+      "source": "user-trust",
+      "target": "ai-product",
+      "type": "application",
+      "explanation": "用户信任是理解和应用AI 产品时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
       "id": "vector-database-component-of-retrieval",
       "source": "vector-database",
       "target": "retrieval",
@@ -5331,6 +6637,20 @@
       "target": "multimodal-ai",
       "type": "application",
       "explanation": "视觉问答是理解和应用多模态人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
+      "id": "voice-cloning-connected-to-multimodal-ai",
+      "source": "voice-cloning",
+      "target": "multimodal-ai",
+      "type": "application",
+      "explanation": "声音克隆是理解和应用多模态人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
+      "id": "workflow-automation-connected-to-ai-agent",
+      "source": "workflow-automation",
+      "target": "ai-agent",
+      "type": "application",
+      "explanation": "工作流自动化是理解和应用AI Agent时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
       "id": "zero-shot-prompting-connected-to-context-window",
@@ -5395,6 +6715,15 @@
         "explanation": "Agent 规划是理解和应用AI Agent时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
+    "agent-sandbox": [
+      {
+        "edgeId": "agent-sandbox-connected-to-ai-agent",
+        "neighbor": "ai-agent",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "Agent 沙箱是理解和应用AI Agent时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
     "agentic-workflow": [
       {
         "edgeId": "agentic-workflow-connected-to-ai-agent",
@@ -5411,6 +6740,15 @@
         "type": "application",
         "direction": "outgoing",
         "explanation": "AI 加速器是理解和应用算力时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
+    "ai-adoption": [
+      {
+        "edgeId": "ai-adoption-connected-to-ai-product",
+        "neighbor": "ai-product",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "AI 采用是理解和应用AI 产品时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
     "ai-agent": [
@@ -5436,6 +6774,13 @@
         "explanation": "Agent 规划是理解和应用AI Agent时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       },
       {
+        "edgeId": "agent-sandbox-connected-to-ai-agent",
+        "neighbor": "agent-sandbox",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "Agent 沙箱是理解和应用AI Agent时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
         "edgeId": "agentic-workflow-connected-to-ai-agent",
         "neighbor": "agentic-workflow",
         "type": "application",
@@ -5448,6 +6793,13 @@
         "type": "application",
         "direction": "incoming",
         "explanation": "API 调用是理解和应用AI Agent时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "automation-trigger-connected-to-ai-agent",
+        "neighbor": "automation-trigger",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "自动化触发器是理解和应用AI Agent时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       },
       {
         "edgeId": "autonomous-agent-connected-to-ai-agent",
@@ -5485,6 +6837,13 @@
         "explanation": "函数调用是理解和应用AI Agent时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       },
       {
+        "edgeId": "human-in-the-loop-connected-to-ai-agent",
+        "neighbor": "human-in-the-loop",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "人在回路是理解和应用AI Agent时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
         "edgeId": "ai-agent-connected-to-large-language-model",
         "neighbor": "large-language-model",
         "type": "application",
@@ -5520,6 +6879,13 @@
         "explanation": "反思机制是理解和应用AI Agent时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       },
       {
+        "edgeId": "retry-policy-connected-to-ai-agent",
+        "neighbor": "retry-policy",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "重试策略是理解和应用AI Agent时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
         "edgeId": "self-correction-connected-to-ai-agent",
         "neighbor": "self-correction",
         "type": "application",
@@ -5553,6 +6919,13 @@
         "type": "application",
         "direction": "incoming",
         "explanation": "工具调用是理解和应用AI Agent时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "workflow-automation-connected-to-ai-agent",
+        "neighbor": "workflow-automation",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "工作流自动化是理解和应用AI Agent时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
     "ai-application": [
@@ -5571,6 +6944,13 @@
         "explanation": "自动扩缩容是理解和应用AI 应用时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       },
       {
+        "edgeId": "canary-release-connected-to-ai-application",
+        "neighbor": "canary-release",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "金丝雀发布是理解和应用AI 应用时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
         "edgeId": "containerization-connected-to-ai-application",
         "neighbor": "containerization",
         "type": "application",
@@ -5578,11 +6958,25 @@
         "explanation": "容器化是理解和应用AI 应用时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       },
       {
+        "edgeId": "continuous-delivery-connected-to-ai-application",
+        "neighbor": "continuous-delivery",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "持续交付是理解和应用AI 应用时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
         "edgeId": "cost-optimization-connected-to-ai-application",
         "neighbor": "cost-optimization",
         "type": "application",
         "direction": "incoming",
         "explanation": "成本优化是理解和应用AI 应用时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "experiment-tracking-connected-to-ai-application",
+        "neighbor": "experiment-tracking",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "实验追踪是理解和应用AI 应用时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       },
       {
         "edgeId": "fallback-model-connected-to-ai-application",
@@ -5683,6 +7077,13 @@
         "explanation": "响应缓存是理解和应用AI 应用时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       },
       {
+        "edgeId": "rollback-connected-to-ai-application",
+        "neighbor": "rollback",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "回滚是理解和应用AI 应用时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
         "edgeId": "semantic-cache-connected-to-ai-application",
         "neighbor": "semantic-cache",
         "type": "application",
@@ -5690,11 +7091,27 @@
         "explanation": "语义缓存是理解和应用AI 应用时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       },
       {
+        "edgeId": "service-level-objective-connected-to-ai-application",
+        "neighbor": "service-level-objective",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "服务等级目标是理解和应用AI 应用时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
         "edgeId": "streaming-response-connected-to-ai-application",
         "neighbor": "streaming-response",
         "type": "application",
         "direction": "incoming",
         "explanation": "流式响应是理解和应用AI 应用时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
+    "ai-capability-boundary": [
+      {
+        "edgeId": "ai-capability-boundary-connected-to-artificial-intelligence",
+        "neighbor": "artificial-intelligence",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "AI 能力边界是理解和应用人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
     "ai-effect": [
@@ -5715,7 +7132,39 @@
         "explanation": "AI 治理是理解和应用AI 安全时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
+    "ai-guardrail": [
+      {
+        "edgeId": "ai-guardrail-connected-to-ai-safety",
+        "neighbor": "ai-safety",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "AI 护栏是理解和应用AI 安全时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
+    "ai-onboarding": [
+      {
+        "edgeId": "ai-onboarding-connected-to-ai-product",
+        "neighbor": "ai-product",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "AI 产品引导是理解和应用AI 产品时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
     "ai-product": [
+      {
+        "edgeId": "ai-adoption-connected-to-ai-product",
+        "neighbor": "ai-adoption",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "AI 采用是理解和应用AI 产品时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "ai-onboarding-connected-to-ai-product",
+        "neighbor": "ai-onboarding",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "AI 产品引导是理解和应用AI 产品时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
       {
         "edgeId": "ai-use-case-connected-to-ai-product",
         "neighbor": "ai-use-case",
@@ -5757,6 +7206,13 @@
         "type": "application",
         "direction": "incoming",
         "explanation": "副驾驶模式是理解和应用AI 产品时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "error-recovery-connected-to-ai-product",
+        "neighbor": "error-recovery",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "错误恢复是理解和应用AI 产品时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       },
       {
         "edgeId": "explanation-interface-connected-to-ai-product",
@@ -5836,6 +7292,13 @@
         "explanation": "提示词界面是理解和应用AI 产品时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       },
       {
+        "edgeId": "task-success-rate-connected-to-ai-product",
+        "neighbor": "task-success-rate",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "任务成功率是理解和应用AI 产品时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
         "edgeId": "uncertainty-display-connected-to-ai-product",
         "neighbor": "uncertainty-display",
         "type": "application",
@@ -5855,6 +7318,13 @@
         "type": "application",
         "direction": "incoming",
         "explanation": "用户控制权是理解和应用AI 产品时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "user-trust-connected-to-ai-product",
+        "neighbor": "user-trust",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "用户信任是理解和应用AI 产品时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
     "ai-risk-management": [
@@ -5889,6 +7359,13 @@
         "explanation": "AI 治理是理解和应用AI 安全时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       },
       {
+        "edgeId": "ai-guardrail-connected-to-ai-safety",
+        "neighbor": "ai-guardrail",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "AI 护栏是理解和应用AI 安全时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
         "edgeId": "ai-risk-management-connected-to-ai-safety",
         "neighbor": "ai-risk-management",
         "type": "application",
@@ -5915,6 +7392,20 @@
         "type": "application",
         "direction": "incoming",
         "explanation": "可审计性是理解和应用AI 安全时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "content-moderation-connected-to-ai-safety",
+        "neighbor": "content-moderation",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "内容审核是理解和应用AI 安全时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "copyright-connected-to-ai-safety",
+        "neighbor": "copyright",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "著作权是理解和应用AI 安全时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       },
       {
         "edgeId": "data-governance-connected-to-ai-safety",
@@ -5973,6 +7464,13 @@
         "explanation": "越狱提示是理解和应用AI 安全时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       },
       {
+        "edgeId": "model-theft-connected-to-ai-safety",
+        "neighbor": "model-theft",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "模型窃取是理解和应用AI 安全时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
         "edgeId": "privacy-connected-to-ai-safety",
         "neighbor": "privacy",
         "type": "application",
@@ -5999,6 +7497,13 @@
         "type": "application",
         "direction": "incoming",
         "explanation": "负责任人工智能是理解和应用AI 安全时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "safety-filter-connected-to-ai-safety",
+        "neighbor": "safety-filter",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "安全过滤器是理解和应用AI 安全时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       },
       {
         "edgeId": "transparency-connected-to-ai-safety",
@@ -6080,6 +7585,13 @@
         "explanation": "AI 应用是理解和应用人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       },
       {
+        "edgeId": "ai-capability-boundary-connected-to-artificial-intelligence",
+        "neighbor": "ai-capability-boundary",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "AI 能力边界是理解和应用人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
         "edgeId": "ai-effect-connected-to-artificial-intelligence",
         "neighbor": "ai-effect",
         "type": "application",
@@ -6143,11 +7655,32 @@
         "explanation": "连接主义是理解和应用人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       },
       {
+        "edgeId": "dartmouth-workshop-connected-to-artificial-intelligence",
+        "neighbor": "dartmouth-workshop",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "达特茅斯会议是理解和应用人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "deep-learning-boom-connected-to-artificial-intelligence",
+        "neighbor": "deep-learning-boom",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "深度学习浪潮是理解和应用人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
         "edgeId": "expert-system-connected-to-artificial-intelligence",
         "neighbor": "expert-system",
         "type": "application",
         "direction": "incoming",
         "explanation": "专家系统是理解和应用人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "foundation-model-era-connected-to-artificial-intelligence",
+        "neighbor": "foundation-model-era",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "基础模型时代是理解和应用人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       },
       {
         "edgeId": "heuristic-connected-to-artificial-intelligence",
@@ -6197,6 +7730,13 @@
         "type": "application",
         "direction": "incoming",
         "explanation": "机器感知是理解和应用人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "perceptron-history-connected-to-artificial-intelligence",
+        "neighbor": "perceptron-history",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "感知机历史是理解和应用人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       },
       {
         "edgeId": "reasoning-system-connected-to-artificial-intelligence",
@@ -6291,6 +7831,15 @@
         "explanation": "自动评估是理解和应用AI 评估时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
+    "automation-trigger": [
+      {
+        "edgeId": "automation-trigger-connected-to-ai-agent",
+        "neighbor": "ai-agent",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "自动化触发器是理解和应用AI Agent时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
     "autonomous-agent": [
       {
         "edgeId": "autonomous-agent-connected-to-ai-agent",
@@ -6345,6 +7894,15 @@
         "explanation": "基准测试是理解和应用AI 评估时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
+    "bias-evaluation": [
+      {
+        "edgeId": "bias-evaluation-connected-to-evaluation",
+        "neighbor": "evaluation",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "偏见评估是理解和应用AI 评估时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
     "browser-use": [
       {
         "edgeId": "browser-use-connected-to-ai-agent",
@@ -6352,6 +7910,15 @@
         "type": "application",
         "direction": "outgoing",
         "explanation": "浏览器操作是理解和应用AI Agent时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
+    "canary-release": [
+      {
+        "edgeId": "canary-release-connected-to-ai-application",
+        "neighbor": "ai-application",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "金丝雀发布是理解和应用AI 应用时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
     "chain-of-thought": [
@@ -6370,6 +7937,24 @@
         "type": "application",
         "direction": "outgoing",
         "explanation": "芯片制造是理解和应用算力时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
+    "chip-interconnect": [
+      {
+        "edgeId": "chip-interconnect-connected-to-compute",
+        "neighbor": "compute",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "芯片互连是理解和应用算力时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
+    "citation-generation": [
+      {
+        "edgeId": "citation-generation-connected-to-retrieval-augmented-generation",
+        "neighbor": "retrieval-augmented-generation",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "引用生成是理解和应用检索增强生成时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
     "classification": [
@@ -6447,6 +8032,13 @@
         "explanation": "芯片制造是理解和应用算力时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       },
       {
+        "edgeId": "chip-interconnect-connected-to-compute",
+        "neighbor": "chip-interconnect",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "芯片互连是理解和应用算力时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
         "edgeId": "cloud-computing-connected-to-compute",
         "neighbor": "cloud-computing",
         "type": "application",
@@ -6461,6 +8053,13 @@
         "explanation": "中央处理器是理解和应用算力时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       },
       {
+        "edgeId": "cuda-connected-to-compute",
+        "neighbor": "cuda",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "CUDA是理解和应用算力时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
         "edgeId": "data-center-connected-to-compute",
         "neighbor": "data-center",
         "type": "application",
@@ -6468,11 +8067,25 @@
         "explanation": "数据中心是理解和应用算力时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       },
       {
+        "edgeId": "distributed-training-connected-to-compute",
+        "neighbor": "distributed-training",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "分布式训练是理解和应用算力时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
         "edgeId": "edge-ai-connected-to-compute",
         "neighbor": "edge-ai",
         "type": "application",
         "direction": "incoming",
         "explanation": "边缘人工智能是理解和应用算力时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "energy-efficiency-connected-to-compute",
+        "neighbor": "energy-efficiency",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "能源效率是理解和应用算力时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       },
       {
         "edgeId": "flops-connected-to-compute",
@@ -6545,6 +8158,13 @@
         "explanation": "半导体是理解和应用算力时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       },
       {
+        "edgeId": "tensor-parallelism-connected-to-compute",
+        "neighbor": "tensor-parallelism",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "张量并行是理解和应用算力时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
         "edgeId": "tpu-connected-to-compute",
         "neighbor": "tpu",
         "type": "application",
@@ -6613,6 +8233,15 @@
         "explanation": "容器化是理解和应用AI 应用时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
+    "content-moderation": [
+      {
+        "edgeId": "content-moderation-connected-to-ai-safety",
+        "neighbor": "ai-safety",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "内容审核是理解和应用AI 安全时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
     "context-compression": [
       {
         "edgeId": "context-compression-connected-to-context-window",
@@ -6629,6 +8258,24 @@
         "type": "application",
         "direction": "outgoing",
         "explanation": "上下文工程是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
+    "context-relevance": [
+      {
+        "edgeId": "context-relevance-connected-to-context-window",
+        "neighbor": "context-window",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "上下文相关性是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
+    "context-retrieval": [
+      {
+        "edgeId": "context-retrieval-connected-to-retrieval-augmented-generation",
+        "neighbor": "retrieval-augmented-generation",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "上下文检索是理解和应用检索增强生成时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
     "context-window": [
@@ -6654,6 +8301,13 @@
         "explanation": "上下文工程是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       },
       {
+        "edgeId": "context-relevance-connected-to-context-window",
+        "neighbor": "context-relevance",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "上下文相关性是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
         "edgeId": "conversation-context-connected-to-context-window",
         "neighbor": "conversation-context",
         "type": "application",
@@ -6675,6 +8329,13 @@
         "explanation": "事实依据约束是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       },
       {
+        "edgeId": "in-context-learning-connected-to-context-window",
+        "neighbor": "in-context-learning",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "上下文学习是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
         "edgeId": "instruction-hierarchy-connected-to-context-window",
         "neighbor": "instruction-hierarchy",
         "type": "application",
@@ -6689,11 +8350,32 @@
         "explanation": "长上下文是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       },
       {
+        "edgeId": "negative-prompt-connected-to-context-window",
+        "neighbor": "negative-prompt",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "负向提示词是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
         "edgeId": "prompt-chaining-connected-to-context-window",
         "neighbor": "prompt-chaining",
         "type": "application",
         "direction": "incoming",
         "explanation": "提示链是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "prompt-constraint-connected-to-context-window",
+        "neighbor": "prompt-constraint",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "提示约束是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "prompt-debugging-connected-to-context-window",
+        "neighbor": "prompt-debugging",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "提示词调试是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       },
       {
         "edgeId": "prompt-evaluation-connected-to-context-window",
@@ -6787,6 +8469,15 @@
         "explanation": "上下文窗口通常按 Token 数量计量，因此理解 Token 是判断容量与成本的前提。"
       }
     ],
+    "continuous-delivery": [
+      {
+        "edgeId": "continuous-delivery-connected-to-ai-application",
+        "neighbor": "ai-application",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "持续交付是理解和应用AI 应用时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
     "conversation-context": [
       {
         "edgeId": "conversation-context-connected-to-context-window",
@@ -6814,6 +8505,15 @@
         "explanation": "副驾驶模式是理解和应用AI 产品时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
+    "copyright": [
+      {
+        "edgeId": "copyright-connected-to-ai-safety",
+        "neighbor": "ai-safety",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "著作权是理解和应用AI 安全时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
     "cost-optimization": [
       {
         "edgeId": "cost-optimization-connected-to-ai-application",
@@ -6839,6 +8539,24 @@
         "type": "application",
         "direction": "outgoing",
         "explanation": "跨模态检索是理解和应用多模态人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
+    "cuda": [
+      {
+        "edgeId": "cuda-connected-to-compute",
+        "neighbor": "compute",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "CUDA是理解和应用算力时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
+    "dartmouth-workshop": [
+      {
+        "edgeId": "dartmouth-workshop-connected-to-artificial-intelligence",
+        "neighbor": "artificial-intelligence",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "达特茅斯会议是理解和应用人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
     "data-center": [
@@ -6904,6 +8622,15 @@
         "explanation": "深度学习是理解和应用机器学习时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
+    "deep-learning-boom": [
+      {
+        "edgeId": "deep-learning-boom-connected-to-artificial-intelligence",
+        "neighbor": "artificial-intelligence",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "深度学习浪潮是理解和应用人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
     "dense-vector": [
       {
         "edgeId": "dense-vector-connected-to-retrieval-augmented-generation",
@@ -6920,6 +8647,24 @@
         "type": "application",
         "direction": "outgoing",
         "explanation": "扩散模型是理解和应用多模态人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
+    "distillation": [
+      {
+        "edgeId": "distillation-connected-to-large-language-model",
+        "neighbor": "large-language-model",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "模型蒸馏是理解和应用大语言模型时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
+    "distributed-training": [
+      {
+        "edgeId": "distributed-training-connected-to-compute",
+        "neighbor": "compute",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "分布式训练是理解和应用算力时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
     "document-chunking": [
@@ -6981,6 +8726,15 @@
         "explanation": "向量数据库存储和检索嵌入向量，先理解 Embedding 才能理解相似度搜索。"
       }
     ],
+    "energy-efficiency": [
+      {
+        "edgeId": "energy-efficiency-connected-to-compute",
+        "neighbor": "compute",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "能源效率是理解和应用算力时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
     "epoch": [
       {
         "edgeId": "epoch-connected-to-machine-learning",
@@ -6988,6 +8742,15 @@
         "type": "application",
         "direction": "outgoing",
         "explanation": "训练轮次是理解和应用机器学习时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
+    "error-recovery": [
+      {
+        "edgeId": "error-recovery-connected-to-ai-product",
+        "neighbor": "ai-product",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "错误恢复是理解和应用AI 产品时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
     "eval-set": [
@@ -7020,6 +8783,13 @@
         "type": "application",
         "direction": "incoming",
         "explanation": "基准测试是理解和应用AI 评估时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "bias-evaluation-connected-to-evaluation",
+        "neighbor": "bias-evaluation",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "偏见评估是理解和应用AI 评估时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       },
       {
         "edgeId": "eval-set-connected-to-evaluation",
@@ -7078,11 +8848,25 @@
         "explanation": "人工评估是理解和应用AI 评估时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       },
       {
+        "edgeId": "latency-connected-to-evaluation",
+        "neighbor": "latency",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "延迟是理解和应用AI 评估时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
         "edgeId": "llm-as-judge-connected-to-evaluation",
         "neighbor": "llm-as-judge",
         "type": "application",
         "direction": "incoming",
         "explanation": "大模型裁判是理解和应用AI 评估时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "observability-connected-to-evaluation",
+        "neighbor": "observability",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "可观测性是理解和应用AI 评估时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       },
       {
         "edgeId": "offline-evaluation-connected-to-evaluation",
@@ -7127,11 +8911,25 @@
         "explanation": "检索召回率是理解和应用AI 评估时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       },
       {
+        "edgeId": "throughput-connected-to-evaluation",
+        "neighbor": "throughput",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "吞吐量是理解和应用AI 评估时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
         "edgeId": "toxicity-evaluation-connected-to-evaluation",
         "neighbor": "toxicity-evaluation",
         "type": "application",
         "direction": "incoming",
         "explanation": "毒性评估是理解和应用AI 评估时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "trace-connected-to-evaluation",
+        "neighbor": "trace",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "调用追踪是理解和应用AI 评估时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
     "evaluation-rubric": [
@@ -7141,6 +8939,15 @@
         "type": "application",
         "direction": "outgoing",
         "explanation": "评估量规是理解和应用AI 评估时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
+    "experiment-tracking": [
+      {
+        "edgeId": "experiment-tracking-connected-to-ai-application",
+        "neighbor": "ai-application",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "实验追踪是理解和应用AI 应用时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
     "expert-system": [
@@ -7267,6 +9074,15 @@
         "type": "application",
         "direction": "outgoing",
         "explanation": "基础模型是理解和应用大语言模型时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
+    "foundation-model-era": [
+      {
+        "edgeId": "foundation-model-era-connected-to-artificial-intelligence",
+        "neighbor": "artificial-intelligence",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "基础模型时代是理解和应用人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
     "foundry": [
@@ -7457,6 +9273,15 @@
         "explanation": "人工评估是理解和应用AI 评估时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
+    "human-in-the-loop": [
+      {
+        "edgeId": "human-in-the-loop-connected-to-ai-agent",
+        "neighbor": "ai-agent",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "人在回路是理解和应用AI Agent时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
     "human-oversight": [
       {
         "edgeId": "human-oversight-connected-to-ai-safety",
@@ -7473,6 +9298,15 @@
         "type": "application",
         "direction": "outgoing",
         "explanation": "混合检索是理解和应用检索增强生成时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
+    "hyperparameter": [
+      {
+        "edgeId": "hyperparameter-connected-to-machine-learning",
+        "neighbor": "machine-learning",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "超参数是理解和应用机器学习时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
     "image-captioning": [
@@ -7509,6 +9343,24 @@
         "type": "application",
         "direction": "outgoing",
         "explanation": "图像理解是理解和应用多模态人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
+    "in-context-learning": [
+      {
+        "edgeId": "in-context-learning-connected-to-context-window",
+        "neighbor": "context-window",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "上下文学习是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
+    "indexing-pipeline": [
+      {
+        "edgeId": "indexing-pipeline-connected-to-retrieval-augmented-generation",
+        "neighbor": "retrieval-augmented-generation",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "索引管线是理解和应用检索增强生成时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
     "inference": [
@@ -7583,6 +9435,15 @@
         "explanation": "关键词检索是理解和应用检索增强生成时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
+    "knowledge-base": [
+      {
+        "edgeId": "knowledge-base-connected-to-retrieval-augmented-generation",
+        "neighbor": "retrieval-augmented-generation",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "知识库是理解和应用检索增强生成时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
     "knowledge-representation": [
       {
         "edgeId": "knowledge-representation-connected-to-artificial-intelligence",
@@ -7613,6 +9474,13 @@
         "type": "application",
         "direction": "incoming",
         "explanation": "解码策略是理解和应用大语言模型时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "distillation-connected-to-large-language-model",
+        "neighbor": "distillation",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "模型蒸馏是理解和应用大语言模型时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       },
       {
         "edgeId": "fine-tuning-connected-to-large-language-model",
@@ -7648,6 +9516,34 @@
         "type": "application",
         "direction": "incoming",
         "explanation": "低秩适配是理解和应用大语言模型时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "mixture-of-experts-connected-to-large-language-model",
+        "neighbor": "mixture-of-experts",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "混合专家模型是理解和应用大语言模型时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "model-capability-connected-to-large-language-model",
+        "neighbor": "model-capability",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "模型能力是理解和应用大语言模型时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "next-token-prediction-connected-to-large-language-model",
+        "neighbor": "next-token-prediction",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "下一词元预测是理解和应用大语言模型时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "open-weight-model-connected-to-large-language-model",
+        "neighbor": "open-weight-model",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "开放权重模型是理解和应用大语言模型时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       },
       {
         "edgeId": "parameter-efficient-fine-tuning-connected-to-large-language-model",
@@ -7755,6 +9651,15 @@
         "explanation": "先理解语言模型如何预测下一个 Token，才能理解它为何会生成流畅但错误的内容。"
       }
     ],
+    "latency": [
+      {
+        "edgeId": "latency-connected-to-evaluation",
+        "neighbor": "evaluation",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "延迟是理解和应用AI 评估时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
     "latency-budget": [
       {
         "edgeId": "latency-budget-connected-to-ai-product",
@@ -7771,6 +9676,24 @@
         "type": "application",
         "direction": "outgoing",
         "explanation": "延迟优化是理解和应用AI 应用时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
+    "learning-rate": [
+      {
+        "edgeId": "learning-rate-connected-to-machine-learning",
+        "neighbor": "machine-learning",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "学习率是理解和应用机器学习时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
+    "lip-sync": [
+      {
+        "edgeId": "lip-sync-connected-to-multimodal-ai",
+        "neighbor": "multimodal-ai",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "唇形同步是理解和应用多模态人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
     "llm-as-judge": [
@@ -7908,11 +9831,32 @@
         "explanation": "梯度下降是理解和应用机器学习时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       },
       {
+        "edgeId": "hyperparameter-connected-to-machine-learning",
+        "neighbor": "hyperparameter",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "超参数是理解和应用机器学习时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "learning-rate-connected-to-machine-learning",
+        "neighbor": "learning-rate",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "学习率是理解和应用机器学习时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
         "edgeId": "loss-function-connected-to-machine-learning",
         "neighbor": "loss-function",
         "type": "application",
         "direction": "incoming",
         "explanation": "损失函数是理解和应用机器学习时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "model-parameter-connected-to-machine-learning",
+        "neighbor": "model-parameter",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "模型参数是理解和应用机器学习时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       },
       {
         "edgeId": "neural-network-connected-to-machine-learning",
@@ -7957,11 +9901,25 @@
         "explanation": "监督学习是理解和应用机器学习时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       },
       {
+        "edgeId": "train-validation-test-split-connected-to-machine-learning",
+        "neighbor": "train-validation-test-split",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "训练验证测试集划分是理解和应用机器学习时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
         "edgeId": "training-data-connected-to-machine-learning",
         "neighbor": "training-data",
         "type": "application",
         "direction": "incoming",
         "explanation": "训练数据是理解和应用机器学习时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "transfer-learning-connected-to-machine-learning",
+        "neighbor": "transfer-learning",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "迁移学习是理解和应用机器学习时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       },
       {
         "edgeId": "underfitting-connected-to-machine-learning",
@@ -7996,6 +9954,24 @@
         "explanation": "元数据过滤是理解和应用检索增强生成时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
+    "mixture-of-experts": [
+      {
+        "edgeId": "mixture-of-experts-connected-to-large-language-model",
+        "neighbor": "large-language-model",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "混合专家模型是理解和应用大语言模型时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
+    "modality": [
+      {
+        "edgeId": "modality-connected-to-multimodal-ai",
+        "neighbor": "multimodal-ai",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "模态是理解和应用多模态人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
     "model-api": [
       {
         "edgeId": "model-api-connected-to-ai-application",
@@ -8003,6 +9979,15 @@
         "type": "application",
         "direction": "outgoing",
         "explanation": "模型 API是理解和应用AI 应用时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
+    "model-capability": [
+      {
+        "edgeId": "model-capability-connected-to-large-language-model",
+        "neighbor": "large-language-model",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "模型能力是理解和应用大语言模型时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
     "model-context-protocol": [
@@ -8021,6 +10006,15 @@
         "type": "application",
         "direction": "outgoing",
         "explanation": "模型部署是理解和应用AI 应用时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
+    "model-parameter": [
+      {
+        "edgeId": "model-parameter-connected-to-machine-learning",
+        "neighbor": "machine-learning",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "模型参数是理解和应用机器学习时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
     "model-registry": [
@@ -8048,6 +10042,15 @@
         "type": "application",
         "direction": "outgoing",
         "explanation": "模型服务是理解和应用AI 应用时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
+    "model-theft": [
+      {
+        "edgeId": "model-theft-connected-to-ai-safety",
+        "neighbor": "ai-safety",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "模型窃取是理解和应用AI 安全时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
     "multi-agent-system": [
@@ -8131,11 +10134,39 @@
         "explanation": "图像理解是理解和应用多模态人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       },
       {
+        "edgeId": "lip-sync-connected-to-multimodal-ai",
+        "neighbor": "lip-sync",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "唇形同步是理解和应用多模态人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "modality-connected-to-multimodal-ai",
+        "neighbor": "modality",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "模态是理解和应用多模态人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
         "edgeId": "multimodal-embedding-connected-to-multimodal-ai",
         "neighbor": "multimodal-embedding",
         "type": "application",
         "direction": "incoming",
         "explanation": "多模态嵌入是理解和应用多模态人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "multimodal-fusion-connected-to-multimodal-ai",
+        "neighbor": "multimodal-fusion",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "多模态融合是理解和应用多模态人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "native-multimodal-model-connected-to-multimodal-ai",
+        "neighbor": "native-multimodal-model",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "原生多模态模型是理解和应用多模态人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       },
       {
         "edgeId": "optical-character-recognition-connected-to-multimodal-ai",
@@ -8199,6 +10230,13 @@
         "type": "application",
         "direction": "incoming",
         "explanation": "视觉问答是理解和应用多模态人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "voice-cloning-connected-to-multimodal-ai",
+        "neighbor": "voice-cloning",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "声音克隆是理解和应用多模态人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
     "multimodal-embedding": [
@@ -8210,6 +10248,15 @@
         "explanation": "多模态嵌入是理解和应用多模态人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
+    "multimodal-fusion": [
+      {
+        "edgeId": "multimodal-fusion-connected-to-multimodal-ai",
+        "neighbor": "multimodal-ai",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "多模态融合是理解和应用多模态人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
     "narrow-ai": [
       {
         "edgeId": "narrow-ai-connected-to-artificial-intelligence",
@@ -8217,6 +10264,15 @@
         "type": "application",
         "direction": "outgoing",
         "explanation": "弱人工智能是理解和应用人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
+    "native-multimodal-model": [
+      {
+        "edgeId": "native-multimodal-model-connected-to-multimodal-ai",
+        "neighbor": "multimodal-ai",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "原生多模态模型是理解和应用多模态人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
     "natural-language-processing": [
@@ -8228,6 +10284,15 @@
         "explanation": "自然语言处理是理解和应用人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
+    "negative-prompt": [
+      {
+        "edgeId": "negative-prompt-connected-to-context-window",
+        "neighbor": "context-window",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "负向提示词是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
     "neural-network": [
       {
         "edgeId": "neural-network-connected-to-machine-learning",
@@ -8237,6 +10302,15 @@
         "explanation": "神经网络是理解和应用机器学习时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
+    "next-token-prediction": [
+      {
+        "edgeId": "next-token-prediction-connected-to-large-language-model",
+        "neighbor": "large-language-model",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "下一词元预测是理解和应用大语言模型时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
     "npu": [
       {
         "edgeId": "npu-connected-to-compute",
@@ -8244,6 +10318,15 @@
         "type": "application",
         "direction": "outgoing",
         "explanation": "神经网络处理器是理解和应用算力时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
+    "observability": [
+      {
+        "edgeId": "observability-connected-to-evaluation",
+        "neighbor": "evaluation",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "可观测性是理解和应用AI 评估时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
     "offline-evaluation": [
@@ -8271,6 +10354,15 @@
         "type": "application",
         "direction": "outgoing",
         "explanation": "在线评估是理解和应用AI 评估时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
+    "open-weight-model": [
+      {
+        "edgeId": "open-weight-model-connected-to-large-language-model",
+        "neighbor": "large-language-model",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "开放权重模型是理解和应用大语言模型时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
     "optical-character-recognition": [
@@ -8345,6 +10437,15 @@
         "explanation": "机器感知是理解和应用人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
+    "perceptron-history": [
+      {
+        "edgeId": "perceptron-history-connected-to-artificial-intelligence",
+        "neighbor": "artificial-intelligence",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "感知机历史是理解和应用人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
     "post-training": [
       {
         "edgeId": "post-training-connected-to-large-language-model",
@@ -8415,6 +10516,24 @@
         "type": "application",
         "direction": "outgoing",
         "explanation": "提示链是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
+    "prompt-constraint": [
+      {
+        "edgeId": "prompt-constraint-connected-to-context-window",
+        "neighbor": "context-window",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "提示约束是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
+    "prompt-debugging": [
+      {
+        "edgeId": "prompt-debugging-connected-to-context-window",
+        "neighbor": "context-window",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "提示词调试是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
     "prompt-evaluation": [
@@ -8648,6 +10767,20 @@
         "explanation": "近似最近邻搜索是理解和应用检索增强生成时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       },
       {
+        "edgeId": "citation-generation-connected-to-retrieval-augmented-generation",
+        "neighbor": "citation-generation",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "引用生成是理解和应用检索增强生成时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "context-retrieval-connected-to-retrieval-augmented-generation",
+        "neighbor": "context-retrieval",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "上下文检索是理解和应用检索增强生成时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
         "edgeId": "data-ingestion-connected-to-retrieval-augmented-generation",
         "neighbor": "data-ingestion",
         "type": "application",
@@ -8676,11 +10809,25 @@
         "explanation": "混合检索是理解和应用检索增强生成时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       },
       {
+        "edgeId": "indexing-pipeline-connected-to-retrieval-augmented-generation",
+        "neighbor": "indexing-pipeline",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "索引管线是理解和应用检索增强生成时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
         "edgeId": "keyword-search-connected-to-retrieval-augmented-generation",
         "neighbor": "keyword-search",
         "type": "application",
         "direction": "incoming",
         "explanation": "关键词检索是理解和应用检索增强生成时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "knowledge-base-connected-to-retrieval-augmented-generation",
+        "neighbor": "knowledge-base",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "知识库是理解和应用检索增强生成时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       },
       {
         "edgeId": "llm-applied-to-rag",
@@ -8709,6 +10856,13 @@
         "type": "application",
         "direction": "incoming",
         "explanation": "查询改写是理解和应用检索增强生成时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "retrieval-query-connected-to-retrieval-augmented-generation",
+        "neighbor": "retrieval-query",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "检索查询是理解和应用检索增强生成时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       },
       {
         "edgeId": "semantic-search-connected-to-retrieval-augmented-generation",
@@ -8813,6 +10967,15 @@
         "explanation": "检索精确率是理解和应用AI 评估时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
+    "retrieval-query": [
+      {
+        "edgeId": "retrieval-query-connected-to-retrieval-augmented-generation",
+        "neighbor": "retrieval-augmented-generation",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "检索查询是理解和应用检索增强生成时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
     "retrieval-recall": [
       {
         "edgeId": "retrieval-recall-connected-to-evaluation",
@@ -8820,6 +10983,15 @@
         "type": "application",
         "direction": "outgoing",
         "explanation": "检索召回率是理解和应用AI 评估时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
+    "retry-policy": [
+      {
+        "edgeId": "retry-policy-connected-to-ai-agent",
+        "neighbor": "ai-agent",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "重试策略是理解和应用AI Agent时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
     "robotics": [
@@ -8838,6 +11010,24 @@
         "type": "application",
         "direction": "outgoing",
         "explanation": "角色提示是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
+    "rollback": [
+      {
+        "edgeId": "rollback-connected-to-ai-application",
+        "neighbor": "ai-application",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "回滚是理解和应用AI 应用时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
+    "safety-filter": [
+      {
+        "edgeId": "safety-filter-connected-to-ai-safety",
+        "neighbor": "ai-safety",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "安全过滤器是理解和应用AI 安全时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
     "sampling": [
@@ -8901,6 +11091,15 @@
         "type": "application",
         "direction": "outgoing",
         "explanation": "半导体是理解和应用算力时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
+    "service-level-objective": [
+      {
+        "edgeId": "service-level-objective-connected-to-ai-application",
+        "neighbor": "ai-application",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "服务等级目标是理解和应用AI 应用时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
     "short-term-memory": [
@@ -9020,6 +11219,15 @@
         "explanation": "任务拆解是理解和应用AI Agent时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
+    "task-success-rate": [
+      {
+        "edgeId": "task-success-rate-connected-to-ai-product",
+        "neighbor": "ai-product",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "任务成功率是理解和应用AI 产品时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
     "temperature": [
       {
         "edgeId": "temperature-connected-to-large-language-model",
@@ -9027,6 +11235,15 @@
         "type": "application",
         "direction": "outgoing",
         "explanation": "温度参数是理解和应用大语言模型时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
+    "tensor-parallelism": [
+      {
+        "edgeId": "tensor-parallelism-connected-to-compute",
+        "neighbor": "compute",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "张量并行是理解和应用算力时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
     "text-to-image": [
@@ -9045,6 +11262,15 @@
         "type": "application",
         "direction": "outgoing",
         "explanation": "文本转语音是理解和应用多模态人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
+    "throughput": [
+      {
+        "edgeId": "throughput-connected-to-evaluation",
+        "neighbor": "evaluation",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "吞吐量是理解和应用AI 评估时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
     "token": [
@@ -9124,6 +11350,24 @@
         "explanation": "张量处理器是理解和应用算力时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
+    "trace": [
+      {
+        "edgeId": "trace-connected-to-evaluation",
+        "neighbor": "evaluation",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "调用追踪是理解和应用AI 评估时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
+    "train-validation-test-split": [
+      {
+        "edgeId": "train-validation-test-split-connected-to-machine-learning",
+        "neighbor": "machine-learning",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "训练验证测试集划分是理解和应用机器学习时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
     "training-compute": [
       {
         "edgeId": "training-compute-connected-to-compute",
@@ -9140,6 +11384,15 @@
         "type": "application",
         "direction": "outgoing",
         "explanation": "训练数据是理解和应用机器学习时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
+    "transfer-learning": [
+      {
+        "edgeId": "transfer-learning-connected-to-machine-learning",
+        "neighbor": "machine-learning",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "迁移学习是理解和应用机器学习时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
     "transformer": [
@@ -9223,6 +11476,15 @@
         "explanation": "用户提示词是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
+    "user-trust": [
+      {
+        "edgeId": "user-trust-connected-to-ai-product",
+        "neighbor": "ai-product",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "用户信任是理解和应用AI 产品时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
     "vector-database": [
       {
         "edgeId": "vector-database-component-of-retrieval",
@@ -9282,6 +11544,24 @@
         "type": "application",
         "direction": "outgoing",
         "explanation": "视觉问答是理解和应用多模态人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
+    "voice-cloning": [
+      {
+        "edgeId": "voice-cloning-connected-to-multimodal-ai",
+        "neighbor": "multimodal-ai",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "声音克隆是理解和应用多模态人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
+    "workflow-automation": [
+      {
+        "edgeId": "workflow-automation-connected-to-ai-agent",
+        "neighbor": "ai-agent",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "工作流自动化是理解和应用AI Agent时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
     "zero-shot-prompting": [

@@ -32,18 +32,18 @@ describe('stage 8 catalog plan', () => {
     const [catalog, summaries] = await Promise.all([loadCatalogPlan(), loadCatalogSummaries()]);
 
     expect(validatePublishedCatalogSummaries(catalog, summaries)).toEqual([]);
-    expect(Object.keys(summaries)).toHaveLength(228);
+    expect(Object.keys(summaries)).toHaveLength(288);
   });
 
-  it('publishes batches B and C as connected catalogue entries', async () => {
+  it('publishes batches B, C and D as connected catalogue entries', async () => {
     const project = await loadProjectContent();
     const catalogued = project.terms.filter(({ data }) => data.status === 'catalogued');
     const connected = new Set(
       project.relations.flatMap((relation) => [relation.source, relation.target]),
     );
 
-    expect(project.terms).toHaveLength(240);
-    expect(catalogued).toHaveLength(228);
+    expect(project.terms).toHaveLength(300);
+    expect(catalogued).toHaveLength(288);
     expect(catalogued.every(({ data }) => connected.has(data.id))).toBe(true);
   });
 });
