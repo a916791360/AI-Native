@@ -1,9 +1,13 @@
 ---
+import GraphExplorer from '@/components/knowledge/GraphExplorer.astro';
 import PageIntro from '@/components/layout/PageIntro.astro';
+import generatedGraph from '@/generated/graph.json';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { loadProjectContent } from '@/lib/content/io';
+import type { GraphData } from '@/lib/graph/model';
 
-const { terms, relations } = await loadProjectContent();
+const { terms, relations, domains } = await loadProjectContent();
+const graph = generatedGraph as GraphData;
 const termMap = Object.fromEntries(terms.map(({ data }) => [data.id, data]));
 const groups = [
   { type: 'prerequisite', label: '前置关系', description: '先理解什么，后面的概念才不至于悬空。' },
@@ -22,28 +26,10 @@ const groups = [
     <PageIntro
       eyebrow={`Knowledge graph · ${terms.length} nodes · ${relations.length} relations`}
       title="概念图谱"
-      description="图谱不是装饰性的节点云。每一条线都必须有关系类型、方向与文字解释；脚本不可用时，这份结构化关系表仍然完整可读。"
+      description="从一个概念出发，观察知识如何通过前置、组成、比较与应用关系连接成体系。"
     />
-    <section class="graph-overview" aria-labelledby="overview-title">
-      <div>
-        <p class="eyebrow">Current graph</p>
-        <h2 class="section-heading" id="overview-title">12 个代表词条的关系骨架</h2>
-      </div>
-      <div class="node-strip">
-        {
-          terms.map(({ data }, index) => (
-            <a href={`/terms/${data.id}/`}>
-              <>
-                <span>{String(index + 1).padStart(2, '0')}</span>
-                <strong>{data.nameZh}</strong>
-                <small>{data.nameEn}</small>
-              </>
-            </a>
-          ))
-        }
-      </div>
-    </section>
-    <div class="relation-groups">
+    <GraphExplorer graph={graph} domains={domains} focusId="retrieval-augmented-generation" />
+    <div class="relation-groups" id="relations">
       {
         groups.map((group) => {
           const groupRelations = relations.filter((relation) => relation.type === group.type);
@@ -77,46 +63,6 @@ const groups = [
 </BaseLayout>
 
 <style>
-  .graph-overview {
-    display: grid;
-    grid-template-columns: minmax(18rem, 0.3fr) 1fr;
-    border-bottom: 1px solid var(--color-line);
-  }
-  .graph-overview > div:first-child {
-    border-right: 1px solid var(--color-line);
-    padding: var(--space-6) var(--page-gutter);
-  }
-  .node-strip {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-  .node-strip a {
-    min-height: 8rem;
-    display: flex;
-    flex-direction: column;
-    border-right: 1px solid var(--color-line-soft);
-    border-bottom: 1px solid var(--color-line-soft);
-    padding: var(--space-3);
-    text-decoration: none;
-  }
-  .node-strip a:hover {
-    background: var(--color-panel);
-  }
-  .node-strip span {
-    color: var(--color-quiet);
-    font-family: var(--font-mono);
-    font-size: var(--text-xs);
-  }
-  .node-strip strong {
-    margin-top: auto;
-    font-family: var(--font-display);
-    font-size: 1.1rem;
-    font-weight: 400;
-  }
-  .node-strip small {
-    color: var(--color-quiet);
-    font-size: 0.6875rem;
-  }
   .relation-group {
     display: grid;
     grid-template-columns: minmax(18rem, 0.3fr) 1fr;
@@ -179,17 +125,12 @@ const groups = [
   }
 
   @media (max-width: 800px) {
-    .graph-overview,
     .relation-group {
       grid-template-columns: 1fr;
     }
-    .graph-overview > div:first-child,
     .relation-group > header {
       border-right: 0;
       border-bottom: 1px solid var(--color-line);
-    }
-    .node-strip {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 

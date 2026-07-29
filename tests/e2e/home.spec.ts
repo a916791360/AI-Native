@@ -219,12 +219,113 @@ test('uses the shared search aggregator from the term atlas', async ({ page }) =
   await expect(page.locator('#atlas-index')).toBeVisible();
 });
 
+test('loads the full graph lazily and supports focus, filters and viewport controls', async ({
+  page,
+  isMobile,
+}) => {
+  const cytoscapeRequests: string[] = [];
+  page.on('request', (request) => {
+    if (request.url().includes('cytoscape')) cytoscapeRequests.push(request.url());
+  });
+  await page.goto('/graph/?focus=token');
+
+  const graph = page.locator('[data-graph-explorer][data-graph-mode="full"]');
+  if (isMobile) {
+    await expect(graph).toHaveAttribute('data-graph-state', 'idle');
+    expect(cytoscapeRequests).toEqual([]);
+    await page.locator('[data-graph-load]').click();
+  }
+  await expect(graph).toHaveAttribute('data-graph-state', 'ready');
+  await expect(graph).toHaveAttribute('data-graph-node-count', '12');
+  await expect(graph).toHaveAttribute('data-graph-selected', 'token');
+  await expect(graph.locator('[data-graph-detail-title]')).toHaveText('Token');
+  expect(cytoscapeRequests).toHaveLength(1);
+
+  const initialEdges = Number(await graph.getAttribute('data-graph-visible-edges'));
+  await graph.locator('[data-graph-relation][value="comparison"]').uncheck();
+  await expect
+    .poll(async () => Number(await graph.getAttribute('data-graph-visible-edges')))
+    .toBeLessThan(initialEdges);
+
+  const initialZoom = await graph.getAttribute('data-graph-zoom');
+  await graph.locator('[data-graph-action="zoom-in"]').click();
+  await expect(graph).not.toHaveAttribute('data-graph-zoom', initialZoom ?? '');
+
+  await graph.locator('[data-graph-focus-select]').selectOption('retrieval');
+  await expect(graph).toHaveAttribute('data-graph-selected', 'retrieval');
+  await expect(graph.locator('[data-graph-detail-title]')).toHaveText('检索');
+});
+
+test('keeps the structured graph usable when Cytoscape cannot initialize', async ({
+  page,
+  isMobile,
+}) => {
+  await page.goto('/graph/?graphError=1');
+  const graph = page.locator('[data-graph-explorer][data-graph-mode="full"]');
+  if (isMobile) await page.locator('[data-graph-load]').click();
+
+  await expect(graph).toHaveAttribute('data-graph-state', 'error');
+  await expect(graph.getByText('交互图谱暂不可用')).toBeVisible();
+  await expect(
+    page.locator('#relations').getByRole('link', { name: '人工智能' }).first(),
+  ).toBeVisible();
+});
+
+test('limits term pages to a one-hop local graph', async ({ page, isMobile }) => {
+  await page.goto('/terms/retrieval-augmented-generation/');
+  const graph = page.locator('[data-graph-explorer][data-graph-mode="local"]');
+  await graph.scrollIntoViewIfNeeded();
+
+  if (isMobile) {
+    await expect(graph).toHaveAttribute('data-graph-state', 'idle');
+    await graph.locator('[data-graph-load]').click();
+  }
+  await expect(graph).toHaveAttribute('data-graph-state', 'ready');
+  await expect(graph).toHaveAttribute('data-graph-selected', 'retrieval-augmented-generation');
+  const localNodeCount = Number(await graph.getAttribute('data-graph-node-count'));
+  expect(localNodeCount).toBeLessThanOrEqual(20);
+});
+
+test('keeps Cytoscape out of the homepage initial load', async ({ page }) => {
+  const cytoscapeRequests: string[] = [];
+  page.on('request', (request) => {
+    if (request.url().includes('cytoscape')) cytoscapeRequests.push(request.url());
+  });
+
+  await page.goto('/');
+  await page.waitForLoadState('networkidle');
+  expect(cytoscapeRequests).toEqual([]);
+});
+
+test('keeps a 500-node synthetic graph responsive in Chromium', async ({ page, isMobile }) => {
+  test.skip(isMobile, 'the 500-node performance gate targets the desktop graph experience');
+  await page.goto('/graph/?benchmark=500');
+
+  const graph = page.locator('[data-graph-explorer][data-graph-mode="full"]');
+  await expect(graph).toHaveAttribute('data-graph-state', 'ready', { timeout: 15_000 });
+  await expect(graph).toHaveAttribute('data-graph-node-count', '500');
+  expect(Number(await graph.getAttribute('data-graph-init-ms'))).toBeLessThan(5_000);
+
+  await graph.locator('[data-graph-focus-select]').selectOption('synthetic-499');
+  await expect(graph).toHaveAttribute('data-graph-selected', 'synthetic-499');
+  await graph.locator('[data-graph-action="zoom-in"]').click();
+  const timerDelay = await page.evaluate(
+    () =>
+      new Promise<number>((resolve) => {
+        const startedAt = performance.now();
+        window.setTimeout(() => resolve(performance.now() - startedAt), 50);
+      }),
+  );
+  expect(timerDelay).toBeLessThan(500);
+});
+
 test('keeps key pages within the viewport without horizontal overflow', async ({ page }) => {
   for (const url of [
     '/',
     '/atlas/',
     '/search/?q=RAG',
     '/routes/',
+    '/graph/',
     '/terms/retrieval-augmented-generation/',
   ]) {
     await page.goto(url);
@@ -258,7 +359,13 @@ test('renders the designed 404 state', async ({ page }) => {
 });
 
 test('has no serious or critical automated accessibility violations', async ({ page }) => {
-  for (const url of ['/', '/atlas/', '/search/?q=RAG', '/terms/retrieval-augmented-generation/']) {
+  for (const url of [
+    '/',
+    '/atlas/',
+    '/search/?q=RAG',
+    '/graph/',
+    '/terms/retrieval-augmented-generation/',
+  ]) {
     await page.goto(url);
     const results = await new AxeBuilder({ page })
       .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])

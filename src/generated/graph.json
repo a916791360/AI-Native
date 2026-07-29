@@ -10,7 +10,11 @@
       "domain": "ai-foundations-history",
       "difficulty": "beginner",
       "ring": "core",
-      "status": "verified"
+      "status": "verified",
+      "position": {
+        "x": 208,
+        "y": 408
+      }
     },
     {
       "id": "context-window",
@@ -21,7 +25,11 @@
       "domain": "prompt-context-engineering",
       "difficulty": "beginner",
       "ring": "core",
-      "status": "verified"
+      "status": "verified",
+      "position": {
+        "x": 792,
+        "y": 408
+      }
     },
     {
       "id": "document-chunking",
@@ -32,7 +40,11 @@
       "domain": "data-retrieval-rag",
       "difficulty": "intermediate",
       "ring": "core",
-      "status": "verified"
+      "status": "verified",
+      "position": {
+        "x": 265,
+        "y": 226
+      }
     },
     {
       "id": "embedding",
@@ -43,7 +55,11 @@
       "domain": "data-retrieval-rag",
       "difficulty": "intermediate",
       "ring": "core",
-      "status": "verified"
+      "status": "verified",
+      "position": {
+        "x": 500,
+        "y": 55
+      }
     },
     {
       "id": "generative-ai",
@@ -54,7 +70,11 @@
       "domain": "large-language-models-generative-ai",
       "difficulty": "beginner",
       "ring": "core",
-      "status": "verified"
+      "status": "verified",
+      "position": {
+        "x": 630,
+        "y": 554
+      }
     },
     {
       "id": "hallucination",
@@ -65,7 +85,11 @@
       "domain": "evaluation-observability-quality",
       "difficulty": "beginner",
       "ring": "core",
-      "status": "verified"
+      "status": "verified",
+      "position": {
+        "x": 930,
+        "y": 360
+      }
     },
     {
       "id": "large-language-model",
@@ -76,7 +100,11 @@
       "domain": "large-language-models-generative-ai",
       "difficulty": "beginner",
       "ring": "core",
-      "status": "verified"
+      "status": "verified",
+      "position": {
+        "x": 735,
+        "y": 226
+      }
     },
     {
       "id": "reranking",
@@ -87,7 +115,11 @@
       "domain": "data-retrieval-rag",
       "difficulty": "advanced",
       "ring": "core",
-      "status": "verified"
+      "status": "verified",
+      "position": {
+        "x": 500,
+        "y": 665
+      }
     },
     {
       "id": "retrieval",
@@ -98,7 +130,11 @@
       "domain": "data-retrieval-rag",
       "difficulty": "intermediate",
       "ring": "core",
-      "status": "verified"
+      "status": "verified",
+      "position": {
+        "x": 500,
+        "y": 145
+      }
     },
     {
       "id": "retrieval-augmented-generation",
@@ -109,7 +145,11 @@
       "domain": "data-retrieval-rag",
       "difficulty": "intermediate",
       "ring": "core",
-      "status": "verified"
+      "status": "verified",
+      "position": {
+        "x": 500,
+        "y": 360
+      }
     },
     {
       "id": "token",
@@ -120,7 +160,11 @@
       "domain": "large-language-models-generative-ai",
       "difficulty": "beginner",
       "ring": "core",
-      "status": "verified"
+      "status": "verified",
+      "position": {
+        "x": 370,
+        "y": 554
+      }
     },
     {
       "id": "vector-database",
@@ -131,7 +175,11 @@
       "domain": "data-retrieval-rag",
       "difficulty": "intermediate",
       "ring": "core",
-      "status": "verified"
+      "status": "verified",
+      "position": {
+        "x": 70,
+        "y": 360
+      }
     }
   ],
   "edges": [

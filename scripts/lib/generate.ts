@@ -1,6 +1,7 @@
 import type { ProjectContent } from '../../src/lib/content/io';
 import type { Relation, Term } from '../../src/lib/content/schema';
 import { normalizeLookupKey } from '../../src/lib/content/validation';
+import { computeGraphPositions } from '../../src/lib/graph/model';
 
 function isPublicTerm(term: Term): boolean {
   return term.status !== 'draft';
@@ -109,6 +110,8 @@ export function buildGraph(project: ProjectContent) {
     );
   }
 
+  const positions = computeGraphPositions(publicTerms, edges);
+
   return {
     version: 1,
     nodes: publicTerms.map((term) => ({
@@ -121,6 +124,7 @@ export function buildGraph(project: ProjectContent) {
       difficulty: term.difficulty,
       ring: term.ring,
       status: term.status,
+      position: positions[term.id] ?? { x: 500, y: 360 },
     })),
     edges,
     local,

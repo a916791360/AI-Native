@@ -33,6 +33,8 @@ describe('generated content artifacts', () => {
     const graph = buildGraph(project);
 
     expect(graph.nodes.map((node) => node.id)).toEqual(['alpha-term', 'beta-term']);
+    expect(graph.nodes.every((node) => Number.isFinite(node.position.x))).toBe(true);
+    expect(buildGraph(project)).toEqual(graph);
     expect(graph.local['alpha-term']).toEqual(
       expect.arrayContaining([
         expect.objectContaining({ neighbor: 'beta-term', direction: 'outgoing' }),
