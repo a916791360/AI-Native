@@ -17,7 +17,7 @@ batches:
       - compute
   - id: foundation-1
     kind: foundation
-    status: draft
+    status: research
     terms:
       - supervised-learning
       - unsupervised-learning
@@ -60,7 +60,7 @@ batches:
           - generalization
       - id: language-model-foundations
         focus: 解释基础模型、注意力、分词与预训练的核心机制。
-        status: draft
+        status: verified
         terms:
           - foundation-model
           - attention-mechanism

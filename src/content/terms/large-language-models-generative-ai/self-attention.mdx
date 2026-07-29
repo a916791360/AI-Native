@@ -8,7 +8,10 @@ summary: 在同一序列内部计算各位置之间相关性的注意力机制�
 domain: large-language-models-generative-ai
 difficulty: intermediate
 ring: core
-status: draft
+status: verified
+publishedAt: '2026-07-29'
+updatedAt: '2026-07-29'
+verifiedAt: '2026-07-29'
 priority: 2
 featured: false
 sources:
@@ -46,7 +49,7 @@ sources:
 
 <h2 id="tradeoffs">什么时候适合与不适合</h2>
 
-适合需要建立全局上下文关系并支持并行训练的任务。标准全自注意力要比较大量位置对，计算和内存会随序列长度呈二次增长；它也只是 Transformer 层的一部分，仍需位置表示、前馈层、残差连接等结构。注意力分数较高同样不保证对应关系就是唯一正确解释。
+适合需要建立全局上下文关系并支持并行训练的任务。标准全自注意力要比较大量位置对，每层计算复杂度会随序列长度呈二次增长；它也只是 Transformer 层的一部分，仍需位置表示、前馈层、残差连接等结构。注意力分数较高同样不保证对应关系就是唯一正确解释。
 
 <h2 id="try-it">亲自试一下</h2>
 
@@ -54,7 +57,7 @@ sources:
 
 <h2 id="next">接下来学什么</h2>
 
-先回到[注意力机制](/terms/attention-mechanism/)区分上位概念，再阅读[Transformer 架构](/terms/transformer/)理解完整层结构；结合[Token](/terms/token/)和[上下文窗口](/terms/context-window/)分析序列长度如何影响模型可见范围与计算成本。
+先回到[注意力机制](/terms/attention-mechanism/)区分上位概念，再阅读[Transformer 架构](/terms/transformer/)理解完整层结构；结合[Token](/terms/token/)和[上下文窗口](/terms/context-window/)分析序列长度，最后回到[大语言模型](/terms/large-language-model/)理解它如何成为实际模型的核心机制。
 
 <h2 id="sources-and-revisions">来源与修订</h2>
 

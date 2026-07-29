@@ -1,7 +1,7 @@
 ---
 termId: self-attention
 batch: foundation-1
-status: draft
+status: verified
 accessedAt: '2026-07-29'
 sourceIds:
   - transformer-original-paper
