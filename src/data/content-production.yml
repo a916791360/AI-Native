@@ -51,7 +51,7 @@ batches:
           - training-data
       - id: training-and-generalization
         focus: 连接任务类型、优化过程与模型泛化质量。
-        status: planned
+        status: research
         terms:
           - classification
           - regression

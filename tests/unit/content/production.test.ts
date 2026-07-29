@@ -27,12 +27,12 @@ describe('stage 9 content production', () => {
     expect(plan.batches[1]?.waves?.flatMap((wave) => wave.terms)).toEqual(plan.batches[1]?.terms);
     expect(plan.batches[1]?.waves?.map(({ status }) => status)).toEqual([
       'verified',
-      'planned',
+      'research',
       'planned',
       'planned',
     ]);
-    expect(deepContentTermIds(plan).size).toBe(13);
-    expect(packets).toHaveLength(13);
+    expect(deepContentTermIds(plan).size).toBe(18);
+    expect(packets).toHaveLength(18);
   });
 
   it('activates protection and packet requirements one wave at a time', async () => {
@@ -42,9 +42,9 @@ describe('stage 9 content production', () => {
       loadProjectContent(),
     ]);
     const activePlan = structuredClone(plan);
-    activePlan.batches[1]!.waves![1]!.status = 'research';
+    activePlan.batches[1]!.waves![2]!.status = 'research';
 
-    expect(deepContentTermIds(activePlan).size).toBe(18);
+    expect(deepContentTermIds(activePlan).size).toBe(23);
     expect(
       validateContentProduction(activePlan, packets, project).filter(
         ({ code }) => code === 'PRODUCTION_PACKET_MISSING',
