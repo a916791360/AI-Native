@@ -14,6 +14,16 @@ describe('metadata search', () => {
     expect(searchMetadata(records, query)[0]?.record.id).toBe(expectedId);
   });
 
+  it.each([
+    'foundation-model',
+    'attention-mechanism',
+    'self-attention',
+    'tokenizer',
+    'pretraining',
+  ])('excludes draft term %s from the public gate', (id) => {
+    expect(metadataCases.some(({ expectedId }) => expectedId === id)).toBe(false);
+  });
+
   it('applies domain, difficulty and status filters together', () => {
     const results = searchMetadata(records, '', {
       domain: 'data-retrieval-rag',

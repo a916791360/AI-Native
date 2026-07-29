@@ -425,26 +425,6 @@
       ]
     },
     {
-      "id": "attention-mechanism",
-      "url": "/terms/attention-mechanism/",
-      "nameZh": "注意力机制",
-      "nameEn": "Attention Mechanism",
-      "abbreviations": [],
-      "aliases": [],
-      "summary": "让模型在处理当前信息时动态分配权重，聚焦输入中更相关部分的计算机制。",
-      "domain": "large-language-models-generative-ai",
-      "domainNameZh": "大语言模型与生成式 AI",
-      "difficulty": "intermediate",
-      "ring": "core",
-      "status": "catalogued",
-      "priority": 1,
-      "featured": false,
-      "searchKeys": [
-        "注意力机制",
-        "attention mechanism"
-      ]
-    },
-    {
       "id": "auditability",
       "url": "/terms/auditability/",
       "nameZh": "可审计性",
@@ -1539,26 +1519,6 @@
       "searchKeys": [
         "微调",
         "fine-tuning"
-      ]
-    },
-    {
-      "id": "foundation-model",
-      "url": "/terms/foundation-model/",
-      "nameZh": "基础模型",
-      "nameEn": "Foundation Model",
-      "abbreviations": [],
-      "aliases": [],
-      "summary": "在大规模广泛数据上训练、能够适配多种下游任务并作为其他应用基础的模型。",
-      "domain": "large-language-models-generative-ai",
-      "domainNameZh": "大语言模型与生成式 AI",
-      "difficulty": "beginner",
-      "ring": "core",
-      "status": "catalogued",
-      "priority": 1,
-      "featured": false,
-      "searchKeys": [
-        "基础模型",
-        "foundation model"
       ]
     },
     {
@@ -2749,26 +2709,6 @@
       ]
     },
     {
-      "id": "pretraining",
-      "url": "/terms/pretraining/",
-      "nameZh": "预训练",
-      "nameEn": "Pretraining",
-      "abbreviations": [],
-      "aliases": [],
-      "summary": "在大规模通用数据上先学习基础表示和规律，再适配具体任务或交互目标的训练阶段。",
-      "domain": "large-language-models-generative-ai",
-      "domainNameZh": "大语言模型与生成式 AI",
-      "difficulty": "intermediate",
-      "ring": "core",
-      "status": "catalogued",
-      "priority": 1,
-      "featured": false,
-      "searchKeys": [
-        "预训练",
-        "pretraining"
-      ]
-    },
-    {
       "id": "privacy",
       "url": "/terms/privacy/",
       "nameZh": "隐私",
@@ -3639,26 +3579,6 @@
         "token",
         "词元",
         "文本令牌"
-      ]
-    },
-    {
-      "id": "tokenizer",
-      "url": "/terms/tokenizer/",
-      "nameZh": "分词器",
-      "nameEn": "Tokenizer",
-      "abbreviations": [],
-      "aliases": [],
-      "summary": "按既定词表和规则把文本转换为 Token 序列，并在输出阶段完成反向解码的组件。",
-      "domain": "large-language-models-generative-ai",
-      "domainNameZh": "大语言模型与生成式 AI",
-      "difficulty": "intermediate",
-      "ring": "core",
-      "status": "catalogued",
-      "priority": 1,
-      "featured": false,
-      "searchKeys": [
-        "分词器",
-        "tokenizer"
       ]
     },
     {
@@ -5263,26 +5183,6 @@
       "searchKeys": [
         "采样",
         "sampling"
-      ]
-    },
-    {
-      "id": "self-attention",
-      "url": "/terms/self-attention/",
-      "nameZh": "自注意力",
-      "nameEn": "Self-Attention",
-      "abbreviations": [],
-      "aliases": [],
-      "summary": "在同一序列内部计算各位置之间相关性的注意力机制，用于形成包含上下文的信息表示。",
-      "domain": "large-language-models-generative-ai",
-      "domainNameZh": "大语言模型与生成式 AI",
-      "difficulty": "intermediate",
-      "ring": "core",
-      "status": "catalogued",
-      "priority": 2,
-      "featured": false,
-      "searchKeys": [
-        "自注意力",
-        "self-attention"
       ]
     },
     {
