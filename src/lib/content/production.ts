@@ -9,11 +9,13 @@ import { parseFrontmatter } from './io';
 import { stableIdSchema } from './schema';
 
 const dateSchema = z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'must use YYYY-MM-DD');
+const productionStatusSchema = z.enum(['planned', 'research', 'draft', 'verified']);
 
 const productionWaveSchema = z
   .object({
     id: stableIdSchema,
     focus: z.string().min(10),
+    status: productionStatusSchema,
     terms: z.array(stableIdSchema).min(1),
   })
   .strict();
@@ -22,7 +24,7 @@ const productionBatchSchema = z
   .object({
     id: stableIdSchema,
     kind: z.enum(['sample', 'foundation', 'collaboration', 'product', 'rag']),
-    status: z.enum(['planned', 'research', 'draft', 'verified']),
+    status: productionStatusSchema,
     terms: z.array(stableIdSchema).min(1),
     waves: z.array(productionWaveSchema).min(1).optional(),
   })
@@ -101,8 +103,20 @@ export async function loadResearchPackets(root = process.cwd()): Promise<Researc
 
 export function deepContentTermIds(plan: ContentProductionPlan): Set<string> {
   return new Set(
-    plan.batches.filter((batch) => batch.status !== 'planned').flatMap((batch) => batch.terms),
+    plan.batches.flatMap((batch) => {
+      if (!batch.waves) return batch.status === 'planned' ? [] : batch.terms;
+      return batch.waves.filter((wave) => wave.status !== 'planned').flatMap((wave) => wave.terms);
+    }),
   );
+}
+
+function expectedBatchStatus(batch: ContentProductionPlan['batches'][number]) {
+  if (!batch.waves) return batch.status;
+  const statuses = batch.waves.map((wave) => wave.status);
+  if (statuses.every((status) => status === 'planned')) return 'planned';
+  if (statuses.every((status) => status === 'verified')) return 'verified';
+  if (statuses.some((status) => status === 'draft')) return 'draft';
+  return 'research';
 }
 
 export function validateContentProduction(
@@ -139,6 +153,17 @@ export function validateContentProduction(
         message: `waves in ${batch.id} must contain every batch term once and in production order`,
       });
     }
+    if (batch.waves && expectedBatchStatus(batch) !== batch.status) {
+      diagnostics.push({
+        code: 'PRODUCTION_BATCH_STATUS',
+        filePath: 'src/data/content-production.yml',
+        message: `${batch.id} status must summarize its wave statuses`,
+      });
+    }
+
+    const waveStatusByTerm = new Map(
+      batch.waves?.flatMap((wave) => wave.terms.map((id) => [id, wave.status] as const)),
+    );
 
     for (const id of batch.terms) {
       if (assigned.has(id)) {
@@ -159,16 +184,17 @@ export function validateContentProduction(
         });
         continue;
       }
-      if (batch.status === 'verified' && term.status !== 'verified') {
+      const productionStatus = waveStatusByTerm.get(id) ?? batch.status;
+      if (productionStatus === 'verified' && term.status !== 'verified') {
         diagnostics.push({
           code: 'PRODUCTION_TERM_NOT_VERIFIED',
           filePath: `src/content/terms/${term.domain}/${id}.mdx`,
-          message: `${id} belongs to verified batch ${batch.id} but is ${term.status}`,
+          message: `${id} is verified in batch ${batch.id} but its term is ${term.status}`,
         });
       }
 
       const packet = packetsByTerm.get(id);
-      if (batch.status === 'planned') {
+      if (productionStatus === 'planned') {
         if (packet) {
           diagnostics.push({
             code: 'PRODUCTION_PACKET_PREMATURE',
@@ -193,7 +219,7 @@ export function validateContentProduction(
           message: `packet identity must match ${id} in batch ${batch.id}`,
         });
       }
-      if (batch.status === 'verified' && packet.data.status !== 'verified') {
+      if (productionStatus === 'verified' && packet.data.status !== 'verified') {
         diagnostics.push({
           code: 'PRODUCTION_PACKET_NOT_VERIFIED',
           filePath: packet.filePath,

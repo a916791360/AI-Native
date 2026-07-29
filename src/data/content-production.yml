@@ -17,7 +17,7 @@ batches:
       - compute
   - id: foundation-1
     kind: foundation
-    status: planned
+    status: research
     terms:
       - supervised-learning
       - unsupervised-learning
@@ -42,6 +42,7 @@ batches:
     waves:
       - id: learning-foundations
         focus: 建立机器学习的学习范式、模型结构与数据基础。
+        status: research
         terms:
           - supervised-learning
           - unsupervised-learning
@@ -50,6 +51,7 @@ batches:
           - training-data
       - id: training-and-generalization
         focus: 连接任务类型、优化过程与模型泛化质量。
+        status: planned
         terms:
           - classification
           - regression
@@ -58,6 +60,7 @@ batches:
           - generalization
       - id: language-model-foundations
         focus: 解释基础模型、注意力、分词与预训练的核心机制。
+        status: planned
         terms:
           - foundation-model
           - attention-mechanism
@@ -66,6 +69,7 @@ batches:
           - pretraining
       - id: generation-and-adaptation
         focus: 串联后训练、模型适配、推理与生成控制。
+        status: planned
         terms:
           - post-training
           - instruction-tuning
