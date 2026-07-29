@@ -1,7 +1,13 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
+import { readFileSync } from 'node:fs';
 
-import { SEARCH_CASES } from '../fixtures/search/queries';
+import { searchCasesForTerms } from '../fixtures/search/queries';
+
+const registry = JSON.parse(
+  readFileSync(new URL('../../src/generated/term-registry.json', import.meta.url), 'utf8'),
+) as { terms: { id: string }[] };
+const PUBLIC_SEARCH_CASES = searchCasesForTerms(registry.terms.map(({ id }) => id));
 
 test('renders the approved direction 1 identity and primary paths', async ({ page, isMobile }) => {
   await page.goto('/');
@@ -42,7 +48,7 @@ test('derives the homepage routes, domains and content scale from project data',
   ).toHaveText('25');
   await expect(
     page.locator('.scope-heading dl div', { hasText: '概念关系' }).locator('dd'),
-  ).toHaveText('308');
+  ).toHaveText('303');
   await expect(page.locator('.featured-register a')).toHaveCount(6);
 });
 
@@ -117,7 +123,7 @@ test('passes the fixed production search relevance gate', async ({ page, isMobil
   const input = page.getByRole('searchbox', { name: '搜索词条' });
   const outcomes: { expected: string; actual: string | null; kind: string; query: string }[] = [];
 
-  for (const searchCase of SEARCH_CASES) {
+  for (const searchCase of PUBLIC_SEARCH_CASES) {
     await input.fill(searchCase.query);
     await input.press('Enter');
     await expect(page.locator('[data-search-output]')).toHaveAttribute('aria-busy', 'false');
@@ -258,6 +264,20 @@ test('renders every verified term as an eight-section article', async ({ page })
   }
 });
 
+test('keeps draft articles reviewable without publishing them in discovery surfaces', async ({
+  page,
+}) => {
+  await page.goto('/terms/classification/');
+
+  await expect(page.locator('.status-notice')).toContainText('暂不能视为已核验结论');
+  await expect(page.locator('.term-content h2')).toHaveCount(8);
+  await expect(page.locator('main[data-pagefind-ignore]')).toBeVisible();
+  await expect(page.getByRole('link', { name: '在概念图谱中查看' })).toHaveCount(0);
+
+  await page.goto('/atlas/');
+  await expect(page.locator('a[href="/terms/classification/"]')).toHaveCount(0);
+});
+
 test('connects a term to its previous and next route entries', async ({ page }) => {
   await page.goto('/terms/context-window/');
 
@@ -309,7 +329,7 @@ test('uses the shared search aggregator from the term atlas', async ({ page }) =
 test('filters and sorts the structured atlas index', async ({ page }) => {
   await page.goto('/atlas/');
 
-  await expect(page.locator('[data-atlas-visible]')).toHaveText('300');
+  await expect(page.locator('[data-atlas-visible]')).toHaveText('295');
   await page.getByLabel('领域范围').selectOption('core');
   await expect(page.locator('[data-atlas-visible]')).toHaveText('225');
   await expect(page.locator('[data-atlas-domain]:visible')).toHaveCount(9);
@@ -372,7 +392,7 @@ test('loads the full graph lazily and supports focus, filters and viewport contr
     await page.locator('[data-graph-load]').click();
   }
   await expect(graph).toHaveAttribute('data-graph-state', 'ready');
-  await expect(graph).toHaveAttribute('data-graph-node-count', '300');
+  await expect(graph).toHaveAttribute('data-graph-node-count', '295');
   await expect(graph).toHaveAttribute('data-graph-selected', 'token');
   await expect(graph.locator('[data-graph-detail-title]')).toHaveText('Token');
   expect(cytoscapeRequests).toHaveLength(1);

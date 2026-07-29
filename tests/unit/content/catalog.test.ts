@@ -43,7 +43,7 @@ describe('stage 8 catalog plan', () => {
     );
 
     expect(project.terms).toHaveLength(300);
-    expect(catalogued).toHaveLength(275);
+    expect(catalogued).toHaveLength(270);
     expect(catalogued.every(({ data }) => connected.has(data.id))).toBe(true);
   });
 });

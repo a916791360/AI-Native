@@ -148,3 +148,8 @@ export const SEARCH_CASES: SearchCase[] = [
   { query: 'Tensor Parallelism', expectedId: 'tensor-parallelism', kind: 'exact' },
   { query: 'Compute', expectedId: 'compute', kind: 'exact' },
 ];
+
+export function searchCasesForTerms(termIds: Iterable<string>) {
+  const publicTermIds = new Set(termIds);
+  return SEARCH_CASES.filter(({ expectedId }) => publicTermIds.has(expectedId));
+}

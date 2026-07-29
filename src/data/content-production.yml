@@ -17,7 +17,7 @@ batches:
       - compute
   - id: foundation-1
     kind: foundation
-    status: research
+    status: draft
     terms:
       - supervised-learning
       - unsupervised-learning
@@ -51,7 +51,7 @@ batches:
           - training-data
       - id: training-and-generalization
         focus: 连接任务类型、优化过程与模型泛化质量。
-        status: research
+        status: draft
         terms:
           - classification
           - regression
