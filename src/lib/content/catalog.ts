@@ -62,6 +62,7 @@ export const catalogPlanSchema = z
 
 export type CatalogPlan = z.infer<typeof catalogPlanSchema>;
 export type CatalogCandidateTuple = z.infer<typeof candidateTupleSchema>;
+export const PUBLISHED_CATALOG_BATCHES = ['B', 'C'] as const;
 
 const catalogSummariesSchema = z.record(stableIdSchema, z.string().min(10).max(160));
 export type CatalogSummaries = z.infer<typeof catalogSummariesSchema>;
@@ -237,7 +238,7 @@ export function validateCatalogPlan(
         `existing term ${term.id} must keep its candidate identity and domain assignment`,
       );
     }
-    if (!['A', 'B'].includes(batch)) {
+    if (!['A', ...PUBLISHED_CATALOG_BATCHES].includes(batch)) {
       add(
         'CATALOG_UNSCHEDULED_TERM_PUBLISHED',
         'groups',
@@ -295,32 +296,32 @@ export function validateCatalogPlan(
   return diagnostics;
 }
 
-export function validateBatchBSummaries(
+export function validatePublishedCatalogSummaries(
   catalog: CatalogPlan,
   summaries: CatalogSummaries,
 ): CatalogDiagnostic[] {
   const diagnostics: CatalogDiagnostic[] = [];
-  const batchBIds = new Set(
+  const publishedIds = new Set(
     flattenCatalogCandidates(catalog)
-      .filter((candidate) => candidate.batch === 'B')
+      .filter((candidate) => PUBLISHED_CATALOG_BATCHES.includes(candidate.batch as 'B' | 'C'))
       .map((candidate) => candidate.id),
   );
 
-  for (const id of batchBIds) {
+  for (const id of publishedIds) {
     if (!summaries[id]) {
       diagnostics.push({
         code: 'CATALOG_SUMMARY_MISSING',
         fieldPath: id,
-        message: `batch B term ${id} requires a directory summary`,
+        message: `published catalog term ${id} requires a directory summary`,
       });
     }
   }
   for (const id of Object.keys(summaries)) {
-    if (!batchBIds.has(id)) {
+    if (!publishedIds.has(id)) {
       diagnostics.push({
         code: 'CATALOG_SUMMARY_UNEXPECTED',
         fieldPath: id,
-        message: `summary does not belong to batch B term ${id}`,
+        message: `summary does not belong to a published catalog term ${id}`,
       });
     }
   }

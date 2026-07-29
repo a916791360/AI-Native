@@ -3,8 +3,8 @@ import path from 'node:path';
 
 import { loadCatalogPlan, loadCatalogSummaries } from '../src/lib/content/catalog';
 import {
-  buildBatchBRelations,
-  buildBatchBTerms,
+  buildPublishedCatalogRelations,
+  buildPublishedCatalogTerms,
   serializeCatalogRelations,
   serializeCatalogTerm,
 } from './lib/catalog-generation';
@@ -13,7 +13,7 @@ const root = process.cwd();
 const [catalog, summaries] = await Promise.all([loadCatalogPlan(root), loadCatalogSummaries(root)]);
 const stale: string[] = [];
 
-for (const { candidate, data } of buildBatchBTerms(catalog, summaries)) {
+for (const { candidate, data } of buildPublishedCatalogTerms(catalog, summaries)) {
   const relativePath = `src/content/terms/${candidate.domain}/${candidate.id}.mdx`;
   try {
     const actual = await readFile(path.join(root, relativePath), 'utf8');
@@ -26,7 +26,7 @@ for (const { candidate, data } of buildBatchBTerms(catalog, summaries)) {
 const relationsPath = 'src/data/catalog-relations.yml';
 try {
   const actual = await readFile(path.join(root, relationsPath), 'utf8');
-  const expected = serializeCatalogRelations(buildBatchBRelations(catalog, summaries));
+  const expected = serializeCatalogRelations(buildPublishedCatalogRelations(catalog, summaries));
   if (actual !== expected) stale.push(relationsPath);
 } catch {
   stale.push(relationsPath);
@@ -38,4 +38,4 @@ if (stale.length > 0) {
   );
 }
 
-console.log('Generated batch B catalog terms and relations are current.');
+console.log('Generated published catalog terms and relations are current.');

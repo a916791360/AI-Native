@@ -2,6 +2,7 @@ import { stringify as stringifyYaml } from 'yaml';
 
 import {
   flattenCatalogCandidates,
+  PUBLISHED_CATALOG_BATCHES,
   type CatalogCandidate,
   type CatalogPlan,
   type CatalogSummaries,
@@ -52,9 +53,9 @@ function variantsFor(catalog: CatalogPlan, id: string) {
   };
 }
 
-export function buildBatchBTerms(catalog: CatalogPlan, summaries: CatalogSummaries) {
+export function buildPublishedCatalogTerms(catalog: CatalogPlan, summaries: CatalogSummaries) {
   return flattenCatalogCandidates(catalog)
-    .filter((candidate) => candidate.batch === 'B')
+    .filter((candidate) => PUBLISHED_CATALOG_BATCHES.includes(candidate.batch as 'B' | 'C'))
     .map((candidate) => {
       const variants = variantsFor(catalog, candidate.id);
       const data: Term = {
@@ -80,14 +81,14 @@ export function serializeCatalogTerm(term: Term): string {
   return `---\n${stringifyYaml(term, { lineWidth: 0 })}---\n`;
 }
 
-export function buildBatchBRelations(
+export function buildPublishedCatalogRelations(
   catalog: CatalogPlan,
   summaries: CatalogSummaries,
 ): Relation[] {
   const allCandidates = new Map(
     flattenCatalogCandidates(catalog).map((candidate) => [candidate.id, candidate]),
   );
-  return buildBatchBTerms(catalog, summaries).map(({ candidate }) => {
+  return buildPublishedCatalogTerms(catalog, summaries).map(({ candidate }) => {
     const anchors = DOMAIN_ANCHORS[candidate.domain]!;
     const target = candidate.id === anchors.root ? anchors.parent : anchors.root;
     const targetName = allCandidates.get(target)?.nameZh ?? target;

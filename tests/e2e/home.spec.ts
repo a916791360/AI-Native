@@ -42,7 +42,7 @@ test('derives the homepage routes, domains and content scale from project data',
   ).toHaveText('12');
   await expect(
     page.locator('.scope-heading dl div', { hasText: '概念关系' }).locator('dd'),
-  ).toHaveText('128');
+  ).toHaveText('248');
   await expect(page.locator('.featured-register a')).toHaveCount(6);
 });
 
@@ -296,9 +296,9 @@ test('uses the shared search aggregator from the term atlas', async ({ page }) =
 test('filters and sorts the structured atlas index', async ({ page }) => {
   await page.goto('/atlas/');
 
-  await expect(page.locator('[data-atlas-visible]')).toHaveText('120');
+  await expect(page.locator('[data-atlas-visible]')).toHaveText('240');
   await page.getByLabel('领域范围').selectOption('core');
-  await expect(page.locator('[data-atlas-visible]')).toHaveText('90');
+  await expect(page.locator('[data-atlas-visible]')).toHaveText('180');
   await expect(page.locator('[data-atlas-domain]:visible')).toHaveCount(9);
   await page.getByLabel('排序方式').selectOption('name');
   await expect(page).toHaveURL(/ring=core/);
@@ -359,7 +359,7 @@ test('loads the full graph lazily and supports focus, filters and viewport contr
     await page.locator('[data-graph-load]').click();
   }
   await expect(graph).toHaveAttribute('data-graph-state', 'ready');
-  await expect(graph).toHaveAttribute('data-graph-node-count', '120');
+  await expect(graph).toHaveAttribute('data-graph-node-count', '240');
   await expect(graph).toHaveAttribute('data-graph-selected', 'token');
   await expect(graph.locator('[data-graph-detail-title]')).toHaveText('Token');
   expect(cytoscapeRequests).toHaveLength(1);

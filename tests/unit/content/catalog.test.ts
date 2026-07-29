@@ -4,7 +4,7 @@ import {
   countCatalogBatches,
   loadCatalogPlan,
   loadCatalogSummaries,
-  validateBatchBSummaries,
+  validatePublishedCatalogSummaries,
   validateCatalogPlan,
 } from '../../../src/lib/content/catalog';
 import { loadProjectContent } from '../../../src/lib/content/io';
@@ -28,22 +28,22 @@ describe('stage 8 catalog plan', () => {
     );
   });
 
-  it('provides one editorial summary for every batch B term', async () => {
+  it('provides one editorial summary for every published catalog term', async () => {
     const [catalog, summaries] = await Promise.all([loadCatalogPlan(), loadCatalogSummaries()]);
 
-    expect(validateBatchBSummaries(catalog, summaries)).toEqual([]);
-    expect(Object.keys(summaries)).toHaveLength(108);
+    expect(validatePublishedCatalogSummaries(catalog, summaries)).toEqual([]);
+    expect(Object.keys(summaries)).toHaveLength(228);
   });
 
-  it('publishes batch B as connected catalogue entries', async () => {
+  it('publishes batches B and C as connected catalogue entries', async () => {
     const project = await loadProjectContent();
     const catalogued = project.terms.filter(({ data }) => data.status === 'catalogued');
     const connected = new Set(
       project.relations.flatMap((relation) => [relation.source, relation.target]),
     );
 
-    expect(project.terms).toHaveLength(120);
-    expect(catalogued).toHaveLength(108);
+    expect(project.terms).toHaveLength(240);
+    expect(catalogued).toHaveLength(228);
     expect(catalogued.every(({ data }) => connected.has(data.id))).toBe(true);
   });
 });

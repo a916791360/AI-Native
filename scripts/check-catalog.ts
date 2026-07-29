@@ -2,7 +2,7 @@ import {
   countCatalogBatches,
   loadCatalogPlan,
   loadCatalogSummaries,
-  validateBatchBSummaries,
+  validatePublishedCatalogSummaries,
   validateCatalogPlan,
 } from '../src/lib/content/catalog';
 import { loadValidatedProjectContent } from './lib/project';
@@ -14,7 +14,7 @@ const [catalog, summaries, project] = await Promise.all([
 ]);
 const diagnostics = [
   ...validateCatalogPlan(catalog, project),
-  ...validateBatchBSummaries(catalog, summaries),
+  ...validatePublishedCatalogSummaries(catalog, summaries),
 ];
 
 if (diagnostics.length > 0) {

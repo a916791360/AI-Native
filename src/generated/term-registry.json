@@ -2,6 +2,66 @@
   "version": 1,
   "terms": [
     {
+      "id": "accountability",
+      "url": "/terms/accountability/",
+      "nameZh": "问责",
+      "nameEn": "Accountability",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "明确谁对 AI 系统的设计、部署、使用和影响承担责任并接受追责的治理要求。",
+      "domain": "safety-ethics-governance",
+      "domainNameZh": "安全、伦理与治理",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "问责",
+        "accountability"
+      ]
+    },
+    {
+      "id": "agent-memory",
+      "url": "/terms/agent-memory/",
+      "nameZh": "Agent 记忆",
+      "nameEn": "Agent Memory",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "Agent 为跨步骤或跨会话任务保存并取回相关状态、经验与用户信息的机制。",
+      "domain": "agents-tool-use-automation",
+      "domainNameZh": "Agent、工具调用与自动化",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "agent 记忆",
+        "agent memory"
+      ]
+    },
+    {
+      "id": "agent-planning",
+      "url": "/terms/agent-planning/",
+      "nameZh": "Agent 规划",
+      "nameEn": "Agent Planning",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "Agent 根据目标、约束和当前状态选择后续步骤及工具的过程，需要支持更新和停止。",
+      "domain": "agents-tool-use-automation",
+      "domainNameZh": "Agent、工具调用与自动化",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "agent 规划",
+        "agent planning"
+      ]
+    },
+    {
       "id": "agentic-workflow",
       "url": "/terms/agentic-workflow/",
       "nameZh": "Agent 工作流",
@@ -213,6 +273,26 @@
       ]
     },
     {
+      "id": "answer-correctness",
+      "url": "/terms/answer-correctness/",
+      "nameZh": "答案正确性",
+      "nameEn": "Answer Correctness",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "回答是否给出符合参考事实和任务要求的结论，可能同时依赖内容与推理过程。",
+      "domain": "evaluation-observability-quality",
+      "domainNameZh": "评估、可观测性与质量",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "答案正确性",
+        "answer correctness"
+      ]
+    },
+    {
       "id": "api-call",
       "url": "/terms/api-call/",
       "nameZh": "API 调用",
@@ -302,6 +382,26 @@
       "searchKeys": [
         "注意力机制",
         "attention mechanism"
+      ]
+    },
+    {
+      "id": "auditability",
+      "url": "/terms/auditability/",
+      "nameZh": "可审计性",
+      "nameEn": "Auditability",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "通过记录数据、版本、决策和操作证据，使 AI 系统能够被独立检查与复盘的能力。",
+      "domain": "safety-ethics-governance",
+      "domainNameZh": "安全、伦理与治理",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "可审计性",
+        "auditability"
       ]
     },
     {
@@ -422,6 +522,26 @@
       "searchKeys": [
         "思维链提示",
         "chain-of-thought prompting"
+      ]
+    },
+    {
+      "id": "cloud-computing",
+      "url": "/terms/cloud-computing/",
+      "nameZh": "云计算",
+      "nameEn": "Cloud Computing",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "通过网络按需提供计算、存储和平台资源的服务模式，使 AI 系统能够弹性部署。",
+      "domain": "compute-chips-industry",
+      "domainNameZh": "算力、芯片与产业生态",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "云计算",
+        "cloud computing"
       ]
     },
     {
@@ -571,6 +691,46 @@
       ]
     },
     {
+      "id": "conversation-context",
+      "url": "/terms/conversation-context/",
+      "nameZh": "对话上下文",
+      "nameEn": "Conversation Context",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "当前对话中的历史消息、状态和约束集合，决定模型能够参考哪些先前信息。",
+      "domain": "prompt-context-engineering",
+      "domainNameZh": "提示词与上下文工程",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "对话上下文",
+        "conversation context"
+      ]
+    },
+    {
+      "id": "conversational-ui",
+      "url": "/terms/conversational-ui/",
+      "nameZh": "对话式界面",
+      "nameEn": "Conversational UI",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "以连续对话作为主要交互方式的界面，适合渐进澄清但需要管理历史、状态和可发现性。",
+      "domain": "ai-product-ux",
+      "domainNameZh": "AI 产品与用户体验",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "对话式界面",
+        "conversational ui"
+      ]
+    },
+    {
       "id": "copilot-pattern",
       "url": "/terms/copilot-pattern/",
       "nameZh": "副驾驶模式",
@@ -588,6 +748,46 @@
       "searchKeys": [
         "副驾驶模式",
         "copilot pattern"
+      ]
+    },
+    {
+      "id": "cost-optimization",
+      "url": "/terms/cost-optimization/",
+      "nameZh": "成本优化",
+      "nameEn": "Cost Optimization",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "在满足质量与可靠性要求的前提下降低模型调用、计算、存储和运维成本的实践。",
+      "domain": "ai-engineering-deployment-operations",
+      "domainNameZh": "AI 工程、部署与运维",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "成本优化",
+        "cost optimization"
+      ]
+    },
+    {
+      "id": "data-center",
+      "url": "/terms/data-center/",
+      "nameZh": "数据中心",
+      "nameEn": "Data Center",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "集中部署计算、存储、网络和供电设施的场所，是大规模 AI 训练与服务的重要基础设施。",
+      "domain": "compute-chips-industry",
+      "domainNameZh": "算力、芯片与产业生态",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "数据中心",
+        "data center"
       ]
     },
     {
@@ -628,6 +828,26 @@
       "searchKeys": [
         "数据接入",
         "data ingestion"
+      ]
+    },
+    {
+      "id": "data-poisoning",
+      "url": "/terms/data-poisoning/",
+      "nameZh": "数据投毒",
+      "nameEn": "Data Poisoning",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "向训练、微调或检索数据中注入恶意样本，以操纵模型行为或降低系统质量的攻击。",
+      "domain": "safety-ethics-governance",
+      "domainNameZh": "安全、伦理与治理",
+      "difficulty": "advanced",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "数据投毒",
+        "data poisoning"
       ]
     },
     {
@@ -742,6 +962,46 @@
       ]
     },
     {
+      "id": "document-understanding",
+      "url": "/terms/document-understanding/",
+      "nameZh": "文档理解",
+      "nameEn": "Document Understanding",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "综合文档的文字、版面、表格和视觉元素提取结构与语义的多模态处理任务。",
+      "domain": "multimodal-ai",
+      "domainNameZh": "多模态",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "文档理解",
+        "document understanding"
+      ]
+    },
+    {
+      "id": "edge-ai",
+      "url": "/terms/edge-ai/",
+      "nameZh": "边缘人工智能",
+      "nameEn": "Edge AI",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "在靠近数据产生位置的边缘设备或节点运行 AI，以降低延迟、带宽和数据外传需求。",
+      "domain": "compute-chips-industry",
+      "domainNameZh": "算力、芯片与产业生态",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "边缘人工智能",
+        "edge ai"
+      ]
+    },
+    {
       "id": "embedding",
       "url": "/terms/embedding/",
       "nameZh": "嵌入",
@@ -813,6 +1073,55 @@
       ]
     },
     {
+      "id": "evaluation-rubric",
+      "url": "/terms/evaluation-rubric/",
+      "nameZh": "评估量规",
+      "nameEn": "Evaluation Rubric",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "把质量目标拆成具体维度、等级和判断标准的评估说明，用于提高人工或模型评审一致性。",
+      "domain": "evaluation-observability-quality",
+      "domainNameZh": "评估、可观测性与质量",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "评估量规",
+        "evaluation rubric"
+      ]
+    },
+    {
+      "id": "explainable-ai",
+      "url": "/terms/explainable-ai/",
+      "nameZh": "可解释人工智能",
+      "nameEn": "Explainable AI",
+      "abbreviations": [
+        "XAI"
+      ],
+      "aliases": [
+        {
+          "value": "可解释性 AI",
+          "language": "zh-CN"
+        }
+      ],
+      "summary": "研究和提供模型预测依据、影响因素或可理解近似解释的方法与系统能力。",
+      "domain": "safety-ethics-governance",
+      "domainNameZh": "安全、伦理与治理",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "可解释人工智能",
+        "explainable ai",
+        "xai",
+        "可解释性 ai"
+      ]
+    },
+    {
       "id": "explanation-interface",
       "url": "/terms/explanation-interface/",
       "nameZh": "解释界面",
@@ -830,6 +1139,26 @@
       "searchKeys": [
         "解释界面",
         "explanation interface"
+      ]
+    },
+    {
+      "id": "factuality",
+      "url": "/terms/factuality/",
+      "nameZh": "事实性",
+      "nameEn": "Factuality",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "输出内容与可验证事实是否一致的质量维度，需要区分事实错误、过时信息和无证据推断。",
+      "domain": "evaluation-observability-quality",
+      "domainNameZh": "评估、可观测性与质量",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "事实性",
+        "factuality"
       ]
     },
     {
@@ -853,6 +1182,86 @@
       ]
     },
     {
+      "id": "faithfulness",
+      "url": "/terms/faithfulness/",
+      "nameZh": "忠实度",
+      "nameEn": "Faithfulness",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "生成回答是否忠实使用给定资料且没有添加资料无法支持主张的质量维度。",
+      "domain": "evaluation-observability-quality",
+      "domainNameZh": "评估、可观测性与质量",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "忠实度",
+        "faithfulness"
+      ]
+    },
+    {
+      "id": "fallback-experience",
+      "url": "/terms/fallback-experience/",
+      "nameZh": "降级体验",
+      "nameEn": "Fallback Experience",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "当模型、网络或依赖能力不可用时提供简化功能、人工路径或明确说明的产品体验。",
+      "domain": "ai-product-ux",
+      "domainNameZh": "AI 产品与用户体验",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "降级体验",
+        "fallback experience"
+      ]
+    },
+    {
+      "id": "fallback-model",
+      "url": "/terms/fallback-model/",
+      "nameZh": "备用模型",
+      "nameEn": "Fallback Model",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "当主模型不可用、超时或不适合当前任务时接管请求的备用模型。",
+      "domain": "ai-engineering-deployment-operations",
+      "domainNameZh": "AI 工程、部署与运维",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "备用模型",
+        "fallback model"
+      ]
+    },
+    {
+      "id": "feedback-loop",
+      "url": "/terms/feedback-loop/",
+      "nameZh": "反馈闭环",
+      "nameEn": "Feedback Loop",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "收集用户修正、结果表现和运行信号并用于后续改进的闭环过程，需要控制偏差和数据质量。",
+      "domain": "ai-product-ux",
+      "domainNameZh": "AI 产品与用户体验",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "反馈闭环",
+        "feedback loop"
+      ]
+    },
+    {
       "id": "few-shot-prompting",
       "url": "/terms/few-shot-prompting/",
       "nameZh": "少样本提示",
@@ -870,6 +1279,26 @@
       "searchKeys": [
         "少样本提示",
         "few-shot prompting"
+      ]
+    },
+    {
+      "id": "fine-tuning",
+      "url": "/terms/fine-tuning/",
+      "nameZh": "微调",
+      "nameEn": "Fine-Tuning",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "在已有模型基础上用特定数据继续训练，以适配领域、任务或行为目标的方法。",
+      "domain": "large-language-models-generative-ai",
+      "domainNameZh": "大语言模型与生成式 AI",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "微调",
+        "fine-tuning"
       ]
     },
     {
@@ -913,6 +1342,26 @@
       ]
     },
     {
+      "id": "generalization",
+      "url": "/terms/generalization/",
+      "nameZh": "泛化能力",
+      "nameEn": "Generalization",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "模型把训练中学到的规律有效应用到未见样本和相近场景的能力。",
+      "domain": "machine-learning-deep-learning",
+      "domainNameZh": "机器学习与深度学习",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "泛化能力",
+        "generalization"
+      ]
+    },
+    {
       "id": "generative-ai",
       "url": "/terms/generative-ai/",
       "nameZh": "生成式 AI",
@@ -939,6 +1388,26 @@
         "generative ai",
         "genai",
         "生成式人工智能"
+      ]
+    },
+    {
+      "id": "generative-ui",
+      "url": "/terms/generative-ui/",
+      "nameZh": "生成式界面",
+      "nameEn": "Generative UI",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "根据任务和上下文动态生成界面内容或控件的交互方式，需要保持一致性、可控性和可访问性。",
+      "domain": "ai-product-ux",
+      "domainNameZh": "AI 产品与用户体验",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "生成式界面",
+        "generative ui"
       ]
     },
     {
@@ -982,6 +1451,26 @@
         "图形处理器",
         "graphics processing unit",
         "gpu"
+      ]
+    },
+    {
+      "id": "groundedness",
+      "url": "/terms/groundedness/",
+      "nameZh": "依据一致性",
+      "nameEn": "Groundedness",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "输出中的主张能否由给定上下文或证据支持的质量维度，常用于评估 RAG 回答。",
+      "domain": "evaluation-observability-quality",
+      "domainNameZh": "评估、可观测性与质量",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "依据一致性",
+        "groundedness"
       ]
     },
     {
@@ -1074,6 +1563,26 @@
       ]
     },
     {
+      "id": "human-escalation",
+      "url": "/terms/human-escalation/",
+      "nameZh": "人工升级处理",
+      "nameEn": "Human Escalation",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "在系统不确定、失败或风险升高时，把任务和必要上下文交给具备权限的人员处理。",
+      "domain": "ai-product-ux",
+      "domainNameZh": "AI 产品与用户体验",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "人工升级处理",
+        "human escalation"
+      ]
+    },
+    {
       "id": "human-evaluation",
       "url": "/terms/human-evaluation/",
       "nameZh": "人工评估",
@@ -1091,6 +1600,46 @@
       "searchKeys": [
         "人工评估",
         "human evaluation"
+      ]
+    },
+    {
+      "id": "human-oversight",
+      "url": "/terms/human-oversight/",
+      "nameZh": "人工监督",
+      "nameEn": "Human Oversight",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "由具备权限和信息的人监督、干预或停止 AI 系统运行的控制安排。",
+      "domain": "safety-ethics-governance",
+      "domainNameZh": "安全、伦理与治理",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "人工监督",
+        "human oversight"
+      ]
+    },
+    {
+      "id": "hybrid-search",
+      "url": "/terms/hybrid-search/",
+      "nameZh": "混合检索",
+      "nameEn": "Hybrid Search",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "组合关键词、向量和结构化过滤等多种检索信号，以兼顾精确匹配与语义召回。",
+      "domain": "data-retrieval-rag",
+      "domainNameZh": "数据、检索与 RAG",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "混合检索",
+        "hybrid search"
       ]
     },
     {
@@ -1134,6 +1683,46 @@
       ]
     },
     {
+      "id": "inference",
+      "url": "/terms/inference/",
+      "nameZh": "模型推理",
+      "nameEn": "Model Inference",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "使用训练完成的模型处理新输入并生成预测或内容的过程，是用户实际调用模型的阶段。",
+      "domain": "large-language-models-generative-ai",
+      "domainNameZh": "大语言模型与生成式 AI",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "模型推理",
+        "model inference"
+      ]
+    },
+    {
+      "id": "inference-compute",
+      "url": "/terms/inference-compute/",
+      "nameZh": "推理算力",
+      "nameEn": "Inference Compute",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "模型处理输入并生成输出时消耗的计算资源，会影响延迟、吞吐和服务成本。",
+      "domain": "compute-chips-industry",
+      "domainNameZh": "算力、芯片与产业生态",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "推理算力",
+        "inference compute"
+      ]
+    },
+    {
       "id": "inference-server",
       "url": "/terms/inference-server/",
       "nameZh": "推理服务器",
@@ -1171,6 +1760,66 @@
       "searchKeys": [
         "知情同意",
         "informed consent"
+      ]
+    },
+    {
+      "id": "instruction-hierarchy",
+      "url": "/terms/instruction-hierarchy/",
+      "nameZh": "指令层级",
+      "nameEn": "Instruction Hierarchy",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "系统、开发者、用户与工具信息之间的指令优先顺序，用于处理冲突和行为边界。",
+      "domain": "prompt-context-engineering",
+      "domainNameZh": "提示词与上下文工程",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "指令层级",
+        "instruction hierarchy"
+      ]
+    },
+    {
+      "id": "instruction-tuning",
+      "url": "/terms/instruction-tuning/",
+      "nameZh": "指令微调",
+      "nameEn": "Instruction Tuning",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "使用指令与期望回答数据继续训练模型，使其更能理解任务描述并按要求输出。",
+      "domain": "large-language-models-generative-ai",
+      "domainNameZh": "大语言模型与生成式 AI",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "指令微调",
+        "instruction tuning"
+      ]
+    },
+    {
+      "id": "jailbreak",
+      "url": "/terms/jailbreak/",
+      "nameZh": "越狱提示",
+      "nameEn": "Jailbreak",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "通过特殊提示绕过模型安全限制并诱导其产生受限内容或行为的攻击方式。",
+      "domain": "safety-ethics-governance",
+      "domainNameZh": "安全、伦理与治理",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "越狱提示",
+        "jailbreak"
       ]
     },
     {
@@ -1223,6 +1872,46 @@
       ]
     },
     {
+      "id": "latency-budget",
+      "url": "/terms/latency-budget/",
+      "nameZh": "延迟预算",
+      "nameEn": "Latency Budget",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "产品为一次 AI 交互分配的最大可接受等待时间，用于约束模型、工具和后处理方案。",
+      "domain": "ai-product-ux",
+      "domainNameZh": "AI 产品与用户体验",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "延迟预算",
+        "latency budget"
+      ]
+    },
+    {
+      "id": "latency-optimization",
+      "url": "/terms/latency-optimization/",
+      "nameZh": "延迟优化",
+      "nameEn": "Latency Optimization",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "通过模型、缓存、批处理、网络和交互策略降低端到端响应时间的工程实践。",
+      "domain": "ai-engineering-deployment-operations",
+      "domainNameZh": "AI 工程、部署与运维",
+      "difficulty": "advanced",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "延迟优化",
+        "latency optimization"
+      ]
+    },
+    {
       "id": "llm-as-judge",
       "url": "/terms/llm-as-judge/",
       "nameZh": "大模型裁判",
@@ -1251,6 +1940,46 @@
         "llm-as-a-judge",
         "llm judge",
         "模型裁判"
+      ]
+    },
+    {
+      "id": "long-context",
+      "url": "/terms/long-context/",
+      "nameZh": "长上下文",
+      "nameEn": "Long Context",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "模型一次能够处理较长输入与历史信息的能力，容量增加不代表所有位置都能同等有效利用。",
+      "domain": "prompt-context-engineering",
+      "domainNameZh": "提示词与上下文工程",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "长上下文",
+        "long context"
+      ]
+    },
+    {
+      "id": "long-term-memory",
+      "url": "/terms/long-term-memory/",
+      "nameZh": "长期记忆",
+      "nameEn": "Long-Term Memory",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "跨会话持久保存可复用信息的记忆形式，需要处理隐私、过期、冲突和检索准确性。",
+      "domain": "agents-tool-use-automation",
+      "domainNameZh": "Agent、工具调用与自动化",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "长期记忆",
+        "long-term memory"
       ]
     },
     {
@@ -1357,6 +2086,26 @@
       ]
     },
     {
+      "id": "model-routing",
+      "url": "/terms/model-routing/",
+      "nameZh": "模型路由",
+      "nameEn": "Model Routing",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "根据任务类型、质量要求、延迟和成本把请求分配给不同模型或推理配置的机制。",
+      "domain": "ai-engineering-deployment-operations",
+      "domainNameZh": "AI 工程、部署与运维",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "模型路由",
+        "model routing"
+      ]
+    },
+    {
       "id": "model-serving",
       "url": "/terms/model-serving/",
       "nameZh": "模型服务",
@@ -1414,6 +2163,26 @@
       "searchKeys": [
         "弱人工智能",
         "narrow ai"
+      ]
+    },
+    {
+      "id": "natural-language-processing",
+      "url": "/terms/natural-language-processing/",
+      "nameZh": "自然语言处理",
+      "nameEn": "Natural Language Processing",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "让计算机分析、理解、生成和转换人类语言的技术领域，覆盖文本与部分语音任务。",
+      "domain": "ai-foundations-history",
+      "domainNameZh": "AI 基础与发展史",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "自然语言处理",
+        "natural language processing"
       ]
     },
     {
@@ -1477,6 +2246,26 @@
       ]
     },
     {
+      "id": "on-device-ai",
+      "url": "/terms/on-device-ai/",
+      "nameZh": "端侧人工智能",
+      "nameEn": "On-Device AI",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "直接在手机、电脑或嵌入式设备上运行模型的方式，可提升隐私与离线能力但受资源限制。",
+      "domain": "compute-chips-industry",
+      "domainNameZh": "算力、芯片与产业生态",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "端侧人工智能",
+        "on-device ai"
+      ]
+    },
+    {
       "id": "online-evaluation",
       "url": "/terms/online-evaluation/",
       "nameZh": "在线评估",
@@ -1517,6 +2306,26 @@
         "光学字符识别",
         "optical character recognition",
         "ocr"
+      ]
+    },
+    {
+      "id": "overfitting",
+      "url": "/terms/overfitting/",
+      "nameZh": "过拟合",
+      "nameEn": "Overfitting",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "模型过度记住训练数据细节，导致训练表现很好但面对新数据时表现下降的现象。",
+      "domain": "machine-learning-deep-learning",
+      "domainNameZh": "机器学习与深度学习",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "过拟合",
+        "overfitting"
       ]
     },
     {
@@ -1640,6 +2449,106 @@
       ]
     },
     {
+      "id": "prompt-cache",
+      "url": "/terms/prompt-cache/",
+      "nameZh": "提示词缓存",
+      "nameEn": "Prompt Cache",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "复用模型对相同提示前缀的计算结果，以降低重复输入的延迟和推理成本。",
+      "domain": "ai-engineering-deployment-operations",
+      "domainNameZh": "AI 工程、部署与运维",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "提示词缓存",
+        "prompt cache"
+      ]
+    },
+    {
+      "id": "prompt-chaining",
+      "url": "/terms/prompt-chaining/",
+      "nameZh": "提示链",
+      "nameEn": "Prompt Chaining",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "把复杂任务拆成多个相互衔接的提示步骤，使中间结果可以检查、转换或交给下一步。",
+      "domain": "prompt-context-engineering",
+      "domainNameZh": "提示词与上下文工程",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "提示链",
+        "prompt chaining"
+      ]
+    },
+    {
+      "id": "prompt-evaluation",
+      "url": "/terms/prompt-evaluation/",
+      "nameZh": "提示词评测",
+      "nameEn": "Prompt Evaluation",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "使用固定任务、样本和标准比较提示词版本效果的过程，避免只凭少量主观示例判断。",
+      "domain": "prompt-context-engineering",
+      "domainNameZh": "提示词与上下文工程",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "提示词评测",
+        "prompt evaluation"
+      ]
+    },
+    {
+      "id": "prompt-injection",
+      "url": "/terms/prompt-injection/",
+      "nameZh": "提示词注入",
+      "nameEn": "Prompt Injection",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "恶意或不可信内容试图覆盖原有指令、诱导模型泄露信息或执行越权操作的攻击。",
+      "domain": "safety-ethics-governance",
+      "domainNameZh": "安全、伦理与治理",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "提示词注入",
+        "prompt injection"
+      ]
+    },
+    {
+      "id": "prompt-interface",
+      "url": "/terms/prompt-interface/",
+      "nameZh": "提示词界面",
+      "nameEn": "Prompt Interface",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "让用户通过自然语言表达任务并查看、调整输入上下文的交互界面。",
+      "domain": "ai-product-ux",
+      "domainNameZh": "AI 产品与用户体验",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "提示词界面",
+        "prompt interface"
+      ]
+    },
+    {
       "id": "prompt-template",
       "url": "/terms/prompt-template/",
       "nameZh": "提示词模板",
@@ -1657,6 +2566,66 @@
       "searchKeys": [
         "提示词模板",
         "prompt template"
+      ]
+    },
+    {
+      "id": "query-rewriting",
+      "url": "/terms/query-rewriting/",
+      "nameZh": "查询改写",
+      "nameEn": "Query Rewriting",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "根据用户意图把原始查询改写为更适合检索系统处理的表达，以提高召回和精确度。",
+      "domain": "data-retrieval-rag",
+      "domainNameZh": "数据、检索与 RAG",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "查询改写",
+        "query rewriting"
+      ]
+    },
+    {
+      "id": "rate-limiting",
+      "url": "/terms/rate-limiting/",
+      "nameZh": "限流",
+      "nameEn": "Rate Limiting",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "限制用户或服务在一定时间内请求数量的机制，用于保护容量、成本和公平使用。",
+      "domain": "ai-engineering-deployment-operations",
+      "domainNameZh": "AI 工程、部署与运维",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "限流",
+        "rate limiting"
+      ]
+    },
+    {
+      "id": "red-teaming",
+      "url": "/terms/red-teaming/",
+      "nameZh": "红队测试",
+      "nameEn": "Red Teaming",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "以对抗视角主动寻找 AI 系统滥用路径、脆弱性和危险输出的测试实践。",
+      "domain": "safety-ethics-governance",
+      "domainNameZh": "安全、伦理与治理",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "红队测试",
+        "red teaming"
       ]
     },
     {
@@ -1680,6 +2649,26 @@
         "强化学习",
         "reinforcement learning",
         "rl"
+      ]
+    },
+    {
+      "id": "relevance",
+      "url": "/terms/relevance/",
+      "nameZh": "相关性",
+      "nameEn": "Relevance",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "输出或检索结果与当前问题、意图和约束的相关程度。",
+      "domain": "evaluation-observability-quality",
+      "domainNameZh": "评估、可观测性与质量",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "相关性",
+        "relevance"
       ]
     },
     {
@@ -1804,6 +2793,146 @@
       ]
     },
     {
+      "id": "retrieval-context",
+      "url": "/terms/retrieval-context/",
+      "nameZh": "检索上下文",
+      "nameEn": "Retrieval Context",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "从外部资料检索后提供给模型的上下文片段，用于补充当前任务所需的事实与证据。",
+      "domain": "prompt-context-engineering",
+      "domainNameZh": "提示词与上下文工程",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "检索上下文",
+        "retrieval context"
+      ]
+    },
+    {
+      "id": "retrieval-precision",
+      "url": "/terms/retrieval-precision/",
+      "nameZh": "检索精确率",
+      "nameEn": "Retrieval Precision",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "检索结果中有多少确实与查询相关的指标，用于观察无关候选和上下文噪声。",
+      "domain": "evaluation-observability-quality",
+      "domainNameZh": "评估、可观测性与质量",
+      "difficulty": "advanced",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "检索精确率",
+        "retrieval precision"
+      ]
+    },
+    {
+      "id": "retrieval-recall",
+      "url": "/terms/retrieval-recall/",
+      "nameZh": "检索召回率",
+      "nameEn": "Retrieval Recall",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "相关资料中有多少被检索系统成功召回的指标，用于观察是否漏掉必要证据。",
+      "domain": "evaluation-observability-quality",
+      "domainNameZh": "评估、可观测性与质量",
+      "difficulty": "advanced",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "检索召回率",
+        "retrieval recall"
+      ]
+    },
+    {
+      "id": "self-correction",
+      "url": "/terms/self-correction/",
+      "nameZh": "自我纠错",
+      "nameEn": "Self-Correction",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "系统依据反馈、验证结果或规则修改先前输出与行动的能力，需要明确触发条件和终止规则。",
+      "domain": "agents-tool-use-automation",
+      "domainNameZh": "Agent、工具调用与自动化",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "自我纠错",
+        "self-correction"
+      ]
+    },
+    {
+      "id": "semantic-search",
+      "url": "/terms/semantic-search/",
+      "nameZh": "语义检索",
+      "nameEn": "Semantic Search",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "根据查询与内容的语义相近程度进行检索，即使双方没有使用相同关键词也可能匹配。",
+      "domain": "data-retrieval-rag",
+      "domainNameZh": "数据、检索与 RAG",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "语义检索",
+        "semantic search"
+      ]
+    },
+    {
+      "id": "semiconductor",
+      "url": "/terms/semiconductor/",
+      "nameZh": "半导体",
+      "nameEn": "Semiconductor",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "导电能力可控制的材料及其器件技术，是处理器、存储器和 AI 芯片的产业基础。",
+      "domain": "compute-chips-industry",
+      "domainNameZh": "算力、芯片与产业生态",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "半导体",
+        "semiconductor"
+      ]
+    },
+    {
+      "id": "similarity-search",
+      "url": "/terms/similarity-search/",
+      "nameZh": "相似度检索",
+      "nameEn": "Similarity Search",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "根据距离或相似度从向量集合中寻找最接近查询表示的候选内容。",
+      "domain": "data-retrieval-rag",
+      "domainNameZh": "数据、检索与 RAG",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "相似度检索",
+        "similarity search"
+      ]
+    },
+    {
       "id": "speech-recognition",
       "url": "/terms/speech-recognition/",
       "nameZh": "语音识别",
@@ -1833,6 +2962,26 @@
       ]
     },
     {
+      "id": "state-management",
+      "url": "/terms/state-management/",
+      "nameZh": "状态管理",
+      "nameEn": "State Management",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "记录并更新任务进度、工具结果和控制变量，使多步骤流程能够恢复和继续的机制。",
+      "domain": "agents-tool-use-automation",
+      "domainNameZh": "Agent、工具调用与自动化",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "状态管理",
+        "state management"
+      ]
+    },
+    {
       "id": "streaming-response",
       "url": "/terms/streaming-response/",
       "nameZh": "流式响应",
@@ -1850,6 +2999,26 @@
       "searchKeys": [
         "流式响应",
         "streaming response"
+      ]
+    },
+    {
+      "id": "structured-output",
+      "url": "/terms/structured-output/",
+      "nameZh": "结构化输出",
+      "nameEn": "Structured Output",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "要求模型按照 JSON、字段约束或其他机器可解析结构返回结果的输出方式。",
+      "domain": "prompt-context-engineering",
+      "domainNameZh": "提示词与上下文工程",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "结构化输出",
+        "structured output"
       ]
     },
     {
@@ -1893,6 +3062,46 @@
       ]
     },
     {
+      "id": "task-decomposition",
+      "url": "/terms/task-decomposition/",
+      "nameZh": "任务拆解",
+      "nameEn": "Task Decomposition",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "把复杂目标拆成范围明确、可执行和可检查的子任务，以降低一次处理的认知与执行负担。",
+      "domain": "agents-tool-use-automation",
+      "domainNameZh": "Agent、工具调用与自动化",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "任务拆解",
+        "task decomposition"
+      ]
+    },
+    {
+      "id": "temperature",
+      "url": "/terms/temperature/",
+      "nameZh": "温度参数",
+      "nameEn": "Temperature",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "调整生成概率分布平滑程度的参数，较低值通常更稳定，较高值通常增加多样性。",
+      "domain": "large-language-models-generative-ai",
+      "domainNameZh": "大语言模型与生成式 AI",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "温度参数",
+        "temperature"
+      ]
+    },
+    {
       "id": "text-to-image",
       "url": "/terms/text-to-image/",
       "nameZh": "文生图",
@@ -1910,6 +3119,35 @@
       "searchKeys": [
         "文生图",
         "text-to-image"
+      ]
+    },
+    {
+      "id": "text-to-speech",
+      "url": "/terms/text-to-speech/",
+      "nameZh": "文本转语音",
+      "nameEn": "Text-to-Speech",
+      "abbreviations": [
+        "TTS"
+      ],
+      "aliases": [
+        {
+          "value": "文字转语音",
+          "language": "zh-CN"
+        }
+      ],
+      "summary": "将文字内容转换为可播放语音的任务，可控制语言、说话风格、速度和音色等属性。",
+      "domain": "multimodal-ai",
+      "domainNameZh": "多模态",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "文本转语音",
+        "text-to-speech",
+        "tts",
+        "文字转语音"
       ]
     },
     {
@@ -1984,6 +3222,26 @@
       ]
     },
     {
+      "id": "training-compute",
+      "url": "/terms/training-compute/",
+      "nameZh": "训练算力",
+      "nameEn": "Training Compute",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "模型训练过程中用于前向计算、反向传播和参数更新的计算资源总量。",
+      "domain": "compute-chips-industry",
+      "domainNameZh": "算力、芯片与产业生态",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "训练算力",
+        "training compute"
+      ]
+    },
+    {
       "id": "training-data",
       "url": "/terms/training-data/",
       "nameZh": "训练数据",
@@ -2024,6 +3282,26 @@
       ]
     },
     {
+      "id": "transparency",
+      "url": "/terms/transparency/",
+      "nameZh": "透明度",
+      "nameEn": "Transparency",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "向相关人员说明 AI 系统用途、能力、限制和重要决策方式的治理原则。",
+      "domain": "safety-ethics-governance",
+      "domainNameZh": "安全、伦理与治理",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "透明度",
+        "transparency"
+      ]
+    },
+    {
       "id": "uncertainty-display",
       "url": "/terms/uncertainty-display/",
       "nameZh": "不确定性呈现",
@@ -2041,6 +3319,26 @@
       "searchKeys": [
         "不确定性呈现",
         "uncertainty display"
+      ]
+    },
+    {
+      "id": "user-control",
+      "url": "/terms/user-control/",
+      "nameZh": "用户控制权",
+      "nameEn": "User Control",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "让用户能够发起、调整、暂停、撤销或拒绝 AI 行为的产品能力，是可靠人机协作的基础。",
+      "domain": "ai-product-ux",
+      "domainNameZh": "AI 产品与用户体验",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "用户控制权",
+        "user control"
       ]
     },
     {
@@ -2093,6 +3391,26 @@
       ]
     },
     {
+      "id": "video-generation",
+      "url": "/terms/video-generation/",
+      "nameZh": "视频生成",
+      "nameEn": "Video Generation",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "根据文本、图像或视频条件合成连续画面的生成任务，需要同时维持视觉质量和时间一致性。",
+      "domain": "multimodal-ai",
+      "domainNameZh": "多模态",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "视频生成",
+        "video generation"
+      ]
+    },
+    {
       "id": "vision-language-model",
       "url": "/terms/vision-language-model/",
       "nameZh": "视觉语言模型",
@@ -2110,6 +3428,175 @@
       "searchKeys": [
         "视觉语言模型",
         "vision-language model"
+      ]
+    },
+    {
+      "id": "advanced-packaging",
+      "url": "/terms/advanced-packaging/",
+      "nameZh": "先进封装",
+      "nameEn": "Advanced Packaging",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "通过芯粒、堆叠和高密度互连等封装技术提升芯片系统带宽、集成度和能效的方法。",
+      "domain": "compute-chips-industry",
+      "domainNameZh": "算力、芯片与产业生态",
+      "difficulty": "advanced",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "先进封装",
+        "advanced packaging"
+      ]
+    },
+    {
+      "id": "adversarial-testing",
+      "url": "/terms/adversarial-testing/",
+      "nameZh": "对抗测试",
+      "nameEn": "Adversarial Testing",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "使用刻意构造的输入和攻击场景评估模型或系统在异常条件下的稳健性。",
+      "domain": "safety-ethics-governance",
+      "domainNameZh": "安全、伦理与治理",
+      "difficulty": "advanced",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "对抗测试",
+        "adversarial testing"
+      ]
+    },
+    {
+      "id": "agent-orchestration",
+      "url": "/terms/agent-orchestration/",
+      "nameZh": "Agent 编排",
+      "nameEn": "Agent Orchestration",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "协调模型、工具、子任务和检查点执行顺序的系统能力，用于管理复杂 Agent 工作流。",
+      "domain": "agents-tool-use-automation",
+      "domainNameZh": "Agent、工具调用与自动化",
+      "difficulty": "advanced",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "agent 编排",
+        "agent orchestration"
+      ]
+    },
+    {
+      "id": "approximate-nearest-neighbor",
+      "url": "/terms/approximate-nearest-neighbor/",
+      "nameZh": "近似最近邻搜索",
+      "nameEn": "Approximate Nearest Neighbor Search",
+      "abbreviations": [
+        "ANN"
+      ],
+      "aliases": [
+        {
+          "value": "近似近邻搜索",
+          "language": "zh-CN"
+        }
+      ],
+      "summary": "用可控精度损失换取更快速度和更低资源消耗的近似最近邻搜索方法。",
+      "domain": "data-retrieval-rag",
+      "domainNameZh": "数据、检索与 RAG",
+      "difficulty": "advanced",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "近似最近邻搜索",
+        "approximate nearest neighbor search",
+        "ann",
+        "近似近邻搜索"
+      ]
+    },
+    {
+      "id": "audio-understanding",
+      "url": "/terms/audio-understanding/",
+      "nameZh": "音频理解",
+      "nameEn": "Audio Understanding",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "从声音中识别语音、事件、音乐或环境信息，并形成可供任务使用的语义表示。",
+      "domain": "multimodal-ai",
+      "domainNameZh": "多模态",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "音频理解",
+        "audio understanding"
+      ]
+    },
+    {
+      "id": "autoscaling",
+      "url": "/terms/autoscaling/",
+      "nameZh": "自动扩缩容",
+      "nameEn": "Autoscaling",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "根据负载和资源指标自动增加或减少服务实例的能力，需要兼顾响应速度与成本波动。",
+      "domain": "ai-engineering-deployment-operations",
+      "domainNameZh": "AI 工程、部署与运维",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "自动扩缩容",
+        "autoscaling"
+      ]
+    },
+    {
+      "id": "backpropagation",
+      "url": "/terms/backpropagation/",
+      "nameZh": "反向传播",
+      "nameEn": "Backpropagation",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "从输出误差向网络前层传播梯度，以计算各参数应如何调整的神经网络训练算法。",
+      "domain": "machine-learning-deep-learning",
+      "domainNameZh": "机器学习与深度学习",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "反向传播",
+        "backpropagation"
+      ]
+    },
+    {
+      "id": "chip-fabrication",
+      "url": "/terms/chip-fabrication/",
+      "nameZh": "芯片制造",
+      "nameEn": "Chip Fabrication",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "通过光刻、沉积、刻蚀等工艺在晶圆上制造集成电路的生产过程。",
+      "domain": "compute-chips-industry",
+      "domainNameZh": "算力、芯片与产业生态",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "芯片制造",
+        "chip fabrication"
       ]
     },
     {
@@ -2133,6 +3620,46 @@
       ]
     },
     {
+      "id": "clustering",
+      "url": "/terms/clustering/",
+      "nameZh": "聚类",
+      "nameEn": "Clustering",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "根据样本之间的相似性自动形成分组的无监督学习任务，用于发现数据中未知结构。",
+      "domain": "machine-learning-deep-learning",
+      "domainNameZh": "机器学习与深度学习",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "聚类",
+        "clustering"
+      ]
+    },
+    {
+      "id": "computer-vision-field",
+      "url": "/terms/computer-vision-field/",
+      "nameZh": "计算机视觉领域",
+      "nameEn": "Computer Vision Field",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "研究机器如何从图像和视频中提取信息并完成识别、理解或决策的人工智能分支。",
+      "domain": "ai-foundations-history",
+      "domainNameZh": "AI 基础与发展史",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "计算机视觉领域",
+        "computer vision field"
+      ]
+    },
+    {
       "id": "containerization",
       "url": "/terms/containerization/",
       "nameZh": "容器化",
@@ -2153,6 +3680,26 @@
       ]
     },
     {
+      "id": "context-compression",
+      "url": "/terms/context-compression/",
+      "nameZh": "上下文压缩",
+      "nameEn": "Context Compression",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "在保留任务关键信息的同时压缩或摘要上下文，以降低 Token 占用并延长有效工作范围。",
+      "domain": "prompt-context-engineering",
+      "domainNameZh": "提示词与上下文工程",
+      "difficulty": "advanced",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "上下文压缩",
+        "context compression"
+      ]
+    },
+    {
       "id": "cpu",
       "url": "/terms/cpu/",
       "nameZh": "中央处理器",
@@ -2170,6 +3717,66 @@
       "searchKeys": [
         "中央处理器",
         "central processing unit"
+      ]
+    },
+    {
+      "id": "cross-modal-retrieval",
+      "url": "/terms/cross-modal-retrieval/",
+      "nameZh": "跨模态检索",
+      "nameEn": "Cross-Modal Retrieval",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "使用一种模态的查询寻找另一种模态内容的检索任务，例如用文字搜索图片或视频。",
+      "domain": "multimodal-ai",
+      "domainNameZh": "多模态",
+      "difficulty": "advanced",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "跨模态检索",
+        "cross-modal retrieval"
+      ]
+    },
+    {
+      "id": "decoding",
+      "url": "/terms/decoding/",
+      "nameZh": "解码策略",
+      "nameEn": "Decoding Strategy",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "根据模型输出的 Token 概率选择后续序列的过程，决定结果的确定性、多样性和重复程度。",
+      "domain": "large-language-models-generative-ai",
+      "domainNameZh": "大语言模型与生成式 AI",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "解码策略",
+        "decoding strategy"
+      ]
+    },
+    {
+      "id": "dense-vector",
+      "url": "/terms/dense-vector/",
+      "nameZh": "稠密向量",
+      "nameEn": "Dense Vector",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "大多数维度都有数值的向量表示，常用于编码内容的语义或特征信息。",
+      "domain": "data-retrieval-rag",
+      "domainNameZh": "数据、检索与 RAG",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "稠密向量",
+        "dense vector"
       ]
     },
     {
@@ -2213,6 +3820,26 @@
       ]
     },
     {
+      "id": "foundry",
+      "url": "/terms/foundry/",
+      "nameZh": "晶圆代工",
+      "nameEn": "Semiconductor Foundry",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "受托为芯片设计企业制造晶圆的专业生产模式，是半导体产业分工的重要环节。",
+      "domain": "compute-chips-industry",
+      "domainNameZh": "算力、芯片与产业生态",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "晶圆代工",
+        "semiconductor foundry"
+      ]
+    },
+    {
       "id": "gpu-serving",
       "url": "/terms/gpu-serving/",
       "nameZh": "GPU 推理服务",
@@ -2230,6 +3857,46 @@
       "searchKeys": [
         "gpu 推理服务",
         "gpu serving"
+      ]
+    },
+    {
+      "id": "gradient-descent",
+      "url": "/terms/gradient-descent/",
+      "nameZh": "梯度下降",
+      "nameEn": "Gradient Descent",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "根据损失函数梯度反复调整模型参数、逐步降低误差的基础优化方法。",
+      "domain": "machine-learning-deep-learning",
+      "domainNameZh": "机器学习与深度学习",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "梯度下降",
+        "gradient descent"
+      ]
+    },
+    {
+      "id": "image-captioning",
+      "url": "/terms/image-captioning/",
+      "nameZh": "图像描述生成",
+      "nameEn": "Image Captioning",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "自动为图像生成文字描述的任务，应区分可见事实、推断内容和不确定信息。",
+      "domain": "multimodal-ai",
+      "domainNameZh": "多模态",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "图像描述生成",
+        "image captioning"
       ]
     },
     {
@@ -2253,6 +3920,69 @@
       ]
     },
     {
+      "id": "load-balancing",
+      "url": "/terms/load-balancing/",
+      "nameZh": "负载均衡",
+      "nameEn": "Load Balancing",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "把请求分配到多个服务实例或资源上的机制，以提高吞吐、可用性和故障恢复能力。",
+      "domain": "ai-engineering-deployment-operations",
+      "domainNameZh": "AI 工程、部署与运维",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "负载均衡",
+        "load balancing"
+      ]
+    },
+    {
+      "id": "lora",
+      "url": "/terms/lora/",
+      "nameZh": "低秩适配",
+      "nameEn": "Low-Rank Adaptation",
+      "abbreviations": [
+        "LoRA"
+      ],
+      "aliases": [],
+      "summary": "通过训练低秩矩阵近似权重变化的参数高效微调方法，使模型适配时无需更新全部原始参数。",
+      "domain": "large-language-models-generative-ai",
+      "domainNameZh": "大语言模型与生成式 AI",
+      "difficulty": "advanced",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "低秩适配",
+        "low-rank adaptation",
+        "lora"
+      ]
+    },
+    {
+      "id": "loss-function",
+      "url": "/terms/loss-function/",
+      "nameZh": "损失函数",
+      "nameEn": "Loss Function",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "衡量模型预测与目标结果之间差异的函数，为训练优化提供需要降低的数值目标。",
+      "domain": "machine-learning-deep-learning",
+      "domainNameZh": "机器学习与深度学习",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "损失函数",
+        "loss function"
+      ]
+    },
+    {
       "id": "memory-bandwidth",
       "url": "/terms/memory-bandwidth/",
       "nameZh": "内存带宽",
@@ -2273,6 +4003,169 @@
       ]
     },
     {
+      "id": "model-registry",
+      "url": "/terms/model-registry/",
+      "nameZh": "模型注册表",
+      "nameEn": "Model Registry",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "记录模型版本、来源、状态和部署信息的系统，为发布、追踪和回滚提供统一目录。",
+      "domain": "ai-engineering-deployment-operations",
+      "domainNameZh": "AI 工程、部署与运维",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "模型注册表",
+        "model registry"
+      ]
+    },
+    {
+      "id": "multi-agent-system",
+      "url": "/terms/multi-agent-system/",
+      "nameZh": "多智能体系统",
+      "nameEn": "Multi-Agent System",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "由多个具有不同角色或能力的 Agent 协作完成任务的系统，需要处理通信、冲突和总体控制。",
+      "domain": "agents-tool-use-automation",
+      "domainNameZh": "Agent、工具调用与自动化",
+      "difficulty": "advanced",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "多智能体系统",
+        "multi-agent system"
+      ]
+    },
+    {
+      "id": "multimodal-embedding",
+      "url": "/terms/multimodal-embedding/",
+      "nameZh": "多模态嵌入",
+      "nameEn": "Multimodal Embedding",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "把不同模态内容映射到可比较的向量空间，使文本、图像或音频之间能够计算语义关联。",
+      "domain": "multimodal-ai",
+      "domainNameZh": "多模态",
+      "difficulty": "advanced",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "多模态嵌入",
+        "multimodal embedding"
+      ]
+    },
+    {
+      "id": "optimizer",
+      "url": "/terms/optimizer/",
+      "nameZh": "优化器",
+      "nameEn": "Optimizer",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "根据梯度和更新规则调整模型参数的算法，不同优化器在速度、稳定性和资源消耗上有所取舍。",
+      "domain": "machine-learning-deep-learning",
+      "domainNameZh": "机器学习与深度学习",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "优化器",
+        "optimizer"
+      ]
+    },
+    {
+      "id": "pairwise-comparison",
+      "url": "/terms/pairwise-comparison/",
+      "nameZh": "成对比较",
+      "nameEn": "Pairwise Comparison",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "让评审者或模型在两个候选结果中选择较优者的评估方式，通常比独立打分更容易保持一致。",
+      "domain": "evaluation-observability-quality",
+      "domainNameZh": "评估、可观测性与质量",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "成对比较",
+        "pairwise comparison"
+      ]
+    },
+    {
+      "id": "parameter-efficient-fine-tuning",
+      "url": "/terms/parameter-efficient-fine-tuning/",
+      "nameZh": "参数高效微调",
+      "nameEn": "Parameter-Efficient Fine-Tuning",
+      "abbreviations": [
+        "PEFT"
+      ],
+      "aliases": [],
+      "summary": "只训练少量新增或选定参数来适配大模型的方法，可减少计算、存储和版本维护成本。",
+      "domain": "large-language-models-generative-ai",
+      "domainNameZh": "大语言模型与生成式 AI",
+      "difficulty": "advanced",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "参数高效微调",
+        "parameter-efficient fine-tuning",
+        "peft"
+      ]
+    },
+    {
+      "id": "perceived-latency",
+      "url": "/terms/perceived-latency/",
+      "nameZh": "感知延迟",
+      "nameEn": "Perceived Latency",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "用户主观感受到的等待时长，可通过流式反馈、进度状态和分步呈现改善。",
+      "domain": "ai-product-ux",
+      "domainNameZh": "AI 产品与用户体验",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "感知延迟",
+        "perceived latency"
+      ]
+    },
+    {
+      "id": "perception",
+      "url": "/terms/perception/",
+      "nameZh": "机器感知",
+      "nameEn": "Machine Perception",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "让机器从图像、声音、传感器或其他输入中识别对象与环境状态的能力。",
+      "domain": "ai-foundations-history",
+      "domainNameZh": "AI 基础与发展史",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "机器感知",
+        "machine perception"
+      ]
+    },
+    {
       "id": "progressive-disclosure",
       "url": "/terms/progressive-disclosure/",
       "nameZh": "渐进披露",
@@ -2290,6 +4183,106 @@
       "searchKeys": [
         "渐进披露",
         "progressive disclosure"
+      ]
+    },
+    {
+      "id": "prompt-versioning",
+      "url": "/terms/prompt-versioning/",
+      "nameZh": "提示词版本管理",
+      "nameEn": "Prompt Versioning",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "对提示词内容、变量、模型配置和评测结果进行版本记录，使变更可以追踪和回退。",
+      "domain": "prompt-context-engineering",
+      "domainNameZh": "提示词与上下文工程",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "提示词版本管理",
+        "prompt versioning"
+      ]
+    },
+    {
+      "id": "quantization",
+      "url": "/terms/quantization/",
+      "nameZh": "模型量化",
+      "nameEn": "Model Quantization",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "用更低数值精度表示模型权重或计算，以减少内存和算力消耗，同时可能带来质量损失。",
+      "domain": "large-language-models-generative-ai",
+      "domainNameZh": "大语言模型与生成式 AI",
+      "difficulty": "advanced",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "模型量化",
+        "model quantization"
+      ]
+    },
+    {
+      "id": "query-expansion",
+      "url": "/terms/query-expansion/",
+      "nameZh": "查询扩展",
+      "nameEn": "Query Expansion",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "为查询补充同义词、相关概念或上下位词，扩大检索覆盖范围但也可能引入噪声。",
+      "domain": "data-retrieval-rag",
+      "domainNameZh": "数据、检索与 RAG",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "查询扩展",
+        "query expansion"
+      ]
+    },
+    {
+      "id": "reasoning-system",
+      "url": "/terms/reasoning-system/",
+      "nameZh": "推理系统",
+      "nameEn": "Reasoning System",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "根据事实、规则或概率关系推导结论的计算系统，用于把已有知识转化为可执行判断。",
+      "domain": "ai-foundations-history",
+      "domainNameZh": "AI 基础与发展史",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "推理系统",
+        "reasoning system"
+      ]
+    },
+    {
+      "id": "reflection",
+      "url": "/terms/reflection/",
+      "nameZh": "反思机制",
+      "nameEn": "Reflection",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "Agent 对中间结果和执行轨迹进行再检查并决定是否修正的机制，不能保证自动发现所有错误。",
+      "domain": "agents-tool-use-automation",
+      "domainNameZh": "Agent、工具调用与自动化",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "反思机制",
+        "reflection"
       ]
     },
     {
@@ -2333,6 +4326,66 @@
       ]
     },
     {
+      "id": "robotics",
+      "url": "/terms/robotics/",
+      "nameZh": "机器人学",
+      "nameEn": "Robotics",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "研究机器人如何感知环境、规划动作并执行物理任务的交叉领域，常结合控制与人工智能。",
+      "domain": "ai-foundations-history",
+      "domainNameZh": "AI 基础与发展史",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "机器人学",
+        "robotics"
+      ]
+    },
+    {
+      "id": "role-prompting",
+      "url": "/terms/role-prompting/",
+      "nameZh": "角色提示",
+      "nameEn": "Role Prompting",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "在提示中设定角色、职责或视角来限定回答重点的方式，不能替代事实依据与任务约束。",
+      "domain": "prompt-context-engineering",
+      "domainNameZh": "提示词与上下文工程",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "角色提示",
+        "role prompting"
+      ]
+    },
+    {
+      "id": "sampling",
+      "url": "/terms/sampling/",
+      "nameZh": "采样",
+      "nameEn": "Sampling",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "按模型给出的概率分布选择下一个 Token 的生成方式，使同一输入可能得到不同结果。",
+      "domain": "large-language-models-generative-ai",
+      "domainNameZh": "大语言模型与生成式 AI",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "采样",
+        "sampling"
+      ]
+    },
+    {
       "id": "self-attention",
       "url": "/terms/self-attention/",
       "nameZh": "自注意力",
@@ -2350,6 +4403,126 @@
       "searchKeys": [
         "自注意力",
         "self-attention"
+      ]
+    },
+    {
+      "id": "semantic-cache",
+      "url": "/terms/semantic-cache/",
+      "nameZh": "语义缓存",
+      "nameEn": "Semantic Cache",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "根据查询语义相似度复用已有结果的缓存方式，需要控制错误命中和内容过期风险。",
+      "domain": "ai-engineering-deployment-operations",
+      "domainNameZh": "AI 工程、部署与运维",
+      "difficulty": "advanced",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "语义缓存",
+        "semantic cache"
+      ]
+    },
+    {
+      "id": "short-term-memory",
+      "url": "/terms/short-term-memory/",
+      "nameZh": "短期记忆",
+      "nameEn": "Short-Term Memory",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "在当前任务或会话范围内保存临时信息的记忆形式，通常随任务结束而清理。",
+      "domain": "agents-tool-use-automation",
+      "domainNameZh": "Agent、工具调用与自动化",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "短期记忆",
+        "short-term memory"
+      ]
+    },
+    {
+      "id": "speech-synthesis",
+      "url": "/terms/speech-synthesis/",
+      "nameZh": "语音合成",
+      "nameEn": "Speech Synthesis",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "通过规则或生成模型合成人类语音波形的技术，是文本转语音和语音创作的基础。",
+      "domain": "multimodal-ai",
+      "domainNameZh": "多模态",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "语音合成",
+        "speech synthesis"
+      ]
+    },
+    {
+      "id": "top-k",
+      "url": "/terms/top-k/",
+      "nameZh": "Top-K 召回",
+      "nameEn": "Top-K Retrieval",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "从检索结果中保留得分最高的 K 个候选的操作，K 值影响召回、噪声和后续处理成本。",
+      "domain": "data-retrieval-rag",
+      "domainNameZh": "数据、检索与 RAG",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "top-k 召回",
+        "top-k retrieval"
+      ]
+    },
+    {
+      "id": "top-p",
+      "url": "/terms/top-p/",
+      "nameZh": "核采样",
+      "nameEn": "Top-p Sampling",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "每一步只从累计概率达到阈值的候选 Token 中采样的生成策略，也称核采样。",
+      "domain": "large-language-models-generative-ai",
+      "domainNameZh": "大语言模型与生成式 AI",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "核采样",
+        "top-p sampling"
+      ]
+    },
+    {
+      "id": "toxicity-evaluation",
+      "url": "/terms/toxicity-evaluation/",
+      "nameZh": "毒性评估",
+      "nameEn": "Toxicity Evaluation",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "检查输出是否包含攻击、仇恨、骚扰或其他有害表达的评估任务，需要结合语言和场景。",
+      "domain": "evaluation-observability-quality",
+      "domainNameZh": "评估、可观测性与质量",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "毒性评估",
+        "toxicity evaluation"
       ]
     },
     {
@@ -2393,6 +4566,46 @@
       ]
     },
     {
+      "id": "underfitting",
+      "url": "/terms/underfitting/",
+      "nameZh": "欠拟合",
+      "nameEn": "Underfitting",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "模型能力、特征或训练不足，无法学到数据中的主要规律，训练和测试表现都较差的现象。",
+      "domain": "machine-learning-deep-learning",
+      "domainNameZh": "机器学习与深度学习",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "欠拟合",
+        "underfitting"
+      ]
+    },
+    {
+      "id": "undo-action",
+      "url": "/terms/undo-action/",
+      "nameZh": "撤销操作",
+      "nameEn": "Undo Action",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "将系统恢复到操作前状态的机制，可降低 AI 自动执行错误带来的不可逆影响。",
+      "domain": "ai-product-ux",
+      "domainNameZh": "AI 产品与用户体验",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "撤销操作",
+        "undo action"
+      ]
+    },
+    {
       "id": "unsupervised-learning",
       "url": "/terms/unsupervised-learning/",
       "nameZh": "无监督学习",
@@ -2410,6 +4623,66 @@
       "searchKeys": [
         "无监督学习",
         "unsupervised learning"
+      ]
+    },
+    {
+      "id": "vector-index",
+      "url": "/terms/vector-index/",
+      "nameZh": "向量索引",
+      "nameEn": "Vector Index",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "为高维向量建立的数据结构，用于减少相似度查询时需要比较的候选数量。",
+      "domain": "data-retrieval-rag",
+      "domainNameZh": "数据、检索与 RAG",
+      "difficulty": "advanced",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "向量索引",
+        "vector index"
+      ]
+    },
+    {
+      "id": "video-understanding",
+      "url": "/terms/video-understanding/",
+      "nameZh": "视频理解",
+      "nameEn": "Video Understanding",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "从视频的画面、声音和时间变化中识别事件、对象关系与叙事内容的能力。",
+      "domain": "multimodal-ai",
+      "domainNameZh": "多模态",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "视频理解",
+        "video understanding"
+      ]
+    },
+    {
+      "id": "visual-question-answering",
+      "url": "/terms/visual-question-answering/",
+      "nameZh": "视觉问答",
+      "nameEn": "Visual Question Answering",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "根据图像内容和自然语言问题生成回答的任务，需要结合视觉识别与语言推理。",
+      "domain": "multimodal-ai",
+      "domainNameZh": "多模态",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "视觉问答",
+        "visual question answering"
       ]
     },
     {
@@ -2453,6 +4726,46 @@
       ]
     },
     {
+      "id": "batch-size",
+      "url": "/terms/batch-size/",
+      "nameZh": "批大小",
+      "nameEn": "Batch Size",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "一次参数更新同时处理的训练样本数量，会影响显存占用、梯度稳定性和训练速度。",
+      "domain": "machine-learning-deep-learning",
+      "domainNameZh": "机器学习与深度学习",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 3,
+      "featured": false,
+      "searchKeys": [
+        "批大小",
+        "batch size"
+      ]
+    },
+    {
+      "id": "epoch",
+      "url": "/terms/epoch/",
+      "nameZh": "训练轮次",
+      "nameEn": "Epoch",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "模型完整遍历一次训练数据集的训练单位，多个轮次会反复使用同一批数据更新参数。",
+      "domain": "machine-learning-deep-learning",
+      "domainNameZh": "机器学习与深度学习",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 3,
+      "featured": false,
+      "searchKeys": [
+        "训练轮次",
+        "epoch"
+      ]
+    },
+    {
       "id": "expert-system",
       "url": "/terms/expert-system/",
       "nameZh": "专家系统",
@@ -2470,6 +4783,26 @@
       "searchKeys": [
         "专家系统",
         "expert system"
+      ]
+    },
+    {
+      "id": "heuristic",
+      "url": "/terms/heuristic/",
+      "nameZh": "启发式方法",
+      "nameEn": "Heuristic",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "利用经验规则缩小搜索范围、较快找到可用答案的方法，通常不保证得到理论上的最优解。",
+      "domain": "ai-foundations-history",
+      "domainNameZh": "AI 基础与发展史",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 3,
+      "featured": false,
+      "searchKeys": [
+        "启发式方法",
+        "heuristic"
       ]
     },
     {
@@ -2513,6 +4846,66 @@
       ]
     },
     {
+      "id": "search-algorithm",
+      "url": "/terms/search-algorithm/",
+      "nameZh": "搜索算法",
+      "nameEn": "Search Algorithm",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "在可能状态或候选方案中按规则探索并找到目标路径的方法，是早期人工智能求解问题的重要基础。",
+      "domain": "ai-foundations-history",
+      "domainNameZh": "AI 基础与发展史",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 3,
+      "featured": false,
+      "searchKeys": [
+        "搜索算法",
+        "search algorithm"
+      ]
+    },
+    {
+      "id": "sparse-vector",
+      "url": "/terms/sparse-vector/",
+      "nameZh": "稀疏向量",
+      "nameEn": "Sparse Vector",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "大部分维度为零的向量表示，常用于表达词项权重并支持高效关键词检索。",
+      "domain": "data-retrieval-rag",
+      "domainNameZh": "数据、检索与 RAG",
+      "difficulty": "advanced",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 3,
+      "featured": false,
+      "searchKeys": [
+        "稀疏向量",
+        "sparse vector"
+      ]
+    },
+    {
+      "id": "speech-technology",
+      "url": "/terms/speech-technology/",
+      "nameZh": "语音技术",
+      "nameEn": "Speech Technology",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "围绕语音识别、理解、合成和交互建立的技术集合，使机器能够处理口语信息。",
+      "domain": "ai-foundations-history",
+      "domainNameZh": "AI 基础与发展史",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "catalogued",
+      "priority": 3,
+      "featured": false,
+      "searchKeys": [
+        "语音技术",
+        "speech technology"
+      ]
+    },
+    {
       "id": "symbolic-ai",
       "url": "/terms/symbolic-ai/",
       "nameZh": "符号主义人工智能",
@@ -2530,6 +4923,46 @@
       "searchKeys": [
         "符号主义人工智能",
         "symbolic ai"
+      ]
+    },
+    {
+      "id": "ai-effect",
+      "url": "/terms/ai-effect/",
+      "nameZh": "AI 效应",
+      "nameEn": "AI Effect",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "当一项人工智能能力变得普及时，人们不再把它视为真正智能的认知与命名现象。",
+      "domain": "ai-foundations-history",
+      "domainNameZh": "AI 基础与发展史",
+      "difficulty": "intermediate",
+      "ring": "extended",
+      "status": "catalogued",
+      "priority": 4,
+      "featured": false,
+      "searchKeys": [
+        "ai 效应",
+        "ai effect"
+      ]
+    },
+    {
+      "id": "cognitive-computing",
+      "url": "/terms/cognitive-computing/",
+      "nameZh": "认知计算",
+      "nameEn": "Cognitive Computing",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "借鉴人类认知过程来设计辅助理解、推理和决策系统的一类技术与产品表述。",
+      "domain": "ai-foundations-history",
+      "domainNameZh": "AI 基础与发展史",
+      "difficulty": "intermediate",
+      "ring": "extended",
+      "status": "catalogued",
+      "priority": 4,
+      "featured": false,
+      "searchKeys": [
+        "认知计算",
+        "cognitive computing"
       ]
     },
     {
