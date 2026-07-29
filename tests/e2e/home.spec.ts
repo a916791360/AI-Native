@@ -18,12 +18,28 @@ test('renders the approved direction 1 identity and primary paths', async ({ pag
   } else {
     const header = page.getByRole('banner');
     await expect(header.getByRole('link', { name: '知识图鉴' })).toHaveAttribute('href', '/atlas/');
+    await expect(header.getByRole('link', { name: '搜索', exact: true })).toHaveAttribute(
+      'href',
+      '/search/',
+    );
     await expect(header.getByRole('link', { name: '学习路线' })).toHaveAttribute(
       'href',
       '/routes/',
     );
     await expect(header.getByRole('link', { name: '概念图谱' })).toHaveAttribute('href', '/graph/');
   }
+});
+
+test('derives the homepage routes, domains and content scale from project data', async ({
+  page,
+}) => {
+  await page.goto('/');
+
+  await expect(page.locator('.route-list .route-item')).toHaveCount(4);
+  await expect(page.locator('.domain-list a')).toHaveCount(12);
+  await expect(page.locator('.scope-band')).toContainText('已核验词条');
+  await expect(page.locator('.scope-band')).toContainText('20');
+  await expect(page.locator('.featured-register a')).toHaveCount(6);
 });
 
 test('provides stable skeletons for all primary page types', async ({ page }) => {
@@ -41,6 +57,38 @@ test('provides stable skeletons for all primary page types', async ({ page }) =>
     await page.goto(url);
     await expect(page.getByRole('heading', { level: 1, name: heading })).toBeVisible();
     await expect(page.locator('#main-content')).toBeVisible();
+  }
+});
+
+test('keeps search, routes and domain browsing available from every core page', async ({
+  page,
+  isMobile,
+}) => {
+  for (const url of [
+    '/',
+    '/atlas/',
+    '/routes/',
+    '/graph/',
+    '/methodology/',
+    '/terms/retrieval-augmented-generation/',
+  ]) {
+    await page.goto(url);
+    if (isMobile) await page.locator('summary', { hasText: '菜单' }).click();
+    const navigation = page.getByRole('navigation', {
+      name: isMobile ? '移动端主导航' : '主导航',
+    });
+    await expect(navigation.getByRole('link', { name: '知识图鉴' })).toHaveAttribute(
+      'href',
+      '/atlas/',
+    );
+    await expect(navigation.getByRole('link', { name: '搜索', exact: true })).toHaveAttribute(
+      'href',
+      '/search/',
+    );
+    await expect(navigation.getByRole('link', { name: '学习路线' })).toHaveAttribute(
+      'href',
+      '/routes/',
+    );
   }
 });
 
@@ -145,6 +193,28 @@ test('publishes the complete RAG route with twelve sequential terms', async ({ p
   ]);
 });
 
+test('publishes all four ordered learning routes', async ({ page }) => {
+  const routes = [
+    ['ai-foundations', 'AI 零基础入门', 6],
+    ['human-ai-collaboration', '高效人机协作', 6],
+    ['ai-product-scenario-judgment', 'AI 产品与场景判断', 8],
+    ['rag-from-zero', 'RAG 从零到理解与应用', 12],
+  ] as const;
+
+  await page.goto('/routes/');
+  await expect(page.locator('.route-entry')).toHaveCount(4);
+  for (const [id, title, termCount] of routes) {
+    await page.goto('/routes/');
+    await expect(page.getByRole('link', { name: title }).first()).toHaveAttribute(
+      'href',
+      `/routes/${id}/`,
+    );
+    await page.goto(`/routes/${id}/`);
+    await expect(page.getByRole('heading', { level: 1, name: title })).toBeVisible();
+    await expect(page.locator('.chapter-terms a')).toHaveCount(termCount);
+  }
+});
+
 test('renders every representative term as a verified eight-section article', async ({ page }) => {
   const termIds = [
     'artificial-intelligence',
@@ -219,6 +289,54 @@ test('uses the shared search aggregator from the term atlas', async ({ page }) =
   await expect(page.locator('#atlas-index')).toBeVisible();
 });
 
+test('filters and sorts the structured atlas index', async ({ page }) => {
+  await page.goto('/atlas/');
+
+  await page.getByLabel('领域范围').selectOption('core');
+  await expect(page.locator('[data-atlas-visible]')).toHaveText('12');
+  await expect(page.locator('[data-atlas-domain]:visible')).toHaveCount(9);
+  await page.getByLabel('排序方式').selectOption('name');
+  await expect(page).toHaveURL(/ring=core/);
+  await expect(page).toHaveURL(/sort=name/);
+});
+
+test('offers recovery and feedback when search has no result', async ({ page }) => {
+  await page.goto('/search/?q=不存在的固定词条');
+
+  await expect(page.locator('[data-search-empty]')).toBeVisible();
+  await expect(page.getByRole('link', { name: '浏览全部领域' })).toHaveAttribute('href', '/atlas/');
+  await expect(page.getByRole('link', { name: '建议收录词条' })).toHaveAttribute(
+    'href',
+    /github\.com\/a916791360\/AI-Native\/issues\/new/,
+  );
+});
+
+test('documents all editorial states and the correction workflow', async ({ page }) => {
+  await page.goto('/methodology/');
+
+  for (const state of ['目录已收录', '草稿', '已核验', '需要复核', '已弃用']) {
+    await expect(page.getByRole('heading', { level: 3, name: state })).toBeVisible();
+  }
+  const correction = page.getByRole('link', { name: '提交内容修订建议' });
+  await expect(correction).toHaveAttribute(
+    'href',
+    /github\.com\/a916791360\/AI-Native\/issues\/new/,
+  );
+});
+
+test('ships preview-safe metadata and crawl endpoints', async ({ page, request }) => {
+  await page.goto('/terms/token/');
+
+  await expect(page.locator('meta[property="og:title"]')).toHaveAttribute('content', /Token/);
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex,nofollow');
+  await expect(page.locator('script[type="application/ld+json"]')).toHaveCount(0);
+
+  const robots = await request.get('/robots.txt');
+  expect(await robots.text()).toContain('Disallow: /');
+  const sitemap = await request.get('/sitemap.xml');
+  expect(await sitemap.text()).toContain('<urlset');
+});
+
 test('loads the full graph lazily and supports focus, filters and viewport controls', async ({
   page,
   isMobile,
@@ -266,6 +384,23 @@ test('keeps the structured graph usable when Cytoscape cannot initialize', async
 
   await expect(graph).toHaveAttribute('data-graph-state', 'error');
   await expect(graph.getByText('交互图谱暂不可用')).toBeVisible();
+  await expect(
+    page.locator('#relations').getByRole('link', { name: '人工智能' }).first(),
+  ).toBeVisible();
+});
+
+test('explains an empty graph filter without removing structured navigation', async ({
+  page,
+  isMobile,
+}) => {
+  await page.goto('/graph/');
+  const graph = page.locator('[data-graph-explorer][data-graph-mode="full"]');
+  if (isMobile) await page.locator('[data-graph-load]').click();
+  await expect(graph).toHaveAttribute('data-graph-state', 'ready');
+
+  await graph.locator('[data-graph-domain]').selectOption('machine-learning-deep-learning');
+  await expect(graph).toHaveAttribute('data-graph-state', 'empty');
+  await expect(graph.getByText('当前筛选没有可显示的词条关系')).toBeVisible();
   await expect(
     page.locator('#relations').getByRole('link', { name: '人工智能' }).first(),
   ).toBeVisible();

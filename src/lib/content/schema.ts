@@ -116,6 +116,7 @@ const prerequisiteExceptionSchema = z
 export const routeSchema = z
   .object({
     id: stableIdSchema,
+    order: z.number().int().min(1).max(4),
     nameZh: z.string().min(2),
     summary: z.string().min(10).max(160),
     audience: z.array(z.string().min(2)).min(1),

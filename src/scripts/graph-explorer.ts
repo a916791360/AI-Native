@@ -125,6 +125,10 @@ function applyFilters(root: HTMLElement, cy: Core): void {
 
   root.dataset.graphVisibleNodes = String(cy.nodes(':visible').length);
   root.dataset.graphVisibleEdges = String(cy.edges(':visible').length);
+  const status = root.querySelector<HTMLElement>('[data-graph-status] span');
+  const isEmpty = cy.nodes(':visible').length === 0;
+  root.dataset.graphState = isEmpty ? 'empty' : 'ready';
+  if (status && isEmpty) status.textContent = '当前筛选没有可显示的词条关系';
 }
 
 function setZoom(root: HTMLElement, cy: Core, nextZoom: number): void {

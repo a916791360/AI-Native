@@ -10,6 +10,7 @@ import { SITE } from '@/config/site';
   </div>
   <nav aria-label="页脚导航">
     {NAVIGATION.map((item) => <a href={item.href}>{item.label}</a>)}
+    <a href={SITE.repositoryUrl}>GitHub</a>
   </nav>
   <p class="footer-state">静态首版 · 内容持续校订</p>
 </footer>

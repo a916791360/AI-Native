@@ -62,6 +62,7 @@ describe('content schemas', () => {
   it('requires a structured route with at least one chapter', () => {
     const result = routeSchema.safeParse({
       id: 'empty-route',
+      order: 1,
       nameZh: '空路线',
       summary: '这是一条没有章节、因而不符合路线结构的数据。',
       audience: ['测试人员'],

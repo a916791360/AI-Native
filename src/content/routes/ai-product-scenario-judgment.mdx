@@ -1,0 +1,40 @@
+---
+id: ai-product-scenario-judgment
+order: 3
+nameZh: AI 产品与场景判断
+summary: 从模型能力与错误边界出发，理解检索增强链路，并判断知识型场景是否值得采用 RAG。
+audience:
+  - 需要评估 AI 产品机会的产品经理
+  - 参与知识型 AI 方案讨论的业务与技术负责人
+prerequisites:
+  - artificial-intelligence
+learningGoals:
+  - 区分模型能力、数据问题和检索问题
+  - 识别知识型场景采用 RAG 的前提
+  - 说明召回、上下文与生成环节的主要取舍
+estimatedTerms: 8
+chapters:
+  - id: capability-boundaries
+    title: 先判断模型边界
+    transition: 从人工智能和生成模型的能力范围开始，识别语言模型可能产生的错误与上下文限制。
+    terms:
+      - id: artificial-intelligence
+      - id: generative-ai
+      - id: large-language-model
+      - id: context-window
+      - id: hallucination
+  - id: evidence-pipeline
+    title: 再判断外部知识链路
+    transition: 当场景需要可更新的外部知识时，再理解检索、重排与 RAG 怎样提供证据。
+    terms:
+      - id: retrieval
+      - id: reranking
+      - id: retrieval-augmented-generation
+outcomes:
+  - 能判断一个场景的问题主要在模型、知识还是流程
+  - 能说明采用 RAG 的收益、成本与不能解决的问题
+prerequisiteExceptions: []
+status: published
+---
+
+这条路线面向方案判断，不把“接入大模型”当作结论。它要求先定位问题，再决定是否需要检索增强或更简单的流程自动化。

@@ -2,44 +2,125 @@
 import PageIntro from '@/components/layout/PageIntro.astro';
 import StatusTag from '@/components/ui/StatusTag.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import { loadProjectContent } from '@/lib/content/io';
+import { buildContentIssueUrl } from '@/lib/site/github';
+import { deriveSiteMetrics } from '@/lib/site/metrics';
+
+const project = await loadProjectContent();
+const metrics = deriveSiteMetrics(project);
+const correctionUrl = buildContentIssueUrl({
+  title: '内容修订建议',
+  pagePath: '/methodology/',
+  issueType: '其他',
+  context: '涉及页面或词条：',
+});
+
+const contentStates = [
+  {
+    status: 'catalogued' as const,
+    title: '目录已收录',
+    copy: '名称、摘要、领域与基础关系已进入结构化系统，但深度正文尚未完成。',
+  },
+  {
+    status: 'draft' as const,
+    title: '草稿',
+    copy: '内容结构可以被内部使用和审查，仍可能调整顺序、解释与边界。',
+  },
+  {
+    status: 'verified' as const,
+    title: '已核验',
+    copy: '来源、事实、例子、适用边界和八段正文都通过自动门禁与人工审查。',
+  },
+  {
+    status: 'needs-review' as const,
+    title: '需要复核',
+    copy: '来源失效、内容过期或存在争议时保留历史内容，同时明确提示谨慎引用。',
+  },
+  {
+    status: 'deprecated' as const,
+    title: '已弃用',
+    copy: '术语过时或被替代时保留原 URL、解释原因，并提供替代词条入口。',
+  },
+];
+
+const sourcePriorities = [
+  ['01', '原始研究与规范', '论文、标准、法律法规和技术规范，用于支撑定义、机制和明确约束。'],
+  ['02', '官方文档', '产品、模型、框架与机构文档，用于确认当前能力、接口和使用边界。'],
+  ['03', '教材与研究机构', '权威教材、大学课程和研究机构资料，用于建立稳定的解释框架。'],
+  ['04', '工程实践', '高质量工程资料用于补充实际取舍，但不单独替代关键事实来源。'],
+  ['05', '媒体与个人观点', '只作为线索或观点，不用于单独支撑关键定义、数字与风险判断。'],
+] as const;
 ---
 
-<BaseLayout title="内容方法" description="AI-Native 的内容状态、关系规则与核验原则。">
+<BaseLayout title="内容方法" description="AI-Native 的内容范围、状态、来源、关系与修订原则。">
   <main id="main-content">
     <PageIntro
-      eyebrow="Editorial methodology · transparent by default"
+      eyebrow={`Editorial methodology · verified ${metrics.latestVerifiedAt}`}
       title="内容方法"
       description="知识工具的可信度不来自语气，而来自能否看见内容处于什么状态、关系为何成立，以及哪些断言有来源支持。"
     />
-    <section class="method-section" aria-labelledby="states-title">
+
+    <section class="method-section scope-section" aria-labelledby="scope-title">
       <header>
-        <p class="eyebrow">01 / Content states</p><h2 id="states-title">
-          不把“已收录”写成“已核验”
-        </h2>
+        <p class="eyebrow">01 / Scope</p>
+        <h2 id="scope-title">当前收录什么，也明确不做什么</h2>
       </header>
-      <div class="state-list">
-        <article>
-          <StatusTag status="catalogued" /><h3>目录已收录</h3><p>
-            名称、摘要、领域与基础关系已进入结构化系统，但深度正文尚未完成。
-          </p>
-        </article>
-        <article>
-          <StatusTag status="draft" /><h3>草稿</h3><p>
-            内容结构可以被内部使用和审查，仍可能调整顺序、解释与边界。
-          </p>
-        </article>
-        <article>
-          <StatusTag status="verified" /><h3>已核验</h3><p>
-            只有来源、事实、例子与适用边界都通过门禁后，才允许使用这一状态。
-          </p>
-        </article>
+      <div class="scope-copy">
+        <p>
+          首版服务中文 AI 初学者、产品人与业务人员，覆盖基础概念、人机协作、产品判断和 RAG
+          学习路径。它是静态知识图鉴，不提供账号、资讯流、社区、付费、运行时 AI 问答或个性化推荐。
+        </p>
+        <dl>
+          <div><dt>领域</dt><dd>{metrics.domainCount}</dd></div>
+          <div><dt>已核验词条</dt><dd>{metrics.verifiedTermCount}</dd></div>
+          <div><dt>已发布路线</dt><dd>{metrics.publishedRouteCount}</dd></div>
+          <div><dt>概念关系</dt><dd>{metrics.relationCount}</dd></div>
+        </dl>
       </div>
     </section>
+
+    <section class="method-section" aria-labelledby="states-title">
+      <header>
+        <p class="eyebrow">02 / Content states</p>
+        <h2 id="states-title">不把“已收录”写成“已核验”</h2>
+      </header>
+      <div class="state-list">
+        {
+          contentStates.map((state) => (
+            <article>
+              <StatusTag status={state.status} />
+              <h3>{state.title}</h3>
+              <p>{state.copy}</p>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="method-section" aria-labelledby="sources-title">
+      <header>
+        <p class="eyebrow">03 / Source priority</p>
+        <h2 id="sources-title">来源按可复核性排序</h2>
+      </header>
+      <ol class="source-list">
+        {
+          sourcePriorities.map(([number, title, copy]) => (
+            <li>
+              <>
+                <span>{number}</span>
+                <strong>{title}</strong>
+                <p>{copy}</p>
+              </>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
     <section class="method-section" aria-labelledby="relations-title">
       <header>
-        <p class="eyebrow">02 / Relation rules</p><h2 id="relations-title">
-          每条关系都要回答“为什么”
-        </h2>
+        <p class="eyebrow">04 / Relation rules</p>
+        <h2 id="relations-title">每条关系都要回答“为什么”</h2>
       </header>
       <div class="principle-list">
         <article class="prerequisite">
@@ -60,17 +141,20 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
         </article>
       </div>
     </section>
-    <section class="method-section source-policy" aria-labelledby="sources-title">
+
+    <section class="method-section revision-section" aria-labelledby="revision-title">
       <header>
-        <p class="eyebrow">03 / Source policy</p><h2 id="sources-title">来源优先级与修订</h2>
+        <p class="eyebrow">05 / Revision</p>
+        <h2 id="revision-title">发现问题后，回到同一事实源修订</h2>
       </header>
       <div>
-        <p>
-          优先使用论文、标准、法律、官方文档、教材、研究机构和可复核的工程实践。来源必须记录标题、发布者、链接与访问日期；会快速变化的事实需要记录发布时间。
-        </p>
-        <p>
-          内容发现错误时，修订关系、摘要和正文必须回到同一份结构化数据，避免图谱、搜索和文章各自维护不同结论。
-        </p>
+        <ol>
+          <li>指出具体页面、段落、关系或来源。</li>
+          <li>提供可复核证据，并区分事实错误、时效问题和表达建议。</li>
+          <li>修改词条、路线或关系事实源，重新运行 Schema、生成物和页面测试。</li>
+          <li>更新日期和状态；必要时标记“需要复核”或“已弃用”，保留历史 URL。</li>
+        </ol>
+        <a class="correction-link" href={correctionUrl}>提交内容修订建议</a>
       </div>
     </section>
   </main>
@@ -79,7 +163,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 <style>
   .method-section {
     display: grid;
-    grid-template-columns: minmax(20rem, 0.36fr) 1fr;
+    grid-template-columns: minmax(20rem, 0.34fr) minmax(0, 1fr);
     border-bottom: 1px solid var(--color-line);
   }
   .method-section > header {
@@ -94,37 +178,95 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
     font-weight: 400;
     line-height: 1.08;
   }
+  .scope-copy,
+  .revision-section > div {
+    padding: var(--space-7) var(--page-gutter);
+  }
+  .scope-copy > p {
+    max-width: 52rem;
+    margin: 0;
+    color: var(--color-muted);
+    font-size: var(--text-lead);
+  }
+  .scope-copy dl {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin: var(--space-6) 0 0;
+    border-top: 1px solid var(--color-line);
+  }
+  .scope-copy dl div {
+    padding-top: var(--space-3);
+  }
+  .scope-copy dt {
+    color: var(--color-quiet);
+    font-size: var(--text-xs);
+  }
+  .scope-copy dd {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 2.2rem;
+  }
   .state-list {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(5, 1fr);
   }
   .state-list article,
   .principle-list article {
-    min-height: 22rem;
+    min-height: 20rem;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     border-right: 1px solid var(--color-line-soft);
-    padding: var(--space-5);
+    padding: var(--space-4);
   }
   .state-list h3,
   .principle-list h3 {
     margin: auto 0 var(--space-3);
     font-family: var(--font-display);
-    font-size: 1.6rem;
+    font-size: 1.45rem;
     font-weight: 400;
   }
   .state-list p,
   .principle-list p {
     margin: 0;
     color: var(--color-muted);
+    font-size: var(--text-sm);
+  }
+  .source-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .source-list li {
+    min-height: 6.5rem;
+    display: grid;
+    grid-template-columns: 3rem minmax(11rem, 0.35fr) minmax(0, 1fr);
+    gap: var(--space-3);
+    align-items: center;
+    border-bottom: 1px solid var(--color-line-soft);
+    padding: var(--space-3) var(--page-gutter);
+  }
+  .source-list span {
+    color: var(--color-prerequisite);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+  }
+  .source-list strong {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 400;
+  }
+  .source-list p {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: var(--text-sm);
   }
   .principle-list {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
   }
   .principle-list article {
-    min-height: 16rem;
+    min-height: 15rem;
     border-bottom: 1px solid var(--color-line-soft);
   }
   .principle-list span {
@@ -143,16 +285,30 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
   .application span {
     color: var(--color-application);
   }
-  .source-policy > div {
-    max-width: 56rem;
-    padding: var(--space-7) var(--page-gutter);
-  }
-  .source-policy p {
-    margin: 0 0 var(--space-4);
+  .revision-section ol {
+    max-width: 46rem;
+    margin: 0;
+    padding-left: 1.4rem;
     color: var(--color-muted);
-    font-size: var(--text-lead);
+  }
+  .revision-section li + li {
+    margin-top: var(--space-2);
+  }
+  .correction-link {
+    min-height: 2.75rem;
+    display: inline-flex;
+    align-items: center;
+    margin-top: var(--space-5);
+    border-bottom: 1px solid var(--color-prerequisite);
+    color: var(--color-prerequisite);
+    text-decoration: none;
   }
 
+  @media (max-width: 980px) {
+    .state-list {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
   @media (max-width: 840px) {
     .method-section {
       grid-template-columns: 1fr;
@@ -161,20 +317,24 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
       border-right: 0;
       border-bottom: 1px solid var(--color-line);
     }
-    .state-list {
-      grid-template-columns: 1fr;
-    }
-    .state-list article {
-      min-height: 12rem;
+    .scope-copy dl {
+      grid-template-columns: repeat(2, 1fr);
     }
   }
-
   @media (max-width: 560px) {
+    .state-list,
     .principle-list {
       grid-template-columns: 1fr;
     }
+    .state-list article,
     .principle-list article {
-      min-height: 12rem;
+      min-height: 11rem;
+    }
+    .source-list li {
+      grid-template-columns: 2rem 1fr;
+    }
+    .source-list p {
+      grid-column: 2;
     }
   }
 </style>

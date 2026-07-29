@@ -8,6 +8,7 @@ import generatedGraph from '@/generated/graph.json';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { loadProjectContent } from '@/lib/content/io';
 import { selectLocalGraph, type GraphData } from '@/lib/graph/model';
+import { buildContentIssueUrl } from '@/lib/site/github';
 
 export const getStaticPaths = (async () => {
   const [entries, { relations, domains, routes }] = await Promise.all([
@@ -18,9 +19,11 @@ export const getStaticPaths = (async () => {
   const domainMap = Object.fromEntries(domains.map((domain) => [domain.id, domain]));
 
   return entries.map((entry) => {
-    const route = routes.find(({ data }) =>
-      data.chapters.some((chapter) => chapter.terms.some((step) => step.id === entry.data.id)),
-    );
+    const route = routes
+      .filter(({ data }) =>
+        data.chapters.some((chapter) => chapter.terms.some((step) => step.id === entry.data.id)),
+      )
+      .sort((left, right) => right.data.estimatedTerms - left.data.estimatedTerms)[0];
     const routeTerms = route?.data.chapters.flatMap((chapter) => chapter.terms) ?? [];
     const routeIndex = routeTerms.findIndex((step) => step.id === entry.data.id);
 
@@ -74,9 +77,11 @@ const relationGroups = Object.entries(relationLabels).map(([type, label]) => ({
   label,
   items: relations.filter((relation) => relation.type === type),
 }));
-const correctionUrl = `https://github.com/a916791360/AI-Native/issues/new?title=${encodeURIComponent(
-  `词条修订：${term.nameZh}`,
-)}&body=${encodeURIComponent(`词条：/terms/${term.id}/\n\n问题或建议：`)}`;
+const correctionUrl = buildContentIssueUrl({
+  title: `词条修订：${term.nameZh}`,
+  pagePath: `/terms/${term.id}/`,
+  context: `词条：${term.nameZh}\n具体问题：`,
+});
 const statusNotice = {
   catalogued: '这个词条已进入目录与关系系统，但深度正文尚未完成来源核验。',
   draft: '这个词条已有正文草稿，内容仍在编辑，暂不能视为已核验结论。',
@@ -91,6 +96,7 @@ const localGraph = selectLocalGraph(generatedGraph as GraphData, term.id);
 <BaseLayout
   title={term.nameZh}
   description={term.summary}
+  structuredDataType="TechArticle"
   searchMetadata={{
     id: term.id,
     nameEn: term.nameEn,

@@ -490,9 +490,35 @@ function hasPrerequisiteException(route: Route, relation: Relation): boolean {
 
 function validateRoutes(project: ProjectContent, diagnostics: ContentDiagnostic[]): void {
   const terms = new Map(project.terms.map((term) => [term.data.id, term.data]));
+  const routeIds = new Map<string, string>();
+  const routeOrders = new Map<number, string>();
 
   for (const routeDocument of project.routes) {
     const { data: route, filePath } = routeDocument;
+    const previousIdFile = routeIds.get(route.id);
+    if (previousIdFile) {
+      addDiagnostic(
+        diagnostics,
+        'ROUTE_DUPLICATE_ID',
+        filePath,
+        'id',
+        `duplicates ${previousIdFile}`,
+      );
+    }
+    routeIds.set(route.id, filePath);
+
+    const previousOrderFile = routeOrders.get(route.order);
+    if (previousOrderFile) {
+      addDiagnostic(
+        diagnostics,
+        'ROUTE_DUPLICATE_ORDER',
+        filePath,
+        'order',
+        `duplicates ${previousOrderFile}`,
+      );
+    }
+    routeOrders.set(route.order, filePath);
+
     if (routeFileId(filePath) !== route.id) {
       addDiagnostic(
         diagnostics,

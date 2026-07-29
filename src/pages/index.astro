@@ -2,13 +2,20 @@
 import RelationField from '@/components/knowledge/RelationField.astro';
 import SearchForm from '@/components/ui/SearchForm.astro';
 import StatusTag from '@/components/ui/StatusTag.astro';
-import { PLANNED_ROUTES } from '@/config/navigation';
 import { SITE } from '@/config/site';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { loadProjectContent } from '@/lib/content/io';
+import { deriveSiteMetrics } from '@/lib/site/metrics';
 
-const { domains } = await loadProjectContent();
-const featuredDomains = domains.filter((domain) => domain.ring === 'core').slice(0, 5);
+const project = await loadProjectContent();
+const { domains, routes, terms } = project;
+const metrics = deriveSiteMetrics(project);
+const sortedRoutes = routes.map(({ data }) => data).sort((left, right) => left.order - right.order);
+const featuredTerms = terms
+  .map(({ data }) => data)
+  .filter((term) => term.featured && term.status === 'verified')
+  .sort((left, right) => left.priority - right.priority || left.nameZh.localeCompare(right.nameZh))
+  .slice(0, 6);
 ---
 
 <BaseLayout>
@@ -35,23 +42,18 @@ const featuredDomains = domains.filter((domain) => domain.ring === 'core').slice
         <h2 class="section-heading" id="routes-heading">从查询一个词，到建立一条理解路径</h2>
       </header>
       <div class="route-list">
-        <a class="route-item route-live" href="/routes/rag-from-zero/">
-          <span class="route-number">01</span>
-          <span><strong>RAG 从零到理解与应用</strong><small>3 章 · 12 个代表词条</small></span>
-          <StatusTag status="published" />
-        </a>
         {
-          PLANNED_ROUTES.map((route, index) => (
-            <div class="route-item">
-              <span class="route-number">0{index + 2}</span>
+          sortedRoutes.map((route) => (
+            <a class="route-item route-live" href={`/routes/${route.id}/`}>
+              <span class="route-number">{String(route.order).padStart(2, '0')}</span>
               <span>
-                <>
-                  <strong>{route.name}</strong>
-                  <small>内容结构将在后续阶段建立</small>
-                </>
+                <strong>{route.nameZh}</strong>
+                <small>
+                  {route.chapters.length} 章 · {route.estimatedTerms} 个代表词条
+                </small>
               </span>
-              <StatusTag status="planned" />
-            </div>
+              <StatusTag status={route.status} />
+            </a>
           ))
         }
       </div>
@@ -62,17 +64,44 @@ const featuredDomains = domains.filter((domain) => domain.ring === 'core').slice
         <p class="eyebrow">Knowledge domains</p>
         <h2 class="section-heading" id="domains-heading">先定位领域，再看概念如何相连</h2>
       </div>
-      <nav class="domain-list" aria-label="核心领域">
+      <nav class="domain-list" aria-label={`${metrics.domainCount} 个知识领域`}>
         {
-          featuredDomains.map((domain, index) => (
+          domains.map((domain) => (
             <a href={`/atlas/#${domain.id}`}>
-              <span>0{index + 1}</span>
+              <span>
+                {String(domain.order).padStart(2, '0')} · {domain.ring}
+              </span>
               <strong>{domain.shortNameZh}</strong>
               <small>{domain.description}</small>
             </a>
           ))
         }
       </nav>
+    </section>
+
+    <section class="scope-band" aria-labelledby="scope-heading">
+      <div class="scope-heading">
+        <p class="eyebrow">Verified collection · {metrics.latestVerifiedAt}</p>
+        <h2 class="section-heading" id="scope-heading">当前内容规模，全部来自事实源</h2>
+        <dl>
+          <div><dt>知识领域</dt><dd>{metrics.domainCount}</dd></div>
+          <div><dt>已核验词条</dt><dd>{metrics.verifiedTermCount}</dd></div>
+          <div><dt>已发布路线</dt><dd>{metrics.publishedRouteCount}</dd></div>
+          <div><dt>概念关系</dt><dd>{metrics.relationCount}</dd></div>
+        </dl>
+      </div>
+      <div class="featured-register">
+        <p class="meta-label">推荐词条</p>
+        {
+          featuredTerms.map((term, index) => (
+            <a href={`/terms/${term.id}/`}>
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <strong>{term.nameZh}</strong>
+              <small>{term.summary}</small>
+            </a>
+          ))
+        }
+      </div>
     </section>
   </main>
 </BaseLayout>
@@ -217,11 +246,11 @@ const featuredDomains = domains.filter((domain) => domain.ring === 'core').slice
 
   .domain-list {
     display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
   .domain-list a {
-    min-height: 18rem;
+    min-height: 13rem;
     display: flex;
     flex-direction: column;
     border-right: 1px solid var(--color-line);
@@ -250,6 +279,68 @@ const featuredDomains = domains.filter((domain) => domain.ring === 'core').slice
     line-height: 1.55;
   }
 
+  .scope-band {
+    display: grid;
+    grid-template-columns: minmax(22rem, 0.42fr) minmax(0, 1fr);
+    border-top: 1px solid var(--color-line);
+  }
+  .scope-heading {
+    border-right: 1px solid var(--color-line);
+    padding: var(--space-7) var(--page-gutter);
+  }
+  .scope-heading dl {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin: var(--space-6) 0 0;
+    border-top: 1px solid var(--color-line);
+  }
+  .scope-heading dl div {
+    padding: var(--space-3) 0;
+  }
+  .scope-heading dt {
+    color: var(--color-quiet);
+    font-size: var(--text-xs);
+  }
+  .scope-heading dd {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 2.2rem;
+  }
+  .featured-register {
+    min-width: 0;
+    padding-top: var(--space-5);
+  }
+  .featured-register > p {
+    padding: 0 var(--page-gutter) var(--space-3);
+  }
+  .featured-register a {
+    min-height: 6rem;
+    display: grid;
+    grid-template-columns: 2.5rem minmax(10rem, 0.35fr) minmax(0, 1fr);
+    gap: var(--space-3);
+    align-items: center;
+    border-top: 1px solid var(--color-line-soft);
+    padding: var(--space-3) var(--page-gutter);
+    text-decoration: none;
+  }
+  .featured-register a:hover {
+    background: var(--color-panel);
+  }
+  .featured-register span {
+    color: var(--color-component);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+  }
+  .featured-register strong {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 400;
+  }
+  .featured-register small {
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+  }
+
   @media (max-width: 980px) {
     .home-hero {
       grid-template-columns: 1fr;
@@ -259,16 +350,18 @@ const featuredDomains = domains.filter((domain) => domain.ring === 'core').slice
       border-right: 0;
     }
     .route-band,
-    .domain-band {
+    .domain-band,
+    .scope-band {
       grid-template-columns: 1fr;
     }
     .route-band > header,
-    .domain-heading {
+    .domain-heading,
+    .scope-heading {
       border-right: 0;
       border-bottom: 1px solid var(--color-line);
     }
     .domain-list {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
     .domain-list a {
       min-height: 13rem;
@@ -296,6 +389,12 @@ const featuredDomains = domains.filter((domain) => domain.ring === 'core').slice
     }
     .domain-list a {
       min-height: 9rem;
+    }
+    .featured-register a {
+      grid-template-columns: 2rem 1fr;
+    }
+    .featured-register small {
+      grid-column: 2;
     }
   }
 </style>

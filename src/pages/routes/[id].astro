@@ -20,7 +20,11 @@ const firstTerm = routeTerms[0];
   <main id="main-content">
     <header class="route-hero">
       <div>
-        <p class="eyebrow">Learning route · 已发布</p>
+        <p class="eyebrow">
+          Learning route {String(route.order).padStart(2, '0')} · {
+            route.status === 'published' ? '已发布' : '草稿'
+          }
+        </p>
         <h1>{route.nameZh}</h1>
       </div>
       <div class="route-summary">

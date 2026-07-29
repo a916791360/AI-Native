@@ -107,6 +107,7 @@ function makeRoute(): ContentDocument<Route> {
     body: '',
     data: {
       id: 'test-route',
+      order: 1,
       nameZh: '测试学习路线',
       summary: '用于验证路线引用、重复节点与前置顺序规则的固定学习路线。',
       audience: ['内容契约测试人员'],

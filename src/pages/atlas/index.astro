@@ -4,8 +4,11 @@ import SearchExperience from '@/components/search/SearchExperience.astro';
 import StatusTag from '@/components/ui/StatusTag.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { loadProjectContent } from '@/lib/content/io';
+import { deriveSiteMetrics } from '@/lib/site/metrics';
 
-const { domains, terms } = await loadProjectContent();
+const project = await loadProjectContent();
+const { domains, terms } = project;
+const metrics = deriveSiteMetrics(project);
 const termsByDomain = new Map(
   domains.map((domain) => [
     domain.id,
@@ -18,17 +21,41 @@ const termsByDomain = new Map(
 );
 ---
 
-<BaseLayout title="知识图鉴" description="按领域查找 AI-Native 已收录的中文 AI 词条。">
+<BaseLayout
+  title="知识图鉴"
+  description="按领域查找 AI-Native 已收录的中文 AI 词条。"
+  structuredDataType="CollectionPage"
+>
   <main id="main-content">
     <PageIntro
-      eyebrow="Knowledge atlas · 12 domains"
+      eyebrow={`Knowledge atlas · ${metrics.domainCount} domains`}
       title="知识图鉴"
-      description="先按领域定位问题，再沿前置、组成、比较与应用关系继续阅读。当前 12 个代表词条均已核验。"
+      description={`先按领域定位问题，再沿前置、组成、比较与应用关系继续阅读。当前 ${metrics.verifiedTermCount} 个代表词条均已核验。`}
     />
 
     <SearchExperience compact={true} emptyBehavior="index" indexTarget="#atlas-index" />
 
-    <div class="atlas-layout" id="atlas-index">
+    <section class="atlas-controls" data-atlas-controls aria-label="图鉴目录控制">
+      <label
+        ><span>领域范围</span><select data-atlas-ring>
+          <option value="all">全部领域</option>
+          <option value="core">核心领域</option>
+          <option value="extended">扩展领域</option>
+        </select></label
+      >
+      <label
+        ><span>排序方式</span><select data-atlas-sort>
+          <option value="domain">领域顺序</option>
+          <option value="name">词条名称</option>
+          <option value="priority">内容优先级</option>
+        </select></label
+      >
+      <p>
+        显示 <strong data-atlas-visible>{metrics.termCount}</strong> / {metrics.termCount} 个词条
+      </p>
+    </section>
+
+    <div class="atlas-layout" id="atlas-index" data-atlas-index>
       <nav class="domain-nav" aria-label="领域目录">
         {
           domains.map((domain) => (
@@ -40,12 +67,21 @@ const termsByDomain = new Map(
         }
       </nav>
 
-      <div class="domain-sections">
+      <div class="domain-sections" data-atlas-sections>
         {
           domains.map((domain) => {
             const domainTerms = termsByDomain.get(domain.id) ?? [];
             return (
-              <section id={domain.id} class="domain-section">
+              <section
+                id={domain.id}
+                class="domain-section"
+                data-atlas-domain
+                data-ring={domain.ring}
+                data-order={domain.order}
+                data-name={domainTerms[0]?.data.nameZh ?? domain.nameZh}
+                data-priority={Math.min(...domainTerms.map(({ data }) => data.priority), 99)}
+                data-term-count={domainTerms.length}
+              >
                 <header>
                   <p class="meta-label">
                     Domain {String(domain.order).padStart(2, '0')} · {domain.ring}
@@ -59,6 +95,8 @@ const termsByDomain = new Map(
                       <a
                         class="term-row"
                         href={`/terms/${term.id}/`}
+                        data-priority={term.priority}
+                        data-name={term.nameZh}
                         data-search={`${term.nameZh} ${term.nameEn} ${term.abbreviations.join(' ')} ${term.aliases.map((alias) => alias.value).join(' ')}`.toLowerCase()}
                       >
                         <span>
@@ -82,7 +120,53 @@ const termsByDomain = new Map(
   </main>
 </BaseLayout>
 
+<script>
+  import '@/scripts/atlas-index';
+</script>
+
 <style>
+  .atlas-controls {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(12rem, 18rem)) 1fr;
+    align-items: center;
+    border-bottom: 1px solid var(--color-line);
+    padding: 0 var(--page-gutter);
+  }
+  .atlas-controls label {
+    min-height: 4rem;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: var(--space-2);
+    border-right: 1px solid var(--color-line-soft);
+    padding: 0 var(--space-3);
+  }
+  .atlas-controls label:first-child {
+    padding-left: 0;
+  }
+  .atlas-controls label span {
+    color: var(--color-quiet);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+  }
+  .atlas-controls select {
+    min-width: 0;
+    min-height: 2.75rem;
+    border: 0;
+    background: var(--color-black);
+    color: var(--color-ink);
+  }
+  .atlas-controls p {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+    text-align: right;
+  }
+  .atlas-controls strong {
+    color: var(--color-prerequisite);
+    font-family: var(--font-mono);
+    font-weight: 400;
+  }
   .atlas-layout {
     display: grid;
     grid-template-columns: minmax(13rem, 0.22fr) minmax(0, 1fr);
@@ -122,6 +206,9 @@ const termsByDomain = new Map(
     grid-template-columns: minmax(17rem, 0.36fr) minmax(0, 1fr);
     border-bottom: 1px solid var(--color-line);
     scroll-margin-top: 1rem;
+  }
+  .domain-section[hidden] {
+    display: none;
   }
   .domain-section > header {
     border-right: 1px solid var(--color-line);
@@ -182,6 +269,19 @@ const termsByDomain = new Map(
   }
 
   @media (max-width: 900px) {
+    .atlas-controls {
+      grid-template-columns: repeat(2, 1fr);
+      padding: 0;
+    }
+    .atlas-controls label {
+      padding: 0 var(--space-2);
+    }
+    .atlas-controls p {
+      grid-column: 1 / -1;
+      border-top: 1px solid var(--color-line-soft);
+      padding: var(--space-2);
+      text-align: left;
+    }
     .atlas-layout {
       grid-template-columns: 1fr;
     }
@@ -201,6 +301,12 @@ const termsByDomain = new Map(
   }
 
   @media (max-width: 620px) {
+    .atlas-controls {
+      grid-template-columns: 1fr;
+    }
+    .atlas-controls p {
+      grid-column: auto;
+    }
     .domain-nav {
       grid-template-columns: repeat(2, 1fr);
     }

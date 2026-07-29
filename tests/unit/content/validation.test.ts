@@ -215,6 +215,21 @@ describe('cross-file content validation', () => {
       (project) => (project.routes[0]!.filePath = 'src/content/routes/wrong-route.mdx'),
     ],
     [
+      'duplicate route ID',
+      'ROUTE_DUPLICATE_ID',
+      (project) => project.routes.push(structuredClone(project.routes[0]!)),
+    ],
+    [
+      'duplicate route order',
+      'ROUTE_DUPLICATE_ORDER',
+      (project) => {
+        const duplicate = structuredClone(project.routes[0]!);
+        duplicate.filePath = 'src/content/routes/second-route.mdx';
+        duplicate.data.id = 'second-route';
+        project.routes.push(duplicate);
+      },
+    ],
+    [
       'unknown route reference',
       'ROUTE_REFERENCE_UNKNOWN',
       (project) => (project.routes[0]!.data.chapters[0]!.terms[1]!.id = 'missing-term'),

@@ -7,6 +7,7 @@ import '@/styles/global.css';
 interface Props {
   title?: string;
   description?: string;
+  structuredDataType?: 'CollectionPage' | 'TechArticle' | 'WebPage';
   searchMetadata?: {
     id: string;
     nameEn: string;
@@ -18,8 +19,34 @@ interface Props {
   };
 }
 
-const { title = SITE.name, description = SITE.description, searchMetadata } = Astro.props;
+const {
+  title = SITE.name,
+  description = SITE.description,
+  structuredDataType = 'WebPage',
+  searchMetadata,
+} = Astro.props;
 const pageTitle = title === SITE.name ? title : `${title} | ${SITE.name}`;
+const canonicalUrl = SITE.publicOrigin
+  ? new URL(Astro.url.pathname.replace(/^\//, ''), `${SITE.publicOrigin}/`).toString()
+  : undefined;
+const socialImageUrl = SITE.publicOrigin
+  ? new URL('og-default.png', `${SITE.publicOrigin}/`).toString()
+  : undefined;
+const structuredData = canonicalUrl
+  ? {
+      '@context': 'https://schema.org',
+      '@type': structuredDataType,
+      name: pageTitle,
+      description,
+      url: canonicalUrl,
+      inLanguage: 'zh-CN',
+      isPartOf: {
+        '@type': 'WebSite',
+        name: SITE.name,
+        url: SITE.publicOrigin,
+      },
+    }
+  : undefined;
 ---
 
 <!doctype html>
@@ -29,6 +56,22 @@ const pageTitle = title === SITE.name ? title : `${title} | ${SITE.name}`;
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#090a0c" />
+    <meta name="robots" content={SITE.publicOrigin ? 'index,follow' : 'noindex,nofollow'} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content={SITE.locale} />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta name="twitter:card" content="summary_large_image" />
+    {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+    {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
+    {socialImageUrl && <meta property="og:image" content={socialImageUrl} />}
+    {
+      structuredData && (
+        <script type="application/ld+json" is:inline set:html={JSON.stringify(structuredData)} />
+      )
+    }
     {
       searchMetadata && (
         <>

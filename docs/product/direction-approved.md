@@ -80,3 +80,10 @@
 - 图鉴抽查截图：`design-demos/production-visual/production-atlas-desktop.png`
 - 词条抽查截图：`design-demos/production-visual/production-term-mobile.png`
 - 验收结论：方向 1 已转译为六类页面和 404 的共享生产视觉系统；桌面、移动、无障碍和完整 CI 均通过。
+
+## 2026-07-29 阶段 7 迭代说明
+
+- 阶段 7 是已选定方向 1「深空知识展柜」的同项目页面扩展，不是新的视觉方向设计。
+- 依据 `$huashu-design` 的「已选定方向后的迭代」豁免，本阶段不重新制作三方向初稿。
+- 新增路线、方法、异常状态和元数据必须沿用现有 Token、边框、衬线层级、暗场基底与关系色角色，并通过桌面和移动端截图验收。
+- 用户启动原话：`开始下一步阶段 7`。

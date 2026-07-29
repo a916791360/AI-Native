@@ -1,0 +1,40 @@
+name: 内容纠错
+description: 报告词条、路线、关系或来源中的事实与表达问题
+title: '[内容纠错] '
+body:
+  - type: input
+    id: page-url
+    attributes:
+      label: 页面 URL
+      description: 请粘贴出现问题的词条、路线或页面地址。
+      placeholder: https://example.com/terms/...
+    validations:
+      required: true
+  - type: dropdown
+    id: issue-type
+    attributes:
+      label: 问题类型
+      options:
+        - 事实或解释错误
+        - 来源失效或不支持结论
+        - 内容可能过时
+        - 关系或学习顺序不合理
+        - 翻译、术语或表达问题
+        - 其他
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: 问题描述
+      description: 请指出具体段落、关系或结论，以及你认为需要修改的内容。
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: 证据或建议来源
+      description: 优先提供论文、标准、官方文档或其他可复核来源。
+      placeholder: 来源标题、发布者、链接与相关段落
+    validations:
+      required: true

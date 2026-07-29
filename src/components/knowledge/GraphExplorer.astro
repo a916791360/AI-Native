@@ -297,6 +297,9 @@ const serializedGraph = JSON.stringify(graph).replaceAll('<', '\\u003c');
   .graph-explorer[data-graph-state='error'] .graph-state {
     color: var(--color-comparison);
   }
+  .graph-explorer[data-graph-state='empty'] .graph-state {
+    color: var(--color-prerequisite);
+  }
   .graph-detail {
     min-width: 0;
     padding: var(--space-5) var(--page-gutter);
