@@ -29,25 +29,25 @@ describe('stage 9 content production', () => {
       'verified',
       'verified',
       'verified',
-      'planned',
+      'research',
     ]);
-    expect(deepContentTermIds(plan).size).toBe(23);
-    expect(packets).toHaveLength(23);
+    expect(deepContentTermIds(plan).size).toBe(28);
+    expect(packets).toHaveLength(28);
   });
 
-  it('activates protection and packet requirements one wave at a time', async () => {
+  it('keeps planned waves outside protection and rejects premature packets', async () => {
     const [plan, packets, project] = await Promise.all([
       loadContentProductionPlan(),
       loadResearchPackets(),
       loadProjectContent(),
     ]);
-    const activePlan = structuredClone(plan);
-    activePlan.batches[1]!.waves![3]!.status = 'research';
+    const plannedCopy = structuredClone(plan);
+    plannedCopy.batches[1]!.waves![3]!.status = 'planned';
 
-    expect(deepContentTermIds(activePlan).size).toBe(28);
+    expect(deepContentTermIds(plannedCopy).size).toBe(23);
     expect(
-      validateContentProduction(activePlan, packets, project).filter(
-        ({ code }) => code === 'PRODUCTION_PACKET_MISSING',
+      validateContentProduction(plannedCopy, packets, project).filter(
+        ({ code }) => code === 'PRODUCTION_PACKET_PREMATURE',
       ),
     ).toHaveLength(5);
   });
