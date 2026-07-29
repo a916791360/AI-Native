@@ -30,7 +30,7 @@ describe('site metadata', () => {
     expect(metrics).toMatchObject({
       domainCount: 12,
       termCount: 300,
-      verifiedTermCount: 12,
+      verifiedTermCount: 20,
       routeCount: 4,
       publishedRouteCount: 4,
       relationCount: 308,

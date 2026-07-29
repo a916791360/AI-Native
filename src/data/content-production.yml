@@ -1,0 +1,17 @@
+version: 1
+targetVerified:
+  min: 80
+  max: 120
+batches:
+  - id: sample-1
+    kind: sample
+    status: verified
+    terms:
+      - machine-learning
+      - transformer
+      - prompt
+      - ai-agent
+      - ai-product
+      - evaluation
+      - ai-safety
+      - compute

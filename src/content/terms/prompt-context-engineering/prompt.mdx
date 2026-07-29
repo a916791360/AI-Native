@@ -8,8 +8,55 @@ summary: 提供给模型的指令、问题、背景或示例，用于表达当�
 domain: prompt-context-engineering
 difficulty: beginner
 ring: core
-status: catalogued
+status: verified
 priority: 1
-featured: false
-sources: []
+featured: true
+publishedAt: '2026-07-29'
+updatedAt: '2026-07-29'
+verifiedAt: '2026-07-29'
+sources:
+  - id: google-intro-prompting
+    type: official-doc
+    title: Introduction to Prompting
+    url: https://cloud.google.com/vertex-ai/generative-ai/docs/learn/prompts/introduction-prompt-design
+    publisher: Google Cloud
+    accessedAt: '2026-07-29'
+  - id: aws-prompt-engineering
+    type: official-doc
+    title: What Is Prompt Engineering?
+    url: https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-prompt-engineering.html
+    publisher: AWS
+    accessedAt: '2026-07-29'
 ---
+
+<h2 id="what-it-is">它是什么</h2>
+
+提示词是提交给模型的一组输入，用来表达当前任务和期望输出。它可以包含问题或指令，也可以加入背景资料、示例、限制条件和输出格式。提示词是模型工作时看到的上下文之一。[S1][S2]
+
+<h2 id="why-it-matters">为什么需要它</h2>
+
+模型不会自动知道用户真正的目标、材料范围和验收标准。同一句“帮我总结”可能意味着不同读者、长度与用途。清楚的提示能减少歧义，让结果更容易评估和接入下一步流程。
+
+<h2 id="how-it-works">它如何工作</h2>
+
+语言模型依据提示和已有上下文预测后续输出。有效提示通常说明目标、输入材料、必要步骤、约束和结果格式；复杂任务还可提供少量示例。提示设计是迭代过程，应使用固定样例和成功标准比较版本，而不是只看一次回答。
+
+<h2 id="example">真实例子</h2>
+
+与其写“总结客户反馈”，可以说明“面向产品周会，将以下反馈按问题主题归类；每类列出频次、代表原话和证据不足处；不要推断用户身份；输出 Markdown 表格”。材料与验收方式因此更明确。
+
+<h2 id="tradeoffs">什么时候适合与不适合</h2>
+
+提示适合表达任务、上下文和格式，也能快速试验交互方式。但它不能补回不存在的事实，不能保证每次输出一致，也不能代替权限控制、检索、工具校验和安全过滤。模型变化后，旧提示还可能需要重新评测。
+
+<h2 id="try-it">亲自试一下</h2>
+
+选择一个重复任务，准备五个固定输入和判断标准。先运行一句简短提示，再逐步补充目标、上下文、约束和格式；每次只改一个变量并记录五个样例的结果，避免凭主观印象挑选版本。
+
+<h2 id="next">接下来学什么</h2>
+
+学习[系统提示词](/terms/system-prompt/)区分应用规则与本轮任务，再学习[少样本提示](/terms/few-shot-prompting/)和[提示词评测](/terms/prompt-evaluation/)建立可重复的改进流程。
+
+<h2 id="sources-and-revisions">来源与修订</h2>
+
+提示的定义和常见组成参考 Google Cloud [S1] 与 AWS Bedrock 文档 [S2]。不同模型对角色、长度和格式的支持会变化，本文只总结截至核验日期仍可跨模型迁移的原则。

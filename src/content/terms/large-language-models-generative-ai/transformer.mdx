@@ -8,8 +8,56 @@ summary: 以注意力机制处理序列关系、支持高并行训练的神经�
 domain: large-language-models-generative-ai
 difficulty: intermediate
 ring: core
-status: catalogued
+status: verified
 priority: 1
-featured: false
-sources: []
+featured: true
+publishedAt: '2026-07-29'
+updatedAt: '2026-07-29'
+verifiedAt: '2026-07-29'
+sources:
+  - id: transformer-original-paper
+    type: paper
+    title: Attention Is All You Need
+    url: https://arxiv.org/abs/1706.03762
+    publisher: arXiv
+    publishedAt: '2017-06-12'
+    accessedAt: '2026-07-29'
+  - id: hugging-face-transformers-docs
+    type: official-doc
+    title: Transformers Documentation
+    url: https://huggingface.co/docs/transformers/index
+    publisher: Hugging Face
+    accessedAt: '2026-07-29'
 ---
+
+<h2 id="what-it-is">它是什么</h2>
+
+Transformer 是以注意力机制为核心处理序列关系的神经网络架构。原始论文用它替代当时机器翻译系统中的循环和卷积结构，使序列各位置可以直接建立关系并更适合并行训练。[S1]
+
+<h2 id="why-it-matters">为什么需要它</h2>
+
+处理一句话时，一个词的含义经常依赖相隔很远的词。循环网络需要按顺序传递信息，而自注意力可以直接比较不同位置。Transformer 因而成为现代语言模型的重要基础，也扩展到视觉、音频和多模态任务。[S2]
+
+<h2 id="how-it-works">它如何工作</h2>
+
+每个 Token 表示被映射为查询、键和值。查询与各个键计算相关程度，再按权重汇总对应的值；多头注意力同时学习不同关系。位置编码补充顺序信息，前馈层进一步变换表示，残差连接和归一化帮助深层训练。
+
+<h2 id="example">真实例子</h2>
+
+在“银行把贷款批准给客户，因为他信用良好”中，模型处理“他”时可以对“客户”等位置分配更高注意力。它学习的是上下文相关的表示，不是在规则表中固定写下“他永远指客户”。
+
+<h2 id="tradeoffs">什么时候适合与不适合</h2>
+
+Transformer 适合需要建模长距离关系和大规模并行训练的序列或多模态任务。标准全注意力的计算和内存会随序列长度快速增长；注意力权重也不天然等于可验证解释。具体模型常对原始架构作大量修改。
+
+<h2 id="try-it">亲自试一下</h2>
+
+写一句包含代词、否定和远距离条件的话，分别标出理解每个关键词需要回看的位置。再尝试删掉一个条件，观察含义如何改变；这能建立“位置之间动态关联”的直觉，而不必先计算矩阵。
+
+<h2 id="next">接下来学什么</h2>
+
+先学习[注意力机制](/terms/attention-mechanism/)和[自注意力](/terms/self-attention/)，再回到[大语言模型](/terms/large-language-model/)理解 Transformer 如何与预训练、Token 和生成目标组合。
+
+<h2 id="sources-and-revisions">来源与修订</h2>
+
+架构、注意力、位置编码与原始实验依据 Transformer 论文 [S1]；当前架构已跨文本、视觉、音频和多模态使用的范围参考 Hugging Face 文档 [S2]。本文不把所有现代模型实现等同于 2017 年原始结构。

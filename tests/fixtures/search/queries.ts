@@ -146,4 +146,5 @@ export const SEARCH_CASES: SearchCase[] = [
   { query: 'Content Moderation', expectedId: 'content-moderation', kind: 'exact' },
   { query: 'CUDA', expectedId: 'cuda', kind: 'exact' },
   { query: 'Tensor Parallelism', expectedId: 'tensor-parallelism', kind: 'exact' },
+  { query: 'Compute', expectedId: 'compute', kind: 'exact' },
 ];

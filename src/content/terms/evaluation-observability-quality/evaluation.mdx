@@ -8,8 +8,56 @@ summary: 用明确任务、数据和标准衡量 AI 系统表现，并据此发�
 domain: evaluation-observability-quality
 difficulty: beginner
 ring: core
-status: catalogued
+status: verified
 priority: 1
-featured: false
-sources: []
+featured: true
+publishedAt: '2026-07-29'
+updatedAt: '2026-07-29'
+verifiedAt: '2026-07-29'
+sources:
+  - id: nist-ai-tevv
+    type: research-institute
+    title: AI Test, Evaluation, Validation and Verification
+    url: https://www.nist.gov/ai-test-evaluation-validation-and-verification-tevv
+    publisher: NIST
+    accessedAt: '2026-07-29'
+  - id: nist-aria-pilot
+    type: research-institute
+    title: Assessing Risks and Impacts of AI - ARIA Pilot Evaluation Report
+    url: https://www.nist.gov/publications/assessing-risks-and-impacts-ai-aria-pilot-evaluation-report
+    publisher: NIST
+    publishedAt: '2025-11-13'
+    accessedAt: '2026-07-29'
 ---
+
+<h2 id="what-it-is">它是什么</h2>
+
+AI 评估是用明确目标、样本、标准和方法判断模型或完整系统在特定条件下表现如何的过程。它既测量能力，也寻找限制、风险和失败模式，为选择、发布和改进提供证据。[S1]
+
+<h2 id="why-it-matters">为什么需要它</h2>
+
+生成式 AI 的输出具有变化，同一个平均分也可能掩盖重要用户或高风险场景。没有固定评估，团队容易用几次演示代替证据，修改提示或模型后也无法判断整体质量究竟提高还是转移了错误。
+
+<h2 id="how-it-works">它如何工作</h2>
+
+先定义使用场景、目标人群和成功标准，再建立代表性样本与评分规则。自动指标适合可结构化验证的任务，人工评价适合开放质量；红队寻找刻意攻击，现场测试观察真实人机互动。NIST ARIA 试点组合了模型测试、红队和现场测试。[S2]
+
+<h2 id="example">真实例子</h2>
+
+客服助手的评测集包含常见问题、边界问题、无答案问题和恶意输入。团队分别衡量答案正确性、证据支持、拒答、延迟和人工接管，并按业务类型拆分结果，避免高频简单问题掩盖关键失败。
+
+<h2 id="tradeoffs">什么时候适合与不适合</h2>
+
+评估适用于模型选择、提示变更、RAG 调整和上线监测，但测试集只代表其覆盖的情境。公开基准可能与产品任务不一致，也可能被训练数据污染。质量、风险、成本和用户影响通常需要多种方法共同判断。
+
+<h2 id="try-it">亲自试一下</h2>
+
+为一个 AI 功能写十个真实任务和统一评分说明，其中加入两个应拒答、两个容易混淆的样例。让两位评审独立打分，比较分歧并修改量规；分歧无法解释时，不要急于扩大测试集。
+
+<h2 id="next">接下来学什么</h2>
+
+继续学习[评测集](/terms/eval-set/)和[评估量规](/terms/evaluation-rubric/)，再区分[离线评估](/terms/offline-evaluation/)与[在线评估](/terms/online-evaluation/)的职责。
+
+<h2 id="sources-and-revisions">来源与修订</h2>
+
+测量、指标、标准和上下文重要性参考 NIST TEVV 资料 [S1]；多层次社会技术评估方法参考 ARIA 试点评估报告 [S2]。本文不把 evaluation、testing、verification 与 validation 当作完全同义词。

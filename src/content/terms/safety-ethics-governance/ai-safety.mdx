@@ -8,8 +8,56 @@ summary: 识别并降低 AI 系统可能造成伤害、失控或滥用风险的�
 domain: safety-ethics-governance
 difficulty: beginner
 ring: core
-status: catalogued
+status: verified
 priority: 1
-featured: false
-sources: []
+featured: true
+publishedAt: '2026-07-29'
+updatedAt: '2026-07-29'
+verifiedAt: '2026-07-29'
+sources:
+  - id: nist-ai-rmf
+    type: official-doc
+    title: Artificial Intelligence Risk Management Framework 1.0
+    url: https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-ai-rmf-10
+    publisher: NIST
+    publishedAt: '2023-01-26'
+    accessedAt: '2026-07-29'
+  - id: international-ai-safety-report-2026
+    type: research-institute
+    title: International AI Safety Report 2026
+    url: https://internationalaisafetyreport.org/sites/default/files/2026-02/international-ai-safety-report-2026.pdf
+    publisher: International AI Safety Report
+    accessedAt: '2026-07-29'
 ---
+
+<h2 id="what-it-is">它是什么</h2>
+
+AI 安全是识别、评估并降低 AI 系统可能造成伤害的研究、工程和治理实践。它关注系统是否可靠、是否会被滥用或攻击，以及能力、部署环境和人类使用方式共同产生的风险。[S1][S2]
+
+<h2 id="why-it-matters">为什么需要它</h2>
+
+AI 错误可能只是一次无用回答，也可能影响隐私、财务、公共服务或关键基础设施。风险随场景、人员和权限变化，不能只靠模型发布前的一次安全测试。安全工作的目标是让收益与风险都可见并受到持续管理。
+
+<h2 id="how-it-works">它如何工作</h2>
+
+团队先界定用途、相关人员和可能损害，再测量发生可能性与影响，选择数据、模型、权限、人工监督和监测控制。NIST AI RMF 将工作组织为治理、映射、测量和管理；运行后还要处理事件、更新证据和重新评估。[S1]
+
+<h2 id="example">真实例子</h2>
+
+医疗预约助手可以解释流程，但不能自行改变处方。系统只开放必要工具，敏感数据按权限读取，高风险意图转给医务人员；团队测试错误建议、提示注入和身份冒用，并记录事故以更新控制措施。
+
+<h2 id="tradeoffs">什么时候适合与不适合</h2>
+
+安全措施应与风险相称：过弱会放大伤害，粗糙的一刀切也可能阻断正当使用。先进 AI 的部分风险已有事件和实验支持，部分仍依赖不确定推断。国际报告强调需要区分现有证据、能力趋势与未来情景。[S2]
+
+<h2 id="try-it">亲自试一下</h2>
+
+为一个 AI 功能建立风险登记表，写下受影响者、失败方式、影响、现有证据、预防控制、检测信号和负责人。至少加入一个正常错误、一个恶意使用和一个系统依赖故障，再确定暂停服务的条件。
+
+<h2 id="next">接下来学什么</h2>
+
+学习[AI 风险管理](/terms/ai-risk-management/)组织治理流程，再进入[红队测试](/terms/red-teaming/)、[提示词注入](/terms/prompt-injection/)和[人工监督](/terms/human-oversight/)理解具体控制。
+
+<h2 id="sources-and-revisions">来源与修订</h2>
+
+风险管理生命周期与可信特征参考 NIST AI RMF 1.0 [S1]；先进 AI 能力、风险、缓解措施及证据不确定性参考 2026 国际 AI 安全报告 [S2]。风险证据会变化，本文核验日期是重要边界。

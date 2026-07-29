@@ -39,7 +39,7 @@ test('derives the homepage routes, domains and content scale from project data',
   await expect(page.locator('.domain-list a')).toHaveCount(12);
   await expect(
     page.locator('.scope-heading dl div', { hasText: '已核验词条' }).locator('dd'),
-  ).toHaveText('12');
+  ).toHaveText('20');
   await expect(
     page.locator('.scope-heading dl div', { hasText: '概念关系' }).locator('dd'),
   ).toHaveText('308');
@@ -219,7 +219,7 @@ test('publishes all four ordered learning routes', async ({ page }) => {
   }
 });
 
-test('renders every representative term as a verified eight-section article', async ({ page }) => {
+test('renders every verified term as an eight-section article', async ({ page }) => {
   const termIds = [
     'artificial-intelligence',
     'generative-ai',
@@ -233,6 +233,14 @@ test('renders every representative term as a verified eight-section article', as
     'retrieval',
     'reranking',
     'retrieval-augmented-generation',
+    'machine-learning',
+    'transformer',
+    'prompt',
+    'ai-agent',
+    'ai-product',
+    'evaluation',
+    'ai-safety',
+    'compute',
   ];
 
   for (const termId of termIds) {

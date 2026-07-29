@@ -8,8 +8,55 @@ summary: 完成模型训练或推理所需计算资源与处理能力的总称�
 domain: compute-chips-industry
 difficulty: beginner
 ring: core
-status: catalogued
+status: verified
 priority: 1
-featured: false
-sources: []
+featured: true
+publishedAt: '2026-07-29'
+updatedAt: '2026-07-29'
+verifiedAt: '2026-07-29'
+sources:
+  - id: google-tpu-architecture
+    type: official-doc
+    title: TPU Architecture
+    url: https://docs.cloud.google.com/tpu/docs/system-architecture-tpu-vm
+    publisher: Google Cloud
+    accessedAt: '2026-07-29'
+  - id: stanford-ai-index-2026-economy
+    type: research-institute
+    title: Economy - The 2026 AI Index Report
+    url: https://hai.stanford.edu/ai-index/2026-ai-index-report/economy
+    publisher: Stanford Institute for Human-Centered AI
+    accessedAt: '2026-07-29'
 ---
+
+<h2 id="what-it-is">它是什么</h2>
+
+算力是完成模型训练或推理所需的计算处理能力。它不只是一块芯片的峰值运算次数，还取决于加速器、内存容量与带宽、芯片互连、网络、软件、能源和实际利用率组成的系统。
+
+<h2 id="why-it-matters">为什么需要它</h2>
+
+模型训练需要反复处理数据并更新参数，推理需要在用户可接受时间内生成结果。算力不足会限制模型规模、吞吐和响应速度；资源过度配置则增加成本与能耗。前沿 AI 的经济性也越来越受大规模计算投入影响。[S2]
+
+<h2 id="how-it-works">它如何工作</h2>
+
+神经网络的大量工作可以表示为矩阵运算。GPU、TPU 等加速器用许多计算单元并行执行这些运算；高带宽内存提供参数和中间结果，多芯片互连传递分片数据，编译器与框架把模型操作映射到硬件。[S1]
+
+<h2 id="example">真实例子</h2>
+
+训练模型时，团队关心一批数据多久完成、显存能否容纳参数和中间状态，以及多卡通信是否拖慢扩展。在线问答则更关心首字延迟、每秒生成 Token、并发请求和单次成本；两者不是同一优化目标。
+
+<h2 id="tradeoffs">什么时候适合与不适合</h2>
+
+峰值 FLOPS 便于比较理论计算上限，却不能单独预测应用速度。低精度格式可提高吞吐和节省内存，但要检查质量；增加设备可能受通信限制；更大芯片也可能降低利用率。模型、批量和延迟目标必须一起评估。
+
+<h2 id="try-it">亲自试一下</h2>
+
+为一个 AI 服务列四项指标：首字延迟、每秒 Token、并发量和单次成本。分别设定最低可接受值，再说明模型大小、批处理或硬件变化可能改善哪一项、损害哪一项，不要只写“需要更多 GPU”。
+
+<h2 id="next">接下来学什么</h2>
+
+先比较[CPU](/terms/cpu/)、[GPU](/terms/gpu/)和[TPU](/terms/tpu/)，再学习[高带宽内存](/terms/high-bandwidth-memory/)与[分布式训练](/terms/distributed-training/)理解系统瓶颈。
+
+<h2 id="sources-and-revisions">来源与修订</h2>
+
+专用加速器、矩阵单元、主机、内存和多设备结构参考 Google TPU 架构文档 [S1]；大规模计算投入与产业成本背景参考 Stanford AI Index 2026 [S2]。本文不固化快速变化的硬件价格和代际参数。

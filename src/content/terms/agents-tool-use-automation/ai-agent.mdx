@@ -12,8 +12,56 @@ summary: 能够围绕目标管理状态、选择步骤并调用工具执行任�
 domain: agents-tool-use-automation
 difficulty: beginner
 ring: core
-status: catalogued
+status: verified
 priority: 1
-featured: false
-sources: []
+featured: true
+publishedAt: '2026-07-29'
+updatedAt: '2026-07-29'
+verifiedAt: '2026-07-29'
+sources:
+  - id: anthropic-effective-agents
+    type: engineering-practice
+    title: Building Effective Agents
+    url: https://www.anthropic.com/engineering/building-effective-agents
+    publisher: Anthropic
+    publishedAt: '2024-12-19'
+    accessedAt: '2026-07-29'
+  - id: anthropic-trustworthy-agents
+    type: research-institute
+    title: Trustworthy Agents in Practice
+    url: https://www.anthropic.com/research/trustworthy-agents
+    publisher: Anthropic
+    accessedAt: '2026-07-29'
 ---
+
+<h2 id="what-it-is">它是什么</h2>
+
+AI Agent 是围绕目标自行选择步骤、调用工具并依据结果继续调整行动的 AI 系统。与一次问答不同，它会在多步执行中维护状态，直到完成任务、达到停止条件或请求人员介入。[S1][S2]
+
+<h2 id="why-it-matters">为什么需要它</h2>
+
+研究、编码或跨系统操作常无法由一次模型输出完成。Agent 可以把语言模型的判断能力与搜索、文件、代码和业务 API 连接起来，处理途中出现的新信息。但行动范围越大，错误和越权的影响也越大。
+
+<h2 id="how-it-works">它如何工作</h2>
+
+典型循环先读取目标和当前状态，选择下一步并调用工具，再观察返回结果、更新计划并判断继续、重试、结束还是升级给人。系统外层负责工具定义、权限、状态保存、预算、超时、日志和人工确认。[S2]
+
+<h2 id="example">真实例子</h2>
+
+旅行研究 Agent 可以先确认日期和预算，再搜索交通与住宿、比较候选并生成行程草案。付款不是普通搜索步骤：系统应在展示金额、商家和取消条件后暂停，由用户明确确认，且不得访问无关账号数据。
+
+<h2 id="tradeoffs">什么时候适合与不适合</h2>
+
+适合步骤会随中间结果变化、工具结果可观察且错误可恢复的任务。固定审批流、简单数据搬运或高风险不可逆操作通常更适合确定性工作流。Anthropic 的工程经验也建议从满足需求的最简单模式开始。[S1]
+
+<h2 id="try-it">亲自试一下</h2>
+
+把一个多步骤任务画成“观察、选择、行动、检查”循环。为每个工具写出允许输入、最大影响、失败恢复和需要人工确认的条件；若无法定义停止条件，就先不要让 Agent 自动执行。
+
+<h2 id="next">接下来学什么</h2>
+
+继续学习[工具调用](/terms/tool-use/)和[Agent 规划](/terms/agent-planning/)，再学习[人在回路](/terms/human-in-the-loop/)与[Agent 沙箱](/terms/agent-sandbox/)设计控制边界。
+
+<h2 id="sources-and-revisions">来源与修订</h2>
+
+Agent 与工作流的区分、可组合模式和简化原则参考 Anthropic 工程指南 [S1]；自导向循环、用户控制、安全交互、透明和隐私原则参考其可信 Agent 研究 [S2]。具体框架接口不在本文稳定范围内。

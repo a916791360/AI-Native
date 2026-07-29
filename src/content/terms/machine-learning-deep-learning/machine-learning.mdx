@@ -8,8 +8,55 @@ summary: 让系统从数据和反馈中学习模式并改进任务表现的方�
 domain: machine-learning-deep-learning
 difficulty: beginner
 ring: core
-status: catalogued
+status: verified
 priority: 1
-featured: false
-sources: []
+featured: true
+publishedAt: '2026-07-29'
+updatedAt: '2026-07-29'
+verifiedAt: '2026-07-29'
+sources:
+  - id: nist-machine-learning
+    type: official-doc
+    title: Machine Learning - Glossary
+    url: https://csrc.nist.gov/glossary/term/machine_learning
+    publisher: NIST
+    accessedAt: '2026-07-29'
+  - id: google-ml-crash-course
+    type: course
+    title: Machine Learning Crash Course
+    url: https://developers.google.com/machine-learning/crash-course
+    publisher: Google for Developers
+    accessedAt: '2026-07-29'
 ---
+
+<h2 id="what-it-is">它是什么</h2>
+
+机器学习是让计算机系统从数据中学习模式，并据此改进预测或决策表现的方法。它与逐条编写固定规则不同：开发者定义任务、数据和评价方式，训练过程再调整模型参数。[S1][S2]
+
+<h2 id="why-it-matters">为什么需要它</h2>
+
+垃圾邮件、图像和用户行为等问题往往包含大量变化，很难穷举规则。机器学习可以从历史样本中归纳规律，但是否值得使用仍取决于数据是否代表真实场景、结果能否验证，以及改进是否大于成本。
+
+<h2 id="how-it-works">它如何工作</h2>
+
+先把业务目标转成可测任务，再准备输入和目标数据。训练算法根据预测误差调整模型参数；验证集帮助选择配置，独立测试集估计模型面对未见样本时的表现。部署后还要监测数据变化和实际错误。
+
+<h2 id="example">真实例子</h2>
+
+邮件服务用历史邮件的文字和“垃圾/正常”标签训练分类模型。模型为新邮件输出垃圾概率，产品再按阈值放入收件箱、垃圾箱或人工复核；误拦正常邮件和漏掉垃圾邮件需要分别衡量。
+
+<h2 id="tradeoffs">什么时候适合与不适合</h2>
+
+适合存在大量可比较样本、规律难以手写且结果可评估的任务。不适合规则已经简单稳定、缺少可信数据、错误后果无法控制，或目标本身无法清楚定义的场景。模型学到的是数据规律，不是自动获得常识。
+
+<h2 id="try-it">亲自试一下</h2>
+
+选择一个日常分类问题，先写出不用机器学习的三条规则，再列出二十个样本和正确答案。比较规则在哪些样本失败，并说明需要多少数据、哪类错误最贵，以及如何留出从未用于调整的测试样本。
+
+<h2 id="next">接下来学什么</h2>
+
+继续学习[训练数据](/terms/training-data/)理解样本质量，再学习[过拟合](/terms/overfitting/)和[泛化能力](/terms/generalization/)，判断训练表现为什么不能直接代表真实效果。
+
+<h2 id="sources-and-revisions">来源与修订</h2>
+
+核心定义参考 NIST 术语表 [S1]，训练、数据、模型与真实系统的学习框架参考 Google 机器学习课程 [S2]。本文描述通用方法，不把任何单一算法或工具等同于机器学习全部范围。

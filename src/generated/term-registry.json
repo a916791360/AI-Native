@@ -142,9 +142,9 @@
       "domainNameZh": "Agent、工具调用与自动化",
       "difficulty": "beginner",
       "ring": "core",
-      "status": "catalogued",
+      "status": "verified",
       "priority": 1,
-      "featured": false,
+      "featured": true,
       "searchKeys": [
         "ai agent",
         "ai agent",
@@ -244,9 +244,9 @@
       "domainNameZh": "AI 产品与用户体验",
       "difficulty": "beginner",
       "ring": "core",
-      "status": "catalogued",
+      "status": "verified",
       "priority": 1,
-      "featured": false,
+      "featured": true,
       "searchKeys": [
         "ai 产品",
         "ai product"
@@ -284,9 +284,9 @@
       "domainNameZh": "安全、伦理与治理",
       "difficulty": "beginner",
       "ring": "core",
-      "status": "catalogued",
+      "status": "verified",
       "priority": 1,
-      "featured": false,
+      "featured": true,
       "searchKeys": [
         "ai 安全",
         "ai safety"
@@ -676,9 +676,9 @@
       "domainNameZh": "算力、芯片与产业生态",
       "difficulty": "beginner",
       "ring": "core",
-      "status": "catalogued",
+      "status": "verified",
       "priority": 1,
-      "featured": false,
+      "featured": true,
       "searchKeys": [
         "算力",
         "compute"
@@ -1304,9 +1304,9 @@
       "domainNameZh": "评估、可观测性与质量",
       "difficulty": "beginner",
       "ring": "core",
-      "status": "catalogued",
+      "status": "verified",
       "priority": 1,
-      "featured": false,
+      "featured": true,
       "searchKeys": [
         "ai 评估",
         "ai evaluation"
@@ -2294,9 +2294,9 @@
       "domainNameZh": "机器学习与深度学习",
       "difficulty": "beginner",
       "ring": "core",
-      "status": "catalogued",
+      "status": "verified",
       "priority": 1,
-      "featured": false,
+      "featured": true,
       "searchKeys": [
         "机器学习",
         "machine learning"
@@ -2820,9 +2820,9 @@
       "domainNameZh": "提示词与上下文工程",
       "difficulty": "beginner",
       "ring": "core",
-      "status": "catalogued",
+      "status": "verified",
       "priority": 1,
-      "featured": false,
+      "featured": true,
       "searchKeys": [
         "提示词",
         "prompt"
@@ -3753,9 +3753,9 @@
       "domainNameZh": "大语言模型与生成式 AI",
       "difficulty": "intermediate",
       "ring": "core",
-      "status": "catalogued",
+      "status": "verified",
       "priority": 1,
-      "featured": false,
+      "featured": true,
       "searchKeys": [
         "transformer 架构",
         "transformer"

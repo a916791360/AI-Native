@@ -8,8 +8,55 @@ summary: 以人工智能能力解决用户问题，并对质量、成本、风�
 domain: ai-product-ux
 difficulty: beginner
 ring: core
-status: catalogued
+status: verified
 priority: 1
-featured: false
-sources: []
+featured: true
+publishedAt: '2026-07-29'
+updatedAt: '2026-07-29'
+verifiedAt: '2026-07-29'
+sources:
+  - id: google-pair-user-needs
+    type: research-institute
+    title: User Needs and Defining Success
+    url: https://pair.withgoogle.com/chapter/user-needs/
+    publisher: Google People + AI Research
+    accessedAt: '2026-07-29'
+  - id: google-ml-problem-framing
+    type: course
+    title: Understand the Problem
+    url: https://developers.google.com/machine-learning/problem-framing/problem
+    publisher: Google for Developers
+    accessedAt: '2026-07-29'
 ---
+
+<h2 id="what-it-is">它是什么</h2>
+
+AI 产品是把人工智能能力嵌入完整用户体验和运行流程，用来解决明确问题的产品。它不只是一个模型接口，还包括数据、交互、工具、质量标准、人工分工、风险控制和持续运营。
+
+<h2 id="why-it-matters">为什么需要它</h2>
+
+能力强的模型也可能无法创造用户价值。Google PAIR 建议从用户需要与 AI 优势的交集出发 [S1]；问题定义还应先判断 AI 是否比规则、搜索或人工流程更合适，并建立可比较的简单基线 [S2]。
+
+<h2 id="how-it-works">它如何工作</h2>
+
+先用非技术语言定义用户目标和成功结果，再拆出 AI 负责、规则负责和人员负责的部分。团队选择模型与数据，设计输入、反馈和恢复路径，以离线评测验证基础质量，再通过真实任务指标和运行监测持续调整。
+
+<h2 id="example">真实例子</h2>
+
+企业知识助手的目标不是“接入大模型”，而是让员工更快找到有效制度。产品需要检索权限内资料、展示引用、对无证据问题拒答、允许用户纠错，并衡量任务完成时间、答案支持度和错误升级率。
+
+<h2 id="tradeoffs">什么时候适合与不适合</h2>
+
+适合输入变化多、容许概率性结果且 AI 能明显改善质量或效率的场景。不适合规则简单稳定、错误不可恢复、缺少合法数据或无法定义成功标准的问题。自动化程度越高，越需要用户控制和异常处理。
+
+<h2 id="try-it">亲自试一下</h2>
+
+选择一个候选功能，分别写下用户问题、当前解决方式、AI 独特价值和一次失败的代价。设计一个不用 AI 的基线，再规定三项任务成功指标和两个停止上线的风险指标，然后才讨论模型。
+
+<h2 id="next">接下来学什么</h2>
+
+学习[AI 应用场景](/terms/ai-use-case/)和[问题方案匹配](/terms/problem-solution-fit/)判断机会，再用[用户控制权](/terms/user-control/)和[错误恢复](/terms/error-recovery/)补齐产品边界。
+
+<h2 id="sources-and-revisions">来源与修订</h2>
+
+用户问题、AI 优势、成功定义与人本设计参考 Google PAIR 指南 [S1]；AI 与非 AI 方案比较、数据条件、成本和可行动结果参考 Google 问题定义课程 [S2]。产品判断始终依赖具体用户和场景。
