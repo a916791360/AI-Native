@@ -45,10 +45,10 @@ test('derives the homepage routes, domains and content scale from project data',
   await expect(page.locator('.domain-list a')).toHaveCount(12);
   await expect(
     page.locator('.scope-heading dl div', { hasText: '已核验词条' }).locator('dd'),
-  ).toHaveText('25');
+  ).toHaveText('30');
   await expect(
     page.locator('.scope-heading dl div', { hasText: '概念关系' }).locator('dd'),
-  ).toHaveText('303');
+  ).toHaveText('308');
   await expect(page.locator('.featured-register a')).toHaveCount(6);
 });
 
@@ -252,6 +252,11 @@ test('renders every verified term as an eight-section article', async ({ page })
     'neural-network',
     'deep-learning',
     'training-data',
+    'classification',
+    'regression',
+    'gradient-descent',
+    'overfitting',
+    'generalization',
   ];
 
   for (const termId of termIds) {
@@ -262,20 +267,6 @@ test('renders every verified term as an eight-section article', async ({ page })
     await expect(page.locator('#sources-and-revisions')).toHaveText('来源与修订');
     await expect(page.locator('.source-register li')).toHaveCount(2);
   }
-});
-
-test('keeps draft articles reviewable without publishing them in discovery surfaces', async ({
-  page,
-}) => {
-  await page.goto('/terms/classification/');
-
-  await expect(page.locator('.status-notice')).toContainText('暂不能视为已核验结论');
-  await expect(page.locator('.term-content h2')).toHaveCount(8);
-  await expect(page.locator('main[data-pagefind-ignore]')).toBeVisible();
-  await expect(page.getByRole('link', { name: '在概念图谱中查看' })).toHaveCount(0);
-
-  await page.goto('/atlas/');
-  await expect(page.locator('a[href="/terms/classification/"]')).toHaveCount(0);
 });
 
 test('connects a term to its previous and next route entries', async ({ page }) => {
@@ -329,7 +320,7 @@ test('uses the shared search aggregator from the term atlas', async ({ page }) =
 test('filters and sorts the structured atlas index', async ({ page }) => {
   await page.goto('/atlas/');
 
-  await expect(page.locator('[data-atlas-visible]')).toHaveText('295');
+  await expect(page.locator('[data-atlas-visible]')).toHaveText('300');
   await page.getByLabel('领域范围').selectOption('core');
   await expect(page.locator('[data-atlas-visible]')).toHaveText('225');
   await expect(page.locator('[data-atlas-domain]:visible')).toHaveCount(9);
@@ -392,7 +383,7 @@ test('loads the full graph lazily and supports focus, filters and viewport contr
     await page.locator('[data-graph-load]').click();
   }
   await expect(graph).toHaveAttribute('data-graph-state', 'ready');
-  await expect(graph).toHaveAttribute('data-graph-node-count', '295');
+  await expect(graph).toHaveAttribute('data-graph-node-count', '300');
   await expect(graph).toHaveAttribute('data-graph-selected', 'token');
   await expect(graph.locator('[data-graph-detail-title]')).toHaveText('Token');
   expect(cytoscapeRequests).toHaveLength(1);

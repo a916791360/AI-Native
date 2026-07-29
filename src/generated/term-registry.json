@@ -1582,6 +1582,26 @@
       ]
     },
     {
+      "id": "generalization",
+      "url": "/terms/generalization/",
+      "nameZh": "泛化能力",
+      "nameEn": "Generalization",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "模型把训练中学到的规律有效应用到未见样本和相近场景的能力。",
+      "domain": "machine-learning-deep-learning",
+      "domainNameZh": "机器学习与深度学习",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "verified",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "泛化能力",
+        "generalization"
+      ]
+    },
+    {
       "id": "generative-ai",
       "url": "/terms/generative-ai/",
       "nameZh": "生成式 AI",
@@ -2666,6 +2686,26 @@
         "光学字符识别",
         "optical character recognition",
         "ocr"
+      ]
+    },
+    {
+      "id": "overfitting",
+      "url": "/terms/overfitting/",
+      "nameZh": "过拟合",
+      "nameEn": "Overfitting",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "模型过度记住训练数据细节，导致训练表现很好但面对新数据时表现下降的现象。",
+      "domain": "machine-learning-deep-learning",
+      "domainNameZh": "机器学习与深度学习",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "verified",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "过拟合",
+        "overfitting"
       ]
     },
     {
@@ -4160,6 +4200,26 @@
       ]
     },
     {
+      "id": "classification",
+      "url": "/terms/classification/",
+      "nameZh": "分类任务",
+      "nameEn": "Classification",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "将输入判断为一个或多个离散类别的预测任务，例如垃圾邮件识别或意图分类。",
+      "domain": "machine-learning-deep-learning",
+      "domainNameZh": "机器学习与深度学习",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "verified",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "分类任务",
+        "classification"
+      ]
+    },
+    {
       "id": "clustering",
       "url": "/terms/clustering/",
       "nameZh": "聚类",
@@ -4497,6 +4557,26 @@
       "searchKeys": [
         "gpu 推理服务",
         "gpu serving"
+      ]
+    },
+    {
+      "id": "gradient-descent",
+      "url": "/terms/gradient-descent/",
+      "nameZh": "梯度下降",
+      "nameEn": "Gradient Descent",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "根据损失函数梯度反复调整模型参数、逐步降低误差的基础优化方法。",
+      "domain": "machine-learning-deep-learning",
+      "domainNameZh": "机器学习与深度学习",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "verified",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "梯度下降",
+        "gradient descent"
       ]
     },
     {
@@ -5063,6 +5143,26 @@
       "searchKeys": [
         "反思机制",
         "reflection"
+      ]
+    },
+    {
+      "id": "regression",
+      "url": "/terms/regression/",
+      "nameZh": "回归任务",
+      "nameEn": "Regression",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "根据输入预测连续数值的机器学习任务，例如需求量、价格或处理时长估计。",
+      "domain": "machine-learning-deep-learning",
+      "domainNameZh": "机器学习与深度学习",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "verified",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "回归任务",
+        "regression"
       ]
     },
     {

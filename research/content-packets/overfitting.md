@@ -1,7 +1,7 @@
 ---
 termId: overfitting
 batch: foundation-1
-status: draft
+status: verified
 accessedAt: '2026-07-29'
 sourceIds:
   - google-overfitting
