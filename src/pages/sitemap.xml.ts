@@ -10,7 +10,9 @@ export const GET: APIRoute = async () => {
   const paths = [
     ...STATIC_PATHS,
     ...project.routes.map(({ data }) => `/routes/${data.id}/`),
-    ...project.terms.map(({ data }) => `/terms/${data.id}/`),
+    ...project.terms
+      .filter(({ data }) => data.status !== 'draft')
+      .map(({ data }) => `/terms/${data.id}/`),
   ];
   const urls = SITE.publicOrigin
     ? paths

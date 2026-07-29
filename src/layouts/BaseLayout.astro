@@ -8,6 +8,7 @@ interface Props {
   title?: string;
   description?: string;
   structuredDataType?: 'CollectionPage' | 'TechArticle' | 'WebPage';
+  indexable?: boolean;
   searchMetadata?: {
     id: string;
     nameEn: string;
@@ -23,6 +24,7 @@ const {
   title = SITE.name,
   description = SITE.description,
   structuredDataType = 'WebPage',
+  indexable = true,
   searchMetadata,
 } = Astro.props;
 const pageTitle = title === SITE.name ? title : `${title} | ${SITE.name}`;
@@ -32,21 +34,22 @@ const canonicalUrl = SITE.publicOrigin
 const socialImageUrl = SITE.publicOrigin
   ? new URL('og-default.png', `${SITE.publicOrigin}/`).toString()
   : undefined;
-const structuredData = canonicalUrl
-  ? {
-      '@context': 'https://schema.org',
-      '@type': structuredDataType,
-      name: pageTitle,
-      description,
-      url: canonicalUrl,
-      inLanguage: 'zh-CN',
-      isPartOf: {
-        '@type': 'WebSite',
-        name: SITE.name,
-        url: SITE.publicOrigin,
-      },
-    }
-  : undefined;
+const structuredData =
+  canonicalUrl && indexable
+    ? {
+        '@context': 'https://schema.org',
+        '@type': structuredDataType,
+        name: pageTitle,
+        description,
+        url: canonicalUrl,
+        inLanguage: 'zh-CN',
+        isPartOf: {
+          '@type': 'WebSite',
+          name: SITE.name,
+          url: SITE.publicOrigin,
+        },
+      }
+    : undefined;
 ---
 
 <!doctype html>
@@ -57,7 +60,10 @@ const structuredData = canonicalUrl
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
     <meta name="theme-color" content="#090a0c" />
-    <meta name="robots" content={SITE.publicOrigin ? 'index,follow' : 'noindex,nofollow'} />
+    <meta
+      name="robots"
+      content={SITE.publicOrigin && indexable ? 'index,follow' : 'noindex,nofollow'}
+    />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content={SITE.locale} />
     <meta property="og:site_name" content={SITE.name} />

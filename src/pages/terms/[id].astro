@@ -97,22 +97,29 @@ const localGraph = selectLocalGraph(generatedGraph as GraphData, term.id);
   title={term.nameZh}
   description={term.summary}
   structuredDataType="TechArticle"
-  searchMetadata={{
-    id: term.id,
-    nameEn: term.nameEn,
-    lookup: [
-      term.nameZh,
-      term.nameEn,
-      ...term.abbreviations,
-      ...term.aliases.map((alias) => alias.value),
-    ].join(' '),
-    domain: term.domain,
-    domainNameZh: domain?.nameZh ?? term.domain,
-    difficulty: term.difficulty,
-    status: term.status,
-  }}
+  indexable={term.status !== 'draft'}
+  searchMetadata={term.status === 'draft'
+    ? undefined
+    : {
+        id: term.id,
+        nameEn: term.nameEn,
+        lookup: [
+          term.nameZh,
+          term.nameEn,
+          ...term.abbreviations,
+          ...term.aliases.map((alias) => alias.value),
+        ].join(' '),
+        domain: term.domain,
+        domainNameZh: domain?.nameZh ?? term.domain,
+        difficulty: term.difficulty,
+        status: term.status,
+      }}
 >
-  <main id="main-content" data-pagefind-body>
+  <main
+    id="main-content"
+    data-pagefind-body={term.status !== 'draft' ? true : undefined}
+    data-pagefind-ignore={term.status === 'draft' ? true : undefined}
+  >
     <header class="term-hero">
       <div class="term-title">
         <p class="eyebrow">{domain?.nameZh ?? term.domain} · {difficultyLabels[term.difficulty]}</p>
@@ -125,7 +132,7 @@ const localGraph = selectLocalGraph(generatedGraph as GraphData, term.id);
         <StatusTag status={term.status} />
         <p>{term.summary}</p>
         <div class="term-actions">
-          <a href={`/graph/?focus=${term.id}`}>在概念图谱中查看</a>
+          {term.status !== 'draft' && <a href={`/graph/?focus=${term.id}`}>在概念图谱中查看</a>}
           <a href={correctionUrl}>提交修订建议</a>
         </div>
       </div>

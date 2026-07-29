@@ -8,6 +8,10 @@ import type { GraphData } from '@/lib/graph/model';
 
 const { terms, relations, domains } = await loadProjectContent();
 const graph = generatedGraph as GraphData;
+const publicIds = new Set(graph.nodes.map(({ id }) => id));
+const publicRelations = relations.filter(
+  ({ source, target }) => publicIds.has(source) && publicIds.has(target),
+);
 const termMap = Object.fromEntries(terms.map(({ data }) => [data.id, data]));
 const groups = [
   { type: 'prerequisite', label: '前置关系', description: '先理解什么，后面的概念才不至于悬空。' },
@@ -24,7 +28,7 @@ const groups = [
 <BaseLayout title="概念图谱" description="查看 AI-Native 当前收录的真实概念关系。">
   <main id="main-content">
     <PageIntro
-      eyebrow={`Knowledge graph · ${terms.length} nodes · ${relations.length} relations`}
+      eyebrow={`Knowledge graph · ${graph.nodes.length} nodes · ${publicRelations.length} relations`}
       title="概念图谱"
       description="从一个概念出发，观察知识如何通过前置、组成、比较与应用关系连接成体系。"
     />
@@ -32,7 +36,7 @@ const groups = [
     <div class="relation-groups" id="relations">
       {
         groups.map((group) => {
-          const groupRelations = relations.filter((relation) => relation.type === group.type);
+          const groupRelations = publicRelations.filter((relation) => relation.type === group.type);
           return (
             <section class={`relation-group type-${group.type}`}>
               <header>

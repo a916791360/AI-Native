@@ -8,11 +8,12 @@ import { deriveSiteMetrics } from '@/lib/site/metrics';
 
 const project = await loadProjectContent();
 const { domains, terms } = project;
+const publicTerms = terms.filter(({ data }) => data.status !== 'draft');
 const metrics = deriveSiteMetrics(project);
 const termsByDomain = new Map(
   domains.map((domain) => [
     domain.id,
-    terms
+    publicTerms
       .filter((term) => term.data.domain === domain.id)
       .sort(
         (a, b) => a.data.priority - b.data.priority || a.data.nameZh.localeCompare(b.data.nameZh),

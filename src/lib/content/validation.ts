@@ -152,14 +152,27 @@ function validateTermStatus(
         'verified terms require at least two sources',
       );
     }
+  }
 
+  if (term.status === 'draft' && term.sources.length < 2) {
+    addDiagnostic(
+      diagnostics,
+      'DRAFT_SOURCES',
+      filePath,
+      'sources',
+      'draft terms require at least two sources',
+    );
+  }
+
+  if (term.status === 'verified' || term.status === 'draft') {
+    const codePrefix = term.status === 'verified' ? 'VERIFIED' : 'DRAFT';
     const sectionHeadings = [...body.matchAll(/^<h2 id="([a-z0-9-]+)">.+?<\/h2>\s*$/gm)];
     for (const section of REQUIRED_SECTIONS) {
       const heading = new RegExp(`^<h2 id="${section}">.+?<\\/h2>\\s*$`, 'm');
       if (!heading.test(body)) {
         addDiagnostic(
           diagnostics,
-          'VERIFIED_SECTION',
+          `${codePrefix}_SECTION`,
           filePath,
           `body.${section}`,
           `missing required level-two heading ID ${section}`,
@@ -175,7 +188,7 @@ function validateTermStatus(
     if (requiredHeadingIds.join('|') !== REQUIRED_SECTIONS.join('|')) {
       addDiagnostic(
         diagnostics,
-        'VERIFIED_SECTION_ORDER',
+        `${codePrefix}_SECTION_ORDER`,
         filePath,
         'body',
         'required section anchors must appear exactly once in the prescribed order',
@@ -191,7 +204,7 @@ function validateTermStatus(
       if ([...content].length < 10) {
         addDiagnostic(
           diagnostics,
-          'VERIFIED_SECTION_CONTENT',
+          `${codePrefix}_SECTION_CONTENT`,
           filePath,
           `body.${sectionId}`,
           'section content must contain at least 10 characters',

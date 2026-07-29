@@ -67,6 +67,22 @@ describe('cross-file content validation', () => {
     ],
     ['missing verified section', 'VERIFIED_SECTION', (project) => (project.terms[0]!.body = '')],
     [
+      'missing draft source',
+      'DRAFT_SOURCES',
+      (project) => {
+        project.terms[0]!.data.status = 'draft';
+        project.terms[0]!.data.sources = [];
+      },
+    ],
+    [
+      'missing draft section',
+      'DRAFT_SECTION',
+      (project) => {
+        project.terms[0]!.data.status = 'draft';
+        project.terms[0]!.body = '';
+      },
+    ],
+    [
       'misordered verified sections',
       'VERIFIED_SECTION_ORDER',
       (project) => {

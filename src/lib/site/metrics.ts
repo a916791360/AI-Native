@@ -12,6 +12,8 @@ export interface SiteMetrics {
 }
 
 export function deriveSiteMetrics(project: ProjectContent): SiteMetrics {
+  const publicTerms = project.terms.filter(({ data }) => data.status !== 'draft');
+  const publicTermIds = new Set(publicTerms.map(({ data }) => data.id));
   const verifiedDates = project.terms
     .filter(({ data }) => data.status === 'verified')
     .map(({ data }) => data.verifiedAt)
@@ -21,11 +23,13 @@ export function deriveSiteMetrics(project: ProjectContent): SiteMetrics {
   return {
     domainCount: project.domains.length,
     coreDomainCount: project.domains.filter((domain) => domain.ring === 'core').length,
-    termCount: project.terms.length,
+    termCount: publicTerms.length,
     verifiedTermCount: project.terms.filter(({ data }) => data.status === 'verified').length,
     routeCount: project.routes.length,
     publishedRouteCount: project.routes.filter(({ data }) => data.status === 'published').length,
-    relationCount: project.relations.length,
+    relationCount: project.relations.filter(
+      ({ source, target }) => publicTermIds.has(source) && publicTermIds.has(target),
+    ).length,
     latestVerifiedAt: verifiedDates[0],
   };
 }

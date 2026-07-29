@@ -185,11 +185,12 @@ export function validateContentProduction(
         continue;
       }
       const productionStatus = waveStatusByTerm.get(id) ?? batch.status;
-      if (productionStatus === 'verified' && term.status !== 'verified') {
+      const expectedTermStatus = productionStatus === 'research' ? 'catalogued' : productionStatus;
+      if (productionStatus !== 'planned' && term.status !== expectedTermStatus) {
         diagnostics.push({
-          code: 'PRODUCTION_TERM_NOT_VERIFIED',
+          code: 'PRODUCTION_TERM_STATUS',
           filePath: `src/content/terms/${term.domain}/${id}.mdx`,
-          message: `${id} is verified in batch ${batch.id} but its term is ${term.status}`,
+          message: `${id} is ${productionStatus} in batch ${batch.id} but its term is ${term.status}`,
         });
       }
 
@@ -219,11 +220,11 @@ export function validateContentProduction(
           message: `packet identity must match ${id} in batch ${batch.id}`,
         });
       }
-      if (productionStatus === 'verified' && packet.data.status !== 'verified') {
+      if (packet.data.status !== productionStatus) {
         diagnostics.push({
-          code: 'PRODUCTION_PACKET_NOT_VERIFIED',
+          code: 'PRODUCTION_PACKET_STATUS',
           filePath: packet.filePath,
-          message: `${id} packet must be verified with its batch`,
+          message: `${id} packet is ${packet.data.status} but its production status is ${productionStatus}`,
         });
       }
       if (packet.body.length < 30) {

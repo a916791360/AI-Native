@@ -1,7 +1,7 @@
 ---
 termId: unsupervised-learning
 batch: foundation-1
-status: research
+status: draft
 accessedAt: '2026-07-29'
 sourceIds:
   - google-machine-learning-types

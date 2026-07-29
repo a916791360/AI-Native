@@ -21,12 +21,12 @@ describe('stage 9 content production', () => {
     expect(plan.batches[1]).toMatchObject({
       id: 'foundation-1',
       kind: 'foundation',
-      status: 'research',
+      status: 'draft',
     });
     expect(plan.batches[1]?.terms).toHaveLength(20);
     expect(plan.batches[1]?.waves?.flatMap((wave) => wave.terms)).toEqual(plan.batches[1]?.terms);
     expect(plan.batches[1]?.waves?.map(({ status }) => status)).toEqual([
-      'research',
+      'draft',
       'planned',
       'planned',
       'planned',
@@ -50,5 +50,20 @@ describe('stage 9 content production', () => {
         ({ code }) => code === 'PRODUCTION_PACKET_MISSING',
       ),
     ).toHaveLength(5);
+  });
+
+  it('keeps term and packet states aligned with an active wave', async () => {
+    const [plan, packets, project] = await Promise.all([
+      loadContentProductionPlan(),
+      loadResearchPackets(),
+      loadProjectContent(),
+    ]);
+    const researchPlan = structuredClone(plan);
+    researchPlan.batches[1]!.status = 'research';
+    researchPlan.batches[1]!.waves![0]!.status = 'research';
+    const diagnostics = validateContentProduction(researchPlan, packets, project);
+
+    expect(diagnostics.filter(({ code }) => code === 'PRODUCTION_TERM_STATUS')).toHaveLength(5);
+    expect(diagnostics.filter(({ code }) => code === 'PRODUCTION_PACKET_STATUS')).toHaveLength(5);
   });
 });
