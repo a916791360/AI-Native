@@ -1,7 +1,7 @@
 ---
 termId: prompt-evaluation
 batch: collaboration-1
-status: research
+status: draft
 accessedAt: '2026-07-30'
 sourceIds:
   - openai-evaluation-best-practices

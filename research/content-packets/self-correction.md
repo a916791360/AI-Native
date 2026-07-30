@@ -1,7 +1,7 @@
 ---
 termId: self-correction
 batch: collaboration-1
-status: research
+status: draft
 accessedAt: '2026-07-30'
 sourceIds:
   - self-refine
