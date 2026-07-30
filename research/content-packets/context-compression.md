@@ -1,7 +1,7 @@
 ---
 termId: context-compression
 batch: collaboration-1
-status: draft
+status: verified
 accessedAt: '2026-07-30'
 sourceIds:
   - llmlingua-paper

@@ -12,7 +12,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 612,
+        "x": 610,
         "y": 65
       }
     },
@@ -27,7 +27,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 621,
+        "x": 619,
         "y": 67
       }
     },
@@ -42,7 +42,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 630,
+        "x": 628,
         "y": 69
       }
     },
@@ -57,7 +57,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 639,
+        "x": 636,
         "y": 71
       }
     },
@@ -72,8 +72,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 648,
-        "y": 74
+        "x": 645,
+        "y": 73
       }
     },
     {
@@ -87,8 +87,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 656,
-        "y": 76
+        "x": 654,
+        "y": 75
       }
     },
     {
@@ -102,7 +102,7 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 665,
+        "x": 662,
         "y": 78
       }
     },
@@ -117,8 +117,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 674,
-        "y": 81
+        "x": 671,
+        "y": 80
       }
     },
     {
@@ -132,8 +132,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 682,
-        "y": 84
+        "x": 679,
+        "y": 83
       }
     },
     {
@@ -147,8 +147,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 691,
-        "y": 87
+        "x": 688,
+        "y": 86
       }
     },
     {
@@ -162,8 +162,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 792,
-        "y": 408
+        "x": 630,
+        "y": 554
       }
     },
     {
@@ -177,7 +177,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 630,
+        "x": 370,
         "y": 554
       }
     },
@@ -192,8 +192,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 699,
-        "y": 90
+        "x": 696,
+        "y": 89
       }
     },
     {
@@ -207,8 +207,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 707,
-        "y": 93
+        "x": 704,
+        "y": 92
       }
     },
     {
@@ -222,8 +222,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 716,
-        "y": 96
+        "x": 712,
+        "y": 95
       }
     },
     {
@@ -237,8 +237,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 724,
-        "y": 100
+        "x": 720,
+        "y": 98
       }
     },
     {
@@ -252,8 +252,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 732,
-        "y": 103
+        "x": 728,
+        "y": 102
       }
     },
     {
@@ -267,8 +267,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 370,
-        "y": 554
+        "x": 208,
+        "y": 408
       }
     },
     {
@@ -282,8 +282,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 740,
-        "y": 107
+        "x": 736,
+        "y": 105
       }
     },
     {
@@ -297,8 +297,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 208,
-        "y": 408
+        "x": 265,
+        "y": 226
       }
     },
     {
@@ -312,8 +312,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 747,
-        "y": 111
+        "x": 744,
+        "y": 109
       }
     },
     {
@@ -327,8 +327,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 755,
-        "y": 114
+        "x": 751,
+        "y": 112
       }
     },
     {
@@ -342,8 +342,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 763,
-        "y": 118
+        "x": 759,
+        "y": 116
       }
     },
     {
@@ -357,8 +357,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 770,
-        "y": 123
+        "x": 766,
+        "y": 120
       }
     },
     {
@@ -372,8 +372,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 777,
-        "y": 127
+        "x": 773,
+        "y": 124
       }
     },
     {
@@ -387,8 +387,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 784,
-        "y": 131
+        "x": 780,
+        "y": 129
       }
     },
     {
@@ -402,8 +402,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 791,
-        "y": 136
+        "x": 787,
+        "y": 133
       }
     },
     {
@@ -432,8 +432,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 798,
-        "y": 140
+        "x": 794,
+        "y": 137
       }
     },
     {
@@ -447,8 +447,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 805,
-        "y": 145
+        "x": 801,
+        "y": 142
       }
     },
     {
@@ -462,8 +462,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 811,
-        "y": 150
+        "x": 807,
+        "y": 147
       }
     },
     {
@@ -477,8 +477,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 818,
-        "y": 155
+        "x": 814,
+        "y": 151
       }
     },
     {
@@ -492,8 +492,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 824,
-        "y": 160
+        "x": 820,
+        "y": 156
       }
     },
     {
@@ -507,8 +507,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 830,
-        "y": 165
+        "x": 826,
+        "y": 161
       }
     },
     {
@@ -522,8 +522,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 836,
-        "y": 170
+        "x": 832,
+        "y": 166
       }
     },
     {
@@ -537,8 +537,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 842,
-        "y": 175
+        "x": 838,
+        "y": 171
       }
     },
     {
@@ -552,8 +552,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 848,
-        "y": 180
+        "x": 843,
+        "y": 177
       }
     },
     {
@@ -567,8 +567,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 853,
-        "y": 186
+        "x": 849,
+        "y": 182
       }
     },
     {
@@ -582,8 +582,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 858,
-        "y": 191
+        "x": 854,
+        "y": 187
       }
     },
     {
@@ -597,8 +597,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 863,
-        "y": 197
+        "x": 859,
+        "y": 193
       }
     },
     {
@@ -612,8 +612,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 868,
-        "y": 203
+        "x": 864,
+        "y": 198
       }
     },
     {
@@ -627,8 +627,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 873,
-        "y": 208
+        "x": 869,
+        "y": 204
       }
     },
     {
@@ -642,8 +642,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 878,
-        "y": 214
+        "x": 874,
+        "y": 209
       }
     },
     {
@@ -657,8 +657,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 882,
-        "y": 220
+        "x": 878,
+        "y": 215
       }
     },
     {
@@ -672,8 +672,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 886,
-        "y": 226
+        "x": 883,
+        "y": 221
       }
     },
     {
@@ -687,8 +687,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 890,
-        "y": 232
+        "x": 887,
+        "y": 227
       }
     },
     {
@@ -702,8 +702,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 894,
-        "y": 238
+        "x": 891,
+        "y": 233
       }
     },
     {
@@ -717,8 +717,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 898,
-        "y": 244
+        "x": 895,
+        "y": 239
       }
     },
     {
@@ -732,8 +732,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 901,
-        "y": 251
+        "x": 898,
+        "y": 245
       }
     },
     {
@@ -747,8 +747,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 905,
-        "y": 257
+        "x": 902,
+        "y": 251
       }
     },
     {
@@ -762,8 +762,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 908,
-        "y": 263
+        "x": 905,
+        "y": 257
       }
     },
     {
@@ -777,8 +777,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 265,
-        "y": 226
+        "x": 500,
+        "y": 55
       }
     },
     {
@@ -792,8 +792,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 911,
-        "y": 270
+        "x": 908,
+        "y": 263
       }
     },
     {
@@ -807,8 +807,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 913,
-        "y": 276
+        "x": 911,
+        "y": 270
       }
     },
     {
@@ -822,8 +822,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 916,
-        "y": 282
+        "x": 913,
+        "y": 276
       }
     },
     {
@@ -837,8 +837,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 918,
-        "y": 289
+        "x": 916,
+        "y": 282
       }
     },
     {
@@ -852,8 +852,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 920,
-        "y": 295
+        "x": 918,
+        "y": 288
       }
     },
     {
@@ -867,8 +867,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 922,
-        "y": 302
+        "x": 920,
+        "y": 295
       }
     },
     {
@@ -882,8 +882,38 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
+        "x": 922,
+        "y": 301
+      }
+    },
+    {
+      "id": "context-compression",
+      "label": "上下文压缩",
+      "labelEn": "Context Compression",
+      "url": "/terms/context-compression/",
+      "summary": "在保留任务关键信息的同时压缩或摘要上下文，以降低 Token 占用并延长有效工作范围。",
+      "domain": "prompt-context-engineering",
+      "difficulty": "advanced",
+      "ring": "core",
+      "status": "verified",
+      "position": {
         "x": 924,
         "y": 308
+      }
+    },
+    {
+      "id": "context-engineering",
+      "label": "上下文工程",
+      "labelEn": "Context Engineering",
+      "url": "/terms/context-engineering/",
+      "summary": "围绕任务选择、组织和更新指令、数据、历史与工具结果，使模型获得合适工作信息的实践。",
+      "domain": "prompt-context-engineering",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "verified",
+      "position": {
+        "x": 925,
+        "y": 314
       }
     },
     {
@@ -897,8 +927,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 925,
-        "y": 315
+        "x": 926,
+        "y": 321
       }
     },
     {
@@ -912,8 +942,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 927,
-        "y": 322
+        "x": 928,
+        "y": 327
       }
     },
     {
@@ -927,8 +957,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 528,
-        "y": 56
+        "x": 735,
+        "y": 226
       }
     },
     {
@@ -943,7 +973,22 @@
       "status": "catalogued",
       "position": {
         "x": 928,
-        "y": 328
+        "y": 334
+      }
+    },
+    {
+      "id": "conversation-context",
+      "label": "对话上下文",
+      "labelEn": "Conversation Context",
+      "url": "/terms/conversation-context/",
+      "summary": "当前对话中的历史消息、状态和约束集合，决定模型能够参考哪些先前信息。",
+      "domain": "prompt-context-engineering",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "verified",
+      "position": {
+        "x": 929,
+        "y": 340
       }
     },
     {
@@ -957,8 +1002,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 929,
-        "y": 335
+        "x": 930,
+        "y": 347
       }
     },
     {
@@ -972,8 +1017,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 929,
-        "y": 342
+        "x": 930,
+        "y": 353
       }
     },
     {
@@ -988,7 +1033,7 @@
       "status": "catalogued",
       "position": {
         "x": 930,
-        "y": 348
+        "y": 360
       }
     },
     {
@@ -1003,7 +1048,7 @@
       "status": "catalogued",
       "position": {
         "x": 930,
-        "y": 355
+        "y": 367
       }
     },
     {
@@ -1018,7 +1063,7 @@
       "status": "catalogued",
       "position": {
         "x": 930,
-        "y": 362
+        "y": 373
       }
     },
     {
@@ -1032,8 +1077,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 930,
-        "y": 368
+        "x": 929,
+        "y": 380
       }
     },
     {
@@ -1047,8 +1092,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 929,
-        "y": 375
+        "x": 928,
+        "y": 386
       }
     },
     {
@@ -1062,8 +1107,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 929,
-        "y": 382
+        "x": 928,
+        "y": 393
       }
     },
     {
@@ -1077,8 +1122,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 928,
-        "y": 388
+        "x": 926,
+        "y": 399
       }
     },
     {
@@ -1092,8 +1137,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 927,
-        "y": 395
+        "x": 925,
+        "y": 406
       }
     },
     {
@@ -1107,8 +1152,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 926,
-        "y": 402
+        "x": 924,
+        "y": 412
       }
     },
     {
@@ -1122,8 +1167,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 925,
-        "y": 408
+        "x": 922,
+        "y": 419
       }
     },
     {
@@ -1137,8 +1182,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 923,
-        "y": 415
+        "x": 920,
+        "y": 425
       }
     },
     {
@@ -1152,8 +1197,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 921,
-        "y": 421
+        "x": 918,
+        "y": 432
       }
     },
     {
@@ -1167,8 +1212,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 919,
-        "y": 428
+        "x": 916,
+        "y": 438
       }
     },
     {
@@ -1182,8 +1227,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 917,
-        "y": 434
+        "x": 913,
+        "y": 444
       }
     },
     {
@@ -1197,8 +1242,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 915,
-        "y": 441
+        "x": 911,
+        "y": 450
       }
     },
     {
@@ -1212,8 +1257,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 912,
-        "y": 447
+        "x": 908,
+        "y": 457
       }
     },
     {
@@ -1227,8 +1272,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 909,
-        "y": 454
+        "x": 905,
+        "y": 463
       }
     },
     {
@@ -1242,8 +1287,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 906,
-        "y": 460
+        "x": 902,
+        "y": 469
       }
     },
     {
@@ -1257,7 +1302,7 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 575,
+        "x": 574,
         "y": 60
       }
     },
@@ -1272,8 +1317,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 903,
-        "y": 466
+        "x": 898,
+        "y": 475
       }
     },
     {
@@ -1287,8 +1332,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 900,
-        "y": 472
+        "x": 895,
+        "y": 481
       }
     },
     {
@@ -1302,8 +1347,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 896,
-        "y": 479
+        "x": 891,
+        "y": 487
       }
     },
     {
@@ -1317,7 +1362,7 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 584,
+        "x": 583,
         "y": 61
       }
     },
@@ -1332,8 +1377,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 892,
-        "y": 485
+        "x": 887,
+        "y": 493
       }
     },
     {
@@ -1347,8 +1392,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 888,
-        "y": 491
+        "x": 883,
+        "y": 499
       }
     },
     {
@@ -1362,8 +1407,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 884,
-        "y": 497
+        "x": 878,
+        "y": 505
       }
     },
     {
@@ -1377,8 +1422,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 880,
-        "y": 503
+        "x": 874,
+        "y": 511
       }
     },
     {
@@ -1392,8 +1437,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 519,
-        "y": 55
+        "x": 528,
+        "y": 56
       }
     },
     {
@@ -1407,8 +1452,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 875,
-        "y": 509
+        "x": 869,
+        "y": 516
       }
     },
     {
@@ -1422,8 +1467,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 871,
-        "y": 514
+        "x": 864,
+        "y": 522
       }
     },
     {
@@ -1437,8 +1482,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 866,
-        "y": 520
+        "x": 859,
+        "y": 527
       }
     },
     {
@@ -1452,8 +1497,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 861,
-        "y": 526
+        "x": 854,
+        "y": 533
       }
     },
     {
@@ -1467,8 +1512,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 856,
-        "y": 531
+        "x": 849,
+        "y": 538
       }
     },
     {
@@ -1482,8 +1527,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 850,
-        "y": 537
+        "x": 843,
+        "y": 543
       }
     },
     {
@@ -1497,8 +1542,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 845,
-        "y": 542
+        "x": 838,
+        "y": 549
       }
     },
     {
@@ -1512,8 +1557,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 839,
-        "y": 548
+        "x": 832,
+        "y": 554
       }
     },
     {
@@ -1527,8 +1572,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 833,
-        "y": 553
+        "x": 826,
+        "y": 559
       }
     },
     {
@@ -1542,8 +1587,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 827,
-        "y": 558
+        "x": 820,
+        "y": 564
       }
     },
     {
@@ -1557,8 +1602,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 821,
-        "y": 563
+        "x": 814,
+        "y": 569
       }
     },
     {
@@ -1572,8 +1617,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 815,
-        "y": 568
+        "x": 807,
+        "y": 573
       }
     },
     {
@@ -1587,8 +1632,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 808,
-        "y": 573
+        "x": 801,
+        "y": 578
       }
     },
     {
@@ -1602,8 +1647,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 802,
-        "y": 577
+        "x": 794,
+        "y": 583
       }
     },
     {
@@ -1617,8 +1662,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 795,
-        "y": 582
+        "x": 787,
+        "y": 587
       }
     },
     {
@@ -1632,8 +1677,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 788,
-        "y": 587
+        "x": 780,
+        "y": 591
       }
     },
     {
@@ -1647,8 +1692,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 781,
-        "y": 591
+        "x": 773,
+        "y": 596
       }
     },
     {
@@ -1662,8 +1707,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 774,
-        "y": 595
+        "x": 766,
+        "y": 600
       }
     },
     {
@@ -1677,8 +1722,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 766,
-        "y": 599
+        "x": 759,
+        "y": 604
       }
     },
     {
@@ -1692,8 +1737,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 759,
-        "y": 604
+        "x": 751,
+        "y": 608
       }
     },
     {
@@ -1707,7 +1752,7 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 547,
+        "x": 546,
         "y": 57
       }
     },
@@ -1722,8 +1767,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 751,
-        "y": 608
+        "x": 744,
+        "y": 611
       }
     },
     {
@@ -1737,8 +1782,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 744,
-        "y": 611
+        "x": 736,
+        "y": 615
       }
     },
     {
@@ -1752,8 +1797,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 736,
-        "y": 615
+        "x": 728,
+        "y": 618
       }
     },
     {
@@ -1767,8 +1812,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 728,
-        "y": 619
+        "x": 720,
+        "y": 622
       }
     },
     {
@@ -1782,8 +1827,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 720,
-        "y": 622
+        "x": 712,
+        "y": 625
       }
     },
     {
@@ -1797,8 +1842,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 712,
-        "y": 626
+        "x": 704,
+        "y": 628
       }
     },
     {
@@ -1812,8 +1857,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 703,
-        "y": 629
+        "x": 696,
+        "y": 631
       }
     },
     {
@@ -1827,7 +1872,7 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 556,
+        "x": 555,
         "y": 58
       }
     },
@@ -1842,8 +1887,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 695,
-        "y": 632
+        "x": 688,
+        "y": 634
       }
     },
     {
@@ -1857,8 +1902,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 687,
-        "y": 635
+        "x": 679,
+        "y": 637
       }
     },
     {
@@ -1872,8 +1917,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 678,
-        "y": 638
+        "x": 671,
+        "y": 640
       }
     },
     {
@@ -1887,8 +1932,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 669,
-        "y": 640
+        "x": 662,
+        "y": 642
       }
     },
     {
@@ -1902,8 +1947,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 661,
-        "y": 643
+        "x": 654,
+        "y": 645
       }
     },
     {
@@ -1917,8 +1962,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 652,
-        "y": 645
+        "x": 645,
+        "y": 647
       }
     },
     {
@@ -1932,8 +1977,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 643,
-        "y": 648
+        "x": 636,
+        "y": 649
       }
     },
     {
@@ -1947,8 +1992,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 634,
-        "y": 650
+        "x": 628,
+        "y": 651
       }
     },
     {
@@ -1962,8 +2007,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 625,
-        "y": 652
+        "x": 619,
+        "y": 653
       }
     },
     {
@@ -1977,8 +2022,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 616,
-        "y": 654
+        "x": 610,
+        "y": 655
       }
     },
     {
@@ -1992,8 +2037,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 607,
-        "y": 655
+        "x": 601,
+        "y": 656
       }
     },
     {
@@ -2007,8 +2052,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 598,
-        "y": 657
+        "x": 592,
+        "y": 658
       }
     },
     {
@@ -2022,8 +2067,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 589,
-        "y": 658
+        "x": 583,
+        "y": 659
       }
     },
     {
@@ -2037,7 +2082,7 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 580,
+        "x": 574,
         "y": 660
       }
     },
@@ -2052,8 +2097,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 570,
-        "y": 661
+        "x": 565,
+        "y": 662
       }
     },
     {
@@ -2067,7 +2112,7 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 561,
+        "x": 555,
         "y": 662
       }
     },
@@ -2082,7 +2127,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 552,
+        "x": 546,
         "y": 663
       }
     },
@@ -2097,7 +2142,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 542,
+        "x": 537,
         "y": 664
       }
     },
@@ -2112,8 +2157,23 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 533,
+        "x": 528,
         "y": 664
+      }
+    },
+    {
+      "id": "instruction-hierarchy",
+      "label": "指令层级",
+      "labelEn": "Instruction Hierarchy",
+      "url": "/terms/instruction-hierarchy/",
+      "summary": "系统、开发者、用户与工具信息之间的指令优先顺序，用于处理冲突和行为边界。",
+      "domain": "prompt-context-engineering",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "verified",
+      "position": {
+        "x": 518,
+        "y": 665
       }
     },
     {
@@ -2127,7 +2187,7 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 524,
+        "x": 509,
         "y": 665
       }
     },
@@ -2142,7 +2202,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 514,
+        "x": 500,
         "y": 665
       }
     },
@@ -2157,7 +2217,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 505,
+        "x": 491,
         "y": 665
       }
     },
@@ -2172,7 +2232,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 495,
+        "x": 482,
         "y": 665
       }
     },
@@ -2187,8 +2247,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 486,
-        "y": 665
+        "x": 472,
+        "y": 664
       }
     },
     {
@@ -2217,8 +2277,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 476,
-        "y": 665
+        "x": 463,
+        "y": 664
       }
     },
     {
@@ -2232,8 +2292,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 467,
-        "y": 664
+        "x": 454,
+        "y": 663
       }
     },
     {
@@ -2247,8 +2307,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 458,
-        "y": 664
+        "x": 445,
+        "y": 662
       }
     },
     {
@@ -2262,8 +2322,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 448,
-        "y": 663
+        "x": 435,
+        "y": 662
       }
     },
     {
@@ -2277,8 +2337,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 439,
-        "y": 662
+        "x": 426,
+        "y": 660
       }
     },
     {
@@ -2292,8 +2352,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 430,
-        "y": 661
+        "x": 417,
+        "y": 659
       }
     },
     {
@@ -2307,8 +2367,23 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 420,
-        "y": 660
+        "x": 408,
+        "y": 658
+      }
+    },
+    {
+      "id": "long-context",
+      "label": "长上下文",
+      "labelEn": "Long Context",
+      "url": "/terms/long-context/",
+      "summary": "模型一次能够处理较长输入与历史信息的能力，容量增加不代表所有位置都能同等有效利用。",
+      "domain": "prompt-context-engineering",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "verified",
+      "position": {
+        "x": 399,
+        "y": 656
       }
     },
     {
@@ -2322,8 +2397,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 411,
-        "y": 658
+        "x": 390,
+        "y": 655
       }
     },
     {
@@ -2337,8 +2412,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 402,
-        "y": 657
+        "x": 381,
+        "y": 653
       }
     },
     {
@@ -2352,8 +2427,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 393,
-        "y": 655
+        "x": 372,
+        "y": 651
       }
     },
     {
@@ -2367,8 +2442,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 384,
-        "y": 654
+        "x": 364,
+        "y": 649
       }
     },
     {
@@ -2382,7 +2457,7 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 500,
+        "x": 509,
         "y": 55
       }
     },
@@ -2397,8 +2472,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 375,
-        "y": 652
+        "x": 355,
+        "y": 647
       }
     },
     {
@@ -2412,8 +2487,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 366,
-        "y": 650
+        "x": 346,
+        "y": 645
       }
     },
     {
@@ -2427,8 +2502,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 357,
-        "y": 648
+        "x": 338,
+        "y": 642
       }
     },
     {
@@ -2442,8 +2517,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 348,
-        "y": 645
+        "x": 329,
+        "y": 640
       }
     },
     {
@@ -2457,8 +2532,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 339,
-        "y": 643
+        "x": 321,
+        "y": 637
       }
     },
     {
@@ -2472,8 +2547,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 331,
-        "y": 640
+        "x": 312,
+        "y": 634
       }
     },
     {
@@ -2487,8 +2562,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 322,
-        "y": 638
+        "x": 304,
+        "y": 631
       }
     },
     {
@@ -2502,8 +2577,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 313,
-        "y": 635
+        "x": 296,
+        "y": 628
       }
     },
     {
@@ -2517,8 +2592,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 305,
-        "y": 632
+        "x": 288,
+        "y": 625
       }
     },
     {
@@ -2532,8 +2607,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 297,
-        "y": 629
+        "x": 280,
+        "y": 622
       }
     },
     {
@@ -2547,8 +2622,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 288,
-        "y": 626
+        "x": 272,
+        "y": 618
       }
     },
     {
@@ -2562,8 +2637,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 280,
-        "y": 622
+        "x": 264,
+        "y": 615
       }
     },
     {
@@ -2577,8 +2652,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 272,
-        "y": 619
+        "x": 256,
+        "y": 611
       }
     },
     {
@@ -2592,8 +2667,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 264,
-        "y": 615
+        "x": 249,
+        "y": 608
       }
     },
     {
@@ -2607,7 +2682,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 509,
+        "x": 518,
         "y": 55
       }
     },
@@ -2622,8 +2697,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 256,
-        "y": 611
+        "x": 241,
+        "y": 604
       }
     },
     {
@@ -2637,8 +2712,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 249,
-        "y": 608
+        "x": 234,
+        "y": 600
       }
     },
     {
@@ -2652,8 +2727,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 241,
-        "y": 604
+        "x": 227,
+        "y": 596
       }
     },
     {
@@ -2667,8 +2742,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 234,
-        "y": 599
+        "x": 220,
+        "y": 591
       }
     },
     {
@@ -2682,8 +2757,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 226,
-        "y": 595
+        "x": 213,
+        "y": 587
       }
     },
     {
@@ -2697,8 +2772,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 219,
-        "y": 591
+        "x": 206,
+        "y": 583
       }
     },
     {
@@ -2712,8 +2787,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 212,
-        "y": 587
+        "x": 199,
+        "y": 578
       }
     },
     {
@@ -2727,8 +2802,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 205,
-        "y": 582
+        "x": 193,
+        "y": 573
       }
     },
     {
@@ -2742,8 +2817,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 198,
-        "y": 577
+        "x": 186,
+        "y": 569
       }
     },
     {
@@ -2757,8 +2832,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 192,
-        "y": 573
+        "x": 180,
+        "y": 564
       }
     },
     {
@@ -2772,8 +2847,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 185,
-        "y": 568
+        "x": 174,
+        "y": 559
       }
     },
     {
@@ -2787,8 +2862,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 179,
-        "y": 563
+        "x": 168,
+        "y": 554
       }
     },
     {
@@ -2802,8 +2877,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 173,
-        "y": 558
+        "x": 162,
+        "y": 549
       }
     },
     {
@@ -2817,8 +2892,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 167,
-        "y": 553
+        "x": 157,
+        "y": 543
       }
     },
     {
@@ -2832,8 +2907,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 161,
-        "y": 548
+        "x": 151,
+        "y": 538
       }
     },
     {
@@ -2847,8 +2922,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 155,
-        "y": 542
+        "x": 146,
+        "y": 533
       }
     },
     {
@@ -2862,8 +2937,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 150,
-        "y": 537
+        "x": 141,
+        "y": 527
       }
     },
     {
@@ -2877,8 +2952,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 144,
-        "y": 531
+        "x": 136,
+        "y": 522
       }
     },
     {
@@ -2892,8 +2967,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 139,
-        "y": 526
+        "x": 131,
+        "y": 516
       }
     },
     {
@@ -2907,8 +2982,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 134,
-        "y": 520
+        "x": 126,
+        "y": 511
       }
     },
     {
@@ -2922,8 +2997,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 129,
-        "y": 514
+        "x": 122,
+        "y": 505
       }
     },
     {
@@ -2937,8 +3012,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 125,
-        "y": 509
+        "x": 117,
+        "y": 499
       }
     },
     {
@@ -2952,8 +3027,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 120,
-        "y": 503
+        "x": 113,
+        "y": 493
       }
     },
     {
@@ -2967,8 +3042,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 116,
-        "y": 497
+        "x": 109,
+        "y": 487
       }
     },
     {
@@ -2982,8 +3057,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 112,
-        "y": 491
+        "x": 105,
+        "y": 481
       }
     },
     {
@@ -2997,8 +3072,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 108,
-        "y": 485
+        "x": 102,
+        "y": 475
       }
     },
     {
@@ -3012,8 +3087,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 104,
-        "y": 479
+        "x": 98,
+        "y": 469
       }
     },
     {
@@ -3027,8 +3102,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 100,
-        "y": 472
+        "x": 95,
+        "y": 463
       }
     },
     {
@@ -3042,8 +3117,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 97,
-        "y": 466
+        "x": 92,
+        "y": 457
       }
     },
     {
@@ -3057,8 +3132,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 94,
-        "y": 460
+        "x": 89,
+        "y": 450
       }
     },
     {
@@ -3072,8 +3147,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 91,
-        "y": 454
+        "x": 87,
+        "y": 444
       }
     },
     {
@@ -3087,8 +3162,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 88,
-        "y": 447
+        "x": 84,
+        "y": 438
       }
     },
     {
@@ -3102,8 +3177,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 85,
-        "y": 441
+        "x": 82,
+        "y": 432
       }
     },
     {
@@ -3117,8 +3192,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 83,
-        "y": 434
+        "x": 80,
+        "y": 425
       }
     },
     {
@@ -3132,8 +3207,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 81,
-        "y": 428
+        "x": 78,
+        "y": 419
       }
     },
     {
@@ -3147,8 +3222,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 79,
-        "y": 421
+        "x": 76,
+        "y": 412
       }
     },
     {
@@ -3162,8 +3237,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 77,
-        "y": 415
+        "x": 75,
+        "y": 406
       }
     },
     {
@@ -3177,8 +3252,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 75,
-        "y": 408
+        "x": 74,
+        "y": 399
       }
     },
     {
@@ -3192,8 +3267,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 74,
-        "y": 402
+        "x": 72,
+        "y": 393
       }
     },
     {
@@ -3207,8 +3282,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 73,
-        "y": 395
+        "x": 72,
+        "y": 386
       }
     },
     {
@@ -3222,8 +3297,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 72,
-        "y": 388
+        "x": 71,
+        "y": 380
       }
     },
     {
@@ -3237,8 +3312,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 71,
-        "y": 382
+        "x": 70,
+        "y": 373
       }
     },
     {
@@ -3252,8 +3327,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 71,
-        "y": 375
+        "x": 70,
+        "y": 367
       }
     },
     {
@@ -3268,7 +3343,7 @@
       "status": "catalogued",
       "position": {
         "x": 70,
-        "y": 368
+        "y": 360
       }
     },
     {
@@ -3283,7 +3358,7 @@
       "status": "catalogued",
       "position": {
         "x": 70,
-        "y": 362
+        "y": 353
       }
     },
     {
@@ -3298,7 +3373,7 @@
       "status": "verified",
       "position": {
         "x": 70,
-        "y": 355
+        "y": 347
       }
     },
     {
@@ -3312,8 +3387,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 70,
-        "y": 348
+        "x": 71,
+        "y": 340
       }
     },
     {
@@ -3327,8 +3402,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 71,
-        "y": 342
+        "x": 72,
+        "y": 334
       }
     },
     {
@@ -3342,8 +3417,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 71,
-        "y": 335
+        "x": 72,
+        "y": 327
       }
     },
     {
@@ -3357,7 +3432,7 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 593,
+        "x": 592,
         "y": 62
       }
     },
@@ -3372,8 +3447,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 72,
-        "y": 328
+        "x": 74,
+        "y": 321
       }
     },
     {
@@ -3387,8 +3462,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 73,
-        "y": 322
+        "x": 75,
+        "y": 314
       }
     },
     {
@@ -3402,7 +3477,7 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 538,
+        "x": 537,
         "y": 56
       }
     },
@@ -3417,8 +3492,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 735,
-        "y": 226
+        "x": 792,
+        "y": 408
       }
     },
     {
@@ -3432,8 +3507,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 75,
-        "y": 315
+        "x": 76,
+        "y": 308
       }
     },
     {
@@ -3447,8 +3522,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 76,
-        "y": 308
+        "x": 78,
+        "y": 301
       }
     },
     {
@@ -3462,8 +3537,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 78,
-        "y": 302
+        "x": 80,
+        "y": 295
       }
     },
     {
@@ -3477,8 +3552,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 80,
-        "y": 295
+        "x": 82,
+        "y": 288
       }
     },
     {
@@ -3492,8 +3567,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 82,
-        "y": 289
+        "x": 84,
+        "y": 282
       }
     },
     {
@@ -3507,8 +3582,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 84,
-        "y": 282
+        "x": 87,
+        "y": 276
       }
     },
     {
@@ -3522,8 +3597,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 87,
-        "y": 276
+        "x": 89,
+        "y": 270
       }
     },
     {
@@ -3537,8 +3612,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 89,
-        "y": 270
+        "x": 92,
+        "y": 263
       }
     },
     {
@@ -3552,8 +3627,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 92,
-        "y": 263
+        "x": 95,
+        "y": 257
       }
     },
     {
@@ -3567,8 +3642,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 95,
-        "y": 257
+        "x": 98,
+        "y": 251
       }
     },
     {
@@ -3582,8 +3657,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 99,
-        "y": 251
+        "x": 102,
+        "y": 245
       }
     },
     {
@@ -3597,8 +3672,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 102,
-        "y": 244
+        "x": 105,
+        "y": 239
       }
     },
     {
@@ -3612,8 +3687,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 106,
-        "y": 238
+        "x": 109,
+        "y": 233
       }
     },
     {
@@ -3627,8 +3702,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 110,
-        "y": 232
+        "x": 113,
+        "y": 227
       }
     },
     {
@@ -3642,8 +3717,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 114,
-        "y": 226
+        "x": 117,
+        "y": 221
       }
     },
     {
@@ -3657,8 +3732,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 118,
-        "y": 220
+        "x": 122,
+        "y": 215
       }
     },
     {
@@ -3672,8 +3747,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 122,
-        "y": 214
+        "x": 126,
+        "y": 209
       }
     },
     {
@@ -3687,8 +3762,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 127,
-        "y": 208
+        "x": 131,
+        "y": 204
       }
     },
     {
@@ -3702,8 +3777,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 132,
-        "y": 203
+        "x": 136,
+        "y": 198
       }
     },
     {
@@ -3717,8 +3792,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 137,
-        "y": 197
+        "x": 141,
+        "y": 193
       }
     },
     {
@@ -3732,8 +3807,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 142,
-        "y": 191
+        "x": 146,
+        "y": 187
       }
     },
     {
@@ -3747,8 +3822,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 147,
-        "y": 186
+        "x": 151,
+        "y": 182
       }
     },
     {
@@ -3762,8 +3837,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 152,
-        "y": 180
+        "x": 157,
+        "y": 177
       }
     },
     {
@@ -3777,8 +3852,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 158,
-        "y": 175
+        "x": 162,
+        "y": 171
       }
     },
     {
@@ -3792,8 +3867,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 164,
-        "y": 170
+        "x": 168,
+        "y": 166
       }
     },
     {
@@ -3807,8 +3882,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 170,
-        "y": 165
+        "x": 174,
+        "y": 161
       }
     },
     {
@@ -3822,8 +3897,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 176,
-        "y": 160
+        "x": 180,
+        "y": 156
       }
     },
     {
@@ -3837,8 +3912,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 182,
-        "y": 155
+        "x": 186,
+        "y": 151
       }
     },
     {
@@ -3852,8 +3927,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 189,
-        "y": 150
+        "x": 193,
+        "y": 147
       }
     },
     {
@@ -3867,8 +3942,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 195,
-        "y": 145
+        "x": 199,
+        "y": 142
       }
     },
     {
@@ -3882,8 +3957,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 202,
-        "y": 140
+        "x": 206,
+        "y": 137
       }
     },
     {
@@ -3897,8 +3972,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 209,
-        "y": 136
+        "x": 213,
+        "y": 133
       }
     },
     {
@@ -3912,8 +3987,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 216,
-        "y": 131
+        "x": 220,
+        "y": 129
       }
     },
     {
@@ -3927,8 +4002,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 223,
-        "y": 127
+        "x": 227,
+        "y": 124
       }
     },
     {
@@ -3942,8 +4017,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 230,
-        "y": 123
+        "x": 234,
+        "y": 120
       }
     },
     {
@@ -3957,8 +4032,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 237,
-        "y": 118
+        "x": 241,
+        "y": 116
       }
     },
     {
@@ -3972,8 +4047,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 566,
-        "y": 59
+        "x": 565,
+        "y": 58
       }
     },
     {
@@ -3987,8 +4062,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 245,
-        "y": 114
+        "x": 249,
+        "y": 112
       }
     },
     {
@@ -4002,8 +4077,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 253,
-        "y": 111
+        "x": 256,
+        "y": 109
       }
     },
     {
@@ -4017,8 +4092,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 260,
-        "y": 107
+        "x": 264,
+        "y": 105
       }
     },
     {
@@ -4032,8 +4107,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 268,
-        "y": 103
+        "x": 272,
+        "y": 102
       }
     },
     {
@@ -4047,8 +4122,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 276,
-        "y": 100
+        "x": 280,
+        "y": 98
       }
     },
     {
@@ -4062,8 +4137,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 284,
-        "y": 96
+        "x": 288,
+        "y": 95
       }
     },
     {
@@ -4077,8 +4152,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 293,
-        "y": 93
+        "x": 296,
+        "y": 92
       }
     },
     {
@@ -4092,8 +4167,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 301,
-        "y": 90
+        "x": 304,
+        "y": 89
       }
     },
     {
@@ -4107,8 +4182,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 309,
-        "y": 87
+        "x": 312,
+        "y": 86
       }
     },
     {
@@ -4122,8 +4197,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 318,
-        "y": 84
+        "x": 321,
+        "y": 83
       }
     },
     {
@@ -4137,8 +4212,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 326,
-        "y": 81
+        "x": 329,
+        "y": 80
       }
     },
     {
@@ -4152,7 +4227,7 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 335,
+        "x": 338,
         "y": 78
       }
     },
@@ -4167,8 +4242,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 344,
-        "y": 76
+        "x": 346,
+        "y": 75
       }
     },
     {
@@ -4182,8 +4257,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 352,
-        "y": 74
+        "x": 355,
+        "y": 73
       }
     },
     {
@@ -4197,7 +4272,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 361,
+        "x": 364,
         "y": 71
       }
     },
@@ -4212,7 +4287,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 370,
+        "x": 372,
         "y": 69
       }
     },
@@ -4227,7 +4302,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 379,
+        "x": 381,
         "y": 67
       }
     },
@@ -4242,7 +4317,7 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 388,
+        "x": 390,
         "y": 65
       }
     },
@@ -4257,7 +4332,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 397,
+        "x": 399,
         "y": 64
       }
     },
@@ -4272,7 +4347,7 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 407,
+        "x": 408,
         "y": 62
       }
     },
@@ -4287,7 +4362,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 416,
+        "x": 417,
         "y": 61
       }
     },
@@ -4302,7 +4377,7 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 603,
+        "x": 601,
         "y": 64
       }
     },
@@ -4317,7 +4392,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 425,
+        "x": 426,
         "y": 60
       }
     },
@@ -4332,8 +4407,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 434,
-        "y": 59
+        "x": 435,
+        "y": 58
       }
     },
     {
@@ -4347,7 +4422,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 444,
+        "x": 445,
         "y": 58
       }
     },
@@ -4362,7 +4437,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 453,
+        "x": 454,
         "y": 57
       }
     },
@@ -4377,7 +4452,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 462,
+        "x": 463,
         "y": 56
       }
     },
@@ -4407,7 +4482,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 481,
+        "x": 482,
         "y": 55
       }
     },
@@ -4863,6 +4938,20 @@
       "explanation": "内容审核是理解和应用AI 安全时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
+      "id": "context-compression-connected-to-context-window",
+      "source": "context-compression",
+      "target": "context-window",
+      "type": "application",
+      "explanation": "上下文压缩是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
+      "id": "context-engineering-connected-to-context-window",
+      "source": "context-engineering",
+      "target": "context-window",
+      "type": "application",
+      "explanation": "上下文工程是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
       "id": "context-relevance-connected-to-context-window",
       "source": "context-relevance",
       "target": "context-window",
@@ -4889,6 +4978,13 @@
       "target": "ai-application",
       "type": "application",
       "explanation": "持续交付是理解和应用AI 应用时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
+      "id": "conversation-context-connected-to-context-window",
+      "source": "conversation-context",
+      "target": "context-window",
+      "type": "application",
+      "explanation": "对话上下文是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
       "id": "conversational-ui-connected-to-ai-product",
@@ -5437,6 +5533,13 @@
       "explanation": "知情同意是理解和应用AI 安全时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
+      "id": "instruction-hierarchy-connected-to-context-window",
+      "source": "instruction-hierarchy",
+      "target": "context-window",
+      "type": "application",
+      "explanation": "指令层级是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
       "id": "instruction-tuning-connected-to-large-language-model",
       "source": "instruction-tuning",
       "target": "large-language-model",
@@ -5540,6 +5643,13 @@
       "target": "ai-application",
       "type": "application",
       "explanation": "负载均衡是理解和应用AI 应用时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
+      "id": "long-context-connected-to-context-window",
+      "source": "long-context",
+      "target": "context-window",
+      "type": "application",
+      "explanation": "长上下文是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
       "id": "long-term-memory-connected-to-ai-agent",
@@ -8132,6 +8242,24 @@
         "explanation": "内容审核是理解和应用AI 安全时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
+    "context-compression": [
+      {
+        "edgeId": "context-compression-connected-to-context-window",
+        "neighbor": "context-window",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "上下文压缩是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
+    "context-engineering": [
+      {
+        "edgeId": "context-engineering-connected-to-context-window",
+        "neighbor": "context-window",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "上下文工程是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
     "context-relevance": [
       {
         "edgeId": "context-relevance-connected-to-context-window",
@@ -8159,11 +8287,32 @@
         "explanation": "思维链提示是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       },
       {
+        "edgeId": "context-compression-connected-to-context-window",
+        "neighbor": "context-compression",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "上下文压缩是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "context-engineering-connected-to-context-window",
+        "neighbor": "context-engineering",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "上下文工程是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
         "edgeId": "context-relevance-connected-to-context-window",
         "neighbor": "context-relevance",
         "type": "application",
         "direction": "incoming",
         "explanation": "上下文相关性是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "conversation-context-connected-to-context-window",
+        "neighbor": "conversation-context",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "对话上下文是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       },
       {
         "edgeId": "few-shot-prompting-connected-to-context-window",
@@ -8185,6 +8334,20 @@
         "type": "application",
         "direction": "incoming",
         "explanation": "上下文学习是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "instruction-hierarchy-connected-to-context-window",
+        "neighbor": "instruction-hierarchy",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "指令层级是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "long-context-connected-to-context-window",
+        "neighbor": "long-context",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "长上下文是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       },
       {
         "edgeId": "negative-prompt-connected-to-context-window",
@@ -8313,6 +8476,15 @@
         "type": "application",
         "direction": "outgoing",
         "explanation": "持续交付是理解和应用AI 应用时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
+    "conversation-context": [
+      {
+        "edgeId": "conversation-context-connected-to-context-window",
+        "neighbor": "context-window",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "对话上下文是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
     "conversational-ui": [
@@ -9227,6 +9399,15 @@
         "explanation": "知情同意是理解和应用AI 安全时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
+    "instruction-hierarchy": [
+      {
+        "edgeId": "instruction-hierarchy-connected-to-context-window",
+        "neighbor": "context-window",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "指令层级是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
     "instruction-tuning": [
       {
         "edgeId": "instruction-tuning-connected-to-large-language-model",
@@ -9531,6 +9712,15 @@
         "type": "application",
         "direction": "outgoing",
         "explanation": "负载均衡是理解和应用AI 应用时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
+    "long-context": [
+      {
+        "edgeId": "long-context-connected-to-context-window",
+        "neighbor": "context-window",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "长上下文是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
     "long-term-memory": [

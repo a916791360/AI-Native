@@ -8,7 +8,10 @@ summary: 在保留任务关键信息的同时压缩或摘要上下文，以降�
 domain: prompt-context-engineering
 difficulty: advanced
 ring: core
-status: draft
+status: verified
+publishedAt: '2026-07-30'
+updatedAt: '2026-07-30'
+verifiedAt: '2026-07-30'
 priority: 2
 featured: false
 sources:
@@ -45,7 +48,7 @@ sources:
 
 <h2 id="tradeoffs">什么时候适合与不适合</h2>
 
-压缩适合长周期、信息重复且中间产物可外部保存的任务。不适合必须逐字引用、精确维护大量变量或依赖早期细节的场景。压缩本质上可能有损：摘要会遗漏，Token 级删除会改变表达，自动触发还可能发生在工具调用中途。[S1][S2] 压缩率高不代表任务质量高。
+压缩适合长周期、信息重复且中间产物可外部保存的任务。不适合必须逐字引用、精确维护大量变量或依赖早期细节的场景。压缩本质上可能有损：摘要会遗漏，Token 级删除会改变表达；Anthropic SDK 的客户端压缩还可能在工具响应待处理时触发，需要按具体实现处理续接边界。[S1][S2] 压缩率高不代表任务质量高。
 
 <h2 id="try-it">亲自试一下</h2>
 

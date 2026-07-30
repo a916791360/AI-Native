@@ -78,7 +78,7 @@ batches:
           - temperature
   - id: collaboration-1
     kind: collaboration
-    status: draft
+    status: research
     terms:
       - system-prompt
       - user-prompt
@@ -112,7 +112,7 @@ batches:
           - structured-output
       - id: context-management
         focus: 组织对话信息、指令优先级、长上下文与压缩边界。
-        status: draft
+        status: verified
         terms:
           - context-engineering
           - conversation-context
