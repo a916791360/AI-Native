@@ -2869,6 +2869,46 @@
       ]
     },
     {
+      "id": "prompt-debugging",
+      "url": "/terms/prompt-debugging/",
+      "nameZh": "提示词调试",
+      "nameEn": "Prompt Debugging",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "通过复现、分离变量、检查上下文和比较输出定位提示问题，并用评测验证修改效果的过程。",
+      "domain": "prompt-context-engineering",
+      "domainNameZh": "提示词与上下文工程",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "verified",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "提示词调试",
+        "prompt debugging"
+      ]
+    },
+    {
+      "id": "prompt-evaluation",
+      "url": "/terms/prompt-evaluation/",
+      "nameZh": "提示词评测",
+      "nameEn": "Prompt Evaluation",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "使用固定任务、样本和标准比较提示词版本效果的过程，避免只凭少量主观示例判断。",
+      "domain": "prompt-context-engineering",
+      "domainNameZh": "提示词与上下文工程",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "verified",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "提示词评测",
+        "prompt evaluation"
+      ]
+    },
+    {
       "id": "prompt-injection",
       "url": "/terms/prompt-injection/",
       "nameZh": "提示词注入",
@@ -3250,6 +3290,26 @@
       "searchKeys": [
         "安全过滤器",
         "safety filter"
+      ]
+    },
+    {
+      "id": "self-correction",
+      "url": "/terms/self-correction/",
+      "nameZh": "自我纠错",
+      "nameEn": "Self-Correction",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "系统依据反馈、验证结果或规则修改先前输出与行动的能力，需要明确触发条件和终止规则。",
+      "domain": "agents-tool-use-automation",
+      "domainNameZh": "Agent、工具调用与自动化",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "verified",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "自我纠错",
+        "self-correction"
       ]
     },
     {
@@ -4986,6 +5046,26 @@
       ]
     },
     {
+      "id": "prompt-versioning",
+      "url": "/terms/prompt-versioning/",
+      "nameZh": "提示词版本管理",
+      "nameEn": "Prompt Versioning",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "对提示词内容、变量、模型配置和评测结果进行版本记录，使变更可以追踪和回退。",
+      "domain": "prompt-context-engineering",
+      "domainNameZh": "提示词与上下文工程",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "verified",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "提示词版本管理",
+        "prompt versioning"
+      ]
+    },
+    {
       "id": "quantization",
       "url": "/terms/quantization/",
       "nameZh": "模型量化",
@@ -5043,6 +5123,26 @@
       "searchKeys": [
         "推理系统",
         "reasoning system"
+      ]
+    },
+    {
+      "id": "reflection",
+      "url": "/terms/reflection/",
+      "nameZh": "反思机制",
+      "nameEn": "Reflection",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "Agent 对中间结果和执行轨迹进行再检查并决定是否修正的机制，不能保证自动发现所有错误。",
+      "domain": "agents-tool-use-automation",
+      "domainNameZh": "Agent、工具调用与自动化",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "verified",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "反思机制",
+        "reflection"
       ]
     },
     {

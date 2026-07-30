@@ -34,7 +34,7 @@ describe('stage 9 content production', () => {
     expect(plan.batches[2]).toMatchObject({
       id: 'collaboration-1',
       kind: 'collaboration',
-      status: 'draft',
+      status: 'verified',
     });
     expect(plan.batches[2]?.terms).toHaveLength(20);
     expect(plan.batches[2]?.waves?.flatMap((wave) => wave.terms)).toEqual(plan.batches[2]?.terms);
@@ -42,7 +42,7 @@ describe('stage 9 content production', () => {
       'verified',
       'verified',
       'verified',
-      'draft',
+      'verified',
     ]);
     expect(deepContentTermIds(plan).size).toBe(48);
     expect(packets).toHaveLength(48);
