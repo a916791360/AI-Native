@@ -130,7 +130,7 @@ batches:
           - human-in-the-loop
       - id: review-and-improvement
         focus: 用评测、调试、版本记录和反馈循环改进协作结果。
-        status: planned
+        status: research
         terms:
           - prompt-evaluation
           - prompt-debugging
