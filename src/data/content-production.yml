@@ -137,3 +137,64 @@ batches:
           - prompt-versioning
           - self-correction
           - reflection
+  - id: product-1
+    kind: product
+    status: planned
+    terms:
+      - ai-use-case
+      - problem-solution-fit
+      - ai-capability-boundary
+      - model-capability
+      - task-success-rate
+      - model-api
+      - model-routing
+      - fallback-model
+      - cost-optimization
+      - latency-budget
+      - human-ai-collaboration
+      - user-control
+      - uncertainty-display
+      - human-oversight
+      - human-escalation
+      - confidence-calibration
+      - offline-evaluation
+      - online-evaluation
+      - observability
+      - ai-risk-management
+    waves:
+      - id: scenario-fit
+        focus: 判断用户问题、AI 能力边界与可以验证的任务成功标准。
+        status: planned
+        terms:
+          - ai-use-case
+          - problem-solution-fit
+          - ai-capability-boundary
+          - model-capability
+          - task-success-rate
+      - id: solution-selection
+        focus: 在模型服务、路由、降级、成本和响应时间之间选择方案。
+        status: planned
+        terms:
+          - model-api
+          - model-routing
+          - fallback-model
+          - cost-optimization
+          - latency-budget
+      - id: human-control
+        focus: 设计人机职责、用户控制、不确定性说明与人工接管边界。
+        status: planned
+        terms:
+          - human-ai-collaboration
+          - user-control
+          - uncertainty-display
+          - human-oversight
+          - human-escalation
+      - id: quality-and-risk
+        focus: 用校准、线上线下评估、可观测性和风险管理持续验证产品。
+        status: planned
+        terms:
+          - confidence-calibration
+          - offline-evaluation
+          - online-evaluation
+          - observability
+          - ai-risk-management

@@ -151,6 +151,13 @@ export function validateContentProduction(
         message: `collaboration batch ${batch.id} must contain 15-25 terms`,
       });
     }
+    if (batch.kind === 'product' && (batch.terms.length < 20 || batch.terms.length > 30)) {
+      diagnostics.push({
+        code: 'PRODUCTION_PRODUCT_SIZE',
+        filePath: 'src/data/content-production.yml',
+        message: `product batch ${batch.id} must contain 20-30 terms`,
+      });
+    }
 
     const waveTerms = batch.waves?.flatMap((wave) => wave.terms);
     if (waveTerms && waveTerms.join('\n') !== batch.terms.join('\n')) {

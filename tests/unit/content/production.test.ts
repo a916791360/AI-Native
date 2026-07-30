@@ -44,6 +44,19 @@ describe('stage 9 content production', () => {
       'verified',
       'verified',
     ]);
+    expect(plan.batches[3]).toMatchObject({
+      id: 'product-1',
+      kind: 'product',
+      status: 'planned',
+    });
+    expect(plan.batches[3]?.terms).toHaveLength(20);
+    expect(plan.batches[3]?.waves?.flatMap((wave) => wave.terms)).toEqual(plan.batches[3]?.terms);
+    expect(plan.batches[3]?.waves?.map(({ status }) => status)).toEqual([
+      'planned',
+      'planned',
+      'planned',
+      'planned',
+    ]);
     expect(deepContentTermIds(plan).size).toBe(48);
     expect(packets).toHaveLength(48);
   });
@@ -59,6 +72,20 @@ describe('stage 9 content production', () => {
 
     expect(validateContentProduction(undersized, packets, project)).toContainEqual(
       expect.objectContaining({ code: 'PRODUCTION_COLLABORATION_SIZE' }),
+    );
+  });
+
+  it('enforces the approved product batch size', async () => {
+    const [plan, packets, project] = await Promise.all([
+      loadContentProductionPlan(),
+      loadResearchPackets(),
+      loadProjectContent(),
+    ]);
+    const undersized = structuredClone(plan);
+    undersized.batches[3]!.terms = undersized.batches[3]!.terms.slice(0, 19);
+
+    expect(validateContentProduction(undersized, packets, project)).toContainEqual(
+      expect.objectContaining({ code: 'PRODUCTION_PRODUCT_SIZE' }),
     );
   });
 
