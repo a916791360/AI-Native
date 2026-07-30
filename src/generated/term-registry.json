@@ -911,26 +911,6 @@
       ]
     },
     {
-      "id": "cost-optimization",
-      "url": "/terms/cost-optimization/",
-      "nameZh": "成本优化",
-      "nameEn": "Cost Optimization",
-      "abbreviations": [],
-      "aliases": [],
-      "summary": "在满足质量与可靠性要求的前提下降低模型调用、计算、存储和运维成本的实践。",
-      "domain": "ai-engineering-deployment-operations",
-      "domainNameZh": "AI 工程、部署与运维",
-      "difficulty": "intermediate",
-      "ring": "core",
-      "status": "catalogued",
-      "priority": 1,
-      "featured": false,
-      "searchKeys": [
-        "成本优化",
-        "cost optimization"
-      ]
-    },
-    {
       "id": "cuda",
       "url": "/terms/cuda/",
       "nameZh": "CUDA",
@@ -1459,26 +1439,6 @@
       "searchKeys": [
         "降级体验",
         "fallback experience"
-      ]
-    },
-    {
-      "id": "fallback-model",
-      "url": "/terms/fallback-model/",
-      "nameZh": "备用模型",
-      "nameEn": "Fallback Model",
-      "abbreviations": [],
-      "aliases": [],
-      "summary": "当主模型不可用、超时或不适合当前任务时接管请求的备用模型。",
-      "domain": "ai-engineering-deployment-operations",
-      "domainNameZh": "AI 工程、部署与运维",
-      "difficulty": "intermediate",
-      "ring": "core",
-      "status": "catalogued",
-      "priority": 1,
-      "featured": false,
-      "searchKeys": [
-        "备用模型",
-        "fallback model"
       ]
     },
     {
@@ -2172,26 +2132,6 @@
       ]
     },
     {
-      "id": "latency-budget",
-      "url": "/terms/latency-budget/",
-      "nameZh": "延迟预算",
-      "nameEn": "Latency Budget",
-      "abbreviations": [],
-      "aliases": [],
-      "summary": "产品为一次 AI 交互分配的最大可接受等待时间，用于约束模型、工具和后处理方案。",
-      "domain": "ai-product-ux",
-      "domainNameZh": "AI 产品与用户体验",
-      "difficulty": "intermediate",
-      "ring": "core",
-      "status": "catalogued",
-      "priority": 1,
-      "featured": false,
-      "searchKeys": [
-        "延迟预算",
-        "latency budget"
-      ]
-    },
-    {
       "id": "latency-optimization",
       "url": "/terms/latency-optimization/",
       "nameZh": "延迟优化",
@@ -2323,26 +2263,6 @@
       ]
     },
     {
-      "id": "model-api",
-      "url": "/terms/model-api/",
-      "nameZh": "模型 API",
-      "nameEn": "Model API",
-      "abbreviations": [],
-      "aliases": [],
-      "summary": "通过网络接口向应用提供模型推理能力的服务契约，通常定义输入、输出、鉴权和限额。",
-      "domain": "ai-engineering-deployment-operations",
-      "domainNameZh": "AI 工程、部署与运维",
-      "difficulty": "beginner",
-      "ring": "core",
-      "status": "catalogued",
-      "priority": 1,
-      "featured": false,
-      "searchKeys": [
-        "模型 api",
-        "model api"
-      ]
-    },
-    {
       "id": "model-capability",
       "url": "/terms/model-capability/",
       "nameZh": "模型能力",
@@ -2423,26 +2343,6 @@
       "searchKeys": [
         "模型参数",
         "model parameter"
-      ]
-    },
-    {
-      "id": "model-routing",
-      "url": "/terms/model-routing/",
-      "nameZh": "模型路由",
-      "nameEn": "Model Routing",
-      "abbreviations": [],
-      "aliases": [],
-      "summary": "根据任务类型、质量要求、延迟和成本把请求分配给不同模型或推理配置的机制。",
-      "domain": "ai-engineering-deployment-operations",
-      "domainNameZh": "AI 工程、部署与运维",
-      "difficulty": "intermediate",
-      "ring": "core",
-      "status": "catalogued",
-      "priority": 1,
-      "featured": false,
-      "searchKeys": [
-        "模型路由",
-        "model routing"
       ]
     },
     {

@@ -47,13 +47,13 @@ describe('stage 9 content production', () => {
     expect(plan.batches[3]).toMatchObject({
       id: 'product-1',
       kind: 'product',
-      status: 'research',
+      status: 'draft',
     });
     expect(plan.batches[3]?.terms).toHaveLength(20);
     expect(plan.batches[3]?.waves?.flatMap((wave) => wave.terms)).toEqual(plan.batches[3]?.terms);
     expect(plan.batches[3]?.waves?.map(({ status }) => status)).toEqual([
       'verified',
-      'research',
+      'draft',
       'planned',
       'planned',
     ]);
