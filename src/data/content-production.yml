@@ -173,7 +173,7 @@ batches:
           - task-success-rate
       - id: solution-selection
         focus: 在模型服务、路由、降级、成本和响应时间之间选择方案。
-        status: planned
+        status: research
         terms:
           - model-api
           - model-routing
