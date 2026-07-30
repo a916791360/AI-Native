@@ -54,11 +54,11 @@ describe('stage 9 content production', () => {
     expect(plan.batches[3]?.waves?.map(({ status }) => status)).toEqual([
       'verified',
       'verified',
-      'planned',
+      'research',
       'planned',
     ]);
-    expect(deepContentTermIds(plan).size).toBe(58);
-    expect(packets).toHaveLength(58);
+    expect(deepContentTermIds(plan).size).toBe(63);
+    expect(packets).toHaveLength(63);
   });
 
   it('enforces the approved collaboration batch size', async () => {
@@ -99,7 +99,7 @@ describe('stage 9 content production', () => {
     plannedCopy.batches[1]!.status = 'research';
     plannedCopy.batches[1]!.waves![3]!.status = 'planned';
 
-    expect(deepContentTermIds(plannedCopy).size).toBe(53);
+    expect(deepContentTermIds(plannedCopy).size).toBe(58);
     expect(
       validateContentProduction(plannedCopy, packets, project).filter(
         ({ code }) => code === 'PRODUCTION_PACKET_PREMATURE',

@@ -182,7 +182,7 @@ batches:
           - latency-budget
       - id: human-control
         focus: 设计人机职责、用户控制、不确定性说明与人工接管边界。
-        status: planned
+        status: research
         terms:
           - human-ai-collaboration
           - user-control
