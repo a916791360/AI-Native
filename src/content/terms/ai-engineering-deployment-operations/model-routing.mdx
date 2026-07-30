@@ -8,7 +8,10 @@ summary: 根据任务类型、质量要求、延迟和成本把请求分配给�
 domain: ai-engineering-deployment-operations
 difficulty: intermediate
 ring: core
-status: draft
+status: verified
+publishedAt: '2026-07-30'
+updatedAt: '2026-07-30'
+verifiedAt: '2026-07-30'
 priority: 1
 featured: false
 sources:
@@ -26,6 +29,13 @@ sources:
     publisher: arXiv
     publishedAt: '2023-05-09'
     accessedAt: '2026-07-30'
+  - id: aws-bedrock-resilience-patterns
+    type: engineering-practice
+    title: Implementing resilience patterns with Amazon Bedrock and LLM gateway
+    url: https://aws.amazon.com/blogs/machine-learning/implementing-resilience-patterns-with-amazon-bedrock-and-llm-gateway/
+    publisher: AWS
+    publishedAt: '2026-06-30'
+    accessedAt: '2026-07-30'
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -38,7 +48,7 @@ sources:
 
 <h2 id="how-it-works">它如何工作</h2>
 
-先定义允许使用的模型、每类任务的质量底线和不可路由的高风险范围，再准备代表性评测集。路由器可以使用显式规则、轻量分类器、学习式评分或“先弱后强”的级联；每次选择都记录输入特征、候选、决策、最终结果、成本和延迟。团队把它与始终使用强模型、始终使用弱模型的基线比较，并根据生产分布和模型变化重新校准阈值。[S1][S2]
+先定义允许使用的模型、每类任务的质量底线和不可路由的高风险范围，再准备代表性评测集。路由器可以使用显式规则、轻量分类器、学习式评分或“先弱后强”的级联；每次选择都记录输入特征、候选、决策、最终结果、成本和延迟。团队把它与始终使用强模型、始终使用弱模型的基线比较，并根据生产分布和模型变化重新校准阈值。[S1][S2][S3]
 
 <h2 id="example">真实例子</h2>
 
@@ -46,7 +56,7 @@ sources:
 
 <h2 id="tradeoffs">什么时候适合与不适合</h2>
 
-请求量较大、任务难度差异明显且有可靠评测时，路由可能带来价值。流量很小、任务高度一致或错误代价极高却无法可靠识别时，固定使用经过验证的模型往往更简单。论文中的成本与质量结果只对其数据、候选模型和当时价格成立；误路由会伤害质量，路由器也会增加延迟、监控和维护成本。[S1][S2]
+请求量较大、任务难度差异明显且有可靠评测时，路由可能带来价值。流量很小、任务高度一致或错误代价极高却无法可靠识别时，固定使用经过验证的模型往往更简单。论文中的成本与质量结果只对其数据、候选模型和当时价格成立；误路由会伤害质量，路由器也会增加延迟、监控和维护成本。[S1][S2][S3]
 
 <h2 id="try-it">亲自试一下</h2>
 
@@ -58,4 +68,4 @@ sources:
 
 <h2 id="sources-and-revisions">来源与修订</h2>
 
-强弱模型动态选择、偏好数据训练和路由评测参考 RouteLLM [S1]；模型级联、按查询组合策略及成本质量取舍参考 FrugalGPT [S2]。候选模型、价格、延迟、任务分布和路由阈值会持续变化，任何收益结论都必须标注当前模型池、数据和日期。
+强弱模型动态选择、偏好数据训练和路由评测参考 RouteLLM [S1]；模型级联、按查询组合策略及成本质量取舍参考 FrugalGPT [S2]；可用性、响应时间、成本、吞吐与生产网关的路由监控参考 AWS 韧性实践 [S3]。候选模型、价格、延迟、任务分布和路由阈值会持续变化，任何收益结论都必须标注当前模型池、数据和日期。

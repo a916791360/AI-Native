@@ -1,11 +1,12 @@
 ---
 termId: model-routing
 batch: product-1
-status: draft
+status: verified
 accessedAt: '2026-07-30'
 sourceIds:
   - routellm
   - frugalgpt
+  - aws-bedrock-resilience-patterns
 timeBoundary: 按约束选择模型的目标相对稳定；模型池、价格、延迟、质量分布、训练数据与路由阈值会持续漂移。
 claims:
   - id: policy-based-model-selection
@@ -20,12 +21,14 @@ claims:
     sourceIds:
       - routellm
       - frugalgpt
+      - aws-bedrock-resilience-patterns
   - id: router-adds-failure-mode
     statement: 路由收益只对对应数据、模型池、价格和评测成立；误路由会损害质量，路由本身还增加延迟与运维复杂度，因此需要护栏、回退和持续监测。
     evidenceType: boundary
     sourceIds:
       - routellm
       - frugalgpt
+      - aws-bedrock-resilience-patterns
 ---
 
 ## 编辑说明
