@@ -1,7 +1,7 @@
 ---
 termId: context-engineering
 batch: collaboration-1
-status: research
+status: draft
 accessedAt: '2026-07-30'
 sourceIds:
   - anthropic-effective-context-engineering

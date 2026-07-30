@@ -1,7 +1,7 @@
 ---
 termId: instruction-hierarchy
 batch: collaboration-1
-status: research
+status: draft
 accessedAt: '2026-07-30'
 sourceIds:
   - instruction-hierarchy-paper

@@ -9,7 +9,7 @@ import {
 } from '../../../src/lib/content/production';
 
 describe('stage 9 content production', () => {
-  it('keeps verified and researched work traceable without activating planned waves', async () => {
+  it('keeps active content work traceable without activating planned waves', async () => {
     const [plan, packets, project] = await Promise.all([
       loadContentProductionPlan(),
       loadResearchPackets(),
@@ -34,13 +34,13 @@ describe('stage 9 content production', () => {
     expect(plan.batches[2]).toMatchObject({
       id: 'collaboration-1',
       kind: 'collaboration',
-      status: 'research',
+      status: 'draft',
     });
     expect(plan.batches[2]?.terms).toHaveLength(20);
     expect(plan.batches[2]?.waves?.flatMap((wave) => wave.terms)).toEqual(plan.batches[2]?.terms);
     expect(plan.batches[2]?.waves?.map(({ status }) => status)).toEqual([
       'verified',
-      'research',
+      'draft',
       'planned',
       'planned',
     ]);

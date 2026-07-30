@@ -765,26 +765,6 @@
       ]
     },
     {
-      "id": "context-engineering",
-      "url": "/terms/context-engineering/",
-      "nameZh": "上下文工程",
-      "nameEn": "Context Engineering",
-      "abbreviations": [],
-      "aliases": [],
-      "summary": "围绕任务选择、组织和更新指令、数据、历史与工具结果，使模型获得合适工作信息的实践。",
-      "domain": "prompt-context-engineering",
-      "domainNameZh": "提示词与上下文工程",
-      "difficulty": "intermediate",
-      "ring": "core",
-      "status": "catalogued",
-      "priority": 1,
-      "featured": false,
-      "searchKeys": [
-        "上下文工程",
-        "context engineering"
-      ]
-    },
-    {
       "id": "context-retrieval",
       "url": "/terms/context-retrieval/",
       "nameZh": "上下文检索",
@@ -828,26 +808,6 @@
         "上下文窗口",
         "context window",
         "上下文长度"
-      ]
-    },
-    {
-      "id": "conversation-context",
-      "url": "/terms/conversation-context/",
-      "nameZh": "对话上下文",
-      "nameEn": "Conversation Context",
-      "abbreviations": [],
-      "aliases": [],
-      "summary": "当前对话中的历史消息、状态和约束集合，决定模型能够参考哪些先前信息。",
-      "domain": "prompt-context-engineering",
-      "domainNameZh": "提示词与上下文工程",
-      "difficulty": "beginner",
-      "ring": "core",
-      "status": "catalogued",
-      "priority": 1,
-      "featured": false,
-      "searchKeys": [
-        "对话上下文",
-        "conversation context"
       ]
     },
     {
@@ -2023,26 +1983,6 @@
       ]
     },
     {
-      "id": "instruction-hierarchy",
-      "url": "/terms/instruction-hierarchy/",
-      "nameZh": "指令层级",
-      "nameEn": "Instruction Hierarchy",
-      "abbreviations": [],
-      "aliases": [],
-      "summary": "系统、开发者、用户与工具信息之间的指令优先顺序，用于处理冲突和行为边界。",
-      "domain": "prompt-context-engineering",
-      "domainNameZh": "提示词与上下文工程",
-      "difficulty": "intermediate",
-      "ring": "core",
-      "status": "catalogued",
-      "priority": 1,
-      "featured": false,
-      "searchKeys": [
-        "指令层级",
-        "instruction hierarchy"
-      ]
-    },
-    {
       "id": "instruction-tuning",
       "url": "/terms/instruction-tuning/",
       "nameZh": "指令微调",
@@ -2240,26 +2180,6 @@
         "llm-as-a-judge",
         "llm judge",
         "模型裁判"
-      ]
-    },
-    {
-      "id": "long-context",
-      "url": "/terms/long-context/",
-      "nameZh": "长上下文",
-      "nameEn": "Long Context",
-      "abbreviations": [],
-      "aliases": [],
-      "summary": "模型一次能够处理较长输入与历史信息的能力，容量增加不代表所有位置都能同等有效利用。",
-      "domain": "prompt-context-engineering",
-      "domainNameZh": "提示词与上下文工程",
-      "difficulty": "intermediate",
-      "ring": "core",
-      "status": "catalogued",
-      "priority": 1,
-      "featured": false,
-      "searchKeys": [
-        "长上下文",
-        "long context"
       ]
     },
     {
@@ -4277,26 +4197,6 @@
       "searchKeys": [
         "容器化",
         "containerization"
-      ]
-    },
-    {
-      "id": "context-compression",
-      "url": "/terms/context-compression/",
-      "nameZh": "上下文压缩",
-      "nameEn": "Context Compression",
-      "abbreviations": [],
-      "aliases": [],
-      "summary": "在保留任务关键信息的同时压缩或摘要上下文，以降低 Token 占用并延长有效工作范围。",
-      "domain": "prompt-context-engineering",
-      "domainNameZh": "提示词与上下文工程",
-      "difficulty": "advanced",
-      "ring": "core",
-      "status": "catalogued",
-      "priority": 2,
-      "featured": false,
-      "searchKeys": [
-        "上下文压缩",
-        "context compression"
       ]
     },
     {
