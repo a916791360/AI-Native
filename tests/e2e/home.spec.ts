@@ -58,7 +58,7 @@ test('derives the homepage routes, domains and content scale from project data',
   await expect(page.locator('.domain-list a')).toHaveCount(12);
   await expect(
     page.locator('.scope-heading dl div', { hasText: '已核验词条' }).locator('dd'),
-  ).toHaveText('60');
+  ).toHaveText('65');
   await expect(
     page.locator('.scope-heading dl div', { hasText: '概念关系' }).locator('dd'),
   ).toHaveText(PUBLIC_RELATION_COUNT);

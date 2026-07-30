@@ -1,7 +1,7 @@
 ---
 termId: ai-capability-boundary
 batch: product-1
-status: draft
+status: verified
 accessedAt: '2026-07-30'
 sourceIds:
   - nist-ai-rmf-core
