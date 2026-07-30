@@ -17,7 +17,7 @@ batches:
       - compute
   - id: foundation-1
     kind: foundation
-    status: research
+    status: draft
     terms:
       - supervised-learning
       - unsupervised-learning
@@ -69,7 +69,7 @@ batches:
           - pretraining
       - id: generation-and-adaptation
         focus: 串联后训练、模型适配、推理与生成控制。
-        status: research
+        status: draft
         terms:
           - post-training
           - instruction-tuning

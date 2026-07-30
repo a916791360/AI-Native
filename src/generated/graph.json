@@ -12,7 +12,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 610,
+        "x": 612,
         "y": 65
       }
     },
@@ -27,7 +27,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 619,
+        "x": 621,
         "y": 67
       }
     },
@@ -42,7 +42,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 628,
+        "x": 630,
         "y": 69
       }
     },
@@ -57,7 +57,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 636,
+        "x": 639,
         "y": 71
       }
     },
@@ -72,8 +72,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 645,
-        "y": 73
+        "x": 648,
+        "y": 74
       }
     },
     {
@@ -87,8 +87,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 654,
-        "y": 75
+        "x": 656,
+        "y": 76
       }
     },
     {
@@ -102,7 +102,7 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 662,
+        "x": 665,
         "y": 78
       }
     },
@@ -117,8 +117,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 671,
-        "y": 80
+        "x": 674,
+        "y": 81
       }
     },
     {
@@ -132,8 +132,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 679,
-        "y": 83
+        "x": 682,
+        "y": 84
       }
     },
     {
@@ -147,8 +147,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 688,
-        "y": 86
+        "x": 691,
+        "y": 87
       }
     },
     {
@@ -162,8 +162,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 630,
-        "y": 554
+        "x": 792,
+        "y": 408
       }
     },
     {
@@ -177,7 +177,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 370,
+        "x": 630,
         "y": 554
       }
     },
@@ -192,8 +192,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 696,
-        "y": 89
+        "x": 699,
+        "y": 90
       }
     },
     {
@@ -207,8 +207,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 704,
-        "y": 92
+        "x": 707,
+        "y": 93
       }
     },
     {
@@ -222,8 +222,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 712,
-        "y": 95
+        "x": 716,
+        "y": 96
       }
     },
     {
@@ -237,8 +237,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 720,
-        "y": 98
+        "x": 724,
+        "y": 100
       }
     },
     {
@@ -252,8 +252,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 728,
-        "y": 102
+        "x": 732,
+        "y": 103
       }
     },
     {
@@ -267,8 +267,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 208,
-        "y": 408
+        "x": 370,
+        "y": 554
       }
     },
     {
@@ -282,8 +282,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 736,
-        "y": 105
+        "x": 740,
+        "y": 107
       }
     },
     {
@@ -297,8 +297,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 265,
-        "y": 226
+        "x": 208,
+        "y": 408
       }
     },
     {
@@ -312,8 +312,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 744,
-        "y": 109
+        "x": 747,
+        "y": 111
       }
     },
     {
@@ -327,8 +327,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 751,
-        "y": 112
+        "x": 755,
+        "y": 114
       }
     },
     {
@@ -342,8 +342,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 759,
-        "y": 116
+        "x": 763,
+        "y": 118
       }
     },
     {
@@ -357,8 +357,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 766,
-        "y": 120
+        "x": 770,
+        "y": 123
       }
     },
     {
@@ -372,8 +372,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 773,
-        "y": 124
+        "x": 777,
+        "y": 127
       }
     },
     {
@@ -387,8 +387,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 780,
-        "y": 129
+        "x": 784,
+        "y": 131
       }
     },
     {
@@ -402,8 +402,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 787,
-        "y": 133
+        "x": 791,
+        "y": 136
       }
     },
     {
@@ -432,8 +432,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 794,
-        "y": 137
+        "x": 798,
+        "y": 140
       }
     },
     {
@@ -447,8 +447,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 801,
-        "y": 142
+        "x": 805,
+        "y": 145
       }
     },
     {
@@ -462,8 +462,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 807,
-        "y": 147
+        "x": 811,
+        "y": 150
       }
     },
     {
@@ -477,8 +477,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 814,
-        "y": 151
+        "x": 818,
+        "y": 155
       }
     },
     {
@@ -492,8 +492,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 820,
-        "y": 156
+        "x": 824,
+        "y": 160
       }
     },
     {
@@ -507,8 +507,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 826,
-        "y": 161
+        "x": 830,
+        "y": 165
       }
     },
     {
@@ -522,8 +522,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 832,
-        "y": 166
+        "x": 836,
+        "y": 170
       }
     },
     {
@@ -537,8 +537,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 838,
-        "y": 171
+        "x": 842,
+        "y": 175
       }
     },
     {
@@ -552,8 +552,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 843,
-        "y": 177
+        "x": 848,
+        "y": 180
       }
     },
     {
@@ -567,8 +567,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 849,
-        "y": 182
+        "x": 853,
+        "y": 186
       }
     },
     {
@@ -582,8 +582,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 854,
-        "y": 187
+        "x": 858,
+        "y": 191
       }
     },
     {
@@ -597,8 +597,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 859,
-        "y": 193
+        "x": 863,
+        "y": 197
       }
     },
     {
@@ -612,8 +612,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 864,
-        "y": 198
+        "x": 868,
+        "y": 203
       }
     },
     {
@@ -627,8 +627,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 869,
-        "y": 204
+        "x": 873,
+        "y": 208
       }
     },
     {
@@ -642,8 +642,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 874,
-        "y": 209
+        "x": 878,
+        "y": 214
       }
     },
     {
@@ -657,8 +657,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 878,
-        "y": 215
+        "x": 882,
+        "y": 220
       }
     },
     {
@@ -672,8 +672,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 883,
-        "y": 221
+        "x": 886,
+        "y": 226
       }
     },
     {
@@ -687,8 +687,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 887,
-        "y": 227
+        "x": 890,
+        "y": 232
       }
     },
     {
@@ -702,8 +702,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 891,
-        "y": 233
+        "x": 894,
+        "y": 238
       }
     },
     {
@@ -717,8 +717,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 895,
-        "y": 239
+        "x": 898,
+        "y": 244
       }
     },
     {
@@ -732,8 +732,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 898,
-        "y": 245
+        "x": 901,
+        "y": 251
       }
     },
     {
@@ -747,8 +747,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 902,
-        "y": 251
+        "x": 905,
+        "y": 257
       }
     },
     {
@@ -762,8 +762,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 905,
-        "y": 257
+        "x": 908,
+        "y": 263
       }
     },
     {
@@ -777,8 +777,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 500,
-        "y": 55
+        "x": 265,
+        "y": 226
       }
     },
     {
@@ -792,8 +792,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 908,
-        "y": 263
+        "x": 911,
+        "y": 270
       }
     },
     {
@@ -807,8 +807,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 911,
-        "y": 270
+        "x": 913,
+        "y": 276
       }
     },
     {
@@ -822,8 +822,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 913,
-        "y": 276
+        "x": 916,
+        "y": 282
       }
     },
     {
@@ -837,8 +837,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 916,
-        "y": 282
+        "x": 918,
+        "y": 289
       }
     },
     {
@@ -852,8 +852,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 918,
-        "y": 288
+        "x": 920,
+        "y": 295
       }
     },
     {
@@ -867,8 +867,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 920,
-        "y": 295
+        "x": 922,
+        "y": 302
       }
     },
     {
@@ -882,8 +882,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 922,
-        "y": 301
+        "x": 924,
+        "y": 308
       }
     },
     {
@@ -897,8 +897,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 924,
-        "y": 308
+        "x": 925,
+        "y": 315
       }
     },
     {
@@ -912,8 +912,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 925,
-        "y": 314
+        "x": 927,
+        "y": 322
       }
     },
     {
@@ -927,8 +927,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 926,
-        "y": 321
+        "x": 928,
+        "y": 328
       }
     },
     {
@@ -942,8 +942,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 928,
-        "y": 327
+        "x": 929,
+        "y": 335
       }
     },
     {
@@ -957,8 +957,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 735,
-        "y": 226
+        "x": 500,
+        "y": 145
       }
     },
     {
@@ -972,8 +972,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 928,
-        "y": 334
+        "x": 929,
+        "y": 342
       }
     },
     {
@@ -987,8 +987,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 929,
-        "y": 340
+        "x": 930,
+        "y": 348
       }
     },
     {
@@ -1003,7 +1003,7 @@
       "status": "catalogued",
       "position": {
         "x": 930,
-        "y": 347
+        "y": 355
       }
     },
     {
@@ -1018,7 +1018,7 @@
       "status": "catalogued",
       "position": {
         "x": 930,
-        "y": 353
+        "y": 362
       }
     },
     {
@@ -1033,7 +1033,7 @@
       "status": "catalogued",
       "position": {
         "x": 930,
-        "y": 360
+        "y": 368
       }
     },
     {
@@ -1047,8 +1047,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 930,
-        "y": 367
+        "x": 929,
+        "y": 375
       }
     },
     {
@@ -1062,8 +1062,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 930,
-        "y": 373
+        "x": 929,
+        "y": 382
       }
     },
     {
@@ -1077,8 +1077,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 929,
-        "y": 380
+        "x": 928,
+        "y": 388
       }
     },
     {
@@ -1092,8 +1092,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 928,
-        "y": 386
+        "x": 927,
+        "y": 395
       }
     },
     {
@@ -1107,8 +1107,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 928,
-        "y": 393
+        "x": 926,
+        "y": 402
       }
     },
     {
@@ -1122,8 +1122,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 926,
-        "y": 399
+        "x": 925,
+        "y": 408
       }
     },
     {
@@ -1137,8 +1137,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 925,
-        "y": 406
+        "x": 923,
+        "y": 415
       }
     },
     {
@@ -1152,8 +1152,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 924,
-        "y": 412
+        "x": 921,
+        "y": 421
       }
     },
     {
@@ -1167,8 +1167,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 922,
-        "y": 419
+        "x": 919,
+        "y": 428
       }
     },
     {
@@ -1182,8 +1182,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 920,
-        "y": 425
+        "x": 917,
+        "y": 434
       }
     },
     {
@@ -1197,8 +1197,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 918,
-        "y": 432
+        "x": 915,
+        "y": 441
       }
     },
     {
@@ -1212,8 +1212,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 916,
-        "y": 438
+        "x": 912,
+        "y": 447
       }
     },
     {
@@ -1227,8 +1227,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 913,
-        "y": 444
+        "x": 909,
+        "y": 454
       }
     },
     {
@@ -1242,8 +1242,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 911,
-        "y": 450
+        "x": 906,
+        "y": 460
       }
     },
     {
@@ -1257,8 +1257,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 908,
-        "y": 457
+        "x": 903,
+        "y": 466
       }
     },
     {
@@ -1272,8 +1272,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 905,
-        "y": 463
+        "x": 900,
+        "y": 472
       }
     },
     {
@@ -1287,8 +1287,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 902,
-        "y": 469
+        "x": 896,
+        "y": 479
       }
     },
     {
@@ -1302,7 +1302,7 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 574,
+        "x": 575,
         "y": 60
       }
     },
@@ -1317,8 +1317,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 898,
-        "y": 475
+        "x": 892,
+        "y": 485
       }
     },
     {
@@ -1332,8 +1332,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 895,
-        "y": 481
+        "x": 888,
+        "y": 491
       }
     },
     {
@@ -1347,8 +1347,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 891,
-        "y": 487
+        "x": 884,
+        "y": 497
       }
     },
     {
@@ -1362,7 +1362,7 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 583,
+        "x": 584,
         "y": 61
       }
     },
@@ -1377,8 +1377,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 887,
-        "y": 493
+        "x": 880,
+        "y": 503
       }
     },
     {
@@ -1392,8 +1392,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 883,
-        "y": 499
+        "x": 875,
+        "y": 509
       }
     },
     {
@@ -1407,8 +1407,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 878,
-        "y": 505
+        "x": 871,
+        "y": 514
       }
     },
     {
@@ -1422,8 +1422,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 874,
-        "y": 511
+        "x": 866,
+        "y": 520
       }
     },
     {
@@ -1437,8 +1437,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 528,
-        "y": 56
+        "x": 519,
+        "y": 55
       }
     },
     {
@@ -1452,8 +1452,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 869,
-        "y": 516
+        "x": 861,
+        "y": 526
       }
     },
     {
@@ -1467,8 +1467,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 864,
-        "y": 522
+        "x": 856,
+        "y": 531
       }
     },
     {
@@ -1482,8 +1482,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 859,
-        "y": 527
+        "x": 850,
+        "y": 537
       }
     },
     {
@@ -1497,8 +1497,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 854,
-        "y": 533
+        "x": 845,
+        "y": 542
       }
     },
     {
@@ -1512,8 +1512,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 849,
-        "y": 538
+        "x": 839,
+        "y": 548
       }
     },
     {
@@ -1527,8 +1527,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 843,
-        "y": 543
+        "x": 833,
+        "y": 553
       }
     },
     {
@@ -1542,8 +1542,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 838,
-        "y": 549
+        "x": 827,
+        "y": 558
       }
     },
     {
@@ -1557,8 +1557,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 832,
-        "y": 554
+        "x": 821,
+        "y": 563
       }
     },
     {
@@ -1572,8 +1572,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 826,
-        "y": 559
+        "x": 815,
+        "y": 568
       }
     },
     {
@@ -1587,8 +1587,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 820,
-        "y": 564
+        "x": 808,
+        "y": 573
       }
     },
     {
@@ -1602,8 +1602,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 814,
-        "y": 569
+        "x": 802,
+        "y": 577
       }
     },
     {
@@ -1617,8 +1617,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 807,
-        "y": 573
+        "x": 795,
+        "y": 582
       }
     },
     {
@@ -1632,23 +1632,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 801,
-        "y": 578
-      }
-    },
-    {
-      "id": "fine-tuning",
-      "label": "微调",
-      "labelEn": "Fine-Tuning",
-      "url": "/terms/fine-tuning/",
-      "summary": "在已有模型基础上用特定数据继续训练，以适配领域、任务或行为目标的方法。",
-      "domain": "large-language-models-generative-ai",
-      "difficulty": "intermediate",
-      "ring": "core",
-      "status": "catalogued",
-      "position": {
-        "x": 794,
-        "y": 583
+        "x": 788,
+        "y": 587
       }
     },
     {
@@ -1662,8 +1647,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 787,
-        "y": 587
+        "x": 781,
+        "y": 591
       }
     },
     {
@@ -1677,8 +1662,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 780,
-        "y": 591
+        "x": 774,
+        "y": 595
       }
     },
     {
@@ -1692,8 +1677,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 773,
-        "y": 596
+        "x": 766,
+        "y": 599
       }
     },
     {
@@ -1707,8 +1692,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 766,
-        "y": 600
+        "x": 759,
+        "y": 604
       }
     },
     {
@@ -1722,8 +1707,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 759,
-        "y": 604
+        "x": 751,
+        "y": 608
       }
     },
     {
@@ -1737,8 +1722,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 751,
-        "y": 608
+        "x": 744,
+        "y": 611
       }
     },
     {
@@ -1752,7 +1737,7 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 546,
+        "x": 547,
         "y": 57
       }
     },
@@ -1767,8 +1752,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 744,
-        "y": 611
+        "x": 736,
+        "y": 615
       }
     },
     {
@@ -1782,8 +1767,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 736,
-        "y": 615
+        "x": 728,
+        "y": 619
       }
     },
     {
@@ -1797,8 +1782,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 728,
-        "y": 618
+        "x": 720,
+        "y": 622
       }
     },
     {
@@ -1812,8 +1797,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 720,
-        "y": 622
+        "x": 712,
+        "y": 626
       }
     },
     {
@@ -1827,8 +1812,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 712,
-        "y": 625
+        "x": 703,
+        "y": 629
       }
     },
     {
@@ -1842,8 +1827,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 704,
-        "y": 628
+        "x": 695,
+        "y": 632
       }
     },
     {
@@ -1857,8 +1842,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 696,
-        "y": 631
+        "x": 687,
+        "y": 635
       }
     },
     {
@@ -1872,7 +1857,7 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 555,
+        "x": 556,
         "y": 58
       }
     },
@@ -1887,8 +1872,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 688,
-        "y": 634
+        "x": 678,
+        "y": 638
       }
     },
     {
@@ -1902,8 +1887,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 679,
-        "y": 637
+        "x": 669,
+        "y": 640
       }
     },
     {
@@ -1917,8 +1902,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 671,
-        "y": 640
+        "x": 661,
+        "y": 643
       }
     },
     {
@@ -1932,8 +1917,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 662,
-        "y": 642
+        "x": 652,
+        "y": 645
       }
     },
     {
@@ -1947,8 +1932,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 654,
-        "y": 645
+        "x": 643,
+        "y": 648
       }
     },
     {
@@ -1962,8 +1947,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 645,
-        "y": 647
+        "x": 634,
+        "y": 650
       }
     },
     {
@@ -1977,8 +1962,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 636,
-        "y": 649
+        "x": 625,
+        "y": 652
       }
     },
     {
@@ -1992,8 +1977,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 628,
-        "y": 651
+        "x": 616,
+        "y": 654
       }
     },
     {
@@ -2007,8 +1992,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 619,
-        "y": 653
+        "x": 607,
+        "y": 655
       }
     },
     {
@@ -2022,8 +2007,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 610,
-        "y": 655
+        "x": 598,
+        "y": 657
       }
     },
     {
@@ -2037,8 +2022,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 601,
-        "y": 656
+        "x": 589,
+        "y": 658
       }
     },
     {
@@ -2052,8 +2037,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 592,
-        "y": 658
+        "x": 580,
+        "y": 660
       }
     },
     {
@@ -2067,8 +2052,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 583,
-        "y": 659
+        "x": 570,
+        "y": 661
       }
     },
     {
@@ -2082,8 +2067,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 574,
-        "y": 660
+        "x": 561,
+        "y": 662
       }
     },
     {
@@ -2097,23 +2082,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 565,
-        "y": 662
-      }
-    },
-    {
-      "id": "inference",
-      "label": "模型推理",
-      "labelEn": "Model Inference",
-      "url": "/terms/inference/",
-      "summary": "使用训练完成的模型处理新输入并生成预测或内容的过程，是用户实际调用模型的阶段。",
-      "domain": "large-language-models-generative-ai",
-      "difficulty": "beginner",
-      "ring": "core",
-      "status": "catalogued",
-      "position": {
-        "x": 555,
-        "y": 662
+        "x": 552,
+        "y": 663
       }
     },
     {
@@ -2127,8 +2097,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 546,
-        "y": 663
+        "x": 542,
+        "y": 664
       }
     },
     {
@@ -2142,7 +2112,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 537,
+        "x": 533,
         "y": 664
       }
     },
@@ -2157,8 +2127,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 528,
-        "y": 664
+        "x": 524,
+        "y": 665
       }
     },
     {
@@ -2172,22 +2142,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 518,
-        "y": 665
-      }
-    },
-    {
-      "id": "instruction-tuning",
-      "label": "指令微调",
-      "labelEn": "Instruction Tuning",
-      "url": "/terms/instruction-tuning/",
-      "summary": "使用指令与期望回答数据继续训练模型，使其更能理解任务描述并按要求输出。",
-      "domain": "large-language-models-generative-ai",
-      "difficulty": "intermediate",
-      "ring": "core",
-      "status": "catalogued",
-      "position": {
-        "x": 509,
+        "x": 514,
         "y": 665
       }
     },
@@ -2202,7 +2157,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 500,
+        "x": 505,
         "y": 665
       }
     },
@@ -2217,7 +2172,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 491,
+        "x": 495,
         "y": 665
       }
     },
@@ -2232,7 +2187,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 482,
+        "x": 486,
         "y": 665
       }
     },
@@ -2247,8 +2202,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 472,
-        "y": 664
+        "x": 476,
+        "y": 665
       }
     },
     {
@@ -2262,8 +2217,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 500,
-        "y": 145
+        "x": 528,
+        "y": 56
       }
     },
     {
@@ -2277,7 +2232,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 463,
+        "x": 467,
         "y": 664
       }
     },
@@ -2292,8 +2247,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 454,
-        "y": 663
+        "x": 458,
+        "y": 664
       }
     },
     {
@@ -2307,8 +2262,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 445,
-        "y": 662
+        "x": 448,
+        "y": 663
       }
     },
     {
@@ -2322,7 +2277,7 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 435,
+        "x": 439,
         "y": 662
       }
     },
@@ -2337,8 +2292,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 426,
-        "y": 660
+        "x": 430,
+        "y": 661
       }
     },
     {
@@ -2352,8 +2307,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 417,
-        "y": 659
+        "x": 420,
+        "y": 660
       }
     },
     {
@@ -2367,7 +2322,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 408,
+        "x": 411,
         "y": 658
       }
     },
@@ -2382,8 +2337,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 399,
-        "y": 656
+        "x": 402,
+        "y": 657
       }
     },
     {
@@ -2397,7 +2352,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 390,
+        "x": 393,
         "y": 655
       }
     },
@@ -2412,8 +2367,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 381,
-        "y": 653
+        "x": 384,
+        "y": 654
       }
     },
     {
@@ -2427,8 +2382,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 372,
-        "y": 651
+        "x": 375,
+        "y": 652
       }
     },
     {
@@ -2442,8 +2397,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 364,
-        "y": 649
+        "x": 366,
+        "y": 650
       }
     },
     {
@@ -2457,7 +2412,7 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 509,
+        "x": 500,
         "y": 55
       }
     },
@@ -2472,8 +2427,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 355,
-        "y": 647
+        "x": 357,
+        "y": 648
       }
     },
     {
@@ -2487,7 +2442,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 346,
+        "x": 348,
         "y": 645
       }
     },
@@ -2502,8 +2457,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 338,
-        "y": 642
+        "x": 339,
+        "y": 643
       }
     },
     {
@@ -2517,7 +2472,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 329,
+        "x": 331,
         "y": 640
       }
     },
@@ -2532,8 +2487,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 321,
-        "y": 637
+        "x": 322,
+        "y": 638
       }
     },
     {
@@ -2547,8 +2502,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 312,
-        "y": 634
+        "x": 313,
+        "y": 635
       }
     },
     {
@@ -2562,8 +2517,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 304,
-        "y": 631
+        "x": 305,
+        "y": 632
       }
     },
     {
@@ -2577,8 +2532,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 296,
-        "y": 628
+        "x": 297,
+        "y": 629
       }
     },
     {
@@ -2593,7 +2548,7 @@
       "status": "catalogued",
       "position": {
         "x": 288,
-        "y": 625
+        "y": 626
       }
     },
     {
@@ -2623,7 +2578,7 @@
       "status": "catalogued",
       "position": {
         "x": 272,
-        "y": 618
+        "y": 619
       }
     },
     {
@@ -2682,7 +2637,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 518,
+        "x": 509,
         "y": 55
       }
     },
@@ -2713,7 +2668,7 @@
       "status": "catalogued",
       "position": {
         "x": 234,
-        "y": 600
+        "y": 599
       }
     },
     {
@@ -2727,8 +2682,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 227,
-        "y": 596
+        "x": 226,
+        "y": 595
       }
     },
     {
@@ -2742,7 +2697,7 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 220,
+        "x": 219,
         "y": 591
       }
     },
@@ -2757,7 +2712,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 213,
+        "x": 212,
         "y": 587
       }
     },
@@ -2772,8 +2727,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 206,
-        "y": 583
+        "x": 205,
+        "y": 582
       }
     },
     {
@@ -2787,8 +2742,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 199,
-        "y": 578
+        "x": 198,
+        "y": 577
       }
     },
     {
@@ -2802,7 +2757,7 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 193,
+        "x": 192,
         "y": 573
       }
     },
@@ -2817,8 +2772,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 186,
-        "y": 569
+        "x": 185,
+        "y": 568
       }
     },
     {
@@ -2832,8 +2787,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 180,
-        "y": 564
+        "x": 179,
+        "y": 563
       }
     },
     {
@@ -2847,8 +2802,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 174,
-        "y": 559
+        "x": 173,
+        "y": 558
       }
     },
     {
@@ -2862,8 +2817,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 168,
-        "y": 554
+        "x": 167,
+        "y": 553
       }
     },
     {
@@ -2877,8 +2832,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 162,
-        "y": 549
+        "x": 161,
+        "y": 548
       }
     },
     {
@@ -2892,8 +2847,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 157,
-        "y": 543
+        "x": 155,
+        "y": 542
       }
     },
     {
@@ -2907,8 +2862,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 151,
-        "y": 538
+        "x": 150,
+        "y": 537
       }
     },
     {
@@ -2922,8 +2877,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 146,
-        "y": 533
+        "x": 144,
+        "y": 531
       }
     },
     {
@@ -2937,8 +2892,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 141,
-        "y": 527
+        "x": 139,
+        "y": 526
       }
     },
     {
@@ -2952,8 +2907,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 136,
-        "y": 522
+        "x": 134,
+        "y": 520
       }
     },
     {
@@ -2967,8 +2922,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 131,
-        "y": 516
+        "x": 129,
+        "y": 514
       }
     },
     {
@@ -2982,8 +2937,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 126,
-        "y": 511
+        "x": 125,
+        "y": 509
       }
     },
     {
@@ -2997,8 +2952,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 122,
-        "y": 505
+        "x": 120,
+        "y": 503
       }
     },
     {
@@ -3012,8 +2967,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 117,
-        "y": 499
+        "x": 116,
+        "y": 497
       }
     },
     {
@@ -3027,23 +2982,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 113,
-        "y": 493
-      }
-    },
-    {
-      "id": "post-training",
-      "label": "后训练",
-      "labelEn": "Post-Training",
-      "url": "/terms/post-training/",
-      "summary": "在预训练之后通过指令数据、偏好反馈或安全方法调整模型行为与可用性的训练阶段。",
-      "domain": "large-language-models-generative-ai",
-      "difficulty": "intermediate",
-      "ring": "core",
-      "status": "catalogued",
-      "position": {
-        "x": 109,
-        "y": 487
+        "x": 112,
+        "y": 491
       }
     },
     {
@@ -3057,8 +2997,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 105,
-        "y": 481
+        "x": 108,
+        "y": 485
       }
     },
     {
@@ -3072,8 +3012,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 102,
-        "y": 475
+        "x": 104,
+        "y": 479
       }
     },
     {
@@ -3087,8 +3027,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 98,
-        "y": 469
+        "x": 100,
+        "y": 472
       }
     },
     {
@@ -3102,8 +3042,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 95,
-        "y": 463
+        "x": 97,
+        "y": 466
       }
     },
     {
@@ -3117,8 +3057,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 92,
-        "y": 457
+        "x": 94,
+        "y": 460
       }
     },
     {
@@ -3132,8 +3072,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 89,
-        "y": 450
+        "x": 91,
+        "y": 454
       }
     },
     {
@@ -3147,8 +3087,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 87,
-        "y": 444
+        "x": 88,
+        "y": 447
       }
     },
     {
@@ -3162,8 +3102,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 84,
-        "y": 438
+        "x": 85,
+        "y": 441
       }
     },
     {
@@ -3177,8 +3117,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 82,
-        "y": 432
+        "x": 83,
+        "y": 434
       }
     },
     {
@@ -3192,8 +3132,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 80,
-        "y": 425
+        "x": 81,
+        "y": 428
       }
     },
     {
@@ -3207,8 +3147,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 78,
-        "y": 419
+        "x": 79,
+        "y": 421
       }
     },
     {
@@ -3222,8 +3162,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 76,
-        "y": 412
+        "x": 77,
+        "y": 415
       }
     },
     {
@@ -3238,7 +3178,7 @@
       "status": "catalogued",
       "position": {
         "x": 75,
-        "y": 406
+        "y": 408
       }
     },
     {
@@ -3253,7 +3193,7 @@
       "status": "catalogued",
       "position": {
         "x": 74,
-        "y": 399
+        "y": 402
       }
     },
     {
@@ -3267,8 +3207,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 72,
-        "y": 393
+        "x": 73,
+        "y": 395
       }
     },
     {
@@ -3283,7 +3223,7 @@
       "status": "catalogued",
       "position": {
         "x": 72,
-        "y": 386
+        "y": 388
       }
     },
     {
@@ -3298,7 +3238,7 @@
       "status": "catalogued",
       "position": {
         "x": 71,
-        "y": 380
+        "y": 382
       }
     },
     {
@@ -3312,8 +3252,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 70,
-        "y": 373
+        "x": 71,
+        "y": 375
       }
     },
     {
@@ -3328,7 +3268,7 @@
       "status": "catalogued",
       "position": {
         "x": 70,
-        "y": 367
+        "y": 368
       }
     },
     {
@@ -3343,7 +3283,7 @@
       "status": "catalogued",
       "position": {
         "x": 70,
-        "y": 360
+        "y": 362
       }
     },
     {
@@ -3358,7 +3298,7 @@
       "status": "catalogued",
       "position": {
         "x": 70,
-        "y": 353
+        "y": 355
       }
     },
     {
@@ -3373,7 +3313,7 @@
       "status": "verified",
       "position": {
         "x": 70,
-        "y": 347
+        "y": 348
       }
     },
     {
@@ -3388,7 +3328,7 @@
       "status": "catalogued",
       "position": {
         "x": 71,
-        "y": 340
+        "y": 342
       }
     },
     {
@@ -3402,8 +3342,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 72,
-        "y": 334
+        "x": 71,
+        "y": 335
       }
     },
     {
@@ -3418,7 +3358,7 @@
       "status": "catalogued",
       "position": {
         "x": 72,
-        "y": 327
+        "y": 328
       }
     },
     {
@@ -3432,7 +3372,7 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 592,
+        "x": 593,
         "y": 62
       }
     },
@@ -3447,8 +3387,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 74,
-        "y": 321
+        "x": 73,
+        "y": 322
       }
     },
     {
@@ -3463,7 +3403,7 @@
       "status": "catalogued",
       "position": {
         "x": 75,
-        "y": 314
+        "y": 315
       }
     },
     {
@@ -3477,7 +3417,7 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 537,
+        "x": 538,
         "y": 56
       }
     },
@@ -3492,8 +3432,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 792,
-        "y": 408
+        "x": 735,
+        "y": 226
       }
     },
     {
@@ -3523,7 +3463,7 @@
       "status": "catalogued",
       "position": {
         "x": 78,
-        "y": 301
+        "y": 302
       }
     },
     {
@@ -3553,7 +3493,7 @@
       "status": "catalogued",
       "position": {
         "x": 82,
-        "y": 288
+        "y": 289
       }
     },
     {
@@ -3642,7 +3582,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 98,
+        "x": 99,
         "y": 251
       }
     },
@@ -3658,7 +3598,7 @@
       "status": "catalogued",
       "position": {
         "x": 102,
-        "y": 245
+        "y": 244
       }
     },
     {
@@ -3672,8 +3612,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 105,
-        "y": 239
+        "x": 106,
+        "y": 238
       }
     },
     {
@@ -3687,8 +3627,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 109,
-        "y": 233
+        "x": 110,
+        "y": 232
       }
     },
     {
@@ -3702,8 +3642,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 113,
-        "y": 227
+        "x": 114,
+        "y": 226
       }
     },
     {
@@ -3717,8 +3657,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 117,
-        "y": 221
+        "x": 118,
+        "y": 220
       }
     },
     {
@@ -3733,7 +3673,7 @@
       "status": "catalogued",
       "position": {
         "x": 122,
-        "y": 215
+        "y": 214
       }
     },
     {
@@ -3747,8 +3687,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 126,
-        "y": 209
+        "x": 127,
+        "y": 208
       }
     },
     {
@@ -3762,8 +3702,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 131,
-        "y": 204
+        "x": 132,
+        "y": 203
       }
     },
     {
@@ -3777,8 +3717,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 136,
-        "y": 198
+        "x": 137,
+        "y": 197
       }
     },
     {
@@ -3792,8 +3732,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 141,
-        "y": 193
+        "x": 142,
+        "y": 191
       }
     },
     {
@@ -3807,8 +3747,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 146,
-        "y": 187
+        "x": 147,
+        "y": 186
       }
     },
     {
@@ -3822,8 +3762,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 151,
-        "y": 182
+        "x": 152,
+        "y": 180
       }
     },
     {
@@ -3837,8 +3777,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 157,
-        "y": 177
+        "x": 158,
+        "y": 175
       }
     },
     {
@@ -3852,8 +3792,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 162,
-        "y": 171
+        "x": 164,
+        "y": 170
       }
     },
     {
@@ -3867,8 +3807,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 168,
-        "y": 166
+        "x": 170,
+        "y": 165
       }
     },
     {
@@ -3882,8 +3822,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 174,
-        "y": 161
+        "x": 176,
+        "y": 160
       }
     },
     {
@@ -3897,8 +3837,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 180,
-        "y": 156
+        "x": 182,
+        "y": 155
       }
     },
     {
@@ -3912,8 +3852,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 186,
-        "y": 151
+        "x": 189,
+        "y": 150
       }
     },
     {
@@ -3927,8 +3867,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 193,
-        "y": 147
+        "x": 195,
+        "y": 145
       }
     },
     {
@@ -3942,8 +3882,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 199,
-        "y": 142
+        "x": 202,
+        "y": 140
       }
     },
     {
@@ -3957,23 +3897,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 206,
-        "y": 137
-      }
-    },
-    {
-      "id": "temperature",
-      "label": "温度参数",
-      "labelEn": "Temperature",
-      "url": "/terms/temperature/",
-      "summary": "调整生成概率分布平滑程度的参数，较低值通常更稳定，较高值通常增加多样性。",
-      "domain": "large-language-models-generative-ai",
-      "difficulty": "beginner",
-      "ring": "core",
-      "status": "catalogued",
-      "position": {
-        "x": 213,
-        "y": 133
+        "x": 209,
+        "y": 136
       }
     },
     {
@@ -3987,8 +3912,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 220,
-        "y": 129
+        "x": 216,
+        "y": 131
       }
     },
     {
@@ -4002,8 +3927,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 227,
-        "y": 124
+        "x": 223,
+        "y": 127
       }
     },
     {
@@ -4017,8 +3942,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 234,
-        "y": 120
+        "x": 230,
+        "y": 123
       }
     },
     {
@@ -4032,8 +3957,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 241,
-        "y": 116
+        "x": 237,
+        "y": 118
       }
     },
     {
@@ -4047,8 +3972,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 565,
-        "y": 58
+        "x": 566,
+        "y": 59
       }
     },
     {
@@ -4062,8 +3987,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 249,
-        "y": 112
+        "x": 245,
+        "y": 114
       }
     },
     {
@@ -4077,8 +4002,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 256,
-        "y": 109
+        "x": 253,
+        "y": 111
       }
     },
     {
@@ -4092,8 +4017,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 264,
-        "y": 105
+        "x": 260,
+        "y": 107
       }
     },
     {
@@ -4107,8 +4032,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 272,
-        "y": 102
+        "x": 268,
+        "y": 103
       }
     },
     {
@@ -4122,8 +4047,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 280,
-        "y": 98
+        "x": 276,
+        "y": 100
       }
     },
     {
@@ -4137,8 +4062,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 288,
-        "y": 95
+        "x": 284,
+        "y": 96
       }
     },
     {
@@ -4152,8 +4077,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 296,
-        "y": 92
+        "x": 293,
+        "y": 93
       }
     },
     {
@@ -4167,8 +4092,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 304,
-        "y": 89
+        "x": 301,
+        "y": 90
       }
     },
     {
@@ -4182,8 +4107,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 312,
-        "y": 86
+        "x": 309,
+        "y": 87
       }
     },
     {
@@ -4197,8 +4122,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 321,
-        "y": 83
+        "x": 318,
+        "y": 84
       }
     },
     {
@@ -4212,8 +4137,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 329,
-        "y": 80
+        "x": 326,
+        "y": 81
       }
     },
     {
@@ -4227,7 +4152,7 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 338,
+        "x": 335,
         "y": 78
       }
     },
@@ -4242,8 +4167,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 346,
-        "y": 75
+        "x": 344,
+        "y": 76
       }
     },
     {
@@ -4257,8 +4182,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 355,
-        "y": 73
+        "x": 352,
+        "y": 74
       }
     },
     {
@@ -4272,7 +4197,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 364,
+        "x": 361,
         "y": 71
       }
     },
@@ -4287,7 +4212,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 372,
+        "x": 370,
         "y": 69
       }
     },
@@ -4302,7 +4227,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 381,
+        "x": 379,
         "y": 67
       }
     },
@@ -4317,7 +4242,7 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 390,
+        "x": 388,
         "y": 65
       }
     },
@@ -4332,7 +4257,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 399,
+        "x": 397,
         "y": 64
       }
     },
@@ -4347,7 +4272,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 408,
+        "x": 407,
         "y": 62
       }
     },
@@ -4362,7 +4287,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 417,
+        "x": 416,
         "y": 61
       }
     },
@@ -4377,7 +4302,7 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 601,
+        "x": 603,
         "y": 64
       }
     },
@@ -4392,7 +4317,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 426,
+        "x": 425,
         "y": 60
       }
     },
@@ -4407,8 +4332,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 435,
-        "y": 58
+        "x": 434,
+        "y": 59
       }
     },
     {
@@ -4422,7 +4347,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 445,
+        "x": 444,
         "y": 58
       }
     },
@@ -4437,7 +4362,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 454,
+        "x": 453,
         "y": 57
       }
     },
@@ -4452,7 +4377,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 463,
+        "x": 462,
         "y": 56
       }
     },
@@ -4482,7 +4407,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 482,
+        "x": 481,
         "y": 55
       }
     },
@@ -5288,13 +5213,6 @@
       "explanation": "少样本提示是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
-      "id": "fine-tuning-connected-to-large-language-model",
-      "source": "fine-tuning",
-      "target": "large-language-model",
-      "type": "application",
-      "explanation": "微调是理解和应用大语言模型时的重要概念，可帮助判断相关机制、场景或实现取舍。"
-    },
-    {
       "id": "flops-connected-to-compute",
       "source": "flops",
       "target": "compute",
@@ -5512,13 +5430,6 @@
       "explanation": "推理算力是理解和应用算力时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
-      "id": "inference-connected-to-large-language-model",
-      "source": "inference",
-      "target": "large-language-model",
-      "type": "application",
-      "explanation": "模型推理是理解和应用大语言模型时的重要概念，可帮助判断相关机制、场景或实现取舍。"
-    },
-    {
       "id": "inference-server-connected-to-ai-application",
       "source": "inference-server",
       "target": "ai-application",
@@ -5538,13 +5449,6 @@
       "target": "context-window",
       "type": "application",
       "explanation": "指令层级是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。"
-    },
-    {
-      "id": "instruction-tuning-connected-to-large-language-model",
-      "source": "instruction-tuning",
-      "target": "large-language-model",
-      "type": "application",
-      "explanation": "指令微调是理解和应用大语言模型时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
       "id": "jailbreak-connected-to-ai-safety",
@@ -5951,13 +5855,6 @@
       "target": "artificial-intelligence",
       "type": "application",
       "explanation": "感知机历史是理解和应用人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
-    },
-    {
-      "id": "post-training-connected-to-large-language-model",
-      "source": "post-training",
-      "target": "large-language-model",
-      "type": "application",
-      "explanation": "后训练是理解和应用大语言模型时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
       "id": "pretraining-connected-to-large-language-model",
@@ -6392,13 +6289,6 @@
       "target": "ai-product",
       "type": "application",
       "explanation": "任务成功率是理解和应用AI 产品时的重要概念，可帮助判断相关机制、场景或实现取舍。"
-    },
-    {
-      "id": "temperature-connected-to-large-language-model",
-      "source": "temperature",
-      "target": "large-language-model",
-      "type": "application",
-      "explanation": "温度参数是理解和应用大语言模型时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
       "id": "tensor-parallelism-connected-to-compute",
@@ -9049,15 +8939,6 @@
         "explanation": "少样本提示是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
-    "fine-tuning": [
-      {
-        "edgeId": "fine-tuning-connected-to-large-language-model",
-        "neighbor": "large-language-model",
-        "type": "application",
-        "direction": "outgoing",
-        "explanation": "微调是理解和应用大语言模型时的重要概念，可帮助判断相关机制、场景或实现取舍。"
-      }
-    ],
     "flops": [
       {
         "edgeId": "flops-connected-to-compute",
@@ -9363,15 +9244,6 @@
         "explanation": "索引管线是理解和应用检索增强生成时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
-    "inference": [
-      {
-        "edgeId": "inference-connected-to-large-language-model",
-        "neighbor": "large-language-model",
-        "type": "application",
-        "direction": "outgoing",
-        "explanation": "模型推理是理解和应用大语言模型时的重要概念，可帮助判断相关机制、场景或实现取舍。"
-      }
-    ],
     "inference-compute": [
       {
         "edgeId": "inference-compute-connected-to-compute",
@@ -9406,15 +9278,6 @@
         "type": "application",
         "direction": "outgoing",
         "explanation": "指令层级是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。"
-      }
-    ],
-    "instruction-tuning": [
-      {
-        "edgeId": "instruction-tuning-connected-to-large-language-model",
-        "neighbor": "large-language-model",
-        "type": "application",
-        "direction": "outgoing",
-        "explanation": "指令微调是理解和应用大语言模型时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
     "jailbreak": [
@@ -9483,32 +9346,11 @@
         "explanation": "模型蒸馏是理解和应用大语言模型时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       },
       {
-        "edgeId": "fine-tuning-connected-to-large-language-model",
-        "neighbor": "fine-tuning",
-        "type": "application",
-        "direction": "incoming",
-        "explanation": "微调是理解和应用大语言模型时的重要概念，可帮助判断相关机制、场景或实现取舍。"
-      },
-      {
         "edgeId": "foundation-model-connected-to-large-language-model",
         "neighbor": "foundation-model",
         "type": "application",
         "direction": "incoming",
         "explanation": "基础模型是理解和应用大语言模型时的重要概念，可帮助判断相关机制、场景或实现取舍。"
-      },
-      {
-        "edgeId": "inference-connected-to-large-language-model",
-        "neighbor": "inference",
-        "type": "application",
-        "direction": "incoming",
-        "explanation": "模型推理是理解和应用大语言模型时的重要概念，可帮助判断相关机制、场景或实现取舍。"
-      },
-      {
-        "edgeId": "instruction-tuning-connected-to-large-language-model",
-        "neighbor": "instruction-tuning",
-        "type": "application",
-        "direction": "incoming",
-        "explanation": "指令微调是理解和应用大语言模型时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       },
       {
         "edgeId": "lora-connected-to-large-language-model",
@@ -9553,13 +9395,6 @@
         "explanation": "参数高效微调是理解和应用大语言模型时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       },
       {
-        "edgeId": "post-training-connected-to-large-language-model",
-        "neighbor": "post-training",
-        "type": "application",
-        "direction": "incoming",
-        "explanation": "后训练是理解和应用大语言模型时的重要概念，可帮助判断相关机制、场景或实现取舍。"
-      },
-      {
         "edgeId": "pretraining-connected-to-large-language-model",
         "neighbor": "pretraining",
         "type": "application",
@@ -9593,13 +9428,6 @@
         "type": "application",
         "direction": "incoming",
         "explanation": "自注意力是理解和应用大语言模型时的重要概念，可帮助判断相关机制、场景或实现取舍。"
-      },
-      {
-        "edgeId": "temperature-connected-to-large-language-model",
-        "neighbor": "temperature",
-        "type": "application",
-        "direction": "incoming",
-        "explanation": "温度参数是理解和应用大语言模型时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       },
       {
         "edgeId": "tokenizer-connected-to-large-language-model",
@@ -10446,15 +10274,6 @@
         "explanation": "感知机历史是理解和应用人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
-    "post-training": [
-      {
-        "edgeId": "post-training-connected-to-large-language-model",
-        "neighbor": "large-language-model",
-        "type": "application",
-        "direction": "outgoing",
-        "explanation": "后训练是理解和应用大语言模型时的重要概念，可帮助判断相关机制、场景或实现取舍。"
-      }
-    ],
     "pretraining": [
       {
         "edgeId": "pretraining-connected-to-large-language-model",
@@ -11226,15 +11045,6 @@
         "type": "application",
         "direction": "outgoing",
         "explanation": "任务成功率是理解和应用AI 产品时的重要概念，可帮助判断相关机制、场景或实现取舍。"
-      }
-    ],
-    "temperature": [
-      {
-        "edgeId": "temperature-connected-to-large-language-model",
-        "neighbor": "large-language-model",
-        "type": "application",
-        "direction": "outgoing",
-        "explanation": "温度参数是理解和应用大语言模型时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
     "tensor-parallelism": [

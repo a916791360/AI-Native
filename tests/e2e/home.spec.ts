@@ -1,12 +1,25 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 import { readFileSync } from 'node:fs';
+import { parse as parseYaml } from 'yaml';
 
 import { searchCasesForTerms } from '../fixtures/search/queries';
 
 const registry = JSON.parse(
   readFileSync(new URL('../../src/generated/term-registry.json', import.meta.url), 'utf8'),
-) as { terms: { id: string }[] };
+) as { terms: { id: string; domain: string }[] };
+const graphData = JSON.parse(
+  readFileSync(new URL('../../src/generated/graph.json', import.meta.url), 'utf8'),
+) as { nodes: unknown[]; edges: unknown[] };
+const domains = parseYaml(
+  readFileSync(new URL('../../src/data/domains.yml', import.meta.url), 'utf8'),
+) as { id: string; ring: 'core' | 'extended' }[];
+const coreDomainIds = new Set(domains.filter(({ ring }) => ring === 'core').map(({ id }) => id));
+const PUBLIC_TERM_COUNT = String(registry.terms.length);
+const PUBLIC_CORE_TERM_COUNT = String(
+  registry.terms.filter(({ domain }) => coreDomainIds.has(domain)).length,
+);
+const PUBLIC_RELATION_COUNT = String(graphData.edges.length);
 const PUBLIC_SEARCH_CASES = searchCasesForTerms(registry.terms.map(({ id }) => id));
 
 test('renders the approved direction 1 identity and primary paths', async ({ page, isMobile }) => {
@@ -48,7 +61,7 @@ test('derives the homepage routes, domains and content scale from project data',
   ).toHaveText('35');
   await expect(
     page.locator('.scope-heading dl div', { hasText: '概念关系' }).locator('dd'),
-  ).toHaveText('308');
+  ).toHaveText(PUBLIC_RELATION_COUNT);
   await expect(page.locator('.featured-register a')).toHaveCount(6);
 });
 
@@ -325,9 +338,9 @@ test('uses the shared search aggregator from the term atlas', async ({ page }) =
 test('filters and sorts the structured atlas index', async ({ page }) => {
   await page.goto('/atlas/');
 
-  await expect(page.locator('[data-atlas-visible]')).toHaveText('300');
+  await expect(page.locator('[data-atlas-visible]')).toHaveText(PUBLIC_TERM_COUNT);
   await page.getByLabel('领域范围').selectOption('core');
-  await expect(page.locator('[data-atlas-visible]')).toHaveText('225');
+  await expect(page.locator('[data-atlas-visible]')).toHaveText(PUBLIC_CORE_TERM_COUNT);
   await expect(page.locator('[data-atlas-domain]:visible')).toHaveCount(9);
   await page.getByLabel('排序方式').selectOption('name');
   await expect(page).toHaveURL(/ring=core/);
@@ -388,7 +401,7 @@ test('loads the full graph lazily and supports focus, filters and viewport contr
     await page.locator('[data-graph-load]').click();
   }
   await expect(graph).toHaveAttribute('data-graph-state', 'ready');
-  await expect(graph).toHaveAttribute('data-graph-node-count', '300');
+  await expect(graph).toHaveAttribute('data-graph-node-count', String(graphData.nodes.length));
   await expect(graph).toHaveAttribute('data-graph-selected', 'token');
   await expect(graph.locator('[data-graph-detail-title]')).toHaveText('Token');
   expect(cytoscapeRequests).toHaveLength(1);

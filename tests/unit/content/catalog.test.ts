@@ -38,12 +38,16 @@ describe('stage 8 catalog plan', () => {
   it('publishes batches B, C and D as connected catalogue entries', async () => {
     const project = await loadProjectContent();
     const catalogued = project.terms.filter(({ data }) => data.status === 'catalogued');
+    const drafts = project.terms.filter(({ data }) => data.status === 'draft');
+    const verified = project.terms.filter(({ data }) => data.status === 'verified');
     const connected = new Set(
       project.relations.flatMap((relation) => [relation.source, relation.target]),
     );
 
     expect(project.terms).toHaveLength(300);
-    expect(catalogued).toHaveLength(265);
+    expect(catalogued).toHaveLength(260);
+    expect(drafts).toHaveLength(5);
+    expect(verified).toHaveLength(35);
     expect(catalogued.every(({ data }) => connected.has(data.id))).toBe(true);
   });
 });
