@@ -8,7 +8,10 @@ summary: 在一次模型交互中设定总体角色、规则和行为边界的�
 domain: prompt-context-engineering
 difficulty: beginner
 ring: core
-status: draft
+status: verified
+publishedAt: '2026-07-30'
+updatedAt: '2026-07-30'
+verifiedAt: '2026-07-30'
 priority: 1
 featured: false
 sources:
@@ -37,7 +40,7 @@ sources:
 
 <h2 id="how-it-works">它如何工作</h2>
 
-应用在调用模型时，把系统指令与用户消息、对话历史和其他上下文一起提交。模型根据协议识别不同来源及其优先顺序，再生成回答。OpenAI Model Spec 描述了系统、开发者和用户等指令层级；Anthropic Messages API 则把初始系统提示放在消息数组之外的顶层 `system` 参数中。[S1][S2] 因此，概念可以迁移，字段和优先规则必须按实际 API 复核。
+应用在调用模型时，把高层规则与用户消息、对话历史和其他上下文一起提交。模型根据协议识别不同来源及其优先顺序，再生成回答。OpenAI Model Spec 把平台提供的系统指令与应用客户提供的开发者指令分层；Anthropic Messages API 则把应用设置的初始系统提示放在消息数组之外的顶层 `system` 参数中。[S1][S2] 因此，概念可以迁移，字段和优先规则必须按实际 API 复核。
 
 <h2 id="example">真实例子</h2>
 
@@ -57,4 +60,4 @@ sources:
 
 <h2 id="sources-and-revisions">来源与修订</h2>
 
-指令层级与系统消息的作用参考 OpenAI Model Spec [S1]；顶层系统参数及用户、助手消息协议参考 Anthropic Messages API [S2]。本文刻意不把任一供应商的字段设计写成跨模型统一标准。
+OpenAI 的系统、开发者与用户指令层级参考 Model Spec [S1]；Anthropic 的顶层系统参数及用户、助手消息协议参考 Messages API [S2]。本文刻意不把任一供应商的字段设计写成跨模型统一标准。

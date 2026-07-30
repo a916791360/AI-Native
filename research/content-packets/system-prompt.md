@@ -1,7 +1,7 @@
 ---
 termId: system-prompt
 batch: collaboration-1
-status: draft
+status: verified
 accessedAt: '2026-07-30'
 sourceIds:
   - openai-model-spec-2025
@@ -9,7 +9,7 @@ sourceIds:
 timeBoundary: 系统级指令的产品作用相对稳定，但角色名称、传输位置、优先顺序和动态更新能力必须按具体模型 API 版本复核。
 claims:
   - id: application-level-instruction
-    statement: 系统提示词是由模型平台或应用提供的高层指令，用于设定整体行为、规则与边界，并与终端用户当轮提交的内容区分。
+    statement: 高层行为规则可以由模型平台或应用提供，但供应商对系统与应用指令的命名、传输位置和权限划分并不相同。
     evidenceType: definition
     sourceIds:
       - openai-model-spec-2025

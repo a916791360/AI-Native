@@ -1,7 +1,7 @@
 ---
 termId: few-shot-prompting
 batch: collaboration-1
-status: draft
+status: verified
 accessedAt: '2026-07-30'
 sourceIds:
   - gpt-3-paper

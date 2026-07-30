@@ -1502,6 +1502,26 @@
       ]
     },
     {
+      "id": "few-shot-prompting",
+      "url": "/terms/few-shot-prompting/",
+      "nameZh": "少样本提示",
+      "nameEn": "Few-Shot Prompting",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "在提示中提供少量输入输出示例，帮助模型从上下文推断任务模式和格式。",
+      "domain": "prompt-context-engineering",
+      "domainNameZh": "提示词与上下文工程",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "verified",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "少样本提示",
+        "few-shot prompting"
+      ]
+    },
+    {
       "id": "fine-tuning",
       "url": "/terms/fine-tuning/",
       "nameZh": "微调",
@@ -2929,6 +2949,26 @@
       ]
     },
     {
+      "id": "prompt-template",
+      "url": "/terms/prompt-template/",
+      "nameZh": "提示词模板",
+      "nameEn": "Prompt Template",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "把固定指令结构与可替换变量组合起来的提示格式，便于复用、版本管理和测试。",
+      "domain": "prompt-context-engineering",
+      "domainNameZh": "提示词与上下文工程",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "verified",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "提示词模板",
+        "prompt template"
+      ]
+    },
+    {
       "id": "query-rewriting",
       "url": "/terms/query-rewriting/",
       "nameZh": "查询改写",
@@ -3402,6 +3442,26 @@
       ]
     },
     {
+      "id": "structured-output",
+      "url": "/terms/structured-output/",
+      "nameZh": "结构化输出",
+      "nameEn": "Structured Output",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "要求模型按照 JSON、字段约束或其他机器可解析结构返回结果的输出方式。",
+      "domain": "prompt-context-engineering",
+      "domainNameZh": "提示词与上下文工程",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "verified",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "结构化输出",
+        "structured output"
+      ]
+    },
+    {
       "id": "supervised-learning",
       "url": "/terms/supervised-learning/",
       "nameZh": "监督学习",
@@ -3419,6 +3479,26 @@
       "searchKeys": [
         "监督学习",
         "supervised learning"
+      ]
+    },
+    {
+      "id": "system-prompt",
+      "url": "/terms/system-prompt/",
+      "nameZh": "系统提示词",
+      "nameEn": "System Prompt",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "在一次模型交互中设定总体角色、规则和行为边界的高层指令，通常由应用提供。",
+      "domain": "prompt-context-engineering",
+      "domainNameZh": "提示词与上下文工程",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "verified",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "系统提示词",
+        "system prompt"
       ]
     },
     {
@@ -3739,6 +3819,26 @@
       "searchKeys": [
         "用户控制权",
         "user control"
+      ]
+    },
+    {
+      "id": "user-prompt",
+      "url": "/terms/user-prompt/",
+      "nameZh": "用户提示词",
+      "nameEn": "User Prompt",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "用户在当前轮次提交的任务、问题和上下文，是模型生成回答的直接输入之一。",
+      "domain": "prompt-context-engineering",
+      "domainNameZh": "提示词与上下文工程",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "verified",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "用户提示词",
+        "user prompt"
       ]
     },
     {
