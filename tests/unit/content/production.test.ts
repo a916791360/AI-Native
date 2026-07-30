@@ -31,8 +31,35 @@ describe('stage 9 content production', () => {
       'verified',
       'verified',
     ]);
+    expect(plan.batches[2]).toMatchObject({
+      id: 'collaboration-1',
+      kind: 'collaboration',
+      status: 'planned',
+    });
+    expect(plan.batches[2]?.terms).toHaveLength(20);
+    expect(plan.batches[2]?.waves?.flatMap((wave) => wave.terms)).toEqual(plan.batches[2]?.terms);
+    expect(plan.batches[2]?.waves?.map(({ status }) => status)).toEqual([
+      'planned',
+      'planned',
+      'planned',
+      'planned',
+    ]);
     expect(deepContentTermIds(plan).size).toBe(28);
     expect(packets).toHaveLength(28);
+  });
+
+  it('enforces the approved collaboration batch size', async () => {
+    const [plan, packets, project] = await Promise.all([
+      loadContentProductionPlan(),
+      loadResearchPackets(),
+      loadProjectContent(),
+    ]);
+    const undersized = structuredClone(plan);
+    undersized.batches[2]!.terms = undersized.batches[2]!.terms.slice(0, 14);
+
+    expect(validateContentProduction(undersized, packets, project)).toContainEqual(
+      expect.objectContaining({ code: 'PRODUCTION_COLLABORATION_SIZE' }),
+    );
   });
 
   it('keeps planned waves outside protection and rejects premature packets', async () => {

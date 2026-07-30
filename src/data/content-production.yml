@@ -76,3 +76,64 @@ batches:
           - fine-tuning
           - inference
           - temperature
+  - id: collaboration-1
+    kind: collaboration
+    status: planned
+    terms:
+      - system-prompt
+      - user-prompt
+      - prompt-template
+      - few-shot-prompting
+      - structured-output
+      - context-engineering
+      - conversation-context
+      - instruction-hierarchy
+      - long-context
+      - context-compression
+      - task-decomposition
+      - prompt-chaining
+      - tool-use
+      - function-calling
+      - human-in-the-loop
+      - prompt-evaluation
+      - prompt-debugging
+      - prompt-versioning
+      - self-correction
+      - reflection
+    waves:
+      - id: prompt-structure
+        focus: 区分指令来源、复用结构、示例引导与可解析输出。
+        status: planned
+        terms:
+          - system-prompt
+          - user-prompt
+          - prompt-template
+          - few-shot-prompting
+          - structured-output
+      - id: context-management
+        focus: 组织对话信息、指令优先级、长上下文与压缩边界。
+        status: planned
+        terms:
+          - context-engineering
+          - conversation-context
+          - instruction-hierarchy
+          - long-context
+          - context-compression
+      - id: task-execution
+        focus: 把复杂任务拆解为可调用工具、可检查并有人类控制的步骤。
+        status: planned
+        terms:
+          - task-decomposition
+          - prompt-chaining
+          - tool-use
+          - function-calling
+          - human-in-the-loop
+      - id: review-and-improvement
+        focus: 用评测、调试、版本记录和反馈循环改进协作结果。
+        status: planned
+        terms:
+          - prompt-evaluation
+          - prompt-debugging
+          - prompt-versioning
+          - self-correction
+          - reflection
