@@ -8,7 +8,7 @@ summary: 要求模型按照 JSON、字段约束或其他机器可解析结构返
 domain: prompt-context-engineering
 difficulty: intermediate
 ring: core
-status: catalogued
+status: draft
 priority: 1
 featured: false
 sources:
@@ -25,3 +25,35 @@ sources:
     publisher: JSON Schema
     accessedAt: '2026-07-30'
 ---
+
+<h2 id="what-it-is">它是什么</h2>
+
+结构化输出是让模型按照预先定义的字段、类型和层级返回结果，使应用能够稳定解析。常见形式包括 JSON 对象、枚举标签和固定字段集合。JSON Schema 是描述 JSON 数据结构与约束的声明式语言；部分模型 API 能在生成阶段接收其支持的 Schema 子集。[S1][S2]
+
+<h2 id="why-it-matters">为什么需要它</h2>
+
+自然语言回答适合阅读，却不一定适合直接进入数据库、界面或下一步自动化。字段名称变化、漏项或类型错误都会让集成失败。结构化输出把“结果长什么样”变成机器可检查的协议，让团队能在使用数据前先判断结构是否合格。
+
+<h2 id="how-it-works">它如何工作</h2>
+
+应用定义字段、数据类型、必填项和允许值，再通过模型 API 的结构化输出配置提交 Schema。支持该能力的服务会约束生成结果匹配所支持的数据形状；应用收到结果后仍要解析并执行 Schema 校验、业务规则检查与错误处理。[S1][S2] 供应商通常只支持 JSON Schema 的一部分，字段和限制必须查阅具体版本。
+
+<h2 id="example">真实例子</h2>
+
+工单助手可以返回 `category`、`urgency`、`evidence` 和 `needsHumanReview` 四个字段，并限制类别与紧急程度只能取规定枚举。即使结果通过 Schema，模型仍可能把普通咨询误判为紧急事件，或引用不存在的证据；应用需要根据原工单复核字段值，再决定是否触发流程。
+
+<h2 id="tradeoffs">什么时候适合与不适合</h2>
+
+结构化输出适合数据提取、分类、界面渲染和自动化交接。开放式写作若被过度约束，可能失去必要表达空间；过深或过大的 Schema 也可能不被服务支持。[S1] 最重要的边界是：语法与字段合规不等于事实正确、业务有效或操作安全，关键动作仍需确定性校验和授权。
+
+<h2 id="try-it">亲自试一下</h2>
+
+为“从会议记录提取行动项”定义负责人、任务、截止日期和证据原句四个字段。分别设计字段类型、必填项和枚举，再准备一个日期缺失和一个负责人含糊的输入。验收时分开记录三层结果：JSON 能否解析、Schema 是否通过、字段值能否由原文支持。
+
+<h2 id="next">接下来学什么</h2>
+
+先用[提示词模板](/terms/prompt-template/)稳定组织输入，再比较[函数调用](/terms/function-calling/)理解“返回最终结构”和“请求外部动作”的区别；最后结合[AI 评估](/terms/evaluation/)检查字段值的真实业务质量。
+
+<h2 id="sources-and-revisions">来源与修订</h2>
+
+Schema 约束生成、受支持子集和语义校验边界参考 Google Structured Outputs 文档 [S1]；JSON Schema 的定义与验证角色参考规范站点 [S2]。本文不固化任何供应商的配置字段或模型名单。

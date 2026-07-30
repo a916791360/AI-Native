@@ -78,7 +78,7 @@ batches:
           - temperature
   - id: collaboration-1
     kind: collaboration
-    status: research
+    status: draft
     terms:
       - system-prompt
       - user-prompt
@@ -103,7 +103,7 @@ batches:
     waves:
       - id: prompt-structure
         focus: 区分指令来源、复用结构、示例引导与可解析输出。
-        status: research
+        status: draft
         terms:
           - system-prompt
           - user-prompt
