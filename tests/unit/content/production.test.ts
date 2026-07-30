@@ -47,18 +47,18 @@ describe('stage 9 content production', () => {
     expect(plan.batches[3]).toMatchObject({
       id: 'product-1',
       kind: 'product',
-      status: 'planned',
+      status: 'research',
     });
     expect(plan.batches[3]?.terms).toHaveLength(20);
     expect(plan.batches[3]?.waves?.flatMap((wave) => wave.terms)).toEqual(plan.batches[3]?.terms);
     expect(plan.batches[3]?.waves?.map(({ status }) => status)).toEqual([
-      'planned',
+      'research',
       'planned',
       'planned',
       'planned',
     ]);
-    expect(deepContentTermIds(plan).size).toBe(48);
-    expect(packets).toHaveLength(48);
+    expect(deepContentTermIds(plan).size).toBe(53);
+    expect(packets).toHaveLength(53);
   });
 
   it('enforces the approved collaboration batch size', async () => {
@@ -99,7 +99,7 @@ describe('stage 9 content production', () => {
     plannedCopy.batches[1]!.status = 'research';
     plannedCopy.batches[1]!.waves![3]!.status = 'planned';
 
-    expect(deepContentTermIds(plannedCopy).size).toBe(43);
+    expect(deepContentTermIds(plannedCopy).size).toBe(48);
     expect(
       validateContentProduction(plannedCopy, packets, project).filter(
         ({ code }) => code === 'PRODUCTION_PACKET_PREMATURE',
