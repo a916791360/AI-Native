@@ -139,7 +139,7 @@ batches:
           - reflection
   - id: product-1
     kind: product
-    status: research
+    status: draft
     terms:
       - ai-use-case
       - problem-solution-fit
@@ -164,7 +164,7 @@ batches:
     waves:
       - id: scenario-fit
         focus: 判断用户问题、AI 能力边界与可以验证的任务成功标准。
-        status: research
+        status: draft
         terms:
           - ai-use-case
           - problem-solution-fit

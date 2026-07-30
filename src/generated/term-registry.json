@@ -173,26 +173,6 @@
       ]
     },
     {
-      "id": "ai-capability-boundary",
-      "url": "/terms/ai-capability-boundary/",
-      "nameZh": "AI 能力边界",
-      "nameEn": "AI Capability Boundary",
-      "abbreviations": [],
-      "aliases": [],
-      "summary": "AI 系统在特定输入、任务和运行条件下能够可靠完成工作的范围，以及超出范围后的失败方式。",
-      "domain": "ai-foundations-history",
-      "domainNameZh": "AI 基础与发展史",
-      "difficulty": "beginner",
-      "ring": "core",
-      "status": "catalogued",
-      "priority": 1,
-      "featured": false,
-      "searchKeys": [
-        "ai 能力边界",
-        "ai capability boundary"
-      ]
-    },
-    {
       "id": "ai-governance",
       "url": "/terms/ai-governance/",
       "nameZh": "AI 治理",
@@ -290,26 +270,6 @@
       "searchKeys": [
         "ai 安全",
         "ai safety"
-      ]
-    },
-    {
-      "id": "ai-use-case",
-      "url": "/terms/ai-use-case/",
-      "nameZh": "AI 应用场景",
-      "nameEn": "AI Use Case",
-      "abbreviations": [],
-      "aliases": [],
-      "summary": "将具体用户任务、可用数据和 AI 能力组合成可评估价值与风险的应用场景。",
-      "domain": "ai-product-ux",
-      "domainNameZh": "AI 产品与用户体验",
-      "difficulty": "beginner",
-      "ring": "core",
-      "status": "catalogued",
-      "priority": 1,
-      "featured": false,
-      "searchKeys": [
-        "ai 应用场景",
-        "ai use case"
       ]
     },
     {
@@ -2343,26 +2303,6 @@
       ]
     },
     {
-      "id": "model-capability",
-      "url": "/terms/model-capability/",
-      "nameZh": "模型能力",
-      "nameEn": "Model Capability",
-      "abbreviations": [],
-      "aliases": [],
-      "summary": "模型在给定任务、语言、模态和约束下表现出的可测能力，不等同于所有场景中的系统效果。",
-      "domain": "large-language-models-generative-ai",
-      "domainNameZh": "大语言模型与生成式 AI",
-      "difficulty": "beginner",
-      "ring": "core",
-      "status": "catalogued",
-      "priority": 1,
-      "featured": false,
-      "searchKeys": [
-        "模型能力",
-        "model capability"
-      ]
-    },
-    {
       "id": "model-context-protocol",
       "url": "/terms/model-context-protocol/",
       "nameZh": "模型上下文协议",
@@ -2786,26 +2726,6 @@
       "searchKeys": [
         "隐私",
         "privacy"
-      ]
-    },
-    {
-      "id": "problem-solution-fit",
-      "url": "/terms/problem-solution-fit/",
-      "nameZh": "问题方案匹配",
-      "nameEn": "Problem-Solution Fit",
-      "abbreviations": [],
-      "aliases": [],
-      "summary": "验证解决方案是否真正缓解目标用户的重要问题，是进入规模化投入前的产品判断。",
-      "domain": "ai-product-ux",
-      "domainNameZh": "AI 产品与用户体验",
-      "difficulty": "beginner",
-      "ring": "core",
-      "status": "catalogued",
-      "priority": 1,
-      "featured": false,
-      "searchKeys": [
-        "问题方案匹配",
-        "problem-solution fit"
       ]
     },
     {
@@ -3519,26 +3439,6 @@
       "searchKeys": [
         "任务拆解",
         "task decomposition"
-      ]
-    },
-    {
-      "id": "task-success-rate",
-      "url": "/terms/task-success-rate/",
-      "nameZh": "任务成功率",
-      "nameEn": "Task Success Rate",
-      "abbreviations": [],
-      "aliases": [],
-      "summary": "在预先定义的成功标准下正确完成任务的次数占总尝试次数的比例，应结合失败类型解释。",
-      "domain": "ai-product-ux",
-      "domainNameZh": "AI 产品与用户体验",
-      "difficulty": "intermediate",
-      "ring": "core",
-      "status": "catalogued",
-      "priority": 1,
-      "featured": false,
-      "searchKeys": [
-        "任务成功率",
-        "task success rate"
       ]
     },
     {

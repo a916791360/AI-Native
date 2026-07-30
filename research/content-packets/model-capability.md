@@ -1,7 +1,7 @@
 ---
 termId: model-capability
 batch: product-1
-status: research
+status: draft
 accessedAt: '2026-07-30'
 sourceIds:
   - helm
