@@ -1,8 +1,8 @@
 ---
 termId: inference
 batch: foundation-1
-status: draft
-accessedAt: '2026-07-29'
+status: verified
+accessedAt: '2026-07-30'
 sourceIds:
   - google-ml-glossary
   - hugging-face-generation-docs

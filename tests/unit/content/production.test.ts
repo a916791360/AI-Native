@@ -21,7 +21,7 @@ describe('stage 9 content production', () => {
     expect(plan.batches[1]).toMatchObject({
       id: 'foundation-1',
       kind: 'foundation',
-      status: 'draft',
+      status: 'verified',
     });
     expect(plan.batches[1]?.terms).toHaveLength(20);
     expect(plan.batches[1]?.waves?.flatMap((wave) => wave.terms)).toEqual(plan.batches[1]?.terms);
@@ -29,7 +29,7 @@ describe('stage 9 content production', () => {
       'verified',
       'verified',
       'verified',
-      'draft',
+      'verified',
     ]);
     expect(deepContentTermIds(plan).size).toBe(28);
     expect(packets).toHaveLength(28);
@@ -60,6 +60,7 @@ describe('stage 9 content production', () => {
       loadProjectContent(),
     ]);
     const researchPlan = structuredClone(plan);
+    researchPlan.batches[1]!.status = 'research';
     researchPlan.batches[1]!.waves![0]!.status = 'research';
     const diagnostics = validateContentProduction(researchPlan, packets, project);
 

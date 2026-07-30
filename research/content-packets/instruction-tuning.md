@@ -1,8 +1,8 @@
 ---
 termId: instruction-tuning
 batch: foundation-1
-status: draft
-accessedAt: '2026-07-29'
+status: verified
+accessedAt: '2026-07-30'
 sourceIds:
   - flan-paper
   - instructgpt-paper

@@ -1522,6 +1522,26 @@
       ]
     },
     {
+      "id": "fine-tuning",
+      "url": "/terms/fine-tuning/",
+      "nameZh": "微调",
+      "nameEn": "Fine-Tuning",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "在已有模型基础上用特定数据继续训练，以适配领域、任务或行为目标的方法。",
+      "domain": "large-language-models-generative-ai",
+      "domainNameZh": "大语言模型与生成式 AI",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "verified",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "微调",
+        "fine-tuning"
+      ]
+    },
+    {
       "id": "foundation-model",
       "url": "/terms/foundation-model/",
       "nameZh": "基础模型",
@@ -1923,6 +1943,26 @@
       ]
     },
     {
+      "id": "inference",
+      "url": "/terms/inference/",
+      "nameZh": "模型推理",
+      "nameEn": "Model Inference",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "使用训练完成的模型处理新输入并生成预测或内容的过程，是用户实际调用模型的阶段。",
+      "domain": "large-language-models-generative-ai",
+      "domainNameZh": "大语言模型与生成式 AI",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "verified",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "模型推理",
+        "model inference"
+      ]
+    },
+    {
       "id": "inference-compute",
       "url": "/terms/inference-compute/",
       "nameZh": "推理算力",
@@ -2000,6 +2040,26 @@
       "searchKeys": [
         "指令层级",
         "instruction hierarchy"
+      ]
+    },
+    {
+      "id": "instruction-tuning",
+      "url": "/terms/instruction-tuning/",
+      "nameZh": "指令微调",
+      "nameEn": "Instruction Tuning",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "使用指令与期望回答数据继续训练模型，使其更能理解任务描述并按要求输出。",
+      "domain": "large-language-models-generative-ai",
+      "domainNameZh": "大语言模型与生成式 AI",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "verified",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "指令微调",
+        "instruction tuning"
       ]
     },
     {
@@ -2666,6 +2726,26 @@
       "searchKeys": [
         "参数量",
         "parameter count"
+      ]
+    },
+    {
+      "id": "post-training",
+      "url": "/terms/post-training/",
+      "nameZh": "后训练",
+      "nameEn": "Post-Training",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "在预训练之后通过指令数据、偏好反馈或安全方法调整模型行为与可用性的训练阶段。",
+      "domain": "large-language-models-generative-ai",
+      "domainNameZh": "大语言模型与生成式 AI",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "verified",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "后训练",
+        "post-training"
       ]
     },
     {
@@ -3459,6 +3539,26 @@
       "searchKeys": [
         "任务成功率",
         "task success rate"
+      ]
+    },
+    {
+      "id": "temperature",
+      "url": "/terms/temperature/",
+      "nameZh": "温度参数",
+      "nameEn": "Temperature",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "调整生成概率分布平滑程度的参数，较低值通常更稳定，较高值通常增加多样性。",
+      "domain": "large-language-models-generative-ai",
+      "domainNameZh": "大语言模型与生成式 AI",
+      "difficulty": "beginner",
+      "ring": "core",
+      "status": "verified",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "温度参数",
+        "temperature"
       ]
     },
     {

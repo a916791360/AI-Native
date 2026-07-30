@@ -1,12 +1,12 @@
 ---
 termId: post-training
 batch: foundation-1
-status: draft
-accessedAt: '2026-07-29'
+status: verified
+accessedAt: '2026-07-30'
 sourceIds:
   - instructgpt-paper
   - llama-3-herd-paper
-timeBoundary: 后训练方法和配方随模型家族快速变化；本文以 2026-07-29 前公开论文中的监督微调、偏好优化与安全调整为边界。
+timeBoundary: 后训练方法和配方随模型家族快速变化；本文以 2026-07-30 前公开论文中的监督微调、偏好优化与安全调整为边界。
 claims:
   - id: training-after-pretraining
     statement: 后训练是预训练之后继续调整模型行为的阶段，目标可包括指令遵循、偏好对齐、安全性和特定能力，而不是重新定义一种固定算法。

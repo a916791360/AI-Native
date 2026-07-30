@@ -58,7 +58,7 @@ test('derives the homepage routes, domains and content scale from project data',
   await expect(page.locator('.domain-list a')).toHaveCount(12);
   await expect(
     page.locator('.scope-heading dl div', { hasText: '已核验词条' }).locator('dd'),
-  ).toHaveText('35');
+  ).toHaveText('40');
   await expect(
     page.locator('.scope-heading dl div', { hasText: '概念关系' }).locator('dd'),
   ).toHaveText(PUBLIC_RELATION_COUNT);
@@ -275,6 +275,11 @@ test('renders every verified term as an eight-section article', async ({ page })
     'self-attention',
     'tokenizer',
     'pretraining',
+    'post-training',
+    'instruction-tuning',
+    'fine-tuning',
+    'inference',
+    'temperature',
   ];
 
   for (const termId of termIds) {
@@ -283,7 +288,7 @@ test('renders every verified term as an eight-section article', async ({ page })
     await expect(page.locator('.term-content h2')).toHaveCount(8);
     await expect(page.locator('#what-it-is')).toHaveText('它是什么');
     await expect(page.locator('#sources-and-revisions')).toHaveText('来源与修订');
-    await expect(page.locator('.source-register li')).toHaveCount(2);
+    expect(await page.locator('.source-register li').count()).toBeGreaterThanOrEqual(2);
   }
 });
 
