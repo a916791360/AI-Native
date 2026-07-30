@@ -1562,26 +1562,6 @@
       ]
     },
     {
-      "id": "function-calling",
-      "url": "/terms/function-calling/",
-      "nameZh": "函数调用",
-      "nameEn": "Function Calling",
-      "abbreviations": [],
-      "aliases": [],
-      "summary": "模型按约定结构选择函数并生成参数，由应用执行函数后把结果返回模型的调用机制。",
-      "domain": "agents-tool-use-automation",
-      "domainNameZh": "Agent、工具调用与自动化",
-      "difficulty": "intermediate",
-      "ring": "core",
-      "status": "catalogued",
-      "priority": 1,
-      "featured": false,
-      "searchKeys": [
-        "函数调用",
-        "function calling"
-      ]
-    },
-    {
       "id": "generalization",
       "url": "/terms/generalization/",
       "nameZh": "泛化能力",
@@ -1840,26 +1820,6 @@
       "searchKeys": [
         "人工评估",
         "human evaluation"
-      ]
-    },
-    {
-      "id": "human-in-the-loop",
-      "url": "/terms/human-in-the-loop/",
-      "nameZh": "人在回路",
-      "nameEn": "Human in the Loop",
-      "abbreviations": [],
-      "aliases": [],
-      "summary": "在 AI 工作流的关键判断、审核或异常环节引入人员参与，以提高控制力和责任清晰度。",
-      "domain": "agents-tool-use-automation",
-      "domainNameZh": "Agent、工具调用与自动化",
-      "difficulty": "beginner",
-      "ring": "core",
-      "status": "catalogued",
-      "priority": 1,
-      "featured": false,
-      "searchKeys": [
-        "人在回路",
-        "human in the loop"
       ]
     },
     {
@@ -2849,26 +2809,6 @@
       ]
     },
     {
-      "id": "prompt-chaining",
-      "url": "/terms/prompt-chaining/",
-      "nameZh": "提示链",
-      "nameEn": "Prompt Chaining",
-      "abbreviations": [],
-      "aliases": [],
-      "summary": "把复杂任务拆成多个相互衔接的提示步骤，使中间结果可以检查、转换或交给下一步。",
-      "domain": "prompt-context-engineering",
-      "domainNameZh": "提示词与上下文工程",
-      "difficulty": "intermediate",
-      "ring": "core",
-      "status": "catalogued",
-      "priority": 1,
-      "featured": false,
-      "searchKeys": [
-        "提示链",
-        "prompt chaining"
-      ]
-    },
-    {
       "id": "prompt-debugging",
       "url": "/terms/prompt-debugging/",
       "nameZh": "提示词调试",
@@ -3502,26 +3442,6 @@
       ]
     },
     {
-      "id": "task-decomposition",
-      "url": "/terms/task-decomposition/",
-      "nameZh": "任务拆解",
-      "nameEn": "Task Decomposition",
-      "abbreviations": [],
-      "aliases": [],
-      "summary": "把复杂目标拆成范围明确、可执行和可检查的子任务，以降低一次处理的认知与执行负担。",
-      "domain": "agents-tool-use-automation",
-      "domainNameZh": "Agent、工具调用与自动化",
-      "difficulty": "beginner",
-      "ring": "core",
-      "status": "catalogued",
-      "priority": 1,
-      "featured": false,
-      "searchKeys": [
-        "任务拆解",
-        "task decomposition"
-      ]
-    },
-    {
       "id": "task-success-rate",
       "url": "/terms/task-success-rate/",
       "nameZh": "任务成功率",
@@ -3659,26 +3579,6 @@
       "searchKeys": [
         "分词器",
         "tokenizer"
-      ]
-    },
-    {
-      "id": "tool-use",
-      "url": "/terms/tool-use/",
-      "nameZh": "工具调用",
-      "nameEn": "Tool Use",
-      "abbreviations": [],
-      "aliases": [],
-      "summary": "模型根据任务选择并调用外部工具，再利用返回结果继续推理或生成输出的能力。",
-      "domain": "agents-tool-use-automation",
-      "domainNameZh": "Agent、工具调用与自动化",
-      "difficulty": "beginner",
-      "ring": "core",
-      "status": "catalogued",
-      "priority": 1,
-      "featured": false,
-      "searchKeys": [
-        "工具调用",
-        "tool use"
       ]
     },
     {

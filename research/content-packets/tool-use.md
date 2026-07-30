@@ -1,7 +1,7 @@
 ---
 termId: tool-use
 batch: collaboration-1
-status: research
+status: draft
 accessedAt: '2026-07-30'
 sourceIds:
   - anthropic-tool-use-loop
