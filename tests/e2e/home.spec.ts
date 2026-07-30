@@ -58,7 +58,7 @@ test('derives the homepage routes, domains and content scale from project data',
   await expect(page.locator('.domain-list a')).toHaveCount(12);
   await expect(
     page.locator('.scope-heading dl div', { hasText: '已核验词条' }).locator('dd'),
-  ).toHaveText('50');
+  ).toHaveText('55');
   await expect(
     page.locator('.scope-heading dl div', { hasText: '概念关系' }).locator('dd'),
   ).toHaveText(PUBLIC_RELATION_COUNT);
@@ -290,6 +290,11 @@ test('renders every verified term as an eight-section article', async ({ page })
     'instruction-hierarchy',
     'long-context',
     'context-compression',
+    'task-decomposition',
+    'prompt-chaining',
+    'tool-use',
+    'function-calling',
+    'human-in-the-loop',
   ];
 
   for (const termId of termIds) {

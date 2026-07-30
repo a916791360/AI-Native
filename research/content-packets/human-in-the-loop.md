@@ -1,11 +1,12 @@
 ---
 termId: human-in-the-loop
 batch: collaboration-1
-status: draft
+status: verified
 accessedAt: '2026-07-30'
 sourceIds:
   - openai-agents-hitl
   - nist-ai-rmf-core
+  - nist-ai-rmf-human-ai-interaction
 timeBoundary: 在关键决策点引入人工参与的治理原则相对稳定；审批 API、暂停与恢复机制、记录字段和法定监督要求需按具体系统与司法辖区复核。
 claims:
   - id: human-decision-point
@@ -23,7 +24,7 @@ claims:
     statement: 人工参与只有在角色、责任、所需信息、权限和响应流程明确时才构成有效控制，也不能自动消除人员偏差或系统风险。
     evidenceType: boundary
     sourceIds:
-      - nist-ai-rmf-core
+      - nist-ai-rmf-human-ai-interaction
 ---
 
 ## 编辑说明

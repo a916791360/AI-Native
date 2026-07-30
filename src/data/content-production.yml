@@ -78,7 +78,7 @@ batches:
           - temperature
   - id: collaboration-1
     kind: collaboration
-    status: draft
+    status: research
     terms:
       - system-prompt
       - user-prompt
@@ -121,7 +121,7 @@ batches:
           - context-compression
       - id: task-execution
         focus: 把复杂任务拆解为可调用工具、可检查并有人类控制的步骤。
-        status: draft
+        status: verified
         terms:
           - task-decomposition
           - prompt-chaining

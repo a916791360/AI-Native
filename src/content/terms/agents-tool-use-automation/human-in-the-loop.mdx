@@ -8,7 +8,10 @@ summary: 在 AI 工作流的关键判断、审核或异常环节引入人员参�
 domain: agents-tool-use-automation
 difficulty: beginner
 ring: core
-status: draft
+status: verified
+publishedAt: '2026-07-30'
+updatedAt: '2026-07-30'
+verifiedAt: '2026-07-30'
 priority: 1
 featured: false
 sources:
@@ -22,6 +25,13 @@ sources:
     type: standard
     title: NIST AI Risk Management Framework Core
     url: https://airc.nist.gov/airmf-resources/airmf/5-sec-core/
+    publisher: NIST
+    publishedAt: '2023-01-26'
+    accessedAt: '2026-07-30'
+  - id: nist-ai-rmf-human-ai-interaction
+    type: standard
+    title: 'NIST AI RMF Appendix C: AI Risk Management and Human-AI Interaction'
+    url: https://airc.nist.gov/airmf-resources/airmf/appendices/app-c-ai-risk-management-and-human-ai-interaction/
     publisher: NIST
     publishedAt: '2023-01-26'
     accessedAt: '2026-07-30'
@@ -45,7 +55,7 @@ AI 系统会遇到低置信度、规则冲突和高影响动作。完全自动�
 
 <h2 id="tradeoffs">什么时候适合与不适合</h2>
 
-高风险、不可逆、受监管或异常操作适合设置人工控制点；低影响且可轻松撤销的常规步骤可以抽样复核或自动执行。人工环节会增加等待、成本和排队，还可能出现疲劳点击、信息不足或人员偏差。[S2] 因此审批人必须有权限、足够上下文和明确责任，系统也要监测拒绝率、响应时间与绕过行为。
+高风险、不可逆、受监管或异常操作适合设置人工控制点；低影响且可轻松撤销的常规步骤可以抽样复核或自动执行。人工环节会增加等待、成本和排队，还可能出现疲劳点击、信息不足或人员偏差。[S3] 因此审批人必须有权限、足够上下文和明确责任，系统也要监测拒绝率、响应时间与绕过行为。
 
 <h2 id="try-it">亲自试一下</h2>
 
@@ -57,4 +67,4 @@ AI 系统会遇到低置信度、规则冲突和高影响动作。完全自动�
 
 <h2 id="sources-and-revisions">来源与修订</h2>
 
-敏感工具调用的暂停、批准或拒绝及状态恢复参考 OpenAI Agents SDK 文档 [S1]；人机角色、责任、监督流程和人员偏差边界参考 NIST AI RMF Core [S2]。具体审批 API 和法定义务依系统版本、行业与司法辖区而变。
+敏感工具调用的暂停、批准或拒绝及状态恢复参考 OpenAI Agents SDK 文档 [S1]；人机角色与监督流程参考 NIST AI RMF Core [S2]，人员偏差和不同人机配置的边界参考其 Human-AI Interaction 附录 [S3]。NIST AI RMF 1.0 正在修订；具体审批 API 和法定义务也依系统版本、行业与司法辖区而变。
