@@ -1,7 +1,7 @@
 ---
 termId: ai-risk-management
 batch: product-1
-status: research
+status: draft
 accessedAt: '2026-07-31'
 sourceIds:
   - nist-ai-rmf-core

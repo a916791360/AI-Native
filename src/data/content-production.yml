@@ -139,7 +139,7 @@ batches:
           - reflection
   - id: product-1
     kind: product
-    status: research
+    status: draft
     terms:
       - ai-use-case
       - problem-solution-fit
@@ -191,7 +191,7 @@ batches:
           - human-escalation
       - id: quality-and-risk
         focus: 用校准、线上线下评估、可观测性和风险管理持续验证产品。
-        status: research
+        status: draft
         terms:
           - confidence-calibration
           - offline-evaluation

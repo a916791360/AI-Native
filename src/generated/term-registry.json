@@ -253,26 +253,6 @@
       ]
     },
     {
-      "id": "ai-risk-management",
-      "url": "/terms/ai-risk-management/",
-      "nameZh": "AI 风险管理",
-      "nameEn": "AI Risk Management",
-      "abbreviations": [],
-      "aliases": [],
-      "summary": "持续识别、评估、处置和监控 AI 风险，使控制措施与具体场景和影响相匹配。",
-      "domain": "safety-ethics-governance",
-      "domainNameZh": "安全、伦理与治理",
-      "difficulty": "beginner",
-      "ring": "core",
-      "status": "catalogued",
-      "priority": 1,
-      "featured": false,
-      "searchKeys": [
-        "ai 风险管理",
-        "ai risk management"
-      ]
-    },
-    {
       "id": "ai-safety",
       "url": "/terms/ai-safety/",
       "nameZh": "AI 安全",
@@ -722,26 +702,6 @@
       "searchKeys": [
         "计算机视觉",
         "computer vision"
-      ]
-    },
-    {
-      "id": "confidence-calibration",
-      "url": "/terms/confidence-calibration/",
-      "nameZh": "置信度校准",
-      "nameEn": "Confidence Calibration",
-      "abbreviations": [],
-      "aliases": [],
-      "summary": "让系统表达的确定程度与实际正确概率尽量一致，以支持更合理的人类判断。",
-      "domain": "ai-product-ux",
-      "domainNameZh": "AI 产品与用户体验",
-      "difficulty": "intermediate",
-      "ring": "core",
-      "status": "catalogued",
-      "priority": 1,
-      "featured": false,
-      "searchKeys": [
-        "置信度校准",
-        "confidence calibration"
       ]
     },
     {
@@ -2566,46 +2526,6 @@
       ]
     },
     {
-      "id": "observability",
-      "url": "/terms/observability/",
-      "nameZh": "可观测性",
-      "nameEn": "Observability",
-      "abbreviations": [],
-      "aliases": [],
-      "summary": "通过指标、日志和追踪理解系统内部状态及问题原因的能力，是定位 AI 应用质量与运行故障的基础。",
-      "domain": "evaluation-observability-quality",
-      "domainNameZh": "评估、可观测性与质量",
-      "difficulty": "intermediate",
-      "ring": "core",
-      "status": "catalogued",
-      "priority": 1,
-      "featured": false,
-      "searchKeys": [
-        "可观测性",
-        "observability"
-      ]
-    },
-    {
-      "id": "offline-evaluation",
-      "url": "/terms/offline-evaluation/",
-      "nameZh": "离线评估",
-      "nameEn": "Offline Evaluation",
-      "abbreviations": [],
-      "aliases": [],
-      "summary": "在上线前或离线数据上运行的可重复评估，适合快速比较版本但不能完全替代真实使用观察。",
-      "domain": "evaluation-observability-quality",
-      "domainNameZh": "评估、可观测性与质量",
-      "difficulty": "intermediate",
-      "ring": "core",
-      "status": "catalogued",
-      "priority": 1,
-      "featured": false,
-      "searchKeys": [
-        "离线评估",
-        "offline evaluation"
-      ]
-    },
-    {
       "id": "on-device-ai",
       "url": "/terms/on-device-ai/",
       "nameZh": "端侧人工智能",
@@ -2623,26 +2543,6 @@
       "searchKeys": [
         "端侧人工智能",
         "on-device ai"
-      ]
-    },
-    {
-      "id": "online-evaluation",
-      "url": "/terms/online-evaluation/",
-      "nameZh": "在线评估",
-      "nameEn": "Online Evaluation",
-      "abbreviations": [],
-      "aliases": [],
-      "summary": "在真实或受控线上流量中观察系统效果的评估，需要同时控制实验风险和用户影响。",
-      "domain": "evaluation-observability-quality",
-      "domainNameZh": "评估、可观测性与质量",
-      "difficulty": "intermediate",
-      "ring": "core",
-      "status": "catalogued",
-      "priority": 1,
-      "featured": false,
-      "searchKeys": [
-        "在线评估",
-        "online evaluation"
       ]
     },
     {
