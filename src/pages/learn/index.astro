@@ -1,0 +1,425 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { LEARNING_MODULES, LEARNING_QUESTIONS, getQuestionsForModule } from '@/data/learning';
+---
+
+<BaseLayout
+  title="AI 产品经理系统课程"
+  description="通过六个能力阶段和 24 道递进判断题，从零建立 AI 产品场景判断、方案选择、体验设计与评估能力。"
+>
+  <main id="main-content" class="learn-page">
+    <header class="course-hero">
+      <div class="course-title">
+        <p class="eyebrow">AI product manager · foundation track</p>
+        <h1>从零建立<br />AI 产品判断力。</h1>
+        <p>
+          不是背完一份术语表，而是学会判断什么时候该用
+          AI、该选哪种方案，以及怎样对质量、成本和风险负责。
+        </p>
+        <a href="/learn/questions/q01-rules-or-ai/">从第 1 题开始</a>
+      </div>
+      <div class="course-outcome">
+        <p class="meta-label">完成这条主线，你将交付</p>
+        <h2>一份可进入业务与技术评审的 AI 产品方案</h2>
+        <ul>
+          <li>场景机会评估</li>
+          <li>方案选择与取舍</li>
+          <li>产品流程与人机边界</li>
+          <li>质量指标、风险与降级方案</li>
+        </ul>
+      </div>
+    </header>
+
+    <section class="course-layout" aria-labelledby="curriculum-heading">
+      <aside>
+        <p class="meta-label">Curriculum spine</p>
+        <h2 id="curriculum-heading">六步完成一次能力迁移</h2>
+        <p>每个阶段包含 4 道题。先选择，再看判断依据；不填写作业，也不保存学习数据。</p>
+        <a href="/learn/questions/">查看 24 题总览</a>
+      </aside>
+      <ol class="course-modules">
+        {
+          LEARNING_MODULES.map((module) => {
+            const questions = getQuestionsForModule(module.id);
+            return (
+              <li id={`module-${module.index}`} data-accent={module.accent}>
+                <span class="module-number">{module.index}</span>
+                <div class="module-copy">
+                  <p class="meta-label">Module {module.index}</p>
+                  <h3>{module.title}</h3>
+                  <p>{module.summary}</p>
+                </div>
+                <dl>
+                  <div>
+                    <>
+                      <dt>核心判断</dt>
+                      <dd>{module.decision}</dd>
+                    </>
+                  </div>
+                  <div>
+                    <>
+                      <dt>练习内容</dt>
+                      <dd>
+                        第 {questions[0]?.index}–{questions.at(-1)?.index} 题 · {module.outcome}
+                      </dd>
+                    </>
+                  </div>
+                </dl>
+                <a href={`/learn/questions/${questions[0]?.id}/`}>开始本阶段</a>
+              </li>
+            );
+          })
+        }
+      </ol>
+    </section>
+
+    <section class="case-register" id="questions" aria-labelledby="questions-heading">
+      <header>
+        <p class="eyebrow">Progressive question bank</p>
+        <h2 class="section-heading" id="questions-heading">从单点判断，进入完整项目</h2>
+        <p>
+          最后四题把前五个阶段合在客服、销售、合同与上线场景中。先做前面的基础题，再来检验完整判断。
+        </p>
+        <a href="/learn/questions/">查看全部 24 题</a>
+      </header>
+      <div>
+        {
+          LEARNING_QUESTIONS.slice(-4).map((item) => (
+            <a href={`/learn/questions/${item.id}/`}>
+              <span>Question {item.index}</span>
+              <strong>{item.question}</strong>
+              <small>{item.shortTitle}</small>
+            </a>
+          ))
+        }
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .course-hero {
+    min-height: calc(100svh - var(--header-height) - 8rem);
+    display: grid;
+    grid-template-columns: minmax(26rem, 0.58fr) minmax(22rem, 0.42fr);
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .course-title,
+  .course-outcome {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: var(--space-7) var(--page-gutter);
+  }
+
+  .course-title {
+    border-right: 1px solid var(--color-line);
+  }
+
+  .course-title h1 {
+    max-width: 9em;
+    margin: var(--space-4) 0 var(--space-3);
+    font-family: var(--font-display);
+    font-size: clamp(3.8rem, 7vw, 7rem);
+    font-weight: 400;
+    line-height: 1.02;
+    letter-spacing: 0;
+  }
+
+  .course-title > p:not(.eyebrow) {
+    max-width: 37rem;
+    margin: 0;
+    color: var(--color-muted);
+    font-size: var(--text-lead);
+  }
+
+  .course-title > a {
+    min-height: 3rem;
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-start;
+    margin-top: var(--space-5);
+    background: var(--color-prerequisite);
+    color: var(--color-black);
+    padding: 0 var(--space-4);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .course-outcome {
+    background: var(--color-panel);
+  }
+
+  .course-outcome .meta-label {
+    color: var(--color-application);
+  }
+
+  .course-outcome h2 {
+    max-width: 13em;
+    margin: var(--space-3) 0 var(--space-4);
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 3vw, 3.25rem);
+    font-weight: 400;
+    line-height: 1.2;
+  }
+
+  .course-outcome ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .course-outcome li {
+    border-top: 1px solid var(--color-line);
+    padding: 0.65rem 0;
+    color: var(--color-muted);
+  }
+
+  .course-layout {
+    display: grid;
+    grid-template-columns: minmax(19rem, 0.3fr) minmax(0, 0.7fr);
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .course-layout > aside {
+    border-right: 1px solid var(--color-line);
+    padding: var(--space-7) var(--page-gutter);
+  }
+
+  .course-layout > aside h2 {
+    margin: var(--space-2) 0 var(--space-3);
+    font-family: var(--font-display);
+    font-size: 2.4rem;
+    font-weight: 400;
+    line-height: 1.2;
+  }
+
+  .course-layout > aside > p:not(.meta-label),
+  .case-register header > p:not(.eyebrow) {
+    margin: 0;
+    color: var(--color-muted);
+  }
+
+  .case-register header > a {
+    min-height: 2.75rem;
+    display: inline-flex;
+    align-items: center;
+    margin-top: var(--space-4);
+    border-bottom: 1px solid var(--color-prerequisite);
+    color: var(--color-prerequisite);
+    text-decoration: none;
+  }
+
+  .course-layout > aside > a {
+    min-height: 2.75rem;
+    display: inline-flex;
+    align-items: center;
+    margin-top: var(--space-4);
+    border-bottom: 1px solid var(--color-prerequisite);
+    color: var(--color-prerequisite);
+    text-decoration: none;
+  }
+
+  .course-modules {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .course-modules > li {
+    min-height: 15rem;
+    display: grid;
+    grid-template-columns: 3.5rem minmax(13rem, 0.7fr) minmax(18rem, 1fr) auto;
+    gap: var(--space-4);
+    align-items: center;
+    border-bottom: 1px solid var(--color-line-soft);
+    padding: var(--space-5) var(--page-gutter);
+  }
+
+  .course-modules > li:last-child {
+    border-bottom: 0;
+  }
+
+  .module-number {
+    align-self: start;
+    color: var(--color-quiet);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+  }
+
+  .course-modules li[data-accent='prerequisite'] .module-number {
+    color: var(--color-prerequisite);
+  }
+  .course-modules li[data-accent='component'] .module-number {
+    color: var(--color-component);
+  }
+  .course-modules li[data-accent='comparison'] .module-number {
+    color: var(--color-comparison);
+  }
+  .course-modules li[data-accent='application'] .module-number {
+    color: var(--color-application);
+  }
+
+  .module-copy h3 {
+    margin: 0.35rem 0 var(--space-1);
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    font-weight: 400;
+  }
+
+  .module-copy > p:not(.meta-label) {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+  }
+
+  .course-modules dl {
+    margin: 0;
+  }
+
+  .course-modules dl div {
+    border-top: 1px solid var(--color-line-soft);
+    padding: 0.55rem 0;
+  }
+
+  .course-modules dt {
+    color: var(--color-quiet);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+  }
+
+  .course-modules dd {
+    margin: 0.15rem 0 0;
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+  }
+
+  .course-modules > li > a {
+    min-height: 2.75rem;
+    display: inline-flex;
+    align-items: center;
+    border-bottom: 1px solid var(--color-line);
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .course-modules > li > a:hover {
+    border-color: var(--color-prerequisite);
+    color: var(--color-ink);
+  }
+
+  .case-register {
+    display: grid;
+    grid-template-columns: minmax(20rem, 0.34fr) minmax(0, 0.66fr);
+  }
+
+  .case-register > header {
+    border-right: 1px solid var(--color-line);
+    padding: var(--space-7) var(--page-gutter);
+  }
+
+  .case-register header > p:not(.eyebrow) {
+    max-width: 32rem;
+    margin-top: var(--space-3);
+  }
+
+  .case-register > div {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .case-register > div a {
+    min-height: 20rem;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid var(--color-line);
+    padding: var(--space-4);
+    text-decoration: none;
+  }
+
+  .case-register > div a:last-child {
+    border-right: 0;
+  }
+
+  .case-register > div a:hover {
+    background: var(--color-panel);
+  }
+
+  .case-register span {
+    color: var(--color-prerequisite);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+  }
+
+  .case-register strong {
+    margin-top: auto;
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 400;
+    line-height: 1.35;
+  }
+
+  .case-register small {
+    margin-top: var(--space-3);
+    color: var(--color-muted);
+  }
+
+  @media (max-width: 1100px) {
+    .course-hero,
+    .course-layout,
+    .case-register {
+      grid-template-columns: 1fr;
+    }
+
+    .course-title,
+    .course-layout > aside,
+    .case-register > header {
+      border-right: 0;
+      border-bottom: 1px solid var(--color-line);
+    }
+
+    .course-hero {
+      min-height: 0;
+    }
+
+    .course-title,
+    .course-outcome {
+      min-height: 36rem;
+    }
+  }
+
+  @media (max-width: 700px) {
+    .course-title,
+    .course-outcome {
+      min-height: 0;
+      padding-block: var(--space-6);
+    }
+
+    .course-title h1 {
+      font-size: clamp(3.4rem, 16vw, 5rem);
+    }
+
+    .course-modules > li {
+      grid-template-columns: 2rem minmax(0, 1fr);
+      gap: var(--space-3);
+    }
+
+    .course-modules dl,
+    .course-modules > li > a {
+      grid-column: 2;
+    }
+
+    .case-register > div {
+      grid-template-columns: 1fr;
+    }
+
+    .case-register > div a {
+      min-height: 12rem;
+      border-right: 0;
+      border-bottom: 1px solid var(--color-line);
+    }
+  }
+</style>

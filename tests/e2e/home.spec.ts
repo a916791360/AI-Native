@@ -22,26 +22,33 @@ const PUBLIC_CORE_TERM_COUNT = String(
 const PUBLIC_RELATION_COUNT = String(graphData.edges.length);
 const PUBLIC_SEARCH_CASES = searchCasesForTerms(registry.terms.map(({ id }) => id));
 
-test('renders the approved direction 1 identity and primary paths', async ({ page, isMobile }) => {
+test('renders the progressive question-led learning identity and primary paths', async ({
+  page,
+  isMobile,
+}) => {
   await page.goto('/');
 
   await expect(page).toHaveTitle('AI-Native');
   await expect(
-    page.getByRole('heading', { level: 1, name: /从听懂 AI.*到判断与设计/ }),
+    page.getByRole('heading', { level: 1, name: '发票金额校验，需要上大模型吗？' }),
   ).toBeVisible();
-  await expect(page.getByText('判断业务场景并设计基础 AI 方案').first()).toBeVisible();
-  await expect(page.getByRole('figure', { name: 'Fig. 06 / 数据、检索与 RAG' })).toBeVisible();
+  await expect(page.getByRole('group', { name: '精选判断题' })).toBeVisible();
+  await expect(page.getByRole('link', { name: '进入本题并查看反馈' })).toHaveAttribute(
+    'href',
+    '/learn/questions/q01-rules-or-ai/',
+  );
 
   if (isMobile) {
     await expect(page.locator('summary', { hasText: '菜单' })).toBeVisible();
   } else {
     const header = page.getByRole('banner');
+    await expect(header.getByRole('link', { name: '学习中心' })).toHaveAttribute('href', '/learn/');
     await expect(header.getByRole('link', { name: '知识图鉴' })).toHaveAttribute('href', '/atlas/');
     await expect(header.getByRole('link', { name: '搜索', exact: true })).toHaveAttribute(
       'href',
       '/search/',
     );
-    await expect(header.getByRole('link', { name: '学习路线' })).toHaveAttribute(
+    await expect(header.getByRole('link', { name: '阅读路线' })).toHaveAttribute(
       'href',
       '/routes/',
     );
@@ -49,24 +56,44 @@ test('renders the approved direction 1 identity and primary paths', async ({ pag
   }
 });
 
-test('derives the homepage routes, domains and content scale from project data', async ({
+test('derives the homepage learning structure and knowledge scale from project data', async ({
   page,
 }) => {
   await page.goto('/');
 
-  await expect(page.locator('.route-list .route-item')).toHaveCount(4);
-  await expect(page.locator('.domain-list a')).toHaveCount(12);
+  await expect(page.locator('[data-case-tab]')).toHaveCount(3);
+  await expect(page.locator('.module-spine > li')).toHaveCount(6);
+  await expect(page.locator('[data-learning-foundation] > a')).toHaveCount(3);
+  await expect(page.locator('[data-learning-foundation]')).toContainText('80 VERIFIED');
+  await expect(page.locator('[data-learning-foundation]')).toContainText(
+    `${PUBLIC_RELATION_COUNT} RELATIONS`,
+  );
+});
+
+test('switches featured questions and sends the user into the selected judgment', async ({
+  page,
+}) => {
+  await page.goto('/');
+
+  await page.getByRole('button', { name: /Question 09.*Prompt 还是 RAG/ }).click();
   await expect(
-    page.locator('.scope-heading dl div', { hasText: '已核验词条' }).locator('dd'),
-  ).toHaveText('80');
+    page.getByRole('heading', { level: 1, name: '回答最新公司政策，只优化 Prompt 够吗？' }),
+  ).toBeVisible();
   await expect(
-    page.locator('.scope-heading dl div', { hasText: '概念关系' }).locator('dd'),
-  ).toHaveText(PUBLIC_RELATION_COUNT);
-  await expect(page.locator('.featured-register a')).toHaveCount(6);
+    page.getByText('Prompt 约束行为，RAG 提供运行时知识；不要混淆两者职责。'),
+  ).toBeVisible();
+  await expect(page.getByRole('link', { name: '进入本题并查看反馈' })).toHaveAttribute(
+    'href',
+    '/learn/questions/q09-prompt-or-rag/',
+  );
 });
 
 test('provides stable skeletons for all primary page types', async ({ page }) => {
   const pages = [
+    ['/learn/', '从零建立 AI 产品判断力。'],
+    ['/learn/questions/', '24 道题，练成 AI 产品判断力。'],
+    ['/learn/questions/q01-rules-or-ai/', '发票金额校验，需要上大模型吗？'],
+    ['/learn/questions/q21-support-rag/', '客服知识库的第一版，应该直接自动回复客户吗？'],
     ['/atlas/', '知识图鉴'],
     ['/search/', '搜索'],
     ['/routes/', '学习路线'],
@@ -83,12 +110,14 @@ test('provides stable skeletons for all primary page types', async ({ page }) =>
   }
 });
 
-test('keeps search, routes and domain browsing available from every core page', async ({
+test('keeps learning, search, routes and domain browsing available from every core page', async ({
   page,
   isMobile,
 }) => {
   for (const url of [
     '/',
+    '/learn/',
+    '/learn/questions/q01-rules-or-ai/',
     '/atlas/',
     '/routes/',
     '/graph/',
@@ -100,6 +129,10 @@ test('keeps search, routes and domain browsing available from every core page', 
     const navigation = page.getByRole('navigation', {
       name: isMobile ? '移动端主导航' : '主导航',
     });
+    await expect(navigation.getByRole('link', { name: '学习中心' })).toHaveAttribute(
+      'href',
+      '/learn/',
+    );
     await expect(navigation.getByRole('link', { name: '知识图鉴' })).toHaveAttribute(
       'href',
       '/atlas/',
@@ -108,11 +141,38 @@ test('keeps search, routes and domain browsing available from every core page', 
       'href',
       '/search/',
     );
-    await expect(navigation.getByRole('link', { name: '学习路线' })).toHaveAttribute(
+    await expect(navigation.getByRole('link', { name: '阅读路线' })).toHaveAttribute(
       'href',
       '/routes/',
     );
   }
+});
+
+test('reveals immediate reasoning without asking the learner to type', async ({ page }) => {
+  await page.goto('/learn/questions/q01-rules-or-ai/');
+
+  await expect(page.locator('textarea, input:not([type="hidden"])')).toHaveCount(0);
+  const riskyOption = page.getByRole('button', { name: /让大模型读取发票后判断/ });
+  await riskyOption.click();
+
+  await expect(riskyOption).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.locator('[data-feedback-panel]')).toBeVisible();
+  await expect(page.locator('[data-feedback-kicker]')).toHaveText('高风险路径');
+  await expect(page.locator('[data-feedback-copy]')).toContainText('增加延迟、成本与不确定性');
+});
+
+test('keeps the question and decision logic readable without JavaScript', async ({ browser }) => {
+  const context = await browser.newContext({ javaScriptEnabled: false });
+  const page = await context.newPage();
+
+  await page.goto('http://127.0.0.1:4321/');
+  await page.getByRole('link', { name: '进入本题并查看反馈' }).click();
+  await expect(
+    page.getByRole('heading', { level: 1, name: '发票金额校验，需要上大模型吗？' }),
+  ).toBeVisible();
+  await expect(page.getByText('能被稳定规则完整描述的问题，优先使用确定性系统。')).toBeVisible();
+
+  await context.close();
 });
 
 test('routes the homepage search into the shared search experience', async ({ page }) => {
@@ -469,6 +529,9 @@ test('keeps a 500-node synthetic graph responsive in Chromium', async ({ page, i
 test('keeps key pages within the viewport without horizontal overflow', async ({ page }) => {
   for (const url of [
     '/',
+    '/learn/',
+    '/learn/questions/',
+    '/learn/questions/q21-support-rag/',
     '/atlas/',
     '/search/?q=RAG',
     '/routes/',
@@ -493,9 +556,11 @@ test('exposes the navigation on narrow screens', async ({ page, isMobile }) => {
   await expect(page.getByRole('navigation', { name: '移动端主导航' })).toBeVisible();
   await page
     .getByRole('navigation', { name: '移动端主导航' })
-    .getByRole('link', { name: '内容方法' })
+    .getByRole('link', { name: '学习中心' })
     .click();
-  await expect(page.getByRole('heading', { level: 1, name: '内容方法' })).toBeVisible();
+  await expect(
+    page.getByRole('heading', { level: 1, name: '从零建立 AI 产品判断力。' }),
+  ).toBeVisible();
 });
 
 test('renders the designed 404 state', async ({ page }) => {
@@ -508,6 +573,9 @@ test('renders the designed 404 state', async ({ page }) => {
 test('has no serious or critical automated accessibility violations', async ({ page }) => {
   for (const url of [
     '/',
+    '/learn/',
+    '/learn/questions/',
+    '/learn/questions/q21-support-rag/',
     '/atlas/',
     '/search/?q=RAG',
     '/graph/',

@@ -12,8 +12,8 @@ export function absoluteSiteUrl(pathname: string, origin: string): string {
 
 export const SITE = {
   name: 'AI-Native',
-  description: '面向中文 AI 初学者与产品人的渐进式 AI 知识图鉴。',
-  promise: '从听懂 AI，到能够判断业务场景并设计基础 AI 方案。',
+  description: '面向中文 AI 初学者与产品人的 AI 产品判断力学习系统。',
+  promise: '从理解 AI 概念，到能够判断业务场景并设计可评审的 AI 产品方案。',
   locale: 'zh_CN',
   repositoryUrl: 'https://github.com/a916791360/AI-Native',
   publicOrigin: resolvePublicOrigin(),

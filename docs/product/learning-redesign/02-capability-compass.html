@@ -1,0 +1,635 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AI-Native 学习重构 · 方向 B 能力罗盘</title>
+    <!--
+      假设：部分用户带着明确转型或补能力目标进入，需要先看“我该补什么”。
+      结构理由：目标选择直接改变推荐能力顺序，让课程从统一目录变成有依据的学习组合。
+      待确认：生产版是否允许用户保存目标；本方向稿只展示即时推荐，不展示虚假进度。
+    -->
+    <style>
+      :root {
+        color-scheme: dark;
+        --ink: oklch(0.96 0.01 85);
+        --muted: oklch(0.72 0.02 80);
+        --quiet: oklch(0.56 0.02 80);
+        --black: oklch(0.12 0.01 255);
+        --panel: oklch(0.155 0.012 255);
+        --line: oklch(0.31 0.015 255);
+        --soft: oklch(0.235 0.012 255);
+        --yellow: oklch(0.8 0.14 80);
+        --cyan: oklch(0.73 0.12 205);
+        --red: oklch(0.72 0.16 28);
+        --green: oklch(0.74 0.13 145);
+        --display: Baskerville, 'Songti SC', STSong, serif;
+        --body: 'Avenir Next', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        --mono: SFMono-Regular, Menlo, Consolas, monospace;
+        font-synthesis: none;
+        line-break: strict;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        min-width: 320px;
+        background: var(--black);
+      }
+      body {
+        min-width: 320px;
+        margin: 0;
+        overflow-x: hidden;
+        background: var(--black);
+        color: var(--ink);
+        font-family: var(--body);
+        font-size: 16px;
+        line-height: 1.7;
+      }
+      a,
+      button {
+        color: inherit;
+        font: inherit;
+      }
+      button {
+        border: 0;
+        cursor: pointer;
+      }
+      :focus-visible {
+        outline: 2px solid var(--yellow);
+        outline-offset: 4px;
+      }
+
+      header {
+        height: 72px;
+        display: grid;
+        grid-template-columns: minmax(190px, 0.7fr) 1.2fr auto;
+        align-items: center;
+        gap: 24px;
+        border-bottom: 1px solid var(--line);
+        padding: 0 48px;
+      }
+      .brand {
+        font-family: var(--display);
+        font-size: 25px;
+        font-weight: 700;
+        text-decoration: none;
+      }
+      .context,
+      .eyebrow,
+      .label,
+      .cap-index {
+        font-family: var(--mono);
+        font-size: 11px;
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
+      }
+      .context {
+        color: var(--quiet);
+      }
+      nav {
+        display: flex;
+        gap: 24px;
+      }
+      nav a {
+        color: var(--muted);
+        font-size: 14px;
+        text-decoration: none;
+      }
+      nav a.active {
+        color: var(--ink);
+        border-bottom: 1px solid var(--yellow);
+      }
+
+      main {
+        min-height: calc(100svh - 72px);
+      }
+      .top {
+        min-height: 420px;
+        display: grid;
+        grid-template-columns: 0.44fr 0.56fr;
+        border-bottom: 1px solid var(--line);
+      }
+      .intro {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        border-right: 1px solid var(--line);
+        padding: 44px 48px;
+      }
+      .eyebrow {
+        color: var(--yellow);
+      }
+      h1 {
+        max-width: 9em;
+        margin: 22px 0 18px;
+        font-family: var(--display);
+        font-size: clamp(48px, 5vw, 72px);
+        font-weight: 400;
+        line-height: 1.08;
+        letter-spacing: 0;
+        text-wrap: balance;
+      }
+      .lead {
+        max-width: 34em;
+        margin: 0;
+        color: var(--muted);
+        font-size: 17px;
+      }
+
+      .goal-picker {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 36px 48px;
+      }
+      .goal-picker h2 {
+        margin: 7px 0 22px;
+        font-family: var(--display);
+        font-size: 31px;
+        font-weight: 400;
+      }
+      .goals {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        border: 1px solid var(--line);
+      }
+      .goal {
+        min-height: 142px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: space-between;
+        border-right: 1px solid var(--line);
+        background: transparent;
+        padding: 18px;
+        text-align: left;
+      }
+      .goal:last-child {
+        border-right: 0;
+      }
+      .goal:hover {
+        background: var(--panel);
+      }
+      .goal[aria-pressed='true'] {
+        background: var(--panel);
+        box-shadow: inset 0 -3px var(--yellow);
+      }
+      .goal span {
+        color: var(--quiet);
+        font-family: var(--mono);
+        font-size: 10px;
+        letter-spacing: 0.08em;
+      }
+      .goal strong {
+        font-family: var(--display);
+        font-size: 20px;
+        font-weight: 400;
+        line-height: 1.35;
+      }
+      .goal[aria-pressed='true'] span {
+        color: var(--yellow);
+      }
+
+      .compass {
+        display: grid;
+        grid-template-columns: minmax(0, 1.35fr) minmax(330px, 0.65fr);
+      }
+      .capabilities {
+        padding: 28px 48px 38px;
+      }
+      .section-head {
+        min-height: 68px;
+        display: flex;
+        align-items: start;
+        justify-content: space-between;
+        gap: 20px;
+      }
+      .section-head h2 {
+        margin: 5px 0 0;
+        font-family: var(--display);
+        font-size: 31px;
+        font-weight: 400;
+      }
+      .section-head p {
+        max-width: 28em;
+        margin: 4px 0 0;
+        color: var(--quiet);
+        font-size: 13px;
+        text-align: right;
+      }
+      .cap-grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        border: 1px solid var(--line);
+      }
+      .cap {
+        position: relative;
+        min-height: 238px;
+        display: flex;
+        flex-direction: column;
+        border-right: 1px solid var(--line);
+        padding: 18px;
+      }
+      .cap:last-child {
+        border-right: 0;
+      }
+      .cap::after {
+        content: '';
+        position: absolute;
+        inset: auto 18px 17px;
+        height: 2px;
+        background: var(--line);
+      }
+      .cap[data-rank='1'] {
+        background: var(--panel);
+      }
+      .cap[data-rank='1']::after {
+        background: var(--yellow);
+      }
+      .cap[data-rank='2']::after {
+        background: var(--cyan);
+      }
+      .cap[data-rank='3']::after {
+        background: var(--green);
+      }
+      .cap-index {
+        color: var(--quiet);
+      }
+      .cap[data-rank='1'] .cap-index {
+        color: var(--yellow);
+      }
+      .cap h3 {
+        margin: 38px 0 12px;
+        font-family: var(--display);
+        font-size: 20px;
+        font-weight: 400;
+        line-height: 1.35;
+      }
+      .cap p {
+        margin: 0 0 32px;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.55;
+      }
+
+      .recommendation {
+        display: flex;
+        flex-direction: column;
+        border-left: 1px solid var(--line);
+        padding: 31px 40px 38px;
+        background: var(--panel);
+      }
+      .recommendation .label {
+        color: var(--green);
+      }
+      .recommendation h2 {
+        margin: 11px 0 10px;
+        font-family: var(--display);
+        font-size: 30px;
+        font-weight: 400;
+        line-height: 1.25;
+      }
+      .recommendation > p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .route {
+        margin: 22px 0 26px;
+        padding: 0;
+        list-style: none;
+        counter-reset: route;
+      }
+      .route li {
+        display: grid;
+        grid-template-columns: 27px 1fr;
+        gap: 10px;
+        border-top: 1px solid var(--line);
+        padding: 9px 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .route li::before {
+        counter-increment: route;
+        content: '0' counter(route);
+        color: var(--quiet);
+        font-family: var(--mono);
+        font-size: 10px;
+      }
+      .primary {
+        min-height: 48px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: auto;
+        background: var(--yellow);
+        color: var(--black);
+        font-weight: 600;
+        text-decoration: none;
+      }
+
+      .next-band {
+        display: grid;
+        grid-template-columns: 0.44fr 0.56fr;
+        border-top: 1px solid var(--line);
+      }
+      .next-band > div {
+        min-height: 166px;
+        padding: 30px 48px;
+      }
+      .next-band > div:first-child {
+        border-right: 1px solid var(--line);
+      }
+      .next-band h2 {
+        margin: 8px 0 0;
+        font-family: var(--display);
+        font-size: 29px;
+        font-weight: 400;
+      }
+      .references {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1px;
+        background: var(--line);
+        padding: 0 !important;
+      }
+      .references div {
+        background: var(--black);
+        padding: 28px;
+      }
+      .references span {
+        color: var(--cyan);
+        font-family: var(--mono);
+        font-size: 10px;
+      }
+      .references strong {
+        display: block;
+        margin-top: 14px;
+        font-family: var(--display);
+        font-size: 19px;
+        font-weight: 400;
+      }
+
+      @media (max-width: 900px) {
+        header {
+          grid-template-columns: 1fr auto;
+          padding: 0 22px;
+        }
+        .context {
+          display: none;
+        }
+        nav a:not(.active) {
+          display: none;
+        }
+        .top {
+          grid-template-columns: 1fr;
+        }
+        .intro {
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+          padding: 46px 22px 34px;
+        }
+        h1 {
+          font-size: clamp(43px, 13vw, 62px);
+        }
+        .goal-picker {
+          padding: 28px 22px 32px;
+        }
+        .goals {
+          grid-template-columns: 1fr;
+        }
+        .goal {
+          min-height: 80px;
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+        }
+        .goal:last-child {
+          border-bottom: 0;
+        }
+        .compass {
+          grid-template-columns: 1fr;
+        }
+        .capabilities {
+          padding: 28px 22px;
+        }
+        .section-head {
+          display: block;
+        }
+        .section-head p {
+          margin-top: 8px;
+          text-align: left;
+        }
+        .cap-grid {
+          grid-template-columns: 1fr;
+          margin-top: 22px;
+        }
+        .cap {
+          min-height: 128px;
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+        }
+        .cap:last-child {
+          border-bottom: 0;
+        }
+        .cap h3 {
+          margin: 17px 0 5px;
+        }
+        .recommendation {
+          border-top: 1px solid var(--line);
+          border-left: 0;
+          padding: 30px 22px;
+        }
+        .next-band {
+          grid-template-columns: 1fr;
+        }
+        .next-band > div:first-child {
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+        }
+        .references {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <a class="brand" href="#">AI-Native</a>
+      <div class="context">Progressive AI product learning / zh-CN</div>
+      <nav aria-label="主导航">
+        <a class="active" href="#compass">学习中心</a>
+        <a href="#library">知识图鉴</a>
+        <a href="#search">搜索</a>
+        <a href="#graph">概念图谱</a>
+      </nav>
+    </header>
+    <main>
+      <section class="top">
+        <div class="intro">
+          <span class="eyebrow">Capability compass</span>
+          <h1>先看你要做什么，再决定学什么。</h1>
+          <p class="lead">
+            AI
+            产品经理不是一个职位标签，而是一组可以拆开训练的判断能力。选择眼前目标，我们给出有依据的学习起点。
+          </p>
+        </div>
+        <div class="goal-picker">
+          <span class="label">01 · 选择你当前的目标</span>
+          <h2>你现在最想解决哪件事？</h2>
+          <div class="goals" role="group" aria-label="学习目标">
+            <button class="goal" type="button" data-goal="transition" aria-pressed="true">
+              <span>Goal A</span><strong>转型 AI 产品经理</strong>
+            </button>
+            <button class="goal" type="button" data-goal="opportunity" aria-pressed="false">
+              <span>Goal B</span><strong>评估手上的 AI 机会</strong>
+            </button>
+            <button class="goal" type="button" data-goal="solution" aria-pressed="false">
+              <span>Goal C</span><strong>补齐 AI 方案设计能力</strong>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="compass" id="compass">
+        <div class="capabilities">
+          <div class="section-head">
+            <div>
+              <span class="label">02 · 能力地图</span>
+              <h2>五种核心判断能力</h2>
+            </div>
+            <p>彩色标线代表当前目标下的建议顺序，不是考试分数。</p>
+          </div>
+          <div class="cap-grid" id="cap-grid">
+            <article class="cap" data-cap="boundary">
+              <span class="cap-index">A / 模型</span>
+              <h3>理解模型边界</h3>
+              <p>知道模型能做什么、何时不可靠。</p>
+            </article>
+            <article class="cap" data-cap="opportunity">
+              <span class="cap-index">B / 场景</span>
+              <h3>判断场景机会</h3>
+              <p>从问题、数据和错误成本判断价值。</p>
+            </article>
+            <article class="cap" data-cap="solution">
+              <span class="cap-index">C / 方案</span>
+              <h3>选择方案结构</h3>
+              <p>在 Prompt、RAG、Agent 与工作流间取舍。</p>
+            </article>
+            <article class="cap" data-cap="experience">
+              <span class="cap-index">D / 体验</span>
+              <h3>设计人机协作</h3>
+              <p>处理控制权、不确定性和错误恢复。</p>
+            </article>
+            <article class="cap" data-cap="evaluation">
+              <span class="cap-index">E / 质量</span>
+              <h3>定义评估约束</h3>
+              <p>让质量、成本和风险可验证。</p>
+            </article>
+          </div>
+        </div>
+        <aside class="recommendation" aria-live="polite">
+          <span class="label">03 · 推荐起点</span>
+          <h2 id="route-title">从边界开始，建立完整判断链</h2>
+          <p id="route-copy">
+            适合第一次系统接触 AI 产品的人。先建立共同语言，再进入场景、方案、体验与评估。
+          </p>
+          <ol class="route" id="route-list">
+            <li>AI 基础与模型边界</li>
+            <li>场景与机会判断</li>
+            <li>方案选择</li>
+            <li>AI 产品体验</li>
+            <li>质量与商业约束</li>
+          </ol>
+          <a class="primary" href="#library" id="route-action">从第一课开始</a>
+        </aside>
+      </section>
+
+      <section class="next-band" id="library">
+        <div>
+          <span class="eyebrow">Knowledge when needed</span>
+          <h2>遇到概念，再进入词库深挖。</h2>
+        </div>
+        <div class="references">
+          <div><span>MODEL BOUNDARY</span><strong>模型与上下文</strong></div>
+          <div><span>SOLUTION CHOICE</span><strong>RAG、Agent、工作流</strong></div>
+          <div><span>QUALITY SYSTEM</span><strong>评估与可观测性</strong></div>
+        </div>
+      </section>
+    </main>
+    <script>
+      const routes = {
+        transition: {
+          title: '从边界开始，建立完整判断链',
+          copy: '适合第一次系统接触 AI 产品的人。先建立共同语言，再进入场景、方案、体验与评估。',
+          action: '从第一课开始',
+          order: ['boundary', 'opportunity', 'solution', 'experience', 'evaluation'],
+          lessons: [
+            'AI 基础与模型边界',
+            '场景与机会判断',
+            '方案选择',
+            'AI 产品体验',
+            '质量与商业约束',
+          ],
+        },
+        opportunity: {
+          title: '从真实场景开始，先证明值得做',
+          copy: '适合手上已有 AI 想法的人。先检查用户问题和约束，再补模型边界与方案选择。',
+          action: '开始机会评估',
+          order: ['opportunity', 'boundary', 'evaluation', 'solution', 'experience'],
+          lessons: [
+            '场景与机会判断',
+            'AI 基础与模型边界',
+            '质量与商业约束',
+            '方案选择',
+            'AI 产品体验',
+          ],
+        },
+        solution: {
+          title: '从方案取舍开始，补齐落地链路',
+          copy: '适合已经会写需求、但难以选择 AI 技术路径的人。先练结构选择，再验证体验与质量。',
+          action: '开始方案练习',
+          order: ['solution', 'boundary', 'experience', 'evaluation', 'opportunity'],
+          lessons: [
+            '方案选择',
+            'AI 基础与模型边界',
+            'AI 产品体验',
+            '质量与商业约束',
+            '场景与机会判断',
+          ],
+        },
+      };
+
+      const buttons = [...document.querySelectorAll('.goal')];
+      const caps = [...document.querySelectorAll('.cap')];
+      const title = document.querySelector('#route-title');
+      const copy = document.querySelector('#route-copy');
+      const list = document.querySelector('#route-list');
+      const action = document.querySelector('#route-action');
+
+      function selectGoal(goal) {
+        const route = routes[goal];
+        buttons.forEach((button) =>
+          button.setAttribute('aria-pressed', String(button.dataset.goal === goal)),
+        );
+        caps.forEach((cap) =>
+          cap.setAttribute('data-rank', String(route.order.indexOf(cap.dataset.cap) + 1)),
+        );
+        title.textContent = route.title;
+        copy.textContent = route.copy;
+        action.textContent = route.action;
+        list.replaceChildren(
+          ...route.lessons.map((lesson) =>
+            Object.assign(document.createElement('li'), { textContent: lesson }),
+          ),
+        );
+      }
+
+      buttons.forEach((button) =>
+        button.addEventListener('click', () => selectGoal(button.dataset.goal)),
+      );
+      selectGoal('transition');
+    </script>
+  </body>
+</html>

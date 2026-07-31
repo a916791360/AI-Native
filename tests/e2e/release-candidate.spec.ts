@@ -21,6 +21,9 @@ test('fits every primary page in all approved release viewports', async ({ page,
   ];
   const paths = [
     '/',
+    '/learn/',
+    '/learn/questions/',
+    '/learn/questions/q21-support-rag/',
     '/atlas/',
     '/search/?q=RAG',
     '/routes/',

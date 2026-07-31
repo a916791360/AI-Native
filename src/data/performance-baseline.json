@@ -6,10 +6,10 @@
     "largestImageBytes": 307200
   },
   "metrics": {
-    "homeInitialJavaScriptBytes": 0,
-    "homeCssBytes": 20713,
-    "pagefindBytes": 1333083,
-    "graphJavaScriptBytes": 444897,
+    "homeInitialJavaScriptBytes": 5847,
+    "homeCssBytes": 20674,
+    "pagefindBytes": 1333080,
+    "graphJavaScriptBytes": 446291,
     "largestImageBytes": 121361
   }
 }
