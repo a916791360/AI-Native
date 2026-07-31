@@ -1,7 +1,7 @@
 ---
 termId: human-escalation
 batch: product-1
-status: draft
+status: verified
 accessedAt: '2026-07-30'
 sourceIds:
   - google-pair-errors-graceful-failure

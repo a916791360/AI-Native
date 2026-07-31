@@ -8,7 +8,10 @@ summary: 在界面中明确呈现模型的不确定性、证据缺口或需要�
 domain: ai-product-ux
 difficulty: intermediate
 ring: core
-status: draft
+status: verified
+publishedAt: '2026-07-31'
+updatedAt: '2026-07-31'
+verifiedAt: '2026-07-31'
 priority: 1
 featured: false
 sources:
@@ -44,7 +47,7 @@ sources:
 
 <h2 id="tradeoffs">什么时候适合与不适合</h2>
 
-证据缺失、多个结果都合理或错误后果较高时，应明确呈现不确定性。低影响且可立即撤销的推荐不必展示复杂数值。模型置信分数若没有经过[置信度校准](/terms/confidence-calibration/)，不能直接解释成答案正确概率；即使已经校准，过细数字也可能造成虚假精确感或困惑。是否展示、展示到何种粒度必须用真实任务验证。[S1]
+证据缺失、多个结果都合理或错误后果较高时，应明确呈现不确定性。低影响且可立即撤销的推荐不必展示复杂数值。如果产品没有明确定义并验证模型分数与实际正确率的关系，就不能把它直接解释成答案正确概率；即使完成[置信度校准](/terms/confidence-calibration/)，过细数字也可能造成虚假精确感或困惑。是否展示、展示到何种粒度必须用真实任务验证。[S1]
 
 <h2 id="try-it">亲自试一下</h2>
 

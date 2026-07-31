@@ -1,7 +1,7 @@
 ---
 termId: uncertainty-display
 batch: product-1
-status: draft
+status: verified
 accessedAt: '2026-07-30'
 sourceIds:
   - google-pair-explainability-trust
@@ -21,7 +21,7 @@ claims:
       - google-pair-explainability-trust
       - microsoft-human-ai-interaction-guidelines
   - id: score-is-not-correctness
-    statement: 模型置信分数若未经校准，不能直接当成答案正确概率；过细数值也可能让用户困惑或产生虚假精确感，因此不应为“透明”而机械展示。
+    statement: 如果产品没有明确定义并验证模型分数与实际正确率的关系，就不能把它直接当成答案正确概率；过细数值也可能让用户困惑或产生虚假精确感，因此不应为“透明”而机械展示。
     evidenceType: boundary
     sourceIds:
       - google-pair-explainability-trust
