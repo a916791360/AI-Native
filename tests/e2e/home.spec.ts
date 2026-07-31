@@ -172,13 +172,17 @@ test('reveals immediate reasoning without asking the learner to type', async ({ 
 test('makes stage progress and cross-stage continuation explicit', async ({ page }) => {
   await page.goto('/learn/questions/q04-high-stakes-answer/');
 
-  const stageMap = page.getByRole('navigation', { name: '六阶段学习路线' });
-  await expect(stageMap.getByRole('link')).toHaveCount(6);
-  await expect(stageMap.getByRole('link', { name: /01 AI 基础与模型边界/ })).toHaveAttribute(
-    'aria-current',
-    'step',
+  const location = page.getByRole('region', { name: '课程位置' });
+  await expect(location).toContainText('阶段 01 / 06');
+  await expect(location).toContainText('AI 基础与模型边界');
+  await expect(location).toContainText('本阶段4 / 4');
+  await expect(location).toContainText('全程04 / 24');
+  await expect(location.getByRole('link')).toHaveCount(1);
+  await expect(location.getByRole('link', { name: '返回课程目录' })).toHaveAttribute(
+    'href',
+    '/learn/',
   );
-  await expect(page.locator('.question-position .eyebrow')).toContainText('本阶段第 4 / 4 题');
+  await expect(page.getByRole('navigation', { name: '六阶段学习路线' })).toHaveCount(0);
 
   await page.getByRole('button', { name: /限定为信息辅助/ }).click();
   const nextStep = page.locator('[data-next-step]');
@@ -190,6 +194,25 @@ test('makes stage progress and cross-stage continuation explicit', async ({ page
   await page.getByRole('button', { name: /补齐监控、预算、护栏和接管/ }).click();
   await expect(page.locator('[data-next-step]')).toContainText('完成主线');
   await expect(page.locator('[data-next-step]')).toHaveAttribute('href', '/learn/');
+});
+
+test('gives the learning center one primary start and one secondary question directory', async ({
+  page,
+}) => {
+  await page.goto('/learn/');
+
+  await expect(page.getByRole('link', { name: '从阶段 01 开始' })).toHaveAttribute(
+    'href',
+    '/learn/questions/q01-rules-or-ai/',
+  );
+  await expect(page.getByRole('link', { name: '查看 24 题目录' })).toHaveAttribute(
+    'href',
+    '/learn/questions/',
+  );
+  await expect(page.locator('.course-modules > li')).toHaveCount(6);
+  await expect(page.getByRole('heading', { name: '按 6 个阶段建立 AI 产品判断力' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: '从单点判断，进入完整项目' })).toHaveCount(0);
+  await expect(page.locator('#questions')).toHaveCount(0);
 });
 
 test('keeps the question and decision logic readable without JavaScript', async ({ browser }) => {

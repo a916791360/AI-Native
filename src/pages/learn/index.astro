@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { LEARNING_MODULES, LEARNING_QUESTIONS, getQuestionsForModule } from '@/data/learning';
+import { LEARNING_MODULES, getQuestionsForModule } from '@/data/learning';
 ---
 
 <BaseLayout
@@ -16,7 +16,10 @@ import { LEARNING_MODULES, LEARNING_QUESTIONS, getQuestionsForModule } from '@/d
           不是背完一份术语表，而是学会判断什么时候该用
           AI、该选哪种方案，以及怎样对质量、成本和风险负责。
         </p>
-        <a href="/learn/questions/q01-rules-or-ai/">从第 1 题开始</a>
+        <div class="course-actions">
+          <a class="primary" href="/learn/questions/q01-rules-or-ai/">从阶段 01 开始</a>
+          <a href="/learn/questions/">查看 24 题目录</a>
+        </div>
       </div>
       <div class="course-outcome">
         <p class="meta-label">完成这条主线，你将交付</p>
@@ -33,9 +36,13 @@ import { LEARNING_MODULES, LEARNING_QUESTIONS, getQuestionsForModule } from '@/d
     <section class="course-layout" aria-labelledby="curriculum-heading">
       <aside>
         <p class="meta-label">Curriculum spine</p>
-        <h2 id="curriculum-heading">六步完成一次能力迁移</h2>
-        <p>每个阶段包含 4 道题。先选择，再看判断依据；不填写作业，也不保存学习数据。</p>
-        <a href="/learn/questions/">查看 24 题总览</a>
+        <h2 id="curriculum-heading">按 6 个阶段建立 AI 产品判断力</h2>
+        <p>从阶段 01 开始，每阶段连续完成 4 道判断题，最后进入综合产品项目。</p>
+        <dl class="curriculum-facts">
+          <div><dt>阶段</dt><dd>6</dd></div>
+          <div><dt>每阶段</dt><dd>4 题</dd></div>
+          <div><dt>学习方式</dt><dd>判断 · 反馈 · 继续</dd></div>
+        </dl>
       </aside>
       <ol class="course-modules">
         {
@@ -65,34 +72,14 @@ import { LEARNING_MODULES, LEARNING_QUESTIONS, getQuestionsForModule } from '@/d
                     </>
                   </div>
                 </dl>
-                <a href={`/learn/questions/${questions[0]?.id}/`}>开始本阶段</a>
+                <a href={`/learn/questions/${questions[0]?.id}/`}>
+                  {module.index === '01' ? '建议从这里开始' : `从第 ${questions[0]?.index} 题进入`}
+                </a>
               </li>
             );
           })
         }
       </ol>
-    </section>
-
-    <section class="case-register" id="questions" aria-labelledby="questions-heading">
-      <header>
-        <p class="eyebrow">Progressive question bank</p>
-        <h2 class="section-heading" id="questions-heading">从单点判断，进入完整项目</h2>
-        <p>
-          最后四题把前五个阶段合在客服、销售、合同与上线场景中。先做前面的基础题，再来检验完整判断。
-        </p>
-        <a href="/learn/questions/">查看全部 24 题</a>
-      </header>
-      <div>
-        {
-          LEARNING_QUESTIONS.slice(-4).map((item) => (
-            <a href={`/learn/questions/${item.id}/`}>
-              <span>Question {item.index}</span>
-              <strong>{item.question}</strong>
-              <small>{item.shortTitle}</small>
-            </a>
-          ))
-        }
-      </div>
     </section>
   </main>
 </BaseLayout>
@@ -134,17 +121,36 @@ import { LEARNING_MODULES, LEARNING_QUESTIONS, getQuestionsForModule } from '@/d
     font-size: var(--text-lead);
   }
 
-  .course-title > a {
+  .course-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    align-items: center;
+    margin-top: var(--space-5);
+  }
+
+  .course-actions a {
     min-height: 3rem;
     display: inline-flex;
     align-items: center;
-    align-self: flex-start;
-    margin-top: var(--space-5);
-    background: var(--color-prerequisite);
-    color: var(--color-black);
     padding: 0 var(--space-4);
+    color: var(--color-muted);
     font-weight: 600;
     text-decoration: none;
+  }
+
+  .course-actions a.primary {
+    background: var(--color-prerequisite);
+    color: var(--color-black);
+  }
+
+  .course-actions a:not(.primary) {
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .course-actions a:not(.primary):hover {
+    border-color: var(--color-prerequisite);
+    color: var(--color-ink);
   }
 
   .course-outcome {
@@ -195,30 +201,37 @@ import { LEARNING_MODULES, LEARNING_QUESTIONS, getQuestionsForModule } from '@/d
     line-height: 1.2;
   }
 
-  .course-layout > aside > p:not(.meta-label),
-  .case-register header > p:not(.eyebrow) {
+  .course-layout > aside > p:not(.meta-label) {
     margin: 0;
     color: var(--color-muted);
   }
 
-  .case-register header > a {
-    min-height: 2.75rem;
-    display: inline-flex;
-    align-items: center;
+  .curriculum-facts {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 var(--space-3);
     margin-top: var(--space-4);
-    border-bottom: 1px solid var(--color-prerequisite);
-    color: var(--color-prerequisite);
-    text-decoration: none;
   }
 
-  .course-layout > aside > a {
-    min-height: 2.75rem;
-    display: inline-flex;
-    align-items: center;
-    margin-top: var(--space-4);
-    border-bottom: 1px solid var(--color-prerequisite);
-    color: var(--color-prerequisite);
-    text-decoration: none;
+  .curriculum-facts div {
+    border-top: 1px solid var(--color-line-soft);
+    padding: 0.7rem 0;
+  }
+
+  .curriculum-facts div:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .curriculum-facts dt {
+    color: var(--color-quiet);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+  }
+
+  .curriculum-facts dd {
+    margin: 0.2rem 0 0;
+    color: var(--color-ink);
+    font-size: var(--text-sm);
   }
 
   .course-modules {
@@ -311,72 +324,14 @@ import { LEARNING_MODULES, LEARNING_QUESTIONS, getQuestionsForModule } from '@/d
     color: var(--color-ink);
   }
 
-  .case-register {
-    display: grid;
-    grid-template-columns: minmax(20rem, 0.34fr) minmax(0, 0.66fr);
-  }
-
-  .case-register > header {
-    border-right: 1px solid var(--color-line);
-    padding: var(--space-7) var(--page-gutter);
-  }
-
-  .case-register header > p:not(.eyebrow) {
-    max-width: 32rem;
-    margin-top: var(--space-3);
-  }
-
-  .case-register > div {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .case-register > div a {
-    min-height: 20rem;
-    display: flex;
-    flex-direction: column;
-    border-right: 1px solid var(--color-line);
-    padding: var(--space-4);
-    text-decoration: none;
-  }
-
-  .case-register > div a:last-child {
-    border-right: 0;
-  }
-
-  .case-register > div a:hover {
-    background: var(--color-panel);
-  }
-
-  .case-register span {
-    color: var(--color-prerequisite);
-    font-family: var(--font-mono);
-    font-size: var(--text-xs);
-  }
-
-  .case-register strong {
-    margin-top: auto;
-    font-family: var(--font-display);
-    font-size: 1.5rem;
-    font-weight: 400;
-    line-height: 1.35;
-  }
-
-  .case-register small {
-    margin-top: var(--space-3);
-    color: var(--color-muted);
-  }
-
   @media (max-width: 1100px) {
     .course-hero,
-    .course-layout,
-    .case-register {
+    .course-layout {
       grid-template-columns: 1fr;
     }
 
     .course-title,
-    .course-layout > aside,
-    .case-register > header {
+    .course-layout > aside {
       border-right: 0;
       border-bottom: 1px solid var(--color-line);
     }
@@ -411,15 +366,9 @@ import { LEARNING_MODULES, LEARNING_QUESTIONS, getQuestionsForModule } from '@/d
     .course-modules > li > a {
       grid-column: 2;
     }
-
-    .case-register > div {
-      grid-template-columns: 1fr;
-    }
-
-    .case-register > div a {
-      min-height: 12rem;
-      border-right: 0;
-      border-bottom: 1px solid var(--color-line);
+    .course-actions {
+      align-items: flex-start;
+      flex-direction: column;
     }
   }
 </style>
