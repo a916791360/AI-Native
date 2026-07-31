@@ -1,12 +1,12 @@
 ---
 termId: ai-risk-management
 batch: product-1
-status: draft
+status: verified
 accessedAt: '2026-07-31'
 sourceIds:
   - nist-ai-rmf-core
   - nist-ai-rmf-playbook
-timeBoundary: 按情境持续治理、识别、测量和处置 AI 风险的框架相对稳定；具体法律义务、风险容忍度、影响对象、控制措施和责任分工需按组织与时间复核。
+timeBoundary: 本文基于 NIST AI RMF 1.0；NIST 已声明框架和 Playbook 正在修订，实施时需核对当前版本，具体法律义务、风险容忍度、影响对象、控制措施和责任分工也需按组织与时间复核。
 claims:
   - id: continuous-contextual-risk-cycle
     statement: AI 风险管理是在整个系统生命周期中持续治理责任、界定使用情境、识别和测量影响，并按优先级处置、监控和沟通风险的组织过程。
@@ -15,7 +15,7 @@ claims:
       - nist-ai-rmf-core
       - nist-ai-rmf-playbook
   - id: govern-map-measure-manage
-    statement: 实施时以 Govern 建立政策、角色和风险容忍度，用 Map 记录场景、相关方和影响，用 Measure 形成可追溯证据，再由 Manage 决定接受、缓解、转移、停止、响应和持续改进。
+    statement: 实施时以 Govern 建立政策、角色和风险容忍度，用 Map 记录场景、相关方和影响，用 Measure 形成可追溯证据，再由 Manage 确定优先级并安排继续、缓解、限制、停用、响应和持续改进。
     evidenceType: mechanism
     sourceIds:
       - nist-ai-rmf-core

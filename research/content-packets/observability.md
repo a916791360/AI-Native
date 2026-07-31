@@ -1,11 +1,12 @@
 ---
 termId: observability
 batch: product-1
-status: draft
+status: verified
 accessedAt: '2026-07-31'
 sourceIds:
   - opentelemetry-observability-primer
   - google-production-ml-monitoring
+  - opentelemetry-sensitive-data
 timeBoundary: 通过系统输出理解内部状态的原则相对稳定；遥测协议、模型供应商、工具链、数据字段、告警阈值和隐私要求会变化。
 claims:
   - id: infer-state-from-correlated-signals
@@ -19,12 +20,14 @@ claims:
     sourceIds:
       - opentelemetry-observability-primer
       - google-production-ml-monitoring
+      - opentelemetry-sensitive-data
   - id: telemetry-is-not-understanding
     statement: 收集大量遥测不自动产生可观测性；缺少上下文关联、质量信号或调查路径时仍无法定位原因，高基数字段、采样、敏感数据和保留期限还会带来成本与隐私风险。
     evidenceType: boundary
     sourceIds:
       - opentelemetry-observability-primer
       - google-production-ml-monitoring
+      - opentelemetry-sensitive-data
 ---
 
 ## 编辑说明

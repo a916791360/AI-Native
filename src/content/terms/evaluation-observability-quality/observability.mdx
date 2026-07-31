@@ -8,7 +8,10 @@ summary: 通过指标、日志和追踪理解系统内部状态及问题原因�
 domain: evaluation-observability-quality
 difficulty: intermediate
 ring: core
-status: draft
+status: verified
+publishedAt: '2026-07-31'
+updatedAt: '2026-07-31'
+verifiedAt: '2026-07-31'
 priority: 1
 featured: false
 sources:
@@ -24,6 +27,12 @@ sources:
     url: https://developers.google.com/machine-learning/crash-course/production-ml-systems/monitoring
     publisher: Google for Developers
     accessedAt: '2026-07-31'
+  - id: opentelemetry-sensitive-data
+    type: official-doc
+    title: Handling sensitive data
+    url: https://opentelemetry.io/docs/security/handling-sensitive-data/
+    publisher: OpenTelemetry
+    accessedAt: '2026-07-31'
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -36,7 +45,7 @@ AI 应用往往串联提示、检索、模型、工具和外部服务，同一�
 
 <h2 id="how-it-works">它如何工作</h2>
 
-为每次请求建立统一追踪标识，并为检索、模型调用、工具执行和后处理创建可关联步骤。记录组件与版本、耗时、错误、重试、令牌和成本，同时收集输入分布、任务结果、评分和用户反馈；指标发现异常，追踪定位路径，结构化日志提供事件细节。告警必须对应负责人和处置手册，新的生产失败还要进入离线评测。敏感输入应脱敏或只记录必要特征，并设置采样、访问和保留规则。[S1][S2]
+为每次请求建立统一追踪标识，并为检索、模型调用、工具执行和后处理创建可关联步骤。记录组件与版本、耗时、错误、重试、令牌和成本，同时收集输入分布、任务结果、评分和用户反馈；指标发现异常，追踪定位路径，结构化日志提供事件细节。告警必须对应负责人和处置手册，新的生产失败还要进入离线评测。敏感输入应遵循数据最小化原则，优先不采集；确需采集时应脱敏或只记录必要特征，并设置访问和保留规则。[S1][S2][S3]
 
 <h2 id="example">真实例子</h2>
 
@@ -44,7 +53,7 @@ RAG 助手的满意度突然下降，但模型 API 错误率没有变化。团�
 
 <h2 id="tradeoffs">什么时候适合与不适合</h2>
 
-多步骤、持续运行或故障代价较高的 AI 系统需要较完整的可观测性；低风险原型可以从少量关键指标和端到端追踪开始。记录越多不一定越好：高基数字段会推高成本，过度采样会遗漏罕见故障，原始提示和用户数据还可能泄露敏感信息。若信号无法关联到版本、任务结果和处置动作，庞大仪表盘仍只是遥测堆积。[S1][S2]
+多步骤、持续运行或故障代价较高的 AI 系统需要较完整的可观测性；低风险原型可以从少量关键指标和端到端追踪开始。记录越多不一定越好：字段和事件规模会推高存储与分析成本，采样可能遗漏罕见故障，原始提示和用户数据还可能泄露敏感信息。若信号无法关联到版本、任务结果和处置动作，庞大仪表盘仍只是遥测堆积。[S1][S2][S3]
 
 <h2 id="try-it">亲自试一下</h2>
 
@@ -56,4 +65,4 @@ RAG 助手的满意度突然下降，但模型 API 错误率没有变化。团�
 
 <h2 id="sources-and-revisions">来源与修订</h2>
 
-从输出理解内部状态、追踪/指标/日志及其关联方式参考 OpenTelemetry 可观测性资料 [S1]；数据校验、重要切片、真实世界指标、训练服务偏差和线上质量监测参考 Google 生产 ML 指南 [S2]。遥测协议、模型供应商、字段、阈值和隐私要求会持续变化。
+从输出理解内部状态、追踪/指标/日志及其关联方式参考 OpenTelemetry 可观测性资料 [S1]；数据校验、重要切片、真实世界指标、训练服务偏差和线上质量监测参考 Google 生产 ML 指南 [S2]；敏感数据责任、数据最小化、过滤与脱敏参考 OpenTelemetry 安全指南 [S3]。遥测协议、模型供应商、字段、阈值和隐私要求会持续变化。

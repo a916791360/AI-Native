@@ -9,7 +9,7 @@ import {
 } from '../../../src/lib/content/production';
 
 describe('stage 9 content production', () => {
-  it('keeps active content work traceable without activating planned waves', async () => {
+  it('keeps completed content work traceable across all approved waves', async () => {
     const [plan, packets, project] = await Promise.all([
       loadContentProductionPlan(),
       loadResearchPackets(),
@@ -47,7 +47,7 @@ describe('stage 9 content production', () => {
     expect(plan.batches[3]).toMatchObject({
       id: 'product-1',
       kind: 'product',
-      status: 'draft',
+      status: 'verified',
     });
     expect(plan.batches[3]?.terms).toHaveLength(20);
     expect(plan.batches[3]?.waves?.flatMap((wave) => wave.terms)).toEqual(plan.batches[3]?.terms);
@@ -55,7 +55,7 @@ describe('stage 9 content production', () => {
       'verified',
       'verified',
       'verified',
-      'draft',
+      'verified',
     ]);
     expect(deepContentTermIds(plan).size).toBe(68);
     expect(packets).toHaveLength(68);

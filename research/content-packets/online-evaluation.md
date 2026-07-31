@@ -1,11 +1,12 @@
 ---
 termId: online-evaluation
 batch: product-1
-status: draft
+status: verified
 accessedAt: '2026-07-31'
 sourceIds:
   - microsoft-online-experimentation
   - google-production-ml-monitoring
+  - microsoft-safe-velocity
 timeBoundary: 用真实流量观察产品结果和以随机实验估计因果影响的原则相对稳定；流量结构、用户行为、产品指标、实验平台和风险护栏需持续复核。
 claims:
   - id: evaluate-in-production-context
@@ -14,12 +15,14 @@ claims:
     sourceIds:
       - microsoft-online-experimentation
       - google-production-ml-monitoring
+      - microsoft-safe-velocity
   - id: hypothesis-randomization-guardrails
     statement: 实施时需预先声明假设、分流单位、主要指标和护栏指标，稳定记录版本与曝光，在小比例流量上比较对照和处理，并设置停止、回滚和逐步放量条件。
     evidenceType: mechanism
     sourceIds:
       - microsoft-online-experimentation
       - google-production-ml-monitoring
+      - microsoft-safe-velocity
   - id: exposure-and-causality-boundaries
     statement: 线上评估会真实影响用户；没有随机化或可信对照的监测只能说明相关变化，标签延迟、样本偏差、干扰效应和短期新奇效应也可能误导结论。
     evidenceType: boundary

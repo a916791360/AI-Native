@@ -1,7 +1,7 @@
 ---
 termId: confidence-calibration
 batch: product-1
-status: draft
+status: verified
 accessedAt: '2026-07-31'
 sourceIds:
   - guo-modern-neural-network-calibration

@@ -1,12 +1,12 @@
 ---
 termId: offline-evaluation
 batch: product-1
-status: draft
+status: verified
 accessedAt: '2026-07-31'
 sourceIds:
   - openai-evaluation-best-practices
   - google-rules-of-ml
-timeBoundary: 在固定数据和条件下重复比较的原则相对稳定；数据分布、评分器、模型版本、提示词、工具链和生产流量会持续变化。
+timeBoundary: 在固定数据和条件下重复比较的原则相对稳定；具体评测平台可能更名、迁移或停止服务，数据分布、评分器、模型版本、提示词、工具链和生产流量也会持续变化。
 claims:
   - id: repeatable-evaluation-outside-live-traffic
     statement: 离线评估是在不把候选版本直接暴露给实时用户的条件下，使用固定或可重放的数据、任务和评分规则重复测量模型或完整系统表现。
