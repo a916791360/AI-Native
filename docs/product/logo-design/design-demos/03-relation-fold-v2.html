@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AI-Native Logo Direction 03 V2 - Relation Fold</title>
+    <!--
+      Assumptions:
+      - The mark should read as an authored industrial object before it reads as any letter.
+      - Positive space represents two knowledge fields; the only negative channel is the learning path.
+
+      Core gesture:
+      - Two offset fields share one constant-width folded route.
+
+      Avoiding round-one failures:
+      - No A outline, no A/I splice, no node-network diagram, no arrow or orbit.
+      - The route survives at 16px because its width is structural rather than decorative.
+    -->
+    <style>
+      :root {
+        --ink: #090b0e;
+        --paper: #f3f0e8;
+        --muted: #858680;
+        --rule: #2d2f32;
+        --accent: #d6ad3f;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        overflow: hidden;
+        background: #17191c;
+      }
+
+      body {
+        display: grid;
+        place-items: center;
+        color: var(--paper);
+        font-family: 'Avenir Next', 'Helvetica Neue', 'PingFang SC', sans-serif;
+        font-synthesis: none;
+      }
+
+      .board {
+        width: 1600px;
+        height: 1000px;
+        display: grid;
+        grid-template-rows: 86px 590px 244px 80px;
+        overflow: hidden;
+        background: var(--ink);
+      }
+
+      .header,
+      .footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 52px;
+      }
+
+      .header {
+        border-bottom: 1px solid var(--rule);
+      }
+
+      .footer {
+        border-top: 1px solid var(--rule);
+      }
+
+      .eyebrow,
+      .meta,
+      .label,
+      .footer span,
+      .size-label {
+        font-family: 'SFMono-Regular', Menlo, monospace;
+        text-transform: uppercase;
+      }
+
+      .eyebrow {
+        margin: 0;
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      .eyebrow::before {
+        width: 6px;
+        height: 6px;
+        margin-right: 14px;
+        display: inline-block;
+        background: var(--accent);
+        content: '';
+      }
+
+      .meta,
+      .footer span {
+        color: var(--muted);
+        font-size: 10px;
+        font-weight: 600;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: 1fr 470px;
+        border-bottom: 1px solid var(--rule);
+      }
+
+      .hero-stage {
+        position: relative;
+        display: grid;
+        place-items: center;
+        border-right: 1px solid var(--rule);
+      }
+
+      .hero-mark {
+        width: 650px;
+        height: 390px;
+        color: var(--paper);
+      }
+
+      .axis-x,
+      .axis-y {
+        position: absolute;
+        background: var(--rule);
+      }
+
+      .axis-x {
+        width: 820px;
+        height: 1px;
+      }
+
+      .axis-y {
+        width: 1px;
+        height: 430px;
+      }
+
+      .axis-pin {
+        position: absolute;
+        width: 7px;
+        height: 7px;
+        background: var(--accent);
+      }
+
+      .hero-copy {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 54px 52px 48px;
+      }
+
+      .direction-no {
+        color: var(--accent);
+        font-family: Baskerville, 'Times New Roman', serif;
+        font-size: 72px;
+        line-height: 1;
+      }
+
+      .concept-kicker {
+        margin: 0 0 18px;
+        color: var(--muted);
+        font:
+          600 10px/1.5 'SFMono-Regular',
+          Menlo,
+          monospace;
+        text-transform: uppercase;
+      }
+
+      .concept {
+        max-width: 320px;
+        margin: 0;
+        font-family: Baskerville, 'Songti SC', STSong, serif;
+        font-size: 34px;
+        font-weight: 400;
+        line-height: 1.35;
+      }
+
+      .tests {
+        display: grid;
+        grid-template-columns: 438px 338px 1fr 390px;
+      }
+
+      .test {
+        position: relative;
+        min-width: 0;
+        padding: 30px 34px;
+        border-right: 1px solid var(--rule);
+      }
+
+      .test:last-child {
+        border-right: 0;
+      }
+
+      .label {
+        margin: 0;
+        color: var(--muted);
+        font-size: 10px;
+        font-weight: 600;
+      }
+
+      .lockup {
+        height: 164px;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .lockup .mark {
+        width: 88px;
+        height: 58px;
+      }
+
+      .wordmark {
+        font-size: 34px;
+        font-weight: 600;
+        letter-spacing: 0.035em;
+        text-transform: uppercase;
+      }
+
+      .wordmark b {
+        font-weight: 400;
+      }
+
+      .sizes {
+        height: 164px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .size-item {
+        display: grid;
+        justify-items: center;
+        gap: 18px;
+      }
+
+      .size-16 {
+        width: 24px;
+        height: 16px;
+      }
+
+      .size-24 {
+        width: 36px;
+        height: 24px;
+      }
+
+      .size-32 {
+        width: 48px;
+        height: 32px;
+      }
+
+      .size-label {
+        color: var(--muted);
+        font-size: 9px;
+      }
+
+      .nav-shell {
+        height: 72px;
+        margin-top: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 18px;
+        border: 1px solid #3a3c3f;
+      }
+
+      .nav-brand {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+      }
+
+      .nav-brand .mark {
+        width: 42px;
+        height: 28px;
+      }
+
+      .nav-word {
+        font-size: 17px;
+        font-weight: 600;
+        text-transform: uppercase;
+      }
+
+      .nav-links {
+        color: var(--muted);
+        font-size: 10px;
+      }
+
+      .inverse {
+        padding: 0;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .inverse-cell {
+        position: relative;
+        display: grid;
+        place-items: center;
+      }
+
+      .inverse-cell + .inverse-cell {
+        border-left: 1px solid var(--rule);
+      }
+
+      .inverse-cell.light {
+        color: var(--ink);
+        background: var(--paper);
+      }
+
+      .inverse-cell.dark {
+        color: var(--paper);
+      }
+
+      .inverse-cell .mark {
+        width: 104px;
+        height: 70px;
+      }
+
+      .inverse-caption {
+        position: absolute;
+        left: 18px;
+        bottom: 16px;
+        color: var(--muted);
+        font:
+          600 8px/1 'SFMono-Regular',
+          Menlo,
+          monospace;
+        text-transform: uppercase;
+      }
+
+      .mark {
+        display: block;
+        color: inherit;
+        overflow: visible;
+        shape-rendering: geometricPrecision;
+      }
+    </style>
+  </head>
+  <body>
+    <svg width="0" height="0" aria-hidden="true" style="position: absolute">
+      <defs>
+        <symbol id="relation-fold-mark" viewBox="0 0 120 80">
+          <path d="M14 0H120V20H84L52 46H0V16Z" fill="currentColor" />
+          <path d="M0 58H52L84 32H120V64L106 80H0Z" fill="currentColor" />
+        </symbol>
+      </defs>
+    </svg>
+
+    <main class="board" aria-label="AI-Native 第二轮方案三：Relation Fold">
+      <header class="header">
+        <p class="eyebrow">AI-Native / Logo Study</p>
+        <span class="meta">Direction 03 / Relation Fold V2 / 1600 × 1000</span>
+      </header>
+
+      <section class="hero" aria-label="主标志与核心概念">
+        <div class="hero-stage">
+          <span class="axis-x"></span><span class="axis-y"></span><span class="axis-pin"></span>
+          <svg class="hero-mark mark" role="img" aria-label="两个知识域共享一条负形折线路径的标志">
+            <use href="#relation-fold-mark"></use>
+          </svg>
+        </div>
+        <div class="hero-copy">
+          <span class="direction-no">03</span>
+          <div>
+            <p class="concept-kicker">Two fields / one shared route</p>
+            <p class="concept">两个知识域，共享一条学习路径</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="tests" aria-label="标志应用测试">
+        <div class="test">
+          <p class="label">01 / Horizontal lockup</p>
+          <div class="lockup">
+            <svg class="mark" aria-hidden="true"><use href="#relation-fold-mark"></use></svg>
+            <span class="wordmark">AI-<b>Native</b></span>
+          </div>
+        </div>
+
+        <div class="test">
+          <p class="label">02 / Optical sizes</p>
+          <div class="sizes">
+            <div class="size-item">
+              <svg class="mark size-16" aria-hidden="true">
+                <use href="#relation-fold-mark"></use>
+              </svg>
+              <span class="size-label">16 PX</span>
+            </div>
+            <div class="size-item">
+              <svg class="mark size-24" aria-hidden="true">
+                <use href="#relation-fold-mark"></use>
+              </svg>
+              <span class="size-label">24 PX</span>
+            </div>
+            <div class="size-item">
+              <svg class="mark size-32" aria-hidden="true">
+                <use href="#relation-fold-mark"></use>
+              </svg>
+              <span class="size-label">32 PX</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="test">
+          <p class="label">03 / 72 px navigation</p>
+          <div class="nav-shell">
+            <div class="nav-brand">
+              <svg class="mark" aria-hidden="true"><use href="#relation-fold-mark"></use></svg>
+              <span class="nav-word">AI-Native</span>
+            </div>
+            <span class="nav-links">图鉴&nbsp;&nbsp; 路径&nbsp;&nbsp; 关系</span>
+          </div>
+        </div>
+
+        <div class="test inverse" aria-label="黑白反相测试">
+          <div class="inverse-cell dark">
+            <svg class="mark" aria-hidden="true"><use href="#relation-fold-mark"></use></svg>
+            <span class="inverse-caption">Bone / carbon</span>
+          </div>
+          <div class="inverse-cell light">
+            <svg class="mark" aria-hidden="true"><use href="#relation-fold-mark"></use></svg>
+            <span class="inverse-caption">Carbon / bone</span>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <span>Form from content: relations become a traversable negative route.</span>
+        <span>One-color vector / constant path width / no literal letter chassis</span>
+      </footer>
+    </main>
+  </body>
+</html>

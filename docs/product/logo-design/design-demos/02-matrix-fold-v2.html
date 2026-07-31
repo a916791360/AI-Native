@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AI-Native Logo Direction 02 V2 - Matrix Fold</title>
+    <!--
+      Assumptions:
+      - The user responded to direction 01's modular intelligence, not to literal letter drawing.
+      - This replacement must feel related to Native Matrix while owning a more horizontal silhouette.
+
+      Core gesture:
+      - One stepped band moves from a vertical source through four discrete turns into a forward terminal.
+
+      Avoiding round-one failures:
+      - No standard A chassis, rocket counter, arrowhead, or direct A/I splice.
+      - The mark is judged as a monochrome silhouette before any verbal explanation.
+    -->
+    <style>
+      :root {
+        --ink: #090b0e;
+        --paper: #f3f0e8;
+        --muted: #888985;
+        --rule: #303235;
+        --accent: #d6ad3f;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        overflow: hidden;
+        background: #181a1d;
+      }
+
+      body {
+        display: grid;
+        place-items: center;
+        color: var(--paper);
+        font-family: 'Avenir Next', 'Helvetica Neue', 'PingFang SC', sans-serif;
+        font-synthesis: none;
+      }
+
+      .board {
+        width: 1600px;
+        height: 1000px;
+        display: grid;
+        grid-template-columns: 760px 840px;
+        grid-template-rows: 92px 828px 80px;
+        overflow: hidden;
+        background: var(--ink);
+      }
+
+      .header,
+      .footer {
+        grid-column: 1 / -1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 52px;
+      }
+
+      .header {
+        border-bottom: 1px solid var(--rule);
+      }
+
+      .footer {
+        border-top: 1px solid var(--rule);
+      }
+
+      .title-row {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+      }
+
+      .index,
+      .meta,
+      .label,
+      .size-label,
+      .footer-copy {
+        font-family: 'SFMono-Regular', Menlo, monospace;
+        text-transform: uppercase;
+      }
+
+      .index {
+        color: var(--accent);
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: 22px;
+        font-weight: 700;
+        line-height: 1;
+        text-transform: uppercase;
+      }
+
+      .meta,
+      .footer-copy {
+        color: var(--muted);
+        font-size: 10px;
+        font-weight: 600;
+      }
+
+      .footer-copy:first-child::before {
+        width: 6px;
+        height: 6px;
+        margin-right: 14px;
+        display: inline-block;
+        background: var(--accent);
+        content: '';
+      }
+
+      .hero {
+        position: relative;
+        display: grid;
+        grid-template-rows: 1fr 146px;
+        border-right: 1px solid var(--rule);
+      }
+
+      .hero-stage {
+        position: relative;
+        display: grid;
+        place-items: center;
+      }
+
+      .hero-mark {
+        width: 480px;
+        height: 320px;
+        color: var(--paper);
+      }
+
+      .grid {
+        position: absolute;
+        width: 480px;
+        height: 320px;
+        color: #25272a;
+      }
+
+      .calibration {
+        position: absolute;
+        width: 7px;
+        height: 7px;
+        top: calc(50% - 4px);
+        left: calc(50% - 4px);
+        background: var(--accent);
+      }
+
+      .hero-copy {
+        display: grid;
+        grid-template-columns: 176px 1fr;
+        align-items: center;
+        padding: 0 54px;
+        border-top: 1px solid var(--rule);
+      }
+
+      .gesture {
+        margin: 0;
+        color: var(--muted);
+        font:
+          600 10px/1.5 'SFMono-Regular',
+          Menlo,
+          monospace;
+        text-transform: uppercase;
+      }
+
+      .statement {
+        margin: 0;
+        font-family: Baskerville, 'Songti SC', STSong, serif;
+        font-size: 30px;
+        font-weight: 400;
+      }
+
+      .tests {
+        display: grid;
+        grid-template-rows: 244px 276px 308px;
+      }
+
+      .section {
+        position: relative;
+        padding: 34px 44px;
+        border-bottom: 1px solid var(--rule);
+      }
+
+      .section:last-child {
+        border-bottom: 0;
+      }
+
+      .label {
+        margin: 0;
+        color: var(--muted);
+        font-size: 10px;
+        font-weight: 600;
+      }
+
+      .lockup {
+        height: 158px;
+        display: flex;
+        align-items: center;
+        gap: 30px;
+      }
+
+      .lockup-mark {
+        width: 116px;
+        height: 76px;
+      }
+
+      .wordmark {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        color: var(--paper);
+        font-size: 49px;
+        font-weight: 600;
+        line-height: 1;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+      }
+
+      .wordmark-rule {
+        width: 24px;
+        height: 5px;
+        display: inline-block;
+        background: currentColor;
+        transform: skewX(-28deg);
+      }
+
+      .scale-nav {
+        display: grid;
+        grid-template-columns: 314px 1fr;
+        padding: 0;
+      }
+
+      .scale,
+      .nav-test {
+        padding: 34px 36px;
+      }
+
+      .scale {
+        border-right: 1px solid var(--rule);
+      }
+
+      .sizes {
+        height: 178px;
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+      }
+
+      .size-item {
+        display: grid;
+        justify-items: center;
+        gap: 22px;
+      }
+
+      .size-16 {
+        width: 24px;
+        height: 16px;
+      }
+
+      .size-24 {
+        width: 36px;
+        height: 24px;
+      }
+
+      .size-32 {
+        width: 48px;
+        height: 32px;
+      }
+
+      .size-label {
+        color: var(--muted);
+        font-size: 9px;
+      }
+
+      .nav-shell {
+        height: 72px;
+        margin-top: 54px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 20px;
+        border: 1px solid #3b3d40;
+      }
+
+      .nav-brand {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+      }
+
+      .nav-brand .mark {
+        width: 42px;
+        height: 28px;
+      }
+
+      .nav-word {
+        font-size: 18px;
+        font-weight: 600;
+        text-transform: uppercase;
+      }
+
+      .nav-links {
+        color: var(--muted);
+        font-size: 11px;
+      }
+
+      .polarity {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        padding: 0;
+      }
+
+      .polarity-cell {
+        position: relative;
+        display: grid;
+        place-items: center;
+      }
+
+      .polarity-cell + .polarity-cell {
+        border-left: 1px solid var(--rule);
+      }
+
+      .polarity-cell.light {
+        color: var(--ink);
+        background: var(--paper);
+      }
+
+      .polarity-cell.dark {
+        color: var(--paper);
+      }
+
+      .polarity-cell .mark {
+        width: 180px;
+        height: 120px;
+      }
+
+      .polarity-cell .label {
+        position: absolute;
+        top: 28px;
+        left: 34px;
+      }
+
+      .polarity-cell.light .label {
+        color: #696862;
+      }
+
+      .mark {
+        display: block;
+        color: inherit;
+        overflow: visible;
+        shape-rendering: crispEdges;
+      }
+    </style>
+  </head>
+  <body>
+    <svg width="0" height="0" aria-hidden="true" style="position: absolute">
+      <defs>
+        <mask id="matrix-fold-node" maskUnits="userSpaceOnUse" x="0" y="0" width="120" height="80">
+          <rect width="120" height="80" fill="white" />
+          <rect x="54" y="34" width="12" height="12" fill="black" />
+        </mask>
+        <symbol id="matrix-fold-mark" viewBox="0 0 120 80">
+          <path
+            d="M0 70V16L14 0h22l48 44V0h36v64l-14 16H84L36 36v44H0Z"
+            fill="currentColor"
+            mask="url(#matrix-fold-node)"
+          />
+        </symbol>
+      </defs>
+    </svg>
+
+    <main class="board" aria-label="AI-Native 第二轮方案二：Matrix Fold">
+      <header class="header">
+        <div class="title-row">
+          <span class="index">02</span>
+          <h1>Matrix Fold / V2</h1>
+        </div>
+        <span class="meta">AI-NATIVE / SECOND EXPLORATION</span>
+      </header>
+
+      <section class="hero" aria-label="主符号与构造">
+        <div class="hero-stage">
+          <svg class="grid" viewBox="0 0 480 320" aria-hidden="true">
+            <g fill="none" stroke="currentColor" stroke-width="1">
+              <path d="M0 40h480M0 80h480M0 120h480M0 160h480M0 200h480M0 240h480M0 280h480" />
+              <path
+                d="M40 0v320M80 0v320M120 0v320M160 0v320M200 0v320M240 0v320M280 0v320M320 0v320M360 0v320M400 0v320M440 0v320"
+              />
+            </g>
+          </svg>
+          <svg
+            class="hero-mark mark"
+            role="img"
+            aria-label="单体 N 折带与方形节点构成的 Matrix Fold 标志"
+          >
+            <use href="#matrix-fold-mark"></use>
+          </svg>
+          <span class="calibration" aria-hidden="true"></span>
+        </div>
+        <div class="hero-copy">
+          <p class="gesture">One native fold<br />one internal node</p>
+          <p class="statement">折成一体，留出节点</p>
+        </div>
+      </section>
+
+      <aside class="tests" aria-label="标志应用测试">
+        <section class="section">
+          <p class="label">01 / Horizontal lockup</p>
+          <div class="lockup">
+            <svg class="lockup-mark mark" aria-hidden="true">
+              <use href="#matrix-fold-mark"></use>
+            </svg>
+            <div class="wordmark">
+              <span>AI</span><i class="wordmark-rule"></i><span>Native</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="section scale-nav">
+          <div class="scale">
+            <p class="label">02 / Optical sizes</p>
+            <div class="sizes">
+              <div class="size-item">
+                <svg class="mark size-16" aria-hidden="true">
+                  <use href="#matrix-fold-mark"></use>
+                </svg>
+                <span class="size-label">16 PX</span>
+              </div>
+              <div class="size-item">
+                <svg class="mark size-24" aria-hidden="true">
+                  <use href="#matrix-fold-mark"></use>
+                </svg>
+                <span class="size-label">24 PX</span>
+              </div>
+              <div class="size-item">
+                <svg class="mark size-32" aria-hidden="true">
+                  <use href="#matrix-fold-mark"></use>
+                </svg>
+                <span class="size-label">32 PX</span>
+              </div>
+            </div>
+          </div>
+          <div class="nav-test">
+            <p class="label">03 / 72 px navigation</p>
+            <div class="nav-shell">
+              <div class="nav-brand">
+                <svg class="mark" aria-hidden="true"><use href="#matrix-fold-mark"></use></svg>
+                <span class="nav-word">AI-Native</span>
+              </div>
+              <span class="nav-links">图鉴&nbsp;&nbsp; 路径&nbsp;&nbsp; 关系</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="section polarity" aria-label="黑白反相与剪影测试">
+          <div class="polarity-cell dark">
+            <p class="label">04A / Bone on carbon</p>
+            <svg class="mark" aria-hidden="true"><use href="#matrix-fold-mark"></use></svg>
+          </div>
+          <div class="polarity-cell light">
+            <p class="label">04B / Carbon on bone</p>
+            <svg class="mark" aria-hidden="true"><use href="#matrix-fold-mark"></use></svg>
+          </div>
+        </section>
+      </aside>
+
+      <footer class="footer">
+        <span class="footer-copy">Single gesture / faceted native band</span>
+        <span class="footer-copy">Monochrome master / 120 × 80</span>
+      </footer>
+    </main>
+  </body>
+</html>

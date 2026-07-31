@@ -1,5 +1,6 @@
 ---
 import { NAVIGATION } from '@/config/navigation';
+import LogoMark from '@/components/brand/LogoMark.astro';
 
 interface Props {
   currentPath: string;
@@ -10,7 +11,10 @@ const isCurrent = (href: string) => currentPath === href || currentPath.startsWi
 ---
 
 <header class="site-header">
-  <a class="site-wordmark" href="/" aria-label="AI-Native 首页">AI-Native</a>
+  <a class="site-wordmark" href="/" aria-label="AI-Native 首页">
+    <LogoMark />
+    <span>AI-Native</span>
+  </a>
   <p class="site-context">AI product decision learning / zh-CN</p>
   <nav class="desktop-nav" aria-label="主导航">
     {
@@ -50,10 +54,19 @@ const isCurrent = (href: string) => currentPath === href || currentPath.startsWi
 
   .site-wordmark {
     width: max-content;
-    font-family: var(--font-display);
-    font-size: 1.5rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    font-size: 1.125rem;
     font-weight: 600;
+    line-height: 1;
     text-decoration: none;
+  }
+
+  .site-wordmark span {
+    white-space: nowrap;
   }
 
   .site-context {

@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI-Native Logo Direction 02 — Aerospace Path</title>
+    <!--
+      Assumptions
+      1. This is a direction-selection board, not production logo artwork or a site-header change.
+      2. The symbol must remain one-color and recognizable from 260px down to 16px.
+      3. “Aerospace” is expressed through airframe proportion, a forward-cut nose, and controlled thrust;
+         no X crossing, Tesla-like T crown, SpaceX orbital sweep, or xAI-style letter construction is used.
+
+      Reasoning
+      The outer chassis reads first as a clipped A: broad landing points, high shoulder, and a nose that
+      advances farther on the right. A negative route grows inside that chassis, changes heading twice,
+      and exits forward. It encodes prerequisite → composition → application as a path rather than as
+      decorative circuitry. Its generous apertures survive favicon scale, while the asymmetric terminal
+      cut supplies motion without relying on a swoosh, gradient, glow, or extra color.
+    -->
+    <style>
+      :root {
+        --black: #090b0e;
+        --bone: #f3f0e8;
+        --yellow: #d6ad3f;
+        --line-dark: rgba(9, 11, 14, 0.18);
+        --line-light: rgba(243, 240, 232, 0.2);
+        --muted-dark: rgba(9, 11, 14, 0.58);
+        --muted-light: rgba(243, 240, 232, 0.58);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        width: 100%;
+        min-width: 1600px;
+        height: 100%;
+        min-height: 1000px;
+        margin: 0;
+        overflow: hidden;
+        background: var(--bone);
+      }
+
+      body {
+        color: var(--black);
+        font-family: 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .board {
+        position: relative;
+        display: grid;
+        grid-template-columns: 720px 880px;
+        width: 1600px;
+        height: 1000px;
+        background: var(--bone);
+      }
+
+      .board::before {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 719px;
+        width: 1px;
+        background: var(--line-dark);
+        content: '';
+      }
+
+      .kicker,
+      .section-label,
+      .scale-label,
+      .nav-meta {
+        margin: 0;
+        font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+        font-size: 11px;
+        font-weight: 500;
+        line-height: 1;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .left-panel {
+        display: grid;
+        grid-template-rows: 142px 438px 260px 160px;
+        height: 1000px;
+        padding: 0 64px;
+      }
+
+      .masthead {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        border-bottom: 1px solid var(--line-dark);
+        padding-bottom: 22px;
+      }
+
+      .direction {
+        margin: 11px 0 0;
+        font-size: 28px;
+        font-weight: 600;
+        line-height: 1;
+        letter-spacing: 0;
+      }
+
+      .index {
+        font-family: Baskerville, 'Times New Roman', serif;
+        font-size: 72px;
+        line-height: 0.78;
+        letter-spacing: 0;
+      }
+
+      .hero-mark {
+        display: grid;
+        place-items: center;
+        border-bottom: 1px solid var(--line-dark);
+      }
+
+      .mark {
+        display: block;
+        width: var(--mark-size);
+        height: var(--mark-size);
+        color: inherit;
+        flex: 0 0 auto;
+      }
+
+      .hero-mark .mark {
+        --mark-size: 260px;
+      }
+
+      .lockup-section {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        border-bottom: 1px solid var(--line-dark);
+      }
+
+      .section-label {
+        margin-bottom: 32px;
+        color: var(--muted-dark);
+      }
+
+      .lockup {
+        display: flex;
+        align-items: center;
+        gap: 25px;
+        width: max-content;
+      }
+
+      .lockup .mark {
+        --mark-size: 64px;
+      }
+
+      .wordmark {
+        font-size: 43px;
+        font-weight: 500;
+        line-height: 1;
+        letter-spacing: 0.055em;
+        white-space: nowrap;
+      }
+
+      .wordmark .native {
+        font-weight: 350;
+      }
+
+      .concept {
+        display: flex;
+        align-items: center;
+        gap: 19px;
+      }
+
+      .calibration-point {
+        width: 6px;
+        height: 6px;
+        background: var(--yellow);
+      }
+
+      .concept p {
+        margin: 0;
+        font-size: 18px;
+        font-weight: 450;
+        line-height: 1.5;
+        letter-spacing: 0;
+      }
+
+      .right-panel {
+        display: grid;
+        grid-template-rows: 142px 344px 220px 294px;
+        height: 1000px;
+        padding: 0 64px;
+      }
+
+      .right-heading {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        border-bottom: 1px solid var(--line-dark);
+        padding-bottom: 23px;
+      }
+
+      .right-heading .section-label {
+        margin: 0;
+        color: var(--black);
+      }
+
+      .revision {
+        color: var(--muted-dark);
+      }
+
+      .polarity {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1px;
+        border-bottom: 1px solid var(--line-dark);
+        background: var(--line-dark);
+      }
+
+      .polarity-sample {
+        position: relative;
+        display: grid;
+        place-items: center;
+      }
+
+      .polarity-sample.dark {
+        color: var(--bone);
+        background: var(--black);
+      }
+
+      .polarity-sample.light {
+        color: var(--black);
+        background: var(--bone);
+      }
+
+      .polarity-sample .mark {
+        --mark-size: 168px;
+      }
+
+      .sample-note {
+        position: absolute;
+        right: 19px;
+        bottom: 17px;
+        margin: 0;
+        color: currentColor;
+        font-family: 'SFMono-Regular', Consolas, monospace;
+        font-size: 9px;
+        line-height: 1;
+        letter-spacing: 0.08em;
+        opacity: 0.52;
+        text-transform: uppercase;
+      }
+
+      .scale-tests {
+        display: grid;
+        grid-template-columns: 190px 1fr;
+        align-items: center;
+        border-bottom: 1px solid var(--line-dark);
+      }
+
+      .scale-tests .section-label {
+        margin: 0;
+      }
+
+      .sizes {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        padding: 0 38px 0 18px;
+      }
+
+      .size-sample {
+        display: grid;
+        grid-template-rows: 42px 18px;
+        justify-items: center;
+        align-items: end;
+        width: 54px;
+      }
+
+      .size-sample.s16 .mark {
+        --mark-size: 16px;
+      }
+
+      .size-sample.s24 .mark {
+        --mark-size: 24px;
+      }
+
+      .size-sample.s32 .mark {
+        --mark-size: 32px;
+      }
+
+      .scale-label {
+        align-self: end;
+        color: var(--muted-dark);
+        font-size: 9px;
+      }
+
+      .navigation-test {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .navigation-test .section-label {
+        margin-bottom: 25px;
+      }
+
+      .nav-bar {
+        display: grid;
+        grid-template-columns: 206px 1fr auto;
+        align-items: center;
+        width: 100%;
+        height: 72px;
+        border-top: 1px solid var(--line-light);
+        border-bottom: 1px solid var(--line-light);
+        padding: 0 23px;
+        color: var(--bone);
+        background: var(--black);
+      }
+
+      .nav-lockup {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .nav-lockup .mark {
+        --mark-size: 28px;
+      }
+
+      .nav-lockup .wordmark {
+        font-size: 19px;
+        font-weight: 500;
+        letter-spacing: 0.05em;
+      }
+
+      .nav-lockup .native {
+        font-weight: 350;
+      }
+
+      .nav-meta {
+        color: var(--muted-light);
+        font-size: 8px;
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+        color: rgba(243, 240, 232, 0.72);
+        font-size: 11px;
+      }
+
+      .nav-links span:first-child {
+        color: var(--bone);
+        text-decoration: underline;
+        text-decoration-color: var(--yellow);
+        text-underline-offset: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- A single reusable vector master keeps all usage tests geometrically identical. -->
+    <svg width="0" height="0" aria-hidden="true" style="position: absolute">
+      <defs>
+        <symbol id="aerospace-path-mark" viewBox="0 0 260 260">
+          <path
+            fill="currentColor"
+            fill-rule="evenodd"
+            d="M18 232 91 28h60l91 204h-55l-18-43H91l-16 43H18Zm88-83h48l-25-60-23 60Z"
+          />
+          <!-- The aft notch and forward terminal are separate airframe cuts, not an orbital stroke. -->
+          <path fill="currentColor" d="M66 187h36l-9 24H57l9-24Zm107-80h38l12 27h-38l-12-27Z" />
+          <!-- Route nodes grow from the interior counter and resolve toward the forward edge. -->
+          <path
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="square"
+            stroke-linejoin="miter"
+            stroke-width="15"
+            d="m104 164 24-29 22 20 31-37"
+          />
+          <rect x="97" y="157" width="15" height="15" fill="currentColor" />
+          <rect x="174" y="111" width="15" height="15" fill="currentColor" />
+        </symbol>
+      </defs>
+    </svg>
+
+    <main class="board" aria-label="AI-Native 标志方向二：航向路径">
+      <section class="left-panel" aria-label="主标志与横向组合">
+        <header class="masthead">
+          <div>
+            <p class="kicker">AI-Native / Logo exploration</p>
+            <h1 class="direction">航向路径</h1>
+          </div>
+          <div class="index" aria-label="方向二">02</div>
+        </header>
+
+        <div class="hero-mark">
+          <svg class="mark" role="img" aria-label="AI-Native 航向路径图形标志">
+            <use href="#aerospace-path-mark"></use>
+          </svg>
+        </div>
+
+        <section class="lockup-section" aria-label="横向组合标志">
+          <p class="section-label">Horizontal lockup / 01</p>
+          <div class="lockup">
+            <svg class="mark" aria-hidden="true"><use href="#aerospace-path-mark"></use></svg>
+            <div class="wordmark">AI-<span class="native">Native</span></div>
+          </div>
+        </section>
+
+        <footer class="concept">
+          <span class="calibration-point" aria-hidden="true"></span>
+          <p>关系路径，从字母骨架内部推进</p>
+        </footer>
+      </section>
+
+      <section class="right-panel" aria-label="反相、小尺寸与导航栏测试">
+        <header class="right-heading">
+          <p class="section-label">System checks / Monochrome master</p>
+          <p class="kicker revision">D-02 · R1</p>
+        </header>
+
+        <section class="polarity" aria-label="黑底与骨白底反相样例">
+          <div class="polarity-sample dark">
+            <svg class="mark" aria-hidden="true"><use href="#aerospace-path-mark"></use></svg>
+            <p class="sample-note">Bone on carbon</p>
+          </div>
+          <div class="polarity-sample light">
+            <svg class="mark" aria-hidden="true"><use href="#aerospace-path-mark"></use></svg>
+            <p class="sample-note">Carbon on bone</p>
+          </div>
+        </section>
+
+        <section class="scale-tests" aria-label="十六、二十四、三十二像素测试">
+          <p class="section-label">Minimum scale<br />icon only</p>
+          <div class="sizes">
+            <div class="size-sample s16">
+              <svg class="mark" aria-hidden="true"><use href="#aerospace-path-mark"></use></svg>
+              <span class="scale-label">16 px</span>
+            </div>
+            <div class="size-sample s24">
+              <svg class="mark" aria-hidden="true"><use href="#aerospace-path-mark"></use></svg>
+              <span class="scale-label">24 px</span>
+            </div>
+            <div class="size-sample s32">
+              <svg class="mark" aria-hidden="true"><use href="#aerospace-path-mark"></use></svg>
+              <span class="scale-label">32 px</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="navigation-test" aria-label="七十二像素站点导航栏模拟">
+          <p class="section-label">Navigation placement / 72 px</p>
+          <div class="nav-bar">
+            <div class="nav-lockup">
+              <svg class="mark" aria-hidden="true"><use href="#aerospace-path-mark"></use></svg>
+              <div class="wordmark">AI-<span class="native">Native</span></div>
+            </div>
+            <p class="nav-meta">Progressive AI knowledge atlas / zh-CN</p>
+            <div class="nav-links" aria-hidden="true">
+              <span>图鉴</span><span>关系</span><span>路径</span>
+            </div>
+          </div>
+        </section>
+      </section>
+    </main>
+  </body>
+</html>

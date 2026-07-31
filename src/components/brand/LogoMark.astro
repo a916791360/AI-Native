@@ -1,0 +1,24 @@
+---
+interface Props {
+  class?: string;
+  size?: number;
+}
+
+const { class: className, size = 28 } = Astro.props;
+---
+
+<svg
+  class={className}
+  data-logo-mark
+  width={size}
+  height={size}
+  viewBox="0 0 8 8"
+  role="presentation"
+  aria-hidden="true"
+  focusable="false"
+>
+  <path
+    fill="currentColor"
+    d="M3 0h2v1H3zM2 1h4v1H2zM1 2h1v1H1zM3 2h2v1H3zM6 2h1v1H6zM1 3h1v1H1zM4 3h1v1H4zM6 3h1v1H6zM0 4h2v1H0zM3 4h1v1H3zM6 4h2v1H6zM0 5h2v1H0zM3 5h2v1H3zM6 5h2v1H6zM0 6h2v1H0zM6 6h2v1H6zM0 7h2v1H0zM6 7h2v1H6z"
+  ></path>
+</svg>

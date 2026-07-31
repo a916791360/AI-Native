@@ -1,0 +1,484 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AI-Native Logo Direction 03 - Relation Field</title>
+    <style>
+      :root {
+        --ink: #090b0e;
+        --paper: #f3f0e8;
+        --muted: #96938c;
+        --rule: #333538;
+        --accent: #d6ad3f;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        overflow: hidden;
+        background: var(--ink);
+      }
+
+      body {
+        display: grid;
+        place-items: center;
+        color: var(--paper);
+        font-family: 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      }
+
+      .board {
+        position: relative;
+        width: 1600px;
+        height: 1000px;
+        overflow: hidden;
+        background: var(--ink);
+      }
+
+      .board::before {
+        position: absolute;
+        inset: 0;
+        z-index: 5;
+        border: 1px solid var(--rule);
+        content: '';
+        pointer-events: none;
+      }
+
+      .topbar {
+        height: 88px;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        padding: 0 52px;
+        border-bottom: 1px solid var(--rule);
+      }
+
+      .eyebrow,
+      .meta,
+      .section-label,
+      .size-label,
+      .measure {
+        margin: 0;
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 1;
+        text-transform: uppercase;
+      }
+
+      .eyebrow {
+        color: var(--paper);
+      }
+
+      .accent-pin {
+        display: inline-block;
+        width: 6px;
+        height: 6px;
+        margin-right: 12px;
+        background: var(--accent);
+        vertical-align: 1px;
+      }
+
+      .meta {
+        display: flex;
+        gap: 34px;
+      }
+
+      .content {
+        display: grid;
+        grid-template-columns: 900px 700px;
+        height: 832px;
+      }
+
+      .hero {
+        position: relative;
+        display: grid;
+        grid-template-rows: 1fr 118px;
+        border-right: 1px solid var(--rule);
+      }
+
+      .hero-stage {
+        position: relative;
+        display: grid;
+        place-items: center;
+      }
+
+      .hero-mark {
+        width: 350px;
+        height: 300px;
+        color: var(--paper);
+        transform: translateY(-14px);
+      }
+
+      .hero-axis-x,
+      .hero-axis-y {
+        position: absolute;
+        background: var(--rule);
+      }
+
+      .hero-axis-x {
+        left: 167px;
+        top: 354px;
+        width: 566px;
+        height: 1px;
+      }
+
+      .hero-axis-y {
+        left: 449px;
+        top: 122px;
+        width: 1px;
+        height: 466px;
+      }
+
+      .axis-tick {
+        position: absolute;
+        width: 7px;
+        height: 7px;
+        background: var(--accent);
+        transform: translate(-3px, -3px);
+      }
+
+      .measure {
+        position: absolute;
+      }
+
+      .measure.top {
+        top: 34px;
+        left: 38px;
+      }
+
+      .measure.right {
+        right: 38px;
+        bottom: 34px;
+      }
+
+      .hero-copy {
+        display: grid;
+        grid-template-columns: 130px 1fr;
+        align-items: center;
+        padding: 0 52px;
+        border-top: 1px solid var(--rule);
+      }
+
+      .direction-no {
+        color: var(--accent);
+        font-family: Baskerville, 'Iowan Old Style', 'Times New Roman', serif;
+        font-size: 54px;
+        font-weight: 400;
+        line-height: 1;
+      }
+
+      .concept {
+        margin: 0;
+        font-family: Baskerville, 'Songti SC', STSong, serif;
+        font-size: 28px;
+        font-weight: 400;
+        line-height: 1.25;
+      }
+
+      .tests {
+        display: grid;
+        grid-template-rows: 210px 180px 180px 262px;
+      }
+
+      .test-section {
+        position: relative;
+        padding: 30px 40px;
+        border-bottom: 1px solid var(--rule);
+      }
+
+      .test-section:last-child {
+        border-bottom: 0;
+      }
+
+      .lockup {
+        display: flex;
+        align-items: center;
+        gap: 23px;
+        height: 126px;
+      }
+
+      .lockup-mark {
+        width: 74px;
+        height: 64px;
+        color: var(--paper);
+        flex: 0 0 auto;
+      }
+
+      .wordmark {
+        margin: 0;
+        font-family: Baskerville, 'Iowan Old Style', 'Times New Roman', serif;
+        font-size: 48px;
+        font-weight: 600;
+        line-height: 1;
+      }
+
+      .size-row {
+        display: flex;
+        align-items: flex-end;
+        gap: 54px;
+        height: 106px;
+        padding-left: 2px;
+      }
+
+      .size-sample {
+        display: grid;
+        justify-items: center;
+        gap: 17px;
+        min-width: 50px;
+      }
+
+      .mini-mark {
+        display: block;
+        color: var(--paper);
+      }
+
+      .size-16 {
+        width: 19px;
+        height: 16px;
+      }
+
+      .size-24 {
+        width: 28px;
+        height: 24px;
+      }
+
+      .size-32 {
+        width: 37px;
+        height: 32px;
+      }
+
+      .size-label {
+        font-size: 11px;
+      }
+
+      .nav-shell {
+        height: 72px;
+        margin-top: 21px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 25px;
+        border: 1px solid var(--rule);
+      }
+
+      .nav-brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .nav-mark {
+        width: 33px;
+        height: 28px;
+        color: var(--paper);
+      }
+
+      .nav-word {
+        font-family: Baskerville, 'Iowan Old Style', 'Times New Roman', serif;
+        font-size: 23px;
+        font-weight: 600;
+      }
+
+      .nav-items {
+        display: flex;
+        gap: 26px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .reverse-section {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        padding: 0;
+      }
+
+      .reverse-cell {
+        position: relative;
+        display: grid;
+        place-items: center;
+      }
+
+      .reverse-cell + .reverse-cell {
+        border-left: 1px solid var(--rule);
+      }
+
+      .reverse-cell.light {
+        background: var(--paper);
+      }
+
+      .reverse-mark {
+        width: 126px;
+        height: 108px;
+      }
+
+      .reverse-cell.dark .reverse-mark {
+        color: var(--paper);
+      }
+
+      .reverse-cell.light .reverse-mark {
+        color: var(--ink);
+      }
+
+      .reverse-caption {
+        position: absolute;
+        left: 22px;
+        bottom: 18px;
+        color: var(--muted);
+        font-size: 10px;
+        line-height: 1;
+      }
+
+      .reverse-cell.light .reverse-caption {
+        color: #66645f;
+      }
+
+      .footer {
+        height: 80px;
+        display: grid;
+        grid-template-columns: 900px 1fr;
+        border-top: 1px solid var(--rule);
+      }
+
+      .footer > div {
+        display: flex;
+        align-items: center;
+        padding: 0 52px;
+        color: var(--muted);
+        font-size: 11px;
+      }
+
+      .footer > div:first-child {
+        border-right: 1px solid var(--rule);
+      }
+
+      .footer-notes {
+        justify-content: space-between;
+      }
+
+      svg {
+        display: block;
+        overflow: visible;
+      }
+    </style>
+  </head>
+  <body>
+    <!--
+      Assumption: this is an exploration board, not a production logo handoff.
+      Form: the A rises into an N return path; their intersection is removed to create
+      one internal node. The same square aperture becomes both connection point and
+      proof that the path is generated from inside the mark.
+    -->
+    <svg width="0" height="0" aria-hidden="true" focusable="false">
+      <defs>
+        <mask id="relation-node" maskUnits="userSpaceOnUse" x="0" y="0" width="280" height="240">
+          <rect width="280" height="240" fill="white" />
+          <rect x="157" y="139" width="20" height="20" fill="black" />
+        </mask>
+        <symbol id="relation-mark" viewBox="0 0 280 240">
+          <g mask="url(#relation-node)" fill="currentColor">
+            <path d="M18 216 104 24h31l69 134V24h36v192h-38L121 63 54 216Z" />
+            <path d="m70 132 94 0 17 32H56Z" />
+          </g>
+        </symbol>
+      </defs>
+    </svg>
+
+    <main class="board">
+      <header class="topbar">
+        <p class="eyebrow"><span class="accent-pin"></span>AI-Native / Logo Study</p>
+        <div class="meta">
+          <span>Direction 03</span><span>Relation Field</span><span>1600 × 1000</span>
+        </div>
+      </header>
+
+      <div class="content">
+        <section class="hero" aria-label="主标志">
+          <div class="hero-stage">
+            <span class="measure top">A / N / NODE / PATH</span>
+            <span class="measure right">MONOCHROME MASTER</span>
+            <span class="hero-axis-x"></span>
+            <span class="hero-axis-y"></span>
+            <span class="axis-tick" style="left: 449px; top: 354px"></span>
+            <svg class="hero-mark" role="img" aria-label="Relation Field 标志">
+              <use href="#relation-mark"></use>
+            </svg>
+          </div>
+          <div class="hero-copy">
+            <div class="direction-no">03</div>
+            <p class="concept">让概念在内部连成路径</p>
+          </div>
+        </section>
+
+        <aside class="tests" aria-label="标志应用测试">
+          <section class="test-section">
+            <p class="section-label">01 / Horizontal lockup</p>
+            <div class="lockup">
+              <svg class="lockup-mark" aria-hidden="true"><use href="#relation-mark"></use></svg>
+              <p class="wordmark">AI-Native</p>
+            </div>
+          </section>
+
+          <section class="test-section">
+            <p class="section-label">02 / Optical sizes</p>
+            <div class="size-row">
+              <div class="size-sample">
+                <svg class="mini-mark size-16" aria-hidden="true">
+                  <use href="#relation-mark"></use>
+                </svg>
+                <span class="size-label">16 px</span>
+              </div>
+              <div class="size-sample">
+                <svg class="mini-mark size-24" aria-hidden="true">
+                  <use href="#relation-mark"></use>
+                </svg>
+                <span class="size-label">24 px</span>
+              </div>
+              <div class="size-sample">
+                <svg class="mini-mark size-32" aria-hidden="true">
+                  <use href="#relation-mark"></use>
+                </svg>
+                <span class="size-label">32 px</span>
+              </div>
+            </div>
+          </section>
+
+          <section class="test-section">
+            <p class="section-label">03 / 72 px site navigation</p>
+            <div class="nav-shell">
+              <div class="nav-brand">
+                <svg class="nav-mark" aria-hidden="true"><use href="#relation-mark"></use></svg>
+                <span class="nav-word">AI-Native</span>
+              </div>
+              <div class="nav-items"><span>图鉴</span><span>路径</span><span>关系</span></div>
+            </div>
+          </section>
+
+          <section class="test-section reverse-section" aria-label="深浅反相测试">
+            <div class="reverse-cell dark">
+              <svg class="reverse-mark" aria-hidden="true"><use href="#relation-mark"></use></svg>
+              <span class="reverse-caption">DARK / #090B0E</span>
+            </div>
+            <div class="reverse-cell light">
+              <svg class="reverse-mark" aria-hidden="true"><use href="#relation-mark"></use></svg>
+              <span class="reverse-caption">LIGHT / #F3F0E8</span>
+            </div>
+          </section>
+        </aside>
+      </div>
+
+      <footer class="footer">
+        <div>FORM FROM CONTENT: RELATION TYPES BECOME ONE INTERNAL ROUTE.</div>
+        <div class="footer-notes">
+          <span>ONE-COLOR VECTOR</span><span>NEGATIVE NODE 20 / 280</span>
+        </div>
+      </footer>
+    </main>
+  </body>
+</html>

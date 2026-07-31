@@ -29,6 +29,14 @@ test('renders the progressive question-led learning identity and primary paths',
   await page.goto('/');
 
   await expect(page).toHaveTitle('AI-Native');
+  const brand = page.getByRole('link', { name: 'AI-Native 首页' });
+  await expect(brand).toBeVisible();
+  await expect(brand.locator('[data-logo-mark]')).toBeVisible();
+  await expect(page.locator('link[rel="icon"]')).toHaveAttribute('href', '/favicon.svg');
+  await expect(page.locator('link[rel="apple-touch-icon"]')).toHaveAttribute(
+    'href',
+    '/apple-touch-icon.png',
+  );
   await expect(
     page.getByRole('heading', { level: 1, name: '发票金额校验，需要上大模型吗？' }),
   ).toBeVisible();
