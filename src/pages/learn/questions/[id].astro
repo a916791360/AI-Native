@@ -2,31 +2,63 @@
 import type { GetStaticPaths } from 'astro';
 
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { LEARNING_MODULES, LEARNING_QUESTIONS, type LearningQuestion } from '@/data/learning';
+import {
+  LEARNING_MODULES,
+  LEARNING_QUESTIONS,
+  getLearningQuestionContext,
+  getQuestionsForModule,
+  type LearningQuestion,
+} from '@/data/learning';
 
 export const getStaticPaths = (() =>
-  LEARNING_QUESTIONS.map((question, position) => ({
+  LEARNING_QUESTIONS.map((question) => ({
     params: { id: question.id },
-    props: {
-      question,
-      previous: LEARNING_QUESTIONS[position - 1],
-      next: LEARNING_QUESTIONS[position + 1],
-    },
+    props: { question },
   }))) satisfies GetStaticPaths;
 
-const { question, previous, next } = Astro.props as {
-  question: LearningQuestion;
-  previous?: LearningQuestion;
-  next?: LearningQuestion;
-};
-const module = LEARNING_MODULES.find(({ id }) => id === question.moduleId)!;
+const { question } = Astro.props as { question: LearningQuestion };
+const context = getLearningQuestionContext(question.id)!;
+const { module, moduleQuestions, modulePosition, previous, next, nextModule, isModuleEnd } =
+  context;
+const continuationHref = next ? `/learn/questions/${next.id}/` : '/learn/';
+const continuationKicker =
+  nextModule && isModuleEnd
+    ? `进入阶段 ${nextModule.index}`
+    : next
+      ? `继续第 ${next.index} 题`
+      : '完成主线';
+const continuationTitle =
+  nextModule && isModuleEnd ? nextModule.title : next ? next.shortTitle : '回到课程总结';
 ---
 
 <BaseLayout title={question.question} description={question.scenario}>
   <main id="main-content" class="question-page">
+    <nav class="question-stage-map" aria-label="六阶段学习路线">
+      {
+        LEARNING_MODULES.map((item) => {
+          const questions = getQuestionsForModule(item.id);
+          const firstQuestion = questions[0];
+          return (
+            <a
+              href={firstQuestion ? `/learn/questions/${firstQuestion.id}/` : '/learn/questions/'}
+              aria-current={item.id === module.id ? 'step' : undefined}
+            >
+              <span>{item.index}</span>
+              <strong>{item.title}</strong>
+              <small>
+                第 {questions[0]?.index}–{questions.at(-1)?.index} 题
+              </small>
+            </a>
+          );
+        })
+      }
+    </nav>
+
     <header class="question-head">
       <div class="question-position">
-        <p class="eyebrow">Stage {module.index} · {module.title}</p>
+        <p class="eyebrow">
+          Stage {module.index} · 本阶段第 {modulePosition + 1} / {moduleQuestions.length} 题
+        </p>
         <strong
           ><span>{question.index}</span> / {
             String(LEARNING_QUESTIONS.length).padStart(2, '0')
@@ -81,12 +113,17 @@ const module = LEARNING_MODULES.find(({ id }) => id === question.moduleId)!;
           ))
         }
       </div>
-      <div class="choice-feedback" data-feedback-panel hidden aria-live="polite">
+      <div class="choice-feedback" data-feedback-panel hidden aria-live="polite" tabindex="-1">
         <div>
           <p class="meta-label" data-feedback-kicker>判断反馈</p>
           <h3 data-feedback-title></h3>
         </div>
         <p data-feedback-copy></p>
+        <a href={continuationHref} data-next-step>
+          <span>{continuationKicker}</span>
+          <strong>{continuationTitle}</strong>
+          <i aria-hidden="true">→</i>
+        </a>
       </div>
     </section>
 
@@ -144,15 +181,19 @@ const module = LEARNING_MODULES.find(({ id }) => id === question.moduleId)!;
         next ? (
           <a class="next" href={`/learn/questions/${next.id}/`}>
             <>
-              <span>下一题 · {next.index}</span>
-              <strong>{next.shortTitle}</strong>
+              <span>
+                {nextModule && isModuleEnd
+                  ? `进入阶段 ${nextModule.index}`
+                  : `下一题 · ${next.index}`}
+              </span>
+              <strong>{nextModule && isModuleEnd ? nextModule.title : next.shortTitle}</strong>
             </>
           </a>
         ) : (
-          <a class="next" href="/learn/questions/">
+          <a class="next" href="/learn/">
             <>
-              <span>完成</span>
-              <strong>回到题库总览</strong>
+              <span>完成主线</span>
+              <strong>回到课程总结</strong>
             </>
           </a>
         )
@@ -184,12 +225,61 @@ const module = LEARNING_MODULES.find(({ id }) => id === question.moduleId)!;
       title.textContent = heading;
       copy.textContent = button.dataset.feedback ?? '';
       panel.hidden = false;
-      panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      panel.focus({ preventScroll: true });
     }),
   );
 </script>
 
 <style>
+  .question-stage-map {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    border-bottom: 1px solid var(--color-line);
+    background: var(--color-black);
+  }
+  .question-stage-map a {
+    min-width: 0;
+    min-height: 6.5rem;
+    display: grid;
+    grid-template-columns: 2rem 1fr;
+    align-content: center;
+    gap: 0.25rem 0.65rem;
+    border-right: 1px solid var(--color-line);
+    padding: var(--space-2);
+    color: var(--color-muted);
+    text-decoration: none;
+  }
+  .question-stage-map a:last-child {
+    border-right: 0;
+  }
+  .question-stage-map a:hover,
+  .question-stage-map a[aria-current='step'] {
+    background: var(--color-panel);
+    color: var(--color-ink);
+  }
+  .question-stage-map a[aria-current='step'] {
+    box-shadow: inset 0 -3px var(--color-prerequisite);
+  }
+  .question-stage-map span,
+  .question-stage-map small {
+    color: var(--color-quiet);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+  }
+  .question-stage-map a[aria-current='step'] span {
+    color: var(--color-prerequisite);
+  }
+  .question-stage-map strong {
+    min-width: 0;
+    overflow: hidden;
+    font-size: var(--text-xs);
+    font-weight: 500;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .question-stage-map small {
+    grid-column: 2;
+  }
   .question-head {
     min-height: 24rem;
     display: grid;
@@ -337,17 +427,20 @@ const module = LEARNING_MODULES.find(({ id }) => id === question.moduleId)!;
   }
   .choice-feedback {
     display: grid;
-    grid-template-columns: minmax(16rem, 0.32fr) 1fr;
+    grid-template-columns: minmax(14rem, 0.25fr) minmax(18rem, 0.5fr) minmax(13rem, 0.25fr);
     margin-top: var(--space-3);
     border: 1px solid var(--color-line);
     background: var(--color-panel);
+    outline: none;
   }
   .choice-feedback > div,
-  .choice-feedback > p {
+  .choice-feedback > p,
+  .choice-feedback > a {
     margin: 0;
     padding: var(--space-4);
   }
-  .choice-feedback > div {
+  .choice-feedback > div,
+  .choice-feedback > p {
     border-right: 1px solid var(--color-line);
   }
   .choice-feedback h3 {
@@ -360,6 +453,34 @@ const module = LEARNING_MODULES.find(({ id }) => id === question.moduleId)!;
     align-self: center;
     color: var(--color-muted);
     font-size: var(--text-lead);
+  }
+  .choice-feedback > a {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: var(--color-ink);
+    text-decoration: none;
+  }
+  .choice-feedback > a:hover {
+    background: var(--color-black);
+  }
+  .choice-feedback > a span {
+    color: var(--color-prerequisite);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+  }
+  .choice-feedback > a strong {
+    margin-top: 0.45rem;
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 400;
+  }
+  .choice-feedback > a i {
+    align-self: flex-end;
+    margin-top: var(--space-2);
+    color: var(--color-prerequisite);
+    font-style: normal;
   }
   .choice-feedback[data-assessment='recommended'] .meta-label {
     color: var(--color-prerequisite);
@@ -452,6 +573,15 @@ const module = LEARNING_MODULES.find(({ id }) => id === question.moduleId)!;
     font-weight: 400;
   }
   @media (max-width: 900px) {
+    .question-stage-map {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .question-stage-map a:nth-child(3) {
+      border-right: 0;
+    }
+    .question-stage-map a:nth-child(-n + 3) {
+      border-bottom: 1px solid var(--color-line);
+    }
     .reasoning {
       grid-template-columns: 1fr 1fr;
     }
@@ -482,6 +612,7 @@ const module = LEARNING_MODULES.find(({ id }) => id === question.moduleId)!;
     .question-position,
     .question-context > div,
     .choice-feedback > div,
+    .choice-feedback > p,
     .reasoning > * {
       border-right: 0;
       border-bottom: 1px solid var(--color-line);
@@ -503,6 +634,25 @@ const module = LEARNING_MODULES.find(({ id }) => id === question.moduleId)!;
     }
     .question-nav a {
       min-height: 8rem;
+    }
+  }
+  @media (max-width: 520px) {
+    .question-stage-map {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .question-stage-map a,
+    .question-stage-map a:nth-child(3) {
+      border-right: 1px solid var(--color-line);
+      border-bottom: 1px solid var(--color-line);
+    }
+    .question-stage-map a:nth-child(2n) {
+      border-right: 0;
+    }
+    .question-stage-map a:nth-last-child(-n + 2) {
+      border-bottom: 0;
+    }
+    .question-stage-map a {
+      min-height: 5.5rem;
     }
   }
 </style>

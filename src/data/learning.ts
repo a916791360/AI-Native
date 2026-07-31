@@ -37,6 +37,18 @@ export interface LearningModule {
   reading: { href: string; label: string };
 }
 
+export interface LearningQuestionContext {
+  question: LearningQuestion;
+  module: LearningModule;
+  moduleQuestions: LearningQuestion[];
+  modulePosition: number;
+  previous?: LearningQuestion;
+  next?: LearningQuestion;
+  nextModule?: LearningModule;
+  isModuleStart: boolean;
+  isModuleEnd: boolean;
+}
+
 export const LEARNING_MODULES: LearningModule[] = [
   {
     id: 'model-boundaries',
@@ -980,4 +992,29 @@ export function getLearningQuestion(id: string): LearningQuestion | undefined {
 
 export function getQuestionsForModule(moduleId: string): LearningQuestion[] {
   return LEARNING_QUESTIONS.filter((item) => item.moduleId === moduleId);
+}
+
+export function getLearningQuestionContext(id: string): LearningQuestionContext | undefined {
+  const position = LEARNING_QUESTIONS.findIndex((item) => item.id === id);
+  if (position === -1) return undefined;
+
+  const question = LEARNING_QUESTIONS[position]!;
+  const modulePosition = LEARNING_MODULES.findIndex((item) => item.id === question.moduleId);
+  const module = LEARNING_MODULES[modulePosition];
+  if (!module) return undefined;
+
+  const moduleQuestions = getQuestionsForModule(module.id);
+  const positionWithinModule = moduleQuestions.findIndex((item) => item.id === question.id);
+
+  return {
+    question,
+    module,
+    moduleQuestions,
+    modulePosition: positionWithinModule,
+    previous: LEARNING_QUESTIONS[position - 1],
+    next: LEARNING_QUESTIONS[position + 1],
+    nextModule: LEARNING_MODULES[modulePosition + 1],
+    isModuleStart: positionWithinModule === 0,
+    isModuleEnd: positionWithinModule === moduleQuestions.length - 1,
+  };
 }

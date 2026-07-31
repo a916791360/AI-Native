@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest';
 import {
   LEARNING_MODULES,
   LEARNING_QUESTIONS,
+  getLearningQuestionContext,
   getQuestionsForModule,
 } from '../../src/data/learning';
 import { loadProjectContent } from '../../src/lib/content/io';
@@ -46,5 +47,39 @@ describe('learning experience', () => {
       ).toHaveLength(1);
       expect(question.checks).toHaveLength(3);
     }
+  });
+
+  it('derives continuous navigation and module boundaries from the question order', () => {
+    const first = getLearningQuestionContext('q01-rules-or-ai');
+    const firstBoundary = getLearningQuestionContext('q04-high-stakes-answer');
+    const nextStage = getLearningQuestionContext('q05-demo-or-value');
+    const last = getLearningQuestionContext('q24-launch-decision');
+
+    expect(first).toMatchObject({
+      modulePosition: 0,
+      isModuleStart: true,
+      isModuleEnd: false,
+    });
+    expect(first?.previous).toBeUndefined();
+    expect(firstBoundary).toMatchObject({
+      modulePosition: 3,
+      isModuleStart: false,
+      isModuleEnd: true,
+      next: { id: 'q05-demo-or-value' },
+      nextModule: { id: 'opportunity-judgment' },
+    });
+    expect(nextStage).toMatchObject({
+      modulePosition: 0,
+      isModuleStart: true,
+      isModuleEnd: false,
+      previous: { id: 'q04-high-stakes-answer' },
+    });
+    expect(last).toMatchObject({
+      modulePosition: 3,
+      isModuleEnd: true,
+    });
+    expect(last?.next).toBeUndefined();
+    expect(last?.nextModule).toBeUndefined();
+    expect(getLearningQuestionContext('missing-question')).toBeUndefined();
   });
 });

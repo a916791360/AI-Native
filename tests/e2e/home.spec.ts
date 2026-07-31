@@ -169,6 +169,29 @@ test('reveals immediate reasoning without asking the learner to type', async ({ 
   await expect(page.locator('[data-feedback-copy]')).toContainText('增加延迟、成本与不确定性');
 });
 
+test('makes stage progress and cross-stage continuation explicit', async ({ page }) => {
+  await page.goto('/learn/questions/q04-high-stakes-answer/');
+
+  const stageMap = page.getByRole('navigation', { name: '六阶段学习路线' });
+  await expect(stageMap.getByRole('link')).toHaveCount(6);
+  await expect(stageMap.getByRole('link', { name: /01 AI 基础与模型边界/ })).toHaveAttribute(
+    'aria-current',
+    'step',
+  );
+  await expect(page.locator('.question-position .eyebrow')).toContainText('本阶段第 4 / 4 题');
+
+  await page.getByRole('button', { name: /限定为信息辅助/ }).click();
+  const nextStep = page.locator('[data-next-step]');
+  await expect(nextStep).toContainText('进入阶段 02');
+  await expect(nextStep).toContainText('场景与机会判断');
+  await expect(nextStep).toHaveAttribute('href', '/learn/questions/q05-demo-or-value/');
+
+  await page.goto('/learn/questions/q24-launch-decision/');
+  await page.getByRole('button', { name: /补齐监控、预算、护栏和接管/ }).click();
+  await expect(page.locator('[data-next-step]')).toContainText('完成主线');
+  await expect(page.locator('[data-next-step]')).toHaveAttribute('href', '/learn/');
+});
+
 test('keeps the question and decision logic readable without JavaScript', async ({ browser }) => {
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();
