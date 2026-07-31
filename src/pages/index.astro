@@ -1,663 +1,425 @@
 ---
 import SearchForm from '@/components/ui/SearchForm.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { FEATURED_QUESTION_IDS, LEARNING_MODULES, LEARNING_QUESTIONS } from '@/data/learning';
+import { LEARNING_MODULES, getQuestionsForModule } from '@/data/learning';
 import { loadProjectContent } from '@/lib/content/io';
 import { deriveSiteMetrics } from '@/lib/site/metrics';
 
 const project = await loadProjectContent();
 const metrics = deriveSiteMetrics(project);
-const featuredQuestions = FEATURED_QUESTION_IDS.map((id) =>
-  LEARNING_QUESTIONS.find((question) => question.id === id),
-).filter((question) => question !== undefined);
-const initialQuestion = featuredQuestions[0]!;
-const clientQuestions = Object.fromEntries(
-  featuredQuestions.map(
-    ({
-      id,
-      question,
-      scenario,
-      facts,
-      options,
-      references,
-      principle,
-      checks,
-      shortTitle,
-      index,
-    }) => [
-      id,
-      {
-        id,
-        question,
-        scenario,
-        facts,
-        options: options.map(({ label }) => ({ label })),
-        references,
-        principle,
-        checks,
-        shortTitle,
-        index,
-      },
-    ],
-  ),
-);
+const firstQuestion = getQuestionsForModule(LEARNING_MODULES[0]!.id)[0]!;
 ---
 
-<BaseLayout>
-  <main id="main-content" class="learning-home">
-    <section class="case-head" aria-labelledby="case-title">
-      <div class="case-intro">
-        <p class="eyebrow">AI product judgment bank · 24 questions</p>
-        <h1 id="case-title" data-case-title>{initialQuestion.question}</h1>
-        <p class="case-lead" data-case-lead>{initialQuestion.scenario}</p>
-      </div>
-      <div class="case-picker">
-        <p class="meta-label">选择一个难度起点</p>
-        <div class="case-tabs" role="group" aria-label="精选判断题">
-          {
-            featuredQuestions.map((item, index) => (
-              <button
-                type="button"
-                class="case-tab"
-                data-case-tab={item.id}
-                aria-pressed={index === 0 ? 'true' : 'false'}
-              >
-                <span>Question {item.index}</span>
-                <strong>{item.shortTitle}</strong>
-              </button>
-            ))
-          }
+<BaseLayout
+  description="面向中文 AI 初学者与产品人的六阶段学习路径，通过 24 道产品判断题建立场景、方案、体验与上线决策能力。"
+  structuredDataType="CollectionPage"
+>
+  <main id="main-content" class="home-page">
+    <header class="home-hero">
+      <div class="home-intro">
+        <p class="eyebrow">6 stages · 24 product decisions</p>
+        <h1>AI 产品经理<br />系统学习路径</h1>
+        <p class="home-lead">
+          从模型边界到完整项目，用真实情境练习判断：什么时候该用
+          AI、该选哪种方案，以及怎样对质量、成本和风险负责。
+        </p>
+        <div class="home-actions">
+          <a class="primary-action" href={`/learn/questions/${firstQuestion.id}/`}>
+            从第 01 题开始学习 <span aria-hidden="true">→</span>
+          </a>
+          <a class="secondary-action" href="/learn/">查看 6 阶段课程地图</a>
         </div>
+        <p class="access-note">无需登录 · 不写作业 · 每题即时反馈</p>
       </div>
-    </section>
 
-    <section class="case-workspace" aria-label="当前精选题">
-      <article class="case-brief">
-        <p class="meta-label">01 · 情境</p>
-        <h2 data-case-brief-title>{initialQuestion.shortTitle}</h2>
-        <p data-case-brief-copy>{initialQuestion.scenario}</p>
-        <dl data-case-facts>
-          {
-            initialQuestion.facts.map((fact, index) => (
-              <div>
-                <>
-                  <dt>{String(index + 1).padStart(2, '0')}</dt>
-                  <dd>{fact}</dd>
-                </>
-              </div>
-            ))
-          }
-        </dl>
-        <div class="case-references">
-          <p class="meta-label">随任务出现的参考词条</p>
-          <div data-case-references>
-            {
-              initialQuestion.references.map((reference) => (
-                <a href={`/terms/${reference.id}/`}>{reference.label}</a>
-              ))
-            }
-          </div>
-        </div>
-      </article>
-
-      <section class="decision-path" aria-labelledby="decision-heading">
-        <p class="meta-label">02 · 可选决策</p>
-        <h2 id="decision-heading">三条都像答案，差别在约束与后果</h2>
-        <ol data-case-options>
-          {
-            initialQuestion.options.map((option, index) => (
-              <li class:list={{ active: index === 0 }}>
-                <span>{String(index + 1).padStart(2, '0')}</span>
-                <div>
-                  <h3>{option.label}</h3>
-                  <p>
-                    {index === 0
-                      ? '进入题目后选择，立即查看判断依据。'
-                      : '比较这条路径忽略了什么条件。'}
-                  </p>
-                </div>
-                <i aria-hidden="true" />
-              </li>
-            ))
-          }
+      <section class="learning-method" aria-labelledby="learning-method-heading">
+        <p class="meta-label">你会怎样学习</p>
+        <h2 id="learning-method-heading">每题只做一件事：<br />看懂一次产品取舍</h2>
+        <ol>
+          <li>
+            <span>01</span>
+            <div><strong>读一个真实情境</strong><small>先看目标、条件和错误后果</small></div>
+          </li>
+          <li>
+            <span>02</span>
+            <div><strong>选择你的判断</strong><small>比较三条都像答案的路径</small></div>
+          </li>
+          <li>
+            <span>03</span>
+            <div><strong>立即查看反馈</strong><small>带走原则，再继续下一题</small></div>
+          </li>
         </ol>
       </section>
+    </header>
 
-      <aside class="case-output">
-        <p class="meta-label">03 · 本题训练</p>
-        <h2 data-case-output-title>{initialQuestion.principle}</h2>
-        <ul data-case-output-list>
-          {initialQuestion.checks.map((item) => <li>{item}</li>)}
-        </ul>
-        <a class="primary-action" href={`/learn/questions/${initialQuestion.id}/`} data-case-action>
-          进入本题并查看反馈
-        </a>
-        <small>无需登录 · 不填写作业 · 不记录选择</small>
-      </aside>
-    </section>
-
-    <section class="curriculum-band" aria-labelledby="curriculum-heading">
+    <section class="course-overview" aria-labelledby="course-overview-heading">
       <header>
-        <p class="eyebrow">System curriculum</p>
-        <h2 class="section-heading" id="curriculum-heading">从第 1 题，到完整的 AI 产品判断</h2>
-        <p>24 道题分成六个阶段，难度从模型边界逐步进入方案、体验、质量与完整项目。</p>
-        <a href="/learn/questions/">查看完整题库</a>
+        <div>
+          <p class="eyebrow">课程地图</p>
+          <h2 class="section-heading" id="course-overview-heading">6 个阶段，一条学习主线</h2>
+          <p>前 20 题建立五类核心判断，最后 4 题把它们放进完整 AI 产品项目。</p>
+        </div>
+        <a href="/learn/">完整查看课程地图 <span aria-hidden="true">→</span></a>
       </header>
-      <ol class="module-spine">
+
+      <ol class="home-modules">
         {
-          LEARNING_MODULES.map((module) => (
-            <li data-accent={module.accent}>
-              <span>{module.index}</span>
-              <div>
-                <strong>{module.title}</strong>
-                <small>{module.decision}</small>
-              </div>
-              <i aria-hidden="true" />
-            </li>
-          ))
+          LEARNING_MODULES.map((module) => {
+            const questions = getQuestionsForModule(module.id);
+            return (
+              <li data-accent={module.accent}>
+                <div class="module-meta">
+                  <span>{module.index}</span>
+                  <small>
+                    第 {questions[0]?.index}–{questions.at(-1)?.index} 题
+                  </small>
+                </div>
+                <h3>{module.title}</h3>
+                <p>{module.summary}</p>
+                <dl>
+                  <dt>这阶段要会判断</dt>
+                  <dd>{module.decision}</dd>
+                </dl>
+              </li>
+            );
+          })
         }
       </ol>
+
+      <div class="course-start">
+        <div>
+          <p class="meta-label">第一步</p>
+          <strong>{firstQuestion.question}</strong>
+          <small>从“这个问题是否真的需要 AI”开始建立判断标准。</small>
+        </div>
+        <a class="primary-action" href={`/learn/questions/${firstQuestion.id}/`}>
+          开始第 01 题 <span aria-hidden="true">→</span>
+        </a>
+      </div>
     </section>
 
     <section class="knowledge-band" aria-labelledby="knowledge-heading">
       <div class="knowledge-intro">
-        <p class="eyebrow">Knowledge when needed</p>
-        <h2 class="section-heading" id="knowledge-heading">遇到概念，再进入词库深挖</h2>
-        <p>词库、阅读路线和关系图谱继续保留，用来回答学习过程中的具体问题。</p>
+        <p class="eyebrow">按需查阅</p>
+        <h2 class="section-heading" id="knowledge-heading">遇到概念时，再进入知识库</h2>
+        <p>不需要先背完 300 个词条。学习中遇到陌生概念，再搜索解释、阅读路线和关系。</p>
         <SearchForm />
       </div>
       <div class="knowledge-register" data-learning-foundation>
-        <a href="/atlas/"
-          ><span>{metrics.verifiedTermCount} VERIFIED</span><strong>已核验深度词条</strong><small
-            >从解释、边界到应用逐层阅读</small
-          ></a
-        >
-        <a href="/routes/"
-          ><span>{metrics.publishedRouteCount} ROUTES</span><strong>主题阅读路线</strong><small
-            >补齐案例背后的前置知识</small
-          ></a
-        >
-        <a href="/graph/"
-          ><span>{metrics.relationCount} RELATIONS</span><strong>概念关系图谱</strong><small
-            >查看前置、组成、比较与应用</small
-          ></a
-        >
+        <a href="/atlas/">
+          <span>{metrics.verifiedTermCount} VERIFIED</span>
+          <strong>已核验深度词条</strong>
+          <small>从解释、边界到应用逐层阅读</small>
+        </a>
+        <a href="/routes/">
+          <span>{metrics.publishedRouteCount} ROUTES</span>
+          <strong>主题阅读路线</strong>
+          <small>补齐案例背后的前置知识</small>
+        </a>
+        <a href="/graph/">
+          <span>{metrics.relationCount} RELATIONS</span>
+          <strong>概念关系图谱</strong>
+          <small>查看前置、组成、比较与应用</small>
+        </a>
       </div>
     </section>
   </main>
 </BaseLayout>
 
-<script is:inline define:vars={{ clientQuestions }}>
-  const cases = clientQuestions;
-  const buttons = [...document.querySelectorAll('[data-case-tab]')];
-  const title = document.querySelector('[data-case-title]');
-  const lead = document.querySelector('[data-case-lead]');
-  const briefTitle = document.querySelector('[data-case-brief-title]');
-  const briefCopy = document.querySelector('[data-case-brief-copy]');
-  const facts = document.querySelector('[data-case-facts]');
-  const references = document.querySelector('[data-case-references]');
-  const outputTitle = document.querySelector('[data-case-output-title]');
-  const outputList = document.querySelector('[data-case-output-list]');
-  const options = document.querySelector('[data-case-options]');
-  const action = document.querySelector('[data-case-action]');
-
-  function selectCase(caseId) {
-    const item = cases[caseId];
-    if (!item) return;
-
-    buttons.forEach((button) =>
-      button.setAttribute('aria-pressed', String(button.dataset.caseTab === caseId)),
-    );
-    title.textContent = item.question;
-    lead.textContent = item.scenario;
-    briefTitle.textContent = item.shortTitle;
-    briefCopy.textContent = item.scenario;
-    outputTitle.textContent = item.principle;
-    action.href = `/learn/questions/${item.id}/`;
-
-    facts.replaceChildren(
-      ...item.facts.map((fact, index) => {
-        const row = document.createElement('div');
-        const term = document.createElement('dt');
-        const description = document.createElement('dd');
-        term.textContent = String(index + 1).padStart(2, '0');
-        description.textContent = fact;
-        row.append(term, description);
-        return row;
-      }),
-    );
-    options.replaceChildren(
-      ...item.options.map((option, index) => {
-        const row = document.createElement('li');
-        const number = document.createElement('span');
-        const body = document.createElement('div');
-        const heading = document.createElement('h3');
-        const explanation = document.createElement('p');
-        const line = document.createElement('i');
-        number.textContent = String(index + 1).padStart(2, '0');
-        heading.textContent = option.label;
-        explanation.textContent =
-          index === 0 ? '进入题目后选择，立即查看判断依据。' : '比较这条路径忽略了什么条件。';
-        line.setAttribute('aria-hidden', 'true');
-        body.append(heading, explanation);
-        row.append(number, body, line);
-        if (index === 0) row.classList.add('active');
-        return row;
-      }),
-    );
-    references.replaceChildren(
-      ...item.references.map((reference) => {
-        const link = document.createElement('a');
-        link.href = `/terms/${reference.id}/`;
-        link.textContent = reference.label;
-        return link;
-      }),
-    );
-    outputList.replaceChildren(
-      ...item.outputItems.map((output) => {
-        const row = document.createElement('li');
-        row.textContent = output;
-        return row;
-      }),
-    );
-  }
-
-  buttons.forEach((button) =>
-    button.addEventListener('click', () => selectCase(button.dataset.caseTab)),
-  );
-</script>
-
 <style>
-  .case-head {
-    min-height: 17rem;
+  .home-hero {
+    min-height: 38rem;
     display: grid;
-    grid-template-columns: minmax(27rem, 0.58fr) minmax(27rem, 0.42fr);
+    grid-template-columns: minmax(0, 0.58fr) minmax(23rem, 0.42fr);
     border-bottom: 1px solid var(--color-line);
   }
 
-  .case-intro {
+  .home-intro,
+  .learning-method {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    padding: var(--space-7) var(--page-gutter);
+  }
+
+  .home-intro {
     border-right: 1px solid var(--color-line);
-    padding: var(--space-5) var(--page-gutter);
   }
 
-  .case-intro h1 {
-    max-width: 12em;
-    margin: var(--space-2) 0 0.5rem;
+  .home-intro h1 {
+    max-width: 10em;
+    margin: var(--space-3) 0 var(--space-3);
     font-family: var(--font-display);
-    font-size: clamp(2.9rem, 4.5vw, 4.65rem);
+    font-size: 5.75rem;
     font-weight: 400;
-    line-height: 1.05;
+    line-height: 1.02;
     letter-spacing: 0;
-    text-wrap: balance;
   }
 
-  .case-lead {
-    max-width: 48rem;
+  .home-lead {
+    max-width: 39rem;
     margin: 0;
     color: var(--color-muted);
-    font-size: var(--text-base);
+    font-size: var(--text-lead);
     text-wrap: pretty;
   }
 
-  .case-picker {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: var(--space-4) var(--page-gutter);
-  }
-
-  .case-tabs {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    margin-top: var(--space-2);
-    border: 1px solid var(--color-line);
-  }
-
-  .case-tab {
-    min-width: 0;
-    min-height: 6.25rem;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: space-between;
-    border: 0;
-    border-right: 1px solid var(--color-line);
-    background: transparent;
-    padding: var(--space-3);
-    cursor: pointer;
-    text-align: left;
-  }
-
-  .case-tab:last-child {
-    border-right: 0;
-  }
-
-  .case-tab:hover,
-  .case-tab[aria-pressed='true'] {
-    background: var(--color-panel);
-  }
-
-  .case-tab[aria-pressed='true'] {
-    box-shadow: inset 0 -3px var(--color-prerequisite);
-  }
-
-  .case-tab span {
-    color: var(--color-quiet);
-    font-family: var(--font-mono);
-    font-size: 0.68rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
-
-  .case-tab[aria-pressed='true'] span {
-    color: var(--color-prerequisite);
-  }
-
-  .case-tab strong {
-    font-family: var(--font-display);
-    font-size: 1.05rem;
-    font-weight: 400;
-    line-height: 1.35;
-  }
-
-  .case-workspace {
-    min-height: 30rem;
-    display: grid;
-    grid-template-columns: minmax(17rem, 0.28fr) minmax(28rem, 0.45fr) minmax(17rem, 0.27fr);
-    border-bottom: 1px solid var(--color-line);
-  }
-
-  .case-brief,
-  .decision-path,
-  .case-output {
-    min-width: 0;
-    padding: var(--space-5) var(--page-gutter);
-  }
-
-  .case-brief,
-  .decision-path {
-    border-right: 1px solid var(--color-line);
-  }
-
-  .case-brief {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .case-brief h2,
-  .decision-path h2,
-  .case-output h2 {
-    margin: var(--space-1) 0 var(--space-2);
-    font-family: var(--font-display);
-    font-size: clamp(1.6rem, 2.4vw, 2.15rem);
-    font-weight: 400;
-    line-height: 1.25;
-  }
-
-  .case-brief > p:not(.meta-label),
-  .curriculum-band header > p:not(.eyebrow),
-  .knowledge-intro > p:not(.eyebrow) {
-    margin: 0;
-    color: var(--color-muted);
-  }
-
-  .case-brief dl {
-    margin: var(--space-4) 0 0;
-  }
-
-  .case-brief dl div {
-    display: grid;
-    grid-template-columns: 4rem minmax(0, 1fr);
-    gap: var(--space-2);
-    border-top: 1px solid var(--color-line-soft);
-    padding: 0.65rem 0;
-  }
-
-  .case-brief dt {
-    color: var(--color-quiet);
-    font-family: var(--font-mono);
-    font-size: 0.68rem;
-  }
-
-  .case-brief dd {
-    margin: 0;
-    color: var(--color-muted);
-    font-size: var(--text-sm);
-  }
-
-  .case-references {
-    margin-top: auto;
-    border-top: 1px solid var(--color-line);
-    padding-top: var(--space-3);
-  }
-
-  .case-references > div {
+  .home-actions {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.4rem 0.7rem;
-    margin-top: var(--space-1);
+    gap: var(--space-3);
+    align-items: center;
+    margin-top: var(--space-5);
   }
 
-  .case-references a {
-    border-bottom: 1px solid var(--color-component);
-    color: var(--color-muted);
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    text-decoration: none;
-  }
-
-  .decision-path ol {
-    margin: var(--space-3) 0 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .decision-path li {
-    display: grid;
-    grid-template-columns: 2rem minmax(0, 1fr) auto;
-    gap: var(--space-2);
-    border-top: 1px solid var(--color-line-soft);
-    padding: var(--space-2) 0;
-  }
-
-  .decision-path li.active {
-    margin-inline: -0.75rem;
-    background: var(--color-panel);
-    padding-inline: 0.75rem;
-  }
-
-  .decision-path li > span {
-    color: var(--color-quiet);
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-  }
-
-  .decision-path li.active > span {
-    color: var(--color-prerequisite);
-  }
-
-  .decision-path h3 {
-    margin: 0;
-    font-family: var(--font-display);
-    font-size: 1.1rem;
-    font-weight: 400;
-  }
-
-  .decision-path li p {
-    margin: 0.15rem 0 0;
-    color: var(--color-muted);
-    font-size: var(--text-sm);
-    line-height: 1.5;
-  }
-
-  .decision-path i {
-    width: 0.5rem;
-    height: 0.5rem;
-    margin-top: 0.45rem;
-    border: 1px solid var(--color-component);
-    border-radius: 50%;
-  }
-
-  .decision-path li.active i {
-    border-color: var(--color-prerequisite);
-    background: var(--color-prerequisite);
-  }
-
-  .case-output {
-    display: flex;
-    flex-direction: column;
-    background: var(--color-panel);
-  }
-
-  .case-output .meta-label {
-    color: var(--color-application);
-  }
-
-  .case-output ul {
-    margin: var(--space-2) 0 var(--space-4);
-    padding: 0;
-    list-style: none;
-  }
-
-  .case-output li {
-    position: relative;
-    border-top: 1px solid var(--color-line);
-    padding: 0.65rem 0 0.65rem 1.1rem;
-    color: var(--color-muted);
-    font-size: var(--text-sm);
-  }
-
-  .case-output li::before {
-    position: absolute;
-    top: 1rem;
-    left: 0;
-    width: 0.42rem;
-    height: 0.42rem;
-    border: 1px solid var(--color-application);
-    content: '';
-  }
-
-  .primary-action {
-    min-height: 3rem;
+  .primary-action,
+  .secondary-action {
+    min-height: 3.25rem;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    margin-top: auto;
-    background: var(--color-prerequisite);
-    color: var(--color-black);
+    gap: var(--space-2);
+    padding: 0 var(--space-4);
     font-weight: 600;
     text-decoration: none;
+    transition:
+      transform var(--transition-fast),
+      background var(--transition-fast),
+      color var(--transition-fast);
+  }
+
+  .primary-action {
+    background: var(--color-prerequisite);
+    color: var(--color-black);
   }
 
   .primary-action:hover {
     background: var(--color-focus);
+    transform: translateY(-2px);
   }
 
-  .case-output small {
-    margin-top: 0.55rem;
+  .primary-action:active {
+    transform: translateY(0);
+  }
+
+  .secondary-action {
+    border-bottom: 1px solid var(--color-line);
+    color: var(--color-muted);
+  }
+
+  .secondary-action:hover {
+    border-color: var(--color-prerequisite);
+    color: var(--color-ink);
+  }
+
+  .access-note {
+    margin: var(--space-2) 0 0;
     color: var(--color-quiet);
     font-family: var(--font-mono);
-    font-size: 0.66rem;
-    text-align: center;
+    font-size: 0.68rem;
   }
 
-  .curriculum-band,
-  .knowledge-band {
+  .learning-method {
+    background: var(--color-panel);
+  }
+
+  .learning-method .meta-label {
+    color: var(--color-application);
+  }
+
+  .learning-method h2 {
+    max-width: 13em;
+    margin: var(--space-3) 0 var(--space-4);
+    font-family: var(--font-display);
+    font-size: 2.75rem;
+    font-weight: 400;
+    line-height: 1.2;
+  }
+
+  .learning-method ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .learning-method li {
     display: grid;
-    grid-template-columns: minmax(20rem, 0.34fr) minmax(0, 0.66fr);
+    grid-template-columns: 2.5rem minmax(0, 1fr);
+    gap: var(--space-2);
+    border-top: 1px solid var(--color-line);
+    padding: var(--space-2) 0;
+  }
+
+  .learning-method li > span {
+    color: var(--color-prerequisite);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+  }
+
+  .learning-method strong,
+  .learning-method small {
+    display: block;
+  }
+
+  .learning-method strong {
+    font-size: var(--text-base);
+    font-weight: 500;
+  }
+
+  .learning-method small {
+    margin-top: 0.15rem;
+    color: var(--color-muted);
+  }
+
+  .course-overview {
     border-bottom: 1px solid var(--color-line);
   }
 
-  .curriculum-band > header,
-  .knowledge-intro {
-    border-right: 1px solid var(--color-line);
-    padding: var(--space-6) var(--page-gutter);
+  .course-overview > header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--space-5);
+    align-items: end;
+    border-bottom: 1px solid var(--color-line);
+    padding: var(--space-6) var(--page-gutter) var(--space-5);
   }
 
-  .curriculum-band header > p:not(.eyebrow),
-  .knowledge-intro > p:not(.eyebrow) {
-    max-width: 32rem;
-    margin-top: var(--space-3);
+  .course-overview > header p:not(.eyebrow) {
+    max-width: 44rem;
+    margin: var(--space-2) 0 0;
+    color: var(--color-muted);
   }
 
-  .curriculum-band header > a {
+  .course-overview > header > a {
     min-height: 2.75rem;
     display: inline-flex;
     align-items: center;
-    margin-top: var(--space-4);
+    gap: var(--space-2);
     border-bottom: 1px solid var(--color-prerequisite);
     color: var(--color-prerequisite);
     text-decoration: none;
   }
 
-  .module-spine {
+  .home-modules {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     margin: 0;
     padding: 0;
     list-style: none;
   }
 
-  .module-spine li {
-    min-height: 5.3rem;
-    display: grid;
-    grid-template-columns: 2.8rem minmax(0, 1fr) auto;
-    gap: var(--space-3);
-    align-items: center;
+  .home-modules > li {
+    min-width: 0;
+    min-height: 17rem;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid var(--color-line-soft);
     border-bottom: 1px solid var(--color-line-soft);
-    padding: var(--space-2) var(--page-gutter);
+    padding: var(--space-4) var(--page-gutter);
   }
 
-  .module-spine li:last-child {
-    border-bottom: 0;
+  .home-modules > li:nth-child(3n) {
+    border-right: 0;
   }
 
-  .module-spine span,
-  .knowledge-register span {
+  .module-meta {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-3);
     color: var(--color-quiet);
     font-family: var(--font-mono);
-    font-size: 0.7rem;
-    letter-spacing: 0.05em;
-  }
-
-  .module-spine strong {
-    display: block;
-    font-family: var(--font-display);
-    font-size: 1.15rem;
-    font-weight: 400;
-  }
-
-  .module-spine small,
-  .knowledge-register small {
-    display: block;
-    margin-top: 0.1rem;
-    color: var(--color-muted);
     font-size: var(--text-xs);
   }
 
-  .module-spine i {
-    width: 0.5rem;
-    height: 0.5rem;
-    border: 1px solid var(--color-line);
-    border-radius: 50%;
+  .home-modules li[data-accent='prerequisite'] .module-meta > span {
+    color: var(--color-prerequisite);
   }
 
-  .module-spine li[data-accent='prerequisite'] i {
-    border-color: var(--color-prerequisite);
-  }
-  .module-spine li[data-accent='component'] i {
-    border-color: var(--color-component);
-  }
-  .module-spine li[data-accent='comparison'] i {
-    border-color: var(--color-comparison);
-  }
-  .module-spine li[data-accent='application'] i {
-    border-color: var(--color-application);
+  .home-modules li[data-accent='component'] .module-meta > span {
+    color: var(--color-component);
   }
 
-  .knowledge-intro :global(.search-form) {
-    margin-top: var(--space-5);
+  .home-modules li[data-accent='comparison'] .module-meta > span {
+    color: var(--color-comparison);
+  }
+
+  .home-modules li[data-accent='application'] .module-meta > span {
+    color: var(--color-application);
+  }
+
+  .home-modules h3 {
+    margin: var(--space-3) 0 var(--space-1);
+    font-family: var(--font-display);
+    font-size: 1.75rem;
+    font-weight: 400;
+    line-height: 1.25;
+  }
+
+  .home-modules > li > p {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+  }
+
+  .home-modules dl {
+    margin: auto 0 0;
+    border-top: 1px solid var(--color-line-soft);
+    padding-top: var(--space-2);
+  }
+
+  .home-modules dt {
+    color: var(--color-quiet);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+  }
+
+  .home-modules dd {
+    margin: 0.2rem 0 0;
+    color: var(--color-ink);
+    font-size: var(--text-sm);
+  }
+
+  .course-start {
+    display: flex;
+    gap: var(--space-5);
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-4) var(--page-gutter);
+    background: var(--color-panel);
+  }
+
+  .course-start strong,
+  .course-start small {
+    display: block;
+  }
+
+  .course-start strong {
+    margin-top: var(--space-1);
+    font-family: var(--font-display);
+    font-size: 1.45rem;
+    font-weight: 400;
+  }
+
+  .course-start small {
+    margin-top: 0.2rem;
+    color: var(--color-muted);
+  }
+
+  .knowledge-band {
+    display: grid;
+    grid-template-columns: minmax(20rem, 0.38fr) minmax(0, 0.62fr);
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .knowledge-intro {
+    border-right: 1px solid var(--color-line);
+    padding: var(--space-6) var(--page-gutter);
+  }
+
+  .knowledge-intro > p:not(.eyebrow) {
+    max-width: 34rem;
+    margin: var(--space-3) 0 var(--space-4);
+    color: var(--color-muted);
   }
 
   .knowledge-register {
@@ -666,12 +428,15 @@ const clientQuestions = Object.fromEntries(
   }
 
   .knowledge-register a {
-    min-height: 17rem;
+    min-width: 0;
+    min-height: 18rem;
     display: flex;
     flex-direction: column;
-    border-right: 1px solid var(--color-line);
+    justify-content: flex-end;
+    border-right: 1px solid var(--color-line-soft);
     padding: var(--space-4);
     text-decoration: none;
+    transition: background var(--transition-fast);
   }
 
   .knowledge-register a:last-child {
@@ -682,104 +447,119 @@ const clientQuestions = Object.fromEntries(
     background: var(--color-panel);
   }
 
-  .knowledge-register a:first-child span {
-    color: var(--color-prerequisite);
-  }
-  .knowledge-register a:nth-child(2) span {
-    color: var(--color-component);
-  }
-  .knowledge-register a:nth-child(3) span {
-    color: var(--color-application);
+  .knowledge-register span,
+  .knowledge-register small {
+    color: var(--color-quiet);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
   }
 
   .knowledge-register strong {
-    margin-top: auto;
+    margin: var(--space-2) 0 var(--space-1);
     font-family: var(--font-display);
-    font-size: 1.35rem;
+    font-size: 1.45rem;
     font-weight: 400;
   }
 
-  @media (max-width: 1100px) {
-    .case-head,
-    .case-workspace,
-    .curriculum-band,
+  @media (max-width: 1080px) {
+    .home-intro h1 {
+      font-size: 4.5rem;
+    }
+
+    .home-modules {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .home-modules > li:nth-child(3n) {
+      border-right: 1px solid var(--color-line-soft);
+    }
+
+    .home-modules > li:nth-child(2n) {
+      border-right: 0;
+    }
+  }
+
+  @media (max-width: 820px) {
+    .home-hero,
     .knowledge-band {
       grid-template-columns: 1fr;
     }
 
-    .case-intro,
-    .case-brief,
-    .decision-path,
-    .curriculum-band > header,
+    .home-hero {
+      min-height: 0;
+    }
+
+    .home-intro,
+    .learning-method,
+    .knowledge-intro {
+      padding-block: var(--space-6);
+    }
+
+    .home-intro,
     .knowledge-intro {
       border-right: 0;
       border-bottom: 1px solid var(--color-line);
     }
 
-    .case-intro {
-      min-height: 24rem;
+    .course-overview > header {
+      grid-template-columns: 1fr;
+      align-items: start;
     }
 
-    .case-brief,
-    .decision-path,
-    .case-output {
-      min-height: 28rem;
+    .course-overview > header > a {
+      width: max-content;
+    }
+
+    .knowledge-register a {
+      min-height: 13rem;
     }
   }
 
-  @media (max-width: 600px) {
-    .case-intro {
-      min-height: 0;
-      padding-block: var(--space-6) var(--space-5);
+  @media (max-width: 576px) {
+    .home-intro h1 {
+      font-size: 3.25rem;
     }
 
-    .case-intro h1 {
-      font-size: clamp(2.65rem, 12vw, 3.6rem);
+    .home-actions,
+    .course-start {
+      align-items: stretch;
+      flex-direction: column;
     }
 
-    .case-picker {
-      padding-block: var(--space-4);
+    .home-actions a,
+    .course-start > a {
+      width: 100%;
     }
 
-    .case-tabs {
-      grid-template-columns: 1fr;
+    .secondary-action {
+      justify-content: flex-start;
+      padding-inline: 0;
     }
 
-    .case-tab {
-      min-height: 4.75rem;
-      border-right: 0;
-      border-bottom: 1px solid var(--color-line);
+    .learning-method h2 {
+      font-size: 2.15rem;
     }
 
-    .case-tab:last-child {
-      border-bottom: 0;
-    }
-
-    .case-brief,
-    .decision-path,
-    .case-output {
-      min-height: 0;
-      padding-block: var(--space-5);
-    }
-
-    .case-references,
-    .primary-action {
-      margin-top: var(--space-5);
-    }
-
-    .module-spine li {
-      grid-template-columns: 2rem minmax(0, 1fr) auto;
-      padding-block: var(--space-3);
-    }
-
+    .home-modules,
     .knowledge-register {
       grid-template-columns: 1fr;
     }
 
+    .home-modules > li,
+    .home-modules > li:nth-child(2n),
+    .home-modules > li:nth-child(3n),
     .knowledge-register a {
-      min-height: 9rem;
+      min-height: 0;
       border-right: 0;
-      border-bottom: 1px solid var(--color-line);
+    }
+
+    .home-modules > li {
+      min-height: 15rem;
+    }
+
+    .knowledge-register a {
+      border-bottom: 1px solid var(--color-line-soft);
+      padding-block: var(--space-5);
     }
   }
 </style>

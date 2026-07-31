@@ -22,7 +22,7 @@ const PUBLIC_CORE_TERM_COUNT = String(
 const PUBLIC_RELATION_COUNT = String(graphData.edges.length);
 const PUBLIC_SEARCH_CASES = searchCasesForTerms(registry.terms.map(({ id }) => id));
 
-test('renders the progressive question-led learning identity and primary paths', async ({
+test('renders the course identity and an obvious first learning action', async ({
   page,
   isMobile,
 }) => {
@@ -38,13 +38,19 @@ test('renders the progressive question-led learning identity and primary paths',
     '/apple-touch-icon.png',
   );
   await expect(
-    page.getByRole('heading', { level: 1, name: '发票金额校验，需要上大模型吗？' }),
+    page.getByRole('heading', { level: 1, name: 'AI 产品经理 系统学习路径' }),
   ).toBeVisible();
-  await expect(page.getByRole('group', { name: '精选判断题' })).toBeVisible();
-  await expect(page.getByRole('link', { name: '进入本题并查看反馈' })).toHaveAttribute(
+  await expect(page.getByRole('link', { name: '从第 01 题开始学习' })).toHaveAttribute(
     'href',
     '/learn/questions/q01-rules-or-ai/',
   );
+  await expect(page.getByRole('link', { name: '查看 6 阶段课程地图' })).toHaveAttribute(
+    'href',
+    '/learn/',
+  );
+  await expect(
+    page.getByRole('region', { name: '每题只做一件事： 看懂一次产品取舍' }),
+  ).toBeVisible();
 
   if (isMobile) {
     await expect(page.locator('summary', { hasText: '菜单' })).toBeVisible();
@@ -69,8 +75,8 @@ test('derives the homepage learning structure and knowledge scale from project d
 }) => {
   await page.goto('/');
 
-  await expect(page.locator('[data-case-tab]')).toHaveCount(3);
-  await expect(page.locator('.module-spine > li')).toHaveCount(6);
+  await expect(page.locator('[data-case-tab]')).toHaveCount(0);
+  await expect(page.locator('.home-modules > li')).toHaveCount(6);
   await expect(page.locator('[data-learning-foundation] > a')).toHaveCount(3);
   await expect(page.locator('[data-learning-foundation]')).toContainText('80 VERIFIED');
   await expect(page.locator('[data-learning-foundation]')).toContainText(
@@ -78,21 +84,16 @@ test('derives the homepage learning structure and knowledge scale from project d
   );
 });
 
-test('switches featured questions and sends the user into the selected judgment', async ({
+test('keeps the homepage oriented around the course instead of a selected question', async ({
   page,
 }) => {
   await page.goto('/');
 
-  await page.getByRole('button', { name: /Question 09.*Prompt 还是 RAG/ }).click();
-  await expect(
-    page.getByRole('heading', { level: 1, name: '回答最新公司政策，只优化 Prompt 够吗？' }),
-  ).toBeVisible();
-  await expect(
-    page.getByText('Prompt 约束行为，RAG 提供运行时知识；不要混淆两者职责。'),
-  ).toBeVisible();
-  await expect(page.getByRole('link', { name: '进入本题并查看反馈' })).toHaveAttribute(
+  await expect(page.getByRole('group', { name: '精选判断题' })).toHaveCount(0);
+  await expect(page.getByText('发票金额校验，需要上大模型吗？')).toBeVisible();
+  await expect(page.getByRole('link', { name: '开始第 01 题' })).toHaveAttribute(
     'href',
-    '/learn/questions/q09-prompt-or-rag/',
+    '/learn/questions/q01-rules-or-ai/',
   );
 });
 
@@ -196,12 +197,11 @@ test('makes stage progress and cross-stage continuation explicit', async ({ page
   await expect(page.locator('[data-next-step]')).toHaveAttribute('href', '/learn/');
 });
 
-test('gives the learning center one primary start and one secondary question directory', async ({
-  page,
-}) => {
+test('gives the learning center a compact guide and one primary start', async ({ page }) => {
   await page.goto('/learn/');
 
-  await expect(page.getByRole('link', { name: '从阶段 01 开始' })).toHaveAttribute(
+  const courseGuide = page.locator('.course-guide');
+  await expect(courseGuide.getByRole('link', { name: '从第 01 题开始学习' })).toHaveAttribute(
     'href',
     '/learn/questions/q01-rules-or-ai/',
   );
@@ -210,7 +210,8 @@ test('gives the learning center one primary start and one secondary question dir
     '/learn/questions/',
   );
   await expect(page.locator('.course-modules > li')).toHaveCount(6);
-  await expect(page.getByRole('heading', { name: '按 6 个阶段建立 AI 产品判断力' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: '按顺序完成 6 个阶段' })).toBeVisible();
+  await expect(courseGuide).toContainText('判断 · 反馈 · 继续');
   await expect(page.getByRole('heading', { name: '从单点判断，进入完整项目' })).toHaveCount(0);
   await expect(page.locator('#questions')).toHaveCount(0);
 });
@@ -220,7 +221,7 @@ test('keeps the question and decision logic readable without JavaScript', async 
   const page = await context.newPage();
 
   await page.goto('http://127.0.0.1:4321/');
-  await page.getByRole('link', { name: '进入本题并查看反馈' }).click();
+  await page.getByRole('link', { name: '从第 01 题开始学习' }).click();
   await expect(
     page.getByRole('heading', { level: 1, name: '发票金额校验，需要上大模型吗？' }),
   ).toBeVisible();
