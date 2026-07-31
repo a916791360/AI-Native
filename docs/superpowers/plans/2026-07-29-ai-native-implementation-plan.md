@@ -748,7 +748,7 @@ pnpm build
 
 ## 阶段 9：80-120 篇深度内容生产
 
-**当前状态：2026-07-30 已完成首个 8 篇样板批、基础批四个波次和协作批四个波次的编辑、事实与关系复核；产品批前两波“场景匹配”和“方案选择”也已完成核验，第三波“人机控制”已进入研究。** 当前 70 个词条达到 `verified`，230 个词条保持 `catalogued`；产品批前两波为 `verified`、第三波为 `research`、第四波为 `planned`，批次整体保持 `research`。默认公开注册表为 300 个词条，图谱为 308 条关系。
+**当前状态：2026-07-31 已完成首个 8 篇样板批、基础批四个波次和协作批四个波次的编辑、事实与关系复核；产品批前两波“场景匹配”和“方案选择”也已完成核验，第三波“人机控制”已完成统一八段初稿。** 当前 70 个词条达到 `verified`，5 个为 `draft`，225 个词条保持 `catalogued`；产品批前两波为 `verified`、第三波为 `draft`、第四波为 `planned`，批次整体同步为 `draft`。默认公开注册表为 295 个词条，图谱为 303 条关系。
 
 ### 目标
 
@@ -813,7 +813,7 @@ pnpm build
 - 20 个词条均为未进入深度生产的 `catalogued` 状态，与前三个批次没有重复分配，并已有公开关系入口。
 - 第一波“场景匹配”已登记 Google PAIR、NIST AI RMF、HELM、OpenAI 和 Anthropic 的一手来源，建立五份研究包并完成统一八段初稿与最终核验，状态为 `verified`。
 - 第二波“方案选择”已登记 Anthropic、Google Cloud、AWS 和 OpenAI 官方资料以及 RouteLLM、FrugalGPT 论文，建立五份研究包并完成统一八段初稿与最终核验，状态为 `verified`。
-- 第三波“人机控制”已登记 Microsoft Human-AI Interaction Guidelines、Google PAIR 与 NIST AI RMF 一手资料并建立五份研究包，状态为 `research`；第四波保持 `planned`。
+- 第三波“人机控制”已登记 Microsoft Human-AI Interaction Guidelines、Google PAIR 与 NIST AI RMF 一手资料，建立五份研究包并完成统一八段初稿，状态为 `draft`；第四波保持 `planned`。
 - 第一波五篇已恢复到默认公开面；完成全部产品批核验后，累计 `verified` 词条将达到阶段 9 目标下限 80。
 - 自动门禁要求产品批保持 20-30 篇，并检查波次顺序、重复分配、词条存在性与生命周期一致性。
 

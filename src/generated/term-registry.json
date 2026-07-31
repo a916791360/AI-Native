@@ -1783,46 +1783,6 @@
       ]
     },
     {
-      "id": "human-ai-collaboration",
-      "url": "/terms/human-ai-collaboration/",
-      "nameZh": "人机协作",
-      "nameEn": "Human-AI Collaboration",
-      "abbreviations": [],
-      "aliases": [],
-      "summary": "人与 AI 按各自优势分配生成、判断、执行和复核职责的工作方式。",
-      "domain": "ai-product-ux",
-      "domainNameZh": "AI 产品与用户体验",
-      "difficulty": "beginner",
-      "ring": "core",
-      "status": "catalogued",
-      "priority": 1,
-      "featured": false,
-      "searchKeys": [
-        "人机协作",
-        "human-ai collaboration"
-      ]
-    },
-    {
-      "id": "human-escalation",
-      "url": "/terms/human-escalation/",
-      "nameZh": "人工升级处理",
-      "nameEn": "Human Escalation",
-      "abbreviations": [],
-      "aliases": [],
-      "summary": "在系统不确定、失败或风险升高时，把任务和必要上下文交给具备权限的人员处理。",
-      "domain": "ai-product-ux",
-      "domainNameZh": "AI 产品与用户体验",
-      "difficulty": "intermediate",
-      "ring": "core",
-      "status": "catalogued",
-      "priority": 1,
-      "featured": false,
-      "searchKeys": [
-        "人工升级处理",
-        "human escalation"
-      ]
-    },
-    {
       "id": "human-evaluation",
       "url": "/terms/human-evaluation/",
       "nameZh": "人工评估",
@@ -1860,26 +1820,6 @@
       "searchKeys": [
         "人在回路",
         "human in the loop"
-      ]
-    },
-    {
-      "id": "human-oversight",
-      "url": "/terms/human-oversight/",
-      "nameZh": "人工监督",
-      "nameEn": "Human Oversight",
-      "abbreviations": [],
-      "aliases": [],
-      "summary": "由具备权限和信息的人监督、干预或停止 AI 系统运行的控制安排。",
-      "domain": "safety-ethics-governance",
-      "domainNameZh": "安全、伦理与治理",
-      "difficulty": "beginner",
-      "ring": "core",
-      "status": "catalogued",
-      "priority": 1,
-      "featured": false,
-      "searchKeys": [
-        "人工监督",
-        "human oversight"
       ]
     },
     {
@@ -3779,46 +3719,6 @@
       "searchKeys": [
         "透明度",
         "transparency"
-      ]
-    },
-    {
-      "id": "uncertainty-display",
-      "url": "/terms/uncertainty-display/",
-      "nameZh": "不确定性呈现",
-      "nameEn": "Uncertainty Display",
-      "abbreviations": [],
-      "aliases": [],
-      "summary": "在界面中明确呈现模型的不确定性、证据缺口或需要复核之处的设计方式。",
-      "domain": "ai-product-ux",
-      "domainNameZh": "AI 产品与用户体验",
-      "difficulty": "intermediate",
-      "ring": "core",
-      "status": "catalogued",
-      "priority": 1,
-      "featured": false,
-      "searchKeys": [
-        "不确定性呈现",
-        "uncertainty display"
-      ]
-    },
-    {
-      "id": "user-control",
-      "url": "/terms/user-control/",
-      "nameZh": "用户控制权",
-      "nameEn": "User Control",
-      "abbreviations": [],
-      "aliases": [],
-      "summary": "让用户能够发起、调整、暂停、撤销或拒绝 AI 行为的产品能力，是可靠人机协作的基础。",
-      "domain": "ai-product-ux",
-      "domainNameZh": "AI 产品与用户体验",
-      "difficulty": "beginner",
-      "ring": "core",
-      "status": "catalogued",
-      "priority": 1,
-      "featured": false,
-      "searchKeys": [
-        "用户控制权",
-        "user control"
       ]
     },
     {

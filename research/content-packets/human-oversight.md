@@ -1,7 +1,7 @@
 ---
 termId: human-oversight
 batch: product-1
-status: research
+status: draft
 accessedAt: '2026-07-30'
 sourceIds:
   - nist-ai-rmf-core

@@ -139,7 +139,7 @@ batches:
           - reflection
   - id: product-1
     kind: product
-    status: research
+    status: draft
     terms:
       - ai-use-case
       - problem-solution-fit
@@ -182,7 +182,7 @@ batches:
           - latency-budget
       - id: human-control
         focus: 设计人机职责、用户控制、不确定性说明与人工接管边界。
-        status: research
+        status: draft
         terms:
           - human-ai-collaboration
           - user-control
