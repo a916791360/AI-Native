@@ -23,10 +23,12 @@
     "sync:catalog": "node --import tsx scripts/sync-catalog.ts",
     "generate:data": "pnpm sync:catalog && node --import tsx scripts/build-registry.ts && node --import tsx scripts/build-graph.ts",
     "check:generated": "node --import tsx scripts/check-catalog-generated.ts && node --import tsx scripts/check-generated.ts",
+    "check:performance": "node --import tsx scripts/check-performance-budget.ts",
+    "capture:release": "node --import tsx scripts/capture-release-candidate.ts",
     "test": "pnpm test:unit && pnpm test:e2e",
     "test:unit": "vitest run",
     "test:e2e": "playwright test",
-    "ci": "pnpm format:check && pnpm lint && pnpm check && pnpm validate:data && pnpm check:generated && pnpm generate:data && git diff --exit-code -- src/generated && pnpm test:unit && pnpm build && pnpm test:e2e"
+    "ci": "pnpm format:check && pnpm lint && pnpm check && pnpm validate:data && pnpm check:generated && pnpm generate:data && git diff --exit-code -- src/generated && pnpm test:unit && pnpm build && pnpm check:performance && pnpm test:e2e"
   },
   "dependencies": {
     "@astrojs/mdx": "7.0.5",

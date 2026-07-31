@@ -1,6 +1,7 @@
 import type { Core, EventObject, NodeSingular } from 'cytoscape';
 
 import {
+  computeGraphPositions,
   createSyntheticGraph,
   RELATION_TYPES,
   type GraphData,
@@ -97,7 +98,7 @@ function selectedTypes(root: HTMLElement): GraphRelationType[] {
     );
 }
 
-function applyFilters(root: HTMLElement, cy: Core): void {
+function applyFilters(root: HTMLElement, cy: Core, updateState = true): void {
   const domain = root.querySelector<HTMLSelectElement>('[data-graph-domain]')?.value ?? '';
   const types = new Set(selectedTypes(root));
   const activeTypeCount = types.size;
@@ -127,7 +128,7 @@ function applyFilters(root: HTMLElement, cy: Core): void {
   root.dataset.graphVisibleEdges = String(cy.edges(':visible').length);
   const status = root.querySelector<HTMLElement>('[data-graph-status] span');
   const isEmpty = cy.nodes(':visible').length === 0;
-  root.dataset.graphState = isEmpty ? 'empty' : 'ready';
+  if (updateState) root.dataset.graphState = isEmpty ? 'empty' : 'ready';
   if (status && isEmpty) status.textContent = '当前筛选没有可显示的词条关系';
 }
 
@@ -149,12 +150,26 @@ function focusNode(
 ): void {
   const element = cy.$id(nodeId);
   const node = graph.nodes.find((item) => item.id === nodeId);
-  if (!element.length || !node) return;
+  if (!element.length || !node || element.style('display') === 'none') return;
 
-  cy.elements().unselect();
-  element.select();
+  const visibleEdges = element.connectedEdges(':visible');
+  const visibleNodes = visibleEdges.connectedNodes().union(element);
+  const neighborhood = visibleNodes.union(visibleEdges);
+  const positions = computeGraphPositions(
+    visibleNodes.map((item) => ({ id: item.id() })),
+    visibleEdges.map((edge) => ({ source: edge.source().id(), target: edge.target().id() })),
+  );
+
+  cy.batch(() => {
+    cy.elements().unselect().removeClass('is-outside-focus');
+    cy.elements(':visible').difference(neighborhood).addClass('is-outside-focus');
+    visibleNodes.forEach((item) => {
+      const position = positions[item.id()];
+      if (position) item.position(position);
+    });
+    element.select();
+  });
   if (moveViewport) {
-    const neighborhood = element.closedNeighborhood(':visible');
     if (reducedMotion) cy.fit(neighborhood, 85);
     else cy.animate({ fit: { eles: neighborhood, padding: 85 }, duration: 280 });
   }
@@ -210,6 +225,7 @@ async function initializeGraph(root: HTMLElement): Promise<void> {
             color: cssColor('--color-ink'),
             'font-size': 11,
             'font-family': cssValue('--font-body'),
+            'min-zoomed-font-size': 9,
             'text-wrap': 'wrap',
             'text-max-width': '92px',
             'text-valign': 'bottom',
@@ -228,6 +244,14 @@ async function initializeGraph(root: HTMLElement): Promise<void> {
           },
         },
         {
+          selector: '.is-outside-focus',
+          style: {
+            opacity: benchmark ? 1 : 0.035,
+            'text-opacity': 0,
+            events: 'no',
+          },
+        },
+        {
           selector: 'edge',
           style: {
             width: benchmark ? 0.65 : 1.25,
@@ -236,6 +260,7 @@ async function initializeGraph(root: HTMLElement): Promise<void> {
             'arrow-scale': benchmark ? 0.45 : 0.7,
             label: 'data(typeLabel)',
             'font-size': 8,
+            'min-zoomed-font-size': 8,
             color: cssColor('--color-quiet'),
             'text-rotation': 'autorotate',
             'text-background-color': cssColor('--color-black'),
@@ -285,7 +310,9 @@ async function initializeGraph(root: HTMLElement): Promise<void> {
         if (button.dataset.graphAction === 'zoom-in') setZoom(root, cy, cy.zoom() * 1.2);
         if (button.dataset.graphAction === 'zoom-out') setZoom(root, cy, cy.zoom() / 1.2);
         if (button.dataset.graphAction === 'reset') {
-          cy.fit(cy.elements(':visible'), 60);
+          const selected = cy.nodes(':selected').first();
+          if (selected.length) focusNode(root, cy, graph, selected.id(), reducedMotion);
+          else cy.fit(cy.elements(':visible'), 60);
           root.dataset.graphZoom = cy.zoom().toFixed(2);
         }
       });
@@ -293,17 +320,27 @@ async function initializeGraph(root: HTMLElement): Promise<void> {
     root.querySelectorAll<HTMLInputElement>('[data-graph-relation]').forEach((input) =>
       input.addEventListener('change', () => {
         applyFilters(root, cy);
-        cy.fit(cy.elements(':visible'), 60);
+        const selected = cy.nodes(':selected:visible').first();
+        const target = selected.length ? selected : cy.nodes(':visible').first();
+        if (target.length) focusNode(root, cy, graph, target.id(), reducedMotion);
       }),
     );
     root.querySelector<HTMLSelectElement>('[data-graph-domain]')?.addEventListener('change', () => {
       applyFilters(root, cy);
-      cy.fit(cy.elements(':visible'), 60);
+      const selected = cy.nodes(':selected:visible').first();
+      const target = selected.length ? selected : cy.nodes(':visible').first();
+      if (target.length) focusNode(root, cy, graph, target.id(), reducedMotion);
     });
     root
       .querySelector<HTMLSelectElement>('[data-graph-focus-select]')
       ?.addEventListener('change', (event) => {
-        focusNode(root, cy, graph, (event.currentTarget as HTMLSelectElement).value, reducedMotion);
+        const nodeId = (event.currentTarget as HTMLSelectElement).value;
+        const domain = root.querySelector<HTMLSelectElement>('[data-graph-domain]');
+        if (domain?.value && cy.$id(nodeId).style('display') === 'none') {
+          domain.value = '';
+          applyFilters(root, cy);
+        }
+        focusNode(root, cy, graph, nodeId, reducedMotion);
       });
     cy.on('tap', 'node', (event: EventObject) => {
       focusNode(root, cy, graph, (event.target as NodeSingular).id(), reducedMotion);
@@ -317,22 +354,25 @@ async function initializeGraph(root: HTMLElement): Promise<void> {
       else if (event.key === 'ArrowDown') cy.panBy({ x: 0, y: -panStep });
       else if (event.key === '+' || event.key === '=') setZoom(root, cy, cy.zoom() * 1.2);
       else if (event.key === '-') setZoom(root, cy, cy.zoom() / 1.2);
-      else if (event.key === 'Home') cy.fit(cy.elements(':visible'), 60);
-      else return;
+      else if (event.key === 'Home') {
+        const selected = cy.nodes(':selected').first();
+        if (selected.length) focusNode(root, cy, graph, selected.id(), true);
+        else cy.fit(cy.elements(':visible'), 60);
+      } else return;
       event.preventDefault();
     });
 
-    applyFilters(root, cy);
+    applyFilters(root, cy, false);
     cy.fit(cy.elements(':visible'), 110);
     root.dataset.graphNodeCount = String(graph.nodes.length);
     root.dataset.graphEdgeCount = String(graph.edges.length);
     root.dataset.graphInitMs = (performance.now() - startedAt).toFixed(1);
     root.dataset.graphZoom = cy.zoom().toFixed(2);
-    root.dataset.graphState = 'ready';
     canvas.ariaBusy = 'false';
     const queryFocus = new URLSearchParams(window.location.search).get('focus');
     const initialFocus = benchmark ? graph.nodes[0]?.id : queryFocus || root.dataset.graphFocus;
-    if (initialFocus) focusNode(root, cy, graph, initialFocus, true, Boolean(queryFocus));
+    if (initialFocus) focusNode(root, cy, graph, initialFocus, true);
+    root.dataset.graphState = 'ready';
   } catch {
     root.dataset.graphState = 'error';
     canvas.ariaBusy = 'false';
