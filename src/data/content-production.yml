@@ -191,7 +191,7 @@ batches:
           - human-escalation
       - id: quality-and-risk
         focus: 用校准、线上线下评估、可观测性和风险管理持续验证产品。
-        status: planned
+        status: research
         terms:
           - confidence-calibration
           - offline-evaluation
