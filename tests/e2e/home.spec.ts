@@ -48,9 +48,7 @@ test('renders the course identity and an obvious first learning action', async (
     'href',
     '/learn/',
   );
-  await expect(
-    page.getByRole('region', { name: '每题只做一件事： 看懂一次产品取舍' }),
-  ).toBeVisible();
+  await expect(page.getByRole('region', { name: '先练判断，再把判断连成项目' })).toBeVisible();
 
   if (isMobile) {
     await expect(page.locator('summary', { hasText: '菜单' })).toBeVisible();
@@ -99,8 +97,10 @@ test('keeps the homepage oriented around the course instead of a selected questi
 
 test('provides stable skeletons for all primary page types', async ({ page }) => {
   const pages = [
-    ['/learn/', '从零建立 AI 产品判断力。'],
-    ['/learn/questions/', '24 道题，练成 AI 产品判断力。'],
+    ['/learn/', '从单点判断， 走到完整项目。'],
+    ['/learn/questions/', '24 道基础题， 建立产品判断。'],
+    ['/learn/cases/user-feedback-analysis/', '每日用户反馈分析与产品改进'],
+    ['/learn/cases/user-feedback-analysis/decide-ai-boundary/', '判断 AI 边界'],
     ['/learn/questions/q01-rules-or-ai/', '发票金额校验，需要上大模型吗？'],
     ['/learn/questions/q21-support-rag/', '客服知识库的第一版，应该直接自动回复客户吗？'],
     ['/atlas/', '知识图鉴'],
@@ -127,6 +127,8 @@ test('keeps learning, search, routes and domain browsing available from every co
     '/',
     '/learn/',
     '/learn/questions/q01-rules-or-ai/',
+    '/learn/cases/user-feedback-analysis/',
+    '/learn/cases/user-feedback-analysis/decide-ai-boundary/',
     '/atlas/',
     '/routes/',
     '/graph/',
@@ -138,6 +140,13 @@ test('keeps learning, search, routes and domain browsing available from every co
     const navigation = page.getByRole('navigation', {
       name: isMobile ? '移动端主导航' : '主导航',
     });
+    const homeLink = navigation.getByRole('link', { name: '首页', exact: true });
+    await expect(homeLink).toHaveAttribute('href', '/');
+    if (url === '/') {
+      await expect(homeLink).toHaveAttribute('aria-current', 'page');
+    } else {
+      await expect(homeLink).not.toHaveAttribute('aria-current', 'page');
+    }
     await expect(navigation.getByRole('link', { name: '学习中心' })).toHaveAttribute(
       'href',
       '/learn/',
@@ -173,13 +182,13 @@ test('reveals immediate reasoning without asking the learner to type', async ({ 
 test('makes stage progress and cross-stage continuation explicit', async ({ page }) => {
   await page.goto('/learn/questions/q04-high-stakes-answer/');
 
-  const location = page.getByRole('region', { name: '课程位置' });
+  const location = page.getByRole('region', { name: 'Level 1 · 基础判断位置' });
   await expect(location).toContainText('阶段 01 / 06');
   await expect(location).toContainText('AI 基础与模型边界');
   await expect(location).toContainText('本阶段4 / 4');
-  await expect(location).toContainText('全程04 / 24');
+  await expect(location).toContainText('基础题04 / 24');
   await expect(location.getByRole('link')).toHaveCount(1);
-  await expect(location.getByRole('link', { name: '返回课程目录' })).toHaveAttribute(
+  await expect(location.getByRole('link', { name: '返回三层学习中心' })).toHaveAttribute(
     'href',
     '/learn/',
   );
@@ -193,11 +202,11 @@ test('makes stage progress and cross-stage continuation explicit', async ({ page
 
   await page.goto('/learn/questions/q24-launch-decision/');
   await page.getByRole('button', { name: /补齐监控、预算、护栏和接管/ }).click();
-  await expect(page.locator('[data-next-step]')).toContainText('完成主线');
+  await expect(page.locator('[data-next-step]')).toContainText('完成 Level 1');
   await expect(page.locator('[data-next-step]')).toHaveAttribute('href', '/learn/');
 });
 
-test('gives the learning center a compact guide and one primary start', async ({ page }) => {
+test('explains the three learning levels while keeping one primary start', async ({ page }) => {
   await page.goto('/learn/');
 
   const courseGuide = page.locator('.course-guide');
@@ -210,9 +219,13 @@ test('gives the learning center a compact guide and one primary start', async ({
     '/learn/questions/',
   );
   await expect(page.locator('.course-modules > li')).toHaveCount(6);
-  await expect(page.getByRole('heading', { name: '按顺序完成 6 个阶段' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Level 1 · 按顺序完成 6 个阶段' })).toBeVisible();
   await expect(courseGuide).toContainText('判断 · 反馈 · 继续');
-  await expect(page.getByRole('heading', { name: '从单点判断，进入完整项目' })).toHaveCount(0);
+  await expect(page.locator('.learning-levels > ol > li')).toHaveCount(3);
+  await expect(page.getByRole('link', { name: '查看黄金项目档案' })).toHaveAttribute(
+    'href',
+    '/learn/cases/user-feedback-analysis/',
+  );
   await expect(page.locator('#questions')).toHaveCount(0);
 });
 
@@ -587,6 +600,8 @@ test('keeps key pages within the viewport without horizontal overflow', async ({
     '/learn/',
     '/learn/questions/',
     '/learn/questions/q21-support-rag/',
+    '/learn/cases/user-feedback-analysis/',
+    '/learn/cases/user-feedback-analysis/decide-ai-boundary/',
     '/atlas/',
     '/search/?q=RAG',
     '/routes/',
@@ -604,17 +619,17 @@ test('keeps key pages within the viewport without horizontal overflow', async ({
 
 test('exposes the navigation on narrow screens', async ({ page, isMobile }) => {
   test.skip(!isMobile, 'mobile navigation is only rendered as a control on narrow viewports');
-  await page.goto('/');
+  await page.goto('/learn/');
 
   const menu = page.locator('summary', { hasText: '菜单' });
   await menu.click();
   await expect(page.getByRole('navigation', { name: '移动端主导航' })).toBeVisible();
   await page
     .getByRole('navigation', { name: '移动端主导航' })
-    .getByRole('link', { name: '学习中心' })
+    .getByRole('link', { name: '首页', exact: true })
     .click();
   await expect(
-    page.getByRole('heading', { level: 1, name: '从零建立 AI 产品判断力。' }),
+    page.getByRole('heading', { level: 1, name: 'AI 产品经理 系统学习路径' }),
   ).toBeVisible();
 });
 
@@ -631,6 +646,8 @@ test('has no serious or critical automated accessibility violations', async ({ p
     '/learn/',
     '/learn/questions/',
     '/learn/questions/q21-support-rag/',
+    '/learn/cases/user-feedback-analysis/',
+    '/learn/cases/user-feedback-analysis/decide-ai-boundary/',
     '/atlas/',
     '/search/?q=RAG',
     '/graph/',

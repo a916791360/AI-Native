@@ -1,0 +1,105 @@
+---
+import type { GetStaticPaths } from 'astro';
+
+import CaseStageDirectory from '@/components/cases/CaseStageDirectory.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { loadCaseStudies } from '@/lib/cases/io';
+import type { CaseStudy } from '@/lib/cases/schema';
+import { CASE_STATUS_LABELS, caseHref, gateHref } from '@/lib/cases/presentation';
+import '@/styles/case-study.css';
+
+export const getStaticPaths = (async () => {
+  const cases = await loadCaseStudies();
+  return cases.map(({ data }) => ({ params: { caseId: data.id }, props: { caseStudy: data } }));
+}) satisfies GetStaticPaths;
+
+const { caseStudy } = Astro.props as { caseStudy: CaseStudy };
+const firstGate = caseStudy.gates[0]!;
+---
+
+<BaseLayout
+  title={caseStudy.title}
+  description={`${caseStudy.objective} 六个 Gate 连续形成完整 AI 产品评审档案。`}
+  structuredDataType="CollectionPage"
+>
+  <main id="main-content" class="case-shell">
+    <header class="case-hero">
+      <div>
+        <p class="eyebrow">Level 2 continuous case · Level 3 capstone</p>
+        <h1>{caseStudy.title}</h1>
+        <p class="case-objective">{caseStudy.objective}</p>
+        <div class="case-actions">
+          <a class="case-primary" href={gateHref(caseStudy.id, firstGate.id)}>
+            从 Gate 01 开始案例 <span aria-hidden="true">→</span>
+          </a>
+          <a class="case-secondary" href={`${caseHref(caseStudy.id)}#project-archive`}>
+            查看完整档案概览
+          </a>
+        </div>
+      </div>
+      <aside>
+        <p class="meta-label">怎样学习</p>
+        <h2>同一个业务对象，连续做六次评审</h2>
+        <p>
+          阅读情境、展开一条决策、比较条件与风险，再查看标准材料怎样增加。无需输入，不保存个人选择。
+        </p>
+        <dl>
+          <div><dt>起点</dt><dd>Gate 01 · 判断 AI 边界</dd></div>
+          <div><dt>终点</dt><dd>完整 AI 产品评审档案</dd></div>
+          <div><dt>内容状态</dt><dd>{CASE_STATUS_LABELS[caseStudy.status]}</dd></div>
+          <div><dt>阈值</dt><dd>待真实基线</dd></div>
+        </dl>
+      </aside>
+    </header>
+
+    <section class="case-context" aria-labelledby="case-context-heading">
+      <div>
+        <p class="eyebrow">Business context</p>
+        <h2 id="case-context-heading">这是一个可复核的教学案例</h2>
+        <p>{caseStudy.businessContext}</p>
+        <p>案例中的事实、假设、建议和未知项分别标注；生产页面不改变其草稿生命周期。</p>
+      </div>
+      <section aria-labelledby="current-process-heading">
+        <p class="meta-label" id="current-process-heading">当前流程假设</p>
+        <ol>{caseStudy.currentProcess.map((step) => <li>{step}</li>)}</ol>
+      </section>
+    </section>
+
+    <CaseStageDirectory caseStudy={caseStudy} />
+
+    <section class="case-archive" id="project-archive" aria-labelledby="archive-heading">
+      <header>
+        <div>
+          <p class="eyebrow">Level 3 · review archive</p>
+          <h2 id="archive-heading">完整项目档案概览</h2>
+        </div>
+        <p>
+          档案展示标准推荐路径，不宣称它是唯一行业做法。所有阈值仍需由真实组织基线、错误成本与运行证据确定。
+        </p>
+      </header>
+      <ol>
+        {
+          caseStudy.gates.map((gate, index) => {
+            const artifact = caseStudy.artifacts[index]!;
+            return (
+              <li>
+                <span>{String(gate.order).padStart(2, '0')}</span>
+                <div class="archive-decision">
+                  <p class="meta-label">{gate.title}</p>
+                  <h3>{gate.decision}</h3>
+                  <p>{gate.question}</p>
+                  <a href={gateHref(caseStudy.id, gate.id)}>进入本关查看证据与取舍</a>
+                </div>
+                <div class="archive-artifact">
+                  <p class="meta-label">形成材料</p>
+                  <h4>{artifact.title}</h4>
+                  <p>{artifact.summary}</p>
+                </div>
+              </li>
+            );
+          })
+        }
+      </ol>
+    </section>
+  </main>
+</BaseLayout>

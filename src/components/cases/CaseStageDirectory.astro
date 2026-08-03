@@ -1,0 +1,41 @@
+---
+import type { CaseStudy } from '@/lib/cases/schema';
+import { CASE_STAGE_LABELS, CASE_STATUS_LABELS, gateHref } from '@/lib/cases/presentation';
+
+interface Props {
+  caseStudy: CaseStudy;
+  currentGateId?: string;
+}
+
+const { caseStudy, currentGateId } = Astro.props;
+---
+
+<section class="case-directory" aria-labelledby="case-directory-heading">
+  <header>
+    <div>
+      <p class="eyebrow">Project directory</p>
+      <h2 id="case-directory-heading">六个 Gate，共同形成一份项目档案</h2>
+    </div>
+    <p>这是固定顺序的项目阶段目录，不代表个人进度，也不会保存选择。</p>
+  </header>
+  <ol>
+    {
+      caseStudy.gates.map((gate) => (
+        <li data-current={gate.id === currentGateId ? 'true' : undefined}>
+          <a
+            href={gateHref(caseStudy.id, gate.id)}
+            aria-current={gate.id === currentGateId ? 'step' : undefined}
+          >
+            <span>{String(gate.order).padStart(2, '0')}</span>
+            <div>
+              <small>{CASE_STAGE_LABELS[gate.stageId]}</small>
+              <strong>{gate.title}</strong>
+              <p>{gate.question}</p>
+            </div>
+            <i>{CASE_STATUS_LABELS[gate.status]}</i>
+          </a>
+        </li>
+      ))
+    }
+  </ol>
+</section>

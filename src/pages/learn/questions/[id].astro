@@ -24,16 +24,16 @@ const continuationKicker =
     ? `进入阶段 ${nextModule.index}`
     : next
       ? `继续第 ${next.index} 题`
-      : '完成主线';
+      : '完成 Level 1';
 const continuationTitle =
-  nextModule && isModuleEnd ? nextModule.title : next ? next.shortTitle : '回到课程总结';
+  nextModule && isModuleEnd ? nextModule.title : next ? next.shortTitle : '回到三层学习中心';
 ---
 
 <BaseLayout title={question.question} description={question.scenario}>
   <main id="main-content" class="question-page">
     <section class="course-location" aria-labelledby="course-location-heading">
       <div class="course-location-title">
-        <p class="meta-label" id="course-location-heading">课程位置</p>
+        <p class="meta-label" id="course-location-heading">Level 1 · 基础判断位置</p>
         <span>阶段 {module.index} / 06</span>
         <strong>{module.title}</strong>
       </div>
@@ -52,11 +52,11 @@ const continuationTitle =
           }
         </ol>
         <div>
-          <span>全程</span>
+          <span>基础题</span>
           <strong>{question.index} / {String(LEARNING_QUESTIONS.length).padStart(2, '0')}</strong>
         </div>
       </div>
-      <a href="/learn/">返回课程目录</a>
+      <a href="/learn/">返回三层学习中心</a>
     </section>
 
     <header class="question-head">
@@ -175,7 +175,7 @@ const continuationTitle =
           <a class="previous" href="/learn/questions/">
             <>
               <span>返回</span>
-              <strong>题库总览</strong>
+              <strong>Level 1 基础题总览</strong>
             </>
           </a>
         )
@@ -195,8 +195,8 @@ const continuationTitle =
         ) : (
           <a class="next" href="/learn/">
             <>
-              <span>完成主线</span>
-              <strong>回到课程总结</strong>
+              <span>完成 Level 1</span>
+              <strong>回到三层学习中心</strong>
             </>
           </a>
         )

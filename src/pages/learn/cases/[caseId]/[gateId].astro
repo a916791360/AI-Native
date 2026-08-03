@@ -1,0 +1,82 @@
+---
+import type { GetStaticPaths } from 'astro';
+
+import CaseGateDesk from '@/components/cases/CaseGateDesk.astro';
+import CaseStageDirectory from '@/components/cases/CaseStageDirectory.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { loadCaseStudies } from '@/lib/cases/io';
+import type { CaseStudy } from '@/lib/cases/schema';
+import { CASE_STAGE_LABELS, caseHref, gateHref, getGateContext } from '@/lib/cases/presentation';
+import '@/styles/case-study.css';
+
+export const getStaticPaths = (async () => {
+  const cases = await loadCaseStudies();
+  return cases.flatMap(({ data }) =>
+    data.gates.map((gate) => ({
+      params: { caseId: data.id, gateId: gate.id },
+      props: { caseStudy: data, gateId: gate.id },
+    })),
+  );
+}) satisfies GetStaticPaths;
+
+const { caseStudy, gateId } = Astro.props as { caseStudy: CaseStudy; gateId: string };
+const context = getGateContext(caseStudy, gateId)!;
+const { gate, previous, next, resources, accumulatedArtifacts } = context;
+const formedArtifactIds = new Set(accumulatedArtifacts.map(({ id }) => id));
+---
+
+<BaseLayout title={`${gate.title} · ${caseStudy.title}`} description={gate.question}>
+  <main id="main-content" class="case-shell">
+    <section class="case-location" aria-label="案例位置">
+      <div><span>连续案例</span><strong>{caseStudy.title}</strong></div>
+      <div>
+        <span>Gate {String(gate.order).padStart(2, '0')} / 06</span>
+        <small>项目阶段 · 不记录完成状态</small>
+      </div>
+      <a href={caseHref(caseStudy.id)}>返回项目档案</a>
+    </section>
+
+    <header class="gate-heading">
+      <div class="gate-number">
+        <p class="meta-label">Gate</p>
+        <strong>{String(gate.order).padStart(2, '0')}</strong>
+      </div>
+      <div class="gate-title">
+        <p class="meta-label">{CASE_STAGE_LABELS[gate.stageId]}</p>
+        <h1>{gate.title}</h1>
+        <p>{gate.question}</p>
+      </div>
+    </header>
+
+    <div class="gate-artifact-trail" aria-label="材料演进">
+      <span>项目材料逐步形成</span>
+      <ol>
+        {
+          caseStudy.artifacts.map((artifact) => (
+            <li data-formed={formedArtifactIds.has(artifact.id) ? 'true' : undefined}>
+              {artifact.title}
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+
+    <CaseGateDesk caseStudy={caseStudy} gate={gate} resources={resources} />
+
+    <nav class="case-navigation" aria-label="案例关卡导航">
+      <a href={previous ? gateHref(caseStudy.id, previous.id) : caseHref(caseStudy.id)}>
+        <span>{previous ? `上一关 · Gate ${String(previous.order).padStart(2, '0')}` : '返回'}</span
+        >
+        <strong>{previous?.title ?? '项目档案与六关目录'}</strong>
+      </a>
+      <a
+        href={next ? gateHref(caseStudy.id, next.id) : `${caseHref(caseStudy.id)}#project-archive`}
+      >
+        <span>{next ? `继续 · Gate ${String(next.order).padStart(2, '0')}` : '六关结束'}</span>
+        <strong>{next?.title ?? '查看完整项目档案'}</strong>
+      </a>
+    </nav>
+
+    <CaseStageDirectory caseStudy={caseStudy} currentGateId={gate.id} />
+  </main>
+</BaseLayout>

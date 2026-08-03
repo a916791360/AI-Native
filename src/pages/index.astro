@@ -2,26 +2,29 @@
 import SearchForm from '@/components/ui/SearchForm.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { LEARNING_MODULES, getQuestionsForModule } from '@/data/learning';
+import { loadCaseStudies } from '@/lib/cases/io';
+import { caseHref } from '@/lib/cases/presentation';
 import { loadProjectContent } from '@/lib/content/io';
 import { deriveSiteMetrics } from '@/lib/site/metrics';
 
-const project = await loadProjectContent();
+const [project, cases] = await Promise.all([loadProjectContent(), loadCaseStudies()]);
 const metrics = deriveSiteMetrics(project);
 const firstQuestion = getQuestionsForModule(LEARNING_MODULES[0]!.id)[0]!;
+const goldenCase = cases[0]!.data;
 ---
 
 <BaseLayout
-  description="面向中文 AI 初学者与产品人的六阶段学习路径，通过 24 道产品判断题建立场景、方案、体验与上线决策能力。"
+  description="面向中文 AI 初学者与产品人的落地型学习系统，通过基础判断、连续案例和完整项目建立 AI 产品能力。"
   structuredDataType="CollectionPage"
 >
   <main id="main-content" class="home-page">
     <header class="home-hero">
       <div class="home-intro">
-        <p class="eyebrow">6 stages · 24 product decisions</p>
+        <p class="eyebrow">6 stages · 3 learning levels</p>
         <h1>AI 产品经理<br />系统学习路径</h1>
         <p class="home-lead">
-          从模型边界到完整项目，用真实情境练习判断：什么时候该用
-          AI、该选哪种方案，以及怎样对质量、成本和风险负责。
+          从单点判断进入连续案例，再用同一个业务对象完成六关项目评审：学会何时使用
+          AI、怎样控制失败，以及如何对价值、质量、成本和上线负责。
         </p>
         <div class="home-actions">
           <a class="primary-action" href={`/learn/questions/${firstQuestion.id}/`}>
@@ -29,26 +32,34 @@ const firstQuestion = getQuestionsForModule(LEARNING_MODULES[0]!.id)[0]!;
           </a>
           <a class="secondary-action" href="/learn/">查看 6 阶段课程地图</a>
         </div>
-        <p class="access-note">无需登录 · 不写作业 · 每题即时反馈</p>
+        <p class="access-note">唯一默认起点 · 无需登录 · 不写作业 · 不保存个人进度</p>
       </div>
 
       <section class="learning-method" aria-labelledby="learning-method-heading">
-        <p class="meta-label">你会怎样学习</p>
-        <h2 id="learning-method-heading">每题只做一件事：<br />看懂一次产品取舍</h2>
+        <p class="meta-label">三层学习结构</p>
+        <h2 id="learning-method-heading">先练判断，再把判断连成项目</h2>
         <ol>
           <li>
             <span>01</span>
-            <div><strong>读一个真实情境</strong><small>先看目标、条件和错误后果</small></div>
+            <div><strong>Level 1 · 单点判断</strong><small>24 题建立基础判断和共同语言</small></div>
           </li>
           <li>
             <span>02</span>
-            <div><strong>选择你的判断</strong><small>比较三条都像答案的路径</small></div>
+            <div>
+              <strong>Level 2 · 连续案例</strong><small>在同一情境中比较连续决策与后果</small>
+            </div>
           </li>
           <li>
             <span>03</span>
-            <div><strong>立即查看反馈</strong><small>带走原则，再继续下一题</small></div>
+            <div>
+              <strong>Level 3 · 完整项目</strong><small>六个 Gate 形成可复核的项目档案</small>
+            </div>
           </li>
         </ol>
+        <a class="case-preview-link" href={caseHref(goldenCase.id)}>
+          查看黄金项目：{goldenCase.title}
+          <span aria-hidden="true">→</span>
+        </a>
       </section>
     </header>
 
@@ -57,7 +68,7 @@ const firstQuestion = getQuestionsForModule(LEARNING_MODULES[0]!.id)[0]!;
         <div>
           <p class="eyebrow">课程地图</p>
           <h2 class="section-heading" id="course-overview-heading">6 个阶段，一条学习主线</h2>
-          <p>前 20 题建立五类核心判断，最后 4 题把它们放进完整 AI 产品项目。</p>
+          <p>六阶段贯穿三层学习；现有 24 题负责 Level 1 基础判断，不再单独承担完整项目训练。</p>
         </div>
         <a href="/learn/">完整查看课程地图 <span aria-hidden="true">→</span></a>
       </header>
@@ -259,6 +270,26 @@ const firstQuestion = getQuestionsForModule(LEARNING_MODULES[0]!.id)[0]!;
   .learning-method strong,
   .learning-method small {
     display: block;
+  }
+
+  .case-preview-link {
+    min-height: 3rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    margin-top: var(--space-4);
+    border-top: 1px solid var(--color-line);
+    border-bottom: 1px solid var(--color-line);
+    color: var(--color-muted);
+    padding-inline: var(--space-2);
+    font-size: var(--text-sm);
+    text-decoration: none;
+  }
+
+  .case-preview-link:hover {
+    border-color: var(--color-application);
+    color: var(--color-ink);
   }
 
   .learning-method strong {

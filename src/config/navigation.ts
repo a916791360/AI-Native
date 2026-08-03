@@ -1,4 +1,5 @@
 export const NAVIGATION = [
+  { href: '/', label: '首页' },
   { href: '/learn/', label: '学习中心' },
   { href: '/atlas/', label: '知识图鉴' },
   { href: '/search/', label: '搜索' },

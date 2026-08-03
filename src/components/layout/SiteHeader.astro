@@ -7,7 +7,8 @@ interface Props {
 }
 
 const { currentPath } = Astro.props;
-const isCurrent = (href: string) => currentPath === href || currentPath.startsWith(href);
+const isCurrent = (href: string) =>
+  href === '/' ? currentPath === href : currentPath === href || currentPath.startsWith(href);
 ---
 
 <header class="site-header">
@@ -139,6 +140,16 @@ const isCurrent = (href: string) => currentPath === href || currentPath.startsWi
     display: flex;
     align-items: center;
     border-bottom: 1px solid var(--color-line-soft);
+  }
+
+  @media (max-width: 1100px) {
+    .site-header {
+      grid-template-columns: 1fr auto;
+    }
+
+    .site-context {
+      display: none;
+    }
   }
 
   @media (max-width: 820px) {

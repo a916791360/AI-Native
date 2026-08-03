@@ -1,27 +1,35 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { LEARNING_MODULES, getQuestionsForModule } from '@/data/learning';
+import { loadCaseStudies } from '@/lib/cases/io';
+import { caseHref, gateHref } from '@/lib/cases/presentation';
 
 const firstQuestion = getQuestionsForModule(LEARNING_MODULES[0]!.id)[0]!;
+const cases = await loadCaseStudies();
+const goldenCase = cases[0]!.data;
+const firstGate = goldenCase.gates[0]!;
 ---
 
 <BaseLayout
-  title="AI 产品经理系统课程"
-  description="通过六个能力阶段和 24 道递进判断题，从零建立 AI 产品场景判断、方案选择、体验设计与评估能力。"
+  title="AI 产品经理学习中心"
+  description="通过六个能力阶段、三层学习方式和一个完整黄金项目，从零建立可迁移的 AI 产品判断。"
   structuredDataType="CollectionPage"
 >
   <main id="main-content" class="learn-page">
     <header class="course-hero">
       <div class="course-title">
-        <p class="eyebrow">AI product manager · foundation track</p>
-        <h1>从零建立<br />AI 产品判断力。</h1>
-        <p>这不是一份需要背完的术语表，而是一条从模型边界、场景判断走向完整产品方案的学习主线。</p>
+        <p class="eyebrow">AI product manager · 3 learning levels</p>
+        <h1>从单点判断，<br />走到完整项目。</h1>
+        <p>
+          六个能力阶段贯穿基础判断、连续案例和完整项目。新学习者仍从第 01
+          题开始，再把判断放进同一个真实业务对象。
+        </p>
         <a class="hero-start" href={`/learn/questions/${firstQuestion.id}/`}>
           从第 01 题开始学习 <span aria-hidden="true">→</span>
         </a>
       </div>
       <div class="course-outcome">
-        <p class="meta-label">完成课程后，你能够</p>
+        <p class="meta-label">完成三层学习后，你能够</p>
         <h2>把一个 AI 想法，整理成可评审的产品方案</h2>
         <ul>
           <li><span>01</span>判断场景是否真的需要 AI</li>
@@ -32,16 +40,50 @@ const firstQuestion = getQuestionsForModule(LEARNING_MODULES[0]!.id)[0]!;
       </div>
     </header>
 
+    <section class="learning-levels" aria-labelledby="learning-levels-heading">
+      <header>
+        <p class="eyebrow">Learning architecture</p>
+        <h2 id="learning-levels-heading">三层不是三条主线，而是逐步加深的同一条路径</h2>
+        <p>
+          默认从 Level 1 开始。有基础的学习者可以按需查看黄金项目，但案例入口不会替代唯一默认起点。
+        </p>
+      </header>
+      <ol>
+        <li data-level="foundation">
+          <span>Level 1</span>
+          <h3>单点判断</h3>
+          <p>24 道基础题，每次聚焦一个产品取舍，建立共同语言和判断原则。</p>
+          <a href={`/learn/questions/${firstQuestion.id}/`}
+            >从第 01 题开始学习 <span aria-hidden="true">→</span></a
+          >
+        </li>
+        <li data-level="case">
+          <span>Level 2</span>
+          <h3>连续案例</h3>
+          <p>围绕每日用户反馈分析，连续比较事实、未知项、方案后果和材料变化。</p>
+          <a href={gateHref(goldenCase.id, firstGate.id)}>从 Gate 01 查看连续决策</a>
+        </li>
+        <li data-level="capstone">
+          <span>Level 3</span>
+          <h3>完整项目</h3>
+          <p>同一个业务对象通过六个 Gate，形成完整 AI 产品评审档案。</p>
+          <a href={caseHref(goldenCase.id)}>查看黄金项目档案</a>
+        </li>
+      </ol>
+    </section>
+
     <section class="course-map" aria-labelledby="curriculum-heading">
       <header class="course-guide">
         <div class="guide-copy">
           <p class="eyebrow">从这里开始</p>
-          <h2 id="curriculum-heading">按顺序完成 6 个阶段</h2>
-          <p>每阶段连续完成 4 道判断题。先选择，再看反馈，然后自然进入下一题。</p>
+          <h2 id="curriculum-heading">Level 1 · 按顺序完成 6 个阶段</h2>
+          <p>
+            每阶段连续完成 4 道基础判断题。先选择，再看反馈；这一步建立判断，不等同于完成项目交付。
+          </p>
         </div>
         <dl class="curriculum-facts">
-          <div><dt>课程</dt><dd>6 阶段</dd></div>
-          <div><dt>练习</dt><dd>24 题</dd></div>
+          <div><dt>层级</dt><dd>Level 1</dd></div>
+          <div><dt>练习</dt><dd>24 基础题</dd></div>
           <div><dt>方式</dt><dd>判断 · 反馈 · 继续</dd></div>
         </dl>
         <div class="guide-actions">
@@ -188,6 +230,103 @@ const firstQuestion = getQuestionsForModule(LEARNING_MODULES[0]!.id)[0]!;
 
   .course-map {
     border-bottom: 1px solid var(--color-line);
+  }
+
+  .learning-levels {
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .learning-levels > header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(20rem, 0.45fr);
+    gap: var(--space-6);
+    align-items: end;
+    border-bottom: 1px solid var(--color-line);
+    padding: var(--space-6) var(--page-gutter) var(--space-4);
+  }
+
+  .learning-levels > header h2 {
+    max-width: 19em;
+    margin: var(--space-2) 0 0;
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    font-weight: 400;
+    line-height: 1.2;
+  }
+
+  .learning-levels > header > p:not(.eyebrow) {
+    margin: 0;
+    color: var(--color-muted);
+  }
+
+  .learning-levels > ol {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .learning-levels li {
+    min-height: 19rem;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid var(--color-line-soft);
+    padding: var(--space-4) var(--page-gutter);
+  }
+
+  .learning-levels li:last-child {
+    border-right: 0;
+  }
+
+  .learning-levels li > span {
+    color: var(--color-quiet);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+  }
+
+  .learning-levels li[data-level='foundation'] > span {
+    color: var(--color-prerequisite);
+  }
+
+  .learning-levels li[data-level='case'] > span {
+    color: var(--color-component);
+  }
+
+  .learning-levels li[data-level='capstone'] > span {
+    color: var(--color-application);
+  }
+
+  .learning-levels h3 {
+    margin: var(--space-3) 0 var(--space-1);
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 400;
+  }
+
+  .learning-levels li > p {
+    color: var(--color-muted);
+  }
+
+  .learning-levels li > a {
+    min-height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+    border-top: 1px solid var(--color-line);
+    border-bottom: 1px solid var(--color-line);
+    color: var(--color-muted);
+    padding-inline: var(--space-2);
+    font-size: var(--text-sm);
+    text-decoration: none;
+  }
+
+  .learning-levels li[data-level='foundation'] > a {
+    border: 0;
+    background: var(--color-prerequisite);
+    color: var(--color-black);
+    font-weight: 600;
   }
 
   .course-guide {
@@ -418,8 +557,24 @@ const firstQuestion = getQuestionsForModule(LEARNING_MODULES[0]!.id)[0]!;
 
   @media (max-width: 820px) {
     .course-hero,
-    .course-guide {
+    .course-guide,
+    .learning-levels > header {
       grid-template-columns: 1fr;
+    }
+
+    .learning-levels > ol {
+      grid-template-columns: 1fr;
+    }
+
+    .learning-levels li {
+      min-height: 0;
+      border-right: 0;
+      border-bottom: 1px solid var(--color-line-soft);
+      padding-block: var(--space-5);
+    }
+
+    .learning-levels li > a {
+      margin-top: var(--space-4);
     }
 
     .course-hero {
