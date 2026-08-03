@@ -1,6 +1,6 @@
 # AI-Native 学习体系 V2 实施计划
 
-- 状态：已批准，阶段 12B 已完成，当前进入 12C
+- 状态：已批准，阶段 12C 已完成，阶段 13 待生产转译检查点确认
 - 批准日期：2026-08-03
 - 产品规格：[`product-spec.md`](./product-spec.md)
 - 技术基线：Astro 静态站、现有内容 Schema、Pagefind、Cytoscape 和统一 CI
@@ -78,11 +78,13 @@
 
 ### 12C：Huashu Design Gate
 
-1. 使用 `$huashu-design`，基于同一份黄金项目真实内容制作三套 HTML 方向稿。
-2. 每套必须包含连续案例首屏、决策反馈、材料演进和完整档案视图。
-3. 每套输出桌面 1440x900 与手机 390x844 截图。
-4. 三套均继承深空知识展柜 Token，只探索信息组织和交互节奏。
-5. 展示后停止，等待用户选择；未选择前不修改生产页面。
+- [x] 使用 `$huashu-design`，基于同一份黄金项目真实内容制作三套 HTML 方向稿。
+- [x] 每套包含连续案例首屏、决策反馈、材料演进和完整档案视图。
+- [x] 每套输出桌面 1440x900 与手机 390x844 截图。
+- [x] 三套继承深空知识展柜 Token，只探索信息组织和交互节奏。
+- [x] 展示后停止，并由用户选定方向 02「证据决策台」。
+
+共同规格、验收和方向确认记录：[`design-gate/design-spec.md`](./design-gate/design-spec.md)、[`design-gate/verification.md`](./design-gate/verification.md) 和 [`design-gate/direction-approved.md`](./design-gate/direction-approved.md)。
 
 ### 出口标准
 
@@ -231,4 +233,4 @@ pnpm test:e2e
 
 ## 10. 当前下一步
 
-阶段 12B 已完成。下一步进入阶段 12C：使用 `$huashu-design` 基于同一份黄金项目内容制作三套 HTML 方向稿和桌面、手机截图，展示后停止等待用户选择。生产开发和部署均未启动。
+阶段 12C 已关闭，用户选定方向 02「证据决策台」。下一步先完成阶段 13 的生产转译五问检查点，再实现黄金项目纵向切片；生产代码和部署均未启动。

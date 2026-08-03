@@ -1,0 +1,1216 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>连续评审脊柱 · AI-Native</title>
+    <!--
+      设计假设：用户需要先确认这是一个连续案例，而非 24 题的另一个入口。
+      因此只保留一个开始按钮；六关是不可跳转的项目脊柱，选择仅用于查看即时反馈。
+      视觉继承「深空知识展柜」，信息结构借鉴 GOV.UK step-by-step 与 Carbon 纵向进程原则。
+    -->
+    <style>
+      :root {
+        color-scheme: dark;
+        --ink: oklch(0.96 0.01 85);
+        --muted: oklch(0.72 0.02 80);
+        --quiet: oklch(0.62 0.02 80);
+        --black: oklch(0.12 0.01 255);
+        --panel: oklch(0.155 0.012 255);
+        --raised: oklch(0.19 0.014 255);
+        --line: oklch(0.31 0.015 255);
+        --line-soft: oklch(0.235 0.012 255);
+        --yellow: oklch(0.8 0.14 80);
+        --cyan: oklch(0.73 0.12 205);
+        --red: oklch(0.72 0.16 28);
+        --green: oklch(0.74 0.13 145);
+        --focus: oklch(0.9 0.16 95);
+        --font-display: 'Baskerville', 'Songti SC', 'STSong', serif;
+        --font-body: 'Avenir Next', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        --font-mono: 'SFMono-Regular', 'Menlo', 'Consolas', monospace;
+        --gutter: clamp(1.25rem, 3.2vw, 3rem);
+        --max: 96rem;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html {
+        min-width: 320px;
+        scroll-behavior: smooth;
+        background: var(--black);
+        color: var(--ink);
+        font-family: var(--font-body);
+        line-break: strict;
+      }
+
+      body {
+        min-width: 320px;
+        min-height: 100vh;
+        margin: 0;
+        overflow-x: hidden;
+        background: var(--black);
+        font-size: 17px;
+        line-height: 1.7;
+      }
+
+      body,
+      button,
+      input {
+        font-family: var(--font-body);
+      }
+
+      button,
+      a,
+      summary,
+      label {
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      button,
+      input {
+        color: inherit;
+        font: inherit;
+      }
+
+      button {
+        border-radius: 0;
+      }
+
+      a {
+        color: inherit;
+        text-underline-offset: 0.28em;
+      }
+
+      :focus-visible {
+        outline: 2px solid var(--focus);
+        outline-offset: 4px;
+      }
+
+      ::selection {
+        background: var(--yellow);
+        color: var(--black);
+      }
+
+      .skip-link {
+        position: fixed;
+        z-index: 100;
+        top: 0.75rem;
+        left: 0.75rem;
+        transform: translateY(-180%);
+        background: var(--ink);
+        color: var(--black);
+        padding: 0.65rem 1rem;
+      }
+
+      .skip-link:focus {
+        transform: translateY(0);
+      }
+
+      .site-header {
+        min-height: 4.5rem;
+        display: grid;
+        grid-template-columns: minmax(11rem, 1fr) auto minmax(11rem, 1fr);
+        align-items: center;
+        border-bottom: 1px solid var(--line);
+        padding: 0 var(--gutter);
+        background: color-mix(in oklch, var(--black) 94%, transparent);
+      }
+
+      .wordmark {
+        justify-self: start;
+        color: var(--ink);
+        font-weight: 700;
+        text-decoration: none;
+      }
+
+      .context,
+      .header-note,
+      .eyebrow,
+      .meta,
+      .number,
+      .choice-status,
+      .stage-state {
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .context {
+        justify-self: center;
+        color: var(--quiet);
+      }
+
+      .header-note {
+        justify-self: end;
+        color: var(--muted);
+      }
+
+      .shell {
+        width: min(100%, var(--max));
+        margin-inline: auto;
+        border-inline: 1px solid var(--line-soft);
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1.36fr) minmax(22rem, 0.64fr);
+        min-height: 25rem;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .hero-copy,
+      .hero-start {
+        padding: clamp(3rem, 6vw, 6.5rem) var(--gutter);
+      }
+
+      .hero-copy {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        border-right: 1px solid var(--line);
+      }
+
+      .eyebrow {
+        margin: 0;
+        color: var(--yellow);
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        text-wrap: pretty;
+      }
+
+      h1 {
+        max-width: 12em;
+        margin: 0.9rem 0 1.35rem;
+        font-family: var(--font-display);
+        font-size: clamp(3.35rem, 6vw, 6.2rem);
+        font-weight: 400;
+        line-height: 1.02;
+        letter-spacing: 0;
+      }
+
+      .hero-copy > p:last-child {
+        max-width: 46rem;
+        margin: 0;
+        color: var(--muted);
+        font-size: 1.08rem;
+      }
+
+      .hero-start {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background: var(--panel);
+      }
+
+      .hero-start h2 {
+        margin: 0.7rem 0 0.85rem;
+        font-family: var(--font-display);
+        font-size: clamp(2rem, 3vw, 3.1rem);
+        font-weight: 400;
+        line-height: 1.15;
+        letter-spacing: 0;
+      }
+
+      .hero-start > p:not(.meta) {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      .start-action {
+        min-height: 3.5rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1.25rem;
+        margin-top: 1.8rem;
+        background: var(--yellow);
+        padding: 0 1.25rem;
+        color: var(--black);
+        font-weight: 700;
+        text-decoration: none;
+        transition:
+          background 140ms ease,
+          transform 140ms ease;
+      }
+
+      .start-action:hover {
+        background: var(--focus);
+        transform: translateY(-2px);
+      }
+
+      .usage-note {
+        margin-top: 0.8rem !important;
+        color: var(--quiet) !important;
+        font-size: 0.82rem;
+      }
+
+      .workflow {
+        display: grid;
+        grid-template-columns: minmax(17rem, 0.72fr) minmax(31rem, 1.55fr) minmax(17rem, 0.73fr);
+        grid-template-areas: 'spine gate artifact';
+        align-items: stretch;
+      }
+
+      .spine,
+      .gate-panel,
+      .artifact-rail {
+        min-width: 0;
+        padding: 2.5rem var(--gutter) 3.5rem;
+      }
+
+      .spine {
+        grid-area: spine;
+        border-right: 1px solid var(--line);
+      }
+
+      .gate-panel {
+        grid-area: gate;
+        border-right: 1px solid var(--line);
+      }
+
+      .artifact-rail {
+        grid-area: artifact;
+        background: var(--panel);
+      }
+
+      .section-kicker {
+        margin: 0;
+        color: var(--quiet);
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .section-kicker strong {
+        color: var(--yellow);
+        font-weight: 500;
+      }
+
+      .spine h2,
+      .artifact-rail h2 {
+        margin: 0.65rem 0 0;
+        font-family: var(--font-display);
+        font-size: 1.75rem;
+        font-weight: 400;
+        line-height: 1.2;
+        letter-spacing: 0;
+      }
+
+      .stage-list {
+        position: relative;
+        margin: 2rem 0 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .stage-list::before {
+        position: absolute;
+        top: 0.75rem;
+        bottom: 0.75rem;
+        left: 0.63rem;
+        width: 1px;
+        background: var(--line);
+        content: '';
+      }
+
+      .stage-list li {
+        position: relative;
+        display: grid;
+        grid-template-columns: 1.35rem minmax(0, 1fr);
+        gap: 0.9rem;
+        padding: 0 0 1.4rem;
+      }
+
+      .stage-list li:last-child {
+        padding-bottom: 0;
+      }
+
+      .stage-marker {
+        position: relative;
+        z-index: 1;
+        width: 1.35rem;
+        height: 1.35rem;
+        display: grid;
+        place-items: center;
+        border: 1px solid var(--line);
+        background: var(--black);
+        color: var(--quiet);
+        font-family: var(--font-mono);
+        font-size: 0.58rem;
+      }
+
+      .stage-list li[aria-current='step'] .stage-marker {
+        border-color: var(--yellow);
+        background: var(--yellow);
+        color: var(--black);
+      }
+
+      .stage-copy h3 {
+        margin: -0.18rem 0 0.15rem;
+        font-size: 0.96rem;
+        font-weight: 600;
+        line-height: 1.45;
+      }
+
+      .stage-copy p {
+        margin: 0;
+        color: var(--quiet);
+        font-size: 0.76rem;
+        line-height: 1.5;
+      }
+
+      .stage-list li[aria-current='step'] .stage-copy h3 {
+        color: var(--ink);
+      }
+
+      .stage-list li[aria-current='step'] .stage-copy p {
+        color: var(--yellow);
+      }
+
+      .gate-heading {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr);
+        gap: 1.25rem;
+        border-bottom: 1px solid var(--line);
+        padding-bottom: 1.8rem;
+      }
+
+      .gate-number {
+        color: var(--yellow);
+        font-family: var(--font-display);
+        font-size: 3.4rem;
+        line-height: 0.95;
+      }
+
+      .gate-heading .meta {
+        margin: 0 0 0.35rem;
+        color: var(--yellow);
+      }
+
+      .gate-heading h2 {
+        margin: 0;
+        font-family: var(--font-display);
+        font-size: clamp(2rem, 3.2vw, 3.5rem);
+        font-weight: 400;
+        line-height: 1.12;
+        letter-spacing: 0;
+      }
+
+      .gate-question {
+        margin: 1.2rem 0 0;
+        color: var(--muted);
+        font-size: 1.08rem;
+      }
+
+      .evidence-strip {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        margin: 1.8rem 0;
+        border-block: 1px solid var(--line);
+      }
+
+      .evidence-item {
+        min-width: 0;
+        padding: 1.15rem 1.2rem 1.2rem 0;
+      }
+
+      .evidence-item + .evidence-item {
+        border-left: 1px solid var(--line);
+        padding-right: 0;
+        padding-left: 1.2rem;
+      }
+
+      .evidence-item .meta {
+        margin: 0 0 0.45rem;
+      }
+
+      .evidence-item.fact .meta {
+        color: var(--cyan);
+      }
+
+      .evidence-item.unknown .meta {
+        color: var(--red);
+      }
+
+      .evidence-item p:last-child {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      fieldset {
+        min-width: 0;
+        margin: 0;
+        border: 0;
+        padding: 0;
+      }
+
+      legend {
+        width: 100%;
+        margin-bottom: 0.7rem;
+        color: var(--ink);
+        font-weight: 600;
+      }
+
+      .choice-help {
+        margin: 0 0 1rem;
+        color: var(--quiet);
+        font-size: 0.82rem;
+      }
+
+      .choice {
+        position: relative;
+        display: grid;
+        grid-template-columns: 2rem minmax(0, 1fr) auto;
+        gap: 0.8rem;
+        align-items: start;
+        min-height: 4.9rem;
+        border-top: 1px solid var(--line);
+        padding: 1rem 0.25rem;
+        cursor: pointer;
+        transition: background 140ms ease;
+      }
+
+      .choice:last-of-type {
+        border-bottom: 1px solid var(--line);
+      }
+
+      .choice:hover {
+        background: color-mix(in oklch, var(--raised) 68%, transparent);
+      }
+
+      .choice input {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+      }
+
+      .choice:has(input:focus-visible) {
+        outline: 2px solid var(--focus);
+        outline-offset: 3px;
+      }
+
+      .choice:has(input:checked) {
+        background: var(--raised);
+      }
+
+      .choice-index {
+        color: var(--quiet);
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+      }
+
+      .choice-copy strong {
+        display: block;
+        font-size: 0.98rem;
+        line-height: 1.5;
+      }
+
+      .choice-copy small {
+        display: block;
+        margin-top: 0.28rem;
+        color: var(--quiet);
+        font-size: 0.78rem;
+        line-height: 1.55;
+      }
+
+      .choice-status {
+        color: var(--quiet);
+        white-space: nowrap;
+      }
+
+      .feedback {
+        min-height: 10.5rem;
+        margin-top: 1.3rem;
+        border-top: 2px solid var(--line);
+        background: var(--panel);
+        padding: 1.25rem 1.35rem 1.35rem;
+      }
+
+      .feedback[data-tone='recommended'] {
+        border-color: var(--green);
+      }
+
+      .feedback[data-tone='conditional'] {
+        border-color: var(--cyan);
+      }
+
+      .feedback[data-tone='risky'] {
+        border-color: var(--red);
+      }
+
+      .feedback-status {
+        margin: 0 0 0.45rem;
+        color: var(--quiet);
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .feedback[data-tone='recommended'] .feedback-status {
+        color: var(--green);
+      }
+
+      .feedback[data-tone='conditional'] .feedback-status {
+        color: var(--cyan);
+      }
+
+      .feedback[data-tone='risky'] .feedback-status {
+        color: var(--red);
+      }
+
+      .feedback-title {
+        margin: 0;
+        font-family: var(--font-display);
+        font-size: 1.55rem;
+        font-weight: 400;
+        line-height: 1.3;
+      }
+
+      .feedback-copy {
+        margin: 0.6rem 0 0;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      .artifact-rail .section-kicker {
+        color: var(--green);
+      }
+
+      .artifact-intro {
+        margin: 0.8rem 0 0;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      .artifact-map {
+        margin: 1.8rem 0 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .artifact-map li {
+        display: grid;
+        grid-template-columns: 1.6rem minmax(0, 1fr);
+        gap: 0.65rem;
+        border-top: 1px solid var(--line);
+        padding: 0.75rem 0;
+      }
+
+      .artifact-map .number {
+        color: var(--quiet);
+      }
+
+      .artifact-map li:first-child .number,
+      .artifact-map li:first-child strong {
+        color: var(--green);
+      }
+
+      .artifact-map strong {
+        font-size: 0.82rem;
+        font-weight: 500;
+        line-height: 1.5;
+      }
+
+      .artifact-change {
+        margin-top: 1.35rem;
+        border-block: 1px solid var(--line);
+      }
+
+      .artifact-change summary {
+        min-height: 3.4rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.8rem;
+        color: var(--ink);
+        cursor: pointer;
+        font-size: 0.82rem;
+        list-style: none;
+      }
+
+      .artifact-change summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .artifact-change summary::after {
+        color: var(--green);
+        content: '+';
+        font-family: var(--font-mono);
+        font-size: 1rem;
+      }
+
+      .artifact-change[open] summary::after {
+        content: '−';
+      }
+
+      .delta {
+        padding: 0 0 1.2rem;
+      }
+
+      .delta-row {
+        border-top: 1px solid var(--line-soft);
+        padding: 0.8rem 0;
+      }
+
+      .delta-row .meta {
+        margin: 0 0 0.3rem;
+        color: var(--quiet);
+      }
+
+      .delta-row:last-child .meta {
+        color: var(--green);
+      }
+
+      .delta-row p:last-child {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.8rem;
+      }
+
+      .archive-action {
+        width: 100%;
+        min-height: 3rem;
+        margin-top: 1.1rem;
+        border: 0;
+        border-bottom: 1px solid var(--line);
+        background: transparent;
+        padding: 0;
+        color: var(--muted);
+        text-align: left;
+        cursor: pointer;
+      }
+
+      .archive-action:hover {
+        color: var(--ink);
+        border-color: var(--ink);
+      }
+
+      dialog {
+        width: min(54rem, calc(100vw - 2rem));
+        max-height: min(48rem, calc(100vh - 2rem));
+        overflow: auto;
+        border: 1px solid var(--line);
+        border-radius: 0;
+        background: var(--black);
+        color: var(--ink);
+        padding: 0;
+      }
+
+      dialog::backdrop {
+        background: color-mix(in oklch, var(--black) 78%, transparent);
+      }
+
+      .dialog-head {
+        position: sticky;
+        z-index: 1;
+        top: 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        border-bottom: 1px solid var(--line);
+        background: var(--black);
+        padding: 1.15rem 1.4rem;
+      }
+
+      .dialog-head h2 {
+        margin: 0;
+        font-family: var(--font-display);
+        font-size: 1.7rem;
+        font-weight: 400;
+      }
+
+      .dialog-close {
+        min-width: 2.75rem;
+        min-height: 2.75rem;
+        border: 1px solid var(--line);
+        background: transparent;
+        cursor: pointer;
+      }
+
+      .dialog-close:hover {
+        border-color: var(--ink);
+      }
+
+      .archive-list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .archive-list li {
+        display: grid;
+        grid-template-columns: 3rem minmax(0, 1fr);
+        gap: 1rem;
+        border-bottom: 1px solid var(--line);
+        padding: 1.25rem 1.4rem;
+      }
+
+      .archive-list .number {
+        color: var(--green);
+      }
+
+      .archive-list strong {
+        display: block;
+        font-family: var(--font-display);
+        font-size: 1.2rem;
+        font-weight: 400;
+      }
+
+      .archive-list p {
+        margin: 0.35rem 0 0;
+        color: var(--muted);
+        font-size: 0.86rem;
+      }
+
+      @media (max-width: 1120px) {
+        .workflow {
+          grid-template-columns: minmax(15rem, 0.75fr) minmax(28rem, 1.45fr);
+          grid-template-areas:
+            'spine gate'
+            'spine artifact';
+        }
+
+        .gate-panel {
+          border-right: 0;
+        }
+
+        .artifact-rail {
+          border-top: 1px solid var(--line);
+        }
+
+        .artifact-map {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          column-gap: 1.4rem;
+        }
+      }
+
+      @media (max-width: 760px) {
+        body {
+          font-size: 16px;
+        }
+
+        .site-header {
+          min-height: 4rem;
+          grid-template-columns: 1fr auto;
+        }
+
+        .context {
+          display: none;
+        }
+
+        .header-note {
+          font-size: 0.64rem;
+        }
+
+        .shell {
+          border-inline: 0;
+        }
+
+        .hero {
+          grid-template-columns: 1fr;
+          min-height: 0;
+        }
+
+        .hero-copy,
+        .hero-start {
+          padding: 2.4rem var(--gutter);
+        }
+
+        .hero-copy {
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+        }
+
+        h1 {
+          max-width: none;
+          font-size: clamp(2.8rem, 14vw, 4.1rem);
+        }
+
+        .hero-start h2 {
+          font-size: 2rem;
+        }
+
+        .start-action {
+          width: 100%;
+          min-height: 3.75rem;
+        }
+
+        .workflow {
+          grid-template-columns: 1fr;
+          grid-template-areas:
+            'gate'
+            'spine'
+            'artifact';
+        }
+
+        .spine,
+        .gate-panel,
+        .artifact-rail {
+          padding: 2.25rem var(--gutter) 2.75rem;
+        }
+
+        .gate-panel,
+        .spine {
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+        }
+
+        .gate-heading {
+          grid-template-columns: 1fr;
+          gap: 0.7rem;
+        }
+
+        .gate-number {
+          font-size: 2rem;
+        }
+
+        .gate-heading h2 {
+          font-size: 2.55rem;
+        }
+
+        .evidence-strip {
+          grid-template-columns: 1fr;
+        }
+
+        .evidence-item {
+          padding: 1rem 0;
+        }
+
+        .evidence-item + .evidence-item {
+          border-top: 1px solid var(--line);
+          border-left: 0;
+          padding-left: 0;
+        }
+
+        .choice {
+          grid-template-columns: 1.6rem minmax(0, 1fr);
+          min-height: 5.2rem;
+          padding-block: 1rem;
+        }
+
+        .choice-status {
+          grid-column: 2;
+          margin-top: 0.15rem;
+        }
+
+        .artifact-map {
+          grid-template-columns: 1fr;
+        }
+
+        .archive-list li {
+          grid-template-columns: 2.25rem minmax(0, 1fr);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          scroll-behavior: auto !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip-link" href="#gate-01">跳到案例起点</a>
+
+    <header class="site-header">
+      <a class="wordmark" href="#top" aria-label="AI-Native 案例课程首页">AI-Native</a>
+      <span class="context">AI product decision learning / zh-cn</span>
+      <span class="header-note">连续案例 · Level 2</span>
+    </header>
+
+    <div id="top" class="shell">
+      <section class="hero" aria-labelledby="page-title">
+        <div class="hero-copy">
+          <p class="eyebrow">Golden case 01 · 每日用户反馈分析</p>
+          <h1 id="page-title">把用户反馈，变成可复核的产品改进证据。</h1>
+          <p>
+            沿着同一个业务对象连续完成六次关键取舍：先判断是否需要
+            AI，再走到评测、成本、上线和回滚。这里不是另一套题库。
+          </p>
+        </div>
+        <div class="hero-start">
+          <p class="meta">一条项目主线 · 六个 Gate · 六份材料</p>
+          <h2>从边界判断开始，而不是从搭 Demo 开始。</h2>
+          <p>每一关只需阅读情境、选择路径并查看后果，材料会沿项目逐步完整。</p>
+          <a class="start-action" href="#gate-01">
+            <span>从 Gate 01 开始案例</span><span aria-hidden="true">↓</span>
+          </a>
+          <p class="usage-note">无需登录 · 不填写作业 · 不保存个人进度</p>
+        </div>
+      </section>
+
+      <main class="workflow" aria-label="连续案例学习区">
+        <section id="gate-01" class="gate-panel" aria-labelledby="gate-title" tabindex="-1">
+          <header class="gate-heading">
+            <span class="gate-number" aria-hidden="true">01</span>
+            <div>
+              <p class="meta">当前项目阶段 · 判断 AI 边界</p>
+              <h2 id="gate-title">先判断是否需要 AI</h2>
+              <p class="gate-question">哪些步骤真的需要概率语义能力？</p>
+            </div>
+          </header>
+
+          <div class="evidence-strip" aria-label="本关已知事实与未知项">
+            <section class="evidence-item fact">
+              <p class="meta">关键事实</p>
+              <p>字段校验、精确去重、固定计数、状态和发布权限可以由确定性规则完成。</p>
+            </section>
+            <section class="evidence-item unknown">
+              <p class="meta">仍待验证</p>
+              <p>现有标签规则的覆盖率、未知表达比例和各类误判成本尚未获得真实数据。</p>
+            </section>
+          </div>
+
+          <fieldset>
+            <legend>面对这套反馈分析流程，你会先选哪条路径？</legend>
+            <p class="choice-help">选择只用于展开当前路径的即时反馈，可随时重选，不会被记录。</p>
+
+            <label class="choice">
+              <input type="radio" name="gate-one" value="rules-first" />
+              <span class="choice-index">A</span>
+              <span class="choice-copy">
+                <strong>规则优先的受限工作流</strong>
+                <small>确定性步骤与概率语义步骤分开，并保留人工发布权。</small>
+              </span>
+              <span class="choice-status">查看后果</span>
+            </label>
+
+            <label class="choice">
+              <input type="radio" name="gate-one" value="rules-only" />
+              <span class="choice-index">B</span>
+              <span class="choice-copy">
+                <strong>全部使用固定规则</strong>
+                <small>用稳定词表和确定类别覆盖全部处理环节。</small>
+              </span>
+              <span class="choice-status">查看后果</span>
+            </label>
+
+            <label class="choice">
+              <input type="radio" name="gate-one" value="autonomous-agent" />
+              <span class="choice-index">C</span>
+              <span class="choice-copy">
+                <strong>自主 Agent 完成并发布简报</strong>
+                <small>让模型自行规划步骤、调用工具并进入真实发布动作。</small>
+              </span>
+              <span class="choice-status">查看后果</span>
+            </label>
+          </fieldset>
+
+          <section class="feedback" aria-live="polite" data-tone="idle">
+            <p class="feedback-status">尚未选择</p>
+            <h3 class="feedback-title">三条路径都像答案，差别在约束与后果。</h3>
+            <p class="feedback-copy">
+              选择任一路径后，这里会解释它为何推荐、有条件成立或风险较高，并指出它会怎样改变本关材料。
+            </p>
+          </section>
+        </section>
+
+        <aside class="spine" aria-labelledby="spine-title">
+          <p class="section-kicker"><strong>项目脊柱</strong> · 固定顺序</p>
+          <h2 id="spine-title">六关完成一次真实评审</h2>
+          <ol class="stage-list">
+            <li aria-current="step">
+              <span class="stage-marker">01</span>
+              <div class="stage-copy">
+                <h3>先判断是否需要 AI</h3>
+                <p>当前起点 · AI 适用性判断卡</p>
+              </div>
+            </li>
+            <li>
+              <span class="stage-marker">02</span>
+              <div class="stage-copy">
+                <h3>定义业务机会与约束</h3>
+                <p>后续阶段 · 场景机会评估表</p>
+              </div>
+            </li>
+            <li>
+              <span class="stage-marker">03</span>
+              <div class="stage-copy">
+                <h3>拆解任务并选择方案</h3>
+                <p>后续阶段 · 任务流程与方案选择表</p>
+              </div>
+            </li>
+            <li>
+              <span class="stage-marker">04</span>
+              <div class="stage-copy">
+                <h3>设计人机责任与失败恢复</h3>
+                <p>后续阶段 · 人机责任与失败恢复图</p>
+              </div>
+            </li>
+            <li>
+              <span class="stage-marker">05</span>
+              <div class="stage-copy">
+                <h3>定义评测、成本与护栏</h3>
+                <p>后续阶段 · 评测、成本与上线护栏表</p>
+              </div>
+            </li>
+            <li>
+              <span class="stage-marker">06</span>
+              <div class="stage-copy">
+                <h3>治理上线与持续迭代</h3>
+                <p>终点 · 完整 AI 产品评审档案</p>
+              </div>
+            </li>
+          </ol>
+        </aside>
+
+        <aside class="artifact-rail" aria-labelledby="artifact-title">
+          <p class="section-kicker">材料演进</p>
+          <h2 id="artifact-title">每一关都留下可复核材料</h2>
+          <p class="artifact-intro">不是累计分数，而是把同一个项目从判断卡推进为完整评审档案。</p>
+
+          <ol class="artifact-map" aria-label="六关材料清单">
+            <li><span class="number">01</span><strong>AI 适用性判断卡</strong></li>
+            <li><span class="number">02</span><strong>场景机会评估表</strong></li>
+            <li><span class="number">03</span><strong>任务流程与方案选择表</strong></li>
+            <li><span class="number">04</span><strong>人机责任与失败恢复图</strong></li>
+            <li><span class="number">05</span><strong>评测、成本与上线护栏表</strong></li>
+            <li><span class="number">06</span><strong>完整 AI 产品评审档案</strong></li>
+          </ol>
+
+          <details class="artifact-change">
+            <summary>查看本关如何改变材料</summary>
+            <div class="delta">
+              <div class="delta-row">
+                <p class="meta">进入本关前</p>
+                <p>已有业务情境、当前流程、教学目标和不虚构业务数据的约束。</p>
+              </div>
+              <div class="delta-row">
+                <p class="meta">Gate 01 新增</p>
+                <p>
+                  在 AI 适用性判断卡中标出规则、模型和人工的初步边界，并记录不引入自主 Agent
+                  的条件。
+                </p>
+              </div>
+            </div>
+          </details>
+
+          <button class="archive-action" type="button" data-open-archive>
+            查看完整六关档案概览 <span aria-hidden="true">↗</span>
+          </button>
+        </aside>
+      </main>
+    </div>
+
+    <dialog aria-labelledby="archive-title">
+      <header class="dialog-head">
+        <div>
+          <p class="section-kicker">完整档案 · 六关终点</p>
+          <h2 id="archive-title">完整 AI 产品评审档案</h2>
+        </div>
+        <button class="dialog-close" type="button" aria-label="关闭档案概览">×</button>
+      </header>
+      <ol class="archive-list">
+        <li>
+          <span class="number">01</span>
+          <div>
+            <strong>AI 适用性判断卡</strong>
+            <p>说明哪些任务使用规则、模型或人工，以及为什么当前不默认使用自主 Agent。</p>
+          </div>
+        </li>
+        <li>
+          <span class="number">02</span>
+          <div>
+            <strong>场景机会评估表</strong>
+            <p>记录使用者、当前流程、业务结果、数据条件、基线和仍待验证的关键问题。</p>
+          </div>
+        </li>
+        <li>
+          <span class="number">03</span>
+          <div>
+            <strong>任务流程与方案选择表</strong>
+            <p>展示每个步骤的输入、输出、状态、机制、权限、异常和终止条件。</p>
+          </div>
+        </li>
+        <li>
+          <span class="number">04</span>
+          <div>
+            <strong>人机责任与失败恢复图</strong>
+            <p>明确错误信号、恢复动作、人工队列、升级上下文、责任人和撤销路径。</p>
+          </div>
+        </li>
+        <li>
+          <span class="number">05</span>
+          <div>
+            <strong>评测、成本与上线护栏表</strong>
+            <p>汇总任务级评测、错误切片、单位成功任务成本、运行指标和待验证阈值。</p>
+          </div>
+        </li>
+        <li>
+          <span class="number">06</span>
+          <div>
+            <strong>完整 AI 产品评审档案</strong>
+            <p>串联机会、方案、体验、质量、成本、上线分级、监控、回滚和下一轮验证。</p>
+          </div>
+        </li>
+      </ol>
+    </dialog>
+
+    <script>
+      const feedbackByOption = {
+        'rules-first': {
+          tone: 'recommended',
+          status: '推荐路径',
+          title: '先拆开确定性与概率步骤，再分别治理。',
+          copy: '这条路径把质量、成本、权限和恢复拆到具体步骤。结果是可以定位失败，也能删除不必要的模型调用；代价是规则与标签体系需要持续维护。材料新增：规则、模型和人工的初步边界。',
+        },
+        'rules-only': {
+          tone: 'conditional',
+          status: '有条件成立',
+          title: '规则可以是起点，但适用范围必须被验证。',
+          copy: '当语义变化很少且规则覆盖经过验证时，这条路径成本低且可复现；风险是新表达和新问题被静默漏掉。材料新增：仅规则方案的适用条件，以及何时升级语义能力的触发信号。',
+        },
+        'autonomous-agent': {
+          tone: 'risky',
+          status: '风险较高',
+          title: '当前任务可以预定义，自主性尚未证明价值。',
+          copy: '让 Agent 自主完成并发布会扩大权限、终止和审计风险，错误也可能传播到真实发布动作。当前阶段否决这条路径；只有动态工具选择被真实需求证明后，才重新评估。',
+        },
+      };
+
+      const feedback = document.querySelector('.feedback');
+      const status = feedback.querySelector('.feedback-status');
+      const title = feedback.querySelector('.feedback-title');
+      const copy = feedback.querySelector('.feedback-copy');
+
+      document.querySelectorAll('input[name="gate-one"]').forEach((input) => {
+        input.addEventListener('change', () => {
+          const next = feedbackByOption[input.value];
+          feedback.dataset.tone = next.tone;
+          status.textContent = next.status;
+          title.textContent = next.title;
+          copy.textContent = next.copy;
+        });
+      });
+
+      const archive = document.querySelector('dialog');
+      const openArchive = document.querySelector('[data-open-archive]');
+      const closeArchive = document.querySelector('.dialog-close');
+
+      openArchive.addEventListener('click', () => archive.showModal());
+      closeArchive.addEventListener('click', () => archive.close());
+      archive.addEventListener('click', (event) => {
+        if (event.target === archive) archive.close();
+      });
+    </script>
+  </body>
+</html>

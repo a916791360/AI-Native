@@ -1,0 +1,1465 @@
+<!doctype html>
+<!--
+  方向 03「能力星图」假设与设计理由
+  1. 用户需要先确认这是一个连续项目案例，而不是另一组 24 道题；因此首屏只保留一个主起点，并明确终点产物。
+  2. “轨道”不是装饰：六个编号节点严格对应六个 Gate，节点旁的短标签对应该 Gate 新增的材料，连线表达评审档案逐步累积。
+  3. 复古未来太空语言只体现在低饱和暗场、坐标式元信息、轨道线和结构编号；不使用行星插画、发光、渐变或虚构数据。
+  4. 选择不保存进度、不提交作业，只在当前页面展开真实案例反馈；移动端把二维轨道转换为同序线性阶段表。
+-->
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <title>能力星图 · 每日用户反馈分析与产品改进</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --ink: #f1eee7;
+        --muted: #b2ada4;
+        --quiet: #88847d;
+        --black: #080a0d;
+        --panel: #0d1117;
+        --raised: #121821;
+        --line: #343b44;
+        --line-soft: #222831;
+        --yellow: #e2b64a;
+        --cyan: #55b8c8;
+        --cobalt: #5578c9;
+        --red: #d16962;
+        --green: #63b77c;
+        --focus: #f6d56d;
+        --display: Baskerville, 'Songti SC', STSong, serif;
+        --body: 'Avenir Next', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        --mono: 'SFMono-Regular', Menlo, Consolas, monospace;
+        --gutter: clamp(20px, 4vw, 58px);
+        --max: 1440px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        background: var(--black);
+      }
+
+      body {
+        margin: 0;
+        min-width: 320px;
+        overflow-x: hidden;
+        background: var(--black);
+        color: var(--ink);
+        font-family: var(--body);
+        font-size: 17px;
+        line-height: 1.72;
+      }
+
+      button,
+      a {
+        font: inherit;
+      }
+
+      button {
+        color: inherit;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      :focus-visible {
+        outline: 2px solid var(--focus);
+        outline-offset: 4px;
+      }
+
+      .skip-link {
+        position: fixed;
+        z-index: 100;
+        top: 10px;
+        left: 10px;
+        padding: 10px 14px;
+        background: var(--focus);
+        color: #080a0d;
+        transform: translateY(-160%);
+      }
+
+      .skip-link:focus {
+        transform: translateY(0);
+      }
+
+      .shell {
+        width: min(100%, var(--max));
+        margin: 0 auto;
+      }
+
+      .site-header {
+        position: relative;
+        z-index: 5;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .site-header .shell {
+        min-height: 70px;
+        padding: 0 var(--gutter);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+        text-decoration: none;
+        font-weight: 700;
+      }
+
+      .brand-mark {
+        width: 24px;
+        height: 31px;
+        position: relative;
+        border: 2px solid var(--ink);
+      }
+
+      .brand-mark::before,
+      .brand-mark::after {
+        content: '';
+        position: absolute;
+        background: var(--black);
+        border: 2px solid var(--ink);
+      }
+
+      .brand-mark::before {
+        width: 5px;
+        height: 12px;
+        left: 7px;
+        top: -7px;
+      }
+
+      .brand-mark::after {
+        width: 6px;
+        height: 6px;
+        right: -5px;
+        bottom: 5px;
+      }
+
+      .header-meta {
+        color: var(--quiet);
+        font-family: var(--mono);
+        font-size: 12px;
+        letter-spacing: 0;
+        text-transform: uppercase;
+      }
+
+      .header-link {
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+        color: var(--muted);
+        font-size: 14px;
+        text-underline-offset: 5px;
+      }
+
+      .hero {
+        min-height: 718px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .hero-grid {
+        min-height: 718px;
+        display: grid;
+        grid-template-columns: minmax(400px, 0.82fr) minmax(600px, 1.18fr);
+      }
+
+      .hero-copy {
+        padding: clamp(52px, 6vw, 86px) var(--gutter) 56px;
+        border-right: 1px solid var(--line);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .eyebrow,
+      .kicker,
+      .stage-code {
+        margin: 0;
+        color: var(--yellow);
+        font-family: var(--mono);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0;
+        text-transform: uppercase;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin-top: 0;
+      }
+
+      h1 {
+        max-width: 670px;
+        margin: 22px 0 25px;
+        font-family: var(--display);
+        font-size: clamp(44px, 4.5vw, 72px);
+        font-weight: 400;
+        line-height: 1.08;
+        letter-spacing: 0;
+      }
+
+      .lead {
+        max-width: 610px;
+        margin-bottom: 20px;
+        color: var(--muted);
+        font-size: 18px;
+      }
+
+      .learning-contract {
+        margin: 0 0 32px;
+        padding: 17px 0;
+        border-top: 1px solid var(--line-soft);
+        border-bottom: 1px solid var(--line-soft);
+        color: var(--quiet);
+        font-size: 14px;
+      }
+
+      .primary-action {
+        width: fit-content;
+        min-height: 52px;
+        padding: 13px 21px;
+        border: 1px solid var(--yellow);
+        border-radius: 0;
+        background: var(--yellow);
+        color: #090b0e;
+        font-weight: 700;
+        text-decoration: none;
+        transition:
+          background 140ms ease,
+          color 140ms ease;
+      }
+
+      .primary-action:hover {
+        background: var(--ink);
+        border-color: var(--ink);
+      }
+
+      .outcome {
+        display: grid;
+        grid-template-columns: 94px 1fr;
+        gap: 14px;
+        margin-top: 36px;
+        padding-top: 19px;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .outcome strong {
+        color: var(--green);
+        font-family: var(--mono);
+        font-size: 11px;
+        letter-spacing: 0;
+        text-transform: uppercase;
+      }
+
+      .orbit-panel {
+        position: relative;
+        min-height: 718px;
+        overflow: hidden;
+        background-color: #0a0d12;
+      }
+
+      .orbit-heading {
+        position: absolute;
+        z-index: 3;
+        top: 36px;
+        left: 42px;
+        right: 42px;
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        color: var(--quiet);
+        font-family: var(--mono);
+        font-size: 11px;
+        letter-spacing: 0;
+        text-transform: uppercase;
+      }
+
+      .orbit-heading b {
+        color: var(--cobalt);
+        font-weight: 700;
+      }
+
+      .orbit-map {
+        position: absolute;
+        inset: 74px 34px 28px;
+      }
+
+      .axis-x,
+      .axis-y {
+        position: absolute;
+        background: var(--line-soft);
+      }
+
+      .axis-x {
+        width: 100%;
+        height: 1px;
+        top: 50%;
+        left: 0;
+      }
+
+      .axis-y {
+        width: 1px;
+        height: 100%;
+        top: 0;
+        left: 50%;
+      }
+
+      .orbit-ring {
+        position: absolute;
+        border: 1px solid var(--line);
+        border-radius: 50%;
+        pointer-events: none;
+      }
+
+      .ring-a {
+        inset: 12% 9%;
+      }
+
+      .ring-b {
+        inset: 22% 20%;
+        border-color: #2f4360;
+      }
+
+      .ring-c {
+        inset: 34% 34%;
+        border-color: #39444f;
+      }
+
+      .core {
+        position: absolute;
+        z-index: 2;
+        width: 190px;
+        min-height: 114px;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        padding: 20px 20px 16px;
+        border: 1px solid var(--cobalt);
+        background: #101720;
+        text-align: center;
+      }
+
+      .core small {
+        display: block;
+        margin-bottom: 9px;
+        color: var(--cobalt);
+        font-family: var(--mono);
+        font-size: 10px;
+        text-transform: uppercase;
+      }
+
+      .core strong {
+        display: block;
+        font-family: var(--display);
+        font-size: 22px;
+        font-weight: 400;
+        line-height: 1.25;
+      }
+
+      .core span {
+        color: var(--quiet);
+        font-size: 12px;
+      }
+
+      .gate-node {
+        position: absolute;
+        z-index: 2;
+        width: 184px;
+        min-height: 82px;
+        padding: 12px 13px;
+        border: 1px solid var(--line);
+        background: rgba(8, 10, 13, 0.96);
+      }
+
+      .gate-node::before {
+        content: '';
+        position: absolute;
+        width: 7px;
+        height: 7px;
+        border: 1px solid currentColor;
+        background: var(--black);
+      }
+
+      .node-1 {
+        left: 2%;
+        top: 12%;
+        color: var(--yellow);
+        border-color: var(--yellow);
+      }
+
+      .node-1::before,
+      .node-2::before,
+      .node-3::before {
+        right: -5px;
+        top: calc(50% - 4px);
+      }
+
+      .node-2 {
+        left: 3%;
+        top: 42%;
+        color: var(--cyan);
+      }
+
+      .node-3 {
+        left: 12%;
+        bottom: 4%;
+        color: var(--cobalt);
+      }
+
+      .node-4 {
+        right: 12%;
+        bottom: 4%;
+        color: var(--green);
+      }
+
+      .node-5 {
+        right: 3%;
+        top: 42%;
+        color: var(--red);
+      }
+
+      .node-6 {
+        right: 2%;
+        top: 12%;
+        color: var(--green);
+        border-color: var(--green);
+      }
+
+      .node-4::before,
+      .node-5::before,
+      .node-6::before {
+        left: -5px;
+        top: calc(50% - 4px);
+      }
+
+      .gate-node b {
+        display: block;
+        margin-bottom: 3px;
+        font-family: var(--mono);
+        font-size: 11px;
+        letter-spacing: 0;
+      }
+
+      .gate-node strong {
+        display: block;
+        color: var(--ink);
+        font-size: 14px;
+        line-height: 1.35;
+      }
+
+      .gate-node span {
+        display: block;
+        margin-top: 6px;
+        color: var(--quiet);
+        font-size: 11px;
+        line-height: 1.35;
+      }
+
+      .orbit-legend {
+        position: absolute;
+        left: 42px;
+        right: 42px;
+        bottom: 20px;
+        display: flex;
+        justify-content: space-between;
+        gap: 18px;
+        color: var(--quiet);
+        font-family: var(--mono);
+        font-size: 10px;
+      }
+
+      .orbit-legend em {
+        color: var(--green);
+        font-style: normal;
+      }
+
+      .gate-one {
+        scroll-margin-top: 18px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .section-grid {
+        display: grid;
+        grid-template-columns: minmax(290px, 0.72fr) minmax(520px, 1.28fr);
+      }
+
+      .section-intro {
+        padding: 70px var(--gutter);
+        border-right: 1px solid var(--line);
+      }
+
+      .section-intro h2 {
+        margin: 15px 0 18px;
+        font-family: var(--display);
+        font-size: clamp(34px, 3.6vw, 54px);
+        font-weight: 400;
+        line-height: 1.14;
+        letter-spacing: 0;
+      }
+
+      .section-intro > p:not(.stage-code) {
+        color: var(--muted);
+      }
+
+      .evidence {
+        margin-top: 32px;
+        border-top: 1px solid var(--line);
+      }
+
+      .evidence-row {
+        padding: 16px 0;
+        border-bottom: 1px solid var(--line-soft);
+      }
+
+      .evidence-row small {
+        display: block;
+        margin-bottom: 5px;
+        color: var(--quiet);
+        font-family: var(--mono);
+        font-size: 10px;
+        text-transform: uppercase;
+      }
+
+      .evidence-row p {
+        margin: 0;
+        font-size: 14px;
+      }
+
+      .evidence-row.fact {
+        border-left: 2px solid var(--cyan);
+        padding-left: 14px;
+      }
+
+      .evidence-row.unknown {
+        border-left: 2px solid var(--red);
+        padding-left: 14px;
+      }
+
+      .decision-lab {
+        padding: 70px var(--gutter) 76px;
+      }
+
+      .decision-lab h3 {
+        margin: 15px 0 10px;
+        font-family: var(--display);
+        font-size: clamp(29px, 2.8vw, 42px);
+        font-weight: 400;
+        line-height: 1.25;
+        letter-spacing: 0;
+      }
+
+      .instruction {
+        margin-bottom: 27px;
+        color: var(--muted);
+      }
+
+      .choice-list {
+        display: grid;
+        gap: 0;
+        border-top: 1px solid var(--line);
+      }
+
+      .choice {
+        width: 100%;
+        min-height: 76px;
+        padding: 16px 18px;
+        border: 0;
+        border-bottom: 1px solid var(--line);
+        border-radius: 0;
+        display: grid;
+        grid-template-columns: 42px 1fr 24px;
+        align-items: center;
+        gap: 12px;
+        background: transparent;
+        text-align: left;
+        cursor: pointer;
+      }
+
+      .choice:hover,
+      .choice[aria-pressed='true'] {
+        background: var(--panel);
+      }
+
+      .choice .option-code {
+        color: var(--quiet);
+        font-family: var(--mono);
+        font-size: 11px;
+      }
+
+      .choice strong {
+        display: block;
+        font-size: 16px;
+        font-weight: 600;
+      }
+
+      .choice span:not(.option-code):not(.choice-marker) {
+        display: block;
+        color: var(--quiet);
+        font-size: 13px;
+      }
+
+      .choice-marker {
+        width: 13px;
+        height: 13px;
+        border: 1px solid var(--quiet);
+      }
+
+      .choice[aria-pressed='true'] .choice-marker {
+        border-color: var(--yellow);
+        background: var(--yellow);
+      }
+
+      .feedback {
+        min-height: 0;
+        margin-top: 26px;
+        padding: 0;
+        border-left: 2px solid var(--yellow);
+      }
+
+      .feedback[hidden] {
+        display: none;
+      }
+
+      .feedback-inner {
+        padding: 4px 0 4px 19px;
+      }
+
+      .feedback-status {
+        margin-bottom: 8px;
+        color: var(--yellow);
+        font-family: var(--mono);
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+
+      .feedback h4 {
+        margin: 0 0 8px;
+        font-size: 18px;
+      }
+
+      .feedback p {
+        margin-bottom: 9px;
+        color: var(--muted);
+        font-size: 15px;
+      }
+
+      .feedback .consequence {
+        margin-bottom: 0;
+        color: var(--ink);
+      }
+
+      .feedback.is-conditional {
+        border-color: var(--cyan);
+      }
+
+      .feedback.is-conditional .feedback-status {
+        color: var(--cyan);
+      }
+
+      .feedback.is-risky {
+        border-color: var(--red);
+      }
+
+      .feedback.is-risky .feedback-status {
+        color: var(--red);
+      }
+
+      .material-change {
+        margin-top: 34px;
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+      }
+
+      .disclosure {
+        width: 100%;
+        min-height: 58px;
+        padding: 12px 0;
+        border: 0;
+        border-radius: 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        background: transparent;
+        color: var(--ink);
+        text-align: left;
+        cursor: pointer;
+      }
+
+      .disclosure span:first-child {
+        color: var(--green);
+        font-family: var(--mono);
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      .disclosure-icon {
+        font-family: var(--mono);
+        font-size: 18px;
+      }
+
+      .change-body {
+        padding: 2px 0 22px;
+      }
+
+      .change-body[hidden] {
+        display: none;
+      }
+
+      .change-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1px;
+        background: var(--line);
+        border: 1px solid var(--line);
+      }
+
+      .change-cell {
+        padding: 18px;
+        background: var(--panel);
+      }
+
+      .change-cell small {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--quiet);
+        font-family: var(--mono);
+        font-size: 10px;
+        text-transform: uppercase;
+      }
+
+      .change-cell p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .change-cell.after {
+        border-top: 2px solid var(--green);
+      }
+
+      .archive {
+        border-bottom: 1px solid var(--line);
+      }
+
+      .archive-head {
+        padding: 72px var(--gutter) 36px;
+        display: grid;
+        grid-template-columns: minmax(280px, 0.7fr) minmax(500px, 1.3fr);
+        gap: 50px;
+        align-items: end;
+      }
+
+      .archive-head h2 {
+        margin: 14px 0 0;
+        font-family: var(--display);
+        font-size: clamp(34px, 3.5vw, 52px);
+        font-weight: 400;
+        line-height: 1.15;
+        letter-spacing: 0;
+      }
+
+      .archive-head p:last-child {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      .archive-list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        border-top: 1px solid var(--line);
+      }
+
+      .archive-item {
+        display: grid;
+        grid-template-columns: 92px minmax(220px, 0.75fr) minmax(360px, 1.25fr) minmax(
+            220px,
+            0.7fr
+          );
+        min-height: 158px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .archive-item > div {
+        padding: 24px clamp(20px, 2.4vw, 38px);
+        border-right: 1px solid var(--line);
+      }
+
+      .archive-item > div:last-child {
+        border-right: 0;
+      }
+
+      .archive-number {
+        color: var(--cyan);
+        font-family: var(--mono);
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .archive-item:first-child .archive-number {
+        color: var(--yellow);
+      }
+
+      .archive-title small,
+      .archive-question small,
+      .archive-artifact small {
+        display: block;
+        margin-bottom: 7px;
+        color: var(--quiet);
+        font-family: var(--mono);
+        font-size: 10px;
+        text-transform: uppercase;
+      }
+
+      .archive-title h3 {
+        margin: 0;
+        font-family: var(--display);
+        font-size: 23px;
+        font-weight: 400;
+        line-height: 1.25;
+      }
+
+      .archive-question p,
+      .archive-artifact p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .archive-artifact p {
+        color: var(--green);
+      }
+
+      .footer {
+        padding: 42px var(--gutter) 52px;
+        color: var(--quiet);
+        font-size: 13px;
+      }
+
+      .footer .shell {
+        display: flex;
+        justify-content: space-between;
+        gap: 24px;
+      }
+
+      .mobile-order {
+        display: none;
+      }
+
+      @media (max-width: 1060px) {
+        .hero-grid {
+          grid-template-columns: minmax(360px, 0.9fr) minmax(520px, 1.1fr);
+        }
+
+        .gate-node {
+          width: 160px;
+        }
+
+        .archive-item {
+          grid-template-columns: 70px minmax(200px, 0.72fr) minmax(300px, 1.28fr);
+        }
+
+        .archive-artifact {
+          grid-column: 2 / -1;
+          border-top: 1px solid var(--line);
+        }
+      }
+
+      @media (max-width: 820px) {
+        body {
+          font-size: 16px;
+        }
+
+        .site-header .shell {
+          min-height: 62px;
+        }
+
+        .header-meta,
+        .header-link {
+          display: none;
+        }
+
+        .hero,
+        .hero-grid,
+        .orbit-panel {
+          min-height: 0;
+        }
+
+        .hero-grid,
+        .section-grid,
+        .archive-head {
+          display: block;
+        }
+
+        .hero-copy {
+          padding: 54px var(--gutter) 48px;
+          border-right: 0;
+        }
+
+        h1 {
+          font-size: clamp(42px, 12vw, 58px);
+        }
+
+        .lead {
+          font-size: 17px;
+        }
+
+        .primary-action {
+          width: 100%;
+          justify-content: center;
+          display: inline-flex;
+        }
+
+        .outcome {
+          grid-template-columns: 1fr;
+        }
+
+        .orbit-panel {
+          padding: 36px var(--gutter) 42px;
+          border-top: 1px solid var(--line);
+        }
+
+        .orbit-heading {
+          position: static;
+          margin-bottom: 23px;
+        }
+
+        .orbit-map {
+          position: static;
+          display: grid;
+          grid-template-columns: 1fr;
+          border-top: 1px solid var(--line);
+        }
+
+        .axis-x,
+        .axis-y,
+        .orbit-ring,
+        .core,
+        .orbit-legend {
+          display: none;
+        }
+
+        .gate-node {
+          position: relative;
+          width: 100%;
+          min-height: 72px;
+          padding: 15px 0 14px 54px;
+          border: 0;
+          border-bottom: 1px solid var(--line);
+          background: transparent;
+          color: var(--cyan);
+        }
+
+        .gate-node::before {
+          left: 14px;
+          top: 23px;
+          right: auto;
+        }
+
+        .gate-node::after {
+          content: '';
+          position: absolute;
+          left: 17px;
+          top: 30px;
+          width: 1px;
+          height: calc(100% - 7px);
+          background: var(--line);
+        }
+
+        .gate-node:last-child::after {
+          display: none;
+        }
+
+        .node-1 {
+          color: var(--yellow);
+          border-bottom: 1px solid var(--line);
+        }
+
+        .node-4,
+        .node-6 {
+          color: var(--green);
+        }
+
+        .node-5 {
+          color: var(--red);
+        }
+
+        .gate-node span {
+          font-size: 12px;
+        }
+
+        .section-intro,
+        .decision-lab {
+          padding: 54px var(--gutter);
+        }
+
+        .section-intro {
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+        }
+
+        .change-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .archive-head {
+          padding: 56px var(--gutter) 32px;
+        }
+
+        .archive-head p:last-child {
+          margin-top: 22px;
+        }
+
+        .archive-item {
+          grid-template-columns: 60px 1fr;
+        }
+
+        .archive-item > div {
+          padding: 20px var(--gutter);
+        }
+
+        .archive-number {
+          grid-row: 1 / 3;
+          padding-right: 10px !important;
+        }
+
+        .archive-question,
+        .archive-artifact {
+          grid-column: 2;
+          border-top: 1px solid var(--line);
+        }
+
+        .footer .shell {
+          display: block;
+        }
+      }
+
+      @media (max-width: 460px) {
+        .brand-mark {
+          width: 21px;
+          height: 28px;
+        }
+
+        .hero-copy {
+          padding-top: 44px;
+        }
+
+        h1 {
+          font-size: 43px;
+        }
+
+        .orbit-heading span:last-child {
+          display: none;
+        }
+
+        .choice {
+          grid-template-columns: 32px 1fr 18px;
+          padding-left: 10px;
+          padding-right: 10px;
+        }
+
+        .archive-item {
+          grid-template-columns: 46px 1fr;
+        }
+
+        .archive-item > div {
+          padding-left: 18px;
+          padding-right: 18px;
+        }
+
+        .footer {
+          padding-top: 34px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+
+        * {
+          transition: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">跳到案例内容</a>
+    <header class="site-header">
+      <div class="shell">
+        <a class="brand" href="#top" aria-label="AI-Native 案例首页">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <span>AI-Native</span>
+        </a>
+        <div class="header-meta">AI PRODUCT DECISION LEARNING / CASE 01</div>
+        <a class="header-link" href="#archive">查看六关档案概览</a>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="hero" id="top" aria-labelledby="case-title">
+        <div class="shell hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">Level 2 · 连续案例 · 6 个项目 Gate</p>
+            <h1 id="case-title">每日用户反馈分析与产品改进</h1>
+            <p class="lead">
+              在同一个业务对象中，连续完成 AI
+              边界、价值、方案、恢复、评测与上线六次产品判断，最终形成一份可复核的 AI 产品评审档案。
+            </p>
+            <p class="learning-contract">
+              只需阅读、选择并查看反馈；无需输入，不保存个人进度，随时可以重选。
+            </p>
+            <a class="primary-action" href="#gate-01">从 Gate 01 开始案例</a>
+            <div class="outcome">
+              <strong>最终产物</strong>
+              <span
+                >完整 AI
+                产品评审档案：串联机会、方案、责任、质量、成本、上线分级、监控与回滚。</span
+              >
+            </div>
+          </div>
+
+          <div class="orbit-panel" aria-label="六个项目阶段与材料演进图">
+            <div class="orbit-heading">
+              <b>Capability orbit / Case 01</b>
+              <span>中心对象：每日用户反馈</span>
+            </div>
+            <div class="orbit-map">
+              <span class="axis-x" aria-hidden="true"></span>
+              <span class="axis-y" aria-hidden="true"></span>
+              <span class="orbit-ring ring-a" aria-hidden="true"></span>
+              <span class="orbit-ring ring-b" aria-hidden="true"></span>
+              <span class="orbit-ring ring-c" aria-hidden="true"></span>
+              <div class="core">
+                <small>Business object</small>
+                <strong>用户反馈证据</strong>
+                <span>客服工单 · 商店评论 · 站内反馈</span>
+              </div>
+              <div class="gate-node node-1">
+                <b>GATE 01 / START</b>
+                <strong>判断 AI 边界</strong>
+                <span>+ AI 适用性判断卡</span>
+              </div>
+              <div class="gate-node node-2">
+                <b>GATE 02</b>
+                <strong>建立价值与数据条件</strong>
+                <span>+ 场景机会评估表</span>
+              </div>
+              <div class="gate-node node-3">
+                <b>GATE 03</b>
+                <strong>拆解并选择工作流</strong>
+                <span>+ 流程与方案选择表</span>
+              </div>
+              <div class="gate-node node-4">
+                <b>GATE 04</b>
+                <strong>设计控制与恢复</strong>
+                <span>+ 人机责任恢复图</span>
+              </div>
+              <div class="gate-node node-5">
+                <b>GATE 05</b>
+                <strong>定义评测成本护栏</strong>
+                <span>+ 评测与上线护栏表</span>
+              </div>
+              <div class="gate-node node-6">
+                <b>GATE 06 / REVIEW</b>
+                <strong>治理上线与迭代</strong>
+                <span>= 完整 AI 产品评审档案</span>
+              </div>
+            </div>
+            <div class="orbit-legend" aria-hidden="true">
+              <span>01 → 06 固定顺序</span>
+              <span><em>材料随每一 Gate 累积</em></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="gate-one" id="gate-01" aria-labelledby="gate-one-title">
+        <div class="shell section-grid">
+          <div class="section-intro">
+            <p class="stage-code">Gate 01 / AI boundary</p>
+            <h2 id="gate-one-title">哪些步骤真的需要概率语义能力？</h2>
+            <p>
+              团队希望把多来源反馈转成可复核的问题证据。先不要急着选模型：确定性规则、受限模型和人工分别应该负责什么？
+            </p>
+            <div class="evidence" aria-label="本关事实与未知项">
+              <div class="evidence-row fact">
+                <small>关键事实 / E1</small>
+                <p>字段校验、精确去重、固定计数、状态和发布权限可以由确定性规则完成。</p>
+              </div>
+              <div class="evidence-row unknown">
+                <small>未知项 / 待真实基线</small>
+                <p>现有标签规则覆盖率、未知表达比例和各类误判成本尚未获得真实数据。</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="decision-lab">
+            <p class="kicker">Make a decision</p>
+            <h3>选择当前最合理的系统边界</h3>
+            <p class="instruction">
+              选择只用于展开反馈，不提交、不计分。你可以在三条路径之间反复比较。
+            </p>
+            <div class="choice-list" role="group" aria-label="Gate 01 可选方案">
+              <button class="choice" type="button" data-choice="recommended" aria-pressed="false">
+                <span class="option-code">01</span>
+                <span>
+                  <strong>规则优先的受限工作流</strong>
+                  <span>确定性步骤与概率步骤分开治理</span>
+                </span>
+                <span class="choice-marker" aria-hidden="true"></span>
+              </button>
+              <button class="choice" type="button" data-choice="conditional" aria-pressed="false">
+                <span class="option-code">02</span>
+                <span>
+                  <strong>全部使用固定规则</strong>
+                  <span>稳定词表和确定类别下可能成立</span>
+                </span>
+                <span class="choice-marker" aria-hidden="true"></span>
+              </button>
+              <button class="choice" type="button" data-choice="risky" aria-pressed="false">
+                <span class="option-code">03</span>
+                <span>
+                  <strong>自主 Agent 完成并发布简报</strong>
+                  <span>把处理、判断与发布交给动态系统</span>
+                </span>
+                <span class="choice-marker" aria-hidden="true"></span>
+              </button>
+            </div>
+
+            <div class="feedback" id="feedback" role="status" aria-live="polite" hidden>
+              <div class="feedback-inner">
+                <div class="feedback-status" id="feedback-status"></div>
+                <h4 id="feedback-title"></h4>
+                <p id="feedback-rationale"></p>
+                <p class="consequence" id="feedback-consequence"></p>
+              </div>
+            </div>
+
+            <div class="material-change">
+              <button
+                class="disclosure"
+                type="button"
+                aria-expanded="false"
+                aria-controls="change-body"
+              >
+                <span>查看本关如何改变材料</span>
+                <span class="disclosure-icon" aria-hidden="true">+</span>
+              </button>
+              <div class="change-body" id="change-body" hidden>
+                <div class="change-grid">
+                  <div class="change-cell">
+                    <small>进入本关前</small>
+                    <p>
+                      只有“希望自动分析用户反馈”的业务愿望，规则、模型、人工和发布权限尚未划界。
+                    </p>
+                  </div>
+                  <div class="change-cell after">
+                    <small>离开本关后 / AI 适用性判断卡</small>
+                    <p>
+                      标出规则、模型与人工的初步边界，并记录暂不引入自主 Agent 及其重新评估条件。
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="archive" id="archive" aria-labelledby="archive-title">
+        <div class="shell">
+          <div class="archive-head">
+            <div>
+              <p class="kicker">Full case archive</p>
+              <h2 id="archive-title">六关形成一份评审档案</h2>
+            </div>
+            <p>
+              每一关都在上一关的业务对象和证据上继续判断，并新增一份材料。这里展示项目结构，不代表个人完成进度；正式学习始终从
+              Gate 01 开始。
+            </p>
+          </div>
+
+          <ol class="archive-list">
+            <li class="archive-item">
+              <div class="archive-number">01</div>
+              <div class="archive-title">
+                <small>AI boundary</small>
+                <h3>判断 AI 边界</h3>
+              </div>
+              <div class="archive-question">
+                <small>核心问题</small>
+                <p>哪些步骤真的需要概率语义能力？</p>
+              </div>
+              <div class="archive-artifact">
+                <small>新增材料</small>
+                <p>AI 适用性判断卡</p>
+              </div>
+            </li>
+            <li class="archive-item">
+              <div class="archive-number">02</div>
+              <div class="archive-title">
+                <small>Value & data</small>
+                <h3>建立价值与数据条件</h3>
+              </div>
+              <div class="archive-question">
+                <small>核心问题</small>
+                <p>怎样证明这不是一个更漂亮的摘要 Demo？</p>
+              </div>
+              <div class="archive-artifact">
+                <small>新增材料</small>
+                <p>场景机会评估表</p>
+              </div>
+            </li>
+            <li class="archive-item">
+              <div class="archive-number">03</div>
+              <div class="archive-title">
+                <small>Workflow</small>
+                <h3>拆解并选择工作流</h3>
+              </div>
+              <div class="archive-question">
+                <small>核心问题</small>
+                <p>如何让每一步可评估、可替换、可停止？</p>
+              </div>
+              <div class="archive-artifact">
+                <small>新增材料</small>
+                <p>任务流程与方案选择表</p>
+              </div>
+            </li>
+            <li class="archive-item">
+              <div class="archive-number">04</div>
+              <div class="archive-title">
+                <small>Control & recovery</small>
+                <h3>设计控制与恢复</h3>
+              </div>
+              <div class="archive-question">
+                <small>核心问题</small>
+                <p>失败出现时谁能看见、纠正、接管和恢复？</p>
+              </div>
+              <div class="archive-artifact">
+                <small>新增材料</small>
+                <p>人机责任与失败恢复图</p>
+              </div>
+            </li>
+            <li class="archive-item">
+              <div class="archive-number">05</div>
+              <div class="archive-title">
+                <small>Evaluation & cost</small>
+                <h3>定义评测、成本与护栏</h3>
+              </div>
+              <div class="archive-question">
+                <small>核心问题</small>
+                <p>怎样证明质量、时效和成本同时可接受？</p>
+              </div>
+              <div class="archive-artifact">
+                <small>新增材料</small>
+                <p>评测、成本与上线护栏表</p>
+              </div>
+            </li>
+            <li class="archive-item">
+              <div class="archive-number">06</div>
+              <div class="archive-title">
+                <small>Launch governance</small>
+                <h3>治理上线与持续迭代</h3>
+              </div>
+              <div class="archive-question">
+                <small>核心问题</small>
+                <p>什么时候扩大范围，什么时候停止或回滚？</p>
+              </div>
+              <div class="archive-artifact">
+                <small>最终汇总</small>
+                <p>完整 AI 产品评审档案</p>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="shell">
+        <span>AI-Native · 连续案例结构探索</span>
+        <span>案例状态：教学草案 · 所有业务阈值待真实基线</span>
+      </div>
+    </footer>
+
+    <script>
+      const feedbackData = {
+        recommended: {
+          status: 'Recommended / 推荐路径',
+          title: '先划清确定性与概率性边界',
+          rationale:
+            '把确定性步骤和概率步骤分开，才能分别控制质量、成本、权限与恢复。每一步还需要固定输入输出与终止条件，语义步骤可以单独评测并回退。',
+          consequence: '结果：可以定位具体失败步骤，并删除不必要的模型调用。',
+          className: '',
+        },
+        conditional: {
+          status: 'Conditional / 有条件成立',
+          title: '规则方案取决于真实覆盖证据',
+          rationale:
+            '对稳定词表和确定类别，固定规则成本低且可复现；但只有在语义变化很少、规则覆盖经过验证时才成立。',
+          consequence: '风险：新表达和新问题可能被静默漏掉，需要记录升级触发信号。',
+          className: 'is-conditional',
+        },
+        risky: {
+          status: 'Risky / 风险较高',
+          title: '自主性没有被需求证明',
+          rationale:
+            '当前步骤可以预定义，动态自主性却扩大了权限、终止和审计风险。只有动态工具选择被真实需求证明后，才值得重新评估。',
+          consequence: '后果：错误可能传播到真实发布动作，当前阶段否决该方案。',
+          className: 'is-risky',
+        },
+      };
+
+      const choices = document.querySelectorAll('.choice');
+      const feedback = document.querySelector('#feedback');
+      const feedbackStatus = document.querySelector('#feedback-status');
+      const feedbackTitle = document.querySelector('#feedback-title');
+      const feedbackRationale = document.querySelector('#feedback-rationale');
+      const feedbackConsequence = document.querySelector('#feedback-consequence');
+
+      choices.forEach((choice) => {
+        choice.addEventListener('click', () => {
+          choices.forEach((item) => item.setAttribute('aria-pressed', 'false'));
+          choice.setAttribute('aria-pressed', 'true');
+
+          const data = feedbackData[choice.dataset.choice];
+          feedback.className = `feedback ${data.className}`.trim();
+          feedbackStatus.textContent = data.status;
+          feedbackTitle.textContent = data.title;
+          feedbackRationale.textContent = data.rationale;
+          feedbackConsequence.textContent = data.consequence;
+          feedback.hidden = false;
+        });
+      });
+
+      const disclosure = document.querySelector('.disclosure');
+      const changeBody = document.querySelector('#change-body');
+      const disclosureIcon = document.querySelector('.disclosure-icon');
+
+      disclosure.addEventListener('click', () => {
+        const isOpen = disclosure.getAttribute('aria-expanded') === 'true';
+        disclosure.setAttribute('aria-expanded', String(!isOpen));
+        changeBody.hidden = isOpen;
+        disclosureIcon.textContent = isOpen ? '+' : '−';
+      });
+    </script>
+  </body>
+</html>
