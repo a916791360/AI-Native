@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "cases": [
+    {
+      "id": "user-feedback-analysis",
+      "url": "/learn/cases/user-feedback-analysis/",
+      "title": "每日用户反馈分析与产品改进",
+      "level": "capstone",
+      "domain": "AI 产品运营与用户洞察",
+      "audience": [
+        "零基础或初级 AI 产品经理",
+        "需要评审 AI 方案的产品与业务人员"
+      ],
+      "objective": "在来源可追溯、错误可发现、人工可接管和成本可计算的前提下，缩短从反馈产生到可复核问题证据出现的时间。",
+      "status": "draft",
+      "updatedAt": "2026-08-03",
+      "gateCount": 6,
+      "artifactCount": 6,
+      "metricCount": 11,
+      "failureModeCount": 12,
+      "stageIds": [
+        "model-boundaries",
+        "opportunity-judgment",
+        "solution-choice",
+        "product-experience",
+        "quality-constraints",
+        "capstone"
+      ]
+    }
+  ]
+}

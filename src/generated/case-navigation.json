@@ -1,0 +1,89 @@
+{
+  "version": 1,
+  "cases": [
+    {
+      "caseId": "user-feedback-analysis",
+      "caseUrl": "/learn/cases/user-feedback-analysis/",
+      "firstGateId": "decide-ai-boundary",
+      "lastGateId": "govern-launch-and-iteration",
+      "gates": [
+        {
+          "id": "decide-ai-boundary",
+          "order": 1,
+          "stageId": "model-boundaries",
+          "title": "判断 AI 边界",
+          "status": "draft",
+          "url": "/learn/cases/user-feedback-analysis/decide-ai-boundary/",
+          "nextGateId": "establish-value-and-data",
+          "artifactIds": [
+            "ai-applicability-card"
+          ]
+        },
+        {
+          "id": "establish-value-and-data",
+          "order": 2,
+          "stageId": "opportunity-judgment",
+          "title": "建立价值与数据条件",
+          "status": "draft",
+          "url": "/learn/cases/user-feedback-analysis/establish-value-and-data/",
+          "previousGateId": "decide-ai-boundary",
+          "nextGateId": "select-workflow",
+          "artifactIds": [
+            "opportunity-assessment"
+          ]
+        },
+        {
+          "id": "select-workflow",
+          "order": 3,
+          "stageId": "solution-choice",
+          "title": "拆解并选择工作流",
+          "status": "draft",
+          "url": "/learn/cases/user-feedback-analysis/select-workflow/",
+          "previousGateId": "establish-value-and-data",
+          "nextGateId": "design-control-and-recovery",
+          "artifactIds": [
+            "workflow-selection"
+          ]
+        },
+        {
+          "id": "design-control-and-recovery",
+          "order": 4,
+          "stageId": "product-experience",
+          "title": "设计控制与恢复",
+          "status": "draft",
+          "url": "/learn/cases/user-feedback-analysis/design-control-and-recovery/",
+          "previousGateId": "select-workflow",
+          "nextGateId": "define-evaluation-and-cost",
+          "artifactIds": [
+            "responsibility-recovery"
+          ]
+        },
+        {
+          "id": "define-evaluation-and-cost",
+          "order": 5,
+          "stageId": "quality-constraints",
+          "title": "定义评测、成本与护栏",
+          "status": "draft",
+          "url": "/learn/cases/user-feedback-analysis/define-evaluation-and-cost/",
+          "previousGateId": "design-control-and-recovery",
+          "nextGateId": "govern-launch-and-iteration",
+          "artifactIds": [
+            "evaluation-guardrails"
+          ]
+        },
+        {
+          "id": "govern-launch-and-iteration",
+          "order": 6,
+          "stageId": "capstone",
+          "title": "治理上线与持续迭代",
+          "status": "draft",
+          "url": "/learn/cases/user-feedback-analysis/govern-launch-and-iteration/",
+          "previousGateId": "define-evaluation-and-cost",
+          "artifactIds": [
+            "complete-review"
+          ]
+        }
+      ]
+    }
+  ]
+}

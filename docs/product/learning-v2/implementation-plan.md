@@ -1,6 +1,6 @@
 # AI-Native 学习体系 V2 实施计划
 
-- 状态：已批准，阶段 11 已完成
+- 状态：已批准，阶段 12B 已完成，当前进入 12C
 - 批准日期：2026-08-03
 - 产品规格：[`product-spec.md`](./product-spec.md)
 - 技术基线：Astro 静态站、现有内容 Schema、Pagefind、Cytoscape 和统一 CI
@@ -58,19 +58,23 @@
 
 ### 12A：案例研究 Gate
 
-1. 明确目标角色、当前流程、输入来源、输出使用者和业务结果。
-2. 建立六个评审关卡的事实、假设、未知项和来源。
-3. 为规则、模型和人工的边界准备可比较方案。
-4. 建立失败清单：接口失败、重复、缺失、标签漂移、错误聚类、幻觉建议、超时和人工接管。
-5. 定义指标口径候选：分类质量、主题覆盖、Bug 发现、人工时间、单位处理成本和延迟。
-6. 不具备真实证据的数字保持待验证。
+- [x] 明确目标角色、当前流程、输入来源、输出使用者和业务结果。
+- [x] 建立六个评审关卡的事实、假设、未知项和来源。
+- [x] 为规则、模型和人工的边界准备可比较方案。
+- [x] 建立失败清单：接口失败、重复、缺失、标签漂移、错误聚类、幻觉建议、超时和人工接管。
+- [x] 定义指标口径候选：分类质量、主题覆盖、Bug 发现、人工时间、单位处理成本和延迟。
+- [x] 不具备真实证据的数字保持待验证。
+
+产物：[`research/user-feedback-analysis/research-pack.md`](./research/user-feedback-analysis/research-pack.md) 与 [`research/user-feedback-analysis/source-register.md`](./research/user-feedback-analysis/source-register.md)。
 
 ### 12B：内容模型 Gate
 
-1. 定义 case、gate、option、artifact、metric、failure mode 和 reference 类型。
-2. 校验稳定 ID、关卡顺序、阶段引用、案例状态和知识引用。
-3. 生成案例注册表和静态导航数据。
-4. 建立无效引用、重复关卡、缺少失败项和状态不一致的固定反例测试。
+- [x] 定义 case、gate、option、artifact、metric、failure mode 和 reference 类型。
+- [x] 校验稳定 ID、关卡顺序、阶段引用、案例状态和知识引用。
+- [x] 生成案例注册表和静态导航数据。
+- [x] 建立无效引用、重复关卡、缺少失败项和状态不一致的固定反例测试。
+
+产物：`src/content/cases/user-feedback-analysis.yml`、`src/lib/cases/`、`src/generated/case-registry.json`、`src/generated/case-navigation.json` 与 `tests/unit/cases/model.test.ts`。
 
 ### 12C：Huashu Design Gate
 
@@ -227,4 +231,4 @@ pnpm test:e2e
 
 ## 10. 当前下一步
 
-阶段 11 完成后进入阶段 12A：为“每日用户反馈分析与产品改进”建立研究包。视觉设计、生产开发和部署均未在当前文档批次中启动。
+阶段 12B 已完成。下一步进入阶段 12C：使用 `$huashu-design` 基于同一份黄金项目内容制作三套 HTML 方向稿和桌面、手机截图，展示后停止等待用户选择。生产开发和部署均未启动。

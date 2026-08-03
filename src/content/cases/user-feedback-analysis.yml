@@ -1,0 +1,787 @@
+id: user-feedback-analysis
+title: 每日用户反馈分析与产品改进
+level: capstone
+domain: AI 产品运营与用户洞察
+audience:
+  - 零基础或初级 AI 产品经理
+  - 需要评审 AI 方案的产品与业务人员
+businessContext: 这是一个教学案例。某数字产品团队从客服工单、应用商店评论和站内反馈接收中文用户反馈，产品团队希望形成可复核的问题证据和行动候选。
+currentProcess:
+  - 从多个来源导出反馈
+  - 人工合并表格并处理重复项
+  - 人工打标签和统计高频问题
+  - 阅读代表反馈并编写简报
+  - 产品经理复核并安排后续动作
+objective: 在来源可追溯、错误可发现、人工可接管和成本可计算的前提下，缩短从反馈产生到可复核问题证据出现的时间。
+baseline:
+  - id: baseline-process-assumption
+    kind: assumption
+    evidence: E1
+    statement: 当前人工流程用于建立教学起点，不代表真实组织一定使用表格或存在效率问题。
+  - id: baseline-values-unknown
+    kind: unknown
+    evidence: E0
+    statement: 实际反馈量、处理时间、覆盖、返工、成本和行动结果均需要真实组织数据验证。
+constraints:
+  - id: constraint-no-fabricated-values
+    kind: fact
+    evidence: E2
+    statement: AI-Native 不为教学完整性虚构业务量、准确率、成本、收益或上线阈值。
+  - id: constraint-human-publish
+    kind: recommendation
+    evidence: E1
+    statement: 模型不得拥有最终发布、产品优先级、外发回复或问题关闭权限。
+  - id: constraint-source-traceability
+    kind: recommendation
+    evidence: E3
+    statement: 重要主题、疑似问题和行动草稿必须能够回到原始反馈证据和处理步骤。
+status: draft
+updatedAt: 2026-08-03
+
+gates:
+  - id: decide-ai-boundary
+    order: 1
+    stageId: model-boundaries
+    status: draft
+    title: 判断 AI 边界
+    question: 哪些步骤真的需要概率语义能力？
+    decision: 规则负责确定性任务，只在语义分类、近似重复和主题发现步骤引入受限模型。
+    facts:
+      - id: gate-one-deterministic-tasks
+        kind: fact
+        evidence: E1
+        statement: 字段校验、精确去重、固定计数、状态和发布权限可以由确定性规则完成。
+      - id: gate-one-semantic-variation
+        kind: assumption
+        evidence: E1
+        statement: 用户表达存在语义变化，固定词表可能无法覆盖全部分类、近似重复和新主题。
+    unknowns:
+      - id: gate-one-rule-coverage
+        kind: unknown
+        evidence: E0
+        statement: 现有标签规则的覆盖率、未知表达比例和各类误判成本尚未获得真实数据。
+    options:
+      - id: rules-first-workflow
+        label: 规则优先的受限工作流
+        assessment: recommended
+        rationale: 把确定性步骤和概率步骤分开，才能分别控制质量、成本、权限与恢复。
+        conditions:
+          - 每一步都有固定输入输出和终止条件
+          - 语义步骤可以单独评测并回退
+        risks:
+          - 规则和标签体系需要持续维护
+        consequences:
+          - 可以定位具体失败步骤
+          - 不必要的模型调用被删除
+        artifactDelta: 在 AI 适用性判断卡中标出规则、模型和人工的初步边界。
+      - id: rules-only-system
+        label: 全部使用固定规则
+        assessment: conditional
+        rationale: 对稳定词表和确定类别成本低且可复现，但可能漏掉表达变化和新主题。
+        conditions:
+          - 语义变化很少且规则覆盖经过验证
+        risks:
+          - 新表达和新问题可能被静默漏掉
+        consequences:
+          - 系统简单但发现能力受规则范围限制
+        artifactDelta: 在判断卡中记录仅规则方案的适用条件和升级触发信号。
+      - id: autonomous-agent-system
+        label: 自主 Agent 完成并发布简报
+        assessment: risky
+        rationale: 当前步骤可以预定义，动态自主性没有被证明，却扩大了权限、终止和审计风险。
+        conditions:
+          - 只有动态工具选择被真实需求证明后才能重新评估
+        risks:
+          - 错误传播到真实发布动作
+          - 难以判断哪一步引入错误
+        consequences:
+          - 当前阶段否决该方案
+        artifactDelta: 在判断卡中记录暂不引入 Agent 及重新评估条件。
+    artifactIds:
+      - ai-applicability-card
+    metricIds:
+      - reviewed-feedback-coverage
+      - unit-approved-brief-cost
+    failureModeIds:
+      - unnecessary-model-call
+      - source-access-failure
+    referenceIds:
+      - term-ai-capability-boundary
+      - term-workflow-automation
+      - source-openai-latency
+
+  - id: establish-value-and-data
+    order: 2
+    stageId: opportunity-judgment
+    status: draft
+    title: 建立价值与数据条件
+    question: 怎样证明这不是一个更漂亮的摘要 Demo？
+    decision: 先记录现有处理、覆盖、返工、问题发现和行动链路，再定义可观察目标和数据许可。
+    facts:
+      - id: gate-two-output-use
+        kind: assumption
+        evidence: E1
+        statement: 输出由产品运营、产品经理和客服或用户运营复核，并用于形成内部行动候选。
+      - id: gate-two-value-principle
+        kind: fact
+        evidence: E2
+        statement: 技术输出质量不等于业务价值，案例必须展示输出如何进入真实决策链路。
+    unknowns:
+      - id: gate-two-real-baseline
+        kind: unknown
+        evidence: E0
+        statement: 实际来源、数据许可、标签一致性、处理基线和简报触发行动的方式仍待验证。
+    options:
+      - id: baseline-before-automation
+        label: 先建立基线和使用链路
+        assessment: recommended
+        rationale: 没有当前流程和后续行动证据，就无法判断自动化是否解决了值得解决的问题。
+        conditions:
+          - 明确输出使用者和责任人
+          - 获取合规的历史样本与当前流程记录
+        risks:
+          - 前期研究会推迟原型展示
+        consequences:
+          - 后续指标可以映射到真实任务
+          - 数据限制会在开发前暴露
+        artifactDelta: 在机会评估表中加入角色、当前流程、基线、数据权限和业务结果字段。
+      - id: prototype-before-baseline
+        label: 先做受控原型再补基线
+        assessment: conditional
+        rationale: 可用于确认数据结构和可行性，但原型结果不能被描述为业务价值已经成立。
+        conditions:
+          - 原型只处理授权样本
+          - 不进入真实发布与优先级流程
+        risks:
+          - 团队可能把流畅输出误当作价值证据
+        consequences:
+          - 获得技术问题清单但不能得出上线结论
+        artifactDelta: 在机会评估表中标记原型仅验证可行性，不代表业务机会成立。
+      - id: summary-quality-as-value
+        label: 用摘要流畅度证明价值
+        assessment: risky
+        rationale: 文本看起来专业并不证明覆盖提高、问题更早发现或行动质量改善。
+        conditions:
+          - 没有条件能够让文风单独成为业务价值证明
+        risks:
+          - 形成没有数据闭环的学生作品
+        consequences:
+          - 无法定义上线与复盘依据
+        artifactDelta: 在机会评估表中记录否决原因并要求补齐业务链路。
+    artifactIds:
+      - opportunity-assessment
+    metricIds:
+      - reviewed-feedback-coverage
+      - confirmed-issue-lead-time
+      - human-review-time
+    failureModeIds:
+      - missing-required-fields
+      - sensitive-data-exposure
+    referenceIds:
+      - route-ai-product-scenario
+      - source-nist-core
+      - term-problem-solution-fit
+
+  - id: select-workflow
+    order: 3
+    stageId: solution-choice
+    status: draft
+    title: 拆解并选择工作流
+    question: 如何让每一步可评估、可替换、可停止？
+    decision: 采用固定工作流和结构化中间结果，分别处理接入、校验、去重、分类、聚类、摘要与人工复核。
+    facts:
+      - id: gate-three-step-contracts
+        kind: recommendation
+        evidence: E3
+        statement: 多步工作流中的每个概率步骤都应有独立输入输出、日志和评测，而不是只看最终文本。
+      - id: gate-three-fixed-process
+        kind: assumption
+        evidence: E1
+        statement: 当前案例的主要步骤可以预定义，不需要模型动态决定全部工具和执行顺序。
+    unknowns:
+      - id: gate-three-task-shape
+        kind: unknown
+        evidence: E0
+        statement: 标签是单标签还是多标签、主题更新频率和跨来源身份合并需求仍待真实数据确认。
+    options:
+      - id: observable-fixed-workflow
+        label: 可观察的固定工作流
+        assessment: recommended
+        rationale: 固定步骤允许对失败、版本、成本和恢复进行独立治理，并保留必要语义能力。
+        conditions:
+          - 中间结果使用结构化契约
+          - 每一步记录版本、状态和失败原因
+        risks:
+          - 步骤增多会增加编排和维护成本
+        consequences:
+          - 可以局部替换模型或退回人工流程
+        artifactDelta: 在流程选择表中固定步骤、机制、输入、输出、状态、权限和终止条件。
+      - id: single-model-call
+        label: 单次模型调用完成全部分析
+        assessment: conditional
+        rationale: 在探索阶段可以快速验证输出形态，但不适合作为需要定位失败的生产架构。
+        conditions:
+          - 仅处理小型受控样本
+          - 不把结果直接进入业务动作
+        risks:
+          - 分类、聚类和摘要错误相互混合
+        consequences:
+          - 原型简单但评测和恢复能力不足
+        artifactDelta: 在流程选择表中注明单次调用仅作为探索基线。
+      - id: dynamic-agent-orchestration
+        label: 动态 Agent 自主编排工具
+        assessment: risky
+        rationale: 当前没有证据证明动态规划收益可以覆盖新增的权限、状态和终止复杂度。
+        conditions:
+          - 未来出现无法预定义的真实任务时重新评估
+        risks:
+          - 工具调用卡死或循环
+          - 外部动作权限扩大
+        consequences:
+          - 当前方案不进入实现范围
+        artifactDelta: 在流程选择表中记录 Agent 方案的否决证据和未来触发条件。
+    artifactIds:
+      - workflow-selection
+    metricIds:
+      - workflow-success-rate
+      - p95-processing-latency
+      - unit-approved-brief-cost
+    failureModeIds:
+      - model-timeout
+      - version-regression
+    referenceIds:
+      - term-task-decomposition
+      - term-structured-output
+      - term-workflow-automation
+      - source-openai-evals
+
+  - id: design-control-and-recovery
+    order: 4
+    stageId: product-experience
+    status: draft
+    title: 设计控制与恢复
+    question: 失败出现时谁能看见、纠正、接管和恢复？
+    decision: 低确定性、高影响、冲突和无证据结果进入人工队列，原文与每一步结果始终保留。
+    facts:
+      - id: gate-four-human-authority
+        kind: recommendation
+        evidence: E3
+        statement: 人工接管必须有明确责任人、必要上下文、真实权限和响应路径，不能只是界面上的按钮。
+      - id: gate-four-reversible-data
+        kind: recommendation
+        evidence: E1
+        statement: 近似重复和主题合并只保存候选关系，不删除原始反馈，确保纠正可以撤销。
+    unknowns:
+      - id: gate-four-review-capacity
+        kind: unknown
+        evidence: E0
+        statement: 人工复核容量、响应时间、升级责任人和业务连续性要求尚未得到真实组织确认。
+    options:
+      - id: risk-based-review
+        label: 基于风险的人工复核
+        assessment: recommended
+        rationale: 把有限人工能力用于高影响、冲突、低确定性和无证据结果，同时保留低风险自动处理。
+        conditions:
+          - 每个升级携带原文、原因和建议动作
+          - 责任人拥有修改、驳回和停止权限
+        risks:
+          - 风险规则不当会造成队列过载或漏报
+        consequences:
+          - 自动化范围可以随证据逐步扩大
+        artifactDelta: 在责任恢复图中加入人工队列、升级上下文、超时和撤销路径。
+      - id: review-every-record
+        label: 每条记录都由人工复核
+        assessment: conditional
+        rationale: 影子运行和早期校准阶段有价值，但长期可能把自动化变成额外工作。
+        conditions:
+          - 有明确的试运行期限和抽样退出标准
+        risks:
+          - 人工负担增加并形成审批疲劳
+        consequences:
+          - 获得高质量纠正样本但吞吐受限
+        artifactDelta: 在责任恢复图中标注全量复核仅用于受控阶段。
+      - id: publish-with-disclaimer
+        label: 自动发布并附加免责声明
+        assessment: risky
+        rationale: 免责声明不能修复无依据建议，也不能替代发布权限和责任边界。
+        conditions:
+          - 不存在可接受的自动发布条件
+        risks:
+          - 错误建议进入真实决策
+        consequences:
+          - 当前阶段禁止该路径
+        artifactDelta: 在责任恢复图中明确最终发布必须由授权人员确认。
+    artifactIds:
+      - responsibility-recovery
+    metricIds:
+      - human-review-time
+      - review-queue-age
+      - unsupported-claim-rate
+    failureModeIds:
+      - duplicate-merge-error
+      - taxonomy-drift
+      - unsupported-summary
+      - review-queue-overload
+    referenceIds:
+      - route-human-ai-collaboration
+      - term-human-in-the-loop
+      - term-human-escalation
+      - term-error-recovery
+      - source-pair-failure
+
+  - id: define-evaluation-and-cost
+    order: 5
+    stageId: quality-constraints
+    status: draft
+    title: 定义评测、成本与护栏
+    question: 怎样证明质量、时效和成本同时可接受？
+    decision: 建立任务级黄金集、错误切片、线上运行指标和单位成功任务成本，具体阈值等待真实基线。
+    facts:
+      - id: gate-five-metric-selection
+        kind: fact
+        evidence: E3
+        statement: 类别不平衡或错误成本不同时，总体准确率不能替代 precision、recall 和错误类型分析。
+      - id: gate-five-total-cost
+        kind: fact
+        evidence: E2
+        statement: 单位成功任务成本必须包含接入、模型、失败重试、运行和人工复核，而不只是调用价格。
+    unknowns:
+      - id: gate-five-thresholds
+        kind: unknown
+        evidence: E0
+        statement: 各类错误成本、预算、时效、上线门槛和回滚阈值尚未通过真实基线确定。
+    options:
+      - id: task-specific-evaluation
+        label: 分步任务评测与单位成本
+        assessment: recommended
+        rationale: 分别评测输入、去重、分类、主题、问题发现和摘要，才能知道优化是否改善真实任务。
+        conditions:
+          - 黄金集包含常见、边界和高影响少数类
+          - 自动评分与人工判断持续校准
+        risks:
+          - 建立和维护评测集需要业务人员投入
+        consequences:
+          - 版本比较和上线决定有可复核证据
+        artifactDelta: 在评测护栏表中加入分步指标、错误切片、成本公式和待验证阈值。
+      - id: aggregate-accuracy-only
+        label: 只用总体准确率验收
+        assessment: risky
+        rationale: 总体准确率会掩盖高影响少数类漏报，也无法评估摘要证据与主题质量。
+        conditions:
+          - 没有条件能让单一准确率覆盖完整工作流
+        risks:
+          - 严重长尾失败被平均值掩盖
+        consequences:
+          - 无法形成可靠上线门槛
+        artifactDelta: 在评测护栏表中记录单指标方案的盲区和否决理由。
+      - id: model-price-only
+        label: 只比较模型单次价格
+        assessment: conditional
+        rationale: 单价可以用于初步筛选，但不能代表重试、人工、运行和失败后的总成本。
+        conditions:
+          - 只作为成本构成中的一个输入
+        risks:
+          - 便宜模型可能通过返工和失败增加总成本
+        consequences:
+          - 必须补充单位成功任务口径后才能决策
+        artifactDelta: 在成本表中把模型单价降为总成本的一项，不作为最终结论。
+    artifactIds:
+      - evaluation-guardrails
+    metricIds:
+      - classification-macro-f1
+      - high-impact-recall
+      - theme-evidence-coverage
+      - unsupported-claim-rate
+      - workflow-success-rate
+      - p95-processing-latency
+      - unit-approved-brief-cost
+    failureModeIds:
+      - high-impact-false-negative
+      - unsupported-summary
+      - version-regression
+    referenceIds:
+      - term-golden-dataset
+      - term-offline-evaluation
+      - term-online-evaluation
+      - term-cost-optimization
+      - source-openai-evals
+      - source-google-metrics
+
+  - id: govern-launch-and-iteration
+    order: 6
+    stageId: capstone
+    status: draft
+    title: 治理上线与持续迭代
+    question: 什么时候扩大范围，什么时候停止或回滚？
+    decision: 按影子运行、辅助草稿、有限使用和扩大范围四级推进，每一级独立评审并保留回滚路径。
+    facts:
+      - id: gate-six-no-auto-promotion
+        kind: recommendation
+        evidence: E3
+        statement: 流程跑通不能自动触发上线或扩围，必须重新检查预期用途、风险、质量、成本和人工控制。
+      - id: gate-six-feedback-meaning
+        kind: recommendation
+        evidence: E3
+        statement: 人工修改、驳回、业务偏好和真实错误必须分开记录，避免把所有反馈解释为同一种质量信号。
+    unknowns:
+      - id: gate-six-real-outcomes
+        kind: unknown
+        evidence: E0
+        statement: 真实使用者行为、纠正数据代表性、行动结果和各级晋级门槛仍待试运行验证。
+    options:
+      - id: staged-launch
+        label: 四级渐进上线
+        assessment: recommended
+        rationale: 先在不影响现行业务的影子模式发现错误，再按证据逐级增加可见性和范围。
+        conditions:
+          - 每一级有责任人、通过条件和回滚动作
+          - 版本变化重新运行固定评测集
+        risks:
+          - 推进速度慢于直接上线
+        consequences:
+          - 风险影响被限制在明确范围
+          - 可以按来源、类别或版本局部回退
+        artifactDelta: 在完整评审档案中串联六份材料、四级上线、监控、停止和复盘责任。
+      - id: direct-full-launch
+        label: 完整流程直接替代人工
+        assessment: risky
+        rationale: 当前没有真实质量、人工容量、成本和恢复证据，直接替代会放大未知失败。
+        conditions:
+          - 当前没有满足直接全量替代的证据
+        risks:
+          - 无声漏报和错误建议进入产品决策
+        consequences:
+          - 当前阶段禁止该路径
+        artifactDelta: 在完整评审档案中记录直接上线的缺失证据和否决理由。
+      - id: permanent-shadow-mode
+        label: 永久保持影子运行
+        assessment: conditional
+        rationale: 对高风险或价值不足场景可能合理，但如果永远不进入真实任务，也无法验证业务价值。
+        conditions:
+          - 风险或收益证据不支持更高权限
+        risks:
+          - 长期产生运行成本却不改善实际流程
+        consequences:
+          - 需要设定停止项目或重新定义目标的评审点
+        artifactDelta: 在完整评审档案中加入停止项目而非默认扩围的选项。
+    artifactIds:
+      - complete-review
+    metricIds:
+      - confirmed-issue-lead-time
+      - workflow-success-rate
+      - review-queue-age
+      - unit-approved-brief-cost
+    failureModeIds:
+      - source-access-failure
+      - sensitive-data-exposure
+      - review-queue-overload
+      - correction-loop-bias
+    referenceIds:
+      - term-observability
+      - term-rollback
+      - term-ai-risk-management
+      - source-nist-core
+      - source-pair-feedback
+
+artifacts:
+  - id: ai-applicability-card
+    type: ai-applicability
+    title: AI 适用性判断卡
+    summary: 说明哪些任务使用规则、模型或人工，以及为什么当前不默认使用自主 Agent。
+  - id: opportunity-assessment
+    type: opportunity-assessment
+    title: 场景机会评估表
+    summary: 记录使用者、当前流程、业务结果、数据条件、基线和仍待验证的关键问题。
+  - id: workflow-selection
+    type: workflow-selection
+    title: 任务流程与方案选择表
+    summary: 展示每个步骤的输入、输出、状态、机制、权限、异常和终止条件。
+  - id: responsibility-recovery
+    type: responsibility-recovery
+    title: 人机责任与失败恢复图
+    summary: 明确错误信号、恢复动作、人工队列、升级上下文、责任人和撤销路径。
+  - id: evaluation-guardrails
+    type: evaluation-guardrails
+    title: 评测、成本与上线护栏表
+    summary: 汇总任务级评测、错误切片、单位成功任务成本、运行指标和待验证阈值。
+  - id: complete-review
+    type: complete-review
+    title: 完整 AI 产品评审档案
+    summary: 串联机会、方案、体验、质量、成本、上线分级、监控、回滚和下一轮验证。
+
+metrics:
+  - id: reviewed-feedback-coverage
+    category: business
+    label: 复核反馈覆盖
+    definition: 被纳入人工可复核分析的授权反馈占全部目标反馈的比例。
+    desiredDirection: increase
+    thresholdStatus: baseline-needed
+  - id: confirmed-issue-lead-time
+    category: business
+    label: 确认问题发现周期
+    definition: 从反馈产生到问题被授权人员确认并进入行动链路的端到端时间。
+    desiredDirection: decrease
+    thresholdStatus: baseline-needed
+  - id: classification-macro-f1
+    category: quality
+    label: 分类 Macro F1
+    definition: 对每个标签分别计算 F1 后取平均，避免高频类别掩盖少数类别表现。
+    desiredDirection: increase
+    thresholdStatus: baseline-needed
+  - id: high-impact-recall
+    category: quality
+    label: 高影响问题召回
+    definition: 黄金集中实际高影响问题被系统候选发现的比例，重点观察假阴性。
+    desiredDirection: increase
+    thresholdStatus: baseline-needed
+  - id: theme-evidence-coverage
+    category: quality
+    label: 主题证据覆盖
+    definition: 已发布主题中能够回到充分原始反馈证据的主题比例。
+    desiredDirection: increase
+    thresholdStatus: baseline-needed
+  - id: unsupported-claim-rate
+    category: quality
+    label: 无依据主张率
+    definition: 摘要或行动草稿中无法由关联原始反馈支持的主张比例。
+    desiredDirection: decrease
+    thresholdStatus: baseline-needed
+  - id: workflow-success-rate
+    category: operation
+    label: 工作流成功率
+    definition: 目标批次在证据完整且无需异常补偿的情况下进入人工复核的比例。
+    desiredDirection: increase
+    thresholdStatus: baseline-needed
+  - id: p95-processing-latency
+    category: operation
+    label: P95 处理延迟
+    definition: 从授权记录进入系统到形成可复核候选的第九十五百分位端到端时间。
+    desiredDirection: decrease
+    thresholdStatus: baseline-needed
+  - id: human-review-time
+    category: human
+    label: 人工复核时间
+    definition: 授权人员检查、修改、驳回和确认系统候选所需的实际处理时间。
+    desiredDirection: decrease
+    thresholdStatus: baseline-needed
+  - id: review-queue-age
+    category: human
+    label: 复核队列时长
+    definition: 等待人工处理的项目从进入队列到获得决定的时间分布。
+    desiredDirection: decrease
+    thresholdStatus: baseline-needed
+  - id: unit-approved-brief-cost
+    category: cost
+    label: 单位已批准简报成本
+    definition: 接入、模型、失败重试、运行和人工复核总成本除以证据完整的已批准简报数。
+    desiredDirection: decrease
+    thresholdStatus: baseline-needed
+
+failureModes:
+  - id: unnecessary-model-call
+    title: 不必要的模型调用
+    signal: 确定性任务仍产生模型请求和可变结果
+    impact: 增加延迟、成本和不必要的不确定性
+    recovery: 改为规则步骤并使用固定样本回归验证
+    owner: 产品与工程
+  - id: source-access-failure
+    title: 来源接入失败
+    signal: 来源批次缺口、错误码或队列持续积压
+    impact: 简报覆盖不完整并可能形成错误趋势判断
+    recovery: 重试或延迟批次，明确标记缺失来源并由工程确认补采
+    owner: 工程
+  - id: missing-required-fields
+    title: 必要字段缺失
+    signal: Schema 校验失败或来源字段映射发生变化
+    impact: 记录被错配、丢失或错误进入后续分析
+    recovery: 隔离记录并修复字段映射，不把无效输入发送给模型
+    owner: 数据责任人
+  - id: sensitive-data-exposure
+    title: 敏感数据暴露
+    signal: 脱敏检测、权限审查或人工复核发现不应处理的数据
+    impact: 形成隐私、权限和组织风险
+    recovery: 停止处理并隔离相关批次，按数据事件流程处置
+    owner: 数据与安全责任人
+  - id: duplicate-merge-error
+    title: 重复合并错误
+    signal: 人工驳回重复候选或频次出现异常变化
+    impact: 原始证据被错误合并并造成主题频次失真
+    recovery: 保留原文并撤销候选关系，重新校准相似度规则
+    owner: 产品运营
+  - id: taxonomy-drift
+    title: 标签体系漂移
+    signal: 标签分布异常、定义变化或固定回归集下降
+    impact: 跨批次趋势不可比较并造成错误路由
+    recovery: 回退标签版本并进入重标队列，由标签责任人批准新版
+    owner: 标签责任人
+  - id: high-impact-false-negative
+    title: 高影响问题漏报
+    signal: 后续人工、客服或线上事件发现系统遗漏的重要问题
+    impact: 重大问题发现和处理被延迟
+    recovery: 增加规则信号和高影响切片样本，复盘后重新评测
+    owner: 产品与工程
+  - id: unsupported-summary
+    title: 无依据摘要或建议
+    signal: 结论无法回到原始反馈或与证据冲突
+    impact: 错误信息进入产品决策和行动链路
+    recovery: 阻止发布并重新生成或由人工编写，保留失败样本
+    owner: 产品经理
+  - id: model-timeout
+    title: 模型超时或不可用
+    signal: 超时、错误率或重试量超过已批准运行边界
+    impact: 批次延迟并增加失败与重试成本
+    recovery: 跳过非必要步骤或回到人工流程，工程决定恢复条件
+    owner: 工程
+  - id: version-regression
+    title: 版本质量回归
+    signal: 提示、模型或配置变化后固定评测集下降
+    impact: 质量无声漂移且历史结果不可比较
+    recovery: 冻结或回退版本，阻止晋级并补充失败样本
+    owner: 产品与工程
+  - id: review-queue-overload
+    title: 人工复核过载
+    signal: 队列时长和未处理项目持续增长
+    impact: 人在回路失去实际响应能力并形成业务死路
+    recovery: 收紧自动化范围并按风险排序，由业务责任人调整容量
+    owner: 业务责任人
+  - id: correction-loop-bias
+    title: 纠正反馈被错误解释
+    signal: 自动指标改善但人工复盘和真实任务结果变差
+    impact: 错误反馈进入评测集并放大系统偏差
+    recovery: 区分修改、驳回、偏好和真实错误后重新校准标签
+    owner: 评测责任人
+
+references:
+  - id: term-ai-capability-boundary
+    kind: term
+    label: AI 能力边界
+    targetId: ai-capability-boundary
+    supports: 用于判断确定性系统与概率模型的适用范围。
+  - id: term-workflow-automation
+    kind: term
+    label: 工作流自动化
+    targetId: workflow-automation
+    supports: 用于理解固定步骤、状态、异常和恢复的编排方式。
+  - id: term-problem-solution-fit
+    kind: term
+    label: 问题方案匹配
+    targetId: problem-solution-fit
+    supports: 用于区分技术演示效果与值得解决的业务问题。
+  - id: term-task-decomposition
+    kind: term
+    label: 任务拆解
+    targetId: task-decomposition
+    supports: 用于拆分目标、步骤、输入输出和终止条件。
+  - id: term-structured-output
+    kind: term
+    label: 结构化输出
+    targetId: structured-output
+    supports: 用于约束工作流中间结果并支持自动校验。
+  - id: term-human-in-the-loop
+    kind: term
+    label: 人在回路
+    targetId: human-in-the-loop
+    supports: 用于定义高影响节点的人工决定和权限。
+  - id: term-human-escalation
+    kind: term
+    label: 人工升级处理
+    targetId: human-escalation
+    supports: 用于设计异常发生后的上下文交接和责任路径。
+  - id: term-error-recovery
+    kind: term
+    label: 错误恢复
+    targetId: error-recovery
+    supports: 用于设计重试、撤销、降级和继续任务的路径。
+  - id: term-golden-dataset
+    kind: term
+    label: 黄金数据集
+    targetId: golden-dataset
+    supports: 用于管理经过业务定义和版本化的评测样本。
+  - id: term-offline-evaluation
+    kind: term
+    label: 离线评估
+    targetId: offline-evaluation
+    supports: 用于在版本发布前比较固定任务和错误切片。
+  - id: term-online-evaluation
+    kind: term
+    label: 在线评估
+    targetId: online-evaluation
+    supports: 用于观察真实使用分布、影响和持续变化。
+  - id: term-cost-optimization
+    kind: term
+    label: 成本优化
+    targetId: cost-optimization
+    supports: 用于定义单位成功任务成本和调用优化顺序。
+  - id: term-observability
+    kind: term
+    label: 可观测性
+    targetId: observability
+    supports: 用于关联输入、步骤、版本、失败和最终结果。
+  - id: term-rollback
+    kind: term
+    label: 回滚
+    targetId: rollback
+    supports: 用于定义版本、来源或类别级别的恢复动作。
+  - id: term-ai-risk-management
+    kind: term
+    label: AI 风险管理
+    targetId: ai-risk-management
+    supports: 用于持续识别、测量、响应和复核部署风险。
+  - id: route-ai-product-scenario
+    kind: route
+    label: AI 产品与场景判断
+    targetId: ai-product-scenario-judgment
+    supports: 支持业务价值、场景条件和方案边界的前置学习。
+  - id: route-human-ai-collaboration
+    kind: route
+    label: 高效人机协作
+    targetId: human-ai-collaboration
+    supports: 支持责任、控制、纠正、恢复和人工接管的前置学习。
+  - id: source-nist-core
+    kind: source
+    label: NIST AI RMF Core
+    url: https://airc.nist.gov/airmf-resources/airmf/5-sec-core/
+    publisher: National Institute of Standards and Technology
+    accessedAt: 2026-08-03
+    stability: evolving
+    supports: 支持预期用途、角色责任、人类监督、风险处理和部署决定。
+  - id: source-pair-failure
+    kind: source
+    label: Google PAIR Errors and Graceful Failure
+    url: https://pair.withgoogle.com/chapter/errors-failing/
+    publisher: Google PAIR
+    accessedAt: 2026-08-03
+    stability: stable
+    supports: 支持按任务定义错误、提供继续路径、反馈和人工接管。
+  - id: source-pair-feedback
+    kind: source
+    label: Google PAIR Feedback and Control
+    url: https://pair.withgoogle.com/guidebook-v2/chapter/feedback-controls/
+    publisher: Google PAIR
+    accessedAt: 2026-08-03
+    stability: stable
+    supports: 支持明确反馈用途、平衡自动化与控制并保留手动路径。
+  - id: source-openai-evals
+    kind: source
+    label: OpenAI Evaluation Best Practices
+    url: https://developers.openai.com/api/docs/guides/evaluation-best-practices
+    publisher: OpenAI
+    accessedAt: 2026-08-03
+    stability: evolving
+    supports: 支持任务化评测、真实分布、持续评估和人工校准。
+  - id: source-google-metrics
+    kind: source
+    label: Google Classification Metrics
+    url: https://developers.google.com/machine-learning/crash-course/classification/accuracy-precision-recall
+    publisher: Google for Developers
+    accessedAt: 2026-08-03
+    stability: stable
+    supports: 支持按错误成本选择 precision、recall 和其他分类指标。
+  - id: source-openai-latency
+    kind: source
+    label: OpenAI Latency Optimization
+    url: https://developers.openai.com/api/docs/guides/latency-optimization
+    publisher: OpenAI
+    accessedAt: 2026-08-03
+    stability: evolving
+    supports: 支持减少不必要调用、请求和 Token，并避免默认使用 LLM。
