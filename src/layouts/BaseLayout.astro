@@ -2,7 +2,9 @@
 import { SITE } from '@/config/site';
 import SiteFooter from '@/components/layout/SiteFooter.astro';
 import SiteHeader from '@/components/layout/SiteHeader.astro';
+import SiteScopeNav from '@/components/layout/SiteScopeNav.astro';
 import '@/styles/global.css';
+import unifiedPagesStylesheet from '@/styles/unified-pages.css?url';
 
 interface Props {
   title?: string;
@@ -28,6 +30,21 @@ const {
   searchMetadata,
 } = Astro.props;
 const pageTitle = title === SITE.name ? title : `${title} | ${SITE.name}`;
+const currentPath = Astro.url.pathname;
+const pagesWithEmbeddedScope = new Set(['/', '/learn/', '/learn/questions/', '/learn/cases/']);
+const loadUnifiedPagesStyles = !pagesWithEmbeddedScope.has(currentPath);
+const showSharedScope = title !== '页面未找到' && !pagesWithEmbeddedScope.has(currentPath);
+const activeScope = currentPath.startsWith('/learn/questions/')
+  ? 'course'
+  : currentPath.startsWith('/learn/cases/')
+    ? 'cases'
+    : currentPath.startsWith('/atlas/') || currentPath.startsWith('/terms/')
+      ? 'knowledge'
+      : currentPath.startsWith('/routes/')
+        ? 'routes'
+        : currentPath.startsWith('/graph/')
+          ? 'graph'
+          : undefined;
 const canonicalUrl = SITE.publicOrigin
   ? new URL(Astro.url.pathname.replace(/^\//, ''), `${SITE.publicOrigin}/`).toString()
   : undefined;
@@ -59,7 +76,7 @@ const structuredData =
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
-    <meta name="theme-color" content="#090a0c" />
+    <meta name="theme-color" content="#ffffff" />
     <meta
       name="robots"
       content={SITE.publicOrigin && indexable ? 'index,follow' : 'noindex,nofollow'}
@@ -72,6 +89,7 @@ const structuredData =
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    {loadUnifiedPagesStyles && <link rel="stylesheet" href={unifiedPagesStylesheet} />}
     {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
     {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
     {socialImageUrl && <meta property="og:image" content={socialImageUrl} />}
@@ -98,7 +116,8 @@ const structuredData =
   </head>
   <body>
     <a class="skip-link" href="#main-content">跳到主要内容</a>
-    <SiteHeader currentPath={Astro.url.pathname} />
+    <SiteHeader currentPath={currentPath} />
+    {showSharedScope && <SiteScopeNav active={activeScope} />}
     <slot />
     <SiteFooter />
   </body>

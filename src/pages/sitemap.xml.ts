@@ -8,6 +8,7 @@ import { loadProjectContent } from '@/lib/content/io';
 const STATIC_PATHS = [
   '/',
   '/learn/',
+  '/learn/cases/',
   '/learn/questions/',
   '/atlas/',
   '/routes/',

@@ -1,0 +1,134 @@
+---
+import ContentScopeNav from '@/components/layout/ContentScopeNav.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { loadCaseStudies } from '@/lib/cases/io';
+import { CASE_STATUS_LABELS, caseHref, gateHref, GOLDEN_CASE_ID } from '@/lib/cases/presentation';
+import { loadProjectContent } from '@/lib/content/io';
+import { deriveSiteMetrics } from '@/lib/site/metrics';
+import '@/styles/case-study.css';
+import '@/styles/case-library.css';
+
+const [cases, project] = await Promise.all([loadCaseStudies(), loadProjectContent()]);
+const metrics = deriveSiteMetrics(project);
+const libraryCases = cases.toSorted((left, right) => {
+  if (left.data.status === 'verified' && right.data.status !== 'verified') return -1;
+  if (right.data.status === 'verified' && left.data.status !== 'verified') return 1;
+  return left.data.title.localeCompare(right.data.title, 'zh-CN');
+});
+const verifiedCases = libraryCases.filter(({ data }) => data.status === 'verified');
+const draftCases = libraryCases.filter(({ data }) => data.status === 'draft');
+const goldenCases = libraryCases.filter(({ data }) => data.id === GOLDEN_CASE_ID);
+---
+
+<BaseLayout
+  title="AI 产品案例库"
+  description="浏览不同业务场景中的 AI 产品连续决策案例，并按内容状态选择可核验的学习材料。"
+  structuredDataType="CollectionPage"
+>
+  <main id="main-content" class="content-catalog case-catalog">
+    <ContentScopeNav
+      active="cases"
+      caseCount={cases.length}
+      relationCount={metrics.relationCount}
+      routeCount={metrics.publishedRouteCount}
+      termCount={metrics.termCount}
+    />
+
+    <div class="catalog-layout">
+      <aside class="catalog-sidebar">
+        <nav aria-label="案例筛选">
+          <a href="#case-list" aria-current="true">全部案例 {cases.length}</a>
+          <a href={verifiedCases[0] ? `#case-${verifiedCases[0].data.id}` : '#case-list'}>
+            已核验 {verifiedCases.length}
+          </a>
+          <a href={draftCases[0] ? `#case-${draftCases[0].data.id}` : '#case-list'}>
+            内容草稿 {draftCases.length}
+          </a>
+          <a href={goldenCases[0] ? `#case-${goldenCases[0].data.id}` : '#case-list'}>
+            完整项目 {goldenCases.length}
+          </a>
+        </nav>
+      </aside>
+
+      <div class="catalog-main">
+        <header class="catalog-title">
+          <h1>AI 产品案例库</h1>
+          <p>在完整业务场景里连续查看证据、方案选择、风险、材料变化与上线条件。</p>
+        </header>
+
+        <section class="catalog-section" aria-labelledby="case-list-heading">
+          <header>
+            <h2 id="case-list-heading">业务场景</h2>
+            <span>{cases.length} 个条目</span>
+          </header>
+
+          <div id="case-list" class="case-card-grid">
+            {
+              libraryCases.map(({ data: caseStudy }) => {
+                const firstGate = caseStudy.gates[0]!;
+                const isGolden = caseStudy.id === GOLDEN_CASE_ID;
+                return (
+                  <article
+                    id={`case-${caseStudy.id}`}
+                    class="case-catalog-card"
+                    data-level={isGolden ? 'capstone' : caseStudy.level}
+                  >
+                    <div class="case-card-status">
+                      <span data-status={caseStudy.status}>
+                        {CASE_STATUS_LABELS[caseStudy.status]}
+                      </span>
+                      <span>{isGolden ? '黄金完整项目' : '重点连续案例'}</span>
+                    </div>
+                    <div class="case-card-heading">
+                      <h2>
+                        <a href={caseHref(caseStudy.id)}>{caseStudy.title}</a>
+                      </h2>
+                      <span>{caseStudy.gates.length} GATES</span>
+                    </div>
+                    <p class="case-card-objective">{caseStudy.objective}</p>
+
+                    <div class="case-card-preview">
+                      <ol aria-label="案例 Gate">
+                        {caseStudy.gates.map((gate, index) => (
+                          <li>
+                            <span>{String(index + 1).padStart(2, '0')}</span>
+                            {gate.title}
+                          </li>
+                        ))}
+                      </ol>
+                      <dl>
+                        <div>
+                          <>
+                            <dt>指标</dt>
+                            <dd>{caseStudy.metrics.length}</dd>
+                          </>
+                        </div>
+                        <div>
+                          <>
+                            <dt>失败模式</dt>
+                            <dd>{caseStudy.failureModes.length}</dd>
+                          </>
+                        </div>
+                        <div>
+                          <>
+                            <dt>领域</dt>
+                            <dd>{caseStudy.domain}</dd>
+                          </>
+                        </div>
+                      </dl>
+                    </div>
+
+                    <div class="case-card-actions">
+                      <a href={gateHref(caseStudy.id, firstGate.id)}>从 Gate 01 开始</a>
+                      <a href={caseHref(caseStudy.id)}>查看项目档案</a>
+                    </div>
+                  </article>
+                );
+              })
+            }
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+</BaseLayout>

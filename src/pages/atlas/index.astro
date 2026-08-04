@@ -27,7 +27,7 @@ const termsByDomain = new Map(
   description="按领域查找 AI-Native 已收录的中文 AI 词条。"
   structuredDataType="CollectionPage"
 >
-  <main id="main-content">
+  <main id="main-content" class="atlas-page">
     <PageIntro
       eyebrow={`Knowledge atlas · ${metrics.domainCount} domains`}
       title="知识图鉴"
@@ -37,7 +37,12 @@ const termsByDomain = new Map(
     <SearchExperience compact={true} emptyBehavior="index" indexTarget="#atlas-index" />
 
     <section class="atlas-controls" data-atlas-controls aria-label="图鉴目录控制">
-      <label
+      <label class="atlas-domain-mobile"
+        ><span>当前领域</span><select data-atlas-domain-mobile>
+          {domains.map((domain) => <option value={domain.id}>{domain.shortNameZh}</option>)}
+        </select></label
+      >
+      <label class="atlas-ring-control"
         ><span>领域范围</span><select data-atlas-ring>
           <option value="all">全部领域</option>
           <option value="core">核心领域</option>
@@ -142,6 +147,9 @@ const termsByDomain = new Map(
     border-right: 1px solid var(--color-line-soft);
     padding: 0 var(--space-3);
   }
+  .atlas-domain-mobile {
+    display: none !important;
+  }
   .atlas-controls label:first-child {
     padding-left: 0;
   }
@@ -152,7 +160,7 @@ const termsByDomain = new Map(
   }
   .atlas-controls select {
     min-width: 0;
-    min-height: 2.75rem;
+    min-height: var(--control-height);
     border: 0;
     background: var(--color-black);
     color: var(--color-ink);
@@ -200,7 +208,7 @@ const termsByDomain = new Map(
   .domain-nav span {
     color: var(--color-quiet);
     font-family: var(--font-mono);
-    font-size: 0.6875rem;
+    font-size: var(--text-xs);
   }
   .domain-section {
     display: grid;
@@ -308,15 +316,25 @@ const termsByDomain = new Map(
     .atlas-controls p {
       grid-column: auto;
     }
+    .atlas-domain-mobile {
+      display: grid !important;
+    }
+    .atlas-ring-control,
     .domain-nav {
-      grid-template-columns: repeat(2, 1fr);
+      display: none !important;
     }
     .term-row {
+      min-height: 0;
       grid-template-columns: 1fr;
       gap: var(--space-2);
+      padding: var(--space-3);
     }
     .term-summary {
-      font-size: 1rem;
+      display: -webkit-box;
+      overflow: hidden;
+      font-size: var(--text-sm);
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
     }
     .term-row :global(.status-tag) {
       justify-self: start;

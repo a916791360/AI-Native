@@ -117,6 +117,7 @@ const localGraph = selectLocalGraph(generatedGraph as GraphData, term.id);
 >
   <main
     id="main-content"
+    class="term-page"
     data-pagefind-body={term.status !== 'draft' ? true : undefined}
     data-pagefind-ignore={term.status === 'draft' ? true : undefined}
   >
@@ -160,7 +161,8 @@ const localGraph = selectLocalGraph(generatedGraph as GraphData, term.id);
     }
 
     <div class="term-layout">
-      <aside class="term-index">
+      <details class="term-index" data-term-index open>
+        <summary>本页目录</summary>
         <p class="meta-label">本页结构</p>
         <nav aria-label="词条页目录">
           {
@@ -174,7 +176,7 @@ const localGraph = selectLocalGraph(generatedGraph as GraphData, term.id);
             )
           }
         </nav>
-      </aside>
+      </details>
 
       <article class="term-article">
         {
@@ -289,6 +291,16 @@ const localGraph = selectLocalGraph(generatedGraph as GraphData, term.id);
   </main>
 </BaseLayout>
 
+<script>
+  const termIndex = document.querySelector<HTMLDetailsElement>('[data-term-index]');
+  if (termIndex) {
+    const compactIndex = window.matchMedia('(max-width: 760px)');
+    const syncIndex = () => (termIndex.open = !compactIndex.matches);
+    compactIndex.addEventListener('change', syncIndex);
+    syncIndex();
+  }
+</script>
+
 <style>
   .term-hero {
     min-height: 31rem;
@@ -392,6 +404,9 @@ const localGraph = selectLocalGraph(generatedGraph as GraphData, term.id);
     height: max-content;
     border-right: 1px solid var(--color-line);
     padding: var(--space-5) var(--page-gutter);
+  }
+  .term-index > summary {
+    display: none;
   }
   .term-index nav {
     display: grid;
@@ -638,6 +653,34 @@ const localGraph = selectLocalGraph(generatedGraph as GraphData, term.id);
       position: static;
       border-right: 0;
       border-bottom: 1px solid var(--color-line);
+    }
+    .term-index {
+      padding: 0 var(--page-gutter);
+    }
+    .term-index > summary {
+      min-height: var(--control-height-mobile);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--color-ink);
+      cursor: pointer;
+      font-size: var(--text-sm);
+      font-weight: 650;
+      list-style: none;
+    }
+    .term-index > summary::-webkit-details-marker {
+      display: none;
+    }
+    .term-index > summary::after {
+      content: '+';
+      color: var(--color-muted);
+      font-family: var(--font-mono);
+    }
+    .term-index[open] > summary::after {
+      content: '-';
+    }
+    .term-index[open] > nav {
+      margin: 0 0 var(--space-3);
     }
     .term-title h1 {
       font-size: 3.5rem;

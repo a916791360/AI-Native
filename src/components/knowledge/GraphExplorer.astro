@@ -212,6 +212,7 @@ const serializedGraph = JSON.stringify(graph).replaceAll('<', '\\u003c');
     margin-right: var(--space-2);
   }
   .graph-relation-filters label {
+    min-height: var(--control-height);
     display: inline-flex;
     align-items: center;
     gap: 0.35rem;
@@ -251,8 +252,11 @@ const serializedGraph = JSON.stringify(graph).replaceAll('<', '\\u003c');
     color: var(--color-prerequisite);
   }
   .graph-view-controls button:disabled {
-    cursor: wait;
+    cursor: not-allowed;
     opacity: 0.45;
+  }
+  .graph-explorer[data-graph-state='loading'] .graph-view-controls button:disabled {
+    cursor: wait;
   }
   .graph-mobile-launch {
     display: none;
@@ -394,6 +398,9 @@ const serializedGraph = JSON.stringify(graph).replaceAll('<', '\\u003c');
     .graph-relation-filters {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .graph-relation-filters label {
+      min-height: var(--control-height-mobile);
     }
     .graph-relation-filters legend {
       grid-column: 1 / -1;

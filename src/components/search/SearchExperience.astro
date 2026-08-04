@@ -31,41 +31,48 @@ const feedbackUrl = buildContentIssueUrl({
     <p class="search-index-state" data-search-index-state>词条索引已就绪</p>
   </div>
 
-  <div class="search-filters" aria-label="筛选搜索结果">
-    <label>
-      <span>领域</span>
-      <select data-search-filter="domain">
-        <option value="">全部领域</option>
-        {domains.map((domain) => <option value={domain.id}>{domain.shortNameZh}</option>)}
-      </select>
-    </label>
-    <label>
-      <span>难度</span>
-      <select data-search-filter="difficulty">
-        <option value="">全部难度</option>
-        <option value="beginner">入门</option>
-        <option value="intermediate">进阶</option>
-        <option value="advanced">深入</option>
-      </select>
-    </label>
-    <label>
-      <span>状态</span>
-      <select data-search-filter="status">
-        <option value="">全部状态</option>
-        <option value="verified">已核验</option>
-        <option value="catalogued">已收录</option>
-        <option value="needs-review">需要复核</option>
-        <option value="deprecated">已弃用</option>
-      </select>
-    </label>
-    <button type="button" class="search-clear" data-search-clear>清除</button>
-  </div>
+  <details class="search-filter-panel" data-search-filter-panel open>
+    <summary>
+      <span>筛选条件</span>
+      <small data-search-filter-summary>全部</small>
+    </summary>
+    <div class="search-filters" aria-label="筛选搜索结果">
+      <label>
+        <span>领域</span>
+        <select data-search-filter="domain">
+          <option value="">全部领域</option>
+          {domains.map((domain) => <option value={domain.id}>{domain.shortNameZh}</option>)}
+        </select>
+      </label>
+      <label>
+        <span>难度</span>
+        <select data-search-filter="difficulty">
+          <option value="">全部难度</option>
+          <option value="beginner">入门</option>
+          <option value="intermediate">进阶</option>
+          <option value="advanced">深入</option>
+        </select>
+      </label>
+      <label>
+        <span>状态</span>
+        <select data-search-filter="status">
+          <option value="">全部状态</option>
+          <option value="verified">已核验</option>
+          <option value="catalogued">已收录</option>
+          <option value="needs-review">需要复核</option>
+          <option value="deprecated">已弃用</option>
+        </select>
+      </label>
+      <button type="button" class="search-clear" data-search-clear>清除</button>
+    </div>
+  </details>
 
   <div class="search-output" data-search-output aria-busy="false">
     <header class="search-output-header">
       <p data-search-status aria-live="polite">正在准备词条索引</p>
     </header>
     <ol class="search-results" data-search-results></ol>
+    <button type="button" class="search-more" data-search-more hidden>显示更多</button>
     <div class="search-empty" data-search-empty hidden>
       <strong>没有匹配词条</strong>
       <p>可以缩短关键词、清除筛选，或按领域继续浏览。</p>
@@ -93,10 +100,10 @@ const feedbackUrl = buildContentIssueUrl({
   }
   .search-query {
     display: grid;
-    grid-template-columns: minmax(20rem, 36rem) minmax(12rem, 1fr);
-    gap: var(--space-5);
-    align-items: end;
-    padding: var(--space-4) var(--page-gutter);
+    grid-template-columns: minmax(16rem, 30rem) minmax(12rem, 1fr);
+    gap: var(--space-3);
+    align-items: center;
+    padding: var(--space-3) var(--page-gutter);
   }
   .search-index-state {
     margin: 0;
@@ -112,6 +119,12 @@ const feedbackUrl = buildContentIssueUrl({
     border-bottom: 1px solid var(--color-line);
     padding-inline: var(--page-gutter);
   }
+  .search-filter-panel {
+    border: 0;
+  }
+  .search-filter-panel > summary {
+    display: none;
+  }
   .search-filters label {
     min-width: 0;
     display: grid;
@@ -119,7 +132,7 @@ const feedbackUrl = buildContentIssueUrl({
     align-items: center;
     gap: var(--space-2);
     border-right: 1px solid var(--color-line-soft);
-    padding: var(--space-2) var(--space-3);
+    padding: var(--space-1) var(--space-2);
   }
   .search-filters label:first-child {
     padding-left: 0;
@@ -131,7 +144,7 @@ const feedbackUrl = buildContentIssueUrl({
   }
   .search-filters select {
     min-width: 0;
-    min-height: 2.75rem;
+    min-height: var(--control-height);
     border: 0;
     background: var(--color-black);
     color: var(--color-ink);
@@ -139,10 +152,14 @@ const feedbackUrl = buildContentIssueUrl({
   }
   .search-clear {
     min-width: 5rem;
+    min-height: 2.75rem;
     border: 0;
     background: transparent;
     color: var(--color-muted);
     cursor: pointer;
+  }
+  .search-clear:disabled {
+    color: var(--color-quiet);
   }
   .search-clear:hover {
     color: var(--color-prerequisite);
@@ -151,7 +168,7 @@ const feedbackUrl = buildContentIssueUrl({
     display: none;
   }
   .search-output-header {
-    min-height: 4rem;
+    min-height: 3rem;
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -168,13 +185,25 @@ const feedbackUrl = buildContentIssueUrl({
     padding: 0;
     list-style: none;
   }
+  .search-more {
+    width: 100%;
+    min-height: var(--control-height);
+    border: 0;
+    border-top: 1px solid var(--color-line);
+    background: var(--color-panel);
+    color: var(--color-accent);
+    font-weight: 600;
+  }
+  .search-more:hover {
+    background: var(--color-panel-raised);
+  }
   .search-result {
     display: grid;
     grid-template-columns: 4rem minmax(13rem, 0.42fr) minmax(18rem, 1fr) minmax(9rem, auto);
-    gap: var(--space-4);
+    gap: var(--space-3);
     align-items: center;
     border-bottom: 1px solid var(--color-line-soft);
-    padding: var(--space-4) var(--page-gutter);
+    padding: var(--space-3) var(--page-gutter);
   }
   .search-result:hover {
     background: var(--color-panel);
@@ -227,9 +256,9 @@ const feedbackUrl = buildContentIssueUrl({
     color: var(--color-component);
   }
   .search-empty {
-    min-height: 16rem;
+    min-height: 12rem;
     border-top: 1px solid var(--color-line);
-    padding: var(--space-6) var(--page-gutter);
+    padding: var(--space-5) var(--page-gutter);
   }
   .search-empty strong {
     font-family: var(--font-display);
@@ -268,6 +297,34 @@ const feedbackUrl = buildContentIssueUrl({
       grid-template-columns: repeat(3, minmax(0, 1fr));
       padding: 0;
     }
+    .search-filter-panel > summary {
+      min-height: var(--control-height-mobile);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-inline: var(--space-3);
+      color: var(--color-ink);
+      font-size: var(--text-sm);
+      font-weight: 600;
+      list-style: none;
+    }
+    .search-filter-panel > summary::-webkit-details-marker {
+      display: none;
+    }
+    .search-filter-panel > summary::after {
+      color: var(--color-quiet);
+      content: '+';
+    }
+    .search-filter-panel[open] > summary::after {
+      content: '−';
+    }
+    .search-filter-panel > summary small {
+      margin-left: auto;
+      padding-right: var(--space-2);
+      color: var(--color-quiet);
+      font-size: var(--text-xs);
+      font-weight: 400;
+    }
     .search-filters label {
       grid-template-columns: 1fr;
       gap: 0;
@@ -281,6 +338,11 @@ const feedbackUrl = buildContentIssueUrl({
       grid-column: 1 / -1;
       min-height: 2.75rem;
     }
+    .search-filters select,
+    .search-clear,
+    .search-more {
+      min-height: var(--control-height-mobile);
+    }
     .search-result {
       grid-template-columns: 2.5rem minmax(0, 1fr);
       gap: var(--space-2) var(--space-3);
@@ -288,6 +350,12 @@ const feedbackUrl = buildContentIssueUrl({
     .search-result-copy,
     .search-result-meta {
       grid-column: 2;
+    }
+    .search-result-copy p {
+      display: -webkit-box;
+      overflow: hidden;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
     }
     .search-result-meta {
       justify-items: start;

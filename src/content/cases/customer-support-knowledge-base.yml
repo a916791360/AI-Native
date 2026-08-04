@@ -1,0 +1,834 @@
+id: customer-support-knowledge-base
+title: 客服知识库与回答辅助
+level: focus
+domain: RAG 与客服产品
+audience:
+  - 零基础或初级 AI 产品经理
+  - 需要评审客服知识助手的产品与业务人员
+businessContext: 这是一个教学案例。某数字产品客服团队维护帮助中心、产品政策、故障处置手册和内部操作说明，希望为坐席提供可回到当前有效原文的回答草稿。
+currentProcess:
+  - 接收客户问题并识别客户、产品与问题类型
+  - 搜索帮助中心、政策和内部处置手册
+  - 检查文档版本、生效时间和适用条件
+  - 起草回答并补充相关原文
+  - 将高风险、无答案或冲突问题升级
+  - 由坐席确认发送并记录处理结果
+objective: 在知识版本、访问权限和原文证据可核验的前提下，提高坐席形成可发送回答的效率，并在证据不足或风险较高时可靠拒答和升级。
+baseline:
+  - id: kb-baseline-process-assumption
+    kind: assumption
+    evidence: E1
+    statement: 当前搜索、核对、起草和升级流程只用于建立教学起点，不代表真实客服团队采用同样工具或存在效率问题。
+  - id: kb-baseline-values-unknown
+    kind: unknown
+    evidence: E0
+    statement: 实际问题分布、无答案比例、查找时间、错误成本、人工容量、延迟和单位成本均需要真实组织数据验证。
+constraints:
+  - id: kb-constraint-no-fabricated-thresholds
+    kind: fact
+    evidence: E2
+    statement: AI-Native 不为教学完整性虚构检索、回答、引用、成本、延迟或上线阈值。
+  - id: kb-constraint-human-send-authority
+    kind: recommendation
+    evidence: E1
+    statement: 首版只辅助内部坐席，不自动对客回复，也不执行退款、改价、封禁、删除或其他外部动作。
+  - id: kb-constraint-permission-enforcement
+    kind: recommendation
+    evidence: E3
+    statement: 权限必须由检索和业务系统执行，检索内容作为不可信数据处理，不能取得系统指令或工具权限。
+status: verified
+updatedAt: 2026-08-04
+verifiedAt: 2026-08-04
+
+gates:
+  - id: decide-ai-boundary
+    order: 1
+    stageId: model-boundaries
+    status: verified
+    title: 判断 AI 边界
+    question: 这个场景需要生成式回答，还是搜索与固定话术已经足够？
+    decision: 先治理有效知识和权限内搜索，只在跨片段归纳、语境适配和回答草稿步骤引入受限生成。
+    facts:
+      - id: kb-g1-external-knowledge
+        kind: fact
+        evidence: E3
+        statement: RAG 把参数化生成与显式外部知识结合，研究动机包括知识更新和来源追踪问题。
+      - id: kb-g1-deterministic-controls
+        kind: recommendation
+        evidence: E1
+        statement: 文档有效期、访问权限、固定话术、风险主题和外发权限应由确定性系统控制。
+    unknowns:
+      - id: kb-g1-generation-need
+        kind: unknown
+        evidence: E0
+        statement: 真实问题中有多少可由搜索或固定话术解决，以及多少确实需要跨片段生成，尚未通过工单样本验证。
+    options:
+      - id: governed-retrieval-copilot
+        label: 治理优先的检索辅助
+        assessment: recommended
+        rationale: 先固定知识、权限和证据边界，再把生成限制为可核验草稿，能够分开控制风险和价值。
+        conditions:
+          - 文档具有所有者、版本、生效时间和权限字段
+          - 回答关键主张可以定位到有效原文
+        risks:
+          - 知识治理会增加前期投入
+          - 受限生成可能覆盖不了全部问题
+        consequences:
+          - 可逐步判断哪些步骤真正需要模型
+          - 无证据问题可以安全转交人工
+        artifactDelta: 在 AI 适用性卡中固定知识治理、搜索、生成和人工确认的责任边界。
+      - id: search-and-template-only
+        label: 搜索与固定话术优先
+        assessment: conditional
+        rationale: 当问题稳定且答案短小明确时，传统搜索和模板更可预测，也可能已经满足业务目标。
+        conditions:
+          - 查询与知识标题或关键词高度匹配
+          - 话术适用条件和版本可以确定性维护
+        risks:
+          - 跨文档归纳和表达变化可能降低覆盖
+        consequences:
+          - 系统简单且成本可控
+          - 复杂问题继续由坐席人工处理
+        artifactDelta: 在 AI 适用性卡中记录仅搜索方案的覆盖范围和升级到生成的触发条件。
+      - id: long-context-auto-answer
+        label: 全量长上下文自动回答
+        assessment: risky
+        rationale: 上下文容量不代表证据会被稳定使用，也不能替代版本、权限、检索和引用核验。
+        conditions:
+          - 当前没有支持首版全量自动回答的条件
+        risks:
+          - 过期或无权限知识进入回答
+          - 关键证据被长上下文噪声淹没
+        consequences:
+          - 当前方案不进入生产范围
+        artifactDelta: 在 AI 适用性卡中记录否决长上下文自动回答的证据和重新评估条件。
+    artifactIds:
+      - kb-ai-applicability
+    metricIds:
+      - evidence-search-time
+      - supported-answer-completion
+      - unit-confirmed-answer-cost
+    failureModeIds:
+      - stale-document-retrieved
+      - permission-filter-failure
+    referenceIds:
+      - source-original-rag
+      - source-lost-in-middle
+      - term-retrieval-augmented-generation
+      - term-knowledge-base
+
+  - id: establish-value-and-data
+    order: 2
+    stageId: opportunity-judgment
+    status: verified
+    title: 建立价值与数据条件
+    question: 怎样证明解决的是找到并使用正确知识，而不是只让回答更像人？
+    decision: 先记录查找、核对、升级、纠正和错误版本基线，再定义有证据且经坐席确认的任务结果。
+    facts:
+      - id: kb-g2-task-outcome
+        kind: recommendation
+        evidence: E2
+        statement: 回答流畅度不能单独证明业务价值，案例必须观察坐席能否完成真实回答任务并处理异常。
+      - id: kb-g2-risk-context
+        kind: fact
+        evidence: E3
+        statement: 生成系统可能自信地产生错误内容或虚假引用，风险需要结合具体使用情境和影响评估。
+    unknowns:
+      - id: kb-g2-real-baseline
+        kind: unknown
+        evidence: E0
+        statement: 文档质量、问题分布、当前查找耗时、重复联系、升级结果和各类错误成本仍待真实数据验证。
+    options:
+      - id: baseline-supported-task
+        label: 先建立有证据任务基线
+        assessment: recommended
+        rationale: 只有同时记录当前任务结果、证据和错误，才能判断新系统是否改善了值得解决的问题。
+        conditions:
+          - 明确坐席、知识负责人和升级责任人
+          - 获取脱敏问题样本和有效知识版本
+        risks:
+          - 前期盘点会推迟演示
+        consequences:
+          - 后续指标可以映射到真实客服任务
+          - 无答案和高风险切片会在开发前暴露
+        artifactDelta: 在机会评估表中加入任务结果、知识条件、权限、错误成本和升级链路。
+      - id: controlled-prototype-first
+        label: 先做受控原型补问题清单
+        assessment: conditional
+        rationale: 原型可用于确认数据结构和输出形态，但不能被描述为业务价值已经成立。
+        conditions:
+          - 只处理授权的脱敏样本
+          - 输出不对客户可见且不执行任何动作
+        risks:
+          - 团队可能把少量顺利样本外推为整体效果
+        consequences:
+          - 获得技术与数据缺口但不能得出上线结论
+        artifactDelta: 在机会评估表中标注原型只验证可行性并列出待补业务基线。
+      - id: fluency-as-success
+        label: 用回答流畅度证明成功
+        assessment: risky
+        rationale: 语气自然不证明知识有效、引用支持、权限正确或客户问题得到解决。
+        conditions:
+          - 没有条件能让文风单独成为成功证据
+        risks:
+          - 错误答案因表达自信而更容易被采用
+        consequences:
+          - 无法建立可审计的上线与回滚门槛
+        artifactDelta: 在机会评估表中记录否决原因并要求补齐任务与风险结果。
+    artifactIds:
+      - kb-opportunity-assessment
+    metricIds:
+      - supported-answer-completion
+      - evidence-search-time
+      - appropriate-abstention-rate
+      - human-review-time
+    failureModeIds:
+      - answer-without-evidence
+      - knowledge-source-conflict
+    referenceIds:
+      - source-nist-genai-profile
+      - term-problem-solution-fit
+      - term-ai-product
+      - route-rag-from-zero
+
+  - id: select-workflow
+    order: 3
+    stageId: solution-choice
+    status: verified
+    title: 拆解检索与回答工作流
+    question: 如何区分知识未入索引、召回失败、重排丢证据和生成未遵循证据？
+    decision: 把知识发布、权限过滤、检索、重排、充分性判断、生成、引用和拒答拆成可观察步骤。
+    facts:
+      - id: kb-g3-separate-rag-dimensions
+        kind: fact
+        evidence: E3
+        statement: RAG 评测研究分别观察上下文相关性、答案忠实度和答案相关性，而不是只给最终回答一个总分。
+      - id: kb-g3-position-sensitivity
+        kind: fact
+        evidence: E3
+        statement: 长上下文模型对相关信息位置的使用可能不稳定，因此候选重排和位置切片需要单独测试。
+    unknowns:
+      - id: kb-g3-retrieval-shape
+        kind: unknown
+        evidence: E0
+        statement: 真实语料适合的切分、关键词与语义检索组合、候选数量、重排和上下文长度尚未比较。
+    options:
+      - id: observable-rag-pipeline
+        label: 可观察的分步 RAG 流程
+        assessment: recommended
+        rationale: 分步契约能定位知识发布、检索、重排、生成和引用中的具体失败，并支持局部回退。
+        conditions:
+          - 每一步记录输入、输出、版本、状态和失败原因
+          - 无证据和冲突状态可以在生成前停止
+        risks:
+          - 编排、日志和评测成本增加
+        consequences:
+          - 可以针对失败步骤改进而不是反复调 Prompt
+          - 可以替换单个组件而不重建全部流程
+        artifactDelta: 在 RAG 诊断表中固定知识发布、检索、重排、生成、引用和拒答的输入输出。
+      - id: simple-retrieve-and-draft
+        label: 简化检索后生成草稿
+        assessment: conditional
+        rationale: 在小型、单一来源、低风险知识集中可作为对照基线，但仍需权限和引用校验。
+        conditions:
+          - 知识来源单一且版本冲突很少
+          - 所有回答仍由坐席检查后发送
+        risks:
+          - 无法充分诊断重排和充分性问题
+        consequences:
+          - 原型路径较短但扩展能力有限
+        artifactDelta: 在 RAG 诊断表中标记简化流程的适用范围和必须保留的控制。
+      - id: final-answer-only-debugging
+        label: 只看最终回答调试
+        assessment: risky
+        rationale: 最终错误可能来自文档、索引、查询、召回、重排或生成，只看成文无法可靠归因。
+        conditions:
+          - 没有条件支持把最终回答当作唯一诊断信号
+        risks:
+          - 团队反复调整模型却忽略检索失败
+          - 局部质量回退无法被发现
+        consequences:
+          - 当前方案不进入生产评测设计
+        artifactDelta: 在 RAG 诊断表中记录各步骤必须暴露的观测信号和固定反例。
+    artifactIds:
+      - kb-workflow-selection
+    metricIds:
+      - retrieval-recall-risk-slices
+      - retrieval-precision
+      - citation-support-rate
+      - p95-draft-latency
+    failureModeIds:
+      - knowledge-index-lag
+      - retrieval-miss
+      - reranker-drops-evidence
+      - model-timeout
+    referenceIds:
+      - source-ares-evaluation
+      - source-lost-in-middle
+      - term-context-retrieval
+      - term-retrieval-precision
+      - term-retrieval-recall
+      - term-faithfulness
+
+  - id: design-control-and-recovery
+    order: 4
+    stageId: product-experience
+    status: verified
+    title: 设计坐席控制与失败恢复
+    question: 坐席怎样看见证据、识别不确定性、纠正回答并完成升级？
+    decision: 展示原文、版本和适用条件，允许修改、驳回和转交，高风险与无证据问题保持发送前人工确认。
+    facts:
+      - id: kb-g4-human-authority
+        kind: recommendation
+        evidence: E2
+        statement: 人工确认必须携带足够证据和真实权限，不能只在界面上增加一个形式化确认按钮。
+      - id: kb-g4-injection-control
+        kind: fact
+        evidence: E3
+        statement: RAG 不能完全缓解提示注入，外部文档中的内容可能通过间接注入改变模型行为或导致越权。
+    unknowns:
+      - id: kb-g4-review-capacity
+        kind: unknown
+        evidence: E0
+        statement: 坐席复核时间、主管升级容量、高风险主题、响应时限和事件责任人仍待真实组织确认。
+    options:
+      - id: evidence-first-agent-control
+        label: 证据优先的坐席控制
+        assessment: recommended
+        rationale: 坐席同时看到回答、原文、版本、风险原因和可执行动作，才可能有效判断是否发送或升级。
+        conditions:
+          - 关键主张和对应证据可以逐项核对
+          - 坐席拥有修改、驳回、转交和停止权限
+        risks:
+          - 信息过多可能增加复核负担
+          - 坐席仍可能因自动化偏差而盲信
+        consequences:
+          - 错误可以在外发前被发现和纠正
+          - 纠正原因可进入评测与知识维护
+        artifactDelta: 在责任恢复图中加入证据检查、拒答原因、升级上下文、超时和撤销路径。
+      - id: review-every-draft
+        label: 每条草稿都由坐席复核
+        assessment: conditional
+        rationale: 影子运行和早期校准阶段有价值，但长期可能增加重复劳动和确认疲劳。
+        conditions:
+          - 有明确的试运行期限和分层退出标准
+          - 记录修改、驳回和无修改发送的真实原因
+        risks:
+          - 人工负担可能高于原流程
+        consequences:
+          - 获得纠正样本但吞吐受限
+        artifactDelta: 在责任恢复图中标注全量复核仅用于校准阶段和退出条件。
+      - id: auto-send-with-disclaimer
+        label: 自动发送并附免责声明
+        assessment: risky
+        rationale: 免责声明不能修复错误知识、越权信息、无支持主张或缺失的人工责任。
+        conditions:
+          - 当前没有支持首版自动发送的条件
+        risks:
+          - 错误承诺直接触达客户
+          - 安全与权限事件扩大
+        consequences:
+          - 当前阶段禁止该路径
+        artifactDelta: 在责任恢复图中明确首版最终发送权属于授权坐席。
+    artifactIds:
+      - kb-responsibility-recovery
+    metricIds:
+      - citation-support-rate
+      - appropriate-abstention-rate
+      - human-review-time
+      - escalation-queue-age
+      - permission-violation-count
+    failureModeIds:
+      - unsupported-citation
+      - knowledge-source-conflict
+      - answer-without-evidence
+      - indirect-prompt-injection
+      - review-queue-overload
+      - permission-filter-failure
+    referenceIds:
+      - source-nist-genai-profile
+      - source-owasp-prompt-injection
+      - term-citation-generation
+      - term-human-escalation
+      - term-prompt-injection
+      - term-human-ai-collaboration
+
+  - id: define-evaluation-and-cost
+    order: 5
+    stageId: quality-constraints
+    status: verified
+    title: 定义评测、成本与上线护栏
+    question: 怎样同时评测检索、回答、引用、拒答、延迟和人工负担？
+    decision: 使用版本化查询集和风险切片分步评测，并用有充分证据且经坐席确认的回答计算单位成功任务成本。
+    facts:
+      - id: kb-g5-human-calibration
+        kind: fact
+        evidence: E3
+        statement: ARES 使用人工标注数据校准自动评估，支持自动评估扩大覆盖但不替代人工基准的边界。
+      - id: kb-g5-layered-evaluation
+        kind: recommendation
+        evidence: E2
+        statement: 案例需要分别观察知识发布、检索、生成、引用、拒答、任务结果、人工负担和运行质量。
+    unknowns:
+      - id: kb-g5-real-thresholds
+        kind: unknown
+        evidence: E0
+        statement: 各风险切片的质量门槛、人工容量、延迟预算、单位成本和晋级回滚阈值仍待真实基线确定。
+    options:
+      - id: layered-evaluation-and-cost
+        label: 分层评测与完整成本
+        assessment: recommended
+        rationale: 分层指标能定位失败来源，单位已确认回答成本则把模型、运行、失败和人工成本放回真实任务。
+        conditions:
+          - 查询集包含常见、无答案、冲突、高风险和权限切片
+          - 每个候选版本在同一固定集和真实人工样本上比较
+        risks:
+          - 数据标注和持续维护成本较高
+        consequences:
+          - 上线与回滚可以基于可复核证据
+          - 降本不会通过减少覆盖或过度拒答伪造
+        artifactDelta: 在评测护栏表中加入分步指标、风险切片、单位成功成本和回滚触发项。
+      - id: end-to-end-pilot-score
+        label: 端到端试点分数作为补充
+        assessment: conditional
+        rationale: 端到端任务结果有业务意义，但必须与分步诊断并用，不能独立解释失败原因。
+        conditions:
+          - 同时保留检索、引用和拒答的步骤级结果
+          - 试点问题与坐席样本具有明确范围
+        risks:
+          - 综合分数可能掩盖高风险少数类失败
+        consequences:
+          - 可以补充任务价值证据但不单独决定上线
+        artifactDelta: 在评测护栏表中把端到端结果标为业务补充指标并附错误切片。
+      - id: thumbs-up-and-token-cost
+        label: 只看点赞与调用价格
+        assessment: risky
+        rationale: 点赞不保证答案有证据，调用价格也忽略知识治理、失败、运行和人工复核成本。
+        conditions:
+          - 没有条件支持用这两个指标替代完整评测
+        risks:
+          - 质量回退和人工负担被隐藏
+          - 通过过度拒答或低覆盖制造漂亮结果
+        consequences:
+          - 当前方案不作为发布 Gate
+        artifactDelta: 在评测护栏表中记录被排除的代理指标及其误导风险。
+    artifactIds:
+      - kb-evaluation-guardrails
+    metricIds:
+      - supported-answer-completion
+      - retrieval-recall-risk-slices
+      - retrieval-precision
+      - citation-support-rate
+      - appropriate-abstention-rate
+      - knowledge-freshness-lag
+      - p95-draft-latency
+      - human-review-time
+      - unit-confirmed-answer-cost
+      - permission-violation-count
+    failureModeIds:
+      - stale-document-retrieved
+      - retrieval-miss
+      - unsupported-citation
+      - answer-without-evidence
+      - version-regression
+    referenceIds:
+      - source-ares-evaluation
+      - source-nist-genai-profile
+      - term-offline-evaluation
+      - term-evaluation
+      - term-faithfulness
+      - term-latency
+
+  - id: govern-launch-and-iteration
+    order: 6
+    stageId: capstone
+    status: verified
+    title: 治理发布与持续更新
+    question: 什么时候能扩大自动化，知识更新或质量回退时如何停止？
+    decision: 按离线回放、影子建议、坐席草稿和受限自动回复逐级推进，每级绑定通过条件、责任人和回滚动作。
+    facts:
+      - id: kb-g6-staged-authority
+        kind: recommendation
+        evidence: E2
+        statement: 自动化权限应随知识、质量、人工负担和运行证据逐级扩大，而不是在首版一次开放。
+      - id: kb-g6-continuous-risk
+        kind: fact
+        evidence: E3
+        statement: 生成系统风险会随使用情境、输入、组件和生命周期阶段变化，需要持续测量、事件响应和版本治理。
+    unknowns:
+      - id: kb-g6-promotion-criteria
+        kind: unknown
+        evidence: E0
+        statement: 真实组织的晋级审批人、低风险主题、监控窗口、事件阈值和回滚时限尚未确认。
+    options:
+      - id: evidence-gated-release
+        label: 证据门禁的分级发布
+        assessment: recommended
+        rationale: 每一级只增加有限权限，并保留上一稳定流程，能够在获得真实证据前限制错误影响范围。
+        conditions:
+          - 每级明确范围、责任人、通过条件和回滚动作
+          - 知识更新和固定查询集在发布前通过回归
+        risks:
+          - 发布节奏慢且需要持续运营投入
+        consequences:
+          - 质量回退或知识异常可以局部停止
+          - 自动化范围与证据强度保持一致
+        artifactDelta: 在完整评审档案中加入四级权限、晋级证据、持续监控、事件响应和回滚表。
+      - id: limited-low-risk-auto-answer
+        label: 受限低风险自动回复
+        assessment: conditional
+        rationale: 只有低风险、高证据、稳定知识主题在坐席草稿阶段持续达标后，才可作为后续候选。
+        conditions:
+          - 主题范围、答案模板和停机开关均已批准
+          - 引用、拒答、权限和知识新鲜度持续达到真实门槛
+        risks:
+          - 主题边界漂移会让高风险问题误入自动回复
+        consequences:
+          - 可减少简单重复任务但必须保留即时回退
+        artifactDelta: 在完整评审档案中记录自动回复白名单、监控和退回坐席草稿的条件。
+      - id: broad-first-release
+        label: 首版面向全部客户自动回答
+        assessment: risky
+        rationale: 当前没有真实质量、人工容量、知识时效或错误成本证据支持扩大到全部问题和客户。
+        conditions:
+          - 当前没有可接受条件
+        risks:
+          - 错误知识、无证据回答和越权信息同时扩大
+          - 出现事件时难以快速确定受影响范围
+        consequences:
+          - 当前阶段禁止该路径
+        artifactDelta: 在完整评审档案中记录否决广泛自动回复的理由和未来重新评估证据。
+    artifactIds:
+      - kb-complete-review
+    metricIds:
+      - supported-answer-completion
+      - appropriate-abstention-rate
+      - knowledge-freshness-lag
+      - escalation-queue-age
+      - unit-confirmed-answer-cost
+      - permission-violation-count
+    failureModeIds:
+      - stale-document-retrieved
+      - knowledge-index-lag
+      - permission-filter-failure
+      - review-queue-overload
+      - version-regression
+    referenceIds:
+      - source-nist-genai-profile
+      - source-owasp-prompt-injection
+      - term-canary-release
+      - term-rollback
+      - term-observability
+      - term-human-escalation
+
+artifacts:
+  - id: kb-ai-applicability
+    type: ai-applicability
+    title: AI 适用性与不可自动化边界卡
+    summary: 区分知识治理、权限搜索、生成草稿与坐席最终发送，记录不使用生成和禁止自动化的范围。
+  - id: kb-opportunity-assessment
+    type: opportunity-assessment
+    title: 客服知识机会评估表
+    summary: 记录目标角色、当前任务、知识条件、权限、真实基线、错误成本、无答案和升级链路。
+  - id: kb-workflow-selection
+    type: workflow-selection
+    title: RAG 诊断与方案选择表
+    summary: 固定知识发布、检索、重排、充分性、生成、引用和拒答步骤及各自输入输出与终止条件。
+  - id: kb-responsibility-recovery
+    type: responsibility-recovery
+    title: 坐席权限、升级与恢复图
+    summary: 标明证据检查、修改、驳回、转交、超时、事件响应和最终发送的人员与系统权限。
+  - id: kb-evaluation-guardrails
+    type: evaluation-guardrails
+    title: RAG 评测、成本与上线护栏表
+    summary: 组合固定查询集、风险切片、分步质量、人工负担、单位成功成本、延迟和回滚条件。
+  - id: kb-complete-review
+    type: complete-review
+    title: 完整客服知识产品评审档案
+    summary: 汇总六关决策、四级发布权限、知识更新、持续监控、事件响应、晋级和回滚证据。
+
+metrics:
+  - id: supported-answer-completion
+    category: business
+    label: 有证据回答任务完成率
+    definition: 有充分有效证据且经授权坐席确认完成的回答任务，占进入目标范围问题的比例。
+    desiredDirection: increase
+    thresholdStatus: baseline-needed
+  - id: evidence-search-time
+    category: business
+    label: 有效证据查找时间
+    definition: 从坐席开始查找，到定位当前有效且适用于该问题的原文证据所需时间。
+    desiredDirection: decrease
+    thresholdStatus: baseline-needed
+  - id: retrieval-recall-risk-slices
+    category: quality
+    label: 风险切片检索召回
+    definition: 在高风险、无答案、冲突和常见主题切片中，必要证据进入候选集合的比例。
+    desiredDirection: increase
+    thresholdStatus: baseline-needed
+  - id: retrieval-precision
+    category: quality
+    label: 检索精确率
+    definition: 返回候选中与当前问题、客户条件和有效知识范围相关的证据所占比例。
+    desiredDirection: increase
+    thresholdStatus: baseline-needed
+  - id: citation-support-rate
+    category: quality
+    label: 引用支持率
+    definition: 回答关键主张中，其引用真实存在、版本有效且原文确实支持该主张的比例。
+    desiredDirection: increase
+    thresholdStatus: baseline-needed
+  - id: appropriate-abstention-rate
+    category: quality
+    label: 合理拒答率
+    definition: 在无证据、知识冲突、权限不足或高风险问题上正确拒答或升级，同时不过度拒绝可回答问题的表现。
+    desiredDirection: range
+    thresholdStatus: baseline-needed
+  - id: knowledge-freshness-lag
+    category: operation
+    label: 知识新鲜度延迟
+    definition: 有效知识发布或下架后，到检索系统正确反映该版本状态之间的端到端时间。
+    desiredDirection: decrease
+    thresholdStatus: baseline-needed
+  - id: p95-draft-latency
+    category: operation
+    label: P95 草稿延迟
+    definition: 从提交已授权问题到返回可供坐席复核草稿的第九十五百分位端到端时间。
+    desiredDirection: decrease
+    thresholdStatus: baseline-needed
+  - id: human-review-time
+    category: human
+    label: 坐席复核时间
+    definition: 坐席核对证据、修改、驳回或确认一条回答草稿所投入的人工时间。
+    desiredDirection: decrease
+    thresholdStatus: baseline-needed
+  - id: escalation-queue-age
+    category: human
+    label: 升级队列时长
+    definition: 无答案、高风险或冲突问题从进入人工升级队列到由责任人接手的等待时间。
+    desiredDirection: decrease
+    thresholdStatus: baseline-needed
+  - id: unit-confirmed-answer-cost
+    category: cost
+    label: 单位已确认回答成本
+    definition: 知识治理、索引、检索、生成、失败运行和人工复核总成本除以有充分证据且经坐席确认的回答数。
+    desiredDirection: decrease
+    thresholdStatus: baseline-needed
+  - id: permission-violation-count
+    category: operation
+    label: 权限违规输出数
+    definition: 检索或回答向当前坐席、客户或租户暴露无权访问知识的事件数量。
+    desiredDirection: guardrail
+    thresholdStatus: defined
+    threshold: 任何权限违规均阻止晋级并触发事件响应
+
+failureModes:
+  - id: stale-document-retrieved
+    title: 过期文档仍可检索
+    signal: 回答引用旧版本、已下架政策或错误生效日期
+    impact: 坐席可能依据无效规则对客户作出错误说明或承诺
+    recovery: 停止相关来源、重建索引、回放受影响查询并退回人工搜索
+    owner: 知识负责人和工程
+  - id: knowledge-index-lag
+    title: 新知识未及时入索引
+    signal: 已发布有效内容持续无法召回或下架内容仍然返回
+    impact: 回答遗漏最新政策或继续使用已经失效的知识
+    recovery: 检查发布队列和缓存失效，标记知识不可用并回退人工流程
+    owner: 知识负责人和工程
+  - id: permission-filter-failure
+    title: 权限过滤失败
+    signal: 返回其他租户、客户或未授权内部资料
+    impact: 造成敏感信息暴露、合规风险和客户信任损害
+    recovery: 阻断输出、停用相关索引、保全日志并启动安全事件响应
+    owner: 安全和工程
+  - id: retrieval-miss
+    title: 关键证据召回失败
+    signal: 有效来源存在但未进入候选集合
+    impact: 系统可能错误拒答或在缺少关键条件时生成答案
+    recovery: 保持无答案状态并升级，修复查询、切分或检索后回放固定样本
+    owner: 检索和评测负责人
+  - id: reranker-drops-evidence
+    title: 重排截断关键证据
+    signal: 相关来源已召回却未进入最终上下文
+    impact: 答案遗漏关键限制、例外或适用条件
+    recovery: 调整候选与重排策略，运行证据位置和风险切片回归
+    owner: 检索和评测负责人
+  - id: unsupported-citation
+    title: 引用不支持回答主张
+    signal: 引用可打开但原文与回答结论不一致
+    impact: 坐席可能因看见引用而错误信任无依据回答
+    recovery: 阻止发送，删除或重写不受支持主张，并把失败加入固定集
+    owner: 坐席和评测负责人
+  - id: knowledge-source-conflict
+    title: 有效知识来源冲突
+    signal: 多份当前有效文档对同一条件给出不同规则
+    impact: 系统可能任意选边并形成错误对客承诺
+    recovery: 不自动裁决，展示冲突并转交知识负责人确认唯一有效规则
+    owner: 知识负责人
+  - id: answer-without-evidence
+    title: 无答案时仍然作答
+    signal: 检索为空或证据不足时仍给出确定回答
+    impact: 模型编造可能直接影响客户处理和业务责任
+    recovery: 强制拒答并进入人工队列，检查充分性和生成护栏
+    owner: 产品和客服主管
+  - id: indirect-prompt-injection
+    title: 间接提示注入
+    signal: 检索文档试图改变指令、请求敏感数据或调用工具
+    impact: 模型行为可能被外部内容操纵并导致越权或错误输出
+    recovery: 将文档按不可信数据隔离，阻止动作并启动安全审查和攻击回放
+    owner: 安全和工程
+  - id: review-queue-overload
+    title: 人工升级队列过载
+    signal: 队龄、积压、超时和未处理高风险问题持续上升
+    impact: 形式上的人在回路无法在业务时限内提供真实保护
+    recovery: 收紧自动化范围、按风险排序并调整责任人与容量
+    owner: 客服主管
+  - id: model-timeout
+    title: 模型或重排服务超时
+    signal: 草稿延迟、失败率或重试量突然升高
+    impact: 坐席等待增加且重复调用推高成本
+    recovery: 达到上限后停止重试，降级到搜索与人工起草并记录失败
+    owner: 工程
+  - id: version-regression
+    title: 版本升级质量回退
+    signal: 固定集、风险切片或线上纠正指标相对稳定版本下降
+    impact: 质量可能在没有明显系统错误时静默恶化
+    recovery: 冻结候选版本并回滚模型、提示、索引或重排到上一稳定组合
+    owner: 产品、工程和评测负责人
+
+references:
+  - id: route-rag-from-zero
+    kind: route
+    label: RAG 从零到理解与应用
+    targetId: rag-from-zero
+    supports: 提供从知识库、切分、检索、重排到评测的顺序阅读支持。
+  - id: term-retrieval-augmented-generation
+    kind: term
+    label: 检索增强生成
+    targetId: retrieval-augmented-generation
+    supports: 解释检索与生成的基本结构、适用条件和评测边界。
+  - id: term-knowledge-base
+    kind: term
+    label: 知识库
+    targetId: knowledge-base
+    supports: 解释知识集合、维护、版本和访问边界。
+  - id: term-context-retrieval
+    kind: term
+    label: 上下文检索
+    targetId: context-retrieval
+    supports: 解释查询、候选召回和上下文选择过程。
+  - id: term-citation-generation
+    kind: term
+    label: 引用生成
+    targetId: citation-generation
+    supports: 区分引用存在、位置正确和引用真正支持主张。
+  - id: term-retrieval-precision
+    kind: term
+    label: 检索精确率
+    targetId: retrieval-precision
+    supports: 用于定位检索噪声和无关候选问题。
+  - id: term-retrieval-recall
+    kind: term
+    label: 检索召回率
+    targetId: retrieval-recall
+    supports: 用于定位关键证据没有进入候选集合的问题。
+  - id: term-faithfulness
+    kind: term
+    label: 忠实度
+    targetId: faithfulness
+    supports: 检查回答是否由给定证据支持而没有添加无依据主张。
+  - id: term-offline-evaluation
+    kind: term
+    label: 离线评测
+    targetId: offline-evaluation
+    supports: 建立版本化固定查询集、保留集和错误切片。
+  - id: term-evaluation
+    kind: term
+    label: 评测
+    targetId: evaluation
+    supports: 解释质量标准、数据集、指标和发布决策的关系。
+  - id: term-human-escalation
+    kind: term
+    label: 人工升级
+    targetId: human-escalation
+    supports: 明确拒答、升级、责任、必要上下文和接管权限。
+  - id: term-prompt-injection
+    kind: term
+    label: 提示注入
+    targetId: prompt-injection
+    supports: 解释外部内容改变模型行为和越权的安全风险。
+  - id: term-human-ai-collaboration
+    kind: term
+    label: 人机协作
+    targetId: human-ai-collaboration
+    supports: 解释人工判断和系统自动化如何按风险分工。
+  - id: term-problem-solution-fit
+    kind: term
+    label: 问题方案匹配
+    targetId: problem-solution-fit
+    supports: 防止用流畅输出替代真实问题、任务和价值证据。
+  - id: term-ai-product
+    kind: term
+    label: AI 产品
+    targetId: ai-product
+    supports: 把模型能力放回用户任务、控制、失败和运营系统中评审。
+  - id: term-latency
+    kind: term
+    label: 延迟
+    targetId: latency
+    supports: 解释端到端等待、分位数和用户任务时限。
+  - id: term-canary-release
+    kind: term
+    label: 金丝雀发布
+    targetId: canary-release
+    supports: 解释限制影响范围并逐步扩大版本或流量的发布方法。
+  - id: term-rollback
+    kind: term
+    label: 回滚
+    targetId: rollback
+    supports: 解释质量回退或事件发生时恢复上一稳定版本。
+  - id: term-observability
+    kind: term
+    label: 可观测性
+    targetId: observability
+    supports: 解释通过日志、指标和追踪定位运行与质量问题。
+  - id: source-nist-genai-profile
+    kind: source
+    label: NIST AI 600-1 Generative AI Profile
+    url: https://doi.org/10.6028/NIST.AI.600-1
+    publisher: NIST
+    accessedAt: 2026-08-04
+    stability: stable
+    supports: 支持生成内容可能错误、引用可能虚假以及风险需按使用情境和生命周期治理。
+  - id: source-original-rag
+    kind: source
+    label: Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks
+    url: https://papers.neurips.cc/paper/2020/hash/6b493230205f780e1bc26945df7481e5-Abstract.html
+    publisher: NeurIPS
+    accessedAt: 2026-08-04
+    stability: stable
+    supports: 支持使用显式非参数知识解决知识更新和来源追踪问题的研究动机。
+  - id: source-lost-in-middle
+    kind: source
+    label: Lost in the Middle
+    url: https://aclanthology.org/2024.tacl-1.9/
+    publisher: TACL and ACL Anthology
+    accessedAt: 2026-08-04
+    stability: stable
+    supports: 支持长上下文对证据位置使用不稳定以及需要位置敏感评测的结论。
+  - id: source-ares-evaluation
+    kind: source
+    label: ARES RAG Evaluation Framework
+    url: https://aclanthology.org/2024.naacl-long.20/
+    publisher: NAACL and ACL Anthology
+    accessedAt: 2026-08-04
+    stability: stable
+    supports: 支持分别评估上下文相关性、答案忠实度和答案相关性并使用人工标注校准。
+  - id: source-owasp-prompt-injection
+    kind: source
+    label: OWASP LLM01 2025 Prompt Injection
+    url: https://genai.owasp.org/llmrisk/llm01-prompt-injection/
+    publisher: OWASP GenAI Security Project
+    accessedAt: 2026-08-04
+    stability: evolving
+    supports: 支持 RAG 不能完全缓解提示注入和检索文档可能成为间接注入来源。

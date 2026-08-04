@@ -27,6 +27,7 @@
     "capture:release": "node --import tsx scripts/capture-release-candidate.ts",
     "capture:learning": "node --import tsx scripts/capture-learning-production.ts",
     "capture:learning-v2": "node --import tsx scripts/capture-learning-v2-production.ts",
+    "capture:learning-v2-stage14": "node --import tsx scripts/capture-learning-v2-stage14.ts",
     "test": "pnpm test:unit && pnpm test:e2e",
     "test:unit": "vitest run",
     "test:e2e": "playwright test",

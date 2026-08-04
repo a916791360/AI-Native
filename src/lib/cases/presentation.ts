@@ -7,6 +7,8 @@ import type {
   CaseStudy,
 } from './schema';
 
+export const GOLDEN_CASE_ID = 'user-feedback-analysis';
+
 export const ASSESSMENT_LABELS = {
   recommended: '推荐路径',
   conditional: '有条件成立',

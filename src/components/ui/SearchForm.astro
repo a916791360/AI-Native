@@ -1,6 +1,7 @@
 ---
 interface Props {
   action?: string;
+  id?: string;
   label?: string;
   placeholder?: string;
   value?: string;
@@ -9,6 +10,7 @@ interface Props {
 
 const {
   action = '/search/',
+  id = 'global-search',
   label = '搜索词条',
   placeholder = 'RAG、向量数据库、AI 幻觉',
   value = '',
@@ -17,8 +19,8 @@ const {
 ---
 
 <form class:list={['search-form', { compact }]} action={action} method="get" role="search">
-  <label class="screen-reader-only" for="global-search">{label}</label>
-  <input id="global-search" name="q" type="search" placeholder={placeholder} value={value} />
+  <label class="screen-reader-only" for={id}>{label}</label>
+  <input id={id} name="q" type="search" placeholder={placeholder} value={value} />
   <button type="submit">搜索</button>
 </form>
 
@@ -26,16 +28,21 @@ const {
   .search-form {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
-    border-bottom: 1px solid var(--color-ink);
+    border: 1px solid var(--color-control-border);
+    border-radius: var(--radius-md);
+    background: var(--color-panel);
+    overflow: hidden;
   }
 
   input {
     min-width: 0;
-    min-height: 3.35rem;
+    min-height: var(--control-height);
     border: 0;
+    padding-inline: var(--space-2);
     background: transparent;
     color: var(--color-ink);
-    font-size: 1.0625rem;
+    font-size: 0.9375rem;
+    outline: 0;
   }
 
   input::placeholder {
@@ -43,28 +50,50 @@ const {
   }
 
   button {
-    min-width: 4.25rem;
-    min-height: 2.75rem;
+    min-width: 3.75rem;
+    min-height: var(--control-height);
     border: 0;
+    border-left: 1px solid var(--color-line);
     background: transparent;
     color: var(--color-ink);
     cursor: pointer;
+    font-size: 0.8125rem;
     font-weight: 600;
   }
 
   button:hover {
+    background: var(--color-panel-raised);
     color: var(--color-prerequisite);
   }
 
+  button:active:not(:disabled) {
+    background: color-mix(in oklch, var(--color-prerequisite) 9%, var(--color-panel));
+  }
+
   .compact {
-    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
   }
 
   .compact input {
-    padding-inline: var(--space-3);
+    min-height: var(--control-height);
+    padding-inline: var(--space-2);
   }
 
   .compact button {
-    border-left: 1px solid var(--color-line);
+    min-height: var(--control-height);
+  }
+
+  .search-form:focus-within {
+    border-color: var(--color-focus);
+    box-shadow: 0 0 0 2px color-mix(in oklch, var(--color-focus) 24%, transparent);
+  }
+
+  @media (max-width: 900px) {
+    input,
+    button,
+    .compact input,
+    .compact button {
+      min-height: var(--control-height-mobile);
+    }
   }
 </style>

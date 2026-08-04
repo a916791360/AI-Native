@@ -2,6 +2,90 @@
   "version": 1,
   "cases": [
     {
+      "caseId": "customer-support-knowledge-base",
+      "caseUrl": "/learn/cases/customer-support-knowledge-base/",
+      "firstGateId": "decide-ai-boundary",
+      "lastGateId": "govern-launch-and-iteration",
+      "gates": [
+        {
+          "id": "decide-ai-boundary",
+          "order": 1,
+          "stageId": "model-boundaries",
+          "title": "判断 AI 边界",
+          "status": "verified",
+          "url": "/learn/cases/customer-support-knowledge-base/decide-ai-boundary/",
+          "nextGateId": "establish-value-and-data",
+          "artifactIds": [
+            "kb-ai-applicability"
+          ]
+        },
+        {
+          "id": "establish-value-and-data",
+          "order": 2,
+          "stageId": "opportunity-judgment",
+          "title": "建立价值与数据条件",
+          "status": "verified",
+          "url": "/learn/cases/customer-support-knowledge-base/establish-value-and-data/",
+          "previousGateId": "decide-ai-boundary",
+          "nextGateId": "select-workflow",
+          "artifactIds": [
+            "kb-opportunity-assessment"
+          ]
+        },
+        {
+          "id": "select-workflow",
+          "order": 3,
+          "stageId": "solution-choice",
+          "title": "拆解检索与回答工作流",
+          "status": "verified",
+          "url": "/learn/cases/customer-support-knowledge-base/select-workflow/",
+          "previousGateId": "establish-value-and-data",
+          "nextGateId": "design-control-and-recovery",
+          "artifactIds": [
+            "kb-workflow-selection"
+          ]
+        },
+        {
+          "id": "design-control-and-recovery",
+          "order": 4,
+          "stageId": "product-experience",
+          "title": "设计坐席控制与失败恢复",
+          "status": "verified",
+          "url": "/learn/cases/customer-support-knowledge-base/design-control-and-recovery/",
+          "previousGateId": "select-workflow",
+          "nextGateId": "define-evaluation-and-cost",
+          "artifactIds": [
+            "kb-responsibility-recovery"
+          ]
+        },
+        {
+          "id": "define-evaluation-and-cost",
+          "order": 5,
+          "stageId": "quality-constraints",
+          "title": "定义评测、成本与上线护栏",
+          "status": "verified",
+          "url": "/learn/cases/customer-support-knowledge-base/define-evaluation-and-cost/",
+          "previousGateId": "design-control-and-recovery",
+          "nextGateId": "govern-launch-and-iteration",
+          "artifactIds": [
+            "kb-evaluation-guardrails"
+          ]
+        },
+        {
+          "id": "govern-launch-and-iteration",
+          "order": 6,
+          "stageId": "capstone",
+          "title": "治理发布与持续更新",
+          "status": "verified",
+          "url": "/learn/cases/customer-support-knowledge-base/govern-launch-and-iteration/",
+          "previousGateId": "define-evaluation-and-cost",
+          "artifactIds": [
+            "kb-complete-review"
+          ]
+        }
+      ]
+    },
+    {
       "caseId": "user-feedback-analysis",
       "caseUrl": "/learn/cases/user-feedback-analysis/",
       "firstGateId": "decide-ai-boundary",

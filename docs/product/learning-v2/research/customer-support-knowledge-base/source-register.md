@@ -1,18 +1,19 @@
 # 客服知识库来源登记
 
-- 研究日期：2026-08-03
+- 研究日期：2026-08-04
+- 核验记录：[`content-verification.md`](./content-verification.md)
 - 适用范围：阶段 14 客服知识库教学案例
 - 选择原则：优先标准机构、官方安全项目、同行评审论文与原始研究
 
 ## 1. 外部来源
 
-| ID  | 来源                                                                                                                                                                             | 稳定性 | 本案例使用的结论                                                                 | 不支持的推断                                     |
-| --- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ | -------------------------------------------------------------------------------- | ------------------------------------------------ |
-| S1  | [NIST AI 600-1: Generative AI Profile](https://doi.org/10.6028/NIST.AI.600-1)                                                                                                    | 稳定   | 生成系统可能产生错误内容和虚假引用；高影响场景需要在生命周期中测量和治理风险     | 不证明 RAG 可消除编造，也不提供本案例上线阈值    |
-| S2  | [Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks](https://papers.neurips.cc/paper/2020/hash/6b493230205f780e1bc26945df7481e5-Abstract.html)                     | 稳定   | RAG 将参数化生成与显式非参数知识结合，研究动机包含知识更新与来源追踪             | 不证明任意企业知识库或检索配置都能产生正确回答   |
-| S3  | [Lost in the Middle: How Language Models Use Long Contexts](https://direct.mit.edu/tacl/article/doi/10.1162/tacl_a_00638/119630/Lost-in-the-Middle-How-Language-Models-Use-Long) | 稳定   | 长上下文模型对证据位置并非同等稳健，支持检索、重排和位置切片评测                 | 不证明所有模型、长度和业务数据都有相同比例的下降 |
-| S4  | [ARES: An Automated Evaluation Framework for RAG Systems](https://aclanthology.org/2024.naacl-long.20/)                                                                          | 稳定   | RAG 应分别观察上下文相关性、答案忠实度和答案相关性；自动评估仍以少量人工标注校准 | 不支持只用模型评委替代人工风险审查               |
-| S5  | [OWASP LLM01:2025 Prompt Injection](https://genai.owasp.org/llmrisk/llm01-prompt-injection/)                                                                                     | 演进   | RAG 不能完全缓解提示注入；被检索文档可能成为间接注入来源                         | 不给出本案例安全已达标的证明                     |
+| ID  | 来源                                                                                                                                                         | 稳定性 | 本案例使用的结论                                                                 | 不支持的推断                                     |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------ | -------------------------------------------------------------------------------- | ------------------------------------------------ |
+| S1  | [NIST AI 600-1: Generative AI Profile](https://doi.org/10.6028/NIST.AI.600-1)                                                                                | 稳定   | 生成系统可能产生错误内容和虚假引用；高影响场景需要在生命周期中测量和治理风险     | 不证明 RAG 可消除编造，也不提供本案例上线阈值    |
+| S2  | [Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks](https://papers.neurips.cc/paper/2020/hash/6b493230205f780e1bc26945df7481e5-Abstract.html) | 稳定   | RAG 将参数化生成与显式非参数知识结合，研究动机包含知识更新与来源追踪             | 不证明任意企业知识库或检索配置都能产生正确回答   |
+| S3  | [Lost in the Middle: How Language Models Use Long Contexts](https://aclanthology.org/2024.tacl-1.9/)                                                         | 稳定   | 长上下文模型对证据位置并非同等稳健，支持检索、重排和位置切片评测                 | 不证明所有模型、长度和业务数据都有相同比例的下降 |
+| S4  | [ARES: An Automated Evaluation Framework for RAG Systems](https://aclanthology.org/2024.naacl-long.20/)                                                      | 稳定   | RAG 应分别观察上下文相关性、答案忠实度和答案相关性；自动评估仍以少量人工标注校准 | 不支持只用模型评委替代人工风险审查               |
+| S5  | [OWASP LLM01:2025 Prompt Injection](https://genai.owasp.org/llmrisk/llm01-prompt-injection/)                                                                 | 演进   | RAG 不能完全缓解提示注入；被检索文档可能成为间接注入来源                         | 不给出本案例安全已达标的证明                     |
 
 ## 2. 项目内知识支持
 

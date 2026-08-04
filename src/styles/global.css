@@ -23,7 +23,7 @@ body {
   overflow-x: hidden;
   background: var(--color-black);
   font-size: var(--text-base);
-  line-height: 1.7;
+  line-height: 1.6;
 }
 
 body,
@@ -42,6 +42,31 @@ textarea {
   font: inherit;
 }
 
+button,
+summary,
+select {
+  cursor: pointer;
+}
+
+button,
+a,
+summary,
+input,
+select {
+  transition:
+    color var(--transition-fast),
+    border-color var(--transition-fast),
+    background-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+button:disabled,
+input:disabled,
+select:disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
+}
+
 a {
   color: inherit;
   text-decoration-thickness: 1px;
@@ -55,8 +80,8 @@ svg {
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-focus);
-  outline-offset: 4px;
+  outline: 3px solid var(--color-focus);
+  outline-offset: 3px;
 }
 
 ::selection {
@@ -66,7 +91,7 @@ svg {
 
 .skip-link {
   position: fixed;
-  z-index: 100;
+  z-index: var(--z-skip-link);
   top: var(--space-2);
   left: var(--space-2);
   transform: translateY(-160%);
@@ -98,10 +123,7 @@ svg {
 }
 
 .page-intro {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(17rem, 0.56fr);
-  gap: var(--space-6);
-  align-items: end;
+  display: block;
   border-bottom: 1px solid var(--color-line);
   padding: var(--space-7) var(--page-gutter) var(--space-5);
 }
@@ -110,7 +132,7 @@ svg {
 .display-title {
   margin: var(--space-2) 0 0;
   font-family: var(--font-display);
-  font-size: clamp(2.75rem, 6vw, 5.75rem);
+  font-size: 2.75rem;
   font-weight: 400;
   line-height: 1.02;
   letter-spacing: 0;
@@ -118,7 +140,8 @@ svg {
 }
 
 .page-intro-copy {
-  margin: 0;
+  max-width: 50rem;
+  margin: var(--space-1) 0 0;
   color: var(--color-muted);
   font-size: var(--text-lead);
   text-wrap: pretty;
@@ -127,7 +150,7 @@ svg {
 .section-heading {
   margin: 0;
   font-family: var(--font-display);
-  font-size: clamp(1.8rem, 3vw, 2.75rem);
+  font-size: 2rem;
   font-weight: 400;
   line-height: 1.18;
   letter-spacing: 0;
@@ -141,6 +164,10 @@ svg {
   clip: rect(0 0 0 0);
   clip-path: inset(50%);
   white-space: nowrap;
+}
+
+[hidden] {
+  display: none !important;
 }
 
 @media (max-width: 720px) {
@@ -160,7 +187,7 @@ svg {
 
   .page-intro h1,
   .display-title {
-    font-size: clamp(2.6rem, 14vw, 4rem);
+    font-size: 2rem;
   }
 }
 

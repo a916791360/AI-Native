@@ -1,0 +1,109 @@
+---
+import ContentScopeNav from '@/components/layout/ContentScopeNav.astro';
+import { LEARNING_MODULES, getQuestionsForModule } from '@/data/learning';
+import { loadCaseStudies } from '@/lib/cases/io';
+import { loadProjectContent } from '@/lib/content/io';
+import { deriveSiteMetrics } from '@/lib/site/metrics';
+
+interface Props {
+  activeScope?: 'course';
+}
+
+const { activeScope = 'course' } = Astro.props;
+const [project, cases] = await Promise.all([loadProjectContent(), loadCaseStudies()]);
+const metrics = deriveSiteMetrics(project);
+---
+
+<main id="main-content" class="content-catalog">
+  <ContentScopeNav
+    active={activeScope}
+    caseCount={cases.length}
+    relationCount={metrics.relationCount}
+    routeCount={metrics.publishedRouteCount}
+    termCount={metrics.termCount}
+  />
+
+  <div class="catalog-layout">
+    <aside class="catalog-sidebar">
+      <nav aria-label="课程阶段目录">
+        {
+          LEARNING_MODULES.map((module, index) => (
+            <a href={`#module-${module.index}`} aria-current={index === 0 ? 'true' : undefined}>
+              {module.title}
+            </a>
+          ))
+        }
+      </nav>
+    </aside>
+
+    <div class="catalog-main">
+      <label class="catalog-stage-picker">
+        <span>课程阶段</span>
+        <select data-course-stage>
+          {
+            LEARNING_MODULES.map((module) => (
+              <option value={`module-${module.index}`}>{module.title}</option>
+            ))
+          }
+        </select>
+      </label>
+      <header class="catalog-title">
+        <h1>AI 产品判断学习库</h1>
+        <p>按六个阶段浏览 24 道判断题，直接进入场景、选择方案并查看反馈。</p>
+      </header>
+
+      {
+        LEARNING_MODULES.map((module) => {
+          const questions = getQuestionsForModule(module.id);
+          return (
+            <section
+              id={`module-${module.index}`}
+              class="catalog-section"
+              aria-labelledby={`module-${module.index}-heading`}
+            >
+              <header>
+                <h2 id={`module-${module.index}-heading`}>{module.title}</h2>
+                <span>{questions.length} 个条目</span>
+              </header>
+
+              <div class="learning-card-grid">
+                {questions.map((question) => (
+                  <article class="learning-card">
+                    <a href={`/learn/questions/${question.id}/`}>
+                      <div class="learning-card-heading">
+                        <h3>{question.shortTitle}</h3>
+                        <span>Q{question.index}</span>
+                      </div>
+                      <p class="learning-card-question">“{question.question}”</p>
+                      <div class="learning-card-preview">
+                        <p>
+                          <span>场景</span>
+                          {question.scenario}
+                        </p>
+                        <ul>
+                          {question.facts.slice(0, 3).map((fact) => (
+                            <li>{fact}</li>
+                          ))}
+                        </ul>
+                        <strong>{question.principle}</strong>
+                      </div>
+                    </a>
+                  </article>
+                ))}
+              </div>
+            </section>
+          );
+        })
+      }
+    </div>
+  </div>
+</main>
+
+<script>
+  const stagePicker = document.querySelector<HTMLSelectElement>('[data-course-stage]');
+  stagePicker?.addEventListener('change', () => {
+    const target = document.getElementById(stagePicker.value);
+    target?.scrollIntoView({ block: 'start' });
+    window.history.replaceState({}, '', `#${stagePicker.value}`);
+  });
+</script>

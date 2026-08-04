@@ -23,10 +23,14 @@ test('fits every primary page in all approved release viewports', async ({ page,
     '/',
     '/learn/',
     '/learn/questions/',
+    '/learn/cases/',
     '/learn/questions/q21-support-rag/',
+    '/learn/cases/customer-support-knowledge-base/',
+    '/learn/cases/customer-support-knowledge-base/decide-ai-boundary/',
     '/atlas/',
     '/search/?q=RAG',
     '/routes/',
+    '/routes/rag-from-zero/',
     '/graph/',
     '/methodology/',
     '/terms/retrieval-augmented-generation/',
@@ -51,6 +55,107 @@ test('fits every primary page in all approved release viewports', async ({ page,
   }
 });
 
+test('keeps every page family within the compact visual hierarchy', async ({ page, isMobile }) => {
+  test.skip(isMobile, 'the explicit viewport matrix covers desktop and mobile once');
+  const paths = [
+    '/',
+    '/learn/',
+    '/learn/questions/q21-support-rag/',
+    '/learn/cases/',
+    '/learn/cases/customer-support-knowledge-base/',
+    '/learn/cases/customer-support-knowledge-base/decide-ai-boundary/',
+    '/atlas/',
+    '/terms/retrieval-augmented-generation/',
+    '/routes/',
+    '/routes/rag-from-zero/',
+    '/graph/',
+    '/search/?q=RAG',
+    '/methodology/',
+    '/not-a-real-concept/',
+  ];
+
+  for (const viewport of [
+    { width: 1440, height: 900, maximumHeadingSize: 48 },
+    { width: 390, height: 844, maximumHeadingSize: 40 },
+  ]) {
+    await page.setViewportSize(viewport);
+    for (const pagePath of paths) {
+      await page.goto(pagePath);
+      const headingSize = await page
+        .getByRole('heading', { level: 1 })
+        .evaluate((heading) => Number.parseFloat(getComputedStyle(heading).fontSize));
+      expect(headingSize, `${pagePath} at ${viewport.width}px`).toBeLessThanOrEqual(
+        viewport.maximumHeadingSize,
+      );
+    }
+  }
+});
+
+test('uses one content scope navigation across secondary pages', async ({ page, isMobile }) => {
+  const pages = [
+    ['/learn/questions/q21-support-rag/', '系统课程'],
+    ['/learn/cases/customer-support-knowledge-base/', '案例实战'],
+    ['/atlas/', '知识词条'],
+    ['/terms/retrieval-augmented-generation/', '知识词条'],
+    ['/routes/rag-from-zero/', '阅读路线'],
+    ['/graph/', '概念关系'],
+  ] as const;
+
+  for (const [pagePath, activeLabel] of pages) {
+    await page.goto(pagePath);
+    if (isMobile) {
+      await expect(page.locator('nav[aria-label="内容类型"]')).toBeHidden();
+      continue;
+    }
+    const scope = page.getByRole('navigation', { name: '内容类型' });
+    await expect(scope.getByRole('link', { name: /阅读路线 4/ })).toBeVisible();
+    await expect(scope.getByRole('link', { name: new RegExp(activeLabel) })).toHaveAttribute(
+      'aria-current',
+      'page',
+    );
+  }
+
+  await page.goto('/not-a-real-concept/');
+  await expect(page.getByRole('navigation', { name: '内容类型' })).toHaveCount(0);
+});
+
+test('keeps global controls and route cards compact', async ({ page, isMobile }) => {
+  test.skip(isMobile, 'the explicit viewport matrix covers desktop and mobile once');
+
+  for (const viewport of [
+    { width: 1440, height: 900, maximumHeaderSearchWidth: 300, maximumSearchHeight: 44 },
+    { width: 390, height: 844, maximumHeaderSearchWidth: 360, maximumSearchHeight: 48 },
+  ]) {
+    await page.setViewportSize(viewport);
+    await page.goto('/routes/');
+
+    const navigation = page.getByRole('navigation', { name: '主导航' });
+    if (viewport.width <= 760) {
+      await page.getByRole('button', { name: '菜单', exact: true }).click();
+    }
+    await expect(navigation.getByRole('link')).toHaveCount(6);
+    await expect(page.getByRole('navigation', { name: '知识工具' })).toHaveCount(0);
+
+    if (viewport.width <= 760) {
+      await page.getByRole('button', { name: '搜索', exact: true }).click();
+    }
+    const searchBox = page.getByRole('searchbox', { name: '搜索案例、问题或术语' });
+    const searchBounds = await searchBox.boundingBox();
+    expect(searchBounds).not.toBeNull();
+    expect(searchBounds!.width).toBeLessThanOrEqual(viewport.maximumHeaderSearchWidth);
+    expect(searchBounds!.height).toBeLessThanOrEqual(viewport.maximumSearchHeight);
+
+    const routeIndex = page.locator('.route-index').first();
+    const routeIndexBounds = await routeIndex.boundingBox();
+    const routeNumberSize = await routeIndex
+      .locator('strong')
+      .evaluate((element) => Number.parseFloat(getComputedStyle(element).fontSize));
+    expect(routeIndexBounds).not.toBeNull();
+    expect(routeIndexBounds!.height).toBeLessThanOrEqual(52);
+    expect(routeNumberSize).toBeLessThanOrEqual(14);
+  }
+});
+
 test('completes search, filtering and graph selection with a keyboard', async ({
   page,
   isMobile,
@@ -61,7 +166,7 @@ test('completes search, filtering and graph selection with a keyboard', async ({
   const skipLink = page.getByRole('link', { name: '跳到主要内容' });
   await page.keyboard.press('Tab');
   await expect(skipLink).toBeFocused();
-  const homeSearch = page.getByRole('searchbox', { name: '搜索词条' });
+  const homeSearch = page.getByRole('searchbox', { name: '搜索案例、问题或术语' });
   await tabTo(page, homeSearch);
   await page.keyboard.type('RAG');
   await page.keyboard.press('Enter');

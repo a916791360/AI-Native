@@ -322,14 +322,14 @@ async function initializeGraph(root: HTMLElement): Promise<void> {
         applyFilters(root, cy);
         const selected = cy.nodes(':selected:visible').first();
         const target = selected.length ? selected : cy.nodes(':visible').first();
-        if (target.length) focusNode(root, cy, graph, target.id(), reducedMotion);
+        if (target.length) focusNode(root, cy, graph, target.id(), true);
       }),
     );
     root.querySelector<HTMLSelectElement>('[data-graph-domain]')?.addEventListener('change', () => {
       applyFilters(root, cy);
       const selected = cy.nodes(':selected:visible').first();
       const target = selected.length ? selected : cy.nodes(':visible').first();
-      if (target.length) focusNode(root, cy, graph, target.id(), reducedMotion);
+      if (target.length) focusNode(root, cy, graph, target.id(), true);
     });
     root
       .querySelector<HTMLSelectElement>('[data-graph-focus-select]')

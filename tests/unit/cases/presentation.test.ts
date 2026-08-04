@@ -9,6 +9,11 @@ import {
   resolveGateResources,
 } from '../../../src/lib/cases/presentation';
 
+async function loadGoldenCase() {
+  const cases = await loadCaseStudies();
+  return cases.find(({ data }) => data.id === 'user-feedback-analysis')!.data;
+}
+
 describe('stage 13 case presentation model', () => {
   it('derives deterministic case and gate routes', () => {
     expect(caseHref('user-feedback-analysis')).toBe('/learn/cases/user-feedback-analysis/');
@@ -18,8 +23,7 @@ describe('stage 13 case presentation model', () => {
   });
 
   it('resolves each gate resource in YAML order', async () => {
-    const cases = await loadCaseStudies();
-    const data = cases[0]!.data;
+    const data = await loadGoldenCase();
     const gate = data.gates[4]!;
     const resources = resolveGateResources(data, gate);
 
@@ -30,8 +34,7 @@ describe('stage 13 case presentation model', () => {
   });
 
   it('provides continuous navigation and accumulated materials', async () => {
-    const cases = await loadCaseStudies();
-    const data = cases[0]!.data;
+    const data = await loadGoldenCase();
     const context = getGateContext(data, 'design-control-and-recovery');
 
     expect(context?.previous?.id).toBe('select-workflow');
@@ -45,8 +48,7 @@ describe('stage 13 case presentation model', () => {
   });
 
   it('maps knowledge and source references to public destinations', async () => {
-    const cases = await loadCaseStudies();
-    const data = cases[0]!.data;
+    const data = await loadGoldenCase();
     const term = data.references.find(({ kind }) => kind === 'term')!;
     const route = data.references.find(({ kind }) => kind === 'route')!;
     const source = data.references.find(({ kind }) => kind === 'source')!;

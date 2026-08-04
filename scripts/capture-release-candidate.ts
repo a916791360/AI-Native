@@ -16,6 +16,8 @@ const captures = [
   ['atlas-390x844', '/atlas/', 390, 844],
   ['routes-1280x800', '/routes/', 1280, 800],
   ['routes-390x844', '/routes/', 390, 844],
+  ['route-detail-1280x800', '/routes/rag-from-zero/', 1280, 800],
+  ['route-detail-390x844', '/routes/rag-from-zero/', 390, 844],
   ['term-1024x768', '/terms/retrieval-augmented-generation/', 1024, 768],
   ['term-360x800', '/terms/retrieval-augmented-generation/', 360, 800],
   ['graph-1440x900', '/graph/', 1440, 900],

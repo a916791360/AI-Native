@@ -13,12 +13,12 @@ async function loadFixture() {
 }
 
 describe('stage 12B case content model', () => {
-  it('validates the golden case and keeps its stages aligned with the learning spine', async () => {
+  it('validates both cases and keeps their stages aligned with the learning spine', async () => {
     const { cases, project } = await loadFixture();
 
     expect(validateCaseStudies(cases, project)).toEqual([]);
-    expect(cases).toHaveLength(1);
-    expect(cases[0]?.data.gates).toHaveLength(6);
+    expect(cases).toHaveLength(2);
+    expect(cases.every(({ data }) => data.gates.length === 6)).toBe(true);
     expect(CASE_STAGE_IDS).toEqual(LEARNING_MODULES.map(({ id }) => id));
   });
 
@@ -29,28 +29,41 @@ describe('stage 12B case content model', () => {
 
     expect(buildCaseRegistry(cases)).toEqual(registry);
     expect(buildCaseNavigation(cases)).toEqual(navigation);
-    expect(registry.cases[0]).toMatchObject({
+    expect(registry.cases.find(({ id }) => id === 'user-feedback-analysis')).toMatchObject({
       id: 'user-feedback-analysis',
       gateCount: 6,
       artifactCount: 6,
       status: 'draft',
     });
-    expect(navigation.cases[0]?.gates[0]).toMatchObject({
+    const goldenNavigation = navigation.cases.find(
+      ({ caseId }) => caseId === 'user-feedback-analysis',
+    );
+    expect(goldenNavigation?.gates[0]).toMatchObject({
       id: 'decide-ai-boundary',
       previousGateId: undefined,
       nextGateId: 'establish-value-and-data',
     });
-    expect(navigation.cases[0]?.gates.at(-1)).toMatchObject({
+    expect(goldenNavigation?.gates.at(-1)).toMatchObject({
       id: 'govern-launch-and-iteration',
       previousGateId: 'define-evaluation-and-cost',
       nextGateId: undefined,
     });
+    expect(registry.cases.find(({ id }) => id === 'customer-support-knowledge-base')).toMatchObject(
+      {
+        id: 'customer-support-knowledge-base',
+        level: 'focus',
+        gateCount: 6,
+        artifactCount: 6,
+        status: 'verified',
+      },
+    );
   });
 
   it('rejects an invalid knowledge reference', async () => {
     const { cases, project } = await loadFixture();
     const invalid = structuredClone(cases);
-    invalid[0]!.data.references[0]!.targetId = 'missing-term';
+    const goldenCase = invalid.find(({ data }) => data.id === 'user-feedback-analysis')!.data;
+    goldenCase.references[0]!.targetId = 'missing-term';
 
     expect(validateCaseStudies(invalid, project).map(({ code }) => code)).toContain(
       'CASE_REFERENCE_UNKNOWN',
@@ -60,7 +73,8 @@ describe('stage 12B case content model', () => {
   it('rejects duplicate gates', async () => {
     const { cases, project } = await loadFixture();
     const invalid = structuredClone(cases);
-    invalid[0]!.data.gates[1]!.id = invalid[0]!.data.gates[0]!.id;
+    const goldenCase = invalid.find(({ data }) => data.id === 'user-feedback-analysis')!.data;
+    goldenCase.gates[1]!.id = goldenCase.gates[0]!.id;
 
     expect(validateCaseStudies(invalid, project).map(({ code }) => code)).toContain(
       'CASE_GATE_DUPLICATE_ID',
@@ -70,7 +84,8 @@ describe('stage 12B case content model', () => {
   it('rejects a gate without a failure mode', async () => {
     const { cases, project } = await loadFixture();
     const invalid = structuredClone(cases);
-    invalid[0]!.data.gates[0]!.failureModeIds = [];
+    const goldenCase = invalid.find(({ data }) => data.id === 'user-feedback-analysis')!.data;
+    goldenCase.gates[0]!.failureModeIds = [];
 
     expect(validateCaseStudies(invalid, project).map(({ code }) => code)).toContain(
       'CASE_GATE_FAILURE_REQUIRED',
@@ -80,7 +95,8 @@ describe('stage 12B case content model', () => {
   it('rejects lifecycle status that overstates case completion', async () => {
     const { cases, project } = await loadFixture();
     const invalid = structuredClone(cases);
-    invalid[0]!.data.status = 'verified';
+    const goldenCase = invalid.find(({ data }) => data.id === 'user-feedback-analysis')!.data;
+    goldenCase.status = 'verified';
 
     expect(validateCaseStudies(invalid, project).map(({ code }) => code)).toEqual(
       expect.arrayContaining(['CASE_STATUS_INCONSISTENT', 'CASE_VERIFIED_DATE_REQUIRED']),

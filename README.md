@@ -24,10 +24,10 @@ AI-Native 是面向中文 AI 初学者与转型产品经理的落地型 AI 产�
 - 黄金项目内容模型：已建立案例、Gate、选项、材料、指标、失败模式和引用 Schema，生成案例注册表与连续导航，并以固定反例阻止无效引用、重复 Gate、缺失失败项和状态虚报。
 - 黄金项目视觉 Gate：完成三套真实内容方向和双端截图，用户选定方向 02「证据决策台」，并确认生产转译检查点。
 - 阶段 13 生产纵向切片：已实现黄金项目首页、六个连续 Gate、完整档案、三层学习入口、按需知识支持、无 JavaScript 路径和四档生产截图；案例内容仍保持 `draft`。
-- 阶段 14 重点案例扩展：已启动客服知识库案例，完成范围 Gate、研究包和来源登记；YAML 初稿与生产核验尚未完成。
+- 阶段 14 重点案例扩展：客服知识库已完成范围 Gate、研究包、YAML、逐项来源核验、案例库入口和四档生产验收，案例与六个 Gate 已进入 `verified`；黄金项目继续保持 `draft`。
 - 后续阶段：阶段 14 重点案例扩展、阶段 15 目标用户能力迁移验收、阶段 16 部署决策与发布。
 
-下一步把客服知识库研究包转为案例 YAML 初稿并完成来源与边界核验，再按同一 Gate 推进其余四个重点案例。项目尚未部署；阶段 16 仍需新的明确部署授权。
+下一步按同一生产 Gate 推进销售跟进助手的选题、范围与研究包，再扩展其余三个重点案例。项目尚未部署；阶段 16 仍需新的明确部署授权。
 
 ## 关键文档
 
@@ -37,6 +37,7 @@ AI-Native 是面向中文 AI 初学者与转型产品经理的落地型 AI 产�
 - [学习体系 V2 实施计划](docs/product/learning-v2/implementation-plan.md)
 - [黄金项目研究包](docs/product/learning-v2/research/user-feedback-analysis/research-pack.md)
 - [阶段 13 生产验收](docs/product/learning-v2/production-verification.md)
+- [阶段 14 客服案例生产验收](docs/product/learning-v2/stage-14-production-verification.md)
 - [设计方向确认](docs/product/direction-approved.md)
 - [学习体验重构事实](docs/product/learning-redesign/product-facts.md)
 - [学习体验重构共同规格](docs/product/learning-redesign/design-spec.md)

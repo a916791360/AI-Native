@@ -4,32 +4,39 @@ import { SITE } from '@/config/site';
 ---
 
 <footer class="site-footer">
-  <div>
-    <a class="footer-wordmark" href="/">{SITE.name}</a>
-    <p>{SITE.description}</p>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a class="footer-wordmark" href="/">{SITE.name}</a>
+      <p>{SITE.description}</p>
+    </div>
+    <nav aria-label="页脚导航">
+      {NAVIGATION.map((item) => <a href={item.href}>{item.label}</a>)}
+      <a href="/methodology/">内容方法</a>
+      <a href={SITE.repositoryUrl}>GitHub</a>
+    </nav>
+    <p class="footer-state">学习首版 · 内容持续校订</p>
   </div>
-  <nav aria-label="页脚导航">
-    {NAVIGATION.map((item) => <a href={item.href}>{item.label}</a>)}
-    <a href="/methodology/">内容方法</a>
-    <a href={SITE.repositoryUrl}>GitHub</a>
-  </nav>
-  <p class="footer-state">学习首版 · 内容持续校订</p>
 </footer>
 
 <style>
   .site-footer {
-    display: grid;
-    grid-template-columns: 1fr auto minmax(12rem, 0.5fr);
-    gap: var(--space-6);
-    align-items: start;
     border-top: 1px solid var(--color-line);
-    padding: var(--space-6) var(--page-gutter);
+    padding: var(--space-4) 0;
     color: var(--color-muted);
   }
 
-  .site-footer p {
+  .footer-inner {
+    width: min(calc(100% - 2.5rem), var(--content-max));
+    display: grid;
+    grid-template-columns: minmax(18rem, 1fr) minmax(24rem, auto);
+    gap: var(--space-3) var(--space-5);
+    align-items: start;
+    margin-inline: auto;
+  }
+
+  .footer-brand p {
     max-width: 30rem;
-    margin: var(--space-2) 0 0;
+    margin: var(--space-1) 0 0;
     font-size: var(--text-sm);
   }
 
@@ -41,30 +48,46 @@ import { SITE } from '@/config/site';
   }
 
   .site-footer nav {
-    display: grid;
-    grid-template-columns: repeat(2, auto);
-    gap: var(--space-1) var(--space-4);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: var(--space-1) var(--space-3);
   }
 
   .site-footer nav a {
+    min-height: var(--control-height);
+    display: inline-flex;
+    align-items: center;
     font-size: var(--text-sm);
   }
 
   .footer-state {
-    justify-self: end;
+    grid-column: 1 / -1;
+    margin: 0;
+    border-top: 1px solid var(--color-line-soft);
+    padding-top: var(--space-2);
     font-family: var(--font-mono);
     font-size: var(--text-xs) !important;
     text-transform: uppercase;
   }
 
   @media (max-width: 760px) {
-    .site-footer {
+    .footer-inner {
+      width: min(calc(100% - 2rem), var(--content-max));
       grid-template-columns: 1fr;
-      gap: var(--space-4);
+      gap: var(--space-3);
+    }
+
+    .site-footer nav {
+      justify-content: flex-start;
+    }
+
+    .site-footer nav a {
+      min-height: var(--control-height-mobile);
     }
 
     .footer-state {
-      justify-self: start;
+      grid-column: auto;
     }
   }
 </style>

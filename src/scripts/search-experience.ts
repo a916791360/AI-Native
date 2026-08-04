@@ -38,10 +38,18 @@ interface DisplayResult {
   excerpt?: string;
 }
 
+interface RenderedResultsState {
+  results: DisplayResult[];
+  query: string;
+  visibleLimit: number;
+}
+
 const records = registry.terms as TermSearchRecord[];
 const recordsByUrl = new Map(records.map((record) => [record.url, record]));
 const recordsById = new Map(records.map((record) => [record.id, record]));
 let pagefindPromise: Promise<PagefindApi> | undefined;
+const RESULT_BATCH_SIZE = 10;
+const renderedResults = new WeakMap<HTMLElement, RenderedResultsState>();
 
 function loadPagefind(): Promise<PagefindApi> {
   pagefindPromise ??= (async () => {
@@ -126,19 +134,30 @@ const statusLabels = {
   deprecated: '已弃用',
 } as const;
 
-function renderResults(root: HTMLElement, results: DisplayResult[], query: string): void {
+function renderResults(
+  root: HTMLElement,
+  results: DisplayResult[],
+  query: string,
+  visibleLimit = RESULT_BATCH_SIZE,
+): void {
   const list = root.querySelector<HTMLOListElement>('[data-search-results]');
   const empty = root.querySelector<HTMLElement>('[data-search-empty]');
   const status = root.querySelector<HTMLElement>('[data-search-status]');
-  if (!list || !empty || !status) return;
+  const more = root.querySelector<HTMLButtonElement>('[data-search-more]');
+  if (!list || !empty || !status || !more) return;
 
   list.replaceChildren();
   empty.hidden = results.length > 0;
+  const visibleResults = results.slice(0, visibleLimit);
+  const visibleCount = visibleResults.length;
   status.textContent = query
-    ? `找到 ${results.length} 个匹配词条`
-    : `显示 ${results.length} 个词条`;
+    ? `找到 ${results.length} 个匹配词条${visibleCount < results.length ? ` · 当前显示 ${visibleCount} 个` : ''}`
+    : `显示 ${visibleCount} / ${results.length} 个词条`;
+  more.hidden = visibleCount >= results.length;
+  more.textContent = `显示更多（剩余 ${Math.max(0, results.length - visibleCount)} 个）`;
+  renderedResults.set(root, { results, query, visibleLimit });
 
-  results.forEach((result, index) => {
+  visibleResults.forEach((result, index) => {
     const item = document.createElement('li');
     item.className = 'search-result';
     item.dataset.resultId = result.record.id;
@@ -266,8 +285,19 @@ function initializeSearch(root: HTMLElement): void {
   const form = root.querySelector<HTMLFormElement>('form');
   const input = root.querySelector<HTMLInputElement>('input[type="search"]');
   const clear = root.querySelector<HTMLButtonElement>('[data-search-clear]');
+  const more = root.querySelector<HTMLButtonElement>('[data-search-more]');
+  const filterPanel = root.querySelector<HTMLDetailsElement>('[data-search-filter-panel]');
+  const filterSummary = root.querySelector<HTMLElement>('[data-search-filter-summary]');
   const selects = [...root.querySelectorAll<HTMLSelectElement>('[data-search-filter]')];
-  if (!form || !input || !clear) return;
+  if (!form || !input || !clear || !more) return;
+
+  const updateControlState = () => {
+    const activeFilterCount = selects.filter((select) => Boolean(select.value)).length;
+    clear.disabled = activeFilterCount === 0 && !input.value.trim();
+    if (filterSummary) {
+      filterSummary.textContent = activeFilterCount > 0 ? `已选 ${activeFilterCount} 项` : '全部';
+    }
+  };
 
   const params = new URLSearchParams(window.location.search);
   input.value = params.get('q') ?? '';
@@ -275,8 +305,17 @@ function initializeSearch(root: HTMLElement): void {
     select.value = params.get(select.dataset.searchFilter ?? '') ?? '';
   });
 
+  const mobileFilters = window.matchMedia('(max-width: 820px)');
+  if (filterPanel) {
+    filterPanel.open = !mobileFilters.matches;
+    mobileFilters.addEventListener('change', (event) => {
+      filterPanel.open = !event.matches;
+    });
+  }
+
   input.addEventListener('focus', () => void loadPagefind().catch(() => undefined), { once: true });
   input.addEventListener('input', () => {
+    updateControlState();
     updateUrl(input, readFilters(root));
     void executeSearch(root, true);
   });
@@ -287,6 +326,7 @@ function initializeSearch(root: HTMLElement): void {
   });
   selects.forEach((select) =>
     select.addEventListener('change', () => {
+      updateControlState();
       updateUrl(input, readFilters(root));
       void executeSearch(root);
     }),
@@ -294,11 +334,19 @@ function initializeSearch(root: HTMLElement): void {
   clear.addEventListener('click', () => {
     input.value = '';
     selects.forEach((select) => (select.value = ''));
+    updateControlState();
     updateUrl(input, {});
     void executeSearch(root);
     input.focus();
   });
 
+  more.addEventListener('click', () => {
+    const state = renderedResults.get(root);
+    if (!state) return;
+    renderResults(root, state.results, state.query, state.visibleLimit + RESULT_BATCH_SIZE);
+  });
+
+  updateControlState();
   void executeSearch(root);
 }
 

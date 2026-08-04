@@ -2,6 +2,32 @@
   "version": 1,
   "cases": [
     {
+      "id": "customer-support-knowledge-base",
+      "url": "/learn/cases/customer-support-knowledge-base/",
+      "title": "客服知识库与回答辅助",
+      "level": "focus",
+      "domain": "RAG 与客服产品",
+      "audience": [
+        "零基础或初级 AI 产品经理",
+        "需要评审客服知识助手的产品与业务人员"
+      ],
+      "objective": "在知识版本、访问权限和原文证据可核验的前提下，提高坐席形成可发送回答的效率，并在证据不足或风险较高时可靠拒答和升级。",
+      "status": "verified",
+      "updatedAt": "2026-08-04",
+      "gateCount": 6,
+      "artifactCount": 6,
+      "metricCount": 12,
+      "failureModeCount": 12,
+      "stageIds": [
+        "model-boundaries",
+        "opportunity-judgment",
+        "solution-choice",
+        "product-experience",
+        "quality-constraints",
+        "capstone"
+      ]
+    },
+    {
       "id": "user-feedback-analysis",
       "url": "/learn/cases/user-feedback-analysis/",
       "title": "每日用户反馈分析与产品改进",
