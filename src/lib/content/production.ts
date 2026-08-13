@@ -23,7 +23,7 @@ const productionWaveSchema = z
 const productionBatchSchema = z
   .object({
     id: stableIdSchema,
-    kind: z.enum(['sample', 'foundation', 'collaboration', 'product', 'rag']),
+    kind: z.enum(['sample', 'foundation', 'collaboration', 'product', 'rag', 'pm']),
     status: productionStatusSchema,
     terms: z.array(stableIdSchema).min(1),
     waves: z.array(productionWaveSchema).min(1).optional(),
@@ -156,6 +156,13 @@ export function validateContentProduction(
         code: 'PRODUCTION_PRODUCT_SIZE',
         filePath: 'src/data/content-production.yml',
         message: `product batch ${batch.id} must contain 20-30 terms`,
+      });
+    }
+    if (batch.kind === 'pm' && (batch.terms.length < 5 || batch.terms.length > 15)) {
+      diagnostics.push({
+        code: 'PRODUCTION_PM_SIZE',
+        filePath: 'src/data/content-production.yml',
+        message: `pm batch ${batch.id} must contain 5-15 terms`,
       });
     }
 

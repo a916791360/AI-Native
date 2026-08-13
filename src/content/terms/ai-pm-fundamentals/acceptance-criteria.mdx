@@ -1,0 +1,62 @@
+---
+id: acceptance-criteria
+nameZh: 验收标准
+nameEn: Acceptance Criteria
+abbreviations: []
+aliases: []
+summary: 用可观察、可验证的条件描述功能完成标准，用于对齐开发、测试与业务对「完成」的定义。
+domain: ai-pm-fundamentals
+difficulty: beginner
+ring: extended
+status: verified
+priority: 1
+featured: false
+publishedAt: '2026-08-13'
+updatedAt: '2026-08-13'
+verifiedAt: '2026-08-13'
+sources:
+  - id: atlassian-acceptance-criteria
+    type: engineering-practice
+    title: Acceptance criteria
+    url: https://www.atlassian.com/agile/project-management/acceptance-criteria
+    publisher: Atlassian
+    accessedAt: '2026-08-13'
+  - id: wikipedia-acceptance-testing
+    type: research-institute
+    title: Acceptance testing
+    url: https://en.wikipedia.org/wiki/Acceptance_testing
+    publisher: Wikipedia
+    accessedAt: '2026-08-13'
+---
+
+<h2 id="what-it-is">它是什么</h2>
+
+验收标准是用可观察、可验证的条件描述「怎样算完成」的清单。它把「做完」从主观感觉变成客观判断，是开发、测试与业务对齐的共同标尺。
+
+<h2 id="why-it-matters">为什么需要它</h2>
+
+「做好一点、再快一点」这类需求无法验收，会导致反复返工和争论。验收标准在动手前写清通过与不通过的边界，减少歧义，也让测试可以自动或人工地核对结果。
+
+<h2 id="how-it-works">它如何工作</h2>
+
+针对每个需求写若干条可验证条件，每条都能被观察到「是」或「否」，并覆盖正常路径、边界与失败情况。验收标准回答「完成时会发生什么」，而不是「怎么做」（后者是实现细节）。写完后任何一方都能独立判断是否达标。
+
+<h2 id="example">真实例子</h2>
+
+一个 AI 客服助手的验收标准不写「回答准确」，而写：命中退款场景时返回草稿；每条草稿都附原文引用；引用指向当前有效版本；证据不足时显示拒答并转人工；响应时间中位数低于 3 秒。每条都可被测试验证。
+
+<h2 id="tradeoffs">什么时候适合与不适合</h2>
+
+适合：跨角色协作、需要明确完成边界、或错误代价高的功能。慎用：过度细化到实现步骤会束缚设计；还在探索的方向可先用更宽的成功标准。验收标准描述「什么算好」，不规定「怎么实现」。
+
+<h2 id="try-it">亲自试一下</h2>
+
+拿一个需求，写出三条验收标准，逐条检查：是否可被观察到真假、是否覆盖正常与失败情况、是否混入了实现细节。把混入的「怎么做」删掉，只留「完成时会发生什么」。
+
+<h2 id="next">接下来学什么</h2>
+
+把验收标准写进 [PRD](/terms/prd/)，配合[用户故事](/terms/user-story/)组织，并用[需求优先级](/terms/prioritization/)决定先交付哪一条。
+
+<h2 id="sources-and-revisions">来源与修订</h2>
+
+验收标准的定义与写法依据 Atlassian 的敏捷实践指南 [S1] 与验收测试的通用概念 [S2]。本版强调「可观察、覆盖边界、不混实现细节」，不把验收标准写成测试用例本身。

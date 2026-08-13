@@ -1438,3 +1438,128 @@
   target: compute
   type: application
   explanation: 能源效率是理解和应用算力时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: ai-product-manager-connected-to-ai-product
+  source: ai-product-manager
+  target: ai-product
+  type: application
+  explanation: AI 产品经理是理解和应用AI 产品时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: product-manager-connected-to-ai-product-manager
+  source: product-manager
+  target: ai-product-manager
+  type: application
+  explanation: 产品经理是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: user-research-connected-to-ai-product-manager
+  source: user-research
+  target: ai-product-manager
+  type: application
+  explanation: 用户研究是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: user-interview-connected-to-ai-product-manager
+  source: user-interview
+  target: ai-product-manager
+  type: application
+  explanation: 用户访谈是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: requirement-analysis-connected-to-ai-product-manager
+  source: requirement-analysis
+  target: ai-product-manager
+  type: application
+  explanation: 需求分析是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: prd-connected-to-ai-product-manager
+  source: prd
+  target: ai-product-manager
+  type: application
+  explanation: 产品需求文档是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: acceptance-criteria-connected-to-ai-product-manager
+  source: acceptance-criteria
+  target: ai-product-manager
+  type: application
+  explanation: 验收标准是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: user-story-connected-to-ai-product-manager
+  source: user-story
+  target: ai-product-manager
+  type: application
+  explanation: 用户故事是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: prioritization-connected-to-ai-product-manager
+  source: prioritization
+  target: ai-product-manager
+  type: application
+  explanation: 需求优先级是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: roadmap-connected-to-ai-product-manager
+  source: roadmap
+  target: ai-product-manager
+  type: application
+  explanation: 产品路线图是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: mvp-connected-to-ai-product-manager
+  source: mvp
+  target: ai-product-manager
+  type: application
+  explanation: 最小可行产品是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: stakeholder-management-connected-to-ai-product-manager
+  source: stakeholder-management
+  target: ai-product-manager
+  type: application
+  explanation: 干系人管理是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: project-management-connected-to-ai-product-manager
+  source: project-management
+  target: ai-product-manager
+  type: application
+  explanation: 项目管理是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: competitive-analysis-connected-to-ai-product-manager
+  source: competitive-analysis
+  target: ai-product-manager
+  type: application
+  explanation: 竞品分析是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: business-model-connected-to-ai-product-manager
+  source: business-model
+  target: ai-product-manager
+  type: application
+  explanation: 商业模式是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: pricing-strategy-connected-to-ai-product-manager
+  source: pricing-strategy
+  target: ai-product-manager
+  type: application
+  explanation: 定价策略是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: north-star-metric-connected-to-ai-product-manager
+  source: north-star-metric
+  target: ai-product-manager
+  type: application
+  explanation: 北极星指标是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: ab-testing-connected-to-ai-product-manager
+  source: ab-testing
+  target: ai-product-manager
+  type: application
+  explanation: A/B 测试是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: product-analytics-connected-to-ai-product-manager
+  source: product-analytics
+  target: ai-product-manager
+  type: application
+  explanation: 产品数据分析是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: go-to-market-connected-to-ai-product-manager
+  source: go-to-market
+  target: ai-product-manager
+  type: application
+  explanation: 上线与增长是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: product-lifecycle-connected-to-ai-product-manager
+  source: product-lifecycle
+  target: ai-product-manager
+  type: application
+  explanation: 产品生命周期是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: tech-collaboration-connected-to-ai-product-manager
+  source: tech-collaboration
+  target: ai-product-manager
+  type: application
+  explanation: 与工程师协作是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: design-collaboration-connected-to-ai-product-manager
+  source: design-collaboration
+  target: ai-product-manager
+  type: application
+  explanation: 与设计师协作是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: ai-pm-competency-connected-to-ai-product-manager
+  source: ai-pm-competency
+  target: ai-product-manager
+  type: application
+  explanation: AI 产品经理能力地图是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。
+- id: ai-pm-career-path-connected-to-ai-product-manager
+  source: ai-pm-career-path
+  target: ai-product-manager
+  type: application
+  explanation: AI 产品经理转岗路径是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。

@@ -1,0 +1,669 @@
+id: sales-follow-up-assistant
+title: 销售跟进助手
+level: focus
+domain: AI 产品与销售运营
+audience:
+  - 零基础或初级 AI 产品经理
+  - 需要评审销售助手的产品与业务人员
+businessContext: 这是一个教学案例。某 B2B 销售团队维护分散在 CRM、邮件和会议纪要中的客户信息，销售常因遗忘或信息不全而漏跟进。团队希望用 AI 帮助整理上下文并生成跟进草稿，但担心错误语气或错误承诺损害客户关系。
+currentProcess:
+  - 识别该跟进的客户与联系人
+  - 汇总 CRM、邮件和会议纪要中的上下文
+  - 起草跟进邮件或消息
+  - 由销售确认并发送
+  - 记录跟进结果并更新 CRM
+objective: 在客户信息可追溯、外发动作可授权、错误可发现并恢复的前提下，帮助销售整理上下文、形成建议草稿并记录跟进结果；首版不自动对外发送。
+baseline:
+  - id: sf-baseline-process-assumption
+    kind: assumption
+    evidence: E1
+    statement: 当前识别、汇总、起草、发送和记录流程只用于建立教学起点，不代表真实销售团队采用同样工具或存在漏跟进问题。
+  - id: sf-baseline-values-unknown
+    kind: unknown
+    evidence: E0
+    statement: 实际漏跟进率、采纳率、客户回复率、误发送率、错误承诺数、查找时间与单位成本均需要真实组织数据验证。
+constraints:
+  - id: sf-constraint-no-fabricated-thresholds
+    kind: fact
+    evidence: E2
+    statement: AI-Native 不为教学完整性虚构采纳率、回复率、误发送、成本、延迟或上线阈值。
+  - id: sf-constraint-human-send-authority
+    kind: recommendation
+    evidence: E1
+    statement: 首版只辅助内部销售，不自动对外发送，也不自动承诺价格、交付或条款。
+  - id: sf-constraint-permission-enforcement
+    kind: recommendation
+    evidence: E3
+    statement: 外发权限和承诺边界必须由确定性系统与销售授权共同执行，客户内容作为不可信数据处理。
+status: draft
+updatedAt: 2026-08-13
+
+gates:
+  - id: decide-ai-boundary
+    order: 1
+    stageId: model-boundaries
+    status: draft
+    title: 判断 AI 边界
+    question: 这个场景需要生成式草稿，还是信息汇总与模板已经足够？
+    decision: 先治理客户信息和跟进记录，只在上下文汇总与建议草稿步骤引入受限生成，外发动作保持人工。
+    facts:
+      - id: sf-g1-llm-unreliable
+        kind: fact
+        evidence: E3
+        statement: 生成式模型可能输出语气不当或越权承诺，事实不准确和越权输出需按使用情境与生命周期治理。
+      - id: sf-g1-deterministic-controls
+        kind: recommendation
+        evidence: E1
+        statement: 客户字段校验、重复跟进、外发权限与发送控制应由确定性系统承担。
+    unknowns:
+      - id: sf-g1-generation-need
+        kind: unknown
+        evidence: E0
+        statement: 真实跟进中多少可由信息汇总和模板解决、多少确实需要生成式草稿，尚未通过销售样本验证。
+    options:
+      - id: governed-draft-copilot
+        label: 治理优先的草稿辅助
+        assessment: recommended
+        rationale: 先固定客户信息、权限与外发边界，再把生成限制为可复核草稿，能够分开控制风险和价值。
+        conditions:
+          - 客户字段、联系人和跟进记录可追溯
+          - 草稿关键主张能回到来源
+        risks:
+          - 客户数据治理会增加前期投入
+          - 受限生成可能覆盖不了全部语气需求
+        consequences:
+          - 可逐步判断哪些步骤真正需要模型
+          - 外发动作始终由销售确认
+        artifactDelta: 在 AI 适用性卡中固定信息治理、草稿生成、销售决策与外发授权的责任边界。
+      - id: summary-and-template-only
+        label: 汇总与模板优先
+        assessment: conditional
+        rationale: 当跟进内容短小明确且上下文结构化时，汇总和模板更可预测，也可能已满足业务目标。
+        conditions:
+          - 客户上下文可结构化汇总
+          - 模板适用条件可确定性维护
+        risks:
+          - 跨来源归纳和语气适配可能降低覆盖
+        consequences:
+          - 系统简单且外发风险低
+          - 复杂跟进继续由销售手工处理
+        artifactDelta: 在 AI 适用性卡中记录仅汇总方案的覆盖范围和升级到生成的触发条件。
+      - id: autonomous-follow-up-agent
+        label: 全自主自动跟进
+        assessment: risky
+        rationale: 自动发送影响真实客户关系，模型不具备承诺与发送权限，也不应成为责任主体。
+        conditions:
+          - 当前没有支持首版全自主跟进的条件
+        risks:
+          - 语气不当或越权承诺伤害客户
+          - 重复跟进骚扰客户
+        consequences:
+          - 当前方案不进入生产范围
+        artifactDelta: 在 AI 适用性卡中记录否决全自主自动跟进的理由和重新评估条件。
+    artifactIds:
+      - sf-ai-applicability
+    metricIds:
+      - sf-follow-up-completion
+      - sf-mis-send-count
+      - sf-unit-adopted-cost
+    failureModeIds:
+      - sf-fm-overpromise
+      - sf-fm-auto-send-breach
+    referenceIds:
+      - source-nist-ai-rmf
+      - source-google-pair
+      - term-ai-product
+      - term-problem-solution-fit
+
+  - id: establish-value-and-data
+    order: 2
+    stageId: opportunity-judgment
+    status: draft
+    title: 建立价值与数据条件
+    question: 怎样证明解决的是「漏跟进与信息不全」，而不是「让邮件更像人」？
+    decision: 先记录漏跟进、误发送和错误承诺的基线，再定义有来源且经销售采纳的任务结果。
+    facts:
+      - id: sf-g2-value-not-fluency
+        kind: recommendation
+        evidence: E1
+        statement: AI 能生成什么不是机会定义，销售因此完成什么才是；流畅草稿不能替代成单证据。
+      - id: sf-g2-data-readiness
+        kind: recommendation
+        evidence: E3
+        statement: 数据准备度由质量、权限和任务匹配决定，不由客户记录行数决定。
+    unknowns:
+      - id: sf-g2-baseline-needed
+        kind: unknown
+        evidence: E0
+        statement: 真实漏跟进率、客户记录质量、外发错误成本与销售人工容量尚未验证。
+    options:
+      - id: measure-before-build
+        label: 先测量再建设
+        assessment: recommended
+        rationale: 先建立漏跟进和误发送基线，再定义有依据的任务结果，避免把流畅草稿当价值。
+        conditions:
+          - 能定义并统计漏跟进和误发送
+          - 客户记录有质量与权限边界
+        risks:
+          - 基线收集需要销售运营配合
+        consequences:
+          - 价值目标可验证而非凭感觉
+        artifactDelta: 在机会评估表中记录目标角色、当前任务、数据条件、真实基线、错误成本与升级链路。
+      - id: demo-driven-build
+        label: 以演示效果立项
+        assessment: risky
+        rationale: 演示反馈好不代表真实使用和成单，缺少基线会导致价值无法验证。
+        conditions:
+          - 当前没有支持仅凭演示立项的条件
+        risks:
+          - 把「写得好」误当「卖得好」
+          - 无法证明漏跟进被缓解
+        consequences:
+          - 当前方案不进入生产范围
+        artifactDelta: 在机会评估表中记录否决演示驱动的理由。
+    artifactIds:
+      - sf-opportunity-assessment
+    metricIds:
+      - sf-missed-follow-up
+      - sf-customer-reply-rate
+    failureModeIds:
+      - sf-fm-missed-opportunity
+    referenceIds:
+      - term-problem-solution-fit
+      - term-north-star-metric
+
+  - id: select-workflow
+    order: 3
+    stageId: solution-choice
+    status: draft
+    title: 拆解信息、草稿与外发工作流
+    question: 如何区分信息处理、建议、决策和外部行动？
+    decision: 把客户上下文、建议草稿、销售决策与外发动作拆成可观察步骤，为每层单独授权。
+    facts:
+      - id: sf-g3-four-layer
+        kind: recommendation
+        evidence: E1
+        statement: 信息处理、建议、决策和外部行动应分层授权，外部动作单独设置权限。
+      - id: sf-g3-untrusted-input
+        kind: fact
+        evidence: E3
+        statement: 客户与外部内容作为不可信数据处理，不能取得系统指令、工具或外发权限。
+    unknowns:
+      - id: sf-g3-context-coverage
+        kind: unknown
+        evidence: E0
+        statement: 客户上下文跨 CRM、邮件与会议纪要的完整性和时效性，尚未通过真实数据验证。
+    options:
+      - id: layered-pipeline
+        label: 分层受限流水线
+        assessment: recommended
+        rationale: 把上下文汇总、草稿生成、销售决策与外发分开，能单独控制每一层的风险和授权。
+        conditions:
+          - 各步骤输入输出与终止条件可定义
+          - 外发动作由确定性系统执行
+        risks:
+          - 分层增加系统复杂度
+        consequences:
+          - 每层可独立评测与授权
+        artifactDelta: 在方案选择表中固定信息汇总、草稿、决策与外发步骤及各自输入输出。
+      - id: single-prompt-automation
+        label: 单次提示包办
+        assessment: risky
+        rationale: 一次提示同时做汇总、草稿与判断，会让风险无法分层控制。
+        conditions:
+          - 当前没有支持单次提示包办的条件
+        risks:
+          - 错误承诺与外发权限混在一起
+        consequences:
+          - 当前方案不进入生产范围
+        artifactDelta: 在方案选择表中记录否决单次提示包办的理由。
+    artifactIds:
+      - sf-workflow-selection
+    metricIds:
+      - sf-context-recall
+      - sf-draft-relevance
+    failureModeIds:
+      - sf-fm-stale-context
+      - sf-fm-prompt-injection
+    referenceIds:
+      - term-prompt-injection
+      - term-human-ai-collaboration
+
+  - id: design-control-and-recovery
+    order: 4
+    stageId: product-experience
+    status: draft
+    title: 设计销售控制与失败恢复
+    question: 销售怎样看见来源、识别错误承诺、修改并最终发送？
+    decision: 展示客户字段与依据、允许修改与驳回，外发前强制销售确认，高风险跟进由主管复核。
+    facts:
+      - id: sf-g4-visible-evidence
+        kind: recommendation
+        evidence: E1
+        statement: 草稿应展示所依据的客户字段与来源，让变化可见、可比较、可拒绝。
+      - id: sf-g4-escalation
+        kind: recommendation
+        evidence: E3
+        statement: 高风险外发需要明确角色、信息与权限的升级路径，不能只靠形式上的确认。
+    unknowns:
+      - id: sf-g4-review-burden
+        kind: unknown
+        evidence: E0
+        statement: 销售复核草稿、修改与驳回的实际时间与疲劳影响尚未验证。
+    options:
+      - id: visible-editable-confirm
+        label: 可见、可改、可确认
+        assessment: recommended
+        rationale: 展示依据、允许修改并强制确认，让销售在发送前真正理解和负责内容。
+        conditions:
+          - 草稿可回看来源并编辑
+          - 发送动作由销售显式确认
+        risks:
+          - 复核会增加销售时间
+        consequences:
+          - 减少误发送与错误承诺
+        artifactDelta: 在权限与恢复图中标明证据检查、修改、驳回、转交与最终发送的人员权限。
+      - id: auto-send-with-undo
+        label: 自动发送加撤销
+        assessment: conditional
+        rationale: 自动发送能减少操作，但只有错误可发现且能及时撤销时才可考虑，首版不采用。
+        conditions:
+          - 有实时发送日志与同范围撤销
+          - 高风险主题不进入自动发送
+        risks:
+          - 撤销无法完全挽回已发出的错误承诺
+        consequences:
+          - 仅作为后续阶段的可评估选项
+        artifactDelta: 在权限与恢复图中记录自动发送与撤销作为后续阶段的评估条件。
+    artifactIds:
+      - sf-responsibility-recovery
+    metricIds:
+      - sf-sales-review-time
+      - sf-escalation-age
+    failureModeIds:
+      - sf-fm-review-overload
+      - sf-fm-tone-mismatch
+    referenceIds:
+      - term-human-escalation
+      - term-user-control
+
+  - id: define-evaluation-and-cost
+    order: 5
+    stageId: quality-constraints
+    status: draft
+    title: 定义评测、成本与上线护栏
+    question: 怎样评测上下文召回、草稿相关性、语气合规与误发送？
+    decision: 用版本化固定集和风险切片分步评测，用「有依据且被采纳的跟进」计算单位成功成本。
+    facts:
+      - id: sf-g5-sliced-eval
+        kind: recommendation
+        evidence: E3
+        statement: 评测分数只对既定样本、标准和运行配置有效，风险切片比总体准确率更能暴露失败。
+      - id: sf-g5-unit-cost
+        kind: recommendation
+        evidence: E1
+        statement: 成本必须按「成功被采纳的跟进」核算，不能把单次模型调用价格当总成本。
+    unknowns:
+      - id: sf-g5-eval-baseline
+        kind: unknown
+        evidence: E0
+        statement: 真实上下文召回、草稿相关性、语气合规与误发送的基线尚未建立。
+    options:
+      - id: sliced-eval-and-unit-cost
+        label: 分片评测与单位成本
+        assessment: recommended
+        rationale: 分步骤评测上下文、草稿、语气与误发送，并用被采纳结果算成本，能定位问题并控成本。
+        conditions:
+          - 有版本化固定集与风险切片
+          - 能追踪「被采纳」作为成功口径
+        risks:
+          - 评测集建设需要投入
+        consequences:
+          - 质量可比较、成本可核算
+        artifactDelta: 在评测与护栏表中组合固定集、风险切片、分步质量、单位成本与回滚条件。
+      - id: overall-quality-only
+        label: 只看总体质量
+        assessment: risky
+        rationale: 总体准确率会掩盖高风险切片的误发送和错误承诺。
+        conditions:
+          - 当前没有支持只看总体质量的条件
+        risks:
+          - 高风险错误被平均掩盖
+        consequences:
+          - 当前方案不进入生产范围
+        artifactDelta: 在评测与护栏表中记录否决只看总体质量的理由。
+    artifactIds:
+      - sf-evaluation-guardrails
+    metricIds:
+      - sf-tone-compliance
+      - sf-source-support-rate
+      - sf-draft-latency
+    failureModeIds:
+      - sf-fm-version-regression
+      - sf-fm-model-timeout
+    referenceIds:
+      - term-offline-evaluation
+      - term-observability
+
+  - id: govern-launch-and-iteration
+    order: 6
+    stageId: capstone
+    status: draft
+    title: 治理发布与持续更新
+    question: 什么时候能扩大自动化，误发或质量回退时如何停止？
+    decision: 按影子草稿、辅助草稿、受限自动草稿逐级推进，自动发送不进入首版。
+    facts:
+      - id: sf-g6-staged-release
+        kind: recommendation
+        evidence: E3
+        statement: 上线应按影响范围逐级推进，每级需要独立通过条件和回滚路径。
+      - id: sf-g6-guardrail
+        kind: fact
+        evidence: E2
+        statement: 任何越权外发或越权承诺必须阻止晋级并触发事件响应，作为明确发布护栏。
+    unknowns:
+      - id: sf-g6-adoption-evidence
+        kind: unknown
+        evidence: E0
+        statement: 各阶段真实采纳率、回复率与误发送改善尚未验证。
+    options:
+      - id: staged-shadow-to-draft
+        label: 影子到草稿逐级推进
+        assessment: recommended
+        rationale: 先影子运行、再辅助草稿、后受限自动草稿，每级用独立通过条件换取更高自动化。
+        conditions:
+          - 每级有通过条件与回滚路径
+          - 自动发送不进入首版
+        risks:
+          - 逐级推进需要更长时间
+        consequences:
+          - 风险与自动化程度同步增长
+        artifactDelta: 在完整评审档案中汇总六关决策、分级发布权限、监控、事件响应与回滚证据。
+      - id: direct-full-automation
+        label: 直接全量自动化
+        assessment: risky
+        rationale: 未经验证直接全量自动化，会把误发送和错误承诺一次性放大。
+        conditions:
+          - 当前没有支持直接全量自动化的条件
+        risks:
+          - 误发送与错误承诺影响真实客户
+        consequences:
+          - 当前方案不进入生产范围
+        artifactDelta: 在完整评审档案中记录否决直接全量自动化的理由。
+    artifactIds:
+      - sf-complete-review
+    metricIds:
+      - sf-mis-send-count
+      - sf-unit-adopted-cost
+    failureModeIds:
+      - sf-fm-auto-send-breach
+      - sf-fm-version-regression
+    referenceIds:
+      - term-canary-release
+      - term-rollback
+
+artifacts:
+  - id: sf-ai-applicability
+    type: ai-applicability
+    title: AI 适用性与不可自动化边界卡
+    summary: 区分信息治理、草稿生成、销售决策与外发授权，记录不使用生成和禁止自动化的范围。
+  - id: sf-opportunity-assessment
+    type: opportunity-assessment
+    title: 销售跟进机会评估表
+    summary: 记录目标角色、当前任务、数据条件、真实基线、错误成本、漏跟进与外发升级链路。
+  - id: sf-workflow-selection
+    type: workflow-selection
+    title: 跟进工作流与方案选择表
+    summary: 固定信息汇总、草稿生成、销售决策与外发步骤及各自输入输出与终止条件。
+  - id: sf-responsibility-recovery
+    type: responsibility-recovery
+    title: 销售权限、升级与恢复图
+    summary: 标明证据检查、修改、驳回、转交、外发确认与最终发送的人员和系统权限。
+  - id: sf-evaluation-guardrails
+    type: evaluation-guardrails
+    title: 跟进评测、成本与上线护栏表
+    summary: 组合固定集、风险切片、分步质量、单位成功成本、误发送与回滚条件。
+  - id: sf-complete-review
+    type: complete-review
+    title: 完整销售跟进产品评审档案
+    summary: 汇总六关决策、分级发布权限、外发监控、事件响应、晋级和回滚证据。
+
+metrics:
+  - id: sf-follow-up-completion
+    category: business
+    label: 有依据跟进完成率
+    definition: 有来源且经销售确认完成的跟进，占进入目标范围应跟进任务的比例。
+    desiredDirection: increase
+    thresholdStatus: baseline-needed
+  - id: sf-missed-follow-up
+    category: business
+    label: 漏跟进率
+    definition: 本应跟进但未在时限内跟进的任务，占全部应跟进任务的比例。
+    desiredDirection: decrease
+    thresholdStatus: baseline-needed
+  - id: sf-customer-reply-rate
+    category: business
+    label: 客户回复率
+    definition: 发送跟进后客户在观察窗口内作出有效回复的比例。
+    desiredDirection: increase
+    thresholdStatus: baseline-needed
+  - id: sf-context-recall
+    category: quality
+    label: 客户上下文召回率
+    definition: 必要客户字段、历史与承诺进入草稿上下文的完整程度。
+    desiredDirection: increase
+    thresholdStatus: baseline-needed
+  - id: sf-draft-relevance
+    category: quality
+    label: 草稿相关性
+    definition: 草稿内容与当前客户状态和跟进目标相关的比例。
+    desiredDirection: increase
+    thresholdStatus: baseline-needed
+  - id: sf-tone-compliance
+    category: quality
+    label: 语气合规率
+    definition: 草稿语气符合客户关系阶段且不构成越权承诺的比例。
+    desiredDirection: increase
+    thresholdStatus: baseline-needed
+  - id: sf-source-support-rate
+    category: quality
+    label: 依据支持率
+    definition: 草稿关键主张中，其来源真实存在且原文确实支持该主张的比例。
+    desiredDirection: increase
+    thresholdStatus: baseline-needed
+  - id: sf-mis-send-count
+    category: operation
+    label: 误发送与越权承诺数
+    definition: 未经授权外发、发送错误对象或越权承诺价格与交付的事件数量。
+    desiredDirection: guardrail
+    thresholdStatus: defined
+    threshold: 任何越权外发或越权承诺均阻止晋级并触发事件响应
+  - id: sf-draft-latency
+    category: operation
+    label: P95 草稿延迟
+    definition: 从提交已授权任务到返回可供销售复核草稿的第九十五百分位端到端时间。
+    desiredDirection: decrease
+    thresholdStatus: baseline-needed
+  - id: sf-sales-review-time
+    category: human
+    label: 销售复核时间
+    definition: 销售核对来源、修改、驳回或确认一条草稿所投入的人工时间。
+    desiredDirection: decrease
+    thresholdStatus: baseline-needed
+  - id: sf-escalation-age
+    category: human
+    label: 高风险升级队列时长
+    definition: 高风险跟进从进入人工升级队列到由主管接手的等待时间。
+    desiredDirection: decrease
+    thresholdStatus: baseline-needed
+  - id: sf-unit-adopted-cost
+    category: cost
+    label: 单位被采纳跟进成本
+    definition: 数据治理、生成、失败运行与人工复核总成本除以有依据且被销售采纳的跟进数。
+    desiredDirection: decrease
+    thresholdStatus: baseline-needed
+
+failureModes:
+  - id: sf-fm-stale-context
+    title: 过期客户信息进入草稿
+    signal: 草稿引用旧联系人、旧承诺或已失效价格
+    impact: 销售可能对客户作出错误说明或承诺
+    recovery: 停止相关来源、标记字段过期并退回人工核实
+    owner: 销售运营和工程
+  - id: sf-fm-overpromise
+    title: 越权承诺价格或交付
+    signal: 草稿出现未授权的价格、条款或交付承诺
+    impact: 错误承诺影响客户关系并带来履约责任
+    recovery: 阻断发送、触发合规审查并回放受影响草稿
+    owner: 合规和销售主管
+  - id: sf-fm-tone-mismatch
+    title: 语气不当伤害关系
+    signal: 草稿语气与客户关系阶段不符或引发投诉
+    impact: 损害客户信任与长期关系
+    recovery: 驳回草稿、补充语气规范并加入固定回归集
+    owner: 销售主管
+  - id: sf-fm-unsupported-claim
+    title: 建议无依据
+    signal: 草稿主张找不到来源或来源不支持该主张
+    impact: 销售可能因信任草稿而误用无依据信息
+    recovery: 阻止发送、删除或重写主张并加入固定集
+    owner: 销售和评测负责人
+  - id: sf-fm-duplicate-follow-up
+    title: 重复跟进骚扰客户
+    signal: 同一客户短期内收到重复跟进
+    impact: 造成客户反感与信任下降
+    recovery: 停止草稿、检查去重规则并回放固定样本
+    owner: 销售运营
+  - id: sf-fm-sensitive-leak
+    title: 敏感信息泄露
+    signal: 草稿暴露其他客户或未授权内部信息
+    impact: 造成隐私泄露与合规风险
+    recovery: 阻断输出、保全日志并启动安全事件响应
+    owner: 安全和工程
+  - id: sf-fm-prompt-injection
+    title: 客户内容间接注入
+    signal: 客户邮件或纪要试图改变指令或请求外发
+    impact: 模型行为可能被外部内容操纵
+    recovery: 将客户内容按不可信数据隔离并阻止动作
+    owner: 安全和工程
+  - id: sf-fm-auto-send-breach
+    title: 未经授权自动发送
+    signal: 出现销售未确认即外发的事件
+    impact: 绕过人工授权造成误发送
+    recovery: 立即停用自动发送、回滚权限并启动事件响应
+    owner: 工程和销售主管
+  - id: sf-fm-review-overload
+    title: 销售复核队列过载
+    signal: 复核时长、积压或未处理高风险草稿持续上升
+    impact: 形式上的人工确认无法提供真实保护
+    recovery: 收紧自动化范围、按风险排序并调整容量
+    owner: 销售主管
+  - id: sf-fm-model-timeout
+    title: 模型服务超时
+    signal: 草稿延迟、失败率或重试量升高
+    impact: 销售等待增加且重复调用推高成本
+    recovery: 停止重试、降级到汇总与人工起草
+    owner: 工程
+  - id: sf-fm-version-regression
+    title: 版本升级质量回退
+    signal: 固定集或风险切片指标相对稳定版本下降
+    impact: 质量静默恶化且误发送风险上升
+    recovery: 冻结候选版本并回滚到上一稳定组合
+    owner: 产品、工程和评测负责人
+  - id: sf-fm-missed-opportunity
+    title: 漏跟进未缓解
+    signal: 漏跟进率没有相对基线下降
+    impact: 产品未解决核心业务问题
+    recovery: 回到机会评估，检查任务定义与覆盖范围
+    owner: 产品和销售主管
+
+references:
+  - id: route-ai-pm-career
+    kind: route
+    label: 转岗 AI 产品经理
+    targetId: ai-pm-career
+    supports: 提供从 AI 判断到产品基本功与职业成长的顺序阅读支持。
+  - id: term-ai-product
+    kind: term
+    label: AI 产品
+    targetId: ai-product
+    supports: 把模型能力放回用户任务、控制、失败和运营系统中评审。
+  - id: term-problem-solution-fit
+    kind: term
+    label: 问题方案匹配
+    targetId: problem-solution-fit
+    supports: 防止用流畅输出替代真实问题、任务和价值证据。
+  - id: term-human-ai-collaboration
+    kind: term
+    label: 人机协作
+    targetId: human-ai-collaboration
+    supports: 解释人工判断和系统自动化如何按风险分工。
+  - id: term-human-escalation
+    kind: term
+    label: 人工升级
+    targetId: human-escalation
+    supports: 明确拒答、升级、责任、必要上下文和接管权限。
+  - id: term-user-control
+    kind: term
+    label: 用户控制权
+    targetId: user-control
+    supports: 解释让变化可见、可比较、可拒绝的交互原则。
+  - id: term-prompt-injection
+    kind: term
+    label: 提示注入
+    targetId: prompt-injection
+    supports: 解释外部内容改变模型行为和越权的安全风险。
+  - id: term-offline-evaluation
+    kind: term
+    label: 离线评测
+    targetId: offline-evaluation
+    supports: 建立版本化固定查询集、保留集和错误切片。
+  - id: term-observability
+    kind: term
+    label: 可观测性
+    targetId: observability
+    supports: 解释通过日志、指标和追踪定位运行与质量问题。
+  - id: term-canary-release
+    kind: term
+    label: 金丝雀发布
+    targetId: canary-release
+    supports: 解释限制影响范围并逐步扩大版本或流量的发布方法。
+  - id: term-rollback
+    kind: term
+    label: 回滚
+    targetId: rollback
+    supports: 解释质量回退或事件发生时恢复上一稳定版本。
+  - id: term-north-star-metric
+    kind: term
+    label: 北极星指标
+    targetId: north-star-metric
+    supports: 解释如何用单一关键指标对齐团队并判断价值是否被持续获取。
+  - id: term-stakeholder-management
+    kind: term
+    label: 干系人管理
+    targetId: stakeholder-management
+    supports: 解释识别销售、合规与工程等干系人并管理其预期。
+  - id: source-nist-ai-rmf
+    kind: source
+    label: NIST AI Risk Management Framework
+    url: https://www.nist.gov/itl/ai-risk-management-framework
+    publisher: NIST
+    accessedAt: 2026-08-13
+    stability: stable
+    supports: 支持按风险分级授权、人工监督、事件响应与持续治理的通用原则。
+  - id: source-google-pair
+    kind: source
+    label: People + AI Guidebook
+    url: https://pair.withgoogle.com/
+    publisher: Google PAIR
+    accessedAt: 2026-08-13
+    stability: stable
+    supports: 支持用户信任、控制与「面向行动的不确定性」的通用设计原则。
+  - id: source-owasp-prompt-injection
+    kind: source
+    label: OWASP LLM01 2025 Prompt Injection
+    url: https://genai.owasp.org/llmrisk/llm01-prompt-injection/
+    publisher: OWASP GenAI Security Project
+    accessedAt: 2026-08-13
+    stability: evolving
+    supports: 支持客户内容可能成为间接注入来源、需按不可信数据隔离。

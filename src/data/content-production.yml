@@ -198,3 +198,36 @@ batches:
           - online-evaluation
           - observability
           - ai-risk-management
+  - id: pm-basics-1
+    kind: pm
+    status: verified
+    terms:
+      - user-research
+      - user-interview
+      - requirement-analysis
+      - acceptance-criteria
+      - user-story
+      - prd
+      - prioritization
+      - roadmap
+      - mvp
+      - business-model
+      - pricing-strategy
+      - competitive-analysis
+      - stakeholder-management
+      - ab-testing
+      - north-star-metric
+  - id: pm-basics-2
+    kind: pm
+    status: verified
+    terms:
+      - product-manager
+      - ai-product-manager
+      - project-management
+      - product-analytics
+      - go-to-market
+      - product-lifecycle
+      - tech-collaboration
+      - design-collaboration
+      - ai-pm-competency
+      - ai-pm-career-path

@@ -23,7 +23,7 @@ test('offers a first-class case library from the learning workspace', async ({
       page.getByRole('navigation', { name: '主导航' }).getByRole('link', { name: '案例库' }),
     ).toHaveAttribute('href', caseLibraryUrl);
   } else {
-    await expect(page.getByRole('link', { name: /案例实战 2/ })).toHaveAttribute(
+    await expect(page.getByRole('link', { name: /案例实战 6/ })).toHaveAttribute(
       'href',
       caseLibraryUrl,
     );
@@ -32,7 +32,7 @@ test('offers a first-class case library from the learning workspace', async ({
   await page.goto(caseLibraryUrl);
   await expect(page.getByRole('heading', { level: 1, name: 'AI 产品案例库' })).toBeVisible();
   const entries = page.locator('.case-catalog-card');
-  await expect(entries).toHaveCount(2);
+  await expect(entries).toHaveCount(6);
   await expect(entries.first()).toContainText('已核验');
   await expect(entries.first()).toContainText('客服知识库与回答辅助');
   await expect(page.getByRole('link', { name: '客服知识库与回答辅助' })).toHaveAttribute(

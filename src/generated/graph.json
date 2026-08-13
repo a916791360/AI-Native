@@ -2,6 +2,36 @@
   "version": 1,
   "nodes": [
     {
+      "id": "ab-testing",
+      "label": "A/B 测试",
+      "labelEn": "A/B Testing",
+      "url": "/terms/ab-testing/",
+      "summary": "把用户随机分组比较不同方案效果，用于在真实行为上判断改动是否带来因果改善。",
+      "domain": "ai-pm-fundamentals",
+      "difficulty": "intermediate",
+      "ring": "extended",
+      "status": "verified",
+      "position": {
+        "x": 610,
+        "y": 65
+      }
+    },
+    {
+      "id": "acceptance-criteria",
+      "label": "验收标准",
+      "labelEn": "Acceptance Criteria",
+      "url": "/terms/acceptance-criteria/",
+      "summary": "用可观察、可验证的条件描述功能完成标准，用于对齐开发、测试与业务对「完成」的定义。",
+      "domain": "ai-pm-fundamentals",
+      "difficulty": "beginner",
+      "ring": "extended",
+      "status": "verified",
+      "position": {
+        "x": 618,
+        "y": 67
+      }
+    },
+    {
       "id": "accountability",
       "label": "问责",
       "labelEn": "Accountability",
@@ -12,8 +42,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 610,
-        "y": 65
+        "x": 626,
+        "y": 68
       }
     },
     {
@@ -27,8 +57,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 619,
-        "y": 67
+        "x": 634,
+        "y": 70
       }
     },
     {
@@ -42,8 +72,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 628,
-        "y": 69
+        "x": 642,
+        "y": 72
       }
     },
     {
@@ -57,8 +87,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 636,
-        "y": 71
+        "x": 650,
+        "y": 74
       }
     },
     {
@@ -72,8 +102,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 645,
-        "y": 73
+        "x": 658,
+        "y": 76
       }
     },
     {
@@ -87,8 +117,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 654,
-        "y": 75
+        "x": 666,
+        "y": 79
       }
     },
     {
@@ -102,8 +132,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 662,
-        "y": 78
+        "x": 674,
+        "y": 81
       }
     },
     {
@@ -117,8 +147,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 671,
-        "y": 80
+        "x": 682,
+        "y": 84
       }
     },
     {
@@ -132,8 +162,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 679,
-        "y": 83
+        "x": 689,
+        "y": 86
       }
     },
     {
@@ -147,8 +177,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 688,
-        "y": 86
+        "x": 697,
+        "y": 89
       }
     },
     {
@@ -162,7 +192,7 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 630,
+        "x": 370,
         "y": 554
       }
     },
@@ -177,8 +207,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 370,
-        "y": 554
+        "x": 208,
+        "y": 408
       }
     },
     {
@@ -192,8 +222,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 696,
-        "y": 89
+        "x": 704,
+        "y": 92
       }
     },
     {
@@ -207,8 +237,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 704,
-        "y": 92
+        "x": 712,
+        "y": 95
       }
     },
     {
@@ -222,8 +252,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 712,
-        "y": 95
+        "x": 719,
+        "y": 98
       }
     },
     {
@@ -237,8 +267,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 720,
-        "y": 98
+        "x": 727,
+        "y": 101
       }
     },
     {
@@ -252,8 +282,38 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 728,
-        "y": 102
+        "x": 734,
+        "y": 104
+      }
+    },
+    {
+      "id": "ai-pm-career-path",
+      "label": "AI 产品经理转岗路径",
+      "labelEn": "AI PM Career Transition",
+      "url": "/terms/ai-pm-career-path/",
+      "summary": "从产品经理或其他岗位转岗 AI 产品经理的路径、所需能力与常见准备方式。",
+      "domain": "ai-pm-fundamentals",
+      "difficulty": "beginner",
+      "ring": "extended",
+      "status": "verified",
+      "position": {
+        "x": 741,
+        "y": 107
+      }
+    },
+    {
+      "id": "ai-pm-competency",
+      "label": "AI 产品经理能力地图",
+      "labelEn": "AI PM Competency Map",
+      "url": "/terms/ai-pm-competency/",
+      "summary": "AI 产品经理所需的能力集合，涵盖 AI 判断、产品基本功与跨角色协作，用于自我评估与成长。",
+      "domain": "ai-pm-fundamentals",
+      "difficulty": "intermediate",
+      "ring": "extended",
+      "status": "verified",
+      "position": {
+        "x": 748,
+        "y": 111
       }
     },
     {
@@ -267,8 +327,23 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 208,
-        "y": 408
+        "x": 630,
+        "y": 554
+      }
+    },
+    {
+      "id": "ai-product-manager",
+      "label": "AI 产品经理",
+      "labelEn": "AI Product Manager",
+      "url": "/terms/ai-product-manager/",
+      "summary": "负责发现 AI 产品机会、定义需求、协调方案并推动上线与持续迭代的产品角色，需要兼顾判断力与产品基本功。",
+      "domain": "ai-pm-fundamentals",
+      "difficulty": "beginner",
+      "ring": "extended",
+      "status": "verified",
+      "position": {
+        "x": 265,
+        "y": 226
       }
     },
     {
@@ -282,8 +357,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 736,
-        "y": 105
+        "x": 755,
+        "y": 114
       }
     },
     {
@@ -297,8 +372,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 265,
-        "y": 226
+        "x": 500,
+        "y": 55
       }
     },
     {
@@ -312,8 +387,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 744,
-        "y": 109
+        "x": 762,
+        "y": 118
       }
     },
     {
@@ -327,8 +402,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 751,
-        "y": 112
+        "x": 768,
+        "y": 122
       }
     },
     {
@@ -342,8 +417,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 759,
-        "y": 116
+        "x": 775,
+        "y": 125
       }
     },
     {
@@ -357,8 +432,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 766,
-        "y": 120
+        "x": 781,
+        "y": 129
       }
     },
     {
@@ -372,8 +447,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 773,
-        "y": 124
+        "x": 788,
+        "y": 133
       }
     },
     {
@@ -387,8 +462,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 780,
-        "y": 129
+        "x": 794,
+        "y": 137
       }
     },
     {
@@ -402,8 +477,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 787,
-        "y": 133
+        "x": 800,
+        "y": 142
       }
     },
     {
@@ -432,8 +507,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 794,
-        "y": 137
+        "x": 806,
+        "y": 146
       }
     },
     {
@@ -447,8 +522,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 801,
-        "y": 142
+        "x": 812,
+        "y": 150
       }
     },
     {
@@ -462,8 +537,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 807,
-        "y": 147
+        "x": 818,
+        "y": 155
       }
     },
     {
@@ -477,8 +552,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 814,
-        "y": 151
+        "x": 824,
+        "y": 159
       }
     },
     {
@@ -492,8 +567,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 820,
-        "y": 156
+        "x": 829,
+        "y": 164
       }
     },
     {
@@ -507,8 +582,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 826,
-        "y": 161
+        "x": 835,
+        "y": 168
       }
     },
     {
@@ -522,8 +597,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 832,
-        "y": 166
+        "x": 840,
+        "y": 173
       }
     },
     {
@@ -537,8 +612,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 838,
-        "y": 171
+        "x": 845,
+        "y": 178
       }
     },
     {
@@ -552,8 +627,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 843,
-        "y": 177
+        "x": 850,
+        "y": 183
       }
     },
     {
@@ -567,8 +642,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 849,
-        "y": 182
+        "x": 855,
+        "y": 188
       }
     },
     {
@@ -582,8 +657,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 854,
-        "y": 187
+        "x": 860,
+        "y": 193
       }
     },
     {
@@ -597,8 +672,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 859,
-        "y": 193
+        "x": 864,
+        "y": 198
       }
     },
     {
@@ -612,8 +687,23 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 864,
-        "y": 198
+        "x": 869,
+        "y": 203
+      }
+    },
+    {
+      "id": "business-model",
+      "label": "商业模式",
+      "labelEn": "Business Model",
+      "url": "/terms/business-model/",
+      "summary": "描述产品如何为目标用户创造价值并获取收入的结构，是产品可持续性的基础。",
+      "domain": "ai-pm-fundamentals",
+      "difficulty": "intermediate",
+      "ring": "extended",
+      "status": "verified",
+      "position": {
+        "x": 873,
+        "y": 208
       }
     },
     {
@@ -627,8 +717,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 869,
-        "y": 204
+        "x": 877,
+        "y": 214
       }
     },
     {
@@ -642,8 +732,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 874,
-        "y": 209
+        "x": 881,
+        "y": 219
       }
     },
     {
@@ -657,8 +747,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 878,
-        "y": 215
+        "x": 885,
+        "y": 224
       }
     },
     {
@@ -672,8 +762,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 883,
-        "y": 221
+        "x": 889,
+        "y": 230
       }
     },
     {
@@ -687,8 +777,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 887,
-        "y": 227
+        "x": 892,
+        "y": 235
       }
     },
     {
@@ -702,8 +792,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 891,
-        "y": 233
+        "x": 896,
+        "y": 241
       }
     },
     {
@@ -717,8 +807,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 895,
-        "y": 239
+        "x": 899,
+        "y": 246
       }
     },
     {
@@ -732,8 +822,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 898,
-        "y": 245
+        "x": 902,
+        "y": 252
       }
     },
     {
@@ -747,8 +837,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 902,
-        "y": 251
+        "x": 905,
+        "y": 258
       }
     },
     {
@@ -762,8 +852,23 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 905,
-        "y": 257
+        "x": 908,
+        "y": 263
+      }
+    },
+    {
+      "id": "competitive-analysis",
+      "label": "竞品分析",
+      "labelEn": "Competitive Analysis",
+      "url": "/terms/competitive-analysis/",
+      "summary": "系统比较竞品的目标、能力、定位与反馈，用于发现差异化机会与替代威胁。",
+      "domain": "ai-pm-fundamentals",
+      "difficulty": "intermediate",
+      "ring": "extended",
+      "status": "verified",
+      "position": {
+        "x": 911,
+        "y": 269
       }
     },
     {
@@ -777,7 +882,7 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 500,
+        "x": 509,
         "y": 55
       }
     },
@@ -792,8 +897,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 908,
-        "y": 263
+        "x": 913,
+        "y": 275
       }
     },
     {
@@ -807,8 +912,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 911,
-        "y": 270
+        "x": 915,
+        "y": 281
       }
     },
     {
@@ -822,8 +927,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 913,
-        "y": 276
+        "x": 917,
+        "y": 287
       }
     },
     {
@@ -837,8 +942,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 916,
-        "y": 282
+        "x": 919,
+        "y": 293
       }
     },
     {
@@ -852,8 +957,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 918,
-        "y": 288
+        "x": 921,
+        "y": 298
       }
     },
     {
@@ -867,8 +972,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 920,
-        "y": 295
+        "x": 923,
+        "y": 304
       }
     },
     {
@@ -882,8 +987,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 922,
-        "y": 301
+        "x": 924,
+        "y": 310
       }
     },
     {
@@ -897,8 +1002,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 924,
-        "y": 308
+        "x": 926,
+        "y": 316
       }
     },
     {
@@ -912,8 +1017,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 925,
-        "y": 314
+        "x": 927,
+        "y": 322
       }
     },
     {
@@ -927,8 +1032,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 926,
-        "y": 321
+        "x": 928,
+        "y": 328
       }
     },
     {
@@ -943,7 +1048,7 @@
       "status": "catalogued",
       "position": {
         "x": 928,
-        "y": 327
+        "y": 334
       }
     },
     {
@@ -972,8 +1077,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 928,
-        "y": 334
+        "x": 929,
+        "y": 340
       }
     },
     {
@@ -987,8 +1092,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 929,
-        "y": 340
+        "x": 930,
+        "y": 346
       }
     },
     {
@@ -1003,7 +1108,7 @@
       "status": "catalogued",
       "position": {
         "x": 930,
-        "y": 347
+        "y": 352
       }
     },
     {
@@ -1018,7 +1123,7 @@
       "status": "catalogued",
       "position": {
         "x": 930,
-        "y": 353
+        "y": 358
       }
     },
     {
@@ -1033,7 +1138,7 @@
       "status": "catalogued",
       "position": {
         "x": 930,
-        "y": 360
+        "y": 365
       }
     },
     {
@@ -1048,7 +1153,7 @@
       "status": "verified",
       "position": {
         "x": 930,
-        "y": 367
+        "y": 371
       }
     },
     {
@@ -1062,8 +1167,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 930,
-        "y": 373
+        "x": 929,
+        "y": 377
       }
     },
     {
@@ -1078,7 +1183,7 @@
       "status": "catalogued",
       "position": {
         "x": 929,
-        "y": 380
+        "y": 383
       }
     },
     {
@@ -1093,7 +1198,7 @@
       "status": "catalogued",
       "position": {
         "x": 928,
-        "y": 386
+        "y": 389
       }
     },
     {
@@ -1107,8 +1212,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 928,
-        "y": 393
+        "x": 927,
+        "y": 395
       }
     },
     {
@@ -1123,7 +1228,7 @@
       "status": "catalogued",
       "position": {
         "x": 926,
-        "y": 399
+        "y": 401
       }
     },
     {
@@ -1138,7 +1243,7 @@
       "status": "catalogued",
       "position": {
         "x": 925,
-        "y": 406
+        "y": 407
       }
     },
     {
@@ -1153,7 +1258,7 @@
       "status": "catalogued",
       "position": {
         "x": 924,
-        "y": 412
+        "y": 413
       }
     },
     {
@@ -1183,7 +1288,7 @@
       "status": "catalogued",
       "position": {
         "x": 920,
-        "y": 425
+        "y": 424
       }
     },
     {
@@ -1198,7 +1303,7 @@
       "status": "catalogued",
       "position": {
         "x": 918,
-        "y": 432
+        "y": 430
       }
     },
     {
@@ -1213,7 +1318,7 @@
       "status": "verified",
       "position": {
         "x": 916,
-        "y": 438
+        "y": 436
       }
     },
     {
@@ -1227,8 +1332,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 913,
-        "y": 444
+        "x": 914,
+        "y": 442
       }
     },
     {
@@ -1242,8 +1347,23 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 911,
-        "y": 450
+        "x": 912,
+        "y": 448
+      }
+    },
+    {
+      "id": "design-collaboration",
+      "label": "与设计师协作",
+      "labelEn": "Design Collaboration",
+      "url": "/terms/design-collaboration/",
+      "summary": "产品经理与设计师在用户流程、交互与视觉上的协作，平衡用户价值与实现成本。",
+      "domain": "ai-pm-fundamentals",
+      "difficulty": "intermediate",
+      "ring": "extended",
+      "status": "verified",
+      "position": {
+        "x": 909,
+        "y": 454
       }
     },
     {
@@ -1257,8 +1377,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 908,
-        "y": 457
+        "x": 907,
+        "y": 459
       }
     },
     {
@@ -1272,8 +1392,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 905,
-        "y": 463
+        "x": 904,
+        "y": 465
       }
     },
     {
@@ -1287,8 +1407,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 902,
-        "y": 469
+        "x": 901,
+        "y": 471
       }
     },
     {
@@ -1302,7 +1422,7 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 574,
+        "x": 576,
         "y": 60
       }
     },
@@ -1317,8 +1437,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 898,
-        "y": 475
+        "x": 897,
+        "y": 476
       }
     },
     {
@@ -1332,8 +1452,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 895,
-        "y": 481
+        "x": 894,
+        "y": 482
       }
     },
     {
@@ -1362,7 +1482,7 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 583,
+        "x": 585,
         "y": 61
       }
     },
@@ -1393,7 +1513,7 @@
       "status": "catalogued",
       "position": {
         "x": 883,
-        "y": 499
+        "y": 498
       }
     },
     {
@@ -1407,8 +1527,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 878,
-        "y": 505
+        "x": 879,
+        "y": 504
       }
     },
     {
@@ -1422,8 +1542,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 874,
-        "y": 511
+        "x": 875,
+        "y": 509
       }
     },
     {
@@ -1437,7 +1557,7 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 528,
+        "x": 534,
         "y": 56
       }
     },
@@ -1452,8 +1572,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 869,
-        "y": 516
+        "x": 871,
+        "y": 514
       }
     },
     {
@@ -1467,8 +1587,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 864,
-        "y": 522
+        "x": 867,
+        "y": 519
       }
     },
     {
@@ -1482,8 +1602,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 859,
-        "y": 527
+        "x": 862,
+        "y": 525
       }
     },
     {
@@ -1497,8 +1617,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 854,
-        "y": 533
+        "x": 857,
+        "y": 530
       }
     },
     {
@@ -1512,8 +1632,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 849,
-        "y": 538
+        "x": 853,
+        "y": 535
       }
     },
     {
@@ -1527,8 +1647,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 843,
-        "y": 543
+        "x": 848,
+        "y": 540
       }
     },
     {
@@ -1542,8 +1662,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 838,
-        "y": 549
+        "x": 843,
+        "y": 544
       }
     },
     {
@@ -1557,8 +1677,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 832,
-        "y": 554
+        "x": 837,
+        "y": 549
       }
     },
     {
@@ -1572,8 +1692,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 826,
-        "y": 559
+        "x": 832,
+        "y": 554
       }
     },
     {
@@ -1587,8 +1707,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 820,
-        "y": 564
+        "x": 826,
+        "y": 558
       }
     },
     {
@@ -1602,8 +1722,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 814,
-        "y": 569
+        "x": 821,
+        "y": 563
       }
     },
     {
@@ -1617,8 +1737,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 807,
-        "y": 573
+        "x": 815,
+        "y": 568
       }
     },
     {
@@ -1632,8 +1752,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 801,
-        "y": 578
+        "x": 809,
+        "y": 572
       }
     },
     {
@@ -1647,8 +1767,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 794,
-        "y": 583
+        "x": 803,
+        "y": 576
       }
     },
     {
@@ -1662,8 +1782,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 787,
-        "y": 587
+        "x": 797,
+        "y": 580
       }
     },
     {
@@ -1677,8 +1797,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 780,
-        "y": 591
+        "x": 791,
+        "y": 585
       }
     },
     {
@@ -1692,8 +1812,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 773,
-        "y": 596
+        "x": 785,
+        "y": 589
       }
     },
     {
@@ -1707,8 +1827,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 766,
-        "y": 600
+        "x": 778,
+        "y": 593
       }
     },
     {
@@ -1722,8 +1842,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 759,
-        "y": 604
+        "x": 772,
+        "y": 596
       }
     },
     {
@@ -1737,8 +1857,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 751,
-        "y": 608
+        "x": 765,
+        "y": 600
       }
     },
     {
@@ -1752,7 +1872,7 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 546,
+        "x": 551,
         "y": 57
       }
     },
@@ -1767,8 +1887,23 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 744,
-        "y": 611
+        "x": 758,
+        "y": 604
+      }
+    },
+    {
+      "id": "go-to-market",
+      "label": "上线与增长",
+      "labelEn": "Go-to-Market",
+      "url": "/terms/go-to-market/",
+      "summary": "把产品送达目标用户并推动采用与增长的策略，涵盖定位、渠道、定价与启动节奏。",
+      "domain": "ai-pm-fundamentals",
+      "difficulty": "intermediate",
+      "ring": "extended",
+      "status": "verified",
+      "position": {
+        "x": 751,
+        "y": 607
       }
     },
     {
@@ -1782,8 +1917,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 736,
-        "y": 615
+        "x": 744,
+        "y": 611
       }
     },
     {
@@ -1797,8 +1932,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 728,
-        "y": 618
+        "x": 737,
+        "y": 614
       }
     },
     {
@@ -1812,8 +1947,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 720,
-        "y": 622
+        "x": 730,
+        "y": 618
       }
     },
     {
@@ -1827,8 +1962,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 712,
-        "y": 625
+        "x": 723,
+        "y": 621
       }
     },
     {
@@ -1842,8 +1977,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 704,
-        "y": 628
+        "x": 716,
+        "y": 624
       }
     },
     {
@@ -1857,8 +1992,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 696,
-        "y": 631
+        "x": 708,
+        "y": 627
       }
     },
     {
@@ -1872,7 +2007,7 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 555,
+        "x": 559,
         "y": 58
       }
     },
@@ -1887,8 +2022,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 688,
-        "y": 634
+        "x": 701,
+        "y": 630
       }
     },
     {
@@ -1902,8 +2037,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 679,
-        "y": 637
+        "x": 693,
+        "y": 633
       }
     },
     {
@@ -1917,8 +2052,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 671,
-        "y": 640
+        "x": 685,
+        "y": 635
       }
     },
     {
@@ -1932,8 +2067,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 662,
-        "y": 642
+        "x": 678,
+        "y": 638
       }
     },
     {
@@ -1947,8 +2082,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 654,
-        "y": 645
+        "x": 670,
+        "y": 640
       }
     },
     {
@@ -1962,8 +2097,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 645,
-        "y": 647
+        "x": 662,
+        "y": 643
       }
     },
     {
@@ -1977,8 +2112,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 636,
-        "y": 649
+        "x": 654,
+        "y": 645
       }
     },
     {
@@ -1992,8 +2127,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 628,
-        "y": 651
+        "x": 646,
+        "y": 647
       }
     },
     {
@@ -2007,8 +2142,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 619,
-        "y": 653
+        "x": 638,
+        "y": 649
       }
     },
     {
@@ -2022,8 +2157,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 610,
-        "y": 655
+        "x": 630,
+        "y": 651
       }
     },
     {
@@ -2037,8 +2172,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 601,
-        "y": 656
+        "x": 622,
+        "y": 652
       }
     },
     {
@@ -2052,8 +2187,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 592,
-        "y": 658
+        "x": 614,
+        "y": 654
       }
     },
     {
@@ -2067,8 +2202,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 583,
-        "y": 659
+        "x": 605,
+        "y": 656
       }
     },
     {
@@ -2082,8 +2217,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 574,
-        "y": 660
+        "x": 597,
+        "y": 657
       }
     },
     {
@@ -2097,8 +2232,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 565,
-        "y": 662
+        "x": 589,
+        "y": 658
       }
     },
     {
@@ -2112,8 +2247,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 555,
-        "y": 662
+        "x": 580,
+        "y": 660
       }
     },
     {
@@ -2127,8 +2262,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 546,
-        "y": 663
+        "x": 572,
+        "y": 661
       }
     },
     {
@@ -2142,8 +2277,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 537,
-        "y": 664
+        "x": 564,
+        "y": 662
       }
     },
     {
@@ -2157,8 +2292,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 528,
-        "y": 664
+        "x": 555,
+        "y": 662
       }
     },
     {
@@ -2172,8 +2307,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 518,
-        "y": 665
+        "x": 547,
+        "y": 663
       }
     },
     {
@@ -2187,8 +2322,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 509,
-        "y": 665
+        "x": 538,
+        "y": 664
       }
     },
     {
@@ -2202,8 +2337,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 500,
-        "y": 665
+        "x": 530,
+        "y": 664
       }
     },
     {
@@ -2217,7 +2352,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 491,
+        "x": 521,
         "y": 665
       }
     },
@@ -2232,7 +2367,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 482,
+        "x": 513,
         "y": 665
       }
     },
@@ -2247,8 +2382,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 472,
-        "y": 664
+        "x": 504,
+        "y": 665
       }
     },
     {
@@ -2277,8 +2412,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 463,
-        "y": 664
+        "x": 496,
+        "y": 665
       }
     },
     {
@@ -2292,8 +2427,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 454,
-        "y": 663
+        "x": 487,
+        "y": 665
       }
     },
     {
@@ -2307,8 +2442,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 445,
-        "y": 662
+        "x": 479,
+        "y": 665
       }
     },
     {
@@ -2322,8 +2457,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 435,
-        "y": 662
+        "x": 470,
+        "y": 664
       }
     },
     {
@@ -2337,8 +2472,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 426,
-        "y": 660
+        "x": 462,
+        "y": 664
       }
     },
     {
@@ -2352,8 +2487,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 417,
-        "y": 659
+        "x": 453,
+        "y": 663
       }
     },
     {
@@ -2367,8 +2502,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 408,
-        "y": 658
+        "x": 445,
+        "y": 662
       }
     },
     {
@@ -2382,8 +2517,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 399,
-        "y": 656
+        "x": 436,
+        "y": 662
       }
     },
     {
@@ -2397,8 +2532,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 390,
-        "y": 655
+        "x": 428,
+        "y": 661
       }
     },
     {
@@ -2412,8 +2547,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 381,
-        "y": 653
+        "x": 420,
+        "y": 660
       }
     },
     {
@@ -2427,8 +2562,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 372,
-        "y": 651
+        "x": 411,
+        "y": 658
       }
     },
     {
@@ -2442,8 +2577,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 364,
-        "y": 649
+        "x": 403,
+        "y": 657
       }
     },
     {
@@ -2457,7 +2592,7 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 509,
+        "x": 517,
         "y": 55
       }
     },
@@ -2472,8 +2607,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 355,
-        "y": 647
+        "x": 395,
+        "y": 656
       }
     },
     {
@@ -2487,8 +2622,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 346,
-        "y": 645
+        "x": 386,
+        "y": 654
       }
     },
     {
@@ -2502,8 +2637,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 338,
-        "y": 642
+        "x": 378,
+        "y": 652
       }
     },
     {
@@ -2517,8 +2652,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 329,
-        "y": 640
+        "x": 370,
+        "y": 651
       }
     },
     {
@@ -2532,8 +2667,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 321,
-        "y": 637
+        "x": 362,
+        "y": 649
       }
     },
     {
@@ -2547,8 +2682,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 312,
-        "y": 634
+        "x": 354,
+        "y": 647
       }
     },
     {
@@ -2562,8 +2697,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 304,
-        "y": 631
+        "x": 346,
+        "y": 645
       }
     },
     {
@@ -2577,8 +2712,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 296,
-        "y": 628
+        "x": 338,
+        "y": 643
       }
     },
     {
@@ -2592,8 +2727,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 288,
-        "y": 625
+        "x": 330,
+        "y": 640
       }
     },
     {
@@ -2607,8 +2742,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 280,
-        "y": 622
+        "x": 322,
+        "y": 638
       }
     },
     {
@@ -2622,8 +2757,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 272,
-        "y": 618
+        "x": 315,
+        "y": 635
       }
     },
     {
@@ -2637,8 +2772,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 264,
-        "y": 615
+        "x": 307,
+        "y": 633
       }
     },
     {
@@ -2652,8 +2787,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 256,
-        "y": 611
+        "x": 299,
+        "y": 630
       }
     },
     {
@@ -2667,8 +2802,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 249,
-        "y": 608
+        "x": 292,
+        "y": 627
       }
     },
     {
@@ -2682,8 +2817,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 518,
-        "y": 55
+        "x": 526,
+        "y": 56
       }
     },
     {
@@ -2697,8 +2832,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 241,
-        "y": 604
+        "x": 284,
+        "y": 624
       }
     },
     {
@@ -2712,8 +2847,23 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 234,
-        "y": 600
+        "x": 277,
+        "y": 621
+      }
+    },
+    {
+      "id": "mvp",
+      "label": "最小可行产品",
+      "labelEn": "Minimum Viable Product",
+      "url": "/terms/mvp/",
+      "summary": "用最小成本验证核心假设的最小可用产品版本，目标是学习而非一次做完所有功能。",
+      "domain": "ai-pm-fundamentals",
+      "difficulty": "beginner",
+      "ring": "extended",
+      "status": "verified",
+      "position": {
+        "x": 270,
+        "y": 618
       }
     },
     {
@@ -2727,8 +2877,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 227,
-        "y": 596
+        "x": 263,
+        "y": 614
       }
     },
     {
@@ -2742,8 +2892,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 220,
-        "y": 591
+        "x": 256,
+        "y": 611
       }
     },
     {
@@ -2757,8 +2907,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 213,
-        "y": 587
+        "x": 249,
+        "y": 607
       }
     },
     {
@@ -2772,8 +2922,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 206,
-        "y": 583
+        "x": 242,
+        "y": 604
       }
     },
     {
@@ -2787,8 +2937,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 199,
-        "y": 578
+        "x": 235,
+        "y": 600
       }
     },
     {
@@ -2802,8 +2952,23 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 193,
-        "y": 573
+        "x": 228,
+        "y": 596
+      }
+    },
+    {
+      "id": "north-star-metric",
+      "label": "北极星指标",
+      "labelEn": "North Star Metric",
+      "url": "/terms/north-star-metric/",
+      "summary": "反映用户获得核心价值的单一关键指标，用于对齐团队并判断增长是否健康。",
+      "domain": "ai-pm-fundamentals",
+      "difficulty": "intermediate",
+      "ring": "extended",
+      "status": "verified",
+      "position": {
+        "x": 222,
+        "y": 593
       }
     },
     {
@@ -2817,8 +2982,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 186,
-        "y": 569
+        "x": 215,
+        "y": 589
       }
     },
     {
@@ -2832,8 +2997,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 180,
-        "y": 564
+        "x": 209,
+        "y": 585
       }
     },
     {
@@ -2847,8 +3012,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 174,
-        "y": 559
+        "x": 203,
+        "y": 580
       }
     },
     {
@@ -2862,8 +3027,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 168,
-        "y": 554
+        "x": 197,
+        "y": 576
       }
     },
     {
@@ -2877,8 +3042,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 162,
-        "y": 549
+        "x": 191,
+        "y": 572
       }
     },
     {
@@ -2892,8 +3057,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 157,
-        "y": 543
+        "x": 185,
+        "y": 568
       }
     },
     {
@@ -2907,8 +3072,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 151,
-        "y": 538
+        "x": 179,
+        "y": 563
       }
     },
     {
@@ -2922,8 +3087,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 146,
-        "y": 533
+        "x": 174,
+        "y": 558
       }
     },
     {
@@ -2937,8 +3102,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 141,
-        "y": 527
+        "x": 168,
+        "y": 554
       }
     },
     {
@@ -2952,8 +3117,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 136,
-        "y": 522
+        "x": 163,
+        "y": 549
       }
     },
     {
@@ -2967,8 +3132,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 131,
-        "y": 516
+        "x": 157,
+        "y": 544
       }
     },
     {
@@ -2982,8 +3147,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 126,
-        "y": 511
+        "x": 152,
+        "y": 540
       }
     },
     {
@@ -2997,8 +3162,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 122,
-        "y": 505
+        "x": 147,
+        "y": 535
       }
     },
     {
@@ -3012,8 +3177,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 117,
-        "y": 499
+        "x": 143,
+        "y": 530
       }
     },
     {
@@ -3027,8 +3192,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 113,
-        "y": 493
+        "x": 138,
+        "y": 525
       }
     },
     {
@@ -3042,8 +3207,23 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 109,
-        "y": 487
+        "x": 133,
+        "y": 519
+      }
+    },
+    {
+      "id": "prd",
+      "label": "产品需求文档",
+      "labelEn": "Product Requirements Document",
+      "url": "/terms/prd/",
+      "summary": "记录产品目标、用户、功能、验收标准与范围的文档，是需求从想法进入设计与开发协作的契约。",
+      "domain": "ai-pm-fundamentals",
+      "difficulty": "beginner",
+      "ring": "extended",
+      "status": "verified",
+      "position": {
+        "x": 129,
+        "y": 514
       }
     },
     {
@@ -3057,8 +3237,38 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 105,
-        "y": 481
+        "x": 125,
+        "y": 509
+      }
+    },
+    {
+      "id": "pricing-strategy",
+      "label": "定价策略",
+      "labelEn": "Pricing Strategy",
+      "url": "/terms/pricing-strategy/",
+      "summary": "基于价值、成本与竞争确定价格结构与计费方式的决策，直接影响采用与商业可持续。",
+      "domain": "ai-pm-fundamentals",
+      "difficulty": "intermediate",
+      "ring": "extended",
+      "status": "verified",
+      "position": {
+        "x": 121,
+        "y": 504
+      }
+    },
+    {
+      "id": "prioritization",
+      "label": "需求优先级",
+      "labelEn": "Prioritization",
+      "url": "/terms/prioritization/",
+      "summary": "依据价值、成本、风险与依赖对需求排序，让有限资源优先解决最重要问题的方法。",
+      "domain": "ai-pm-fundamentals",
+      "difficulty": "intermediate",
+      "ring": "extended",
+      "status": "verified",
+      "position": {
+        "x": 117,
+        "y": 498
       }
     },
     {
@@ -3072,8 +3282,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 102,
-        "y": 475
+        "x": 113,
+        "y": 493
       }
     },
     {
@@ -3087,8 +3297,53 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 98,
-        "y": 469
+        "x": 109,
+        "y": 487
+      }
+    },
+    {
+      "id": "product-analytics",
+      "label": "产品数据分析",
+      "labelEn": "Product Analytics",
+      "url": "/terms/product-analytics/",
+      "summary": "通过埋点、漏斗、留存等数据理解用户行为与产品健康度，支撑发现与验证。",
+      "domain": "ai-pm-fundamentals",
+      "difficulty": "intermediate",
+      "ring": "extended",
+      "status": "verified",
+      "position": {
+        "x": 106,
+        "y": 482
+      }
+    },
+    {
+      "id": "product-lifecycle",
+      "label": "产品生命周期",
+      "labelEn": "Product Lifecycle",
+      "url": "/terms/product-lifecycle/",
+      "summary": "产品从概念、增长、成熟到衰退的阶段模型，用于匹配不同阶段的策略与资源。",
+      "domain": "ai-pm-fundamentals",
+      "difficulty": "intermediate",
+      "ring": "extended",
+      "status": "verified",
+      "position": {
+        "x": 103,
+        "y": 476
+      }
+    },
+    {
+      "id": "product-manager",
+      "label": "产品经理",
+      "labelEn": "Product Manager",
+      "url": "/terms/product-manager/",
+      "summary": "对产品结果负责、串联用户、业务与技术，通过发现、定义、优先级和迭代把想法变成可用产品的角色。",
+      "domain": "ai-pm-fundamentals",
+      "difficulty": "beginner",
+      "ring": "extended",
+      "status": "verified",
+      "position": {
+        "x": 99,
+        "y": 471
       }
     },
     {
@@ -3102,8 +3357,23 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 95,
-        "y": 463
+        "x": 96,
+        "y": 465
+      }
+    },
+    {
+      "id": "project-management",
+      "label": "项目管理",
+      "labelEn": "Project Management",
+      "url": "/terms/project-management/",
+      "summary": "对范围、进度、资源和风险进行计划与跟踪，保证交付可预测且问题及时暴露。",
+      "domain": "ai-pm-fundamentals",
+      "difficulty": "intermediate",
+      "ring": "extended",
+      "status": "verified",
+      "position": {
+        "x": 93,
+        "y": 459
       }
     },
     {
@@ -3117,8 +3387,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 92,
-        "y": 457
+        "x": 91,
+        "y": 454
       }
     },
     {
@@ -3132,8 +3402,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 89,
-        "y": 450
+        "x": 88,
+        "y": 448
       }
     },
     {
@@ -3147,8 +3417,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 87,
-        "y": 444
+        "x": 86,
+        "y": 442
       }
     },
     {
@@ -3163,7 +3433,7 @@
       "status": "catalogued",
       "position": {
         "x": 84,
-        "y": 438
+        "y": 436
       }
     },
     {
@@ -3178,7 +3448,7 @@
       "status": "verified",
       "position": {
         "x": 82,
-        "y": 432
+        "y": 430
       }
     },
     {
@@ -3193,7 +3463,7 @@
       "status": "verified",
       "position": {
         "x": 80,
-        "y": 425
+        "y": 424
       }
     },
     {
@@ -3223,7 +3493,7 @@
       "status": "catalogued",
       "position": {
         "x": 76,
-        "y": 412
+        "y": 413
       }
     },
     {
@@ -3238,7 +3508,7 @@
       "status": "verified",
       "position": {
         "x": 75,
-        "y": 406
+        "y": 407
       }
     },
     {
@@ -3253,7 +3523,7 @@
       "status": "verified",
       "position": {
         "x": 74,
-        "y": 399
+        "y": 401
       }
     },
     {
@@ -3267,8 +3537,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 72,
-        "y": 393
+        "x": 73,
+        "y": 395
       }
     },
     {
@@ -3283,7 +3553,7 @@
       "status": "catalogued",
       "position": {
         "x": 72,
-        "y": 386
+        "y": 389
       }
     },
     {
@@ -3298,7 +3568,7 @@
       "status": "catalogued",
       "position": {
         "x": 71,
-        "y": 380
+        "y": 383
       }
     },
     {
@@ -3312,8 +3582,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 70,
-        "y": 373
+        "x": 71,
+        "y": 377
       }
     },
     {
@@ -3328,7 +3598,7 @@
       "status": "catalogued",
       "position": {
         "x": 70,
-        "y": 367
+        "y": 371
       }
     },
     {
@@ -3343,7 +3613,7 @@
       "status": "catalogued",
       "position": {
         "x": 70,
-        "y": 360
+        "y": 365
       }
     },
     {
@@ -3358,7 +3628,7 @@
       "status": "verified",
       "position": {
         "x": 70,
-        "y": 353
+        "y": 358
       }
     },
     {
@@ -3373,7 +3643,7 @@
       "status": "verified",
       "position": {
         "x": 70,
-        "y": 347
+        "y": 352
       }
     },
     {
@@ -3387,8 +3657,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 71,
-        "y": 340
+        "x": 70,
+        "y": 346
       }
     },
     {
@@ -3402,8 +3672,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 72,
-        "y": 334
+        "x": 71,
+        "y": 340
       }
     },
     {
@@ -3418,7 +3688,22 @@
       "status": "catalogued",
       "position": {
         "x": 72,
-        "y": 327
+        "y": 334
+      }
+    },
+    {
+      "id": "requirement-analysis",
+      "label": "需求分析",
+      "labelEn": "Requirement Analysis",
+      "url": "/terms/requirement-analysis/",
+      "summary": "把模糊想法拆解为可验证的问题、目标、约束与验收条件，形成可执行需求的过程。",
+      "domain": "ai-pm-fundamentals",
+      "difficulty": "beginner",
+      "ring": "extended",
+      "status": "verified",
+      "position": {
+        "x": 72,
+        "y": 328
       }
     },
     {
@@ -3432,7 +3717,7 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 592,
+        "x": 593,
         "y": 62
       }
     },
@@ -3447,8 +3732,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 74,
-        "y": 321
+        "x": 73,
+        "y": 322
       }
     },
     {
@@ -3462,8 +3747,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 75,
-        "y": 314
+        "x": 74,
+        "y": 316
       }
     },
     {
@@ -3477,7 +3762,7 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 537,
+        "x": 543,
         "y": 56
       }
     },
@@ -3508,7 +3793,7 @@
       "status": "catalogued",
       "position": {
         "x": 76,
-        "y": 308
+        "y": 310
       }
     },
     {
@@ -3522,8 +3807,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 78,
-        "y": 301
+        "x": 77,
+        "y": 304
       }
     },
     {
@@ -3537,8 +3822,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 80,
-        "y": 295
+        "x": 79,
+        "y": 298
       }
     },
     {
@@ -3552,8 +3837,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 82,
-        "y": 288
+        "x": 81,
+        "y": 293
       }
     },
     {
@@ -3567,8 +3852,23 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 84,
-        "y": 282
+        "x": 83,
+        "y": 287
+      }
+    },
+    {
+      "id": "roadmap",
+      "label": "产品路线图",
+      "labelEn": "Product Roadmap",
+      "url": "/terms/roadmap/",
+      "summary": "按时间与目标组织产品迭代方向的计划，用于对齐干系人预期并说明先做什么、为什么。",
+      "domain": "ai-pm-fundamentals",
+      "difficulty": "intermediate",
+      "ring": "extended",
+      "status": "verified",
+      "position": {
+        "x": 85,
+        "y": 281
       }
     },
     {
@@ -3583,7 +3883,7 @@
       "status": "catalogued",
       "position": {
         "x": 87,
-        "y": 276
+        "y": 275
       }
     },
     {
@@ -3598,7 +3898,7 @@
       "status": "catalogued",
       "position": {
         "x": 89,
-        "y": 270
+        "y": 269
       }
     },
     {
@@ -3628,7 +3928,7 @@
       "status": "catalogued",
       "position": {
         "x": 95,
-        "y": 257
+        "y": 258
       }
     },
     {
@@ -3643,7 +3943,7 @@
       "status": "catalogued",
       "position": {
         "x": 98,
-        "y": 251
+        "y": 252
       }
     },
     {
@@ -3657,8 +3957,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 102,
-        "y": 245
+        "x": 101,
+        "y": 246
       }
     },
     {
@@ -3672,8 +3972,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 105,
-        "y": 239
+        "x": 104,
+        "y": 241
       }
     },
     {
@@ -3687,8 +3987,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 109,
-        "y": 233
+        "x": 108,
+        "y": 235
       }
     },
     {
@@ -3702,8 +4002,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 113,
-        "y": 227
+        "x": 111,
+        "y": 230
       }
     },
     {
@@ -3717,8 +4017,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 117,
-        "y": 221
+        "x": 115,
+        "y": 224
       }
     },
     {
@@ -3732,8 +4032,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 122,
-        "y": 215
+        "x": 119,
+        "y": 219
       }
     },
     {
@@ -3747,8 +4047,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 126,
-        "y": 209
+        "x": 123,
+        "y": 214
       }
     },
     {
@@ -3762,8 +4062,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 131,
-        "y": 204
+        "x": 127,
+        "y": 208
       }
     },
     {
@@ -3777,8 +4077,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 136,
-        "y": 198
+        "x": 131,
+        "y": 203
       }
     },
     {
@@ -3792,8 +4092,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 141,
-        "y": 193
+        "x": 136,
+        "y": 198
       }
     },
     {
@@ -3807,8 +4107,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 146,
-        "y": 187
+        "x": 140,
+        "y": 193
       }
     },
     {
@@ -3822,8 +4122,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 151,
-        "y": 182
+        "x": 145,
+        "y": 188
       }
     },
     {
@@ -3837,8 +4137,23 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 157,
-        "y": 177
+        "x": 150,
+        "y": 183
+      }
+    },
+    {
+      "id": "stakeholder-management",
+      "label": "干系人管理",
+      "labelEn": "Stakeholder Management",
+      "url": "/terms/stakeholder-management/",
+      "summary": "识别并协调对产品有影响或受产品影响的人，管理预期、冲突与决策节奏。",
+      "domain": "ai-pm-fundamentals",
+      "difficulty": "intermediate",
+      "ring": "extended",
+      "status": "verified",
+      "position": {
+        "x": 155,
+        "y": 178
       }
     },
     {
@@ -3852,8 +4167,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 162,
-        "y": 171
+        "x": 160,
+        "y": 173
       }
     },
     {
@@ -3867,8 +4182,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 168,
-        "y": 166
+        "x": 165,
+        "y": 168
       }
     },
     {
@@ -3882,8 +4197,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 174,
-        "y": 161
+        "x": 171,
+        "y": 164
       }
     },
     {
@@ -3897,8 +4212,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 180,
-        "y": 156
+        "x": 176,
+        "y": 159
       }
     },
     {
@@ -3912,8 +4227,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 186,
-        "y": 151
+        "x": 182,
+        "y": 155
       }
     },
     {
@@ -3927,8 +4242,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 193,
-        "y": 147
+        "x": 188,
+        "y": 150
       }
     },
     {
@@ -3942,8 +4257,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 199,
-        "y": 142
+        "x": 194,
+        "y": 146
       }
     },
     {
@@ -3955,6 +4270,21 @@
       "domain": "ai-product-ux",
       "difficulty": "intermediate",
       "ring": "core",
+      "status": "verified",
+      "position": {
+        "x": 200,
+        "y": 142
+      }
+    },
+    {
+      "id": "tech-collaboration",
+      "label": "与工程师协作",
+      "labelEn": "Engineering Collaboration",
+      "url": "/terms/tech-collaboration/",
+      "summary": "产品经理与工程师在方案、排期、权衡与风险上的协作方式，关键是清晰目标与可验证验收。",
+      "domain": "ai-pm-fundamentals",
+      "difficulty": "intermediate",
+      "ring": "extended",
       "status": "verified",
       "position": {
         "x": 206,
@@ -3972,7 +4302,7 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 213,
+        "x": 212,
         "y": 133
       }
     },
@@ -3987,7 +4317,7 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 220,
+        "x": 219,
         "y": 129
       }
     },
@@ -4002,8 +4332,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 227,
-        "y": 124
+        "x": 225,
+        "y": 125
       }
     },
     {
@@ -4017,8 +4347,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 234,
-        "y": 120
+        "x": 232,
+        "y": 122
       }
     },
     {
@@ -4032,8 +4362,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 241,
-        "y": 116
+        "x": 238,
+        "y": 118
       }
     },
     {
@@ -4047,8 +4377,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 565,
-        "y": 58
+        "x": 568,
+        "y": 59
       }
     },
     {
@@ -4062,8 +4392,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 249,
-        "y": 112
+        "x": 245,
+        "y": 114
       }
     },
     {
@@ -4077,8 +4407,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 256,
-        "y": 109
+        "x": 252,
+        "y": 111
       }
     },
     {
@@ -4092,8 +4422,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 264,
-        "y": 105
+        "x": 259,
+        "y": 107
       }
     },
     {
@@ -4107,8 +4437,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 272,
-        "y": 102
+        "x": 266,
+        "y": 104
       }
     },
     {
@@ -4122,8 +4452,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 280,
-        "y": 98
+        "x": 273,
+        "y": 101
       }
     },
     {
@@ -4137,8 +4467,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 288,
-        "y": 95
+        "x": 281,
+        "y": 98
       }
     },
     {
@@ -4152,8 +4482,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 296,
-        "y": 92
+        "x": 288,
+        "y": 95
       }
     },
     {
@@ -4167,8 +4497,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 304,
-        "y": 89
+        "x": 296,
+        "y": 92
       }
     },
     {
@@ -4182,8 +4512,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 312,
-        "y": 86
+        "x": 303,
+        "y": 89
       }
     },
     {
@@ -4197,8 +4527,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 321,
-        "y": 83
+        "x": 311,
+        "y": 86
       }
     },
     {
@@ -4212,8 +4542,8 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 329,
-        "y": 80
+        "x": 318,
+        "y": 84
       }
     },
     {
@@ -4227,8 +4557,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 338,
-        "y": 78
+        "x": 326,
+        "y": 81
       }
     },
     {
@@ -4242,8 +4572,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 346,
-        "y": 75
+        "x": 334,
+        "y": 79
       }
     },
     {
@@ -4257,8 +4587,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 355,
-        "y": 73
+        "x": 342,
+        "y": 76
       }
     },
     {
@@ -4272,8 +4602,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 364,
-        "y": 71
+        "x": 350,
+        "y": 74
       }
     },
     {
@@ -4287,8 +4617,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 372,
-        "y": 69
+        "x": 358,
+        "y": 72
       }
     },
     {
@@ -4302,8 +4632,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 381,
-        "y": 67
+        "x": 366,
+        "y": 70
       }
     },
     {
@@ -4317,8 +4647,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 390,
-        "y": 65
+        "x": 374,
+        "y": 68
       }
     },
     {
@@ -4332,8 +4662,23 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 399,
-        "y": 64
+        "x": 382,
+        "y": 67
+      }
+    },
+    {
+      "id": "user-interview",
+      "label": "用户访谈",
+      "labelEn": "User Interview",
+      "url": "/terms/user-interview/",
+      "summary": "通过一对一提问与追问获取用户真实目标、行为与障碍的定性研究方法，强调开放问题与去引导。",
+      "domain": "ai-pm-fundamentals",
+      "difficulty": "beginner",
+      "ring": "extended",
+      "status": "verified",
+      "position": {
+        "x": 390,
+        "y": 65
       }
     },
     {
@@ -4347,8 +4692,38 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 408,
+        "x": 399,
+        "y": 64
+      }
+    },
+    {
+      "id": "user-research",
+      "label": "用户研究",
+      "labelEn": "User Research",
+      "url": "/terms/user-research/",
+      "summary": "通过访谈、问卷、观察等方法理解用户目标、情境与痛点，为需求判断提供可复核证据的研究过程。",
+      "domain": "ai-pm-fundamentals",
+      "difficulty": "beginner",
+      "ring": "extended",
+      "status": "verified",
+      "position": {
+        "x": 407,
         "y": 62
+      }
+    },
+    {
+      "id": "user-story",
+      "label": "用户故事",
+      "labelEn": "User Story",
+      "url": "/terms/user-story/",
+      "summary": "用「作为…我希望…以便…」句式表达用户价值的最小需求单元，强调角色、意图与价值。",
+      "domain": "ai-pm-fundamentals",
+      "difficulty": "beginner",
+      "ring": "extended",
+      "status": "verified",
+      "position": {
+        "x": 415,
+        "y": 61
       }
     },
     {
@@ -4362,8 +4737,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 417,
-        "y": 61
+        "x": 424,
+        "y": 60
       }
     },
     {
@@ -4392,8 +4767,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 426,
-        "y": 60
+        "x": 432,
+        "y": 59
       }
     },
     {
@@ -4407,7 +4782,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 435,
+        "x": 441,
         "y": 58
       }
     },
@@ -4422,8 +4797,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 445,
-        "y": 58
+        "x": 449,
+        "y": 57
       }
     },
     {
@@ -4437,8 +4812,8 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 454,
-        "y": 57
+        "x": 457,
+        "y": 56
       }
     },
     {
@@ -4452,7 +4827,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 463,
+        "x": 466,
         "y": 56
       }
     },
@@ -4467,7 +4842,7 @@
       "ring": "extended",
       "status": "catalogued",
       "position": {
-        "x": 472,
+        "x": 474,
         "y": 56
       }
     },
@@ -4482,7 +4857,7 @@
       "ring": "core",
       "status": "catalogued",
       "position": {
-        "x": 482,
+        "x": 483,
         "y": 55
       }
     },
@@ -4503,6 +4878,20 @@
     }
   ],
   "edges": [
+    {
+      "id": "ab-testing-connected-to-ai-product-manager",
+      "source": "ab-testing",
+      "target": "ai-product-manager",
+      "type": "application",
+      "explanation": "A/B 测试是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
+      "id": "acceptance-criteria-connected-to-ai-product-manager",
+      "source": "acceptance-criteria",
+      "target": "ai-product-manager",
+      "type": "application",
+      "explanation": "验收标准是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
     {
       "id": "accountability-connected-to-ai-safety",
       "source": "accountability",
@@ -4630,6 +5019,20 @@
       "explanation": "AI 产品引导是理解和应用AI 产品时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
+      "id": "ai-pm-career-path-connected-to-ai-product-manager",
+      "source": "ai-pm-career-path",
+      "target": "ai-product-manager",
+      "type": "application",
+      "explanation": "AI 产品经理转岗路径是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
+      "id": "ai-pm-competency-connected-to-ai-product-manager",
+      "source": "ai-pm-competency",
+      "target": "ai-product-manager",
+      "type": "application",
+      "explanation": "AI 产品经理能力地图是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
       "id": "ai-precedes-generative-ai",
       "source": "artificial-intelligence",
       "target": "generative-ai",
@@ -4642,6 +5045,13 @@
       "target": "artificial-intelligence",
       "type": "application",
       "explanation": "AI 产品是理解和应用人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
+      "id": "ai-product-manager-connected-to-ai-product",
+      "source": "ai-product-manager",
+      "target": "ai-product",
+      "type": "application",
+      "explanation": "AI 产品经理是理解和应用AI 产品时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
       "id": "ai-risk-management-connected-to-ai-safety",
@@ -4798,6 +5208,13 @@
       "explanation": "浏览器操作是理解和应用AI Agent时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
+      "id": "business-model-connected-to-ai-product-manager",
+      "source": "business-model",
+      "target": "ai-product-manager",
+      "type": "application",
+      "explanation": "商业模式是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
       "id": "canary-release-connected-to-ai-application",
       "source": "canary-release",
       "target": "ai-application",
@@ -4880,6 +5297,13 @@
       "target": "artificial-intelligence",
       "type": "application",
       "explanation": "认知计算是理解和应用人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
+      "id": "competitive-analysis-connected-to-ai-product-manager",
+      "source": "competitive-analysis",
+      "target": "ai-product-manager",
+      "type": "application",
+      "explanation": "竞品分析是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
       "id": "compute-connected-to-artificial-intelligence",
@@ -5104,6 +5528,13 @@
       "target": "retrieval-augmented-generation",
       "type": "application",
       "explanation": "稠密向量是理解和应用检索增强生成时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
+      "id": "design-collaboration-connected-to-ai-product-manager",
+      "source": "design-collaboration",
+      "target": "ai-product-manager",
+      "type": "application",
+      "explanation": "与设计师协作是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
       "id": "diffusion-model-connected-to-multimodal-ai",
@@ -5349,6 +5780,13 @@
       "target": "ai-product",
       "type": "application",
       "explanation": "生成式界面是理解和应用AI 产品时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
+      "id": "go-to-market-connected-to-ai-product-manager",
+      "source": "go-to-market",
+      "target": "ai-product-manager",
+      "type": "application",
+      "explanation": "上线与增长是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
       "id": "golden-dataset-connected-to-evaluation",
@@ -5806,6 +6244,13 @@
       "explanation": "多模态融合是理解和应用多模态人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
+      "id": "mvp-connected-to-ai-product-manager",
+      "source": "mvp",
+      "target": "ai-product-manager",
+      "type": "application",
+      "explanation": "最小可行产品是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
       "id": "narrow-ai-connected-to-artificial-intelligence",
       "source": "narrow-ai",
       "target": "artificial-intelligence",
@@ -5846,6 +6291,13 @@
       "target": "large-language-model",
       "type": "application",
       "explanation": "下一词元预测是理解和应用大语言模型时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
+      "id": "north-star-metric-connected-to-ai-product-manager",
+      "source": "north-star-metric",
+      "target": "ai-product-manager",
+      "type": "application",
+      "explanation": "北极星指标是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
       "id": "npu-connected-to-compute",
@@ -5960,11 +6412,32 @@
       "explanation": "后训练是理解和应用大语言模型时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
+      "id": "prd-connected-to-ai-product-manager",
+      "source": "prd",
+      "target": "ai-product-manager",
+      "type": "application",
+      "explanation": "产品需求文档是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
       "id": "pretraining-connected-to-large-language-model",
       "source": "pretraining",
       "target": "large-language-model",
       "type": "application",
       "explanation": "预训练是理解和应用大语言模型时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
+      "id": "pricing-strategy-connected-to-ai-product-manager",
+      "source": "pricing-strategy",
+      "target": "ai-product-manager",
+      "type": "application",
+      "explanation": "定价策略是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
+      "id": "prioritization-connected-to-ai-product-manager",
+      "source": "prioritization",
+      "target": "ai-product-manager",
+      "type": "application",
+      "explanation": "需求优先级是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
       "id": "privacy-connected-to-ai-safety",
@@ -5981,11 +6454,39 @@
       "explanation": "问题方案匹配是理解和应用AI 产品时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
+      "id": "product-analytics-connected-to-ai-product-manager",
+      "source": "product-analytics",
+      "target": "ai-product-manager",
+      "type": "application",
+      "explanation": "产品数据分析是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
+      "id": "product-lifecycle-connected-to-ai-product-manager",
+      "source": "product-lifecycle",
+      "target": "ai-product-manager",
+      "type": "application",
+      "explanation": "产品生命周期是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
+      "id": "product-manager-connected-to-ai-product-manager",
+      "source": "product-manager",
+      "target": "ai-product-manager",
+      "type": "application",
+      "explanation": "产品经理是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
       "id": "progressive-disclosure-connected-to-ai-product",
       "source": "progressive-disclosure",
       "target": "ai-product",
       "type": "application",
       "explanation": "渐进披露是理解和应用AI 产品时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
+      "id": "project-management-connected-to-ai-product-manager",
+      "source": "project-management",
+      "target": "ai-product-manager",
+      "type": "application",
+      "explanation": "项目管理是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
       "id": "prompt-cache-connected-to-ai-application",
@@ -6135,6 +6636,13 @@
       "explanation": "请求批处理是理解和应用AI 应用时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
+      "id": "requirement-analysis-connected-to-ai-product-manager",
+      "source": "requirement-analysis",
+      "target": "ai-product-manager",
+      "type": "application",
+      "explanation": "需求分析是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
       "id": "reranking-compared-with-retrieval",
       "source": "reranking",
       "target": "retrieval",
@@ -6210,6 +6718,13 @@
       "target": "ai-agent",
       "type": "application",
       "explanation": "重试策略是理解和应用AI Agent时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
+      "id": "roadmap-connected-to-ai-product-manager",
+      "source": "roadmap",
+      "target": "ai-product-manager",
+      "type": "application",
+      "explanation": "产品路线图是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
       "id": "robotics-connected-to-artificial-intelligence",
@@ -6338,6 +6853,13 @@
       "explanation": "语音技术是理解和应用人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
+      "id": "stakeholder-management-connected-to-ai-product-manager",
+      "source": "stakeholder-management",
+      "target": "ai-product-manager",
+      "type": "application",
+      "explanation": "干系人管理是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
       "id": "state-management-connected-to-ai-agent",
       "source": "state-management",
       "target": "ai-agent",
@@ -6392,6 +6914,13 @@
       "target": "ai-product",
       "type": "application",
       "explanation": "任务成功率是理解和应用AI 产品时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
+      "id": "tech-collaboration-connected-to-ai-product-manager",
+      "source": "tech-collaboration",
+      "target": "ai-product-manager",
+      "type": "application",
+      "explanation": "与工程师协作是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
       "id": "temperature-connected-to-large-language-model",
@@ -6583,11 +7112,32 @@
       "explanation": "用户控制权是理解和应用AI 产品时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
+      "id": "user-interview-connected-to-ai-product-manager",
+      "source": "user-interview",
+      "target": "ai-product-manager",
+      "type": "application",
+      "explanation": "用户访谈是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
       "id": "user-prompt-connected-to-context-window",
       "source": "user-prompt",
       "target": "context-window",
       "type": "application",
       "explanation": "用户提示词是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
+      "id": "user-research-connected-to-ai-product-manager",
+      "source": "user-research",
+      "target": "ai-product-manager",
+      "type": "application",
+      "explanation": "用户研究是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
+      "id": "user-story-connected-to-ai-product-manager",
+      "source": "user-story",
+      "target": "ai-product-manager",
+      "type": "application",
+      "explanation": "用户故事是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
       "id": "user-trust-connected-to-ai-product",
@@ -6661,6 +7211,24 @@
     }
   ],
   "local": {
+    "ab-testing": [
+      {
+        "edgeId": "ab-testing-connected-to-ai-product-manager",
+        "neighbor": "ai-product-manager",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "A/B 测试是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
+    "acceptance-criteria": [
+      {
+        "edgeId": "acceptance-criteria-connected-to-ai-product-manager",
+        "neighbor": "ai-product-manager",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "验收标准是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
     "accountability": [
       {
         "edgeId": "accountability-connected-to-ai-safety",
@@ -7150,6 +7718,24 @@
         "explanation": "AI 产品引导是理解和应用AI 产品时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
+    "ai-pm-career-path": [
+      {
+        "edgeId": "ai-pm-career-path-connected-to-ai-product-manager",
+        "neighbor": "ai-product-manager",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "AI 产品经理转岗路径是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
+    "ai-pm-competency": [
+      {
+        "edgeId": "ai-pm-competency-connected-to-ai-product-manager",
+        "neighbor": "ai-product-manager",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "AI 产品经理能力地图是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
     "ai-product": [
       {
         "edgeId": "ai-adoption-connected-to-ai-product",
@@ -7164,6 +7750,13 @@
         "type": "application",
         "direction": "incoming",
         "explanation": "AI 产品引导是理解和应用AI 产品时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "ai-product-manager-connected-to-ai-product",
+        "neighbor": "ai-product-manager",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "AI 产品经理是理解和应用AI 产品时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       },
       {
         "edgeId": "ai-use-case-connected-to-ai-product",
@@ -7325,6 +7918,183 @@
         "type": "application",
         "direction": "incoming",
         "explanation": "用户信任是理解和应用AI 产品时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
+    "ai-product-manager": [
+      {
+        "edgeId": "ab-testing-connected-to-ai-product-manager",
+        "neighbor": "ab-testing",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "A/B 测试是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "acceptance-criteria-connected-to-ai-product-manager",
+        "neighbor": "acceptance-criteria",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "验收标准是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "ai-pm-career-path-connected-to-ai-product-manager",
+        "neighbor": "ai-pm-career-path",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "AI 产品经理转岗路径是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "ai-pm-competency-connected-to-ai-product-manager",
+        "neighbor": "ai-pm-competency",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "AI 产品经理能力地图是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "ai-product-manager-connected-to-ai-product",
+        "neighbor": "ai-product",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "AI 产品经理是理解和应用AI 产品时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "business-model-connected-to-ai-product-manager",
+        "neighbor": "business-model",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "商业模式是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "competitive-analysis-connected-to-ai-product-manager",
+        "neighbor": "competitive-analysis",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "竞品分析是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "design-collaboration-connected-to-ai-product-manager",
+        "neighbor": "design-collaboration",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "与设计师协作是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "go-to-market-connected-to-ai-product-manager",
+        "neighbor": "go-to-market",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "上线与增长是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "mvp-connected-to-ai-product-manager",
+        "neighbor": "mvp",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "最小可行产品是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "north-star-metric-connected-to-ai-product-manager",
+        "neighbor": "north-star-metric",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "北极星指标是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "prd-connected-to-ai-product-manager",
+        "neighbor": "prd",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "产品需求文档是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "pricing-strategy-connected-to-ai-product-manager",
+        "neighbor": "pricing-strategy",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "定价策略是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "prioritization-connected-to-ai-product-manager",
+        "neighbor": "prioritization",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "需求优先级是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "product-analytics-connected-to-ai-product-manager",
+        "neighbor": "product-analytics",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "产品数据分析是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "product-lifecycle-connected-to-ai-product-manager",
+        "neighbor": "product-lifecycle",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "产品生命周期是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "product-manager-connected-to-ai-product-manager",
+        "neighbor": "product-manager",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "产品经理是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "project-management-connected-to-ai-product-manager",
+        "neighbor": "project-management",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "项目管理是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "requirement-analysis-connected-to-ai-product-manager",
+        "neighbor": "requirement-analysis",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "需求分析是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "roadmap-connected-to-ai-product-manager",
+        "neighbor": "roadmap",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "产品路线图是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "stakeholder-management-connected-to-ai-product-manager",
+        "neighbor": "stakeholder-management",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "干系人管理是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "tech-collaboration-connected-to-ai-product-manager",
+        "neighbor": "tech-collaboration",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "与工程师协作是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "user-interview-connected-to-ai-product-manager",
+        "neighbor": "user-interview",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "用户访谈是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "user-research-connected-to-ai-product-manager",
+        "neighbor": "user-research",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "用户研究是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "user-story-connected-to-ai-product-manager",
+        "neighbor": "user-story",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "用户故事是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
     "ai-risk-management": [
@@ -7912,6 +8682,15 @@
         "explanation": "浏览器操作是理解和应用AI Agent时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
+    "business-model": [
+      {
+        "edgeId": "business-model-connected-to-ai-product-manager",
+        "neighbor": "ai-product-manager",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "商业模式是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
     "canary-release": [
       {
         "edgeId": "canary-release-connected-to-ai-application",
@@ -8000,6 +8779,15 @@
         "type": "application",
         "direction": "outgoing",
         "explanation": "认知计算是理解和应用人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
+    "competitive-analysis": [
+      {
+        "edgeId": "competitive-analysis-connected-to-ai-product-manager",
+        "neighbor": "ai-product-manager",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "竞品分析是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
     "compute": [
@@ -8640,6 +9428,15 @@
         "explanation": "稠密向量是理解和应用检索增强生成时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
+    "design-collaboration": [
+      {
+        "edgeId": "design-collaboration-connected-to-ai-product-manager",
+        "neighbor": "ai-product-manager",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "与设计师协作是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
     "diffusion-model": [
       {
         "edgeId": "diffusion-model-connected-to-multimodal-ai",
@@ -9149,6 +9946,15 @@
         "type": "application",
         "direction": "outgoing",
         "explanation": "生成式界面是理解和应用AI 产品时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
+    "go-to-market": [
+      {
+        "edgeId": "go-to-market-connected-to-ai-product-manager",
+        "neighbor": "ai-product-manager",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "上线与增长是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
     "golden-dataset": [
@@ -10257,6 +11063,15 @@
         "explanation": "多模态融合是理解和应用多模态人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
+    "mvp": [
+      {
+        "edgeId": "mvp-connected-to-ai-product-manager",
+        "neighbor": "ai-product-manager",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "最小可行产品是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
     "narrow-ai": [
       {
         "edgeId": "narrow-ai-connected-to-artificial-intelligence",
@@ -10309,6 +11124,15 @@
         "type": "application",
         "direction": "outgoing",
         "explanation": "下一词元预测是理解和应用大语言模型时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
+    "north-star-metric": [
+      {
+        "edgeId": "north-star-metric-connected-to-ai-product-manager",
+        "neighbor": "ai-product-manager",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "北极星指标是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
     "npu": [
@@ -10455,6 +11279,15 @@
         "explanation": "后训练是理解和应用大语言模型时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
+    "prd": [
+      {
+        "edgeId": "prd-connected-to-ai-product-manager",
+        "neighbor": "ai-product-manager",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "产品需求文档是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
     "pretraining": [
       {
         "edgeId": "pretraining-connected-to-large-language-model",
@@ -10462,6 +11295,24 @@
         "type": "application",
         "direction": "outgoing",
         "explanation": "预训练是理解和应用大语言模型时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
+    "pricing-strategy": [
+      {
+        "edgeId": "pricing-strategy-connected-to-ai-product-manager",
+        "neighbor": "ai-product-manager",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "定价策略是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
+    "prioritization": [
+      {
+        "edgeId": "prioritization-connected-to-ai-product-manager",
+        "neighbor": "ai-product-manager",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "需求优先级是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
     "privacy": [
@@ -10482,6 +11333,33 @@
         "explanation": "问题方案匹配是理解和应用AI 产品时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
+    "product-analytics": [
+      {
+        "edgeId": "product-analytics-connected-to-ai-product-manager",
+        "neighbor": "ai-product-manager",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "产品数据分析是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
+    "product-lifecycle": [
+      {
+        "edgeId": "product-lifecycle-connected-to-ai-product-manager",
+        "neighbor": "ai-product-manager",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "产品生命周期是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
+    "product-manager": [
+      {
+        "edgeId": "product-manager-connected-to-ai-product-manager",
+        "neighbor": "ai-product-manager",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "产品经理是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
     "progressive-disclosure": [
       {
         "edgeId": "progressive-disclosure-connected-to-ai-product",
@@ -10489,6 +11367,15 @@
         "type": "application",
         "direction": "outgoing",
         "explanation": "渐进披露是理解和应用AI 产品时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
+    "project-management": [
+      {
+        "edgeId": "project-management-connected-to-ai-product-manager",
+        "neighbor": "ai-product-manager",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "项目管理是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
     "prompt": [
@@ -10678,6 +11565,15 @@
         "type": "application",
         "direction": "outgoing",
         "explanation": "请求批处理是理解和应用AI 应用时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
+    "requirement-analysis": [
+      {
+        "edgeId": "requirement-analysis-connected-to-ai-product-manager",
+        "neighbor": "ai-product-manager",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "需求分析是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
     "reranking": [
@@ -10994,6 +11890,15 @@
         "explanation": "重试策略是理解和应用AI Agent时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
+    "roadmap": [
+      {
+        "edgeId": "roadmap-connected-to-ai-product-manager",
+        "neighbor": "ai-product-manager",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "产品路线图是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
     "robotics": [
       {
         "edgeId": "robotics-connected-to-artificial-intelligence",
@@ -11156,6 +12061,15 @@
         "explanation": "语音技术是理解和应用人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
+    "stakeholder-management": [
+      {
+        "edgeId": "stakeholder-management-connected-to-ai-product-manager",
+        "neighbor": "ai-product-manager",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "干系人管理是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
     "state-management": [
       {
         "edgeId": "state-management-connected-to-ai-agent",
@@ -11226,6 +12140,15 @@
         "type": "application",
         "direction": "outgoing",
         "explanation": "任务成功率是理解和应用AI 产品时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
+    "tech-collaboration": [
+      {
+        "edgeId": "tech-collaboration-connected-to-ai-product-manager",
+        "neighbor": "ai-product-manager",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "与工程师协作是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
     "temperature": [
@@ -11467,6 +12390,15 @@
         "explanation": "用户控制权是理解和应用AI 产品时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
+    "user-interview": [
+      {
+        "edgeId": "user-interview-connected-to-ai-product-manager",
+        "neighbor": "ai-product-manager",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "用户访谈是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
     "user-prompt": [
       {
         "edgeId": "user-prompt-connected-to-context-window",
@@ -11474,6 +12406,24 @@
         "type": "application",
         "direction": "outgoing",
         "explanation": "用户提示词是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
+    "user-research": [
+      {
+        "edgeId": "user-research-connected-to-ai-product-manager",
+        "neighbor": "ai-product-manager",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "用户研究是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      }
+    ],
+    "user-story": [
+      {
+        "edgeId": "user-story-connected-to-ai-product-manager",
+        "neighbor": "ai-product-manager",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "用户故事是理解和应用AI 产品经理时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
     "user-trust": [

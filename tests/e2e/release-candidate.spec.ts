@@ -108,7 +108,7 @@ test('uses one content scope navigation across secondary pages', async ({ page, 
       continue;
     }
     const scope = page.getByRole('navigation', { name: '内容类型' });
-    await expect(scope.getByRole('link', { name: /阅读路线 4/ })).toBeVisible();
+    await expect(scope.getByRole('link', { name: /阅读路线 5/ })).toBeVisible();
     await expect(scope.getByRole('link', { name: new RegExp(activeLabel) })).toHaveAttribute(
       'aria-current',
       'page',
@@ -182,7 +182,7 @@ test('completes search, filtering and graph selection with a keyboard', async ({
   await tabTo(page, ringFilter);
   await expect(ringFilter).toBeFocused();
   await ringFilter.selectOption('core');
-  await expect(page.locator('[data-atlas-visible]')).not.toHaveText('300');
+  await expect(page.locator('[data-atlas-visible]')).not.toHaveText('325');
 
   await page.goto('/graph/');
   const graph = page.locator('[data-graph-explorer][data-graph-mode="full"]');

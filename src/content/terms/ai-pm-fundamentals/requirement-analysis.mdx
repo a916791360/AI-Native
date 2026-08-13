@@ -1,0 +1,62 @@
+---
+id: requirement-analysis
+nameZh: 需求分析
+nameEn: Requirement Analysis
+abbreviations: []
+aliases: []
+summary: 把模糊想法拆解为可验证的问题、目标、约束与验收条件，形成可执行需求的过程。
+domain: ai-pm-fundamentals
+difficulty: beginner
+ring: extended
+status: verified
+priority: 1
+featured: false
+publishedAt: '2026-08-13'
+updatedAt: '2026-08-13'
+verifiedAt: '2026-08-13'
+sources:
+  - id: ireb-requirements
+    type: official-doc
+    title: International Requirements Engineering Board
+    url: https://www.ireb.org/
+    publisher: IREB
+    accessedAt: '2026-08-13'
+  - id: wikipedia-requirements-analysis
+    type: research-institute
+    title: Requirements analysis
+    url: https://en.wikipedia.org/wiki/Requirements_analysis
+    publisher: Wikipedia
+    accessedAt: '2026-08-13'
+---
+
+<h2 id="what-it-is">它是什么</h2>
+
+需求分析是把一句模糊想法，拆解成「为谁解决什么问题、目标是什么、有什么约束、怎样算完成」的过程。它的产出是可验证的需求与验收标准，而不是一份越长越好的文档。
+
+<h2 id="why-it-matters">为什么需要它</h2>
+
+模糊需求会在开发中反复返工：做偏了、漏了边界、或完成标准无法判断。需求分析把共识提前到动手之前，让设计、开发和测试对「做什么、不做什么、怎么验收」有同一份依据。
+
+<h2 id="how-it-works">它如何工作</h2>
+
+先确认问题和目标用户，再区分「用户需求」与「产品需求」：用户需求是问题，产品需求是解决方案。接着补充约束（时间、权限、数据、合规）和验收条件，最后用优先级决定先做哪一部分。整个过程强调可验证，而不是术语堆砌。
+
+<h2 id="example">真实例子</h2>
+
+「给客服加个 AI」不是需求。分析后变成：坐席在处理退款类问题时，能在一个界面看到该客户最近 90 天的订单与适用政策，并标出政策版本；命中退款场景时提供可编辑的回复草稿。完成标准是坐席找到政策的时间下降，而不是「用了 AI」。
+
+<h2 id="tradeoffs">什么时候适合与不适合</h2>
+
+适合：需求模糊、涉及多方、或错误代价高。慎用：改动很小、团队已高度对齐、或还在探索方向时，过早写详细需求会锁死错误方案。需求分析是降低返工风险的手段，不是流程形式。
+
+<h2 id="try-it">亲自试一下</h2>
+
+拿一个你正在做的功能，写下三句话：①谁在什么情况下遇到什么问题；②我们提供什么来解决；③完成后怎样验证它真的解决了。如果第三句写不出可观察的标准，就说明需求还没分析清楚。
+
+<h2 id="next">接下来学什么</h2>
+
+把分析结论写进 [PRD](/terms/prd/)，并用[验收标准](/terms/acceptance-criteria/)和[用户故事](/terms/user-story/)让需求可交付、可验证。
+
+<h2 id="sources-and-revisions">来源与修订</h2>
+
+需求工程的定义与流程依据 IREB 的需求工程框架 [S1] 与需求分析的通用描述 [S2]。本版区分用户需求与产品需求，不把「需求分析」等同于写文档。

@@ -28,6 +28,7 @@ const DOMAIN_ANCHORS: Record<string, { root: string; parent: string }> = {
   },
   'safety-ethics-governance': { root: 'ai-safety', parent: 'artificial-intelligence' },
   'compute-chips-industry': { root: 'compute', parent: 'artificial-intelligence' },
+  'ai-pm-fundamentals': { root: 'ai-product-manager', parent: 'ai-product' },
 };
 
 function priorityFor(candidate: CatalogCandidate): number {

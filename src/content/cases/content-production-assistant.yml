@@ -1,0 +1,671 @@
+id: content-production-assistant
+title: 内容生产助手
+level: focus
+domain: AI 产品与内容运营
+audience:
+  - 零基础或初级 AI 产品经理
+  - 需要评审内容生产助手的产品、内容与营销人员
+businessContext: 这是一个教学案例。某内容团队需要持续产出博客、营销文案和社交媒体内容，希望用 AI 生成初稿，但担心事实错误、品牌语气不一致和版权风险。
+currentProcess:
+  - 选题并确定内容目标
+  - 收集素材与事实来源
+  - 撰写初稿
+  - 事实核验与品牌审核
+  - 编辑确认并发布
+  - 记录内容表现
+objective: 在事实可核验、版权可规避、人工可审核的前提下，帮助内容团队生成初稿并保持品牌一致性；首版不自动发布。
+baseline:
+  - id: cp-baseline-process-assumption
+    kind: assumption
+    evidence: E1
+    statement: 当前选题、撰写、核验、审核和发布流程只用于建立教学起点，不代表真实内容团队采用同样工具或存在效率问题。
+  - id: cp-baseline-values-unknown
+    kind: unknown
+    evidence: E0
+    statement: 实际生产时间、事实错误率、品牌一致性、原创性与单位成本均需要真实组织数据验证。
+constraints:
+  - id: cp-constraint-no-fabricated-thresholds
+    kind: fact
+    evidence: E2
+    statement: AI-Native 不为教学完整性虚构事实准确率、品牌一致性、原创性、成本、延迟或上线阈值。
+  - id: cp-constraint-human-publish-authority
+    kind: recommendation
+    evidence: E1
+    statement: 系统只辅助内部内容团队，不自动发布，也不替代编辑的事实核验与品牌审核责任。
+  - id: cp-constraint-untrusted-input
+    kind: recommendation
+    evidence: E3
+    statement: 外部素材与来源内容作为不可信数据处理，不能取得系统指令、工具或发布权限。
+status: draft
+updatedAt: 2026-08-13
+
+gates:
+  - id: decide-ai-boundary
+    order: 1
+    stageId: model-boundaries
+    status: draft
+    title: 判断 AI 边界
+    question: 内容生产需要生成式初稿，还是模板与人工改写已经足够？
+    decision: 用模板与人工核验承担事实和品牌责任，只在初稿与改写步骤引入受限生成，发布始终由编辑确认。
+    facts:
+      - id: cp-g1-llm-unreliable
+        kind: fact
+        evidence: E3
+        statement: 生成式模型可能编造事实、引用或数据，事实不准确需按情境与生命周期治理。
+      - id: cp-g1-deterministic-controls
+        kind: recommendation
+        evidence: E1
+        statement: 选题、来源清单、品牌规范、事实核验与发布权限应由确定性系统承担。
+    unknowns:
+      - id: cp-g1-generation-need
+        kind: unknown
+        evidence: E0
+        statement: 真实内容中多少可由模板和人工改写解决、多少需要生成式初稿，尚未通过样本验证。
+    options:
+      - id: governed-draft-copilot
+        label: 治理优先的初稿辅助
+        assessment: recommended
+        rationale: 先固定来源、品牌和发布边界，再把生成限制为可核验初稿，能分开控制风险和价值。
+        conditions:
+          - 事实来源与品牌规范可维护
+          - 初稿关键事实能回到来源
+        risks:
+          - 来源与品牌治理增加前期投入
+        consequences:
+          - 事实错误可发现、发布责任不转移
+        artifactDelta: 在 AI 适用性卡中固定来源治理、初稿生成、事实核验与发布授权的责任边界。
+      - id: template-and-rewrite-only
+        label: 模板与改写优先
+        assessment: conditional
+        rationale: 当内容类型稳定且事实可模板化时，模板和改写更可预测，也可能已满足目标。
+        conditions:
+          - 内容结构可模板化
+          - 事实可确定性维护
+        risks:
+          - 跨主题归纳和风格适配可能降低覆盖
+        consequences:
+          - 系统简单且事实风险低
+          - 复杂内容继续由编辑手工处理
+        artifactDelta: 在 AI 适用性卡中记录仅模板方案的覆盖范围和升级到生成的触发条件。
+      - id: auto-publish-agent
+        label: 全自主自动发布
+        assessment: risky
+        rationale: 自动发布会把事实错误、品牌漂移和版权风险直接对外，模型无法承担编辑责任。
+        conditions:
+          - 当前没有支持全自主自动发布的条件
+        risks:
+          - 事实错误与版权风险直接对外
+        consequences:
+          - 当前方案不进入生产范围
+        artifactDelta: 在 AI 适用性卡中记录否决自动发布的理由。
+    artifactIds:
+      - cp-ai-applicability
+    metricIds:
+      - cp-false-claim-count
+      - cp-publish-completion
+      - cp-unit-published-cost
+    failureModeIds:
+      - cp-fm-fabricated-fact
+      - cp-fm-auto-publish-breach
+    referenceIds:
+      - source-nist-ai-rmf
+      - source-google-pair
+      - term-ai-product
+      - term-problem-solution-fit
+
+  - id: establish-value-and-data
+    order: 2
+    stageId: opportunity-judgment
+    status: draft
+    title: 建立价值与数据条件
+    question: 怎样证明解决的是「生产瓶颈」，而不是「写得更快」？
+    decision: 先记录生产时间、事实错误和返工基线，再定义有来源且经编辑确认的发布结果。
+    facts:
+      - id: cp-g2-value-not-speed
+        kind: recommendation
+        evidence: E1
+        statement: 快不是价值定义，事实准确和发布质量才是；生成速度不能替代内容信任。
+      - id: cp-g2-data-readiness
+        kind: recommendation
+        evidence: E3
+        statement: 数据准备度由来源质量、品牌规范和权限决定，不由素材数量决定。
+    unknowns:
+      - id: cp-g2-baseline-needed
+        kind: unknown
+        evidence: E0
+        statement: 真实生产时间、事实错误率、返工比例、编辑容量与内容类型分布尚未验证。
+    options:
+      - id: measure-before-build
+        label: 先测量再建设
+        assessment: recommended
+        rationale: 先建立生产时间和事实错误基线，再定义有来源的发布结果，避免把速度当价值。
+        conditions:
+          - 能定义并统计生产时间与事实错误
+          - 来源与品牌规范有质量边界
+        risks:
+          - 基线收集需要内容团队配合
+        consequences:
+          - 价值目标可验证而非凭感觉
+        artifactDelta: 在机会评估表中记录目标角色、当前任务、来源条件、真实基线、错误成本与升级链路。
+      - id: demo-driven-build
+        label: 以演示效果立项
+        assessment: risky
+        rationale: 演示初稿漂亮不代表事实准确或发布质量，缺少基线会导致价值无法验证。
+        conditions:
+          - 当前没有支持仅凭演示立项的条件
+        risks:
+          - 把「写得快」误当「写得好」
+        consequences:
+          - 当前方案不进入生产范围
+        artifactDelta: 在机会评估表中记录否决演示驱动的理由。
+    artifactIds:
+      - cp-opportunity-assessment
+    metricIds:
+      - cp-production-time
+      - cp-factual-accuracy
+    failureModeIds:
+      - cp-fm-fabricated-fact
+    referenceIds:
+      - term-problem-solution-fit
+      - term-north-star-metric
+
+  - id: select-workflow
+    order: 3
+    stageId: solution-choice
+    status: draft
+    title: 拆解选题、初稿、审核与发布工作流
+    question: 如何区分选题、生成、事实核验、品牌审核与发布？
+    decision: 把选题、素材、初稿、事实核验、品牌审核与发布拆成可观察步骤，发布责任始终在编辑。
+    facts:
+      - id: cp-g3-layer-separation
+        kind: recommendation
+        evidence: E1
+        statement: 选题、生成、核验、审核与发布应分层，发布动作由确定性流程和编辑共同作出。
+      - id: cp-g3-untrusted-input
+        kind: fact
+        evidence: E3
+        statement: 外部素材与来源内容作为不可信数据处理，不能取得系统指令、工具或发布权限。
+    unknowns:
+      - id: cp-g3-coverage
+        kind: unknown
+        evidence: E0
+        statement: 不同内容类型下生成与人工核验的合理分工尚未通过样本验证。
+    options:
+      - id: layered-production-pipeline
+        label: 分层生产流水线
+        assessment: recommended
+        rationale: 把选题、初稿、核验、审核与发布分开，能单独控制每层的事实、品牌和授权风险。
+        conditions:
+          - 各步骤输入输出与终止条件可定义
+          - 发布由确定性流程和编辑执行
+        risks:
+          - 分层增加系统复杂度
+        consequences:
+          - 每层可独立评测与授权
+        artifactDelta: 在方案选择表中固定选题、初稿、核验、审核与发布步骤及各自输入输出。
+      - id: single-prompt-production
+        label: 单次提示包办生产
+        assessment: risky
+        rationale: 一次提示同时选题、撰写和判断，会让事实错误与发布责任无法分层控制。
+        conditions:
+          - 当前没有支持单次提示包办的条件
+        risks:
+          - 事实错误与品牌漂移混在一起
+        consequences:
+          - 当前方案不进入生产范围
+        artifactDelta: 在方案选择表中记录否决单次提示包办的理由。
+    artifactIds:
+      - cp-workflow-selection
+    metricIds:
+      - cp-citation-support-rate
+      - cp-brand-consistency
+    failureModeIds:
+      - cp-fm-unsupported-claim
+      - cp-fm-prompt-injection
+    referenceIds:
+      - term-prompt-injection
+      - term-human-ai-collaboration
+
+  - id: design-control-and-recovery
+    order: 4
+    stageId: product-experience
+    status: draft
+    title: 设计编辑控制与失败恢复
+    question: 编辑怎样看见来源、识别事实错误、修改并最终发布？
+    decision: 展示事实来源与品牌规范、允许修改与驳回，发布前强制编辑确认，敏感内容由主管复核。
+    facts:
+      - id: cp-g4-visible-evidence
+        kind: recommendation
+        evidence: E1
+        statement: 初稿应展示所依据的来源与品牌规范，让变化可见、可比较、可拒绝。
+      - id: cp-g4-escalation
+        kind: recommendation
+        evidence: E3
+        statement: 敏感或高风险内容需要明确角色、信息与权限的升级路径，不能只靠形式上的确认。
+    unknowns:
+      - id: cp-g4-review-burden
+        kind: unknown
+        evidence: E0
+        statement: 编辑核对事实、修改与驳回的实际时间与疲劳影响尚未验证。
+    options:
+      - id: visible-editable-confirm
+        label: 可见、可改、可确认
+        assessment: recommended
+        rationale: 展示来源、允许修改并强制确认，让编辑在发布前真正理解并负责内容。
+        conditions:
+          - 初稿可回看来源并编辑
+          - 发布动作由编辑显式确认
+        risks:
+          - 复核会增加编辑时间
+        consequences:
+          - 减少事实错误与品牌漂移
+        artifactDelta: 在权限与恢复图中标明证据检查、修改、驳回、转交与最终发布的人员权限。
+      - id: auto-publish-with-undo
+        label: 自动发布加撤销
+        assessment: conditional
+        rationale: 自动发布能减少操作，但只有错误可发现且能及时撤销时才可考虑，首版不采用。
+        conditions:
+          - 有实时发布日志与同范围撤销
+          - 高风险内容不进入自动发布
+        risks:
+          - 撤销无法完全挽回已发出的错误内容
+        consequences:
+          - 仅作为后续阶段的可评估选项
+        artifactDelta: 在权限与恢复图中记录自动发布与撤销作为后续阶段的评估条件。
+    artifactIds:
+      - cp-responsibility-recovery
+    metricIds:
+      - cp-editor-review-time
+      - cp-escalation-age
+    failureModeIds:
+      - cp-fm-review-overload
+      - cp-fm-brand-tone-drift
+    referenceIds:
+      - term-human-escalation
+      - term-user-control
+
+  - id: define-evaluation-and-cost
+    order: 5
+    stageId: quality-constraints
+    status: draft
+    title: 定义评测、成本与上线护栏
+    question: 怎样评测事实性、品牌一致性、原创性与发布质量？
+    decision: 用版本化固定集和风险切片分步评测，用「有依据且经编辑确认的发布」计算单位成功成本。
+    facts:
+      - id: cp-g5-sliced-eval
+        kind: recommendation
+        evidence: E3
+        statement: 评测分数只对既定样本、标准和运行配置有效，风险切片比总体准确率更能暴露事实错误。
+      - id: cp-g5-unit-cost
+        kind: recommendation
+        evidence: E1
+        statement: 成本必须按「成功完成一次有依据发布」核算，不能把单次模型调用价格当总成本。
+    unknowns:
+      - id: cp-g5-eval-baseline
+        kind: unknown
+        evidence: E0
+        statement: 真实事实准确、品牌一致、原创性与发布质量的基线尚未建立。
+    options:
+      - id: sliced-eval-and-unit-cost
+        label: 分片评测与单位成本
+        assessment: recommended
+        rationale: 分步骤评测事实、品牌、原创与发布，并用有依据发布结果算成本，能定位问题并控成本。
+        conditions:
+          - 有版本化固定集与风险切片
+          - 能追踪「经编辑确认」作为成功口径
+        risks:
+          - 评测集建设需要投入
+        consequences:
+          - 质量可比较、成本可核算
+        artifactDelta: 在评测与护栏表中组合固定集、风险切片、分步质量、单位成本与回滚条件。
+      - id: overall-quality-only
+        label: 只看总体质量
+        assessment: risky
+        rationale: 总体质量会掩盖高风险内容的事实错误与版权风险。
+        conditions:
+          - 当前没有支持只看总体质量的条件
+        risks:
+          - 高风险事实错误被平均掩盖
+        consequences:
+          - 当前方案不进入生产范围
+        artifactDelta: 在评测与护栏表中记录否决只看总体质量的理由。
+    artifactIds:
+      - cp-evaluation-guardrails
+    metricIds:
+      - cp-originality-score
+      - cp-version-consistency
+      - cp-draft-latency
+    failureModeIds:
+      - cp-fm-version-regression
+      - cp-fm-model-timeout
+    referenceIds:
+      - term-offline-evaluation
+      - term-observability
+
+  - id: govern-launch-and-iteration
+    order: 6
+    stageId: capstone
+    status: draft
+    title: 治理发布与持续更新
+    question: 什么时候能扩大自动化，质量回退时如何停止？
+    decision: 按影子初稿、辅助初稿、受限自动初稿逐级推进，自动发布不进入首版。
+    facts:
+      - id: cp-g6-staged-release
+        kind: recommendation
+        evidence: E3
+        statement: 上线应按影响范围逐级推进，每级需要独立通过条件和回滚路径。
+      - id: cp-g6-guardrail
+        kind: fact
+        evidence: E2
+        statement: 任何未经审核自动发布或事实错误必须阻止晋级并触发事件响应，作为明确发布护栏。
+    unknowns:
+      - id: cp-g6-adoption-evidence
+        kind: unknown
+        evidence: E0
+        statement: 各阶段真实生产时间改善、事实错误与编辑采纳尚未验证。
+    options:
+      - id: staged-shadow-to-draft
+        label: 影子到初稿逐级推进
+        assessment: recommended
+        rationale: 先影子运行、再辅助初稿、后受限自动初稿，每级用独立通过条件换取更高自动化。
+        conditions:
+          - 每级有通过条件与回滚路径
+          - 自动发布不进入首版
+        risks:
+          - 逐级推进需要更长时间
+        consequences:
+          - 风险与自动化程度同步增长
+        artifactDelta: 在完整评审档案中汇总六关决策、分级发布权限、监控、事件响应与回滚证据。
+      - id: direct-full-automation
+        label: 直接全量自动化
+        assessment: risky
+        rationale: 未经验证直接全量自动化，会把事实错误与版权风险一次性放大。
+        conditions:
+          - 当前没有支持直接全量自动化的条件
+        risks:
+          - 事实错误与版权风险直接对外
+        consequences:
+          - 当前方案不进入生产范围
+        artifactDelta: 在完整评审档案中记录否决直接全量自动化的理由。
+    artifactIds:
+      - cp-complete-review
+    metricIds:
+      - cp-false-claim-count
+      - cp-unit-published-cost
+    failureModeIds:
+      - cp-fm-auto-publish-breach
+      - cp-fm-version-regression
+    referenceIds:
+      - term-canary-release
+      - term-rollback
+
+artifacts:
+  - id: cp-ai-applicability
+    type: ai-applicability
+    title: AI 适用性与不可自动化边界卡
+    summary: 区分来源治理、初稿生成、事实核验、品牌审核与发布授权，记录不使用生成和禁止自动化的范围。
+  - id: cp-opportunity-assessment
+    type: opportunity-assessment
+    title: 内容生产机会评估表
+    summary: 记录目标角色、当前任务、来源条件、真实基线、错误成本与升级链路。
+  - id: cp-workflow-selection
+    type: workflow-selection
+    title: 生产工作流与方案选择表
+    summary: 固定选题、初稿、核验、审核与发布步骤及各自输入输出与终止条件。
+  - id: cp-responsibility-recovery
+    type: responsibility-recovery
+    title: 编辑权限、升级与恢复图
+    summary: 标明证据检查、修改、驳回、转交、发布确认与最终发布的人员和系统权限。
+  - id: cp-evaluation-guardrails
+    type: evaluation-guardrails
+    title: 生产评测、成本与上线护栏表
+    summary: 组合固定集、风险切片、分步质量、单位成功成本与回滚条件。
+  - id: cp-complete-review
+    type: complete-review
+    title: 完整内容生产产品评审档案
+    summary: 汇总六关决策、分级发布权限、监控、事件响应、晋级和回滚证据。
+
+metrics:
+  - id: cp-publish-completion
+    category: business
+    label: 有依据发布完成率
+    definition: 有来源且经编辑确认完成的内容，占进入目标范围选题的比例。
+    desiredDirection: increase
+    thresholdStatus: baseline-needed
+  - id: cp-production-time
+    category: business
+    label: 内容生产时间
+    definition: 从选题到经编辑确认发布所需的端到端时间。
+    desiredDirection: decrease
+    thresholdStatus: baseline-needed
+  - id: cp-factual-accuracy
+    category: quality
+    label: 事实准确率
+    definition: 发布内容中关键事实经核验准确的比例。
+    desiredDirection: increase
+    thresholdStatus: baseline-needed
+  - id: cp-brand-consistency
+    category: quality
+    label: 品牌一致性
+    definition: 发布内容符合品牌语气、术语与规范的比例。
+    desiredDirection: increase
+    thresholdStatus: baseline-needed
+  - id: cp-originality-score
+    category: quality
+    label: 原创性
+    definition: 内容与已有作品及来源的重合程度，用于识别抄袭与过度借鉴风险。
+    desiredDirection: increase
+    thresholdStatus: baseline-needed
+  - id: cp-citation-support-rate
+    category: quality
+    label: 引用支持率
+    definition: 内容关键事实中，其来源真实存在且原文确实支持该事实的比例。
+    desiredDirection: increase
+    thresholdStatus: baseline-needed
+  - id: cp-false-claim-count
+    category: operation
+    label: 事实错误数
+    definition: 发布内容中经确认的事实错误或编造引用的事件数量。
+    desiredDirection: guardrail
+    thresholdStatus: defined
+    threshold: 任何未经审核自动发布或事实错误均阻止晋级并触发事件响应
+  - id: cp-draft-latency
+    category: operation
+    label: P95 初稿延迟
+    definition: 从提交选题到返回可供编辑复核初稿的第九十五百分位端到端时间。
+    desiredDirection: decrease
+    thresholdStatus: baseline-needed
+  - id: cp-version-consistency
+    category: operation
+    label: 来源与品牌版本一致性
+    definition: 生成所用来源与品牌规范版本与当前有效版本一致的比例。
+    desiredDirection: increase
+    thresholdStatus: baseline-needed
+  - id: cp-editor-review-time
+    category: human
+    label: 编辑复核时间
+    definition: 编辑核对事实、修改、驳回或确认一次发布所投入的人工时间。
+    desiredDirection: decrease
+    thresholdStatus: baseline-needed
+  - id: cp-escalation-age
+    category: human
+    label: 高风险升级队列时长
+    definition: 高风险内容从进入人工升级队列到由主管接手的等待时间。
+    desiredDirection: decrease
+    thresholdStatus: baseline-needed
+  - id: cp-unit-published-cost
+    category: cost
+    label: 单位已确认发布成本
+    definition: 来源治理、生成、失败运行与人工复核总成本除以有依据且经编辑确认的发布数。
+    desiredDirection: decrease
+    thresholdStatus: baseline-needed
+
+failureModes:
+  - id: cp-fm-fabricated-fact
+    title: 编造事实
+    signal: 发布内容出现无法核验或错误的事实、数据或引用
+    impact: 损害内容可信度与品牌信任
+    recovery: 撤回内容、标记事实错误并回放固定集定位原因
+    owner: 编辑和评测负责人
+  - id: cp-fm-unsupported-claim
+    title: 引用不支持主张
+    signal: 引用可打开但原文与内容结论不一致
+    impact: 编辑可能因信任引用而误发错误内容
+    recovery: 阻止发布、删除或重写主张并加入固定集
+    owner: 编辑和评测负责人
+  - id: cp-fm-copyright-infringement
+    title: 版权侵权
+    signal: 内容与已有作品高度重合或直接复制
+    impact: 带来版权与法律风险
+    recovery: 阻止发布、删除重合内容并启动合规审查
+    owner: 法务和编辑
+  - id: cp-fm-brand-tone-drift
+    title: 品牌语气漂移
+    signal: 内容语气、术语与品牌规范不符
+    impact: 品牌形象不一致并降低辨识度
+    recovery: 驳回内容、补充品牌规范并加入固定回归集
+    owner: 品牌负责人
+  - id: cp-fm-stale-information
+    title: 过时信息
+    signal: 内容引用已失效数据、价格或政策
+    impact: 发布过时事实误导用户
+    recovery: 停止发布、更新来源并回放受影响内容
+    owner: 编辑和工程
+  - id: cp-fm-prompt-injection
+    title: 来源内容间接注入
+    signal: 外部素材试图改变指令或请求发布动作
+    impact: 模型行为可能被来源内容操纵
+    recovery: 将来源内容按不可信数据隔离并阻止动作
+    owner: 安全和工程
+  - id: cp-fm-auto-publish-breach
+    title: 未经审核自动发布
+    signal: 出现编辑未确认即发布的事件
+    impact: 绕过人工审核造成事实错误对外
+    recovery: 停用自动发布、回滚权限并启动事件响应
+    owner: 编辑和工程
+  - id: cp-fm-sensitive-leak
+    title: 敏感信息泄露
+    signal: 内容暴露未公开数据或内部信息
+    impact: 造成隐私与合规风险
+    recovery: 阻断发布、保全日志并启动安全事件响应
+    owner: 安全和工程
+  - id: cp-fm-review-overload
+    title: 编辑复核队列过载
+    signal: 复核时长、积压或未处理高风险内容上升
+    impact: 形式上的人工审核无法提供真实保护
+    recovery: 收紧自动化范围、按风险排序并调整容量
+    owner: 内容主管
+  - id: cp-fm-model-timeout
+    title: 模型服务超时
+    signal: 初稿延迟、失败率或重试量升高
+    impact: 编辑等待增加且重复调用推高成本
+    recovery: 停止重试、降级到模板与人工撰写
+    owner: 工程
+  - id: cp-fm-version-regression
+    title: 版本升级质量回退
+    signal: 固定集或风险切片指标相对稳定版本下降
+    impact: 事实错误或品牌漂移静默恶化
+    recovery: 冻结候选版本并回滚到上一稳定组合
+    owner: 产品、工程和评测负责人
+  - id: cp-fm-duplicate-content
+    title: 重复内容
+    signal: 多篇内容高度相似或互相抄袭
+    impact: 降低内容价值并带来版权风险
+    recovery: 停止发布、检查原创性规则并回放固定样本
+    owner: 编辑
+
+references:
+  - id: route-ai-pm-career
+    kind: route
+    label: 转岗 AI 产品经理
+    targetId: ai-pm-career
+    supports: 提供从 AI 判断到产品基本功与职业成长的顺序阅读支持。
+  - id: term-ai-product
+    kind: term
+    label: AI 产品
+    targetId: ai-product
+    supports: 把模型能力放回用户任务、控制、失败和运营系统中评审。
+  - id: term-problem-solution-fit
+    kind: term
+    label: 问题方案匹配
+    targetId: problem-solution-fit
+    supports: 防止用流畅输出替代真实问题、任务和价值证据。
+  - id: term-human-ai-collaboration
+    kind: term
+    label: 人机协作
+    targetId: human-ai-collaboration
+    supports: 解释人工判断和系统自动化如何按风险分工。
+  - id: term-human-escalation
+    kind: term
+    label: 人工升级
+    targetId: human-escalation
+    supports: 明确拒答、升级、责任、必要上下文和接管权限。
+  - id: term-user-control
+    kind: term
+    label: 用户控制权
+    targetId: user-control
+    supports: 解释让变化可见、可比较、可拒绝的交互原则。
+  - id: term-prompt-injection
+    kind: term
+    label: 提示注入
+    targetId: prompt-injection
+    supports: 解释外部内容改变模型行为和越权的安全风险。
+  - id: term-faithfulness
+    kind: term
+    label: 忠实度
+    targetId: faithfulness
+    supports: 检查内容是否由给定来源支持而没有添加无依据主张。
+  - id: term-offline-evaluation
+    kind: term
+    label: 离线评测
+    targetId: offline-evaluation
+    supports: 建立版本化固定查询集、保留集和错误切片。
+  - id: term-observability
+    kind: term
+    label: 可观测性
+    targetId: observability
+    supports: 解释通过日志、指标和追踪定位运行与质量问题。
+  - id: term-canary-release
+    kind: term
+    label: 金丝雀发布
+    targetId: canary-release
+    supports: 解释限制影响范围并逐步扩大版本或流量的发布方法。
+  - id: term-rollback
+    kind: term
+    label: 回滚
+    targetId: rollback
+    supports: 解释质量回退或事件发生时恢复上一稳定版本。
+  - id: term-north-star-metric
+    kind: term
+    label: 北极星指标
+    targetId: north-star-metric
+    supports: 解释如何用单一关键指标对齐团队并判断价值是否被持续获取。
+  - id: term-stakeholder-management
+    kind: term
+    label: 干系人管理
+    targetId: stakeholder-management
+    supports: 解释识别编辑、品牌与法务等干系人并管理其预期。
+  - id: source-nist-ai-rmf
+    kind: source
+    label: NIST AI Risk Management Framework
+    url: https://www.nist.gov/itl/ai-risk-management-framework
+    publisher: NIST
+    accessedAt: 2026-08-13
+    stability: stable
+    supports: 支持按风险分级授权、人工监督、事件响应与持续治理的通用原则。
+  - id: source-google-pair
+    kind: source
+    label: People + AI Guidebook
+    url: https://pair.withgoogle.com/
+    publisher: Google PAIR
+    accessedAt: 2026-08-13
+    stability: stable
+    supports: 支持用户信任、控制与「面向行动的不确定性」的通用设计原则。
+  - id: source-owasp-prompt-injection
+    kind: source
+    label: OWASP LLM01 2025 Prompt Injection
+    url: https://genai.owasp.org/llmrisk/llm01-prompt-injection/
+    publisher: OWASP GenAI Security Project
+    accessedAt: 2026-08-13
+    stability: evolving
+    supports: 支持来源内容可能成为间接注入来源、需按不可信数据隔离。

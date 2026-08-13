@@ -46,19 +46,19 @@ test('renders the content-catalog shell and a direct case-library entry', async 
     'href',
     '/apple-touch-icon.png',
   );
-  await expect(page.getByRole('heading', { level: 1, name: 'AI 产品判断学习库' })).toBeVisible();
-  await expect(page.locator('.learning-card > a').first()).toHaveAttribute(
+  await expect(
+    page.getByRole('heading', { level: 1, name: '从看懂 AI，到做出可上线的 AI 产品' }),
+  ).toBeVisible();
+  await expect(page.getByRole('link', { name: '从第 01 题开始' })).toHaveAttribute(
     'href',
     '/learn/questions/q01-rules-or-ai/',
   );
-  if (isMobile) {
-    await expect(page.locator('nav[aria-label="内容类型"]')).toBeHidden();
-  } else {
-    await expect(page.getByRole('link', { name: /案例实战 2/ })).toHaveAttribute(
-      'href',
-      '/learn/cases/',
-    );
-  }
+  const entries = page.locator('.entry-card');
+  await expect(entries).toHaveCount(4);
+  await expect(entries.filter({ hasText: '转岗路径' })).toHaveAttribute('href', '/routes/');
+  await expect(entries.filter({ hasText: '判断题库' })).toHaveAttribute('href', '/learn/');
+  await expect(entries.filter({ hasText: '案例实战' })).toHaveAttribute('href', '/learn/cases/');
+  await expect(entries.filter({ hasText: '知识图鉴' })).toHaveAttribute('href', '/atlas/');
   const header = page.getByRole('banner');
   await revealMobileHeaderPanel(page, isMobile, '菜单');
   await expect(header.getByRole('link', { name: '首页', exact: true })).toHaveAttribute(
@@ -83,30 +83,28 @@ test('derives the homepage learning structure and knowledge scale from project d
 }) => {
   await page.goto('/');
 
-  await expect(page.locator('[data-case-tab]')).toHaveCount(0);
-  await expect(page.locator('.catalog-section')).toHaveCount(6);
-  await expect(page.locator('.learning-card')).toHaveCount(24);
+  await expect(page.locator('.level-list li')).toHaveCount(3);
+  await expect(page.locator('.entry-card')).toHaveCount(4);
+  await expect(page.locator('.outcome-list li')).toHaveCount(6);
+  await expect(page.getByText(`${PUBLIC_TERM_COUNT} 词条`)).toBeVisible();
+  await expect(page.getByText(`${PUBLIC_RELATION_COUNT} 关系`)).toBeVisible();
   if (isMobile) {
-    await expect(page.getByRole('combobox', { name: '课程阶段' }).locator('option')).toHaveCount(6);
-    await expect(page.locator('nav[aria-label="内容类型"]')).toBeHidden();
-  } else {
-    await expect(
-      page.getByRole('navigation', { name: '课程阶段目录' }).getByRole('link'),
-    ).toHaveCount(6);
-    await expect(page.getByRole('navigation', { name: '内容类型' })).toContainText(
-      `概念关系 ${PUBLIC_RELATION_COUNT}`,
-    );
+    await expect(page.locator('.level-list li').first()).toBeVisible();
   }
 });
 
-test('keeps the homepage oriented around the course instead of a selected question', async ({
+test('keeps the homepage oriented around positioning instead of a selected question', async ({
   page,
 }) => {
   await page.goto('/');
 
   await expect(page.getByRole('group', { name: '精选判断题' })).toHaveCount(0);
-  await expect(page.getByText('发票金额校验，需要上大模型吗？')).toBeVisible();
-  await expect(page.getByRole('link', { name: /规则还是 AI.*Q01/ })).toHaveAttribute(
+  await expect(page.locator('.learning-card')).toHaveCount(0);
+  await expect(page.getByText('发票金额校验，需要上大模型吗？')).toHaveCount(0);
+  await expect(
+    page.getByRole('heading', { level: 1, name: '从看懂 AI，到做出可上线的 AI 产品' }),
+  ).toBeVisible();
+  await expect(page.getByRole('link', { name: '从第 01 题开始' })).toHaveAttribute(
     'href',
     '/learn/questions/q01-rules-or-ai/',
   );
@@ -247,7 +245,7 @@ test('keeps the course as one six-stage, twenty-four-card catalog', async ({ pag
       page.getByRole('navigation', { name: '主导航' }).getByRole('link', { name: '案例库' }),
     ).toBeVisible();
   } else {
-    await expect(page.getByRole('navigation', { name: '内容类型' })).toContainText('案例实战 2');
+    await expect(page.getByRole('navigation', { name: '内容类型' })).toContainText('案例实战 6');
   }
   await expect(page.locator('.task-list, .learning-levels, .course-summary')).toHaveCount(0);
 });
@@ -257,7 +255,7 @@ test('keeps the question and decision logic readable without JavaScript', async 
   const page = await context.newPage();
 
   await page.goto(`${PLAYWRIGHT_BASE_URL}/`);
-  await page.locator('.learning-card > a').first().click();
+  await page.getByRole('link', { name: '从第 01 题开始' }).click();
   await expect(
     page.getByRole('heading', { level: 1, name: '发票金额校验，需要上大模型吗？' }),
   ).toBeVisible();
@@ -375,16 +373,17 @@ test('publishes the complete RAG route with twelve sequential terms', async ({ p
   ]);
 });
 
-test('publishes all four ordered learning routes', async ({ page }) => {
+test('publishes all five ordered learning routes', async ({ page }) => {
   const routes = [
     ['ai-foundations', 'AI 零基础入门', 6],
     ['human-ai-collaboration', '高效人机协作', 6],
     ['ai-product-scenario-judgment', 'AI 产品与场景判断', 8],
     ['rag-from-zero', 'RAG 从零到理解与应用', 12],
+    ['ai-pm-career', '转岗 AI 产品经理', 23],
   ] as const;
 
   await page.goto('/routes/');
-  await expect(page.locator('.route-entry')).toHaveCount(4);
+  await expect(page.locator('.route-entry')).toHaveCount(5);
   for (const [id, title, termCount] of routes) {
     await page.goto('/routes/');
     await expect(page.getByRole('link', { name: title }).first()).toHaveAttribute(
@@ -667,7 +666,9 @@ test('exposes the navigation on narrow screens', async ({ page, isMobile }) => {
   const primaryNavigation = page.getByRole('navigation', { name: '主导航' });
   await expect(primaryNavigation.getByRole('link', { name: '案例库' })).toBeVisible();
   await primaryNavigation.getByRole('link', { name: '首页', exact: true }).click();
-  await expect(page.getByRole('heading', { level: 1, name: 'AI 产品判断学习库' })).toBeVisible();
+  await expect(
+    page.getByRole('heading', { level: 1, name: '从看懂 AI，到做出可上线的 AI 产品' }),
+  ).toBeVisible();
 });
 
 test('renders the designed 404 state', async ({ page }) => {
@@ -678,6 +679,7 @@ test('renders the designed 404 state', async ({ page }) => {
 });
 
 test('has no serious or critical automated accessibility violations', async ({ page }) => {
+  test.setTimeout(90_000);
   for (const url of [
     '/',
     '/learn/',

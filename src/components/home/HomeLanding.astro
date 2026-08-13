@@ -1,0 +1,498 @@
+---
+import { LEARNING_MODULES, LEARNING_QUESTIONS } from '@/data/learning';
+import { loadCaseStudies } from '@/lib/cases/io';
+import { loadProjectContent } from '@/lib/content/io';
+import { deriveSiteMetrics } from '@/lib/site/metrics';
+
+const [project, cases] = await Promise.all([loadProjectContent(), loadCaseStudies()]);
+const metrics = deriveSiteMetrics(project);
+const orderedQuestionIds = LEARNING_QUESTIONS.map((question) => question.id);
+
+const entryPoints = [
+  {
+    href: '/routes/',
+    kicker: '转岗路径',
+    title: '按职业路径开始',
+    copy: '把「会判断」到「能落地」串成一条顺序，知道先学什么、再学什么。',
+    count: `${metrics.publishedRouteCount} 条路线`,
+  },
+  {
+    href: '/learn/',
+    kicker: '判断题库',
+    title: '做 24 道判断题',
+    copy: '六阶段、24 个真实场景，每次选择都有分档反馈与判断方法。',
+    count: `${LEARNING_QUESTIONS.length} 道题`,
+  },
+  {
+    href: '/learn/cases/',
+    kicker: '案例实战',
+    title: '跟完整项目',
+    copy: '同一个业务连续六次评审，材料逐步形成，最终汇成可评审档案。',
+    count: `${cases.length} 个案例`,
+  },
+  {
+    href: '/atlas/',
+    kicker: '知识图鉴',
+    title: '随时查概念',
+    copy: `${metrics.domainCount} 个领域、按关系连接的知识词条，学习中随时按需深挖。`,
+    count: `${metrics.termCount} 个词条`,
+  },
+] as const;
+---
+
+<main
+  id="main-content"
+  class="home-landing"
+  data-question-order={JSON.stringify(orderedQuestionIds)}
+>
+  <section class="hero" aria-labelledby="hero-heading">
+    <div class="hero-inner">
+      <p class="eyebrow">落地型 AI 产品经理学习系统</p>
+      <h1 id="hero-heading">从看懂 AI，到做出可上线的 AI 产品</h1>
+      <p class="hero-copy">
+        面向想转岗 AI 产品经理的你。不是背名词，而是学会判断「该不该用
+        AI、选什么方案、怎么落地、何时上线」，并把它做成可评审的产品方案。
+      </p>
+      <div class="hero-actions">
+        <a class="hero-primary" href="/learn/questions/q01-rules-or-ai/" data-hero-start
+          >从第 01 题开始</a
+        >
+        <a class="hero-secondary" href="#learning-structure">先看学习结构</a>
+      </div>
+      <p class="hero-note">静态学习库 · 不登录 · 不保存个人作业 · 内容持续校订</p>
+    </div>
+  </section>
+
+  <section id="learning-structure" class="structure" aria-labelledby="structure-heading">
+    <header class="section-head">
+      <p class="eyebrow">三层学习中心</p>
+      <h2 id="structure-heading">一条从「会判断」到「能落地」的路径</h2>
+      <p>
+        先建立判断，再用连续案例练习，最后在完整项目里交付；知识图鉴、阅读路线、概念图谱和搜索，是你随时可查的支撑层。
+      </p>
+    </header>
+    <ol class="level-list">
+      <li>
+        <span class="level-mark">L1</span>
+        <div>
+          <h3>基础判断</h3>
+          <p>六阶段、24 道判断题，建立「是否需要 AI、选什么方案、如何保证质量」的判断方法。</p>
+          <a href="/learn/">进入 24 题 <i aria-hidden="true">→</i></a>
+        </div>
+      </li>
+      <li>
+        <span class="level-mark">L2</span>
+        <div>
+          <h3>连续案例</h3>
+          <p>同一个业务对象，连续做六次评审，把判断放进真实情境里反复练习。</p>
+          <a href="/learn/cases/">进入案例库 <i aria-hidden="true">→</i></a>
+        </div>
+      </li>
+      <li>
+        <span class="level-mark">L3</span>
+        <div>
+          <h3>完整项目</h3>
+          <p>把机会、方案、体验、质量与运营串成一份可评审的 AI 产品档案。</p>
+          <a href="/learn/cases/user-feedback-analysis/">看黄金项目 <i aria-hidden="true">→</i></a>
+        </div>
+      </li>
+    </ol>
+    <p class="structure-support">
+      支撑层：<a href="/atlas/">知识图鉴</a>
+      {metrics.termCount} 词条 ·
+      <a href="/routes/">阅读路线</a>
+      {metrics.publishedRouteCount} 条 ·
+      <a href="/graph/">概念图谱</a>
+      {metrics.relationCount} 关系 ·
+      <a href="/search/">搜索</a>
+    </p>
+  </section>
+
+  <section class="entries" aria-labelledby="entries-heading">
+    <header class="section-head">
+      <p class="eyebrow">从哪开始</p>
+      <h2 id="entries-heading">四个入口，按你的目标选一个</h2>
+    </header>
+    <div class="entry-grid">
+      {
+        entryPoints.map((entry) => (
+          <a class="entry-card" href={entry.href}>
+            <span class="entry-kicker">{entry.kicker}</span>
+            <h3>{entry.title}</h3>
+            <p>{entry.copy}</p>
+            <small>{entry.count}</small>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="outcomes" aria-labelledby="outcomes-heading">
+    <header class="section-head">
+      <p class="eyebrow">你将学会什么</p>
+      <h2 id="outcomes-heading">六个阶段，练成一套判断方法</h2>
+    </header>
+    <ol class="outcome-list">
+      {
+        LEARNING_MODULES.map((module) => (
+          <li>
+            <span class="outcome-index">{module.index}</span>
+            <div>
+              <h3>{module.title}</h3>
+              <p class="outcome-decision">{module.decision}</p>
+              <p class="outcome-result">{module.outcome}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+</main>
+
+<style>
+  .home-landing {
+    min-width: 0;
+    padding-bottom: var(--space-7);
+  }
+
+  .hero {
+    border-bottom: 1px solid var(--color-line);
+    background:
+      radial-gradient(60rem 24rem at 82% -6rem, oklch(0.93 0.045 265 / 0.7), transparent 60%),
+      var(--color-black);
+  }
+
+  .hero-inner {
+    width: min(calc(100% - 2.5rem), var(--content-max));
+    margin-inline: auto;
+    padding-block: clamp(3.5rem, 8vw, 6rem);
+  }
+
+  .hero h1 {
+    max-width: 16em;
+    margin: var(--space-2) 0 0;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    line-height: 1.1;
+    letter-spacing: 0;
+    text-wrap: balance;
+  }
+
+  .hero-copy {
+    max-width: 44rem;
+    margin: var(--space-4) 0 0;
+    color: var(--color-muted);
+    font-size: var(--text-lead);
+    line-height: 1.75;
+    text-wrap: pretty;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-top: var(--space-5);
+  }
+
+  .hero-actions a {
+    min-height: 3rem;
+    display: inline-flex;
+    align-items: center;
+    border-radius: var(--radius-md);
+    padding: 0 var(--space-4);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .hero-primary {
+    background: var(--color-prerequisite);
+    color: var(--color-black);
+  }
+
+  .hero-primary:hover {
+    filter: brightness(0.94);
+  }
+
+  .hero-secondary {
+    border: 1px solid var(--color-line);
+    color: var(--color-ink);
+  }
+
+  .hero-secondary:hover {
+    background: var(--color-panel);
+  }
+
+  .hero-note {
+    margin: var(--space-4) 0 0;
+    color: var(--color-quiet);
+    font-size: var(--text-xs);
+  }
+
+  .structure,
+  .entries,
+  .outcomes {
+    width: min(calc(100% - 2.5rem), var(--content-max));
+    margin-inline: auto;
+  }
+
+  .structure {
+    border-bottom: 1px solid var(--color-line);
+    padding-block: var(--space-6);
+  }
+
+  .entries {
+    border-bottom: 1px solid var(--color-line);
+    padding-block: var(--space-6);
+  }
+
+  .outcomes {
+    padding-block: var(--space-6);
+  }
+
+  .section-head {
+    max-width: 50rem;
+    margin-bottom: var(--space-4);
+  }
+
+  .section-head h2 {
+    margin: var(--space-1) 0 0;
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    line-height: 1.2;
+    letter-spacing: 0;
+  }
+
+  .section-head > p:last-child {
+    margin: var(--space-2) 0 0;
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+    line-height: 1.7;
+  }
+
+  .level-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .level-list li {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: var(--space-3);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+    background: var(--color-panel);
+  }
+
+  .level-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: var(--radius-md);
+    background: oklch(0.93 0.045 265);
+    color: oklch(0.42 0.19 270);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    font-weight: 700;
+  }
+
+  .level-list h3 {
+    margin: 0;
+    font-size: 1.15rem;
+    line-height: 1.35;
+    letter-spacing: 0;
+  }
+
+  .level-list p {
+    margin: var(--space-1) 0 var(--space-2);
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+    line-height: 1.7;
+  }
+
+  .level-list a,
+  .structure-support a {
+    color: var(--color-prerequisite);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .level-list a i {
+    font-style: normal;
+  }
+
+  .level-list a:hover,
+  .structure-support a:hover {
+    text-decoration: underline;
+  }
+
+  .structure-support {
+    margin: var(--space-3) 0 0;
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+  }
+
+  .entry-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-3);
+  }
+
+  .entry-card {
+    min-height: 15rem;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+    background: var(--color-panel);
+    text-decoration: none;
+    transition:
+      border-color var(--transition-fast),
+      box-shadow var(--transition-fast);
+  }
+
+  .entry-card:hover {
+    border-color: color-mix(in oklch, var(--color-prerequisite) 48%, var(--color-line));
+    box-shadow: var(--shadow-hover);
+  }
+
+  .entry-kicker {
+    color: var(--color-prerequisite);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .entry-card h3 {
+    margin: var(--space-2) 0 0;
+    font-size: 1.2rem;
+    line-height: 1.35;
+    letter-spacing: 0;
+  }
+
+  .entry-card p {
+    margin: var(--space-1) 0 0;
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+    line-height: 1.7;
+  }
+
+  .entry-card small {
+    margin-top: auto;
+    padding-top: var(--space-2);
+    color: var(--color-quiet);
+    font-size: var(--text-xs);
+  }
+
+  .outcome-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .outcome-list li {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: var(--space-3);
+    border-top: 1px solid var(--color-line);
+    padding-top: var(--space-3);
+  }
+
+  .outcome-index {
+    color: var(--color-prerequisite);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+  }
+
+  .outcome-list h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    line-height: 1.4;
+    letter-spacing: 0;
+  }
+
+  .outcome-decision {
+    margin: var(--space-1) 0 0;
+    color: var(--color-ink);
+    font-size: var(--text-sm);
+    font-weight: 600;
+  }
+
+  .outcome-result {
+    margin: 0.25rem 0 0;
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+  }
+
+  @media (max-width: 960px) {
+    .level-list {
+      grid-template-columns: 1fr;
+    }
+
+    .entry-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 640px) {
+    .hero-inner,
+    .structure,
+    .entries,
+    .outcomes {
+      width: calc(100% - 2rem);
+    }
+
+    .hero-actions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .hero-actions a {
+      justify-content: center;
+    }
+
+    .entry-grid,
+    .outcome-list {
+      grid-template-columns: 1fr;
+    }
+
+    .entry-card {
+      min-height: 0;
+    }
+  }
+</style>
+
+<script>
+  const PROGRESS_KEY = 'ai-native.progress';
+  const landing = document.querySelector<HTMLElement>('[data-question-order]');
+  const startLink = document.querySelector<HTMLAnchorElement>('[data-hero-start]');
+  if (landing && startLink) {
+    let answered: string[] = [];
+    try {
+      const stored = JSON.parse(localStorage.getItem(PROGRESS_KEY) ?? '{"answered":[]}');
+      if (Array.isArray(stored.answered)) answered = stored.answered;
+    } catch {
+      /* localStorage unavailable */
+    }
+    if (answered.length > 0) {
+      const order: string[] = JSON.parse(landing.dataset.questionOrder ?? '[]');
+      const answeredSet = new Set(answered);
+      const nextId = order.find((id) => !answeredSet.has(id));
+      if (nextId) {
+        startLink.href = `/learn/questions/${nextId}/`;
+        startLink.textContent = `继续学习 · 已答 ${answered.length} 题`;
+      }
+    }
+  }
+</script>

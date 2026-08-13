@@ -1,0 +1,665 @@
+id: internal-operations-automation
+title: 内部运营自动化助手
+level: focus
+domain: AI 产品与内部运营
+audience:
+  - 零基础或初级 AI 产品经理
+  - 需要评审内部自动化助手的产品、运营与工程人员
+businessContext: 这是一个教学案例。某运营团队每天重复执行数据录入、工单路由、报表汇总和状态更新等固定流程，希望用 AI 自动化，但担心错误动作被批量放大和越权执行。
+currentProcess:
+  - 识别需要处理的运营任务
+  - 汇总相关数据并录入系统
+  - 按规则路由或更新状态
+  - 人工核对关键动作
+  - 记录处理结果并生成报表
+objective: 在动作可审计、错误可恢复、人工可接管的前提下，帮助运营团队自动化重复任务；首版只做信息处理与草稿，不自动执行有副作用的动作。
+baseline:
+  - id: io-baseline-process-assumption
+    kind: assumption
+    evidence: E1
+    statement: 当前识别、录入、路由、核对和记录流程只用于建立教学起点，不代表真实运营团队采用同样工具或存在效率问题。
+  - id: io-baseline-values-unknown
+    kind: unknown
+    evidence: E0
+    statement: 实际错误率、返工率、恢复时间、人工容量、副作用范围与单位成本均需要真实组织数据验证。
+constraints:
+  - id: io-constraint-no-fabricated-thresholds
+    kind: fact
+    evidence: E2
+    statement: AI-Native 不为教学完整性虚构错误率、恢复时间、成本、延迟或上线阈值。
+  - id: io-constraint-human-action-authority
+    kind: recommendation
+    evidence: E1
+    statement: 首版只做信息处理与草稿，不自动执行有副作用的动作，关键动作由确定性流程和运营确认。
+  - id: io-constraint-untrusted-input
+    kind: recommendation
+    evidence: E3
+    statement: 输入数据作为不可信数据处理，不能取得系统指令、工具或执行权限。
+status: draft
+updatedAt: 2026-08-13
+
+gates:
+  - id: decide-ai-boundary
+    order: 1
+    stageId: model-boundaries
+    status: draft
+    title: 判断 AI 边界
+    question: 内部运营需要 Agent，还是规则与受限步骤已经足够？
+    decision: 用规则承担确定性流程，只在需要语义判断的步骤引入受限模型，执行动作保持人工或确定性系统。
+    facts:
+      - id: io-g1-automation-not-agent
+        kind: recommendation
+        evidence: E1
+        statement: 自动化不等于智能体；只有任务需要动态判断时才增加自主性，稳定流程优先用确定性系统。
+      - id: io-g1-deterministic-controls
+        kind: recommendation
+        evidence: E1
+        statement: 字段映射、路由规则、状态更新与执行权限应由确定性系统承担。
+    unknowns:
+      - id: io-g1-automation-need
+        kind: unknown
+        evidence: E0
+        statement: 真实流程中多少可由规则完成、多少需要语义判断或生成，尚未通过任务样本验证。
+    options:
+      - id: governed-automation-copilot
+        label: 治理优先的自动化辅助
+        assessment: recommended
+        rationale: 先固定规则与执行边界，再把语义判断限制为可复核草稿，能分开控制副作用和价值。
+        conditions:
+          - 流程步骤、字段与权限可维护
+          - 动作可审计并同范围撤销
+        risks:
+          - 流程治理增加前期投入
+        consequences:
+          - 副作用可控制、错误可恢复
+        artifactDelta: 在 AI 适用性卡中固定规则治理、语义草稿、人工决策与执行授权的责任边界。
+      - id: rules-only-automation
+        label: 规则自动化优先
+        assessment: conditional
+        rationale: 当流程稳定且字段结构化时，规则自动化更可预测，也可能已满足运营目标。
+        conditions:
+          - 流程可确定性描述
+          - 无需要语义判断的步骤
+        risks:
+          - 语义变化场景覆盖不足
+        consequences:
+          - 系统简单且副作用可控
+          - 语义任务继续由运营手工处理
+        artifactDelta: 在 AI 适用性卡中记录仅规则方案的覆盖范围和升级到模型的触发条件。
+      - id: autonomous-agent
+        label: 全自主 Agent
+        assessment: risky
+        rationale: 全自主执行会把错误动作批量放大，模型无法承担有副作用动作的责任。
+        conditions:
+          - 当前没有支持全自主 Agent 的条件
+        risks:
+          - 批量错误动作不可控
+        consequences:
+          - 当前方案不进入生产范围
+        artifactDelta: 在 AI 适用性卡中记录否决全自主 Agent 的理由。
+    artifactIds:
+      - io-ai-applicability
+    metricIds:
+      - io-side-effect-count
+      - io-task-automation-rate
+      - io-unit-task-cost
+    failureModeIds:
+      - io-fm-wrong-batch-action
+      - io-fm-unauthorized-action
+    referenceIds:
+      - source-nist-ai-rmf
+      - source-google-pair
+      - term-ai-product
+      - term-problem-solution-fit
+
+  - id: establish-value-and-data
+    order: 2
+    stageId: opportunity-judgment
+    status: draft
+    title: 建立价值与数据条件
+    question: 怎样证明解决的是「重复劳动」，而不是「上了自动化」？
+    decision: 先记录重复劳动、错误和返工基线，再定义有依据且经运营确认的自动化结果。
+    facts:
+      - id: io-g2-value-not-automation
+        kind: recommendation
+        evidence: E1
+        statement: 自动化本身不是价值，减少重复劳动和错误才是；上了 Agent 不等于解决业务问题。
+      - id: io-g2-data-readiness
+        kind: recommendation
+        evidence: E3
+        statement: 数据准备度由流程稳定性、字段质量和权限决定，不由任务量决定。
+    unknowns:
+      - id: io-g2-baseline-needed
+        kind: unknown
+        evidence: E0
+        statement: 真实重复劳动时长、错误率、返工比例、人工容量与流程分布尚未验证。
+    options:
+      - id: measure-before-build
+        label: 先测量再建设
+        assessment: recommended
+        rationale: 先建立重复劳动和错误基线，再定义有依据的自动化结果，避免把自动化当价值。
+        conditions:
+          - 能定义并统计重复劳动与错误
+          - 流程与字段有质量边界
+        risks:
+          - 基线收集需要运营配合
+        consequences:
+          - 价值目标可验证而非凭感觉
+        artifactDelta: 在机会评估表中记录目标角色、当前任务、流程条件、真实基线、错误成本与升级链路。
+      - id: demo-driven-build
+        label: 以演示效果立项
+        assessment: risky
+        rationale: 演示自动化顺畅不代表错误和返工被缓解，缺少基线会导致价值无法验证。
+        conditions:
+          - 当前没有支持仅凭演示立项的条件
+        risks:
+          - 把「跑通了」误当「跑对了」
+        consequences:
+          - 当前方案不进入生产范围
+        artifactDelta: 在机会评估表中记录否决演示驱动的理由。
+    artifactIds:
+      - io-opportunity-assessment
+    metricIds:
+      - io-rework-rate
+      - io-error-rate
+    failureModeIds:
+      - io-fm-wrong-batch-action
+    referenceIds:
+      - term-problem-solution-fit
+      - term-north-star-metric
+
+  - id: select-workflow
+    order: 3
+    stageId: solution-choice
+    status: draft
+    title: 拆解信息处理、草稿与执行工作流
+    question: 如何区分信息处理、建议、决策和外部动作？
+    decision: 把信息处理、语义草稿、运营决策与动作执行拆成可观察步骤，执行动作由确定性系统或运营确认。
+    facts:
+      - id: io-g3-layer-separation
+        kind: recommendation
+        evidence: E1
+        statement: 信息处理、建议、决策和执行应分层授权，有副作用的动作单独设置权限。
+      - id: io-g3-untrusted-input
+        kind: fact
+        evidence: E3
+        statement: 输入数据作为不可信数据处理，不能取得系统指令、工具或执行权限。
+    unknowns:
+      - id: io-g3-coverage
+        kind: unknown
+        evidence: E0
+        statement: 不同流程下规则与语义判断的合理分工尚未通过任务样本验证。
+    options:
+      - id: layered-automation-pipeline
+        label: 分层自动化流水线
+        assessment: recommended
+        rationale: 把信息处理、草稿、决策和执行分开，能单独控制每层的副作用和授权。
+        conditions:
+          - 各步骤输入输出与终止条件可定义
+          - 执行动作由确定性系统执行
+        risks:
+          - 分层增加系统复杂度
+        consequences:
+          - 每层可独立评测与授权
+        artifactDelta: 在方案选择表中固定信息处理、草稿、决策与执行步骤及各自输入输出。
+      - id: single-prompt-automation
+        label: 单次提示包办
+        assessment: risky
+        rationale: 一次提示同时处理、判断和执行，会让副作用无法分层控制。
+        conditions:
+          - 当前没有支持单次提示包办的条件
+        risks:
+          - 错误执行与越权混在一起
+        consequences:
+          - 当前方案不进入生产范围
+        artifactDelta: 在方案选择表中记录否决单次提示包办的理由。
+    artifactIds:
+      - io-workflow-selection
+    metricIds:
+      - io-rule-coverage
+      - io-audit-coverage
+    failureModeIds:
+      - io-fm-prompt-injection
+      - io-fm-stale-rule
+    referenceIds:
+      - term-prompt-injection
+      - term-human-ai-collaboration
+
+  - id: design-control-and-recovery
+    order: 4
+    stageId: product-experience
+    status: draft
+    title: 设计运营控制与失败恢复
+    question: 运营怎样看见动作、预览影响、确认并撤销？
+    decision: 展示动作与影响范围、允许预览与确认，批量动作支持同范围撤销，执行前强制运营确认。
+    facts:
+      - id: io-g4-preview-confirm
+        kind: recommendation
+        evidence: E1
+        statement: AI 动作的影响范围越大，预览、确认和同范围撤销越重要。
+      - id: io-g4-escalation
+        kind: recommendation
+        evidence: E3
+        statement: 高风险或批量动作需要明确角色、信息与权限的升级路径，不能只靠形式上的确认。
+    unknowns:
+      - id: io-g4-review-burden
+        kind: unknown
+        evidence: E0
+        statement: 运营复核动作、确认与撤销的实际时间与疲劳影响尚未验证。
+    options:
+      - id: visible-preview-confirm
+        label: 可见、可预览、可撤销
+        assessment: recommended
+        rationale: 展示动作与影响、允许预览并支持同范围撤销，让运营在执行前真正理解并负责。
+        conditions:
+          - 动作可预览影响范围
+          - 执行由运营显式确认
+        risks:
+          - 复核会增加运营时间
+        consequences:
+          - 减少批量错误与越权执行
+        artifactDelta: 在权限与恢复图中标明动作检查、预览、确认、撤销与转交的人员权限。
+      - id: auto-execute-with-undo
+        label: 自动执行加撤销
+        assessment: conditional
+        rationale: 自动执行能减少操作，但只有错误可发现且能及时撤销时才可考虑，首版不采用。
+        conditions:
+          - 有实时执行日志与同范围撤销
+          - 高风险动作不进入自动执行
+        risks:
+          - 撤销无法完全挽回已发生的副作用
+        consequences:
+          - 仅作为后续阶段的可评估选项
+        artifactDelta: 在权限与恢复图中记录自动执行与撤销作为后续阶段的评估条件。
+    artifactIds:
+      - io-responsibility-recovery
+    metricIds:
+      - io-human-review-time
+      - io-escalation-age
+    failureModeIds:
+      - io-fm-review-overload
+      - io-fm-side-effect-unrecoverable
+    referenceIds:
+      - term-human-escalation
+      - term-user-control
+
+  - id: define-evaluation-and-cost
+    order: 5
+    stageId: quality-constraints
+    status: draft
+    title: 定义评测、成本与上线护栏
+    question: 怎样评测动作准确率、副作用与恢复能力？
+    decision: 用版本化固定集和风险切片分步评测，用「有依据且经运营确认的任务」计算单位成功成本。
+    facts:
+      - id: io-g5-sliced-eval
+        kind: recommendation
+        evidence: E3
+        statement: 评测分数只对既定样本、标准和运行配置有效，风险切片比总体准确率更能暴露批量错误。
+      - id: io-g5-unit-cost
+        kind: recommendation
+        evidence: E1
+        statement: 成本必须按「成功完成一次有依据任务」核算，不能把单次模型调用价格当总成本。
+    unknowns:
+      - id: io-g5-eval-baseline
+        kind: unknown
+        evidence: E0
+        statement: 真实动作准确、副作用范围与恢复能力的基线尚未建立。
+    options:
+      - id: sliced-eval-and-unit-cost
+        label: 分片评测与单位成本
+        assessment: recommended
+        rationale: 分步骤评测动作准确、副作用与恢复，并用有依据任务结果算成本，能定位问题并控成本。
+        conditions:
+          - 有版本化固定集与风险切片
+          - 能追踪「经运营确认」作为成功口径
+        risks:
+          - 评测集建设需要投入
+        consequences:
+          - 质量可比较、成本可核算
+        artifactDelta: 在评测与护栏表中组合固定集、风险切片、分步质量、单位成本与回滚条件。
+      - id: overall-accuracy-only
+        label: 只看总体准确率
+        assessment: risky
+        rationale: 总体准确率会掩盖高风险动作的批量错误与副作用。
+        conditions:
+          - 当前没有支持只看总体准确率的条件
+        risks:
+          - 批量错误被平均掩盖
+        consequences:
+          - 当前方案不进入生产范围
+        artifactDelta: 在评测与护栏表中记录否决只看总体准确率的理由。
+    artifactIds:
+      - io-evaluation-guardrails
+    metricIds:
+      - io-version-consistency
+      - io-recovery-time
+      - io-draft-latency
+    failureModeIds:
+      - io-fm-version-regression
+      - io-fm-model-timeout
+    referenceIds:
+      - term-offline-evaluation
+      - term-observability
+
+  - id: govern-launch-and-iteration
+    order: 6
+    stageId: capstone
+    status: draft
+    title: 治理发布与持续更新
+    question: 什么时候能扩大自动化，错误或回退时如何停止？
+    decision: 按影子草稿、辅助草稿、受限自动草稿逐级推进，自动执行不进入首版。
+    facts:
+      - id: io-g6-staged-release
+        kind: recommendation
+        evidence: E3
+        statement: 上线应按影响范围逐级推进，每级需要独立通过条件和回滚路径。
+      - id: io-g6-guardrail
+        kind: fact
+        evidence: E2
+        statement: 任何越权执行或不可恢复的副作用必须阻止晋级并触发事件响应，作为明确发布护栏。
+    unknowns:
+      - id: io-g6-adoption-evidence
+        kind: unknown
+        evidence: E0
+        statement: 各阶段真实自动化率改善、错误率与运营采纳尚未验证。
+    options:
+      - id: staged-shadow-to-draft
+        label: 影子到草稿逐级推进
+        assessment: recommended
+        rationale: 先影子运行、再辅助草稿、后受限自动草稿，每级用独立通过条件换取更高自动化。
+        conditions:
+          - 每级有通过条件与回滚路径
+          - 自动执行不进入首版
+        risks:
+          - 逐级推进需要更长时间
+        consequences:
+          - 风险与自动化程度同步增长
+        artifactDelta: 在完整评审档案中汇总六关决策、分级执行权限、监控、事件响应与回滚证据。
+      - id: direct-full-automation
+        label: 直接全量自动化
+        assessment: risky
+        rationale: 未经验证直接全量自动化，会把批量错误与副作用一次性放大。
+        conditions:
+          - 当前没有支持直接全量自动化的条件
+        risks:
+          - 批量错误动作不可控
+        consequences:
+          - 当前方案不进入生产范围
+        artifactDelta: 在完整评审档案中记录否决直接全量自动化的理由。
+    artifactIds:
+      - io-complete-review
+    metricIds:
+      - io-side-effect-count
+      - io-unit-task-cost
+    failureModeIds:
+      - io-fm-unauthorized-action
+      - io-fm-version-regression
+    referenceIds:
+      - term-canary-release
+      - term-rollback
+
+artifacts:
+  - id: io-ai-applicability
+    type: ai-applicability
+    title: AI 适用性与不可自动化边界卡
+    summary: 区分规则治理、语义草稿、运营决策与执行授权，记录不使用生成和禁止自动化的范围。
+  - id: io-opportunity-assessment
+    type: opportunity-assessment
+    title: 内部自动化机会评估表
+    summary: 记录目标角色、当前任务、流程条件、真实基线、错误成本与升级链路。
+  - id: io-workflow-selection
+    type: workflow-selection
+    title: 自动化工作流与方案选择表
+    summary: 固定信息处理、草稿、决策与执行步骤及各自输入输出与终止条件。
+  - id: io-responsibility-recovery
+    type: responsibility-recovery
+    title: 运营权限、升级与恢复图
+    summary: 标明动作检查、预览、确认、撤销、转交与最终执行的人员和系统权限。
+  - id: io-evaluation-guardrails
+    type: evaluation-guardrails
+    title: 自动化评测、成本与上线护栏表
+    summary: 组合固定集、风险切片、分步质量、单位成功成本与回滚条件。
+  - id: io-complete-review
+    type: complete-review
+    title: 完整内部自动化产品评审档案
+    summary: 汇总六关决策、分级执行权限、监控、事件响应、晋级和回滚证据。
+
+metrics:
+  - id: io-task-automation-rate
+    category: business
+    label: 有依据自动化完成率
+    definition: 有来源且经运营确认完成的自动化任务，占进入目标范围任务的比例。
+    desiredDirection: increase
+    thresholdStatus: baseline-needed
+  - id: io-rework-rate
+    category: business
+    label: 返工率
+    definition: 自动化结果被运营驳回或需要返工的任务，占全部任务的比例。
+    desiredDirection: decrease
+    thresholdStatus: baseline-needed
+  - id: io-error-rate
+    category: quality
+    label: 错误动作率
+    definition: 执行结果错误的动作占全部执行动作的比例。
+    desiredDirection: decrease
+    thresholdStatus: baseline-needed
+  - id: io-rule-coverage
+    category: quality
+    label: 规则覆盖
+    definition: 可被确定性规则完整描述的流程占目标流程的比例。
+    desiredDirection: increase
+    thresholdStatus: baseline-needed
+  - id: io-audit-coverage
+    category: operation
+    label: 审计覆盖
+    definition: 动作可回溯到输入、规则、模型与运营确认的完整程度。
+    desiredDirection: increase
+    thresholdStatus: baseline-needed
+  - id: io-side-effect-count
+    category: operation
+    label: 越权或不可恢复副作用数
+    definition: 未经授权执行、或产生不可恢复副作用的事件数量。
+    desiredDirection: guardrail
+    thresholdStatus: defined
+    threshold: 任何越权执行或不可恢复副作用均阻止晋级并触发事件响应
+  - id: io-recovery-time
+    category: operation
+    label: 错误恢复时间
+    definition: 从发现错误动作到完成同范围撤销或回滚所需时间。
+    desiredDirection: decrease
+    thresholdStatus: baseline-needed
+  - id: io-draft-latency
+    category: operation
+    label: P95 草稿延迟
+    definition: 从提交任务到返回可供运营复核草稿的第九十五百分位端到端时间。
+    desiredDirection: decrease
+    thresholdStatus: baseline-needed
+  - id: io-version-consistency
+    category: operation
+    label: 规则与字段版本一致性
+    definition: 执行所用规则与字段映射版本与当前有效版本一致的比例。
+    desiredDirection: increase
+    thresholdStatus: baseline-needed
+  - id: io-human-review-time
+    category: human
+    label: 运营复核时间
+    definition: 运营核对动作、预览、确认或撤销一次任务所投入的人工时间。
+    desiredDirection: decrease
+    thresholdStatus: baseline-needed
+  - id: io-escalation-age
+    category: human
+    label: 高风险升级队列时长
+    definition: 高风险或批量动作从进入人工升级队列到由责任人接手的等待时间。
+    desiredDirection: decrease
+    thresholdStatus: baseline-needed
+  - id: io-unit-task-cost
+    category: cost
+    label: 单位已确认任务成本
+    definition: 规则治理、模型、失败运行与人工复核总成本除以有依据且经运营确认的任务数。
+    desiredDirection: decrease
+    thresholdStatus: baseline-needed
+
+failureModes:
+  - id: io-fm-wrong-batch-action
+    title: 批量错误动作
+    signal: 批量更新中大量任务被错误处理
+    impact: 错误被批量放大并产生广泛副作用
+    recovery: 停止执行、同范围回滚并回放固定集定位原因
+    owner: 运营和工程
+  - id: io-fm-unauthorized-action
+    title: 越权执行
+    signal: 出现运营未确认或规则未授权的执行动作
+    impact: 绕过人工授权造成副作用
+    recovery: 停用执行、回滚权限并启动事件响应
+    owner: 工程和运营主管
+  - id: io-fm-side-effect-unrecoverable
+    title: 副作用不可撤销
+    signal: 动作产生无法回滚的外部副作用
+    impact: 错误无法恢复并造成持续影响
+    recovery: 阻断后续动作、评估影响并启动事件响应
+    owner: 工程和运营主管
+  - id: io-fm-prompt-injection
+    title: 输入数据间接注入
+    signal: 输入数据试图改变指令或请求执行动作
+    impact: 模型行为可能被输入内容操纵
+    recovery: 将输入数据按不可信数据隔离并阻止动作
+    owner: 安全和工程
+  - id: io-fm-stale-rule
+    title: 过时规则
+    signal: 执行使用旧版本规则或已失效字段映射
+    impact: 任务被按错误规则处理
+    recovery: 停止相关规则、更新版本并回放受影响任务
+    owner: 运营和工程
+  - id: io-fm-duplicate-execution
+    title: 重复执行
+    signal: 同一任务被多次执行
+    impact: 产生重复副作用与数据污染
+    recovery: 停止执行、检查去重规则并回放固定样本
+    owner: 运营和工程
+  - id: io-fm-silent-failure
+    title: 静默失败
+    signal: 任务失败但无日志或状态标记
+    impact: 错误未被发现并持续积累
+    recovery: 补齐失败标记与审计、回放受影响任务
+    owner: 工程
+  - id: io-fm-review-overload
+    title: 运营复核队列过载
+    signal: 复核时长、积压或未处理高风险任务上升
+    impact: 形式上的人工确认无法提供真实保护
+    recovery: 收紧自动化范围、按风险排序并调整容量
+    owner: 运营主管
+  - id: io-fm-model-timeout
+    title: 模型服务超时
+    signal: 草稿延迟、失败率或重试量升高
+    impact: 运营等待增加且重复调用推高成本
+    recovery: 停止重试、降级到规则与人工处理
+    owner: 工程
+  - id: io-fm-version-regression
+    title: 版本升级质量回退
+    signal: 固定集或风险切片指标相对稳定版本下降
+    impact: 错误动作或副作用静默恶化
+    recovery: 冻结候选版本并回滚到上一稳定组合
+    owner: 产品、工程和评测负责人
+  - id: io-fm-sensitive-leak
+    title: 敏感信息泄露
+    signal: 处理过程暴露无权访问的内部数据
+    impact: 造成隐私与合规风险
+    recovery: 阻断输出、保全日志并启动安全事件响应
+    owner: 安全和工程
+  - id: io-fm-scope-creep
+    title: 自动化范围蔓延
+    signal: 自动化逐步覆盖未经验证的新流程
+    impact: 风险在无门禁的情况下累积
+    recovery: 回到分级发布门禁并重新评估每个新增范围
+    owner: 产品和运营主管
+
+references:
+  - id: route-ai-pm-career
+    kind: route
+    label: 转岗 AI 产品经理
+    targetId: ai-pm-career
+    supports: 提供从 AI 判断到产品基本功与职业成长的顺序阅读支持。
+  - id: term-ai-product
+    kind: term
+    label: AI 产品
+    targetId: ai-product
+    supports: 把模型能力放回用户任务、控制、失败和运营系统中评审。
+  - id: term-problem-solution-fit
+    kind: term
+    label: 问题方案匹配
+    targetId: problem-solution-fit
+    supports: 防止用流畅输出替代真实问题、任务和价值证据。
+  - id: term-human-ai-collaboration
+    kind: term
+    label: 人机协作
+    targetId: human-ai-collaboration
+    supports: 解释人工判断和系统自动化如何按风险分工。
+  - id: term-human-escalation
+    kind: term
+    label: 人工升级
+    targetId: human-escalation
+    supports: 明确拒答、升级、责任、必要上下文和接管权限。
+  - id: term-user-control
+    kind: term
+    label: 用户控制权
+    targetId: user-control
+    supports: 解释让变化可见、可比较、可拒绝的交互原则。
+  - id: term-prompt-injection
+    kind: term
+    label: 提示注入
+    targetId: prompt-injection
+    supports: 解释外部内容改变模型行为和越权的安全风险。
+  - id: term-offline-evaluation
+    kind: term
+    label: 离线评测
+    targetId: offline-evaluation
+    supports: 建立版本化固定查询集、保留集和错误切片。
+  - id: term-observability
+    kind: term
+    label: 可观测性
+    targetId: observability
+    supports: 解释通过日志、指标和追踪定位运行与质量问题。
+  - id: term-canary-release
+    kind: term
+    label: 金丝雀发布
+    targetId: canary-release
+    supports: 解释限制影响范围并逐步扩大版本或流量的发布方法。
+  - id: term-rollback
+    kind: term
+    label: 回滚
+    targetId: rollback
+    supports: 解释质量回退或事件发生时恢复上一稳定版本。
+  - id: term-north-star-metric
+    kind: term
+    label: 北极星指标
+    targetId: north-star-metric
+    supports: 解释如何用单一关键指标对齐团队并判断价值是否被持续获取。
+  - id: term-stakeholder-management
+    kind: term
+    label: 干系人管理
+    targetId: stakeholder-management
+    supports: 解释识别运营、工程与合规等干系人并管理其预期。
+  - id: source-nist-ai-rmf
+    kind: source
+    label: NIST AI Risk Management Framework
+    url: https://www.nist.gov/itl/ai-risk-management-framework
+    publisher: NIST
+    accessedAt: 2026-08-13
+    stability: stable
+    supports: 支持按风险分级授权、人工监督、事件响应与持续治理的通用原则。
+  - id: source-google-pair
+    kind: source
+    label: People + AI Guidebook
+    url: https://pair.withgoogle.com/
+    publisher: Google PAIR
+    accessedAt: 2026-08-13
+    stability: stable
+    supports: 支持用户信任、控制与「面向行动的不确定性」的通用设计原则。
+  - id: source-owasp-prompt-injection
+    kind: source
+    label: OWASP LLM01 2025 Prompt Injection
+    url: https://genai.owasp.org/llmrisk/llm01-prompt-injection/
+    publisher: OWASP GenAI Security Project
+    accessedAt: 2026-08-13
+    stability: evolving
+    supports: 支持输入数据可能成为间接注入来源、需按不可信数据隔离。

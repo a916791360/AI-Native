@@ -1,0 +1,665 @@
+id: contract-review-assistant
+title: 合同条款审核助手
+level: focus
+domain: AI 产品与法务
+audience:
+  - 零基础或初级 AI 产品经理
+  - 需要评审合同审核助手的产品、法务与业务人员
+businessContext: 这是一个教学案例。某公司法务团队需要优先发现合同中的非标准条款。漏报可能带来法律风险，误报会增加审核负担，最终审批责任仍在人。
+currentProcess:
+  - 接收待审核合同并识别合同类型
+  - 对照标准条款模板逐条比对
+  - 标出非标准、缺失或冲突条款
+  - 法务复核并给出修改建议
+  - 由有权人审批并记录结果
+objective: 在条款可追溯、漏报可发现、人工可接管、责任不转移的前提下，帮助法务更快定位非标准条款与风险，同时保持最终判断和审批由人负责。
+baseline:
+  - id: cr-baseline-process-assumption
+    kind: assumption
+    evidence: E1
+    statement: 当前比对、标注、复核和审批流程只用于建立教学起点，不代表真实法务团队采用同样工具或存在效率问题。
+  - id: cr-baseline-values-unknown
+    kind: unknown
+    evidence: E0
+    statement: 实际漏报率、误报率、审核时间、错误成本、法务容量与单位成本均需要真实组织数据验证。
+constraints:
+  - id: cr-constraint-no-fabricated-thresholds
+    kind: fact
+    evidence: E2
+    statement: AI-Native 不为教学完整性虚构漏报、误报、审核、成本、延迟或上线阈值。
+  - id: cr-constraint-human-approval-authority
+    kind: recommendation
+    evidence: E1
+    statement: 系统只辅助内部法务，不自动给出「通过」结论，也不替代有权人的审批责任。
+  - id: cr-constraint-untrusted-input
+    kind: recommendation
+    evidence: E3
+    statement: 合同文本作为不可信数据处理，不能取得系统指令、工具或审批权限。
+status: draft
+updatedAt: 2026-08-13
+
+gates:
+  - id: decide-ai-boundary
+    order: 1
+    stageId: model-boundaries
+    status: draft
+    title: 判断 AI 边界
+    question: 合同审核需要生成式「通过」结论，还是证据获取与差异标注？
+    decision: 用确定性模板比对定位差异，只在归纳与风险提示步骤引入受限生成，审批结论始终由人作出。
+    facts:
+      - id: cr-g1-llm-unreliable
+        kind: fact
+        evidence: E3
+        statement: 生成式模型可能遗漏关键条款或给出无依据结论，漏报与越权输出需按风险治理。
+      - id: cr-g1-deterministic-controls
+        kind: recommendation
+        evidence: E1
+        statement: 合同类型、模板版本、条款定位与审批权限应由确定性系统承担。
+    unknowns:
+      - id: cr-g1-generation-need
+        kind: unknown
+        evidence: E0
+        statement: 真实合同中多少风险可由模板比对发现、多少需要生成式归纳，尚未通过合同样本验证。
+    options:
+      - id: governed-evidence-copilot
+        label: 治理优先的证据辅助
+        assessment: recommended
+        rationale: 先固定模板、条款与权限边界，再把生成限制为差异标注和风险提示，能分开控制风险和价值。
+        conditions:
+          - 合同类型与标准条款模板可维护
+          - 标注能回到具体条款原文
+        risks:
+          - 模板与条款治理增加前期投入
+        consequences:
+          - 漏报可发现、审批责任不转移
+        artifactDelta: 在 AI 适用性卡中固定模板治理、差异标注、生成提示与人工审批的责任边界。
+      - id: template-diff-only
+        label: 模板比对优先
+        assessment: conditional
+        rationale: 当合同类型稳定且条款结构化时，模板比对更可预测，也可能已满足法务目标。
+        conditions:
+          - 条款可结构化提取并确定性比对
+          - 模板适用条件可维护
+        risks:
+          - 跨条款归纳和例外识别可能降低覆盖
+        consequences:
+          - 系统简单且误报可控
+          - 复杂条款继续由法务人工判断
+        artifactDelta: 在 AI 适用性卡中记录仅比对方案的覆盖范围和升级到生成的触发条件。
+      - id: auto-approve-agent
+        label: 自动通过判定
+        assessment: risky
+        rationale: 自动给出「通过」会把审批责任伪装成模型能力，漏报的法律后果无法由模型承担。
+        conditions:
+          - 当前没有支持自动通过判定的条件
+        risks:
+          - 漏报非标准条款带来法律风险
+          - 责任主体被错误转移
+        consequences:
+          - 当前方案不进入生产范围
+        artifactDelta: 在 AI 适用性卡中记录否决自动通过判定的理由。
+    artifactIds:
+      - cr-ai-applicability
+    metricIds:
+      - cr-missed-critical-clause
+      - cr-contract-completion
+      - cr-unit-reviewed-cost
+    failureModeIds:
+      - cr-fm-missed-non-standard
+      - cr-fm-auto-approve-breach
+    referenceIds:
+      - source-nist-ai-rmf
+      - source-google-pair
+      - term-ai-product
+      - term-problem-solution-fit
+
+  - id: establish-value-and-data
+    order: 2
+    stageId: opportunity-judgment
+    status: draft
+    title: 建立价值与数据条件
+    question: 怎样证明解决的是「漏报非标准条款」，而不是「审得更快」？
+    decision: 先记录漏报、误报和错误成本基线，再定义有来源且经法务确认的审核结果。
+    facts:
+      - id: cr-g2-value-not-speed
+        kind: recommendation
+        evidence: E1
+        statement: 快不是价值定义，漏报和误报才是；审核速度不能替代法律风险覆盖。
+      - id: cr-g2-data-readiness
+        kind: recommendation
+        evidence: E3
+        statement: 数据准备度由合同质量、模板覆盖和权限决定，不由合同份数决定。
+    unknowns:
+      - id: cr-g2-baseline-needed
+        kind: unknown
+        evidence: E0
+        statement: 真实漏报率、误报率、错误成本、法务容量与合同类型分布尚未验证。
+    options:
+      - id: measure-before-build
+        label: 先测量再建设
+        assessment: recommended
+        rationale: 先建立漏报和误报基线，再定义有来源的审核结果，避免把速度当价值。
+        conditions:
+          - 能定义并统计漏报与误报
+          - 合同与模板有质量边界
+        risks:
+          - 基线收集需要法务配合
+        consequences:
+          - 价值目标可验证而非凭感觉
+        artifactDelta: 在机会评估表中记录目标角色、当前任务、合同条件、真实基线、错误成本与升级链路。
+      - id: demo-driven-build
+        label: 以演示效果立项
+        assessment: risky
+        rationale: 演示标注漂亮不代表漏报被缓解，缺少基线会导致价值无法验证。
+        conditions:
+          - 当前没有支持仅凭演示立项的条件
+        risks:
+          - 把「标得全」误当「审得对」
+        consequences:
+          - 当前方案不进入生产范围
+        artifactDelta: 在机会评估表中记录否决演示驱动的理由。
+    artifactIds:
+      - cr-opportunity-assessment
+    metricIds:
+      - cr-non-standard-recall
+      - cr-false-positive-rate
+    failureModeIds:
+      - cr-fm-missed-non-standard
+    referenceIds:
+      - term-problem-solution-fit
+      - term-north-star-metric
+
+  - id: select-workflow
+    order: 3
+    stageId: solution-choice
+    status: draft
+    title: 拆解条款识别、对比与升级工作流
+    question: 如何区分标准条款、非标准条款和审批责任？
+    decision: 把合同解析、条款比对、差异标注、风险提示与人工审批拆成可观察步骤，审批责任始终在有权人。
+    facts:
+      - id: cr-g3-layer-separation
+        kind: recommendation
+        evidence: E1
+        statement: 识别、比对、标注、提示与审批应分层，审批结论由确定性流程和有权人共同作出。
+      - id: cr-g3-untrusted-input
+        kind: fact
+        evidence: E3
+        statement: 合同文本作为不可信数据处理，不能取得系统指令、工具或审批权限。
+    unknowns:
+      - id: cr-g3-coverage
+        kind: unknown
+        evidence: E0
+        statement: 不同合同类型下模板覆盖与非标准条款的分布尚未通过样本验证。
+    options:
+      - id: layered-review-pipeline
+        label: 分层审核流水线
+        assessment: recommended
+        rationale: 把解析、比对、标注、提示与审批分开，能单独控制每层的漏报、误报和授权。
+        conditions:
+          - 各步骤输入输出与终止条件可定义
+          - 审批由确定性流程和有权人执行
+        risks:
+          - 分层增加系统复杂度
+        consequences:
+          - 每层可独立评测与授权
+        artifactDelta: 在方案选择表中固定解析、比对、标注、提示与审批步骤及各自输入输出。
+      - id: single-prompt-review
+        label: 单次提示包办审核
+        assessment: risky
+        rationale: 一次提示同时解析、比对和判断，会让漏报与审批责任无法分层控制。
+        conditions:
+          - 当前没有支持单次提示包办的条件
+        risks:
+          - 漏报与越权「通过」混在一起
+        consequences:
+          - 当前方案不进入生产范围
+        artifactDelta: 在方案选择表中记录否决单次提示包办的理由。
+    artifactIds:
+      - cr-workflow-selection
+    metricIds:
+      - cr-clause-support-rate
+      - cr-risk-tier-coverage
+    failureModeIds:
+      - cr-fm-fabricated-citation
+      - cr-fm-prompt-injection
+    referenceIds:
+      - term-prompt-injection
+      - term-human-ai-collaboration
+
+  - id: design-control-and-recovery
+    order: 4
+    stageId: product-experience
+    status: draft
+    title: 设计法务控制与失败恢复
+    question: 法务怎样看见原文、识别漏报、修改并最终确认？
+    decision: 展示条款原文与比对差异、允许修改与驳回，审批前强制法务确认，高风险条款由有权人复核。
+    facts:
+      - id: cr-g4-visible-evidence
+        kind: recommendation
+        evidence: E1
+        statement: 标注应展示所依据的条款原文与模板差异，让变化可见、可比较、可拒绝。
+      - id: cr-g4-escalation
+        kind: recommendation
+        evidence: E3
+        statement: 高风险条款需要明确角色、信息与权限的升级路径，不能只靠形式上的确认。
+    unknowns:
+      - id: cr-g4-review-burden
+        kind: unknown
+        evidence: E0
+        statement: 法务复核标注、修改与驳回的实际时间与疲劳影响尚未验证。
+    options:
+      - id: visible-editable-confirm
+        label: 可见、可改、可确认
+        assessment: recommended
+        rationale: 展示条款原文与差异、允许修改并强制确认，让法务在审批前真正理解并负责。
+        conditions:
+          - 标注可回看条款原文并编辑
+          - 审批动作由有权人显式确认
+        risks:
+          - 复核会增加法务时间
+        consequences:
+          - 减少漏报与越权通过
+        artifactDelta: 在权限与恢复图中标明证据检查、修改、驳回、转交与最终审批的人员权限。
+      - id: auto-approve-with-undo
+        label: 自动通过加撤销
+        assessment: conditional
+        rationale: 自动通过能减少操作，但只有漏报可发现且能及时撤销时才可考虑，首版不采用。
+        conditions:
+          - 有实时审批日志与同范围撤销
+          - 高风险条款不进入自动通过
+        risks:
+          - 撤销无法完全挽回已发生的法律后果
+        consequences:
+          - 仅作为后续阶段的可评估选项
+        artifactDelta: 在权限与恢复图中记录自动通过与撤销作为后续阶段的评估条件。
+    artifactIds:
+      - cr-responsibility-recovery
+    metricIds:
+      - cr-human-review-time
+      - cr-escalation-age
+    failureModeIds:
+      - cr-fm-review-overload
+      - cr-fm-false-escalation
+    referenceIds:
+      - term-human-escalation
+      - term-user-control
+
+  - id: define-evaluation-and-cost
+    order: 5
+    stageId: quality-constraints
+    status: draft
+    title: 定义评测、成本与上线护栏
+    question: 怎样评测漏报、误报与条款对比质量？
+    decision: 用版本化固定集和风险切片分步评测，用「有依据且经法务确认的审核」计算单位成功成本。
+    facts:
+      - id: cr-g5-sliced-eval
+        kind: recommendation
+        evidence: E3
+        statement: 评测分数只对既定样本、标准和运行配置有效，风险切片比总体准确率更能暴露漏报。
+      - id: cr-g5-unit-cost
+        kind: recommendation
+        evidence: E1
+        statement: 成本必须按「成功完成一次有依据审核」核算，不能把单次模型调用价格当总成本。
+    unknowns:
+      - id: cr-g5-eval-baseline
+        kind: unknown
+        evidence: E0
+        statement: 真实漏报、误报、条款定位与风险覆盖的基线尚未建立。
+    options:
+      - id: sliced-eval-and-unit-cost
+        label: 分片评测与单位成本
+        assessment: recommended
+        rationale: 分步骤评测漏报、误报与条款定位，并用有依据审核结果算成本，能定位问题并控成本。
+        conditions:
+          - 有版本化固定集与风险切片
+          - 能追踪「经法务确认」作为成功口径
+        risks:
+          - 评测集建设需要投入
+        consequences:
+          - 质量可比较、成本可核算
+        artifactDelta: 在评测与护栏表中组合固定集、风险切片、分步质量、单位成本与回滚条件。
+      - id: overall-accuracy-only
+        label: 只看总体准确率
+        assessment: risky
+        rationale: 总体准确率会掩盖高风险条款的漏报与越权通过。
+        conditions:
+          - 当前没有支持只看总体准确率的条件
+        risks:
+          - 高风险漏报被平均掩盖
+        consequences:
+          - 当前方案不进入生产范围
+        artifactDelta: 在评测与护栏表中记录否决只看总体准确率的理由。
+    artifactIds:
+      - cr-evaluation-guardrails
+    metricIds:
+      - cr-version-consistency
+      - cr-draft-latency
+    failureModeIds:
+      - cr-fm-version-regression
+      - cr-fm-model-timeout
+    referenceIds:
+      - term-offline-evaluation
+      - term-observability
+
+  - id: govern-launch-and-iteration
+    order: 6
+    stageId: capstone
+    status: draft
+    title: 治理发布与持续更新
+    question: 什么时候能扩大自动化，漏报或质量回退时如何停止？
+    decision: 按影子标注、辅助标注、受限自动标注逐级推进，自动「通过」不进入首版。
+    facts:
+      - id: cr-g6-staged-release
+        kind: recommendation
+        evidence: E3
+        statement: 上线应按影响范围逐级推进，每级需要独立通过条件和回滚路径。
+      - id: cr-g6-guardrail
+        kind: fact
+        evidence: E2
+        statement: 任何越权「通过」或关键条款漏报必须阻止晋级并触发事件响应，作为明确发布护栏。
+    unknowns:
+      - id: cr-g6-adoption-evidence
+        kind: unknown
+        evidence: E0
+        statement: 各阶段真实漏报改善、审核时间与法务采纳尚未验证。
+    options:
+      - id: staged-shadow-to-draft
+        label: 影子到标注逐级推进
+        assessment: recommended
+        rationale: 先影子运行、再辅助标注、后受限自动标注，每级用独立通过条件换取更高自动化。
+        conditions:
+          - 每级有通过条件与回滚路径
+          - 自动「通过」不进入首版
+        risks:
+          - 逐级推进需要更长时间
+        consequences:
+          - 风险与自动化程度同步增长
+        artifactDelta: 在完整评审档案中汇总六关决策、分级发布权限、监控、事件响应与回滚证据。
+      - id: direct-full-automation
+        label: 直接全量自动化
+        assessment: risky
+        rationale: 未经验证直接全量自动化，会把漏报与越权通过一次性放大。
+        conditions:
+          - 当前没有支持直接全量自动化的条件
+        risks:
+          - 漏报非标准条款带来法律风险
+        consequences:
+          - 当前方案不进入生产范围
+        artifactDelta: 在完整评审档案中记录否决直接全量自动化的理由。
+    artifactIds:
+      - cr-complete-review
+    metricIds:
+      - cr-missed-critical-clause
+      - cr-unit-reviewed-cost
+    failureModeIds:
+      - cr-fm-auto-approve-breach
+      - cr-fm-version-regression
+    referenceIds:
+      - term-canary-release
+      - term-rollback
+
+artifacts:
+  - id: cr-ai-applicability
+    type: ai-applicability
+    title: AI 适用性与不可自动化边界卡
+    summary: 区分模板治理、条款比对、差异标注、风险提示与人工审批，记录不使用生成和禁止自动化的范围。
+  - id: cr-opportunity-assessment
+    type: opportunity-assessment
+    title: 合同审核机会评估表
+    summary: 记录目标角色、当前任务、合同条件、真实基线、错误成本、漏报与升级链路。
+  - id: cr-workflow-selection
+    type: workflow-selection
+    title: 审核工作流与方案选择表
+    summary: 固定解析、比对、标注、提示与审批步骤及各自输入输出与终止条件。
+  - id: cr-responsibility-recovery
+    type: responsibility-recovery
+    title: 法务权限、升级与恢复图
+    summary: 标明证据检查、修改、驳回、转交、审批确认与最终审批的人员和系统权限。
+  - id: cr-evaluation-guardrails
+    type: evaluation-guardrails
+    title: 审核评测、成本与上线护栏表
+    summary: 组合固定集、风险切片、分步质量、单位成功成本、漏报与回滚条件。
+  - id: cr-complete-review
+    type: complete-review
+    title: 完整合同审核产品评审档案
+    summary: 汇总六关决策、分级发布权限、漏报监控、事件响应、晋级和回滚证据。
+
+metrics:
+  - id: cr-contract-completion
+    category: business
+    label: 有依据审核完成率
+    definition: 有来源且经法务确认完成的审核，占进入目标范围合同的比例。
+    desiredDirection: increase
+    thresholdStatus: baseline-needed
+  - id: cr-non-standard-recall
+    category: quality
+    label: 非标准条款召回率
+    definition: 必要非标准或缺失条款被正确标出的比例。
+    desiredDirection: increase
+    thresholdStatus: baseline-needed
+  - id: cr-false-positive-rate
+    category: quality
+    label: 误报率
+    definition: 被标为风险但实际为标准条款的标注，占全部标注的比例。
+    desiredDirection: decrease
+    thresholdStatus: baseline-needed
+  - id: cr-clause-support-rate
+    category: quality
+    label: 条款定位支持率
+    definition: 标注能回到具体条款原文且原文确实支持该标注的比例。
+    desiredDirection: increase
+    thresholdStatus: baseline-needed
+  - id: cr-risk-tier-coverage
+    category: quality
+    label: 风险条款覆盖
+    definition: 高风险条款类别进入标注与升级范围的比例。
+    desiredDirection: increase
+    thresholdStatus: baseline-needed
+  - id: cr-missed-critical-clause
+    category: operation
+    label: 关键条款漏报数
+    definition: 高风险非标准条款未被标出并进入审批的事件数量。
+    desiredDirection: guardrail
+    thresholdStatus: defined
+    threshold: 任何关键条款漏报或越权通过均阻止晋级并触发事件响应
+  - id: cr-draft-latency
+    category: operation
+    label: P95 审核延迟
+    definition: 从提交合同到返回可供法务复核标注的第九十五百分位端到端时间。
+    desiredDirection: decrease
+    thresholdStatus: baseline-needed
+  - id: cr-version-consistency
+    category: operation
+    label: 模板版本一致性
+    definition: 合同解析与比对所用模板版本与当前有效版本一致的比例。
+    desiredDirection: increase
+    thresholdStatus: baseline-needed
+  - id: cr-human-review-time
+    category: human
+    label: 法务复核时间
+    definition: 法务核对标注、修改、驳回或确认一次审核所投入的人工时间。
+    desiredDirection: decrease
+    thresholdStatus: baseline-needed
+  - id: cr-escalation-age
+    category: human
+    label: 高风险升级队列时长
+    definition: 高风险条款从进入人工升级队列到由有权人接手的等待时间。
+    desiredDirection: decrease
+    thresholdStatus: baseline-needed
+  - id: cr-unit-reviewed-cost
+    category: cost
+    label: 单位已确认审核成本
+    definition: 模板治理、解析、比对、生成、失败运行与人工复核总成本除以有依据且经法务确认的审核数。
+    desiredDirection: decrease
+    thresholdStatus: baseline-needed
+  - id: cr-false-escalation
+    category: quality
+    label: 误报升级率
+    definition: 被升级但实际无需人工介入的标注占升级总数的比例。
+    desiredDirection: decrease
+    thresholdStatus: baseline-needed
+
+failureModes:
+  - id: cr-fm-missed-non-standard
+    title: 漏报非标准条款
+    signal: 高风险非标准条款未被标出
+    impact: 法律风险未被发现并进入审批
+    recovery: 停止标注、标记漏报并回放固定集定位原因
+    owner: 法务和评测负责人
+  - id: cr-fm-false-escalation
+    title: 误报过多
+    signal: 标准条款被大量标为风险
+    impact: 增加法务审核负担并降低信任
+    recovery: 调整比对阈值、补充模板并回放固定集
+    owner: 法务和评测负责人
+  - id: cr-fm-fabricated-citation
+    title: 标注引用不支持
+    signal: 标注能打开但条款原文与标注结论不一致
+    impact: 法务可能因信任标注而误判
+    recovery: 阻止提交、删除或重写标注并加入固定集
+    owner: 法务和评测负责人
+  - id: cr-fm-stale-template
+    title: 过时模板
+    signal: 比对使用旧版本模板或已失效条款
+    impact: 标准条款被误判为非标准或漏判
+    recovery: 停止相关模板、更新版本并回放受影响合同
+    owner: 法务和工程
+  - id: cr-fm-jurisdiction-mismatch
+    title: 法律适用错误
+    signal: 合同按错误管辖或行业模板比对
+    impact: 风险判断失去针对性
+    recovery: 校验合同类型与管辖并退回人工
+    owner: 法务
+  - id: cr-fm-prompt-injection
+    title: 合同内容间接注入
+    signal: 合同文本试图改变指令或请求审批动作
+    impact: 模型行为可能被合同内容操纵
+    recovery: 将合同文本按不可信数据隔离并阻止动作
+    owner: 安全和工程
+  - id: cr-fm-auto-approve-breach
+    title: 越权自动通过
+    signal: 出现未经有权人确认的「通过」结论
+    impact: 审批责任被绕过并带来法律风险
+    recovery: 停用自动通过、回滚权限并启动事件响应
+    owner: 法务和工程
+  - id: cr-fm-sensitive-leak
+    title: 敏感信息泄露
+    signal: 合同内容暴露给无权方或进入训练
+    impact: 造成隐私与合规风险
+    recovery: 阻断输出、保全日志并启动安全事件响应
+    owner: 安全和工程
+  - id: cr-fm-review-overload
+    title: 法务复核队列过载
+    signal: 复核时长、积压或未处理高风险条款上升
+    impact: 形式上的人工复核无法提供真实保护
+    recovery: 收紧自动化范围、按风险排序并调整容量
+    owner: 法务主管
+  - id: cr-fm-model-timeout
+    title: 模型服务超时
+    signal: 审核延迟、失败率或重试量升高
+    impact: 法务等待增加且重复调用推高成本
+    recovery: 停止重试、降级到模板比对与人工审核
+    owner: 工程
+  - id: cr-fm-version-regression
+    title: 版本升级质量回退
+    signal: 固定集或风险切片指标相对稳定版本下降
+    impact: 漏报或误报静默恶化
+    recovery: 冻结候选版本并回滚到上一稳定组合
+    owner: 产品、工程和评测负责人
+  - id: cr-fm-conflicting-clause
+    title: 条款冲突未标记
+    signal: 多份有效条款对同一事项给出冲突规则
+    impact: 法务可能依据错误条款作出判断
+    recovery: 不自动裁决，展示冲突并转交有权人确认
+    owner: 法务
+
+references:
+  - id: route-ai-pm-career
+    kind: route
+    label: 转岗 AI 产品经理
+    targetId: ai-pm-career
+    supports: 提供从 AI 判断到产品基本功与职业成长的顺序阅读支持。
+  - id: term-ai-product
+    kind: term
+    label: AI 产品
+    targetId: ai-product
+    supports: 把模型能力放回用户任务、控制、失败和运营系统中评审。
+  - id: term-problem-solution-fit
+    kind: term
+    label: 问题方案匹配
+    targetId: problem-solution-fit
+    supports: 防止用流畅输出替代真实问题、任务和价值证据。
+  - id: term-human-ai-collaboration
+    kind: term
+    label: 人机协作
+    targetId: human-ai-collaboration
+    supports: 解释人工判断和系统自动化如何按风险分工。
+  - id: term-human-escalation
+    kind: term
+    label: 人工升级
+    targetId: human-escalation
+    supports: 明确拒答、升级、责任、必要上下文和接管权限。
+  - id: term-user-control
+    kind: term
+    label: 用户控制权
+    targetId: user-control
+    supports: 解释让变化可见、可比较、可拒绝的交互原则。
+  - id: term-prompt-injection
+    kind: term
+    label: 提示注入
+    targetId: prompt-injection
+    supports: 解释外部内容改变模型行为和越权的安全风险。
+  - id: term-offline-evaluation
+    kind: term
+    label: 离线评测
+    targetId: offline-evaluation
+    supports: 建立版本化固定查询集、保留集和错误切片。
+  - id: term-observability
+    kind: term
+    label: 可观测性
+    targetId: observability
+    supports: 解释通过日志、指标和追踪定位运行与质量问题。
+  - id: term-canary-release
+    kind: term
+    label: 金丝雀发布
+    targetId: canary-release
+    supports: 解释限制影响范围并逐步扩大版本或流量的发布方法。
+  - id: term-rollback
+    kind: term
+    label: 回滚
+    targetId: rollback
+    supports: 解释质量回退或事件发生时恢复上一稳定版本。
+  - id: term-north-star-metric
+    kind: term
+    label: 北极星指标
+    targetId: north-star-metric
+    supports: 解释如何用单一关键指标对齐团队并判断价值是否被持续获取。
+  - id: term-stakeholder-management
+    kind: term
+    label: 干系人管理
+    targetId: stakeholder-management
+    supports: 解释识别法务、业务与工程等干系人并管理其预期。
+  - id: source-nist-ai-rmf
+    kind: source
+    label: NIST AI Risk Management Framework
+    url: https://www.nist.gov/itl/ai-risk-management-framework
+    publisher: NIST
+    accessedAt: 2026-08-13
+    stability: stable
+    supports: 支持按风险分级授权、人工监督、事件响应与持续治理的通用原则。
+  - id: source-google-pair
+    kind: source
+    label: People + AI Guidebook
+    url: https://pair.withgoogle.com/
+    publisher: Google PAIR
+    accessedAt: 2026-08-13
+    stability: stable
+    supports: 支持用户信任、控制与「面向行动的不确定性」的通用设计原则。
+  - id: source-owasp-prompt-injection
+    kind: source
+    label: OWASP LLM01 2025 Prompt Injection
+    url: https://genai.owasp.org/llmrisk/llm01-prompt-injection/
+    publisher: OWASP GenAI Security Project
+    accessedAt: 2026-08-13
+    stability: evolving
+    supports: 支持合同文本可能成为间接注入来源、需按不可信数据隔离。

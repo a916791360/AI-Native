@@ -2,6 +2,46 @@
   "version": 1,
   "terms": [
     {
+      "id": "ab-testing",
+      "url": "/terms/ab-testing/",
+      "nameZh": "A/B 测试",
+      "nameEn": "A/B Testing",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "把用户随机分组比较不同方案效果，用于在真实行为上判断改动是否带来因果改善。",
+      "domain": "ai-pm-fundamentals",
+      "domainNameZh": "AI 产品经理基本功",
+      "difficulty": "intermediate",
+      "ring": "extended",
+      "status": "verified",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "a/b 测试",
+        "a/b testing"
+      ]
+    },
+    {
+      "id": "acceptance-criteria",
+      "url": "/terms/acceptance-criteria/",
+      "nameZh": "验收标准",
+      "nameEn": "Acceptance Criteria",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "用可观察、可验证的条件描述功能完成标准，用于对齐开发、测试与业务对「完成」的定义。",
+      "domain": "ai-pm-fundamentals",
+      "domainNameZh": "AI 产品经理基本功",
+      "difficulty": "beginner",
+      "ring": "extended",
+      "status": "verified",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "验收标准",
+        "acceptance criteria"
+      ]
+    },
+    {
       "id": "accountability",
       "url": "/terms/accountability/",
       "nameZh": "问责",
@@ -233,6 +273,46 @@
       ]
     },
     {
+      "id": "ai-pm-career-path",
+      "url": "/terms/ai-pm-career-path/",
+      "nameZh": "AI 产品经理转岗路径",
+      "nameEn": "AI PM Career Transition",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "从产品经理或其他岗位转岗 AI 产品经理的路径、所需能力与常见准备方式。",
+      "domain": "ai-pm-fundamentals",
+      "domainNameZh": "AI 产品经理基本功",
+      "difficulty": "beginner",
+      "ring": "extended",
+      "status": "verified",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "ai 产品经理转岗路径",
+        "ai pm career transition"
+      ]
+    },
+    {
+      "id": "ai-pm-competency",
+      "url": "/terms/ai-pm-competency/",
+      "nameZh": "AI 产品经理能力地图",
+      "nameEn": "AI PM Competency Map",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "AI 产品经理所需的能力集合，涵盖 AI 判断、产品基本功与跨角色协作，用于自我评估与成长。",
+      "domain": "ai-pm-fundamentals",
+      "domainNameZh": "AI 产品经理基本功",
+      "difficulty": "intermediate",
+      "ring": "extended",
+      "status": "verified",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "ai 产品经理能力地图",
+        "ai pm competency map"
+      ]
+    },
+    {
       "id": "ai-product",
       "url": "/terms/ai-product/",
       "nameZh": "AI 产品",
@@ -250,6 +330,32 @@
       "searchKeys": [
         "ai 产品",
         "ai product"
+      ]
+    },
+    {
+      "id": "ai-product-manager",
+      "url": "/terms/ai-product-manager/",
+      "nameZh": "AI 产品经理",
+      "nameEn": "AI Product Manager",
+      "abbreviations": [],
+      "aliases": [
+        {
+          "value": "AI PM",
+          "language": "en"
+        }
+      ],
+      "summary": "负责发现 AI 产品机会、定义需求、协调方案并推动上线与持续迭代的产品角色，需要兼顾判断力与产品基本功。",
+      "domain": "ai-pm-fundamentals",
+      "domainNameZh": "AI 产品经理基本功",
+      "difficulty": "beginner",
+      "ring": "extended",
+      "status": "verified",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "ai 产品经理",
+        "ai product manager",
+        "ai pm"
       ]
     },
     {
@@ -585,6 +691,26 @@
       ]
     },
     {
+      "id": "business-model",
+      "url": "/terms/business-model/",
+      "nameZh": "商业模式",
+      "nameEn": "Business Model",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "描述产品如何为目标用户创造价值并获取收入的结构，是产品可持续性的基础。",
+      "domain": "ai-pm-fundamentals",
+      "domainNameZh": "AI 产品经理基本功",
+      "difficulty": "intermediate",
+      "ring": "extended",
+      "status": "verified",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "商业模式",
+        "business model"
+      ]
+    },
+    {
       "id": "chain-of-thought",
       "url": "/terms/chain-of-thought/",
       "nameZh": "思维链提示",
@@ -662,6 +788,26 @@
       "searchKeys": [
         "代码执行",
         "code execution"
+      ]
+    },
+    {
+      "id": "competitive-analysis",
+      "url": "/terms/competitive-analysis/",
+      "nameZh": "竞品分析",
+      "nameEn": "Competitive Analysis",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "系统比较竞品的目标、能力、定位与反馈，用于发现差异化机会与替代威胁。",
+      "domain": "ai-pm-fundamentals",
+      "domainNameZh": "AI 产品经理基本功",
+      "difficulty": "intermediate",
+      "ring": "extended",
+      "status": "verified",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "竞品分析",
+        "competitive analysis"
       ]
     },
     {
@@ -1651,6 +1797,29 @@
       ]
     },
     {
+      "id": "go-to-market",
+      "url": "/terms/go-to-market/",
+      "nameZh": "上线与增长",
+      "nameEn": "Go-to-Market",
+      "abbreviations": [
+        "GTM"
+      ],
+      "aliases": [],
+      "summary": "把产品送达目标用户并推动采用与增长的策略，涵盖定位、渠道、定价与启动节奏。",
+      "domain": "ai-pm-fundamentals",
+      "domainNameZh": "AI 产品经理基本功",
+      "difficulty": "intermediate",
+      "ring": "extended",
+      "status": "verified",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "上线与增长",
+        "go-to-market",
+        "gtm"
+      ]
+    },
+    {
       "id": "golden-dataset",
       "url": "/terms/golden-dataset/",
       "nameZh": "黄金数据集",
@@ -2486,6 +2655,29 @@
       ]
     },
     {
+      "id": "mvp",
+      "url": "/terms/mvp/",
+      "nameZh": "最小可行产品",
+      "nameEn": "Minimum Viable Product",
+      "abbreviations": [
+        "MVP"
+      ],
+      "aliases": [],
+      "summary": "用最小成本验证核心假设的最小可用产品版本，目标是学习而非一次做完所有功能。",
+      "domain": "ai-pm-fundamentals",
+      "domainNameZh": "AI 产品经理基本功",
+      "difficulty": "beginner",
+      "ring": "extended",
+      "status": "verified",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "最小可行产品",
+        "minimum viable product",
+        "mvp"
+      ]
+    },
+    {
       "id": "narrow-ai",
       "url": "/terms/narrow-ai/",
       "nameZh": "弱人工智能",
@@ -2543,6 +2735,26 @@
       "searchKeys": [
         "神经网络",
         "neural network"
+      ]
+    },
+    {
+      "id": "north-star-metric",
+      "url": "/terms/north-star-metric/",
+      "nameZh": "北极星指标",
+      "nameEn": "North Star Metric",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "反映用户获得核心价值的单一关键指标，用于对齐团队并判断增长是否健康。",
+      "domain": "ai-pm-fundamentals",
+      "domainNameZh": "AI 产品经理基本功",
+      "difficulty": "intermediate",
+      "ring": "extended",
+      "status": "verified",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "北极星指标",
+        "north star metric"
       ]
     },
     {
@@ -2749,6 +2961,29 @@
       ]
     },
     {
+      "id": "prd",
+      "url": "/terms/prd/",
+      "nameZh": "产品需求文档",
+      "nameEn": "Product Requirements Document",
+      "abbreviations": [
+        "PRD"
+      ],
+      "aliases": [],
+      "summary": "记录产品目标、用户、功能、验收标准与范围的文档，是需求从想法进入设计与开发协作的契约。",
+      "domain": "ai-pm-fundamentals",
+      "domainNameZh": "AI 产品经理基本功",
+      "difficulty": "beginner",
+      "ring": "extended",
+      "status": "verified",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "产品需求文档",
+        "product requirements document",
+        "prd"
+      ]
+    },
+    {
       "id": "pretraining",
       "url": "/terms/pretraining/",
       "nameZh": "预训练",
@@ -2766,6 +3001,46 @@
       "searchKeys": [
         "预训练",
         "pretraining"
+      ]
+    },
+    {
+      "id": "pricing-strategy",
+      "url": "/terms/pricing-strategy/",
+      "nameZh": "定价策略",
+      "nameEn": "Pricing Strategy",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "基于价值、成本与竞争确定价格结构与计费方式的决策，直接影响采用与商业可持续。",
+      "domain": "ai-pm-fundamentals",
+      "domainNameZh": "AI 产品经理基本功",
+      "difficulty": "intermediate",
+      "ring": "extended",
+      "status": "verified",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "定价策略",
+        "pricing strategy"
+      ]
+    },
+    {
+      "id": "prioritization",
+      "url": "/terms/prioritization/",
+      "nameZh": "需求优先级",
+      "nameEn": "Prioritization",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "依据价值、成本、风险与依赖对需求排序，让有限资源优先解决最重要问题的方法。",
+      "domain": "ai-pm-fundamentals",
+      "domainNameZh": "AI 产品经理基本功",
+      "difficulty": "intermediate",
+      "ring": "extended",
+      "status": "verified",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "需求优先级",
+        "prioritization"
       ]
     },
     {
@@ -2806,6 +3081,69 @@
       "searchKeys": [
         "问题方案匹配",
         "problem-solution fit"
+      ]
+    },
+    {
+      "id": "product-analytics",
+      "url": "/terms/product-analytics/",
+      "nameZh": "产品数据分析",
+      "nameEn": "Product Analytics",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "通过埋点、漏斗、留存等数据理解用户行为与产品健康度，支撑发现与验证。",
+      "domain": "ai-pm-fundamentals",
+      "domainNameZh": "AI 产品经理基本功",
+      "difficulty": "intermediate",
+      "ring": "extended",
+      "status": "verified",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "产品数据分析",
+        "product analytics"
+      ]
+    },
+    {
+      "id": "product-lifecycle",
+      "url": "/terms/product-lifecycle/",
+      "nameZh": "产品生命周期",
+      "nameEn": "Product Lifecycle",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "产品从概念、增长、成熟到衰退的阶段模型，用于匹配不同阶段的策略与资源。",
+      "domain": "ai-pm-fundamentals",
+      "domainNameZh": "AI 产品经理基本功",
+      "difficulty": "intermediate",
+      "ring": "extended",
+      "status": "verified",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "产品生命周期",
+        "product lifecycle"
+      ]
+    },
+    {
+      "id": "product-manager",
+      "url": "/terms/product-manager/",
+      "nameZh": "产品经理",
+      "nameEn": "Product Manager",
+      "abbreviations": [
+        "PM"
+      ],
+      "aliases": [],
+      "summary": "对产品结果负责、串联用户、业务与技术，通过发现、定义、优先级和迭代把想法变成可用产品的角色。",
+      "domain": "ai-pm-fundamentals",
+      "domainNameZh": "AI 产品经理基本功",
+      "difficulty": "beginner",
+      "ring": "extended",
+      "status": "verified",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "产品经理",
+        "product manager",
+        "pm"
       ]
     },
     {
@@ -3072,6 +3410,26 @@
       ]
     },
     {
+      "id": "requirement-analysis",
+      "url": "/terms/requirement-analysis/",
+      "nameZh": "需求分析",
+      "nameEn": "Requirement Analysis",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "把模糊想法拆解为可验证的问题、目标、约束与验收条件，形成可执行需求的过程。",
+      "domain": "ai-pm-fundamentals",
+      "domainNameZh": "AI 产品经理基本功",
+      "difficulty": "beginner",
+      "ring": "extended",
+      "status": "verified",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "需求分析",
+        "requirement analysis"
+      ]
+    },
+    {
       "id": "reranking",
       "url": "/terms/reranking/",
       "nameZh": "重排",
@@ -3250,6 +3608,26 @@
       "searchKeys": [
         "检索召回率",
         "retrieval recall"
+      ]
+    },
+    {
+      "id": "roadmap",
+      "url": "/terms/roadmap/",
+      "nameZh": "产品路线图",
+      "nameEn": "Product Roadmap",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "按时间与目标组织产品迭代方向的计划，用于对齐干系人预期并说明先做什么、为什么。",
+      "domain": "ai-pm-fundamentals",
+      "domainNameZh": "AI 产品经理基本功",
+      "difficulty": "intermediate",
+      "ring": "extended",
+      "status": "verified",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "产品路线图",
+        "product roadmap"
       ]
     },
     {
@@ -3542,6 +3920,26 @@
       ]
     },
     {
+      "id": "tech-collaboration",
+      "url": "/terms/tech-collaboration/",
+      "nameZh": "与工程师协作",
+      "nameEn": "Engineering Collaboration",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "产品经理与工程师在方案、排期、权衡与风险上的协作方式，关键是清晰目标与可验证验收。",
+      "domain": "ai-pm-fundamentals",
+      "domainNameZh": "AI 产品经理基本功",
+      "difficulty": "intermediate",
+      "ring": "extended",
+      "status": "verified",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "与工程师协作",
+        "engineering collaboration"
+      ]
+    },
+    {
       "id": "temperature",
       "url": "/terms/temperature/",
       "nameZh": "温度参数",
@@ -3822,6 +4220,26 @@
       ]
     },
     {
+      "id": "user-interview",
+      "url": "/terms/user-interview/",
+      "nameZh": "用户访谈",
+      "nameEn": "User Interview",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "通过一对一提问与追问获取用户真实目标、行为与障碍的定性研究方法，强调开放问题与去引导。",
+      "domain": "ai-pm-fundamentals",
+      "domainNameZh": "AI 产品经理基本功",
+      "difficulty": "beginner",
+      "ring": "extended",
+      "status": "verified",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "用户访谈",
+        "user interview"
+      ]
+    },
+    {
       "id": "user-prompt",
       "url": "/terms/user-prompt/",
       "nameZh": "用户提示词",
@@ -3839,6 +4257,26 @@
       "searchKeys": [
         "用户提示词",
         "user prompt"
+      ]
+    },
+    {
+      "id": "user-research",
+      "url": "/terms/user-research/",
+      "nameZh": "用户研究",
+      "nameEn": "User Research",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "通过访谈、问卷、观察等方法理解用户目标、情境与痛点，为需求判断提供可复核证据的研究过程。",
+      "domain": "ai-pm-fundamentals",
+      "domainNameZh": "AI 产品经理基本功",
+      "difficulty": "beginner",
+      "ring": "extended",
+      "status": "verified",
+      "priority": 1,
+      "featured": false,
+      "searchKeys": [
+        "用户研究",
+        "user research"
       ]
     },
     {
@@ -4417,6 +4855,26 @@
       "searchKeys": [
         "稠密向量",
         "dense vector"
+      ]
+    },
+    {
+      "id": "design-collaboration",
+      "url": "/terms/design-collaboration/",
+      "nameZh": "与设计师协作",
+      "nameEn": "Design Collaboration",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "产品经理与设计师在用户流程、交互与视觉上的协作，平衡用户价值与实现成本。",
+      "domain": "ai-pm-fundamentals",
+      "domainNameZh": "AI 产品经理基本功",
+      "difficulty": "intermediate",
+      "ring": "extended",
+      "status": "verified",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "与设计师协作",
+        "design collaboration"
       ]
     },
     {
@@ -5026,6 +5484,26 @@
       ]
     },
     {
+      "id": "project-management",
+      "url": "/terms/project-management/",
+      "nameZh": "项目管理",
+      "nameEn": "Project Management",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "对范围、进度、资源和风险进行计划与跟踪，保证交付可预测且问题及时暴露。",
+      "domain": "ai-pm-fundamentals",
+      "domainNameZh": "AI 产品经理基本功",
+      "difficulty": "intermediate",
+      "ring": "extended",
+      "status": "verified",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "项目管理",
+        "project management"
+      ]
+    },
+    {
       "id": "prompt-constraint",
       "url": "/terms/prompt-constraint/",
       "nameZh": "提示约束",
@@ -5366,6 +5844,26 @@
       ]
     },
     {
+      "id": "stakeholder-management",
+      "url": "/terms/stakeholder-management/",
+      "nameZh": "干系人管理",
+      "nameEn": "Stakeholder Management",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "识别并协调对产品有影响或受产品影响的人，管理预期、冲突与决策节奏。",
+      "domain": "ai-pm-fundamentals",
+      "domainNameZh": "AI 产品经理基本功",
+      "difficulty": "intermediate",
+      "ring": "extended",
+      "status": "verified",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "干系人管理",
+        "stakeholder management"
+      ]
+    },
+    {
       "id": "throughput",
       "url": "/terms/throughput/",
       "nameZh": "吞吐量",
@@ -5583,6 +6081,26 @@
       "searchKeys": [
         "无监督学习",
         "unsupervised learning"
+      ]
+    },
+    {
+      "id": "user-story",
+      "url": "/terms/user-story/",
+      "nameZh": "用户故事",
+      "nameEn": "User Story",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "用「作为…我希望…以便…」句式表达用户价值的最小需求单元，强调角色、意图与价值。",
+      "domain": "ai-pm-fundamentals",
+      "domainNameZh": "AI 产品经理基本功",
+      "difficulty": "beginner",
+      "ring": "extended",
+      "status": "verified",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "用户故事",
+        "user story"
       ]
     },
     {

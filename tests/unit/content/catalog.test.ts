@@ -14,7 +14,7 @@ describe('stage 8 catalog plan', () => {
     const [catalog, project] = await Promise.all([loadCatalogPlan(), loadProjectContent()]);
 
     expect(validateCatalogPlan(catalog, project)).toEqual([]);
-    expect(countCatalogBatches(catalog)).toEqual({ A: 12, B: 108, C: 120, D: 60 });
+    expect(countCatalogBatches(catalog)).toEqual({ A: 12, B: 108, C: 120, D: 85 });
     expect(catalog.groups.every((group) => group.terms.length === 25)).toBe(true);
   });
 
@@ -32,7 +32,7 @@ describe('stage 8 catalog plan', () => {
     const [catalog, summaries] = await Promise.all([loadCatalogPlan(), loadCatalogSummaries()]);
 
     expect(validatePublishedCatalogSummaries(catalog, summaries)).toEqual([]);
-    expect(Object.keys(summaries)).toHaveLength(288);
+    expect(Object.keys(summaries)).toHaveLength(313);
   });
 
   it('publishes batches B, C and D as connected catalogue entries', async () => {
@@ -44,10 +44,10 @@ describe('stage 8 catalog plan', () => {
       project.relations.flatMap((relation) => [relation.source, relation.target]),
     );
 
-    expect(project.terms).toHaveLength(300);
+    expect(project.terms).toHaveLength(325);
     expect(catalogued).toHaveLength(220);
     expect(drafts).toHaveLength(0);
-    expect(verified).toHaveLength(80);
+    expect(verified).toHaveLength(105);
     expect(catalogued.every(({ data }) => connected.has(data.id))).toBe(true);
   });
 });

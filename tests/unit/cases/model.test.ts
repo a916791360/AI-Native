@@ -17,7 +17,7 @@ describe('stage 12B case content model', () => {
     const { cases, project } = await loadFixture();
 
     expect(validateCaseStudies(cases, project)).toEqual([]);
-    expect(cases).toHaveLength(2);
+    expect(cases).toHaveLength(6);
     expect(cases.every(({ data }) => data.gates.length === 6)).toBe(true);
     expect(CASE_STAGE_IDS).toEqual(LEARNING_MODULES.map(({ id }) => id));
   });

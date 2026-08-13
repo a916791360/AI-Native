@@ -1018,3 +1018,35 @@ export function getLearningQuestionContext(id: string): LearningQuestionContext 
     isModuleEnd: positionWithinModule === moduleQuestions.length - 1,
   };
 }
+
+// 每道判断题对应的「如果你是 PM，下一步做什么」落地动作。
+// 目标：把判断从「结论」落到「产品经理交付物」，并链接到相关词条深挖。
+export const PM_ACTIONS: Record<string, string> = {
+  'q01-rules-or-ai': '把输入、期望输出与错误处理人写清，先排除确定性方案，再决定是否引入模型。',
+  'q02-classify-or-generate':
+    '先定义产品所需的最小输出字段，再决定是否允许自由生成，避免过度设计。',
+  'q03-context-limit':
+    '列出问题所需的证据来源与召回范围，把「相关性」作为知识方案的核心，而不是拼全文。',
+  'q04-high-stakes-answer': '按风险给任务分级，把权限、人工监督与证据要求写进验收标准。',
+  'q05-demo-or-value': '先定义「用户因此完成什么任务」，再决定是否立项，而不是把演示效果当机会。',
+  'q06-data-readiness': '检查数据质量、权限与任务匹配度，用检查项代替「数据很多」的直觉判断。',
+  'q07-error-cost': '把错误按后果分级，让质量指标绑定到错误成本，而不是只看平均准确率。',
+  'q08-automation-fit': '画出稳定步骤与需要判断的步骤，只对后者增加智能，别把自动化当 Agent。',
+  'q09-prompt-or-rag': '在方案说明里区分行为约束（Prompt）与运行时知识（RAG），各写清职责。',
+  'q10-workflow-or-agent': '按任务不确定性逐级授权，把不可自动执行的步骤（如支付）单独标注。',
+  'q11-fine-tuning': '先建立可测基线与评测集，再决定是否引入微调，用数据说话。',
+  'q12-search-or-generation': '先匹配用户任务是找证据还是生成，决定用检索、摘要还是两者组合。',
+  'q13-user-control': '设计「修改可见、可比较、可拒绝」的交互，再动用户资产，而不是直接覆盖。',
+  'q14-uncertainty':
+    '把不确定性表达成可行动的信息（如「证据不足，需人工确认」），而不是孤立百分比。',
+  'q15-human-escalation': '定义失败信号与升级路径，让转人工及时、明显且不丢上下文。',
+  'q16-recovery': '按影响范围设计预览、确认与同范围撤销，而不是逐条手工回滚。',
+  'q17-eval-set': '建立固定评测集与失败分类，让「质量是否变好」可以重复比较。',
+  'q18-online-metrics': '同时盯离线质量与线上任务完成率、延迟，避免只看离线分数。',
+  'q19-cost-latency': '按任务难度与价值分配模型资源，做资源分配方案，而不是一律用最强模型。',
+  'q20-launch-guardrails': '准备监控、降级与恢复路径，把「可靠」定义为可发现、可限制、可恢复。',
+  'q21-support-rag': '从最小可控价值开始，用证据逐级换取更高自动化，先人工确认再自动。',
+  'q22-sales-copilot': '为信息处理、建议、决策与外部行动分别授权，外发动作单独设权限。',
+  'q23-contract-review': '让 AI 增强证据获取与判断，把最终责任明确留在人身上。',
+  'q24-launch-decision': '对照价值、能力、体验、质量与运营责任清单逐项补齐，再谈上线。',
+};

@@ -93,3 +93,11 @@
   shortNameZh: 算力与产业
   description: 理解训练与推理所需算力、硬件和产业协作结构。
   ring: extended
+
+- id: ai-pm-fundamentals
+  order: 13
+  nameZh: AI 产品经理基本功
+  nameEn: AI Product Manager Fundamentals
+  shortNameZh: AI 产品经理
+  description: 学习从需求发现、方案文档到路线、指标与上线的产品经理核心方法。
+  ring: extended

@@ -1,0 +1,63 @@
+---
+id: prd
+nameZh: 产品需求文档
+nameEn: Product Requirements Document
+abbreviations:
+  - PRD
+aliases: []
+summary: 记录产品目标、用户、功能、验收标准与范围的文档，是需求从想法进入设计与开发协作的契约。
+domain: ai-pm-fundamentals
+difficulty: beginner
+ring: extended
+status: verified
+priority: 1
+featured: false
+publishedAt: '2026-08-13'
+updatedAt: '2026-08-13'
+verifiedAt: '2026-08-13'
+sources:
+  - id: svpg-inspired
+    type: textbook
+    title: Inspired - How to Create Tech Products Customers Love
+    url: https://www.svpg.com/
+    publisher: Silicon Valley Product Group
+    accessedAt: '2026-08-13'
+  - id: atlassian-prd
+    type: engineering-practice
+    title: Product Requirements Documents
+    url: https://www.atlassian.com/agile/product-management/requirements
+    publisher: Atlassian
+    accessedAt: '2026-08-13'
+---
+
+<h2 id="what-it-is">它是什么</h2>
+
+PRD 是记录「为什么做、为谁做、做什么、怎样算完成」的产品需求文档。它是需求从想法进入设计、开发与测试协作的契约，重点不是篇幅，而是让各方对目标、范围与验收有一致理解。
+
+<h2 id="why-it-matters">为什么需要它</h2>
+
+没有 PRD，团队容易各自按想象实现：设计强调体验、开发强调实现、业务强调目标，最后拼出来对不上。PRD 把目标、用户、功能、验收标准和边界写在同一处，减少返工和「我以为你懂」的错位。
+
+<h2 id="how-it-works">它如何工作</h2>
+
+一份可用的 PRD 通常包含：背景与目标、目标用户、用户问题、功能与范围（含不做什么）、验收标准、依赖与风险、成功指标。关键是把「用户问题」和「解决方案」分开写，并用可观察的验收标准代替形容词。
+
+<h2 id="example">真实例子</h2>
+
+一个 AI 客服助手 PRD 会写：目标是让坐席更快找到带版本的政策原文；目标用户是一线客服；功能是检索 + 原文引用 + 可编辑草稿；不做什么是「不自动对外发送」；验收标准是「引用必须能回到当前有效原文，且无证据时拒答」。
+
+<h2 id="tradeoffs">什么时候适合与不适合</h2>
+
+适合：跨角色协作、范围较大、或错误代价高的需求。慎用：小改动不必写成长文档，持续发现的方向也可用更轻的「一页说明 + 验收标准」代替。PRD 的价值在共识，不在文档厚度。
+
+<h2 id="try-it">亲自试一下</h2>
+
+拿一个功能写一页 PRD：目标一句话、用户一句话、功能三条以内、不做什么三条以内、验收标准三条（每条都能被观察到真假）。写完后问自己：没有上下文的人能否据此判断「做完没做完」。
+
+<h2 id="next">接下来学什么</h2>
+
+配合[验收标准](/terms/acceptance-criteria/)把「完成」定义清楚，再用[需求优先级](/terms/prioritization/)和[产品路线图](/terms/roadmap/)把多个 PRD 排进迭代。
+
+<h2 id="sources-and-revisions">来源与修订</h2>
+
+产品文档与「解决用户问题」的定位依据 Marty Cagan 的产品原则 [S1]；PRD 的组成要素参考 Atlassian 的实践指南 [S2]。本版强调「用户问题与解决方案分开」「验收可观察」，不把某种模板写成唯一标准。

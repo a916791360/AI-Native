@@ -28,13 +28,13 @@ describe('site metadata', () => {
     const metrics = deriveSiteMetrics(await loadProjectContent());
 
     expect(metrics).toMatchObject({
-      domainCount: 12,
-      termCount: 300,
-      verifiedTermCount: 80,
-      routeCount: 4,
-      publishedRouteCount: 4,
-      relationCount: 308,
-      latestVerifiedAt: '2026-07-31',
+      domainCount: 13,
+      termCount: 325,
+      verifiedTermCount: 105,
+      routeCount: 5,
+      publishedRouteCount: 5,
+      relationCount: 333,
+      latestVerifiedAt: '2026-08-13',
     });
   });
 

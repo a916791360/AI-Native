@@ -1,0 +1,62 @@
+---
+id: product-analytics
+nameZh: 产品数据分析
+nameEn: Product Analytics
+abbreviations: []
+aliases: []
+summary: 通过埋点、漏斗、留存等数据理解用户行为与产品健康度，支撑发现与验证。
+domain: ai-pm-fundamentals
+difficulty: intermediate
+ring: extended
+status: verified
+priority: 1
+featured: false
+publishedAt: '2026-08-13'
+updatedAt: '2026-08-13'
+verifiedAt: '2026-08-13'
+sources:
+  - id: amplitude-product-analytics
+    type: engineering-practice
+    title: Product analytics
+    url: https://amplitude.com/
+    publisher: Amplitude
+    accessedAt: '2026-08-13'
+  - id: wikipedia-analytics
+    type: research-institute
+    title: Analytics
+    url: https://en.wikipedia.org/wiki/Analytics
+    publisher: Wikipedia
+    accessedAt: '2026-08-13'
+---
+
+<h2 id="what-it-is">它是什么</h2>
+
+产品数据分析是通过埋点、漏斗、留存、分群等手段，理解用户行为与产品健康度的过程。它把「用户怎么用、卡在哪、还回不回来」变成可观察的事实，支撑发现与验证。
+
+<h2 id="why-it-matters">为什么需要它</h2>
+
+没有数据，产品决策靠感觉和「上线后再说」。数据分析让关键问题可回答：改动是否真的改善、哪个环节流失、增长是否健康，从而把资源和迭代方向放到有证据的地方。
+
+<h2 id="how-it-works">它如何工作</h2>
+
+先确定要回答的问题，再据此设计埋点（记录关键事件与属性），用漏斗看转化、用留存看长期价值、用分群看差异。关键是先有「北极星指标 + 护栏指标」，再围绕它们搭看板，而不是堆一堆没人看的报表。
+
+<h2 id="example">真实例子</h2>
+
+一个 AI 知识助手不只看「提问数」，而是看「提问 → 得到可引用答案 → 确认解决」的漏斗。数据显示很多用户在「得到答案」后就流失，于是团队发现「答案没标来源导致不信任」，优先修复引用展示。
+
+<h2 id="tradeoffs">什么时候适合与不适合</h2>
+
+适合：需要验证改动、定位流失、判断增长健康。慎用：只看表面指标会被误导（如刷量）；埋点过多带来隐私与维护成本；数据能说明「是什么」，不能替代「为什么」（后者靠研究）。分析要服务于决策。
+
+<h2 id="try-it">亲自试一下</h2>
+
+为你的产品画一条「新用户 → 首次获得价值」的漏斗，标出每一跳的转化。找出流失最大的一跳，写一个「为什么会在这里流失」的假设，并计划用数据或研究验证它。
+
+<h2 id="next">接下来学什么</h2>
+
+配合[北极星指标](/terms/north-star-metric/)选对指标，用 [A/B 测试](/terms/ab-testing/)做因果验证，再用[上线与增长](/terms/go-to-market/)把洞察转化为增长动作。
+
+<h2 id="sources-and-revisions">来源与修订</h2>
+
+产品分析围绕事件、漏斗与留存的做法依据 Amplitude 的实践 [S1] 与分析方法的通用定义 [S2]。本版强调「先定指标再搭看板」「数据回答是什么、研究回答为什么」，不把报表数量当分析质量。

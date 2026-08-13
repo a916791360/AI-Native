@@ -55,7 +55,7 @@ export const catalogPlanSchema = z
   .object({
     version: z.literal(1),
     targetCount: z.number().int().min(300).max(500),
-    groups: z.array(catalogGroupSchema).length(12),
+    groups: z.array(catalogGroupSchema).length(13),
     mergeReviews: z.array(mergeReviewSchema),
   })
   .strict();

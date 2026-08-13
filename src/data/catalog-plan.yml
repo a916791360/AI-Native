@@ -1,5 +1,5 @@
 version: 1
-targetCount: 300
+targetCount: 325
 
 # Tuple: [id, nameZh, nameEn, difficulty, ring, batch, scores(F/S/R/B), routeCodes]
 groups:
@@ -564,6 +564,79 @@ groups:
       - [tensor-parallelism, 张量并行, Tensor Parallelism, advanced, extended, D, '3443', F]
       - [energy-efficiency, 能源效率, Energy Efficiency, intermediate, core, D, '4555', FP]
 
+  - domain: ai-pm-fundamentals
+    terms:
+      - [ai-product-manager, AI 产品经理, AI Product Manager, beginner, extended, D, '5555', P]
+      - [product-manager, 产品经理, Product Manager, beginner, extended, D, '5544', P]
+      - [user-research, 用户研究, User Research, beginner, extended, D, '4555', P]
+      - [user-interview, 用户访谈, User Interview, beginner, extended, D, '4555', P]
+      - [requirement-analysis, 需求分析, Requirement Analysis, beginner, extended, D, '5555', P]
+      - [prd, 产品需求文档, Product Requirements Document, beginner, extended, D, '5555', P]
+      - [acceptance-criteria, 验收标准, Acceptance Criteria, beginner, extended, D, '5554', P]
+      - [user-story, 用户故事, User Story, beginner, extended, D, '4544', P]
+      - [prioritization, 需求优先级, Prioritization, intermediate, extended, D, '4555', P]
+      - [roadmap, 产品路线图, Product Roadmap, intermediate, extended, D, '4555', P]
+      - [mvp, 最小可行产品, Minimum Viable Product, beginner, extended, D, '5555', P]
+      - [
+          stakeholder-management,
+          干系人管理,
+          Stakeholder Management,
+          intermediate,
+          extended,
+          D,
+          '3554',
+          P,
+        ]
+      - [project-management, 项目管理, Project Management, intermediate, extended, D, '3554', P]
+      - [competitive-analysis, 竞品分析, Competitive Analysis, intermediate, extended, D, '4555', P]
+      - [business-model, 商业模式, Business Model, intermediate, extended, D, '4555', P]
+      - [pricing-strategy, 定价策略, Pricing Strategy, intermediate, extended, D, '3555', P]
+      - [north-star-metric, 北极星指标, North Star Metric, intermediate, extended, D, '4555', P]
+      - [ab-testing, A/B 测试, A/B Testing, intermediate, extended, D, '4555', P]
+      - [product-analytics, 产品数据分析, Product Analytics, intermediate, extended, D, '4555', P]
+      - [go-to-market, 上线与增长, Go-to-Market, intermediate, extended, D, '3555', P]
+      - [product-lifecycle, 产品生命周期, Product Lifecycle, intermediate, extended, D, '4554', P]
+      - [
+          tech-collaboration,
+          与工程师协作,
+          Engineering Collaboration,
+          intermediate,
+          extended,
+          D,
+          '4555',
+          P,
+        ]
+      - [
+          design-collaboration,
+          与设计师协作,
+          Design Collaboration,
+          intermediate,
+          extended,
+          D,
+          '3544',
+          P,
+        ]
+      - [
+          ai-pm-competency,
+          AI 产品经理能力地图,
+          AI PM Competency Map,
+          intermediate,
+          extended,
+          D,
+          '4555',
+          none,
+        ]
+      - [
+          ai-pm-career-path,
+          AI 产品经理转岗路径,
+          AI PM Career Transition,
+          beginner,
+          extended,
+          D,
+          '5555',
+          none,
+        ]
+
 mergeReviews:
   - canonical: artificial-intelligence
     variants:
@@ -684,3 +757,23 @@ mergeReviews:
     variants:
       - { value: GPU, language: en, kind: abbreviation }
     reason: 图形处理器的通用缩写应归入同一规范硬件概念。
+  - canonical: prd
+    variants:
+      - { value: PRD, language: en, kind: abbreviation }
+    reason: 产品需求文档的通用缩写作为搜索别名归入同一规范词条。
+  - canonical: mvp
+    variants:
+      - { value: MVP, language: en, kind: abbreviation }
+    reason: 最小可行产品的通用缩写作为搜索别名归入同一规范词条。
+  - canonical: go-to-market
+    variants:
+      - { value: GTM, language: en, kind: abbreviation }
+    reason: 上线与增长的通用缩写作为搜索别名归入同一规范词条。
+  - canonical: product-manager
+    variants:
+      - { value: PM, language: en, kind: abbreviation }
+    reason: 产品经理的通用缩写作为搜索别名归入同一规范词条。
+  - canonical: ai-product-manager
+    variants:
+      - { value: AI PM, language: en, kind: alias }
+    reason: 常见英文说法指向 AI 产品经理这一规范词条。

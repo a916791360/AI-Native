@@ -151,6 +151,17 @@ export const SEARCH_CASES: SearchCase[] = [
   { query: 'CUDA', expectedId: 'cuda', kind: 'exact' },
   { query: 'Tensor Parallelism', expectedId: 'tensor-parallelism', kind: 'exact' },
   { query: 'Compute', expectedId: 'compute', kind: 'exact' },
+  { query: '产品需求文档', expectedId: 'prd', kind: 'exact' },
+  { query: 'PRD', expectedId: 'prd', kind: 'alias' },
+  { query: '需求分析', expectedId: 'requirement-analysis', kind: 'exact' },
+  { query: '用户研究', expectedId: 'user-research', kind: 'exact' },
+  { query: '最小可行产品', expectedId: 'mvp', kind: 'exact' },
+  { query: 'MVP', expectedId: 'mvp', kind: 'alias' },
+  { query: '商业模式', expectedId: 'business-model', kind: 'exact' },
+  { query: '北极星指标', expectedId: 'north-star-metric', kind: 'exact' },
+  { query: '产品路线图', expectedId: 'roadmap', kind: 'exact' },
+  { query: 'AI 产品经理', expectedId: 'ai-product-manager', kind: 'exact' },
+  { query: 'AI PM', expectedId: 'ai-product-manager', kind: 'alias' },
 ];
 
 export function searchCasesForTerms(termIds: Iterable<string>) {

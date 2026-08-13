@@ -2,6 +2,174 @@
   "version": 1,
   "cases": [
     {
+      "caseId": "content-production-assistant",
+      "caseUrl": "/learn/cases/content-production-assistant/",
+      "firstGateId": "decide-ai-boundary",
+      "lastGateId": "govern-launch-and-iteration",
+      "gates": [
+        {
+          "id": "decide-ai-boundary",
+          "order": 1,
+          "stageId": "model-boundaries",
+          "title": "判断 AI 边界",
+          "status": "draft",
+          "url": "/learn/cases/content-production-assistant/decide-ai-boundary/",
+          "nextGateId": "establish-value-and-data",
+          "artifactIds": [
+            "cp-ai-applicability"
+          ]
+        },
+        {
+          "id": "establish-value-and-data",
+          "order": 2,
+          "stageId": "opportunity-judgment",
+          "title": "建立价值与数据条件",
+          "status": "draft",
+          "url": "/learn/cases/content-production-assistant/establish-value-and-data/",
+          "previousGateId": "decide-ai-boundary",
+          "nextGateId": "select-workflow",
+          "artifactIds": [
+            "cp-opportunity-assessment"
+          ]
+        },
+        {
+          "id": "select-workflow",
+          "order": 3,
+          "stageId": "solution-choice",
+          "title": "拆解选题、初稿、审核与发布工作流",
+          "status": "draft",
+          "url": "/learn/cases/content-production-assistant/select-workflow/",
+          "previousGateId": "establish-value-and-data",
+          "nextGateId": "design-control-and-recovery",
+          "artifactIds": [
+            "cp-workflow-selection"
+          ]
+        },
+        {
+          "id": "design-control-and-recovery",
+          "order": 4,
+          "stageId": "product-experience",
+          "title": "设计编辑控制与失败恢复",
+          "status": "draft",
+          "url": "/learn/cases/content-production-assistant/design-control-and-recovery/",
+          "previousGateId": "select-workflow",
+          "nextGateId": "define-evaluation-and-cost",
+          "artifactIds": [
+            "cp-responsibility-recovery"
+          ]
+        },
+        {
+          "id": "define-evaluation-and-cost",
+          "order": 5,
+          "stageId": "quality-constraints",
+          "title": "定义评测、成本与上线护栏",
+          "status": "draft",
+          "url": "/learn/cases/content-production-assistant/define-evaluation-and-cost/",
+          "previousGateId": "design-control-and-recovery",
+          "nextGateId": "govern-launch-and-iteration",
+          "artifactIds": [
+            "cp-evaluation-guardrails"
+          ]
+        },
+        {
+          "id": "govern-launch-and-iteration",
+          "order": 6,
+          "stageId": "capstone",
+          "title": "治理发布与持续更新",
+          "status": "draft",
+          "url": "/learn/cases/content-production-assistant/govern-launch-and-iteration/",
+          "previousGateId": "define-evaluation-and-cost",
+          "artifactIds": [
+            "cp-complete-review"
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "contract-review-assistant",
+      "caseUrl": "/learn/cases/contract-review-assistant/",
+      "firstGateId": "decide-ai-boundary",
+      "lastGateId": "govern-launch-and-iteration",
+      "gates": [
+        {
+          "id": "decide-ai-boundary",
+          "order": 1,
+          "stageId": "model-boundaries",
+          "title": "判断 AI 边界",
+          "status": "draft",
+          "url": "/learn/cases/contract-review-assistant/decide-ai-boundary/",
+          "nextGateId": "establish-value-and-data",
+          "artifactIds": [
+            "cr-ai-applicability"
+          ]
+        },
+        {
+          "id": "establish-value-and-data",
+          "order": 2,
+          "stageId": "opportunity-judgment",
+          "title": "建立价值与数据条件",
+          "status": "draft",
+          "url": "/learn/cases/contract-review-assistant/establish-value-and-data/",
+          "previousGateId": "decide-ai-boundary",
+          "nextGateId": "select-workflow",
+          "artifactIds": [
+            "cr-opportunity-assessment"
+          ]
+        },
+        {
+          "id": "select-workflow",
+          "order": 3,
+          "stageId": "solution-choice",
+          "title": "拆解条款识别、对比与升级工作流",
+          "status": "draft",
+          "url": "/learn/cases/contract-review-assistant/select-workflow/",
+          "previousGateId": "establish-value-and-data",
+          "nextGateId": "design-control-and-recovery",
+          "artifactIds": [
+            "cr-workflow-selection"
+          ]
+        },
+        {
+          "id": "design-control-and-recovery",
+          "order": 4,
+          "stageId": "product-experience",
+          "title": "设计法务控制与失败恢复",
+          "status": "draft",
+          "url": "/learn/cases/contract-review-assistant/design-control-and-recovery/",
+          "previousGateId": "select-workflow",
+          "nextGateId": "define-evaluation-and-cost",
+          "artifactIds": [
+            "cr-responsibility-recovery"
+          ]
+        },
+        {
+          "id": "define-evaluation-and-cost",
+          "order": 5,
+          "stageId": "quality-constraints",
+          "title": "定义评测、成本与上线护栏",
+          "status": "draft",
+          "url": "/learn/cases/contract-review-assistant/define-evaluation-and-cost/",
+          "previousGateId": "design-control-and-recovery",
+          "nextGateId": "govern-launch-and-iteration",
+          "artifactIds": [
+            "cr-evaluation-guardrails"
+          ]
+        },
+        {
+          "id": "govern-launch-and-iteration",
+          "order": 6,
+          "stageId": "capstone",
+          "title": "治理发布与持续更新",
+          "status": "draft",
+          "url": "/learn/cases/contract-review-assistant/govern-launch-and-iteration/",
+          "previousGateId": "define-evaluation-and-cost",
+          "artifactIds": [
+            "cr-complete-review"
+          ]
+        }
+      ]
+    },
+    {
       "caseId": "customer-support-knowledge-base",
       "caseUrl": "/learn/cases/customer-support-knowledge-base/",
       "firstGateId": "decide-ai-boundary",
@@ -81,6 +249,174 @@
           "previousGateId": "define-evaluation-and-cost",
           "artifactIds": [
             "kb-complete-review"
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "internal-operations-automation",
+      "caseUrl": "/learn/cases/internal-operations-automation/",
+      "firstGateId": "decide-ai-boundary",
+      "lastGateId": "govern-launch-and-iteration",
+      "gates": [
+        {
+          "id": "decide-ai-boundary",
+          "order": 1,
+          "stageId": "model-boundaries",
+          "title": "判断 AI 边界",
+          "status": "draft",
+          "url": "/learn/cases/internal-operations-automation/decide-ai-boundary/",
+          "nextGateId": "establish-value-and-data",
+          "artifactIds": [
+            "io-ai-applicability"
+          ]
+        },
+        {
+          "id": "establish-value-and-data",
+          "order": 2,
+          "stageId": "opportunity-judgment",
+          "title": "建立价值与数据条件",
+          "status": "draft",
+          "url": "/learn/cases/internal-operations-automation/establish-value-and-data/",
+          "previousGateId": "decide-ai-boundary",
+          "nextGateId": "select-workflow",
+          "artifactIds": [
+            "io-opportunity-assessment"
+          ]
+        },
+        {
+          "id": "select-workflow",
+          "order": 3,
+          "stageId": "solution-choice",
+          "title": "拆解信息处理、草稿与执行工作流",
+          "status": "draft",
+          "url": "/learn/cases/internal-operations-automation/select-workflow/",
+          "previousGateId": "establish-value-and-data",
+          "nextGateId": "design-control-and-recovery",
+          "artifactIds": [
+            "io-workflow-selection"
+          ]
+        },
+        {
+          "id": "design-control-and-recovery",
+          "order": 4,
+          "stageId": "product-experience",
+          "title": "设计运营控制与失败恢复",
+          "status": "draft",
+          "url": "/learn/cases/internal-operations-automation/design-control-and-recovery/",
+          "previousGateId": "select-workflow",
+          "nextGateId": "define-evaluation-and-cost",
+          "artifactIds": [
+            "io-responsibility-recovery"
+          ]
+        },
+        {
+          "id": "define-evaluation-and-cost",
+          "order": 5,
+          "stageId": "quality-constraints",
+          "title": "定义评测、成本与上线护栏",
+          "status": "draft",
+          "url": "/learn/cases/internal-operations-automation/define-evaluation-and-cost/",
+          "previousGateId": "design-control-and-recovery",
+          "nextGateId": "govern-launch-and-iteration",
+          "artifactIds": [
+            "io-evaluation-guardrails"
+          ]
+        },
+        {
+          "id": "govern-launch-and-iteration",
+          "order": 6,
+          "stageId": "capstone",
+          "title": "治理发布与持续更新",
+          "status": "draft",
+          "url": "/learn/cases/internal-operations-automation/govern-launch-and-iteration/",
+          "previousGateId": "define-evaluation-and-cost",
+          "artifactIds": [
+            "io-complete-review"
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "sales-follow-up-assistant",
+      "caseUrl": "/learn/cases/sales-follow-up-assistant/",
+      "firstGateId": "decide-ai-boundary",
+      "lastGateId": "govern-launch-and-iteration",
+      "gates": [
+        {
+          "id": "decide-ai-boundary",
+          "order": 1,
+          "stageId": "model-boundaries",
+          "title": "判断 AI 边界",
+          "status": "draft",
+          "url": "/learn/cases/sales-follow-up-assistant/decide-ai-boundary/",
+          "nextGateId": "establish-value-and-data",
+          "artifactIds": [
+            "sf-ai-applicability"
+          ]
+        },
+        {
+          "id": "establish-value-and-data",
+          "order": 2,
+          "stageId": "opportunity-judgment",
+          "title": "建立价值与数据条件",
+          "status": "draft",
+          "url": "/learn/cases/sales-follow-up-assistant/establish-value-and-data/",
+          "previousGateId": "decide-ai-boundary",
+          "nextGateId": "select-workflow",
+          "artifactIds": [
+            "sf-opportunity-assessment"
+          ]
+        },
+        {
+          "id": "select-workflow",
+          "order": 3,
+          "stageId": "solution-choice",
+          "title": "拆解信息、草稿与外发工作流",
+          "status": "draft",
+          "url": "/learn/cases/sales-follow-up-assistant/select-workflow/",
+          "previousGateId": "establish-value-and-data",
+          "nextGateId": "design-control-and-recovery",
+          "artifactIds": [
+            "sf-workflow-selection"
+          ]
+        },
+        {
+          "id": "design-control-and-recovery",
+          "order": 4,
+          "stageId": "product-experience",
+          "title": "设计销售控制与失败恢复",
+          "status": "draft",
+          "url": "/learn/cases/sales-follow-up-assistant/design-control-and-recovery/",
+          "previousGateId": "select-workflow",
+          "nextGateId": "define-evaluation-and-cost",
+          "artifactIds": [
+            "sf-responsibility-recovery"
+          ]
+        },
+        {
+          "id": "define-evaluation-and-cost",
+          "order": 5,
+          "stageId": "quality-constraints",
+          "title": "定义评测、成本与上线护栏",
+          "status": "draft",
+          "url": "/learn/cases/sales-follow-up-assistant/define-evaluation-and-cost/",
+          "previousGateId": "design-control-and-recovery",
+          "nextGateId": "govern-launch-and-iteration",
+          "artifactIds": [
+            "sf-evaluation-guardrails"
+          ]
+        },
+        {
+          "id": "govern-launch-and-iteration",
+          "order": 6,
+          "stageId": "capstone",
+          "title": "治理发布与持续更新",
+          "status": "draft",
+          "url": "/learn/cases/sales-follow-up-assistant/govern-launch-and-iteration/",
+          "previousGateId": "define-evaluation-and-cost",
+          "artifactIds": [
+            "sf-complete-review"
           ]
         }
       ]

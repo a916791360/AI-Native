@@ -1,6 +1,6 @@
 ---
 import ContentScopeNav from '@/components/layout/ContentScopeNav.astro';
-import { LEARNING_MODULES, getQuestionsForModule } from '@/data/learning';
+import { LEARNING_MODULES, LEARNING_QUESTIONS, getQuestionsForModule } from '@/data/learning';
 import { loadCaseStudies } from '@/lib/cases/io';
 import { loadProjectContent } from '@/lib/content/io';
 import { deriveSiteMetrics } from '@/lib/site/metrics';
@@ -50,6 +50,10 @@ const metrics = deriveSiteMetrics(project);
       <header class="catalog-title">
         <h1>AI 产品判断学习库</h1>
         <p>按六个阶段浏览 24 道判断题，直接进入场景、选择方案并查看反馈。</p>
+        <p class="catalog-progress" data-catalog-progress hidden>
+          本机进度：已答 <strong data-progress-count>0</strong> / {LEARNING_QUESTIONS.length}
+          <a data-progress-next href="/learn/questions/q01-rules-or-ai/">继续下一题 →</a>
+        </p>
       </header>
 
       {
@@ -68,7 +72,7 @@ const metrics = deriveSiteMetrics(project);
 
               <div class="learning-card-grid">
                 {questions.map((question) => (
-                  <article class="learning-card">
+                  <article class="learning-card" data-question-id={question.id}>
                     <a href={`/learn/questions/${question.id}/`}>
                       <div class="learning-card-heading">
                         <h3>{question.shortTitle}</h3>
@@ -85,7 +89,7 @@ const metrics = deriveSiteMetrics(project);
                             <li>{fact}</li>
                           ))}
                         </ul>
-                        <strong>{question.principle}</strong>
+                        <strong>打开题目，先做判断 →</strong>
                       </div>
                     </a>
                   </article>
@@ -106,4 +110,34 @@ const metrics = deriveSiteMetrics(project);
     target?.scrollIntoView({ block: 'start' });
     window.history.replaceState({}, '', `#${stagePicker.value}`);
   });
+
+  const PROGRESS_KEY = 'ai-native.progress';
+  const progressEl = document.querySelector<HTMLElement>('[data-catalog-progress]');
+  const countEl = document.querySelector<HTMLElement>('[data-progress-count]');
+  const nextLink = document.querySelector<HTMLAnchorElement>('[data-progress-next]');
+  const cards = [...document.querySelectorAll<HTMLElement>('[data-question-id]')];
+
+  let answered: string[] = [];
+  try {
+    const stored = JSON.parse(localStorage.getItem(PROGRESS_KEY) ?? '{"answered":[]}');
+    if (Array.isArray(stored.answered)) answered = stored.answered;
+  } catch {
+    /* localStorage unavailable */
+  }
+
+  if (answered.length > 0 && progressEl) {
+    const answeredSet = new Set(answered);
+    cards.forEach((card) => {
+      if (answeredSet.has(card.dataset.questionId ?? '')) {
+        card.dataset.answered = 'true';
+        const badge = card.querySelector<HTMLElement>('.learning-card-heading span');
+        if (badge) badge.textContent = `✓ ${badge.textContent}`;
+      }
+    });
+    if (countEl) countEl.textContent = String(answered.length);
+    const nextCard = cards.find((card) => !answeredSet.has(card.dataset.questionId ?? ''));
+    if (nextLink)
+      nextLink.href = nextCard ? `/learn/questions/${nextCard.dataset.questionId}/` : '/learn/';
+    progressEl.hidden = false;
+  }
 </script>

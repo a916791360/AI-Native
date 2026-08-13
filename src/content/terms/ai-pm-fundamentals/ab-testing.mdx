@@ -1,0 +1,62 @@
+---
+id: ab-testing
+nameZh: A/B 测试
+nameEn: A/B Testing
+abbreviations: []
+aliases: []
+summary: 把用户随机分组比较不同方案效果，用于在真实行为上判断改动是否带来因果改善。
+domain: ai-pm-fundamentals
+difficulty: intermediate
+ring: extended
+status: verified
+priority: 1
+featured: false
+publishedAt: '2026-08-13'
+updatedAt: '2026-08-13'
+verifiedAt: '2026-08-13'
+sources:
+  - id: wikipedia-ab-testing
+    type: research-institute
+    title: A/B testing
+    url: https://en.wikipedia.org/wiki/A/B_testing
+    publisher: Wikipedia
+    accessedAt: '2026-08-13'
+  - id: exp-platform
+    type: engineering-practice
+    title: Trustworthy Online Controlled Experiments
+    url: https://exp-platform.com/
+    publisher: Ron Kohavi
+    accessedAt: '2026-08-13'
+---
+
+<h2 id="what-it-is">它是什么</h2>
+
+A/B 测试是把用户随机分成两组或多组，分别体验不同方案，再比较真实行为指标的实验方法。它用来判断一个改动是否真的带来因果改善，而不是靠感觉或「上线后再说」。
+
+<h2 id="why-it-matters">为什么需要它</h2>
+
+很多「看起来更好」的改动上线后没效果甚至有副作用。A/B 测试用随机化排除季节、用户差异等干扰，让「改没改好」有可复现的证据，避免把资源和用户信任浪费在错误改动上。
+
+<h2 id="how-it-works">它如何工作</h2>
+
+先定要改善的指标（最好对齐北极星），再确定样本量与时长，随机分配用户到控制组和实验组，只改变一个变量。运行到足够样本后，用统计检验判断差异是否显著。对 AI 产品要额外注意：模型、提示词、延迟等都可能成为被测试变量。
+
+<h2 id="example">真实例子</h2>
+
+一个 AI 客服助手想测试「默认展示引用原文」是否提升信任。团队把坐席随机分成两组，一组默认展开引用、一组默认折叠，观察「坐席采纳率」和「回复编辑时间」。结果若采纳率显著上升，才把默认展开推向全量。
+
+<h2 id="tradeoffs">什么时候适合与不适合</h2>
+
+适合：有足够流量、需要因果结论、改动可被随机化。慎用：样本不足会得出假显著；同时改多个变量无法归因；高风险或隐私敏感场景要谨慎设计。A/B 测试是因果工具，不是所有决策都需要它。
+
+<h2 id="try-it">亲自试一下</h2>
+
+挑一个你想改的地方，写出「要改善的指标、控制组与实验组的区别、如何随机分组、跑多久够样本」。检查是否只改了一个变量，以及结论能否用统计检验支持。
+
+<h2 id="next">接下来学什么</h2>
+
+配合[北极星指标](/terms/north-star-metric/)选对实验指标，用[产品数据分析](/terms/product-analytics/)建立埋点与漏斗，再结合[上线与增长](/terms/go-to-market/)把验证过的改动推向用户。
+
+<h2 id="sources-and-revisions">来源与修订</h2>
+
+A/B 测试的随机化与因果判断依据其通用定义 [S1] 与在线受控实验的方法指南 [S2]。本版强调「单变量、足够样本、对齐关键指标」，不把 A/B 测试写成唯一的决策手段。

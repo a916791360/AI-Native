@@ -25,7 +25,7 @@ const dateSchema = z
 export const domainSchema = z
   .object({
     id: stableIdSchema,
-    order: z.number().int().min(1).max(12),
+    order: z.number().int().min(1).max(13),
     nameZh: z.string().min(2),
     nameEn: z.string().min(2),
     shortNameZh: z.string().min(2),
@@ -34,7 +34,7 @@ export const domainSchema = z
   })
   .strict();
 
-export const domainsSchema = z.array(domainSchema).length(12);
+export const domainsSchema = z.array(domainSchema).length(13);
 
 const aliasSchema = z
   .object({
@@ -116,7 +116,7 @@ const prerequisiteExceptionSchema = z
 export const routeSchema = z
   .object({
     id: stableIdSchema,
-    order: z.number().int().min(1).max(4),
+    order: z.number().int().min(1).max(5),
     nameZh: z.string().min(2),
     summary: z.string().min(10).max(160),
     audience: z.array(z.string().min(2)).min(1),

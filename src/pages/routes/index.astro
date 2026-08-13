@@ -12,7 +12,10 @@ const routes = project.routes
   .sort((left, right) => left.order - right.order);
 ---
 
-<BaseLayout title="学习路线" description="沿四条有顺序的词条路线系统学习 AI。">
+<BaseLayout
+  title="学习路线"
+  description={`沿 ${metrics.publishedRouteCount} 条有顺序的词条路线系统学习 AI。`}
+>
   <main id="main-content" class="routes-page">
     <PageIntro
       eyebrow={`Learning routes · ${metrics.publishedRouteCount} published`}

@@ -2,6 +2,58 @@
   "version": 1,
   "cases": [
     {
+      "id": "content-production-assistant",
+      "url": "/learn/cases/content-production-assistant/",
+      "title": "内容生产助手",
+      "level": "focus",
+      "domain": "AI 产品与内容运营",
+      "audience": [
+        "零基础或初级 AI 产品经理",
+        "需要评审内容生产助手的产品、内容与营销人员"
+      ],
+      "objective": "在事实可核验、版权可规避、人工可审核的前提下，帮助内容团队生成初稿并保持品牌一致性；首版不自动发布。",
+      "status": "draft",
+      "updatedAt": "2026-08-13",
+      "gateCount": 6,
+      "artifactCount": 6,
+      "metricCount": 12,
+      "failureModeCount": 12,
+      "stageIds": [
+        "model-boundaries",
+        "opportunity-judgment",
+        "solution-choice",
+        "product-experience",
+        "quality-constraints",
+        "capstone"
+      ]
+    },
+    {
+      "id": "contract-review-assistant",
+      "url": "/learn/cases/contract-review-assistant/",
+      "title": "合同条款审核助手",
+      "level": "focus",
+      "domain": "AI 产品与法务",
+      "audience": [
+        "零基础或初级 AI 产品经理",
+        "需要评审合同审核助手的产品、法务与业务人员"
+      ],
+      "objective": "在条款可追溯、漏报可发现、人工可接管、责任不转移的前提下，帮助法务更快定位非标准条款与风险，同时保持最终判断和审批由人负责。",
+      "status": "draft",
+      "updatedAt": "2026-08-13",
+      "gateCount": 6,
+      "artifactCount": 6,
+      "metricCount": 12,
+      "failureModeCount": 12,
+      "stageIds": [
+        "model-boundaries",
+        "opportunity-judgment",
+        "solution-choice",
+        "product-experience",
+        "quality-constraints",
+        "capstone"
+      ]
+    },
+    {
       "id": "customer-support-knowledge-base",
       "url": "/learn/cases/customer-support-knowledge-base/",
       "title": "客服知识库与回答辅助",
@@ -14,6 +66,58 @@
       "objective": "在知识版本、访问权限和原文证据可核验的前提下，提高坐席形成可发送回答的效率，并在证据不足或风险较高时可靠拒答和升级。",
       "status": "verified",
       "updatedAt": "2026-08-04",
+      "gateCount": 6,
+      "artifactCount": 6,
+      "metricCount": 12,
+      "failureModeCount": 12,
+      "stageIds": [
+        "model-boundaries",
+        "opportunity-judgment",
+        "solution-choice",
+        "product-experience",
+        "quality-constraints",
+        "capstone"
+      ]
+    },
+    {
+      "id": "internal-operations-automation",
+      "url": "/learn/cases/internal-operations-automation/",
+      "title": "内部运营自动化助手",
+      "level": "focus",
+      "domain": "AI 产品与内部运营",
+      "audience": [
+        "零基础或初级 AI 产品经理",
+        "需要评审内部自动化助手的产品、运营与工程人员"
+      ],
+      "objective": "在动作可审计、错误可恢复、人工可接管的前提下，帮助运营团队自动化重复任务；首版只做信息处理与草稿，不自动执行有副作用的动作。",
+      "status": "draft",
+      "updatedAt": "2026-08-13",
+      "gateCount": 6,
+      "artifactCount": 6,
+      "metricCount": 12,
+      "failureModeCount": 12,
+      "stageIds": [
+        "model-boundaries",
+        "opportunity-judgment",
+        "solution-choice",
+        "product-experience",
+        "quality-constraints",
+        "capstone"
+      ]
+    },
+    {
+      "id": "sales-follow-up-assistant",
+      "url": "/learn/cases/sales-follow-up-assistant/",
+      "title": "销售跟进助手",
+      "level": "focus",
+      "domain": "AI 产品与销售运营",
+      "audience": [
+        "零基础或初级 AI 产品经理",
+        "需要评审销售助手的产品与业务人员"
+      ],
+      "objective": "在客户信息可追溯、外发动作可授权、错误可发现并恢复的前提下，帮助销售整理上下文、形成建议草稿并记录跟进结果；首版不自动对外发送。",
+      "status": "draft",
+      "updatedAt": "2026-08-13",
       "gateCount": 6,
       "artifactCount": 6,
       "metricCount": 12,
