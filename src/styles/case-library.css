@@ -124,18 +124,18 @@
 }
 
 .case-card-actions a:first-child {
-  border-color: var(--color-prerequisite);
-  background: var(--color-prerequisite);
-  color: white;
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+  color: var(--color-black);
 }
 
 .case-card-actions a:hover {
-  border-color: var(--color-prerequisite);
-  color: var(--color-prerequisite);
+  border-color: var(--color-accent-strong);
+  color: var(--color-accent-strong);
 }
 
 .case-card-actions a:first-child:hover {
-  color: white;
+  color: var(--color-black);
 }
 
 @media (max-width: 520px) {

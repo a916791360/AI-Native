@@ -25,8 +25,8 @@ const routes = project.routes
 
     <section class="route-register" aria-label="已发布学习路线">
       {
-        routes.map((route) => (
-          <article class="route-entry">
+        routes.map((route, routeIndex) => (
+          <article class="route-entry" data-reveal style={`--reveal-delay: ${routeIndex * 80}ms`}>
             <div class="route-index">
               <span class="meta-label">Route {String(route.order).padStart(2, '0')}</span>
               <strong>{String(route.order).padStart(2, '0')}</strong>

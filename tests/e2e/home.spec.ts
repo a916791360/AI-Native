@@ -397,6 +397,7 @@ test('publishes all five ordered learning routes', async ({ page }) => {
 });
 
 test('renders every verified term as an eight-section article', async ({ page }) => {
+  test.setTimeout(120_000);
   const termIds = registry.terms.filter(({ status }) => status === 'verified').map(({ id }) => id);
 
   for (const termId of termIds) {

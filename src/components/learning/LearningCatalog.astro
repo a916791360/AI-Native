@@ -71,8 +71,13 @@ const metrics = deriveSiteMetrics(project);
               </header>
 
               <div class="learning-card-grid">
-                {questions.map((question) => (
-                  <article class="learning-card" data-question-id={question.id}>
+                {questions.map((question, cardIndex) => (
+                  <article
+                    class="learning-card"
+                    data-question-id={question.id}
+                    data-reveal
+                    style={`--reveal-delay: ${cardIndex * 45}ms`}
+                  >
                     <a href={`/learn/questions/${question.id}/`}>
                       <div class="learning-card-heading">
                         <h3>{question.shortTitle}</h3>

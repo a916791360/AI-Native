@@ -45,8 +45,13 @@
 
 .scope-strip a:hover,
 .scope-strip a[aria-current='page'] {
-  background: oklch(0.95 0.025 260);
-  color: var(--color-prerequisite);
+  background: var(--color-accent-wash);
+  color: var(--color-accent-strong);
+}
+
+.scope-strip a:hover small,
+.scope-strip a[aria-current='page'] small {
+  color: inherit;
 }
 
 .scope-strip small {
@@ -106,8 +111,9 @@
 .catalog-title h1 {
   margin: 0;
   font-size: 1.875rem;
+  font-weight: 650;
   line-height: 1.25;
-  letter-spacing: 0;
+  letter-spacing: -0.012em;
 }
 
 .catalog-title p {
@@ -186,15 +192,18 @@
   border: 1px solid var(--color-line);
   border-radius: var(--radius-md);
   background: var(--color-panel);
+  box-shadow: var(--shadow-card);
   overflow: hidden;
   transition:
     border-color var(--transition-fast),
-    box-shadow var(--transition-fast);
+    box-shadow var(--transition-fast),
+    transform var(--transition-fast);
 }
 
 .learning-card:hover,
 .case-catalog-card:hover {
-  border-color: color-mix(in oklch, var(--color-prerequisite) 48%, var(--color-line));
+  transform: translateY(-3px);
+  border-color: color-mix(in oklch, var(--color-accent) 45%, var(--color-line));
   box-shadow: var(--shadow-hover);
 }
 

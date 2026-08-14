@@ -178,7 +178,7 @@ const localGraph = selectLocalGraph(generatedGraph as GraphData, term.id);
         </nav>
       </details>
 
-      <article class="term-article">
+      <article class="term-article" data-reveal>
         {
           hasDeepContent ? (
             <div class="term-content">
@@ -186,7 +186,7 @@ const localGraph = selectLocalGraph(generatedGraph as GraphData, term.id);
             </div>
           ) : (
             <section id="overview" class="catalogued-copy">
-              <p class="section-number">01 / Catalogue entry</p>
+              <p class="section-number">Catalogue entry</p>
               <h2>内容概览</h2>
               <p class="lead">{term.summary}</p>
               <p>

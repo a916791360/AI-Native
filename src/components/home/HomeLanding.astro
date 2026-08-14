@@ -13,29 +13,33 @@ const entryPoints = [
     href: '/routes/',
     kicker: '转岗路径',
     title: '按职业路径开始',
-    copy: '把「会判断」到「能落地」串成一条顺序，知道先学什么、再学什么。',
+    copy: '把「会判断」到「能落地」串成一条顺序。',
     count: `${metrics.publishedRouteCount} 条路线`,
+    index: '01',
   },
   {
     href: '/learn/',
     kicker: '判断题库',
     title: '做 24 道判断题',
-    copy: '六阶段、24 个真实场景，每次选择都有分档反馈与判断方法。',
+    copy: '六阶段、24 个真实场景，选择后有分档反馈。',
     count: `${LEARNING_QUESTIONS.length} 道题`,
+    index: '02',
   },
   {
     href: '/learn/cases/',
     kicker: '案例实战',
     title: '跟完整项目',
-    copy: '同一个业务连续六次评审，材料逐步形成，最终汇成可评审档案。',
+    copy: '同一个业务连续六次评审，汇成评审档案。',
     count: `${cases.length} 个案例`,
+    index: '03',
   },
   {
     href: '/atlas/',
     kicker: '知识图鉴',
     title: '随时查概念',
-    copy: `${metrics.domainCount} 个领域、按关系连接的知识词条，学习中随时按需深挖。`,
+    copy: `${metrics.domainCount} 个领域、按关系连接的知识词条。`,
     count: `${metrics.termCount} 个词条`,
+    index: '04',
   },
 ] as const;
 ---
@@ -46,106 +50,158 @@ const entryPoints = [
   data-question-order={JSON.stringify(orderedQuestionIds)}
 >
   <section class="hero" aria-labelledby="hero-heading">
-    <div class="hero-inner">
-      <p class="eyebrow">落地型 AI 产品经理学习系统</p>
-      <h1 id="hero-heading">从看懂 AI，到做出可上线的 AI 产品</h1>
-      <p class="hero-copy">
-        面向想转岗 AI 产品经理的你。不是背名词，而是学会判断「该不该用
-        AI、选什么方案、怎么落地、何时上线」，并把它做成可评审的产品方案。
-      </p>
-      <div class="hero-actions">
-        <a class="hero-primary" href="/learn/questions/q01-rules-or-ai/" data-hero-start
-          >从第 01 题开始</a
-        >
-        <a class="hero-secondary" href="#learning-structure">先看学习结构</a>
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow" data-reveal>落地型 AI 产品经理学习系统</p>
+        <h1 id="hero-heading" data-reveal style="--reveal-delay: 60ms">
+          从看懂 AI，到做出<span class="hl">可上线</span>的 AI 产品
+        </h1>
+        <p class="hero-sub" data-reveal style="--reveal-delay: 120ms">
+          不是背名词，而是学会判断<b>「该不该用 AI、选什么方案、如何落地、何时上线」</b
+          >，并把它做成可评审的产品方案。
+        </p>
+        <div class="cta-row" data-reveal style="--reveal-delay: 180ms">
+          <a class="cta-primary" href="/learn/questions/q01-rules-or-ai/" data-hero-start>
+            从第 01 题开始 →
+          </a>
+          <a class="cta-ghost" href="#learning-structure">先看学习结构</a>
+        </div>
       </div>
-      <p class="hero-note">静态学习库 · 不登录 · 不保存个人作业 · 内容持续校订</p>
+      <div class="term" aria-hidden="true" data-reveal style="--reveal-delay: 140ms">
+        <div class="term-bar">
+          <span class="dots"><i></i><i></i><i></i></span>
+          <span>ai-native --status</span>
+        </div>
+        <div class="term-body">
+          <p><span class="prompt">$</span> ai-native <b>judge</b> --scenario 发票金额校验</p>
+          <p class="ok">✓ 推荐路径：确定性规则计算并校验</p>
+          <p><span class="prompt">$</span> ai-native <b>route</b> --career</p>
+          <p class="ok">✓ L1 判断 → L2 案例 → L3 项目</p>
+          <p><span class="prompt">$</span> ai-native <b>atlas</b> --count</p>
+          <p class="ok">
+            ✓ {metrics.termCount} terms · {metrics.relationCount} relations · {metrics.domainCount} domains
+          </p>
+          <p class="cursor-line"><span class="prompt">$</span> <i aria-hidden="true"></i></p>
+        </div>
+      </div>
+    </div>
+    <dl class="hero-stats" data-reveal style="--reveal-delay: 220ms">
+      <div><dd>{LEARNING_QUESTIONS.length}</dd><dt>SYS COURSE</dt></div>
+      <div><dd>{cases.length}</dd><dt>CASE LAB</dt></div>
+      <div><dd>{metrics.termCount}</dd><dt>TERMS</dt></div>
+      <div><dd>{metrics.publishedRouteCount}</dd><dt>ROUTES</dt></div>
+      <div><dd>{metrics.relationCount}</dd><dt>RELATIONS</dt></div>
+    </dl>
+  </section>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      {
+        [...LEARNING_QUESTIONS, ...LEARNING_QUESTIONS].map((question) => (
+          <span>
+            {question.shortTitle} <b>/</b>
+          </span>
+        ))
+      }
+    </div>
+  </div>
+
+  <section id="learning-structure" class="structure" aria-labelledby="structure-heading">
+    <div class="shell">
+      <header class="sec-head" data-reveal>
+        <p class="eyebrow">01/ Learning path</p>
+        <h2 id="structure-heading">一条从「会判断」到「能落地」的路径</h2>
+        <p>
+          先建立判断，再用连续案例练习，最后在完整项目里交付；知识图鉴、阅读路线、概念图谱和搜索，是你随时可查的支撑层。
+        </p>
+      </header>
+      <ol class="level-list">
+        <li data-reveal>
+          <span class="level-tag">L1</span>
+          <div>
+            <h3>基础判断</h3>
+            <p>六阶段、24 道判断题，建立「是否需要 AI、选什么方案、如何保证质量」的判断方法。</p>
+            <a href="/learn/">进入 24 题 →</a>
+          </div>
+        </li>
+        <li data-reveal style="--reveal-delay: 80ms">
+          <span class="level-tag">L2</span>
+          <div>
+            <h3>连续案例</h3>
+            <p>同一个业务对象，连续做六次评审，把判断放进真实情境里反复练习。</p>
+            <a href="/learn/cases/">进入案例库 →</a>
+          </div>
+        </li>
+        <li data-reveal style="--reveal-delay: 160ms">
+          <span class="level-tag">L3</span>
+          <div>
+            <h3>完整项目</h3>
+            <p>把机会、方案、体验、质量与运营串成一份可评审的 AI 产品档案。</p>
+            <a href="/learn/cases/user-feedback-analysis/">看黄金项目 →</a>
+          </div>
+        </li>
+      </ol>
+      <p class="structure-support" data-reveal>
+        <span class="prompt">$</span> 支撑层：<a href="/atlas/">知识图鉴</a>
+        {metrics.termCount} 词条 ·
+        <a href="/routes/">阅读路线</a>
+        {metrics.publishedRouteCount} 条 ·
+        <a href="/graph/">概念图谱</a>
+        {metrics.relationCount} 关系 ·
+        <a href="/search/">搜索</a>
+      </p>
     </div>
   </section>
 
-  <section id="learning-structure" class="structure" aria-labelledby="structure-heading">
-    <header class="section-head">
-      <p class="eyebrow">三层学习中心</p>
-      <h2 id="structure-heading">一条从「会判断」到「能落地」的路径</h2>
-      <p>
-        先建立判断，再用连续案例练习，最后在完整项目里交付；知识图鉴、阅读路线、概念图谱和搜索，是你随时可查的支撑层。
-      </p>
-    </header>
-    <ol class="level-list">
-      <li>
-        <span class="level-mark">L1</span>
-        <div>
-          <h3>基础判断</h3>
-          <p>六阶段、24 道判断题，建立「是否需要 AI、选什么方案、如何保证质量」的判断方法。</p>
-          <a href="/learn/">进入 24 题 <i aria-hidden="true">→</i></a>
-        </div>
-      </li>
-      <li>
-        <span class="level-mark">L2</span>
-        <div>
-          <h3>连续案例</h3>
-          <p>同一个业务对象，连续做六次评审，把判断放进真实情境里反复练习。</p>
-          <a href="/learn/cases/">进入案例库 <i aria-hidden="true">→</i></a>
-        </div>
-      </li>
-      <li>
-        <span class="level-mark">L3</span>
-        <div>
-          <h3>完整项目</h3>
-          <p>把机会、方案、体验、质量与运营串成一份可评审的 AI 产品档案。</p>
-          <a href="/learn/cases/user-feedback-analysis/">看黄金项目 <i aria-hidden="true">→</i></a>
-        </div>
-      </li>
-    </ol>
-    <p class="structure-support">
-      支撑层：<a href="/atlas/">知识图鉴</a>
-      {metrics.termCount} 词条 ·
-      <a href="/routes/">阅读路线</a>
-      {metrics.publishedRouteCount} 条 ·
-      <a href="/graph/">概念图谱</a>
-      {metrics.relationCount} 关系 ·
-      <a href="/search/">搜索</a>
-    </p>
-  </section>
-
   <section class="entries" aria-labelledby="entries-heading">
-    <header class="section-head">
-      <p class="eyebrow">从哪开始</p>
-      <h2 id="entries-heading">四个入口，按你的目标选一个</h2>
-    </header>
-    <div class="entry-grid">
-      {
-        entryPoints.map((entry) => (
-          <a class="entry-card" href={entry.href}>
-            <span class="entry-kicker">{entry.kicker}</span>
-            <h3>{entry.title}</h3>
-            <p>{entry.copy}</p>
-            <small>{entry.count}</small>
-          </a>
-        ))
-      }
+    <div class="shell">
+      <header class="sec-head" data-reveal>
+        <p class="eyebrow">02/ Entry points</p>
+        <h2 id="entries-heading">四个入口，按你的目标选一个</h2>
+      </header>
+      <div class="entry-grid">
+        {
+          entryPoints.map((entry, position) => (
+            <a
+              class="entry-card"
+              href={entry.href}
+              data-reveal
+              style={`--reveal-delay: ${position * 70}ms`}
+            >
+              <span class="entry-bar" aria-hidden="true" />
+              <span class="entry-num">{entry.index}</span>
+              <span class="entry-kicker">{entry.kicker}</span>
+              <h3>{entry.title}</h3>
+              <p>{entry.copy}</p>
+              <small>{entry.count}</small>
+            </a>
+          ))
+        }
+      </div>
     </div>
   </section>
 
   <section class="outcomes" aria-labelledby="outcomes-heading">
-    <header class="section-head">
-      <p class="eyebrow">你将学会什么</p>
-      <h2 id="outcomes-heading">六个阶段，练成一套判断方法</h2>
-    </header>
-    <ol class="outcome-list">
-      {
-        LEARNING_MODULES.map((module) => (
-          <li>
-            <span class="outcome-index">{module.index}</span>
-            <div>
-              <h3>{module.title}</h3>
-              <p class="outcome-decision">{module.decision}</p>
-              <p class="outcome-result">{module.outcome}</p>
-            </div>
-          </li>
-        ))
-      }
-    </ol>
+    <div class="shell">
+      <header class="sec-head" data-reveal>
+        <p class="eyebrow">03/ Six stages</p>
+        <h2 id="outcomes-heading">六个阶段，练成一套判断方法</h2>
+      </header>
+      <ol class="outcome-list">
+        {
+          LEARNING_MODULES.map((module, position) => (
+            <li data-reveal style={`--reveal-delay: ${position * 60}ms`}>
+              <span class="outcome-index">{module.index}</span>
+              <div>
+                <h3>{module.title}</h3>
+                <p class="outcome-decision">{module.decision}</p>
+                <p class="outcome-result">{module.outcome}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
   </section>
 </main>
 
@@ -155,123 +211,326 @@ const entryPoints = [
     padding-bottom: var(--space-7);
   }
 
-  .hero {
-    border-bottom: 1px solid var(--color-line);
-    background:
-      radial-gradient(60rem 24rem at 82% -6rem, oklch(0.93 0.045 265 / 0.7), transparent 60%),
-      var(--color-black);
-  }
-
-  .hero-inner {
-    width: min(calc(100% - 2.5rem), var(--content-max));
+  .shell {
+    width: min(1180px, calc(100% - 3rem));
     margin-inline: auto;
-    padding-block: clamp(3.5rem, 8vw, 6rem);
   }
 
-  .hero h1 {
-    max-width: 16em;
-    margin: var(--space-2) 0 0;
-    font-size: clamp(2rem, 3.5vw, 3rem);
-    line-height: 1.1;
-    letter-spacing: 0;
-    text-wrap: balance;
+  .hero {
+    position: relative;
+    border-bottom: 1px solid var(--color-line);
+    overflow: hidden;
+  }
+
+  .hero-grid {
+    width: min(1180px, calc(100% - 3rem));
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: clamp(2rem, 4vw, 3.5rem);
+    align-items: center;
+    margin-inline: auto;
+    padding-block: clamp(3rem, 6vw, 4.5rem) clamp(2.5rem, 4vw, 3.5rem);
   }
 
   .hero-copy {
-    max-width: 44rem;
-    margin: var(--space-4) 0 0;
+    min-width: 0;
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-accent-strong);
+  }
+
+  .eyebrow::before {
+    content: '> ';
+    color: var(--color-accent);
+  }
+
+  .hero h1 {
+    margin: 1.1rem 0 0;
+    font-size: clamp(2.2rem, 3.6vw, 3rem);
+    font-weight: 800;
+    line-height: 1.16;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+
+  .hero h1 .hl {
+    color: var(--color-accent);
+    text-shadow: 0 0 26px color-mix(in oklch, var(--color-accent) 50%, transparent);
+  }
+
+  .hero-sub {
+    max-width: 34rem;
+    margin: 1.3rem 0 0;
     color: var(--color-muted);
     font-size: var(--text-lead);
     line-height: 1.75;
-    text-wrap: pretty;
   }
 
-  .hero-actions {
+  .hero-sub b {
+    color: var(--color-accent-strong);
+    font-weight: 600;
+  }
+
+  .cta-row {
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-2);
-    margin-top: var(--space-5);
+    margin-top: 2.2rem;
   }
 
-  .hero-actions a {
-    min-height: 3rem;
+  .cta-primary {
+    position: relative;
     display: inline-flex;
     align-items: center;
-    border-radius: var(--radius-md);
-    padding: 0 var(--space-4);
-    font-size: var(--text-sm);
-    font-weight: 600;
+    min-height: 3rem;
+    background: var(--color-accent);
+    color: oklch(0.2 0.05 120);
+    font-family: var(--font-mono);
+    font-size: 0.92rem;
+    font-weight: 800;
+    padding: 0 1.7rem;
     text-decoration: none;
+    white-space: nowrap;
+    clip-path: polygon(
+      0 0,
+      calc(100% - 12px) 0,
+      100% 12px,
+      100% 100%,
+      12px 100%,
+      0 calc(100% - 12px)
+    );
+    transition:
+      transform var(--transition-fast),
+      box-shadow var(--transition-fast);
   }
 
-  .hero-primary {
-    background: var(--color-prerequisite);
-    color: var(--color-black);
+  .cta-primary:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 color-mix(in oklch, var(--color-accent-strong) 55%, transparent);
   }
 
-  .hero-primary:hover {
-    filter: brightness(0.94);
-  }
-
-  .hero-secondary {
+  .cta-ghost {
+    display: inline-flex;
+    align-items: center;
+    min-height: 3rem;
     border: 1px solid var(--color-line);
     color: var(--color-ink);
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    padding: 0 1.5rem;
+    text-decoration: none;
+    white-space: nowrap;
   }
 
-  .hero-secondary:hover {
+  .cta-ghost:hover {
+    border-color: var(--color-accent-strong);
+    color: var(--color-accent-strong);
+  }
+
+  /* 终端窗口 */
+  .term {
+    border: 1px solid var(--color-line);
+    background: var(--color-panel);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    box-shadow: var(--shadow-hover);
+  }
+
+  .term-bar {
+    display: flex;
+    gap: 0.8rem;
+    align-items: center;
+    border-bottom: 1px solid var(--color-line);
+    padding: 0.6rem 0.9rem;
+    color: var(--color-quiet);
+    font-size: 0.72rem;
+  }
+
+  .term-bar .dots {
+    display: flex;
+    gap: 0.35rem;
+  }
+
+  .term-bar .dots i {
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 50%;
+    background: var(--color-quiet);
+  }
+
+  .term-bar .dots i:nth-child(1) {
+    background: var(--color-accent);
+  }
+
+  .term-bar .dots i:nth-child(2) {
+    background: var(--color-accent-strong);
+  }
+
+  .term-body {
+    padding: 1.1rem 1.2rem;
+    line-height: 2.1;
+  }
+
+  .term-body p {
+    margin: 0;
+    color: var(--color-muted);
+  }
+
+  .term-body b {
+    color: var(--color-accent-strong);
+  }
+
+  .term-body .ok {
+    color: var(--color-accent);
+  }
+
+  .term-body .prompt,
+  .structure-support .prompt {
+    color: var(--color-accent);
+  }
+
+  .cursor-line i {
+    display: inline-block;
+    width: 0.55em;
+    height: 1em;
+    vertical-align: -0.15em;
+    background: var(--color-accent);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .cursor-line i {
+      animation: term-blink 1.1s steps(1) infinite;
+    }
+  }
+
+  @keyframes term-blink {
+    50% {
+      opacity: 0;
+    }
+  }
+
+  /* 数据条 */
+  .hero-stats {
+    width: min(1180px, calc(100% - 3rem));
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    margin: 0 auto;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .hero-stats div {
+    padding: 1.1rem 1.2rem;
+    border-right: 1px solid var(--color-line);
+  }
+
+  .hero-stats div:last-child {
+    border-right: 0;
+  }
+
+  .hero-stats dd {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 1.55rem;
+    font-weight: 600;
+    color: var(--color-accent);
+  }
+
+  .hero-stats dt {
+    margin-top: 0.15rem;
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    letter-spacing: 0.14em;
+    color: var(--color-quiet);
+  }
+
+  /* 跑马灯（全页仅此一条） */
+  .marquee {
+    overflow: hidden;
+    border-bottom: 1px solid var(--color-line);
     background: var(--color-panel);
   }
 
-  .hero-note {
-    margin: var(--space-4) 0 0;
-    color: var(--color-quiet);
-    font-size: var(--text-xs);
+  .marquee-track {
+    display: flex;
+    width: max-content;
   }
 
+  .marquee span {
+    padding: 0.55rem 0;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--color-accent-strong);
+    white-space: nowrap;
+  }
+
+  .marquee span::after {
+    content: '';
+    margin-inline: 1.2rem;
+    color: var(--color-accent);
+  }
+
+  .marquee b {
+    color: var(--color-accent);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .marquee-track {
+      animation: marquee-scroll 40s linear infinite;
+    }
+  }
+
+  @keyframes marquee-scroll {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  /* 通用区块 */
   .structure,
   .entries,
   .outcomes {
-    width: min(calc(100% - 2.5rem), var(--content-max));
-    margin-inline: auto;
-  }
-
-  .structure {
+    padding-block: 4.2rem;
     border-bottom: 1px solid var(--color-line);
-    padding-block: var(--space-6);
   }
 
-  .entries {
-    border-bottom: 1px solid var(--color-line);
-    padding-block: var(--space-6);
+  .sec-head {
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+    margin-bottom: 2.4rem;
   }
 
-  .outcomes {
-    padding-block: var(--space-6);
+  .sec-head .eyebrow {
+    flex: 0 0 auto;
+    white-space: nowrap;
   }
 
-  .section-head {
-    max-width: 50rem;
-    margin-bottom: var(--space-4);
-  }
-
-  .section-head h2 {
-    margin: var(--space-1) 0 0;
+  .sec-head h2 {
+    margin: 0;
     font-size: clamp(1.6rem, 3vw, 2.2rem);
-    line-height: 1.2;
-    letter-spacing: 0;
+    font-weight: 800;
+    letter-spacing: -0.01em;
   }
 
-  .section-head > p:last-child {
-    margin: var(--space-2) 0 0;
+  .sec-head p {
+    max-width: 30rem;
+    margin: 0;
     color: var(--color-muted);
-    font-size: var(--text-sm);
-    line-height: 1.7;
+    font-size: 0.92rem;
   }
 
   .level-list {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: var(--space-3);
+    gap: 1.1rem;
     margin: 0;
     padding: 0;
     list-style: none;
@@ -282,120 +541,142 @@ const entryPoints = [
     grid-template-columns: auto minmax(0, 1fr);
     gap: var(--space-3);
     border: 1px solid var(--color-line);
-    border-radius: var(--radius-md);
-    padding: var(--space-4);
     background: var(--color-panel);
+    padding: 1.7rem 1.6rem;
+    transition:
+      transform var(--transition-fast),
+      border-color var(--transition-fast),
+      box-shadow var(--transition-fast);
   }
 
-  .level-mark {
+  .level-list li:hover {
+    transform: translate(-3px, -3px);
+    border-color: var(--color-accent);
+    box-shadow: 8px 8px 0 color-mix(in oklch, var(--color-accent) 14%, transparent);
+  }
+
+  .level-tag {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     width: 2.5rem;
     height: 2.5rem;
-    border-radius: var(--radius-md);
-    background: oklch(0.93 0.045 265);
-    color: oklch(0.42 0.19 270);
+    border: 1px solid var(--color-line);
+    background: var(--color-accent-wash);
+    color: var(--color-accent);
     font-family: var(--font-mono);
-    font-size: var(--text-sm);
+    font-size: 0.85rem;
     font-weight: 700;
   }
 
   .level-list h3 {
     margin: 0;
-    font-size: 1.15rem;
-    line-height: 1.35;
-    letter-spacing: 0;
+    font-size: 1.18rem;
+    font-weight: 800;
   }
 
   .level-list p {
-    margin: var(--space-1) 0 var(--space-2);
+    margin: 0.5rem 0 1rem;
     color: var(--color-muted);
-    font-size: var(--text-sm);
-    line-height: 1.7;
+    font-size: 0.88rem;
   }
 
   .level-list a,
   .structure-support a {
-    color: var(--color-prerequisite);
-    font-size: var(--text-sm);
+    color: var(--color-accent-strong);
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
     font-weight: 600;
     text-decoration: none;
   }
 
-  .level-list a i {
-    font-style: normal;
-  }
-
   .level-list a:hover,
   .structure-support a:hover {
-    text-decoration: underline;
+    color: var(--color-accent);
   }
 
   .structure-support {
-    margin: var(--space-3) 0 0;
+    margin: 1.6rem 0 0;
     color: var(--color-muted);
-    font-size: var(--text-sm);
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
   }
 
   .entry-grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: var(--space-3);
+    gap: 1.1rem;
   }
 
   .entry-card {
-    min-height: 15rem;
+    position: relative;
+    min-height: 13rem;
     display: flex;
     flex-direction: column;
     border: 1px solid var(--color-line);
-    border-radius: var(--radius-md);
-    padding: var(--space-4);
     background: var(--color-panel);
+    padding: 1.4rem;
+    overflow: hidden;
     text-decoration: none;
     transition:
-      border-color var(--transition-fast),
-      box-shadow var(--transition-fast);
+      transform var(--transition-fast),
+      border-color var(--transition-fast);
   }
 
   .entry-card:hover {
-    border-color: color-mix(in oklch, var(--color-prerequisite) 48%, var(--color-line));
-    box-shadow: var(--shadow-hover);
+    transform: translateY(-4px);
+    border-color: var(--color-accent-strong);
+  }
+
+  .entry-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--color-accent), var(--color-accent-strong));
+    opacity: 0.55;
+  }
+
+  .entry-num {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--color-quiet);
   }
 
   .entry-kicker {
-    color: var(--color-prerequisite);
+    margin-top: 1rem;
     font-family: var(--font-mono);
-    font-size: var(--text-xs);
-    letter-spacing: 0.08em;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
+    color: var(--color-accent-strong);
   }
 
   .entry-card h3 {
-    margin: var(--space-2) 0 0;
-    font-size: 1.2rem;
-    line-height: 1.35;
-    letter-spacing: 0;
+    margin: 0.4rem 0 0;
+    font-size: 1.08rem;
+    font-weight: 800;
   }
 
   .entry-card p {
-    margin: var(--space-1) 0 0;
+    margin: 0.4rem 0 0;
     color: var(--color-muted);
-    font-size: var(--text-sm);
-    line-height: 1.7;
+    font-size: 0.85rem;
   }
 
   .entry-card small {
     margin-top: auto;
-    padding-top: var(--space-2);
-    color: var(--color-quiet);
-    font-size: var(--text-xs);
+    padding-top: 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--color-accent);
   }
 
   .outcome-list {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-3);
+    gap: 1.1rem;
     margin: 0;
     padding: 0;
     list-style: none;
@@ -403,39 +684,49 @@ const entryPoints = [
 
   .outcome-list li {
     display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    gap: var(--space-3);
-    border-top: 1px solid var(--color-line);
-    padding-top: var(--space-3);
+    grid-template-columns: 3.2rem minmax(0, 1fr);
+    gap: 1rem;
+    border: 1px solid var(--color-line);
+    background: var(--color-panel);
+    padding: 1.3rem 1.2rem;
+    transition: border-color var(--transition-fast);
+  }
+
+  .outcome-list li:hover {
+    border-color: var(--color-accent-strong);
   }
 
   .outcome-index {
-    color: var(--color-prerequisite);
     font-family: var(--font-mono);
-    font-size: var(--text-sm);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--color-accent);
   }
 
   .outcome-list h3 {
     margin: 0;
-    font-size: 1.1rem;
-    line-height: 1.4;
-    letter-spacing: 0;
+    font-size: 1.02rem;
+    font-weight: 800;
   }
 
   .outcome-decision {
-    margin: var(--space-1) 0 0;
-    color: var(--color-ink);
-    font-size: var(--text-sm);
+    margin: 0.3rem 0 0;
+    font-size: 0.88rem;
     font-weight: 600;
   }
 
   .outcome-result {
-    margin: 0.25rem 0 0;
+    margin: 0.15rem 0 0;
     color: var(--color-muted);
-    font-size: var(--text-sm);
+    font-size: 0.84rem;
   }
 
   @media (max-width: 960px) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
     .level-list {
       grid-template-columns: 1fr;
     }
@@ -443,23 +734,36 @@ const entryPoints = [
     .entry-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
+
+    .sec-head {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
   }
 
   @media (max-width: 640px) {
-    .hero-inner,
-    .structure,
-    .entries,
-    .outcomes {
+    .shell,
+    .hero-grid,
+    .hero-stats {
       width: calc(100% - 2rem);
     }
 
-    .hero-actions {
+    .cta-row {
       flex-direction: column;
       align-items: stretch;
     }
 
-    .hero-actions a {
+    .cta-primary,
+    .cta-ghost {
       justify-content: center;
+    }
+
+    .hero-stats {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .hero-stats div {
+      border-bottom: 1px solid var(--color-line);
     }
 
     .entry-grid,

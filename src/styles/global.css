@@ -14,6 +14,7 @@ html {
   font-synthesis: none;
   line-break: strict;
   scroll-behavior: smooth;
+  text-rendering: optimizeLegibility;
 }
 
 body {
@@ -21,9 +22,13 @@ body {
   min-height: 100vh;
   margin: 0;
   overflow-x: hidden;
-  background: var(--color-black);
+  background-color: var(--color-black);
+  background-image:
+    linear-gradient(var(--color-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-grid) 1px, transparent 1px);
+  background-size: 44px 44px;
   font-size: var(--text-base);
-  line-height: 1.6;
+  line-height: 1.7;
 }
 
 body,
@@ -57,7 +62,12 @@ select {
     color var(--transition-fast),
     border-color var(--transition-fast),
     background-color var(--transition-fast),
-    box-shadow var(--transition-fast);
+    box-shadow var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+button:active:not(:disabled) {
+  transform: scale(0.98);
 }
 
 button:disabled,
@@ -85,8 +95,8 @@ svg {
 }
 
 ::selection {
-  background: var(--color-prerequisite);
-  color: var(--color-black);
+  background: var(--color-accent);
+  color: oklch(0.2 0.04 120);
 }
 
 .skip-link {
@@ -95,10 +105,12 @@ svg {
   top: var(--space-2);
   left: var(--space-2);
   transform: translateY(-160%);
-  border: 1px solid var(--color-ink);
-  background: var(--color-ink);
-  color: var(--color-black);
+  border: 1px solid var(--color-accent);
+  border-radius: var(--radius-pill);
+  background: var(--color-accent);
+  color: oklch(0.2 0.04 120);
   padding: var(--space-2) var(--space-3);
+  transition: transform var(--transition-fast);
 }
 
 .skip-link:focus {
@@ -114,12 +126,13 @@ svg {
 .meta-label {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
 .eyebrow {
-  color: var(--color-prerequisite);
+  color: var(--color-accent-strong);
+  font-weight: 600;
 }
 
 .page-intro {
@@ -133,17 +146,18 @@ svg {
   margin: var(--space-2) 0 0;
   font-family: var(--font-display);
   font-size: 2.75rem;
-  font-weight: 400;
-  line-height: 1.02;
-  letter-spacing: 0;
+  font-weight: 650;
+  line-height: 1.08;
+  letter-spacing: -0.012em;
   text-wrap: balance;
 }
 
 .page-intro-copy {
   max-width: 50rem;
-  margin: var(--space-1) 0 0;
+  margin: var(--space-2) 0 0;
   color: var(--color-muted);
   font-size: var(--text-lead);
+  line-height: 1.75;
   text-wrap: pretty;
 }
 
@@ -151,9 +165,9 @@ svg {
   margin: 0;
   font-family: var(--font-display);
   font-size: 2rem;
-  font-weight: 400;
+  font-weight: 650;
   line-height: 1.18;
-  letter-spacing: 0;
+  letter-spacing: -0.01em;
 }
 
 .screen-reader-only {
@@ -168,6 +182,20 @@ svg {
 
 [hidden] {
   display: none !important;
+}
+
+/* 滚动揭示：渐进增强，无 JS 或减少动效时保持直接可见。
+   只使用 transform，不使用 opacity，避免首屏外元素在过渡中被无障碍扫描判定为低对比度。 */
+@media (prefers-reduced-motion: no-preference) {
+  html.js [data-reveal] {
+    transform: translateY(16px);
+    transition: transform 0.55s var(--ease-out-expo);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  html.js [data-reveal].is-visible {
+    transform: none;
+  }
 }
 
 @media (max-width: 720px) {
@@ -196,6 +224,8 @@ svg {
   *::before,
   *::after {
     scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
 }

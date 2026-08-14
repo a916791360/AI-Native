@@ -64,7 +64,7 @@ const goldenCases = libraryCases.filter(({ data }) => data.id === GOLDEN_CASE_ID
 
           <div id="case-list" class="case-card-grid">
             {
-              libraryCases.map(({ data: caseStudy }) => {
+              libraryCases.map(({ data: caseStudy }, cardIndex) => {
                 const firstGate = caseStudy.gates[0]!;
                 const isGolden = caseStudy.id === GOLDEN_CASE_ID;
                 return (
@@ -72,6 +72,8 @@ const goldenCases = libraryCases.filter(({ data }) => data.id === GOLDEN_CASE_ID
                     id={`case-${caseStudy.id}`}
                     class="case-catalog-card"
                     data-level={isGolden ? 'capstone' : caseStudy.level}
+                    data-reveal
+                    style={`--reveal-delay: ${cardIndex * 70}ms`}
                   >
                     <div class="case-card-status">
                       <span data-status={caseStudy.status}>

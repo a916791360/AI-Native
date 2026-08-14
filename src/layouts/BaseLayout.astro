@@ -76,7 +76,7 @@ const structuredData =
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
-    <meta name="theme-color" content="#ffffff" />
+    <meta name="theme-color" content="#0b1110" />
     <meta
       name="robots"
       content={SITE.publicOrigin && indexable ? 'index,follow' : 'noindex,nofollow'}
@@ -120,5 +120,26 @@ const structuredData =
     {showSharedScope && <SiteScopeNav active={activeScope} />}
     <slot />
     <SiteFooter />
+    <script>
+      const root = document.documentElement;
+      root.classList.add('js');
+      const reveals = [...document.querySelectorAll<HTMLElement>('[data-reveal]')];
+      if ('IntersectionObserver' in window && reveals.length > 0) {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
+              }
+            }
+          },
+          { rootMargin: '0px 0px -8% 0px', threshold: 0.12 },
+        );
+        for (const element of reveals) observer.observe(element);
+      } else {
+        for (const element of reveals) element.classList.add('is-visible');
+      }
+    </script>
   </body>
 </html>

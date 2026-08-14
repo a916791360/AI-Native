@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>方向 C · 荧光网格终端 | AI-Native 首页方向稿</title>
+<style>
+  :root {
+    --bg: #07090c;
+    --bg-2: #0b0e13;
+    --panel: #0e1218;
+    --grid: rgba(140, 255, 220, 0.07);
+    --line: rgba(140, 255, 220, 0.18);
+    --ink: #e8f4ee;
+    --muted: #9fb4a8;
+    --quiet: #6d8378;
+    --lime: #b8f135;
+    --cyan: #43e8c4;
+    --mono: 'SF Mono', 'JetBrains Mono', 'Fira Code', Menlo, monospace;
+    --sans: 'PingFang SC', 'HarmonyOS Sans SC', 'Microsoft YaHei', -apple-system, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    min-width: 320px; background: var(--bg); color: var(--ink);
+    font-family: var(--sans); line-height: 1.7;
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 44px 44px;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  /* 扫光 */
+  .scan {
+    position: fixed; inset: 0; pointer-events: none; z-index: 60; opacity: 0.5;
+    background: linear-gradient(180deg, transparent 0%, rgba(184, 241, 53, 0.045) 50%, transparent 100%);
+    background-size: 100% 240px; animation: scan 7s linear infinite;
+  }
+  @keyframes scan { from { background-position: 0 -240px; } to { background-position: 0 100vh; } }
+  @media (prefers-reduced-motion: reduce) { .scan { animation: none; } }
+
+  .shell { width: min(1180px, calc(100% - 3rem)); margin-inline: auto; }
+
+  /* header：终端式 */
+  header.site { position: sticky; top: 0; z-index: 20; border-bottom: 1px solid var(--line); background: rgba(7,9,12,0.85); backdrop-filter: blur(12px); }
+  .nav { display: flex; align-items: center; gap: 1rem; min-height: 4rem; }
+  .brand { font-family: var(--mono); font-weight: 700; font-size: 1rem; }
+  .brand .cursor { display: inline-block; width: 0.55em; height: 1.05em; background: var(--lime); vertical-align: -0.15em; animation: blink 1.1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  .nav-links { display: flex; gap: 0.3rem; margin-left: 1.5rem; }
+  .nav-links a { padding: 0.45rem 0.85rem; font-family: var(--mono); font-size: 0.8rem; color: var(--muted); border: 1px solid transparent; }
+  .nav-links a:hover, .nav-links a.on { color: var(--lime); border-color: var(--line); background: rgba(184,241,53,0.06); }
+  .nav-spacer { flex: 1; }
+  .nav-search { font-family: var(--mono); font-size: 0.78rem; color: var(--quiet); border: 1px dashed var(--line); padding: 0.45rem 1rem; }
+
+  /* hero */
+  .hero { border-bottom: 1px solid var(--line); position: relative; overflow: hidden; }
+  .hero-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 3rem; align-items: center; padding: 4.5rem 0 4rem; }
+  .eyebrow { font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.22em; color: var(--cyan); }
+  .eyebrow::before { content: '> '; color: var(--lime); }
+  h1 { margin-top: 1.1rem; font-size: clamp(2.3rem, 4.5vw, 3.8rem); line-height: 1.14; font-weight: 800; letter-spacing: -0.01em; }
+  h1 .hl { color: var(--lime); text-shadow: 0 0 26px rgba(184,241,53,0.5); }
+  .hero-sub { margin-top: 1.4rem; max-width: 34rem; color: var(--muted); font-size: 1.05rem; }
+  .hero-sub b { color: var(--cyan); font-weight: 600; }
+  .cta-row { display: flex; gap: 0.8rem; margin-top: 2.3rem; }
+  .cta-primary {
+    position: relative; background: var(--lime); color: #0c1204; font-weight: 800; font-family: var(--mono);
+    font-size: 0.92rem; padding: 0.9rem 1.7rem; clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+    transition: box-shadow .2s ease, transform .2s ease;
+  }
+  .cta-primary:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 rgba(67,232,196,0.55); }
+  .cta-ghost { border: 1px solid var(--line); color: var(--ink); font-family: var(--mono); font-size: 0.9rem; padding: 0.9rem 1.5rem; }
+  .cta-ghost:hover { border-color: var(--cyan); color: var(--cyan); }
+
+  /* 终端卡片 */
+  .term {
+    border: 1px solid var(--line); background: var(--bg-2); font-family: var(--mono); font-size: 0.8rem;
+  }
+  .term-bar { display: flex; gap: 0.5rem; padding: 0.6rem 0.9rem; border-bottom: 1px solid var(--line); color: var(--quiet); font-size: 0.72rem; }
+  .term-bar .dots { display: flex; gap: 0.35rem; }
+  .term-bar .dots i { width: 0.6rem; height: 0.6rem; border-radius: 50%; background: var(--quiet); }
+  .term-bar .dots i:nth-child(1) { background: var(--lime); }
+  .term-bar .dots i:nth-child(2) { background: var(--cyan); }
+  .term-body { padding: 1.1rem 1.2rem; line-height: 2; }
+  .term-body .p { color: var(--muted); }
+  .term-body .p b { color: var(--cyan); }
+  .term-body .ok { color: var(--lime); }
+  .term-body .dim { color: var(--quiet); }
+
+  /* 跑马灯 */
+  .marquee { overflow: hidden; border-bottom: 1px solid var(--line); background: var(--bg-2); }
+  .marquee-track { display: flex; width: max-content; animation: marquee 22s linear infinite; }
+  .marquee span { padding: 0.55rem 1.6rem; font-family: var(--mono); font-size: 0.8rem; color: var(--cyan); white-space: nowrap; }
+  .marquee span b { color: var(--lime); }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) { .marquee-track { animation: none; } }
+
+  /* stats */
+  .stats { display: grid; grid-template-columns: repeat(5, 1fr); border-top: 1px solid var(--line); }
+  .stat { padding: 1.3rem 1.2rem; border-right: 1px solid var(--line); }
+  .stat:last-child { border-right: 0; }
+  .stat b { display: block; font-family: var(--mono); font-size: 1.55rem; color: var(--lime); }
+  .stat span { font-size: 0.78rem; color: var(--quiet); font-family: var(--mono); }
+
+  section.block { padding: 4.2rem 0; border-bottom: 1px solid var(--line); }
+  .sec-head { display: flex; align-items: baseline; gap: 1.5rem; margin-bottom: 2.4rem; }
+  .sec-head .k { font-family: var(--mono); font-size: 0.74rem; color: var(--cyan); letter-spacing: 0.14em; white-space: nowrap; }
+  .sec-head h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 800; letter-spacing: -0.01em; }
+  .sec-head p { max-width: 30rem; color: var(--muted); font-size: 0.92rem; }
+
+  .levels { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.1rem; }
+  .level {
+    border: 1px solid var(--line); background: var(--panel); padding: 1.7rem 1.6rem;
+    transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+  }
+  .level:hover { transform: translate(-3px, -3px); border-color: var(--lime); box-shadow: 8px 8px 0 rgba(184,241,53,0.14); }
+  .level .tag { font-family: var(--mono); color: var(--lime); font-size: 0.82rem; font-weight: 700; }
+  .level h3 { margin-top: 0.7rem; font-size: 1.18rem; font-weight: 800; }
+  .level p { margin-top: 0.5rem; color: var(--muted); font-size: 0.88rem; }
+  .level a { display: inline-block; margin-top: 1.1rem; font-family: var(--mono); font-size: 0.85rem; color: var(--cyan); }
+  .level a:hover { color: var(--lime); }
+
+  .entries { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.1rem; }
+  .entry {
+    position: relative; min-height: 13rem; border: 1px solid var(--line); background: var(--panel);
+    padding: 1.4rem; overflow: hidden; transition: transform .2s ease, border-color .2s ease;
+  }
+  .entry:hover { transform: translateY(-4px); border-color: var(--cyan); }
+  .entry .bar { position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--lime), var(--cyan)); opacity: 0.55; }
+  .entry .num { font-family: var(--mono); color: var(--quiet); font-size: 0.8rem; }
+  .entry h3 { margin-top: 1.1rem; font-size: 1.08rem; font-weight: 800; }
+  .entry p { margin-top: 0.4rem; color: var(--muted); font-size: 0.85rem; }
+  .entry small { position: absolute; left: 1.4rem; bottom: 1.2rem; font-family: var(--mono); color: var(--lime); font-size: 0.78rem; }
+
+  .stages { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.1rem; }
+  .stage-item { display: grid; grid-template-columns: 3.2rem 1fr; gap: 1rem; border: 1px solid var(--line); background: var(--panel); padding: 1.3rem 1.2rem; transition: border-color .2s ease; }
+  .stage-item:hover { border-color: var(--cyan); }
+  .stage-item .idx { font-family: var(--mono); color: var(--lime); font-size: 1.15rem; font-weight: 700; }
+  .stage-item h3 { font-size: 1.02rem; font-weight: 800; }
+  .stage-item .q { margin-top: 0.3rem; font-size: 0.88rem; font-weight: 600; color: var(--ink); }
+  .stage-item .o { margin-top: 0.15rem; color: var(--muted); font-size: 0.84rem; }
+
+  footer { padding: 2.6rem 0; color: var(--quiet); font-size: 0.82rem; font-family: var(--mono); }
+  .foot { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+  .foot a { color: var(--muted); }
+  .foot a:hover { color: var(--lime); }
+
+  @media (max-width: 900px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .levels, .entries { grid-template-columns: 1fr 1fr; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .stat { border-bottom: 1px solid var(--line); }
+    .nav-links { display: none; }
+  }
+  @media (max-width: 620px) {
+    .levels, .entries, .stages { grid-template-columns: 1fr; }
+    .sec-head { flex-direction: column; gap: 0.5rem; }
+  }
+</style>
+</head>
+<body>
+<div class="scan" aria-hidden="true"></div>
+
+<header class="site">
+  <div class="shell nav">
+    <a class="brand" href="#">AI-Native<span class="cursor"></span></a>
+    <nav class="nav-links">
+      <a class="on" href="#">首页</a><a href="#">系统课程</a><a href="#">案例库</a>
+      <a href="#">知识图鉴</a><a href="#">阅读路线</a><a href="#">概念图谱</a>
+    </nav>
+    <span class="nav-spacer"></span>
+    <span class="nav-search">搜索案例、问题或术语</span>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="shell hero-grid">
+    <div>
+      <p class="eyebrow">落地型 AI 产品经理学习系统</p>
+      <h1>从看懂 AI，到做出<span class="hl">可上线</span>的 AI 产品</h1>
+      <p class="hero-sub">不是背名词，而是学会判断<b>「该不该用 AI、选什么方案、如何落地、何时上线」</b>，并把它做成可评审的产品方案。</p>
+      <div class="cta-row">
+        <a class="cta-primary" href="#">从第 01 题开始 →</a>
+        <a class="cta-ghost" href="#">先看学习结构</a>
+      </div>
+    </div>
+    <div class="term" aria-hidden="true">
+      <div class="term-bar"><span class="dots"><i></i><i></i><i></i></span> ai-native --status</div>
+      <div class="term-body">
+        <p class="p"><span class="dim">$</span> ai-native <b>judge</b> --scenario 发票金额校验</p>
+        <p class="ok">✓ 推荐路径：确定性规则计算并校验</p>
+        <p class="p"><span class="dim">$</span> ai-native <b>route</b> --career</p>
+        <p class="ok">✓ 转岗路径：L1 判断 → L2 案例 → L3 项目</p>
+        <p class="p"><span class="dim">$</span> ai-native <b>atlas</b> --count</p>
+        <p class="ok">✓ 325 词条 · 333 关系 · 13 领域</p>
+        <p class="dim">_</p>
+      </div>
+    </div>
+  </div>
+  <div class="shell stats">
+    <div class="stat"><b>24</b><span>SYS COURSE</span></div>
+    <div class="stat"><b>6</b><span>CASE LAB</span></div>
+    <div class="stat"><b>325</b><span>TERMS</span></div>
+    <div class="stat"><b>5</b><span>ROUTES</span></div>
+    <div class="stat"><b>333</b><span>RELATIONS</span></div>
+  </div>
+</section>
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>规则还是 AI <b>/</b> 演示还是价值 <b>/</b> Prompt 还是 RAG <b>/</b> 工作流还是 Agent <b>/</b> 何时微调 <b>/</b> 搜索还是生成 <b>/</b> 用户控制 <b>/</b> 表达不确定性 <b>/</b> 人工介入 <b>/</b> 错误恢复 <b>/</b> 建立评测集 <b>/</b> 线上指标 <b>/</b> 成本与延迟 <b>/</b> 上线护栏 <b>/</b> 客服知识库 <b>/</b> 销售跟进助手 <b>/</b> 合同条款审核 <b>/</b> 内容生产 <b>/</b> 内部运营自动化 <b>/</b> 上线决策</span>
+    <span>规则还是 AI <b>/</b> 演示还是价值 <b>/</b> Prompt 还是 RAG <b>/</b> 工作流还是 Agent <b>/</b> 何时微调 <b>/</b> 搜索还是生成 <b>/</b> 用户控制 <b>/</b> 表达不确定性 <b>/</b> 人工介入 <b>/</b> 错误恢复 <b>/</b> 建立评测集 <b>/</b> 线上指标 <b>/</b> 成本与延迟 <b>/</b> 上线护栏 <b>/</b> 客服知识库 <b>/</b> 销售跟进助手 <b>/</b> 合同条款审核 <b>/</b> 内容生产 <b>/</b> 内部运营自动化 <b>/</b> 上线决策</span>
+  </div>
+</div>
+
+<section class="block">
+  <div class="shell">
+    <div class="sec-head">
+      <span class="k">01/ LEARNING_PATH</span>
+      <h2>一条从「会判断」到「能落地」的路径</h2>
+      <p>先建立判断，再用连续案例练习，最后在完整项目里交付；知识图鉴、阅读路线、概念图谱和搜索，是你随时可查的支撑层。</p>
+    </div>
+    <div class="levels">
+      <div class="level"><span class="tag">L1</span><h3>基础判断</h3><p>六阶段、24 道判断题，建立「是否需要 AI、选什么方案、如何保证质量」的判断方法。</p><a href="#">进入 24 题 →</a></div>
+      <div class="level"><span class="tag">L2</span><h3>连续案例</h3><p>同一个业务对象，连续做六次评审，把判断放进真实情境里反复练习。</p><a href="#">进入案例库 →</a></div>
+      <div class="level"><span class="tag">L3</span><h3>完整项目</h3><p>把机会、方案、体验、质量与运营串成一份可评审的 AI 产品档案。</p><a href="#">看黄金项目 →</a></div>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="shell">
+    <div class="sec-head">
+      <span class="k">02/ ENTRY_POINTS</span>
+      <h2>四个入口，按你的目标选一个</h2>
+    </div>
+    <div class="entries">
+      <div class="entry"><span class="bar"></span><span class="num">01</span><h3>按职业路径开始</h3><p>把「会判断」到「能落地」串成一条顺序。</p><small>5 条路线</small></div>
+      <div class="entry"><span class="bar"></span><span class="num">02</span><h3>做 24 道判断题</h3><p>六阶段、24 个真实场景，选择后有分档反馈。</p><small>24 道题</small></div>
+      <div class="entry"><span class="bar"></span><span class="num">03</span><h3>跟完整项目</h3><p>同一个业务连续六次评审，汇成评审档案。</p><small>6 个案例</small></div>
+      <div class="entry"><span class="bar"></span><span class="num">04</span><h3>随时查概念</h3><p>13 个领域、按关系连接的知识词条。</p><small>325 个词条</small></div>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="shell">
+    <div class="sec-head">
+      <span class="k">03/ SIX_STAGES</span>
+      <h2>六个阶段，练成一套判断方法</h2>
+    </div>
+    <div class="stages">
+      <div class="stage-item"><span class="idx">01</span><div><h3>AI 基础与模型边界</h3><p class="q">这个问题是否真的需要 AI？</p><p class="o">识别生成、规则与模型边界</p></div></div>
+      <div class="stage-item"><span class="idx">02</span><div><h3>场景与机会判断</h3><p class="q">这个机会值得做、能够做吗？</p><p class="o">建立场景筛选标准</p></div></div>
+      <div class="stage-item"><span class="idx">03</span><div><h3>方案选择</h3><p class="q">哪种方案最小、可靠且可验证？</p><p class="o">做出有依据的技术取舍</p></div></div>
+      <div class="stage-item"><span class="idx">04</span><div><h3>AI 产品体验</h3><p class="q">人和 AI 分别在什么时候做决定？</p><p class="o">形成可靠的人机协作体验</p></div></div>
+      <div class="stage-item"><span class="idx">05</span><div><h3>质量与商业约束</h3><p class="q">怎样证明它长期可用且值得运行？</p><p class="o">建立上线与运营门槛</p></div></div>
+      <div class="stage-item"><span class="idx">06</span><div><h3>综合产品项目</h3><p class="q">这份方案能否经得住评审？</p><p class="o">完成端到端产品判断</p></div></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="shell foot">
+    <span>AI-NATIVE / 学习首版 / 内容持续校订</span>
+    <span>首页 · 系统课程 · 案例库 · 知识图鉴 · 阅读路线 · 概念图谱 · 搜索 · GitHub</span>
+  </div>
+</footer>
+
+</body>
+</html>

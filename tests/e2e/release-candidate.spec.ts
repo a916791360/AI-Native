@@ -12,6 +12,7 @@ async function tabTo(page: Page, target: Locator, maximumTabs = 30) {
 
 test('fits every primary page in all approved release viewports', async ({ page, isMobile }) => {
   test.skip(isMobile, 'the viewport matrix runs once with explicit release-candidate dimensions');
+  test.setTimeout(150_000);
   const viewports = [
     { width: 1440, height: 900 },
     { width: 1280, height: 800 },

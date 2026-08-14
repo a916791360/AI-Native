@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>方向 B · 纸墨编辑部 | AI-Native 首页方向稿</title>
+<style>
+  :root {
+    --paper: #f7f3ea;
+    --paper-2: #fbf8f2;
+    --ink: #1c1a16;
+    --muted: #5c574e;
+    --quiet: #8b8578;
+    --line: #ddd5c6;
+    --line-soft: #e9e2d3;
+    --seal: #bf3a2b;
+    --seal-dark: #9e2f22;
+    --song: 'Songti SC', 'STSong', 'Noto Serif CJK SC', 'SimSun', serif;
+    --hei: 'PingFang SC', 'HarmonyOS Sans SC', 'Microsoft YaHei', -apple-system, sans-serif;
+    --mono: 'SF Mono', 'JetBrains Mono', Menlo, monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    min-width: 320px; background: var(--paper); color: var(--ink);
+    font-family: var(--hei); line-height: 1.8;
+  }
+  a { color: inherit; text-decoration: none; }
+  .shell { width: min(1120px, calc(100% - 3rem)); margin-inline: auto; }
+
+  /* header: 细线 + 印章字标 */
+  header.site { border-bottom: 1px solid var(--ink); background: var(--paper); position: sticky; top: 0; z-index: 20; }
+  .nav { display: flex; align-items: center; gap: 1.6rem; min-height: 4.2rem; }
+  .brand { display: flex; align-items: center; gap: 0.7rem; font-family: var(--song); font-weight: 700; font-size: 1.2rem; letter-spacing: 0.02em; }
+  .seal {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 1.55rem; height: 1.55rem; border-radius: 0.2rem;
+    background: var(--seal); color: #fff; font-size: 0.72rem; font-weight: 700;
+    transform: rotate(-6deg);
+  }
+  .nav-links { display: flex; gap: 1.4rem; margin-left: 1rem; }
+  .nav-links a { font-size: 0.9rem; color: var(--muted); }
+  .nav-links a.on { color: var(--seal); font-weight: 700; }
+  .nav-links a:hover { color: var(--seal); }
+  .nav-spacer { flex: 1; }
+  .nav-search { font-size: 0.85rem; color: var(--quiet); border-bottom: 1px solid var(--quiet); padding-bottom: 0.15rem; }
+
+  /* hero: 大字号左对齐 + 右侧印章列 */
+  .hero { border-bottom: 1px solid var(--ink); }
+  .hero-grid { display: grid; grid-template-columns: 1fr 7.5rem; gap: 2.5rem; padding: 5rem 0 4rem; }
+  .kicker { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--seal); }
+  h1 { margin-top: 1.6rem; font-family: var(--song); font-weight: 700; font-size: clamp(2.6rem, 5vw, 4.2rem); line-height: 1.24; letter-spacing: 0.01em; }
+  h1 .red { color: var(--seal); }
+  .hero-sub { margin-top: 1.6rem; max-width: 33rem; color: var(--muted); font-size: 1.05rem; }
+  .cta-row { display: flex; gap: 1.8rem; align-items: center; margin-top: 2.6rem; }
+  .cta-primary {
+    background: var(--ink); color: var(--paper); padding: 0.9rem 2.1rem; font-weight: 700; font-size: 0.95rem;
+    transition: background .2s ease;
+  }
+  .cta-primary:hover { background: var(--seal); }
+  .cta-text { font-size: 0.95rem; color: var(--muted); border-bottom: 1px solid var(--muted); }
+  .cta-text:hover { color: var(--seal); border-color: var(--seal); }
+  .hero-side {
+    border-left: 1px solid var(--line); padding-left: 1.2rem; display: flex; flex-direction: column; justify-content: flex-end;
+  }
+  .hero-side .big-seal {
+    display: flex; align-items: center; justify-content: center;
+    width: 4.4rem; height: 4.4rem; border: 2px solid var(--seal); color: var(--seal);
+    font-family: var(--song); font-size: 1.7rem; font-weight: 700; border-radius: 0.35rem;
+    transform: rotate(-5deg); margin-bottom: 2.5rem;
+  }
+  .hero-side p { font-family: var(--song); writing-mode: vertical-rl; letter-spacing: 0.35em; color: var(--quiet); font-size: 0.82rem; }
+
+  /* stats: 横排小表格 */
+  .stats { display: grid; grid-template-columns: repeat(5, 1fr); border-top: 1px solid var(--ink); }
+  .stat { padding: 1.1rem 1rem; border-right: 1px solid var(--line); }
+  .stat:last-child { border-right: 0; }
+  .stat b { display: block; font-family: var(--song); font-size: 1.7rem; font-weight: 700; }
+  .stat span { font-size: 0.78rem; color: var(--muted); }
+
+  section.block { padding: 4.6rem 0; border-bottom: 1px solid var(--line); }
+  .sec-head { display: grid; grid-template-columns: 5.5rem 1fr; gap: 2rem; align-items: start; margin-bottom: 2.8rem; }
+  .sec-head .no { font-family: var(--song); font-size: 3.2rem; font-weight: 700; color: var(--seal); line-height: 1; }
+  .sec-head h2 { font-family: var(--song); font-size: clamp(1.6rem, 2.8vw, 2.2rem); font-weight: 700; line-height: 1.3; }
+  .sec-head p { margin-top: 0.6rem; max-width: 34rem; color: var(--muted); font-size: 0.92rem; }
+
+  .levels { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--ink); }
+  .level { padding: 1.9rem 1.6rem 1.6rem 0; border-right: 1px solid var(--line); }
+  .level:last-child { border-right: 0; }
+  .level:not(:first-child) { padding-left: 1.6rem; }
+  .level .tag { font-family: var(--mono); font-size: 0.78rem; color: var(--seal); letter-spacing: 0.18em; }
+  .level h3 { margin-top: 0.7rem; font-family: var(--song); font-size: 1.35rem; font-weight: 700; }
+  .level p { margin-top: 0.55rem; color: var(--muted); font-size: 0.9rem; }
+  .level a { display: inline-block; margin-top: 1.1rem; font-size: 0.9rem; font-weight: 700; color: var(--ink); border-bottom: 2px solid var(--seal); }
+  .level a:hover { color: var(--seal); }
+
+  .entries { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--ink); border-left: 1px solid var(--ink); }
+  .entry { position: relative; padding: 1.6rem; border-right: 1px solid var(--ink); border-bottom: 1px solid var(--ink); min-height: 12.5rem; background: var(--paper-2); transition: background .2s ease; }
+  .entry:hover { background: var(--paper); }
+  .entry .num { font-family: var(--mono); font-size: 0.78rem; color: var(--seal); }
+  .entry h3 { margin-top: 1.4rem; font-family: var(--song); font-size: 1.15rem; font-weight: 700; }
+  .entry p { margin-top: 0.4rem; color: var(--muted); font-size: 0.86rem; }
+  .entry small { position: absolute; left: 1.6rem; bottom: 1.3rem; font-size: 0.78rem; color: var(--quiet); }
+
+  .stages { display: grid; grid-template-columns: repeat(2, 1fr); column-gap: 3rem; }
+  .stage-item { display: grid; grid-template-columns: 3.4rem 1fr; gap: 1.1rem; padding: 1.5rem 0; border-top: 1px solid var(--line-soft); }
+  .stage-item .idx { font-family: var(--song); font-size: 2rem; font-weight: 700; color: var(--line); line-height: 1.2; }
+  .stage-item h3 { font-family: var(--song); font-size: 1.12rem; font-weight: 700; }
+  .stage-item .q { margin-top: 0.3rem; font-size: 0.9rem; font-weight: 700; }
+  .stage-item .o { margin-top: 0.15rem; color: var(--muted); font-size: 0.86rem; }
+
+  footer { padding: 2.8rem 0; border-top: 1px solid var(--ink); }
+  .foot { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; font-size: 0.84rem; color: var(--muted); }
+  .foot a:hover { color: var(--seal); }
+
+  @media (max-width: 900px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .hero-side { display: none; }
+    .levels { grid-template-columns: 1fr; }
+    .level { border-right: 0; border-bottom: 1px solid var(--line); padding-left: 0 !important; }
+    .entries { grid-template-columns: 1fr 1fr; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .nav-links { display: none; }
+  }
+  @media (max-width: 620px) {
+    .entries, .stages { grid-template-columns: 1fr; }
+    .sec-head { grid-template-columns: 1fr; gap: 0.6rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="shell nav">
+    <a class="brand" href="#"><span class="seal">AI</span> AI-Native</a>
+    <nav class="nav-links">
+      <a class="on" href="#">首页</a><a href="#">系统课程</a><a href="#">案例库</a>
+      <a href="#">知识图鉴</a><a href="#">阅读路线</a><a href="#">概念图谱</a>
+    </nav>
+    <span class="nav-spacer"></span>
+    <span class="nav-search">搜索案例、问题或术语</span>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="shell hero-grid">
+    <div>
+      <p class="kicker">落地型 AI 产品经理学习系统</p>
+      <h1>从看懂 AI，到做出<span class="red">可上线</span>的<br>AI 产品</h1>
+      <p class="hero-sub">不是背名词，而是学会判断「该不该用 AI、选什么方案、如何落地、何时上线」，并把它做成可评审的产品方案。</p>
+      <div class="cta-row">
+        <a class="cta-primary" href="#">从第 01 题开始</a>
+        <a class="cta-text" href="#">先看学习结构</a>
+      </div>
+    </div>
+    <aside class="hero-side" aria-hidden="true">
+      <span class="big-seal">学</span>
+      <p>知识图鉴 · 概念图谱 · 连续案例 · 完整项目</p>
+    </aside>
+  </div>
+  <div class="shell stats">
+    <div class="stat"><b>24</b><span>系统课程</span></div>
+    <div class="stat"><b>6</b><span>案例实战</span></div>
+    <div class="stat"><b>325</b><span>知识词条</span></div>
+    <div class="stat"><b>5</b><span>阅读路线</span></div>
+    <div class="stat"><b>333</b><span>概念关系</span></div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="shell">
+    <div class="sec-head">
+      <span class="no">壹</span>
+      <div>
+        <h2>一条从「会判断」到「能落地」的路径</h2>
+        <p>先建立判断，再用连续案例练习，最后在完整项目里交付；知识图鉴、阅读路线、概念图谱和搜索，是你随时可查的支撑层。</p>
+      </div>
+    </div>
+    <div class="levels">
+      <div class="level">
+        <span class="tag">L1</span>
+        <h3>基础判断</h3>
+        <p>六阶段、24 道判断题，建立「是否需要 AI、选什么方案、如何保证质量」的判断方法。</p>
+        <a href="#">进入 24 题</a>
+      </div>
+      <div class="level">
+        <span class="tag">L2</span>
+        <h3>连续案例</h3>
+        <p>同一个业务对象，连续做六次评审，把判断放进真实情境里反复练习。</p>
+        <a href="#">进入案例库</a>
+      </div>
+      <div class="level">
+        <span class="tag">L3</span>
+        <h3>完整项目</h3>
+        <p>把机会、方案、体验、质量与运营串成一份可评审的 AI 产品档案。</p>
+        <a href="#">看黄金项目</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="shell">
+    <div class="sec-head">
+      <span class="no">贰</span>
+      <div>
+        <h2>四个入口，按你的目标选一个</h2>
+      </div>
+    </div>
+    <div class="entries">
+      <div class="entry"><span class="num">01</span><h3>按职业路径开始</h3><p>把「会判断」到「能落地」串成一条顺序。</p><small>5 条路线</small></div>
+      <div class="entry"><span class="num">02</span><h3>做 24 道判断题</h3><p>六阶段、24 个真实场景，选择后有分档反馈。</p><small>24 道题</small></div>
+      <div class="entry"><span class="num">03</span><h3>跟完整项目</h3><p>同一个业务连续六次评审，汇成评审档案。</p><small>6 个案例</small></div>
+      <div class="entry"><span class="num">04</span><h3>随时查概念</h3><p>13 个领域、按关系连接的知识词条。</p><small>325 个词条</small></div>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="shell">
+    <div class="sec-head">
+      <span class="no">叁</span>
+      <div>
+        <h2>六个阶段，练成一套判断方法</h2>
+      </div>
+    </div>
+    <div class="stages">
+      <div class="stage-item"><span class="idx">01</span><div><h3>AI 基础与模型边界</h3><p class="q">这个问题是否真的需要 AI？</p><p class="o">识别生成、规则与模型边界</p></div></div>
+      <div class="stage-item"><span class="idx">02</span><div><h3>场景与机会判断</h3><p class="q">这个机会值得做、能够做吗？</p><p class="o">建立场景筛选标准</p></div></div>
+      <div class="stage-item"><span class="idx">03</span><div><h3>方案选择</h3><p class="q">哪种方案最小、可靠且可验证？</p><p class="o">做出有依据的技术取舍</p></div></div>
+      <div class="stage-item"><span class="idx">04</span><div><h3>AI 产品体验</h3><p class="q">人和 AI 分别在什么时候做决定？</p><p class="o">形成可靠的人机协作体验</p></div></div>
+      <div class="stage-item"><span class="idx">05</span><div><h3>质量与商业约束</h3><p class="q">怎样证明它长期可用且值得运行？</p><p class="o">建立上线与运营门槛</p></div></div>
+      <div class="stage-item"><span class="idx">06</span><div><h3>综合产品项目</h3><p class="q">这份方案能否经得住评审？</p><p class="o">完成端到端产品判断</p></div></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="shell foot">
+    <span>AI-Native · 面向中文 AI 初学者与产品人的 AI 产品判断力学习系统</span>
+    <span>首页 · 系统课程 · 案例库 · 知识图鉴 · 阅读路线 · 概念图谱 · 搜索 · GitHub</span>
+  </div>
+</footer>
+
+</body>
+</html>

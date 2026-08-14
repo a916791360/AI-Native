@@ -659,3 +659,26 @@
 - 证据边界：所有采纳率、节省时长、误发率、漏报率与收益保持 `E0 待验证`；外部来源只支持通用方法。
 - 正式产物：`docs/product/learning-v2/research/sales-follow-up-assistant/research-pack.md` 与 `source-register.md`。
 - 保留边界：未推送、未创建 Pull Request、未部署；四个新案例的逐项来源核验与生产验收仍按后续生产波次推进。
+
+## 2026-08-13：全站设计 UI 与动效改版
+
+- 状态：使用 design-taste-frontend 技能完成全站视觉与动效改版第一波；内容、信息架构、URL、无 JavaScript 可读与无障碍保持不变。
+- 设计方向：从「明亮内容工作台」冷色蓝紫，升级为「暖纸 + 墨色 + 青绿」编辑风；单一青绿强调色，四类关系语义色保留并重新对齐色调。
+- 设计系统：重写 `src/styles/tokens.css`（暖纸底、墨色文字、青绿强调、统一 8/10px/全圆角规则、分层阴影与动效缓动 token）与 `src/styles/global.css`（显示字体字重 650、紧凑字距、按压缩放反馈、滚动揭示工具）。
+- 动效层：新增 IntersectionObserver 滚动揭示（`[data-reveal]` + `--reveal-delay` 级联，仅 transform 不含 opacity，避免过渡中被无障碍扫描误判对比度）；卡片悬浮抬升、按钮按压反馈、星座图形漂浮动效；全部遵循 `prefers-reduced-motion` 与无 JavaScript 直接可见。
+- 页面改造：首页重构为分屏 hero + 星座关系图形 + 数据条 + 三层路径/四入口/六阶段；课程卡片、案例卡片悬浮抬升与错峰揭示；题目页、案例详情、词条页、路线列表、方法页逐段揭示；头部加高至 4rem 并增强毛玻璃。
+- 文案收敛：方法页移除「01 / Scope」式编号 eyebrow 与词条页「01 / Catalogue entry」编号，改为纯主题标签。
+- 性能基线：首页首屏 JavaScript 1269 B → 1670 B、首页 CSS 24659 B → 29405 B，为有意改版，重录 `src/data/performance-baseline.json`；Pagefind、图谱与图片基线未放宽。
+- 验收结果：Astro 99 个文件零诊断；234 项单元测试通过；`validate:data`、`check:generated`、`check:performance`、格式与 lint 全部通过；E2E 81 项通过、7 项按设备条件跳过、0 失败（含 105 篇核验词条八段正文与全站无障碍检查）；为受改版影响的三个长测试补充超时上限。
+- 保留边界：未推送、未创建 Pull Request、未部署；图谱画布、搜索交互与移动端深层的进一步视觉细化仍可在后续波次推进。
+
+## 2026-08-15：方向 C「荧光网格终端」全站转译
+
+- 状态：三方向 Gate 用户选定方向 C，全站深色荧光体系转译完成；内容、信息架构、URL、无 JavaScript 可读与无障碍保持不回退。
+- 设计系统：`tokens.css` 切换为深色墨绿底 + 荧光青柠主强调 + 青绿次强调；四类关系语义色深色适配（青绿/蓝/琥珀/绿）；网格底纹、分层阴影与荧光光晕 token；`global.css` 增加 44px 网格背景、等宽标签、荧光选区与焦点环。
+- 终端语汇：头部字标闪烁光标、等宽主导航；首页 hero 重构为「左文案 + 终端窗口」分屏（judge/route/atlas 三条真实命令），切角青柠主按钮 + 硬阴影悬浮，青柠等宽数据条，全页唯一跑马灯（24 题名滚动），三层路径与四入口使用硬阴影悬浮卡片。
+- 全站适配：课程卡片、案例卡片、题目页、案例详情、词条页、路线、方法页沿用深色 token 并保持滚动揭示动效；图谱画布颜色运行时读取 token 自动适配深色。
+- 无障碍：扫描并修复深色下的对比度问题（quiet 提亮、scope 计数继承激活色、案例按钮深字荧光底）；全站 Axe 无严重/关键违规。
+- 性能基线：首页 CSS 29405 B → 31417 B（终端 hero + 跑马灯为有意改版），重录 `src/data/performance-baseline.json`；首页 JavaScript、Pagefind、图谱与图片基线未放宽。
+- 验收结果：Astro 99 个文件零诊断；234 项单元测试通过；`validate:data`、`check:generated`、`check:performance`、格式与 lint 全部通过；E2E 81 项通过、7 项按设备条件跳过、0 失败。
+- 保留边界：未推送、未创建 Pull Request、未部署；三套方向稿归档于 `docs/product/design-demos/redesign-2026-08-13/`。

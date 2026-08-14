@@ -1,29 +1,43 @@
 :root {
-  color-scheme: light;
-  --color-canvas: oklch(0.985 0.004 265);
-  --color-ink: oklch(0.21 0.012 265);
-  --color-muted: oklch(0.45 0.018 265);
-  --color-quiet: oklch(0.5 0.018 265);
+  color-scheme: dark;
+
+  /* 荧光网格终端：深空墨绿底、荧光青柠主强调、青绿次强调 */
+  --color-canvas: oklch(0.155 0.01 165);
+  --color-ink: oklch(0.93 0.018 152);
+  --color-muted: oklch(0.72 0.024 160);
+  --color-quiet: oklch(0.64 0.022 162);
   --color-black: var(--color-canvas);
-  --color-panel: oklch(1 0 0);
-  --color-panel-raised: oklch(0.975 0.006 265);
-  --color-line: oklch(0.86 0.012 265);
-  --color-line-soft: oklch(0.92 0.008 265);
-  --color-control-border: oklch(0.61 0.025 265);
-  --color-accent: oklch(0.53 0.2 270);
-  --color-prerequisite: oklch(0.53 0.2 270);
-  --color-component: oklch(0.5 0.12 238);
-  --color-comparison: oklch(0.54 0.14 35);
-  --color-application: oklch(0.48 0.1 145);
-  --color-error: oklch(0.5 0.19 28);
-  --color-focus: oklch(0.53 0.2 260);
-  --font-display: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
-  --font-body: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
-  --font-mono: 'SFMono-Regular', 'Menlo', 'Consolas', monospace;
+  --color-panel: oklch(0.185 0.011 165);
+  --color-panel-raised: oklch(0.215 0.013 165);
+  --color-line: oklch(0.31 0.02 162);
+  --color-line-soft: oklch(0.245 0.016 162);
+  --color-control-border: oklch(0.44 0.025 162);
+  --color-grid: oklch(0.55 0.06 170 / 0.07);
+
+  --color-accent: oklch(0.88 0.21 121);
+  --color-accent-strong: oklch(0.8 0.13 176);
+  --color-accent-wash: oklch(0.88 0.21 121 / 0.12);
+
+  /* 四类关系语义色（深色适配，保持区分度） */
+  --color-prerequisite: oklch(0.8 0.13 176);
+  --color-component: oklch(0.74 0.12 250);
+  --color-comparison: oklch(0.8 0.13 75);
+  --color-application: oklch(0.78 0.14 140);
+  --color-error: oklch(0.72 0.17 25);
+  --color-focus: oklch(0.8 0.13 176);
+
+  --font-display:
+    'PingFang SC', 'HarmonyOS Sans SC', 'Source Han Sans SC', 'Noto Sans SC', 'Microsoft YaHei',
+    -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body:
+    'PingFang SC', 'HarmonyOS Sans SC', 'Source Han Sans SC', 'Noto Sans SC', 'Microsoft YaHei',
+    -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'SF Mono', 'JetBrains Mono', 'Cascadia Code', 'Menlo', 'Consolas', monospace;
+
   --text-xs: 0.75rem;
   --text-sm: 0.875rem;
   --text-base: 1rem;
-  --text-lead: 1.125rem;
+  --text-lead: 1.0625rem;
   --space-0: 0.25rem;
   --space-1: 0.5rem;
   --space-2: 0.75rem;
@@ -38,13 +52,21 @@
   --reading-max: 46rem;
   --control-height: 2.75rem;
   --control-height-mobile: 3rem;
-  --radius-sm: 0.375rem;
-  --radius-md: 0.5rem;
+
+  /* 圆角规则：容器 10px / 小件 8px / 交互控件与徽标全圆角 */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.625rem;
   --radius-pill: 999px;
-  --shadow-hover: 0 0.25rem 1rem color-mix(in oklch, var(--color-ink) 8%, transparent);
+
+  --shadow-card: 0 1px 0 oklch(0.9 0.05 160 / 0.05);
+  --shadow-hover: 0 14px 36px oklch(0 0 0 / 0.55);
+  --shadow-glow: 0 0 22px oklch(0.88 0.21 121 / 0.28);
+
   --z-header: 20;
   --z-skip-link: 100;
   --header-height: auto;
+
   --transition-fast: 170ms cubic-bezier(0.2, 0, 0, 1);
-  --transition-panel: 220ms cubic-bezier(0.2, 0, 0, 1);
+  --transition-panel: 260ms cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }

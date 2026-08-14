@@ -23,7 +23,7 @@ const firstGate = caseStudy.gates[0]!;
   structuredDataType="CollectionPage"
 >
   <main id="main-content" class="case-shell">
-    <header class="case-hero">
+    <header class="case-hero" data-reveal>
       <div>
         <p class="eyebrow">Level 2 continuous case · Level 3 capstone</p>
         <h1>{caseStudy.title}</h1>
@@ -52,7 +52,7 @@ const firstGate = caseStudy.gates[0]!;
       </aside>
     </header>
 
-    <section class="case-context" aria-labelledby="case-context-heading">
+    <section class="case-context" aria-labelledby="case-context-heading" data-reveal>
       <div>
         <p class="eyebrow">Business context</p>
         <h2 id="case-context-heading">这是一个可复核的教学案例</h2>
@@ -67,7 +67,12 @@ const firstGate = caseStudy.gates[0]!;
 
     <CaseStageDirectory caseStudy={caseStudy} />
 
-    <section class="case-archive" id="project-archive" aria-labelledby="archive-heading">
+    <section
+      class="case-archive"
+      id="project-archive"
+      aria-labelledby="archive-heading"
+      data-reveal
+    >
       <header>
         <div>
           <p class="eyebrow">Level 3 · review archive</p>
