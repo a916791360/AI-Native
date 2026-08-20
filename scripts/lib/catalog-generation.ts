@@ -36,6 +36,8 @@ const DOMAIN_ANCHORS: Record<string, { root: string; parent: string }> = {
 const VERIFIED_PUBLICATION_DATE = '2026-08-20';
 const DATE_LITERAL_PATTERN = /^\d{4}-\d{2}-\d{2}$/u;
 const YAML_STRINGIFY_OPTIONS = { lineWidth: 0, singleQuote: true } as const;
+type CatalogSourcePoolKey = keyof typeof CATALOG_SOURCE_POOLS;
+type CatalogSource = (typeof CATALOG_SOURCE_POOLS)[CatalogSourcePoolKey][number];
 
 export interface CatalogTermDocument {
   candidate: CatalogCandidate;
@@ -59,6 +61,11 @@ function quoteYamlDateStringValues(value: unknown): unknown {
     return scalar;
   }
   return value;
+}
+
+function sourcesForDomain(domain: string): CatalogSource[] {
+  if (!(domain in CATALOG_SOURCE_POOLS)) return [];
+  return CATALOG_SOURCE_POOLS[domain as CatalogSourcePoolKey].map((source) => ({ ...source }));
 }
 
 function priorityFor(candidate: CatalogCandidate): number {
@@ -186,8 +193,7 @@ export function buildPublishedCatalogTerms(
     .map((candidate) => {
       const variants = variantsFor(catalog, candidate.id);
       const domain = domainById.get(candidate.domain);
-      const sourcePool = CATALOG_SOURCE_POOLS[candidate.domain] ?? [];
-      const sources = sourcePool.map((source) => ({ ...source }));
+      const sources = sourcesForDomain(candidate.domain);
       const data: Term = {
         id: candidate.id,
         nameZh: candidate.nameZh,

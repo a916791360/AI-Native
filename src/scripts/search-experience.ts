@@ -251,11 +251,17 @@ async function executeSearch(root: HTMLElement, debounced = false): Promise<void
       ? await pagefind.debouncedSearch(query, pagefindOptions(filters), 180)
       : await pagefind.search(query, pagefindOptions(filters));
     if (!response || root.dataset.searchRequest !== requestId) return;
-    const resultData = await Promise.all(
+    const resultData = await Promise.allSettled(
       response.results.slice(0, 30).map((result) => result.data()),
     );
+    const fulfilledResultData = resultData
+      .filter(
+        (result): result is PromiseFulfilledResult<PagefindResultData> =>
+          result.status === 'fulfilled',
+      )
+      .map((result) => result.value);
     if (root.dataset.searchRequest !== requestId) return;
-    renderResults(root, mergeResults(metadataResults, resultData), query);
+    renderResults(root, mergeResults(metadataResults, fulfilledResultData), query);
     state.textContent = '词条索引 + 正文索引';
   } catch {
     if (root.dataset.searchRequest === requestId) {

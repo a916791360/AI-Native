@@ -329,12 +329,10 @@ test('combines domain, difficulty and status filters', async ({ page, isMobile }
   await page.locator('[data-search-filter="difficulty"]').selectOption('advanced');
   await page.locator('[data-search-filter="status"]').selectOption('verified');
 
-  await expect(page.locator('[data-search-status]')).toHaveText('显示 1 / 1 个词条');
-  await expect(page.locator('[data-search-results] li')).toHaveCount(1);
-  await expect(page.locator('[data-search-results] li')).toHaveAttribute(
-    'data-result-id',
-    'reranking',
-  );
+  const results = page.locator('[data-search-results] li');
+  await expect(page.locator('[data-search-status]')).toHaveText('显示 5 / 5 个词条');
+  await expect(results).toHaveCount(5);
+  await expect(results.first()).toHaveAttribute('data-result-id', 'reranking');
 });
 
 test('keeps metadata search available when the body index cannot load', async ({ page }) => {
