@@ -3,6 +3,7 @@ import path from 'node:path';
 
 import { loadCatalogPlan, loadCatalogSummaries } from '../src/lib/content/catalog';
 import { deepContentTermIds, loadContentProductionPlan } from '../src/lib/content/production';
+import { loadValidatedProjectContent } from './lib/project';
 import {
   buildPublishedCatalogRelations,
   buildPublishedCatalogTerms,
@@ -11,23 +12,25 @@ import {
 } from './lib/catalog-generation';
 
 const root = process.cwd();
-const [catalog, summaries, production] = await Promise.all([
+const [catalog, summaries, production, project] = await Promise.all([
   loadCatalogPlan(root),
   loadCatalogSummaries(root),
   loadContentProductionPlan(root),
+  loadValidatedProjectContent(root),
 ]);
 const protectedIds = deepContentTermIds(production);
-const terms = buildPublishedCatalogTerms(catalog, summaries).filter(
+const terms = buildPublishedCatalogTerms(catalog, summaries, project).filter(
   ({ candidate }) => !protectedIds.has(candidate.id),
 );
 
-for (const { candidate, data } of terms) {
+for (const term of terms) {
+  const { candidate } = term;
   const directory = path.join(root, 'src/content/terms', candidate.domain);
   await mkdir(directory, { recursive: true });
-  await writeFile(path.join(directory, `${candidate.id}.mdx`), serializeCatalogTerm(data), 'utf8');
+  await writeFile(path.join(directory, `${candidate.id}.mdx`), serializeCatalogTerm(term), 'utf8');
 }
 
-const relations = buildPublishedCatalogRelations(catalog, summaries);
+const relations = buildPublishedCatalogRelations(catalog);
 await writeFile(
   path.join(root, 'src/data/catalog-relations.yml'),
   serializeCatalogRelations(relations),

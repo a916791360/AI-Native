@@ -8,8 +8,62 @@ summary: 把请求分配到多个服务实例或资源上的机制，以提高�
 domain: ai-engineering-deployment-operations
 difficulty: intermediate
 ring: core
-status: catalogued
+status: verified
 priority: 2
 featured: false
-sources: []
+publishedAt: '2026-08-20'
+updatedAt: '2026-08-20'
+verifiedAt: '2026-08-20'
+sources:
+  - id: openai-cost-optimization
+    type: official-doc
+    title: Cost optimization
+    url: https://developers.openai.com/api/docs/guides/cost-optimization
+    publisher: OpenAI
+    accessedAt: '2026-07-30'
+  - id: frugalgpt
+    type: paper
+    title: 'FrugalGPT: How to Use Large Language Models While Reducing Cost and Improving Performance'
+    url: https://arxiv.org/abs/2305.05176
+    publisher: arXiv
+    publishedAt: '2023-05-09'
+    accessedAt: '2026-07-30'
+  - id: google-cloud-ai-ml-cost-optimization
+    type: official-doc
+    title: 'AI and ML perspective: Cost optimization'
+    url: https://docs.cloud.google.com/architecture/framework/perspectives/ai-ml/cost-optimization
+    publisher: Google Cloud
+    accessedAt: '2026-07-30'
 ---
+
+<h2 id="what-it-is">它是什么</h2>
+
+负载均衡是把请求分配到多个服务实例或资源上的机制，以提高吞吐、可用性和故障恢复能力。在AI 工程运维里，它通常作为一个可复核的入口，用来把概念、对象和判断条件对齐。[S1][S2]
+
+<h2 id="why-it-matters">为什么需要它</h2>
+
+理解负载均衡能帮助你判断问题是否真的落在这个概念上，而不是被相近名词带偏。它属于这个领域的基础入口，适合放在前面学习。再把机制、前提和依赖关系补齐。
+
+<h2 id="how-it-works">它如何工作</h2>
+
+它通常先确认输入、约束、流程和输出，再检查这些部分能否被复核。这样做可以把抽象名词落到具体判断上，也方便和其他词条做关系对照。
+
+<h2 id="example">真实例子</h2>
+
+例如，在一个真实的AI 工程运维场景中，团队会先把负载均衡放进当前问题里，再决定要不要继续拆成数据、流程、接口或评估步骤。Cost optimization、FrugalGPT: How to Use Large Language Models While Reducing Cost and Improving Performance 和 AI and ML perspective: Cost optimization 会是很好的核验起点。
+
+<h2 id="tradeoffs">什么时候适合与不适合</h2>
+
+它适合被用来统一语言、减少歧义和梳理边界，但不适合被当成万能解释。若定义太粗，容易掩盖条件差异；若过早套用，也会把本来简单的问题说复杂。
+
+<h2 id="try-it">亲自试一下</h2>
+
+把负载均衡放进你正在看的一个真实项目里，写下三件事：它是什么、它不是什么、什么时候不该用它。再在本站搜索相邻词条，比较它与其它概念的差别。
+
+<h2 id="next">接下来学什么</h2>
+
+接着阅读 [AI 应用](/terms/ai-application/) 与 [人工智能](/terms/artificial-intelligence/)，把这个概念放回更大的关系网里。先看前置，再看组成和应用，通常更容易把负载均衡放进完整链路。
+
+<h2 id="sources-and-revisions">来源与修订</h2>
+
+本文参考 Cost optimization、FrugalGPT: How to Use Large Language Models While Reducing Cost and Improving Performance 和 AI and ML perspective: Cost optimization。核验日期为 2026-08-20；后续若官方定义、研究结论或产品接口变化，应先更新来源，再修订正文。

@@ -21,7 +21,15 @@ describe('metadata search', () => {
       status: 'verified',
     });
 
-    expect(results.map(({ record }) => record.id)).toEqual(['reranking']);
+    expect(results[0]?.record.id).toBe('reranking');
+    expect(
+      results.every(
+        ({ record }) =>
+          record.domain === 'data-retrieval-rag' &&
+          record.difficulty === 'advanced' &&
+          record.status === 'verified',
+      ),
+    ).toBe(true);
   });
 
   it('returns featured terms first for an empty query', () => {
