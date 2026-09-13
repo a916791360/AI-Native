@@ -640,6 +640,56 @@ test('exposes the navigation on narrow screens', async ({ page, isMobile }) => {
   await expect(page).toHaveURL(/\/atlas\/$/);
 });
 
+test('unlocks L2 and L3 only after all twenty-four questions are answered', async ({ page }) => {
+  await page.goto('/');
+
+  const levelList = page.locator('.level-list');
+  await expect(levelList).not.toHaveAttribute('data-unlocked', 'true');
+  await expect(page.locator('[data-level="l2"] [data-level-state]')).toContainText(
+    '完成 24 题后开启',
+  );
+  await expect(page.locator('[data-level="l1"] [data-level-state]')).toContainText('起点');
+
+  const orderRaw = await page.locator('[data-question-order]').getAttribute('data-question-order');
+  const order: string[] = JSON.parse(orderRaw ?? '[]');
+  expect(order).toHaveLength(24);
+
+  await page.evaluate((answered) => {
+    localStorage.setItem('ai-native.progress', JSON.stringify({ answered, lastVisited: null }));
+  }, order);
+  await page.reload();
+
+  await expect(page.locator('.level-list')).toHaveAttribute('data-unlocked', 'true');
+  await expect(page.locator('[data-level="l2"] [data-level-state]')).toHaveText('已开启');
+  await expect(page.locator('[data-level="l3"] [data-level-state]')).toHaveText('已开启');
+  await expect(page.locator('[data-level="l1"] [data-level-state]')).toContainText('已完成');
+  await expect(page.locator('[data-hero-start]')).toHaveAttribute('href', '/learn/complete/');
+});
+
+test('records L1 graduation and points to L2 on the completion page', async ({ page }) => {
+  await page.goto('/learn/complete/');
+
+  await expect(page.locator('[data-complete-count]')).toHaveText('0');
+  await expect(page.locator('.complete-page')).not.toHaveAttribute('data-complete-state', 'done');
+
+  const orderRaw = await page.locator('[data-complete]').getAttribute('data-question-order');
+  const order: string[] = JSON.parse(orderRaw ?? '[]');
+  expect(order).toHaveLength(24);
+
+  await page.evaluate((answered) => {
+    localStorage.setItem('ai-native.progress', JSON.stringify({ answered, lastVisited: null }));
+  }, order);
+  await page.reload();
+
+  await expect(page.locator('[data-complete-count]')).toHaveText('24');
+  await expect(page.locator('.complete-page')).toHaveAttribute('data-complete-state', 'done');
+  await expect(page.getByRole('link', { name: /进入 L2/ })).toHaveAttribute(
+    'href',
+    '/learn/cases/',
+  );
+  await expect(page.locator('[data-stage-done="true"]')).toHaveCount(6);
+});
+
 test('renders the designed 404 state', async ({ page }) => {
   const response = await page.goto('/not-a-real-concept/');
 

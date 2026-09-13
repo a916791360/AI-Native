@@ -75,31 +75,34 @@ const orderedQuestionIds = LEARNING_QUESTIONS.map((question) => question.id);
         <p class="eyebrow">01/ Learning path</p>
         <h2 id="structure-heading">一条从「会判断」到「能落地」的路径</h2>
         <p>
-          先建立判断，再用连续案例练习，最后在完整项目里交付；知识图鉴、阅读路线、概念图谱和搜索，是你随时可查的支撑层。
+          从 24 道判断题开始，一路走到可评审的完整项目档案。三层依次解锁，不需要在入口处做选择。
         </p>
       </header>
-      <ol class="level-list">
-        <li data-reveal>
+      <ol class="level-list" data-level-list data-level-total={LEARNING_QUESTIONS.length}>
+        <li data-reveal data-level="l1">
           <span class="level-tag">L1</span>
           <div>
             <h3>基础判断</h3>
             <p>六阶段、24 道判断题，建立「是否需要 AI、选什么方案、如何保证质量」的判断方法。</p>
+            <p class="level-state" data-level-state>起点 · {LEARNING_QUESTIONS.length} 道题</p>
             <a href="/learn/">进入 24 题 →</a>
           </div>
         </li>
-        <li data-reveal style="--reveal-delay: 80ms">
+        <li data-reveal data-level="l2" style="--reveal-delay: 80ms">
           <span class="level-tag">L2</span>
           <div>
             <h3>连续案例</h3>
             <p>同一个业务对象，连续做六次评审，把判断放进真实情境里反复练习。</p>
+            <p class="level-state" data-level-state>完成 {LEARNING_QUESTIONS.length} 题后开启</p>
             <a href="/learn/cases/">进入案例库 →</a>
           </div>
         </li>
-        <li data-reveal style="--reveal-delay: 160ms">
+        <li data-reveal data-level="l3" style="--reveal-delay: 160ms">
           <span class="level-tag">L3</span>
           <div>
             <h3>完整项目</h3>
             <p>把机会、方案、体验、质量与运营串成一份可评审的 AI 产品档案。</p>
+            <p class="level-state" data-level-state>完成 {LEARNING_QUESTIONS.length} 题后开启</p>
             <a href="/learn/cases/user-feedback-analysis/">看黄金项目 →</a>
           </div>
         </li>
@@ -526,6 +529,31 @@ const orderedQuestionIds = LEARNING_QUESTIONS.map((question) => question.id);
     font-size: 0.88rem;
   }
 
+  .level-list .level-state {
+    margin: 0 0 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    letter-spacing: 0.04em;
+    color: var(--color-muted);
+  }
+
+  /* L2/L3 默认标注「完成 24 题后开启」；答满 24 题后由脚本切换为已开启 */
+  .level-list li[data-level='l2'],
+  .level-list li[data-level='l3'] {
+    border-style: dashed;
+  }
+
+  .level-list[data-unlocked='true'] li[data-level='l2'],
+  .level-list[data-unlocked='true'] li[data-level='l3'] {
+    border-style: solid;
+    border-color: color-mix(in oklch, var(--color-accent) 45%, var(--color-line));
+  }
+
+  .level-list[data-unlocked='true'] li[data-level='l2'] .level-state,
+  .level-list[data-unlocked='true'] li[data-level='l3'] .level-state {
+    color: var(--color-accent);
+  }
+
   .level-list a,
   .structure-support a {
     color: var(--color-accent-strong);
@@ -646,22 +674,42 @@ const orderedQuestionIds = LEARNING_QUESTIONS.map((question) => question.id);
   const PROGRESS_KEY = 'ai-native.progress';
   const landing = document.querySelector<HTMLElement>('[data-question-order]');
   const startLink = document.querySelector<HTMLAnchorElement>('[data-hero-start]');
-  if (landing && startLink) {
-    let answered: string[] = [];
-    try {
-      const stored = JSON.parse(localStorage.getItem(PROGRESS_KEY) ?? '{"answered":[]}');
-      if (Array.isArray(stored.answered)) answered = stored.answered;
-    } catch {
-      /* localStorage unavailable */
+  const levelList = document.querySelector<HTMLElement>('[data-level-list]');
+
+  let answered: string[] = [];
+  try {
+    const stored = JSON.parse(localStorage.getItem(PROGRESS_KEY) ?? '{"answered":[]}');
+    if (Array.isArray(stored.answered)) answered = stored.answered;
+  } catch {
+    /* localStorage unavailable; progress is optional */
+  }
+
+  if (landing && startLink && answered.length > 0) {
+    const order: string[] = JSON.parse(landing.dataset.questionOrder ?? '[]');
+    const nextId = order.find((id) => !answered.includes(id));
+    startLink.href = nextId ? `/learn/questions/${nextId}/` : '/learn/complete/';
+    startLink.textContent = nextId
+      ? `继续学习 · 已答 ${answered.length} 题`
+      : `已完成 ${order.length} 题 · 查看结业`;
+  }
+
+  if (levelList) {
+    const total = Number(levelList.dataset.levelTotal ?? '0');
+    const done = Math.min(answered.length, total);
+    const complete = total > 0 && done >= total;
+    // 三个状态节点按 L1 → L2 → L3 的 DOM 顺序出现：首个是 L1，其余是待解锁层。
+    const [l1State, ...lockedStates] =
+      levelList.querySelectorAll<HTMLElement>('[data-level-state]');
+    if (l1State) {
+      if (complete) l1State.textContent = `已完成 · ${total} / ${total}`;
+      else if (done > 0) l1State.textContent = `进行中 · 已答 ${done} / ${total}`;
+      else l1State.textContent = `起点 · ${total} 道题`;
     }
-    if (answered.length > 0) {
-      const order: string[] = JSON.parse(landing.dataset.questionOrder ?? '[]');
-      const answeredSet = new Set(answered);
-      const nextId = order.find((id) => !answeredSet.has(id));
-      if (nextId) {
-        startLink.href = `/learn/questions/${nextId}/`;
-        startLink.textContent = `继续学习 · 已答 ${answered.length} 题`;
-      }
+    if (complete) {
+      levelList.dataset.unlocked = 'true';
+      lockedStates.forEach((state) => {
+        state.textContent = '已开启';
+      });
     }
   }
 </script>

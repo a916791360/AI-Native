@@ -51,7 +51,8 @@ const metrics = deriveSiteMetrics(project);
         <h1>AI 产品判断学习库</h1>
         <p>按六个阶段浏览 24 道判断题，直接进入场景、选择方案并查看反馈。</p>
         <p class="catalog-progress" data-catalog-progress hidden>
-          本机进度：已答 <strong data-progress-count>0</strong> / {LEARNING_QUESTIONS.length}
+          <span data-progress-label>本机进度：已答</span>
+          <strong data-progress-count>0</strong> / {LEARNING_QUESTIONS.length}
           <a data-progress-next href="/learn/questions/q01-rules-or-ai/">继续下一题 →</a>
         </p>
       </header>
@@ -141,8 +142,16 @@ const metrics = deriveSiteMetrics(project);
     });
     if (countEl) countEl.textContent = String(answered.length);
     const nextCard = cards.find((card) => !answeredSet.has(card.dataset.questionId ?? ''));
-    if (nextLink)
-      nextLink.href = nextCard ? `/learn/questions/${nextCard.dataset.questionId}/` : '/learn/';
+    if (nextLink) {
+      if (nextCard) {
+        nextLink.href = `/learn/questions/${nextCard.dataset.questionId}/`;
+      } else {
+        nextLink.href = '/learn/complete/';
+        nextLink.textContent = '查看 L1 结业 →';
+        const labelEl = document.querySelector<HTMLElement>('[data-progress-label]');
+        if (labelEl) labelEl.textContent = '已答完全部判断题：';
+      }
+    }
     progressEl.hidden = false;
   }
 </script>

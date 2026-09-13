@@ -695,3 +695,15 @@
 - 验收结果：Astro 100 个文件零诊断；234 项单元测试通过；`validate:data`、`check:generated`、`check:performance`、格式与 lint 全部通过；E2E 81 项通过、7 项按设备条件跳过、0 失败（基于构建产物 preview 运行）。首页 CSS 由 31417 B 降至约 29.1 KiB，性能预算未放宽。
 - 保留边界：未改动词条、关系、案例或路线生命周期，未重生成 `src/generated/`；未推送、未创建 Pull Request、未部署。
 - 后续待确认：L1/L2/L3 由并列改为递进解锁；24 题完成终点页；5 条阅读路线合并或降级；325 个词条由「独立入口」转为「题内即时查」的验收。
+
+## 2026-09-13：L1 递进解锁、结业终点页与路线分组
+
+- 状态：已执行；承接同日「学习入口收敛为单主线」的后续待确认项第 1、2、3 条，首页与学习主线补齐「完成」这件事。
+- 递进解锁：首页路径区块的 L2/L3 在未答完 24 题时以虚线边框 +「完成 24 题后开启」呈现；答完 24 题后 `[data-level-list]` 置 `data-unlocked="true"`，两处状态文案改为「已开启」，hero 主 CTA 由「开始学习」变为「已完成 24 题 · 查看结业」并指向 `/learn/complete/`。无 JavaScript 时三层仍全部可读可点——解锁只改状态文案与边框样式，不做隐藏，避免把递进变成内容墙。
+- 结业终点页：新增 `src/pages/learn/complete.astro`。展示已答数量、六个阶段各自的 `n / 4` 进度，以及 L2（连续案例）与 L3（完整项目）的下一步入口；24/24 时页面置 `data-complete-state="done"`，主 CTA 变为「进入 L2 连续案例 →」。`LearningCatalog` 的下一步链接在答完后同步改为「查看 L1 结业 →」，使主线第一次有了明确的完成节点。
+- 路线分组：`src/pages/routes/index.astro` 将 5 条路线拆为「推荐起点」（`ai-pm-career`）与「专题路线」（其余 4 条），避免路线与主线并列竞争入口；路线标题降为 `h3` 以修正标题层级。
+- 性能基线：首页首屏 JavaScript 1670 B → 2104 B。新增递进解锁与结业跳转逻辑属有意变更，且已先做一轮无损瘦身（去掉冗余 `Set`、三处状态节点合并为一次 `querySelectorAll`），节省 129 B 后才重录 `src/data/performance-baseline.json`（capturedAt 2026-09-13）；首页 CSS、Pagefind、图谱与图片基线未放宽。
+- 站点地图：`src/pages/sitemap.xml.ts` 的 `STATIC_PATHS` 补入 `/learn/complete/`。
+- 验收结果：Astro 101 个文件零诊断；234 项单元测试通过；`validate:data`、`check:generated`、`check:performance`、格式与 lint 全部通过；构建 407 页、Pagefind 索引 325 页；E2E 85 项通过、7 项按设备条件跳过、0 失败（含 2 项新增用例：答完 24 题才解锁 L2/L3、结业页记录 L1 完成并指向 L2）。
+- 保留边界：未改动词条、关系、案例或路线内容本身，未重生成 `src/generated/`；未推送、未创建 Pull Request、未部署。
+- 后续待确认：325 个词条由「独立入口」转为「题内即时查」的验收（原第 4 条，尚未开始）。

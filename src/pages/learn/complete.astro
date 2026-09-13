@@ -1,0 +1,323 @@
+---
+import PageIntro from '@/components/layout/PageIntro.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { LEARNING_MODULES, LEARNING_QUESTIONS, getQuestionsForModule } from '@/data/learning';
+
+const total = LEARNING_QUESTIONS.length;
+const order = LEARNING_QUESTIONS.map((question) => question.id);
+const stages = LEARNING_MODULES.map((module) => ({
+  id: module.id,
+  index: module.index,
+  title: module.title,
+  decision: module.decision,
+  questionIds: getQuestionsForModule(module.id).map((question) => question.id),
+}));
+---
+
+<BaseLayout
+  title="L1 结业 · 基础判断"
+  description={`走完 ${total} 道判断题后，这里记录你的 L1 完成情况，并给出 L2 与 L3 的下一步。`}
+>
+  <main
+    id="main-content"
+    class="complete-page"
+    data-complete
+    data-total={total}
+    data-question-order={JSON.stringify(order)}
+  >
+    <PageIntro
+      eyebrow={`Level 1 · ${total} questions`}
+      title="L1 结业 · 基础判断"
+      description={`走完 ${total} 道判断题，你就建立了「该不该用 AI、选什么方案、如何保证质量」的判断方法。这一页记录完成情况，并给出下一步。`}
+    />
+
+    <section class="complete-status" aria-label="L1 完成情况" aria-live="polite">
+      <p class="status-count">
+        <strong data-complete-count>0</strong>
+        <span>/ {total} 题已答</span>
+      </p>
+      <p class="status-note" data-complete-note>
+        进度记录在本机浏览器，不上传、不注册账号。答满 {total} 题后，这里会显示结业状态。
+      </p>
+      <a class="status-action" href="/learn/questions/q01-rules-or-ai/" data-complete-next>
+        从第 01 题开始 →
+      </a>
+    </section>
+
+    <section class="complete-stages" aria-labelledby="stages-heading">
+      <h2 id="stages-heading">六个阶段的完成情况</h2>
+      <ol>
+        {
+          stages.map((stage) => (
+            <li data-stage-ids={JSON.stringify(stage.questionIds)}>
+              <span class="stage-index">{stage.index}</span>
+              <div>
+                <h3>{stage.title}</h3>
+                <p>{stage.decision}</p>
+                <small data-stage-progress>0 / {stage.questionIds.length}</small>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <section class="complete-next" aria-labelledby="next-heading">
+      <h2 id="next-heading">下一步</h2>
+      <p>L1 建立判断，L2 把判断放进真实情境反复练习，L3 交付一份可评审的产品档案。</p>
+      <div class="next-grid">
+        <a href="/learn/cases/">
+          <span>L2</span>
+          <strong>连续案例</strong>
+          <small>同一个业务对象，连续六次评审</small>
+        </a>
+        <a href="/learn/cases/user-feedback-analysis/">
+          <span>L3</span>
+          <strong>完整项目</strong>
+          <small>黄金项目：每日用户反馈分析与产品改进</small>
+        </a>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .complete-page {
+    width: min(72rem, calc(100% - 3rem));
+    margin-inline: auto;
+    padding-bottom: var(--space-7);
+  }
+
+  .complete-status {
+    display: grid;
+    gap: var(--space-2);
+    border: 1px solid var(--color-line);
+    background: var(--color-panel);
+    padding: 1.6rem 1.5rem;
+    margin-bottom: var(--space-5);
+  }
+
+  .status-count {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin: 0;
+    font-family: var(--font-mono);
+  }
+
+  .status-count strong {
+    font-size: 2.4rem;
+    line-height: 1;
+    color: var(--color-accent);
+  }
+
+  .status-count span {
+    color: var(--color-muted);
+    font-size: 0.9rem;
+  }
+
+  .status-note {
+    max-width: 44rem;
+    margin: 0;
+    color: var(--color-muted);
+    font-size: 0.9rem;
+  }
+
+  .status-action {
+    justify-self: start;
+    min-height: 2.75rem;
+    display: inline-flex;
+    align-items: center;
+    margin-top: var(--space-1);
+    border-bottom: 1px solid var(--color-accent-strong);
+    color: var(--color-accent-strong);
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .status-action:hover {
+    color: var(--color-accent);
+  }
+
+  .complete-page[data-complete-state='done'] .complete-status {
+    border-color: color-mix(in oklch, var(--color-accent) 55%, var(--color-line));
+  }
+
+  .complete-stages h2,
+  .complete-next h2 {
+    margin: 0 0 var(--space-3);
+    font-size: 1.4rem;
+    font-weight: 800;
+  }
+
+  .complete-stages ol {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.9rem;
+    margin: 0 0 var(--space-6);
+    padding: 0;
+    list-style: none;
+  }
+
+  .complete-stages li {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: var(--space-3);
+    border: 1px solid var(--color-line);
+    background: var(--color-panel);
+    padding: 1.1rem 1.2rem;
+  }
+
+  .stage-index {
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
+
+  .complete-stages h3 {
+    margin: 0;
+    font-size: 1.02rem;
+    font-weight: 700;
+  }
+
+  .complete-stages p {
+    margin: 0.3rem 0 0.5rem;
+    color: var(--color-muted);
+    font-size: 0.85rem;
+  }
+
+  .complete-stages small {
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    color: var(--color-muted);
+  }
+
+  .complete-stages li[data-stage-done='true'] {
+    border-color: color-mix(in oklch, var(--color-accent) 45%, var(--color-line));
+  }
+
+  .complete-stages li[data-stage-done='true'] small {
+    color: var(--color-accent);
+  }
+
+  .complete-next {
+    border-top: 1px solid var(--color-line);
+    padding-top: var(--space-4);
+  }
+
+  .complete-next > p {
+    max-width: 44rem;
+    margin: 0 0 var(--space-3);
+    color: var(--color-muted);
+    font-size: 0.9rem;
+  }
+
+  .next-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.9rem;
+  }
+
+  .next-grid a {
+    display: grid;
+    gap: 0.3rem;
+    border: 1px solid var(--color-line);
+    background: var(--color-panel);
+    padding: 1.2rem 1.3rem;
+    text-decoration: none;
+    transition:
+      transform var(--transition-fast),
+      border-color var(--transition-fast);
+  }
+
+  .next-grid a:hover {
+    transform: translateY(-3px);
+    border-color: var(--color-accent);
+  }
+
+  .next-grid span {
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 700;
+  }
+
+  .next-grid strong {
+    font-size: 1.08rem;
+  }
+
+  .next-grid small {
+    color: var(--color-muted);
+    font-size: 0.85rem;
+  }
+
+  @media (max-width: 720px) {
+    .complete-stages ol,
+    .next-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  const PROGRESS_KEY = 'ai-native.progress';
+  const root = document.querySelector<HTMLElement>('[data-complete]');
+  if (root) {
+    const total = Number(root.dataset.total ?? '24');
+    const order: string[] = JSON.parse(root.dataset.questionOrder ?? '[]');
+
+    let answered: string[] = [];
+    try {
+      const stored = JSON.parse(localStorage.getItem(PROGRESS_KEY) ?? '{"answered":[]}');
+      if (Array.isArray(stored.answered)) answered = stored.answered;
+    } catch {
+      /* localStorage unavailable; progress is optional */
+    }
+
+    const answeredSet = new Set(answered);
+    const done = Math.min(answered.length, total);
+
+    const countEl = root.querySelector<HTMLElement>('[data-complete-count]');
+    if (countEl) countEl.textContent = String(done);
+
+    const noteEl = root.querySelector<HTMLElement>('[data-complete-note]');
+    const nextEl = root.querySelector<HTMLAnchorElement>('[data-complete-next]');
+
+    if (done >= total) {
+      root.dataset.completeState = 'done';
+      if (noteEl) {
+        noteEl.textContent = `L1 已结业：${total} 道判断题全部完成。你已经建立了从「该不该用 AI」到「何时上线」的完整判断链。`;
+      }
+      if (nextEl) {
+        nextEl.href = '/learn/cases/';
+        nextEl.textContent = '进入 L2 连续案例 →';
+      }
+    } else {
+      const remaining = total - done;
+      if (noteEl) {
+        noteEl.textContent =
+          done > 0
+            ? `还差 ${remaining} 题。进度只记录在本机浏览器，不上传、不注册账号。`
+            : `进度记录在本机浏览器，不上传、不注册账号。答满 ${total} 题后，这里会显示结业状态。`;
+      }
+      if (nextEl) {
+        const nextId = order.find((id) => !answeredSet.has(id));
+        if (nextId) {
+          nextEl.href = `/learn/questions/${nextId}/`;
+          nextEl.textContent = done > 0 ? `继续第 ${done + 1} 题 →` : '从第 01 题开始 →';
+        }
+      }
+    }
+
+    root.querySelectorAll<HTMLElement>('[data-stage-ids]').forEach((stage) => {
+      const ids: string[] = JSON.parse(stage.dataset.stageIds ?? '[]');
+      const stageDone = ids.filter((id) => answeredSet.has(id)).length;
+      const progressEl = stage.querySelector<HTMLElement>('[data-stage-progress]');
+      if (progressEl) progressEl.textContent = `${stageDone} / ${ids.length}`;
+      if (ids.length > 0 && stageDone >= ids.length) stage.dataset.stageDone = 'true';
+    });
+  }
+</script>
