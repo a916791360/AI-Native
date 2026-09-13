@@ -728,36 +728,44 @@ const pmAction = PM_ACTIONS[question.id];
     font-size: var(--text-xs);
   }
 
+  /* 题内即时查：被引用词条就地给出中文名与定义，读者为一个名词不必跳去知识库。
+     沿用上面 .checks 的「细线 + 双列」语汇，不用卡片盒——每题只引用 2–4 个词条，
+     卡片网格在 1120px 下会排成 3+1 的孤儿行（1280 / 1440 实测均是）。 */
   .refs {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
-    gap: var(--space-3);
+    gap: 0;
     margin-top: var(--space-5);
   }
   .refs .meta-label {
-    grid-column: 1 / -1;
     color: var(--color-quiet);
   }
   .refs a {
     display: grid;
-    gap: var(--space-1);
-    border: 1px solid var(--color-line);
-    border-radius: var(--radius-md);
-    padding: var(--space-3);
+    grid-template-columns: minmax(8.5rem, 12rem) minmax(0, 1fr);
+    gap: var(--space-1) var(--space-4);
+    align-items: baseline;
+    border-bottom: 1px solid var(--color-line-soft);
+    padding-block: var(--space-3);
     text-decoration: none;
   }
-  .refs a:hover {
-    border-color: var(--color-control-border);
-    background: var(--color-panel);
+  .refs a:first-of-type {
+    border-top: 1px solid var(--color-line-soft);
+  }
+  .refs a:hover strong,
+  .refs a:focus-visible strong {
+    color: var(--color-accent-strong);
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
   }
   .refs strong {
     font-size: var(--text-sm);
     font-weight: var(--weight-display);
   }
   .refs span {
-    color: var(--color-quiet);
-    font-size: var(--text-xs);
-    line-height: 1.7;
+    max-width: var(--reading-max);
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+    line-height: 1.75;
   }
 
   /* PM 落地也是正文的一部分，不套卡片。 */
@@ -849,6 +857,9 @@ const pmAction = PM_ACTIONS[question.id];
       padding-left: 0;
     }
     .question-nav {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .refs a {
       grid-template-columns: minmax(0, 1fr);
     }
   }

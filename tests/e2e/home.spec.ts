@@ -215,6 +215,42 @@ test('supports keyboard answering and keeps the continuation link explicit', asy
   await expect(page).toHaveURL(/\/learn\/questions\/q02-classify-or-generate\/$/);
 });
 
+test('answers every referenced term inside the question instead of sending the reader away', async ({
+  page,
+}) => {
+  // 「题内即时查」：被引用的词条要在答题页就地给出中文名与解释，
+  // 读者为了一个名词不必离开当前这题去知识库。空解释 = 退化成裸链接，视为失败。
+  for (const questionPath of [
+    '/learn/questions/q01-rules-or-ai/',
+    '/learn/questions/q61-accuracy-or-explain/',
+    '/learn/questions/q90-pilot-or-scale/',
+  ]) {
+    await page.goto(questionPath);
+
+    const refs = page.getByRole('navigation', { name: '相关知识库条目' });
+    const entries = refs.locator('a');
+    const count = await entries.count();
+    expect(count, `${questionPath} 的题内引用条数`).toBeGreaterThanOrEqual(2);
+
+    for (let index = 0; index < count; index += 1) {
+      const entry = entries.nth(index);
+      await expect(entry, `${questionPath} 第 ${index + 1} 条引用`).toBeVisible();
+
+      const href = await entry.getAttribute('href');
+      expect(href, `${questionPath} 第 ${index + 1} 条引用的链接`).toMatch(
+        /^\/terms\/[a-z0-9-]+\/$/,
+      );
+
+      const name = (await entry.locator('strong').textContent())?.trim() ?? '';
+      const definition = (await entry.locator('span').textContent())?.trim() ?? '';
+      expect(name.length, `${questionPath} 第 ${index + 1} 条引用的词条名`).toBeGreaterThan(0);
+      expect(definition.length, `${questionPath} 中「${name}」的题内解释`).toBeGreaterThanOrEqual(
+        10,
+      );
+    }
+  }
+});
+
 test('marks tier and module boundaries on the question page', async ({ page }) => {
   // 阶段边界：第 01 阶段的最后一题指向阶段 02。
   await page.goto('/learn/questions/q05-context-overflow-retrieval/');

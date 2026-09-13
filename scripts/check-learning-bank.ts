@@ -14,6 +14,7 @@ const AUTHORED_BY_TIER = [TIER1_QUESTIONS, TIER2_QUESTIONS, TIER3_QUESTIONS];
 const QUESTIONS_PER_TIER = 30;
 const QUESTIONS_PER_MODULE = 5;
 const POSITION_TOLERANCE = 0.4;
+const MIN_TERM_SUMMARY = 10;
 
 const issues: string[] = [];
 const fail = (message: string) => issues.push(message);
@@ -21,6 +22,7 @@ const fail = (message: string) => issues.push(message);
 interface TermRecord {
   id: string;
   nameZh: string;
+  summary?: string;
 }
 const registry = JSON.parse(
   await readFile(path.join(root, 'src/generated/term-registry.json'), 'utf8'),
@@ -128,7 +130,7 @@ for (const question of LEARNING_QUESTIONS) {
   }
 }
 
-// ---- 3. 引用可解析 ---------------------------------------------------------
+// ---- 3. 引用可解析（题内即时查）：词条必须存在、同名、且有能直接读的解释 ----
 
 for (const question of LEARNING_QUESTIONS) {
   if (question.references.length < 2) {
@@ -138,9 +140,19 @@ for (const question of LEARNING_QUESTIONS) {
     const term = termsById.get(reference.id);
     if (!term) {
       fail(`${question.id} 引用了不存在的词条 ${reference.id}`);
-    } else if (term.nameZh !== reference.label) {
+      continue;
+    }
+    if (term.nameZh !== reference.label) {
       fail(
         `${question.id} 引用 ${reference.id} 的 label 是「${reference.label}」，应为「${term.nameZh}」`,
+      );
+    }
+    // 答题页把词条摘要就地渲染在题目里（`termSummaries[reference.id]`）。
+    // 摘要缺失或过短时那一行会是空的——「题内即时查」就退化成一条裸链接，
+    // 读者又被赶回知识库，这正是当初要修的问题。
+    if (!term.summary || term.summary.trim().length < MIN_TERM_SUMMARY) {
+      fail(
+        `${question.id} 引用 ${reference.id}，但该词条摘要只有 ${term.summary?.trim().length ?? 0} 字（至少 ${MIN_TERM_SUMMARY} 字），题内解释会渲染成空行`,
       );
     }
   }
