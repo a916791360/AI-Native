@@ -87,7 +87,7 @@ test('keeps the homepage oriented around positioning instead of a selected quest
 
   await expect(page.getByRole('group', { name: '精选判断题' })).toHaveCount(0);
   await expect(page.locator('.learning-card')).toHaveCount(0);
-  await expect(page.getByText('发票金额校验，需要上大模型吗？')).toHaveCount(0);
+  await expect(page.getByText('发票金额校验，需要引入大模型吗？')).toHaveCount(0);
   await expect(
     page.getByRole('heading', { level: 1, name: '从看懂 AI，到做出可上线的 AI 产品' }),
   ).toBeVisible();
@@ -104,8 +104,8 @@ test('provides stable skeletons for all primary page types', async ({ page }) =>
     ['/learn/cases/', 'AI 产品案例库'],
     ['/learn/cases/user-feedback-analysis/', '每日用户反馈分析与产品改进'],
     ['/learn/cases/user-feedback-analysis/decide-ai-boundary/', '判断 AI 边界'],
-    ['/learn/questions/q01-rules-or-ai/', '发票金额校验，需要上大模型吗？'],
-    ['/learn/questions/q21-support-rag/', '客服知识库的第一版，应该直接自动回复客户吗？'],
+    ['/learn/questions/q01-rules-or-ai/', '发票金额校验，需要引入大模型吗？'],
+    ['/learn/questions/q31-long-doc-source/', '制度文档持续增长，还把全文拼进提示词吗？'],
     ['/atlas/', '知识图鉴'],
     ['/search/', '搜索'],
     ['/routes/', '学习路线'],
@@ -159,53 +159,92 @@ test('keeps the primary learning navigation consistent on every core page', asyn
   }
 });
 
-test('reveals immediate reasoning without asking the learner to type', async ({ page }) => {
+test('answers in place with immediate per-option feedback instead of jumping to a panel', async ({
+  page,
+}) => {
   await page.goto('/learn/questions/q01-rules-or-ai/');
 
+  // 一题一屏：不要求学习者打字。
   await expect(
     page.locator('#main-content textarea, #main-content input:not([type="hidden"])'),
   ).toHaveCount(0);
+
+  // 作答前：所有反馈都是折叠的，核心原则也是折叠的（先判断，再看解释）。
+  await expect(page.locator('[data-option-feedback][open]')).toHaveCount(0);
+  await expect(page.locator('[data-principle]')).not.toHaveAttribute('open', '');
+
   const riskyOption = page.getByRole('button', { name: /让大模型读取发票后判断/ });
+  const riskyItem = page.locator('[data-option-item]').filter({ has: riskyOption });
   await riskyOption.click();
 
+  // 反馈就在被点的那一条里展开，不需要跳到页面下方的独立面板。
   await expect(riskyOption).toHaveAttribute('aria-pressed', 'true');
-  await expect(page.locator('[data-feedback-panel]')).toBeVisible();
-  await expect(page.locator('[data-feedback-kicker]')).toHaveText('高风险路径');
-  await expect(page.locator('[data-feedback-copy]')).toContainText('增加延迟、成本与不确定性');
+  await expect(riskyItem).toHaveAttribute('data-state', 'chosen');
+  const riskyFeedback = riskyItem.locator('[data-option-feedback]');
+  await expect(riskyFeedback).toHaveAttribute('open', '');
+  await expect(riskyFeedback.locator('.option-verdict')).toHaveText('高风险路径');
+  await expect(riskyFeedback.locator('.option-why')).toContainText('增加延迟、成本与不确定性');
+
+  // 同一题的所有路径判断一起展开，方便横向比较。
+  const opened = await page.locator('[data-option-feedback][open]').count();
+  expect(opened).toBe(3);
+
+  // 答完即记录：进度条与结业状态同步更新。
+  await expect(page.locator('[data-progress-answered]')).toHaveText('已答 1 / 90');
+  await expect(page.locator('[data-progress-missed]')).toHaveText('错 1');
+  await expect(page.locator('[data-principle]')).toHaveAttribute('open', '');
+
+  // 已作答后不接受二次改答，避免「试到对为止」。
+  const recommended = page.getByRole('button', { name: /使用确定性规则计算并校验/ });
+  await recommended.click();
+  await expect(recommended).toHaveAttribute('aria-pressed', 'false');
 });
 
-test('makes stage progress and cross-stage continuation explicit', async ({ page }) => {
-  await page.goto('/learn/questions/q04-high-stakes-answer/');
+test('supports keyboard answering and keeps the continuation link explicit', async ({ page }) => {
+  await page.goto('/learn/questions/q01-rules-or-ai/');
 
-  const location = page.getByRole('region', { name: 'Level 1 · 基础判断位置' });
-  await expect(location).toContainText('阶段 01 / 06');
-  await expect(location).toContainText('AI 基础与模型边界');
-  await expect(location).toContainText('本阶段4 / 4');
-  await expect(location).toContainText('基础题04 / 24');
-  await expect(location.getByRole('link')).toHaveCount(1);
-  await expect(location.getByRole('link', { name: '返回三层学习中心' })).toHaveAttribute(
-    'href',
-    '/learn/',
-  );
-  await expect(page.getByRole('navigation', { name: '六阶段学习路线' })).toHaveCount(0);
+  // 数字键作答：2 是本题的推荐路径。
+  await page.keyboard.press('2');
+  await expect(page.locator('[data-progress-answered]')).toHaveText('已答 1 / 90');
+  await expect(page.locator('[data-progress-missed]')).toHaveText('错 0');
 
-  await page.getByRole('button', { name: /限定为信息辅助/ }).click();
+  // 答完后 → 才推进，避免误触跳过。
   const nextStep = page.locator('[data-next-step]');
-  await expect(nextStep).toContainText('进入阶段 02');
-  await expect(nextStep).toContainText('场景与机会判断');
-  await expect(nextStep).toHaveAttribute('href', '/learn/questions/q05-demo-or-value/');
-
-  await page.goto('/learn/questions/q24-launch-decision/');
-  await page.getByRole('button', { name: /补齐监控、预算、护栏和接管/ }).click();
-  await expect(page.locator('[data-next-step]')).toContainText('完成 Level 1');
-  await expect(page.locator('[data-next-step]')).toHaveAttribute('href', '/learn/');
+  await expect(nextStep).toHaveAttribute('href', '/learn/questions/q02-classify-or-generate/');
+  await page.keyboard.press('ArrowRight');
+  await expect(page).toHaveURL(/\/learn\/questions\/q02-classify-or-generate\/$/);
 });
 
-test('keeps the course as one six-stage, twenty-four-card catalog', async ({ page, isMobile }) => {
+test('marks tier and module boundaries on the question page', async ({ page }) => {
+  // 阶段边界：第 01 阶段的最后一题指向阶段 02。
+  await page.goto('/learn/questions/q05-context-overflow-retrieval/');
+  const head = page.locator('.q-head .meta-label');
+  await expect(head).toContainText('T1 · 第 5 / 30 题');
+  await expect(head).toContainText('阶段 01 第 5 / 5 题');
+  const moduleStep = page.locator('[data-next-step]');
+  await expect(moduleStep).toContainText('进入阶段 02');
+  await expect(moduleStep).toContainText('场景与机会判断');
+  await expect(moduleStep).toHaveAttribute('href', '/learn/questions/q06-demo-or-opportunity/');
+
+  // 层级边界：T1 最后一题指向 T2 第一题，并说明进入的是哪一层。
+  await page.goto('/learn/questions/q30-missing-rollback/');
+  const tierStep = page.locator('[data-next-step]');
+  await expect(tierStep).toContainText('进入 T2 场景判断');
+  await expect(tierStep).toHaveAttribute('href', '/learn/questions/q31-long-doc-source/');
+
+  // 三层终点：最后一题指向结业页，而不是再回到学习中心。
+  await page.goto('/learn/questions/q90-pilot-or-scale/');
+  const finalStep = page.locator('[data-next-step]');
+  await expect(finalStep).toContainText('三层训练完成');
+  await expect(finalStep).toHaveAttribute('href', '/learn/complete/');
+});
+
+test('keeps the course as one three-tier, ninety-card catalog', async ({ page, isMobile }) => {
   await page.goto('/learn/');
 
-  await expect(page.locator('.catalog-section')).toHaveCount(6);
-  await expect(page.locator('.learning-card')).toHaveCount(24);
+  await expect(page.locator('.tier-block')).toHaveCount(3);
+  await expect(page.locator('.module-block')).toHaveCount(18);
+  await expect(page.locator('.learning-card')).toHaveCount(90);
   await expect(page.locator('.learning-card > a').first()).toHaveAttribute(
     'href',
     '/learn/questions/q01-rules-or-ai/',
@@ -217,9 +256,77 @@ test('keeps the course as one six-stage, twenty-four-card catalog', async ({ pag
       page.getByRole('navigation', { name: '主导航' }).getByRole('link', { name: '案例库' }),
     ).toBeVisible();
   } else {
-    await expect(page.getByRole('navigation', { name: '内容类型' })).toContainText('案例实战 6');
+    const scope = page.getByRole('navigation', { name: '内容类型' });
+    await expect(scope).toContainText('系统课程 90');
+    await expect(scope).toContainText('案例实战 6');
   }
   await expect(page.locator('.task-list, .learning-levels, .course-summary')).toHaveCount(0);
+});
+
+test('folds the catalog by tier and only expands the tier the learner is on', async ({
+  page,
+  isMobile,
+}) => {
+  await page.goto('/learn/');
+
+  const tiers = page.locator('[data-tier-disclosure]');
+
+  // 默认只展开第一层，其余两层收起——90 张卡片不再一次性铺满。
+  await expect(tiers.nth(0)).toHaveJSProperty('open', true);
+  await expect(tiers.nth(1)).toHaveJSProperty('open', false);
+  await expect(tiers.nth(2)).toHaveJSProperty('open', false);
+
+  // 收起的层只剩一个层头的高度；展开的层要高得多。
+  // 只量 <details> 自身——它内部处于 content-visibility 子树里，子元素尺寸不可靠。
+  const measure = () =>
+    tiers.evaluateAll((nodes) =>
+      nodes.map((node) => Math.round(node.getBoundingClientRect().height)),
+    );
+  const collapsed = await measure();
+  const headHeight = await page
+    .locator('.tier-head')
+    .first()
+    .evaluate((node) => Math.round(node.getBoundingClientRect().height));
+
+  expect(collapsed[0]).toBeGreaterThan(headHeight * 5);
+  expect(collapsed[1]).toBeLessThan(headHeight * 1.5);
+  expect(collapsed[2]).toBeLessThan(headHeight * 1.5);
+
+  // 收起的层仍然报得出状态，不展开也能判断哪一层值得进。
+  // 题量由 .tier-count 承担，状态位只报进度，不重复数字。
+  await expect(page.locator('[data-tier-state-label]').nth(0)).toHaveText('未开始');
+  await expect(page.locator('[data-tier-state-label]').nth(1)).toHaveText('未开始');
+  await expect(page.locator('.tier-count').nth(0)).toContainText('30');
+
+  // 点开第二层。
+  await page.locator('.tier-head').nth(1).click();
+  await expect(tiers.nth(1)).toHaveJSProperty('open', true);
+  await expect.poll(async () => (await measure())[1] ?? 0).toBeGreaterThan(headHeight * 5);
+
+  if (isMobile) {
+    // 移动端侧栏隐藏，靠「跳到某一层」选择器进入收起层。
+    await page.locator('[data-course-stage]').selectOption('tier-T3');
+    await expect(tiers.nth(2)).toHaveJSProperty('open', true);
+  } else {
+    // 桌面侧栏跟着主区走：只列当前展开那一层的六个阶段。
+    await expect(page.locator('[data-tier-nav="t1-recognize"]')).toHaveAttribute(
+      'data-open',
+      'true',
+    );
+    await expect(page.locator('[data-tier-nav="t2-judge"]')).toHaveAttribute('data-open', 'true');
+    await expect(page.locator('[data-tier-nav="t3-tradeoff"]')).toHaveAttribute(
+      'data-open',
+      'false',
+    );
+
+    // 侧栏的层标题始终可见，点它要能把收起的层展开。
+    await page.locator('[data-tier-jump="t3-tradeoff"]').click();
+    await expect(tiers.nth(2)).toHaveJSProperty('open', true);
+    await expect(page.locator('[data-tier-nav="t3-tradeoff"]')).toHaveAttribute(
+      'data-open',
+      'true',
+    );
+  }
 });
 
 test('keeps the question and decision logic readable without JavaScript', async ({ browser }) => {
@@ -229,7 +336,7 @@ test('keeps the question and decision logic readable without JavaScript', async 
   await page.goto(`${PLAYWRIGHT_BASE_URL}/`);
   await page.getByRole('link', { name: '从第 01 题开始' }).click();
   await expect(
-    page.getByRole('heading', { level: 1, name: '发票金额校验，需要上大模型吗？' }),
+    page.getByRole('heading', { level: 1, name: '发票金额校验，需要引入大模型吗？' }),
   ).toBeVisible();
   await expect(page.getByText('能被稳定规则完整描述的问题，优先使用确定性系统。')).toBeVisible();
 
@@ -611,7 +718,7 @@ test('keeps key pages within the viewport without horizontal overflow', async ({
     '/',
     '/learn/',
     '/learn/questions/',
-    '/learn/questions/q21-support-rag/',
+    '/learn/questions/q61-accuracy-or-explain/',
     '/learn/cases/user-feedback-analysis/',
     '/learn/cases/user-feedback-analysis/decide-ai-boundary/',
     '/atlas/',
@@ -640,54 +747,101 @@ test('exposes the navigation on narrow screens', async ({ page, isMobile }) => {
   await expect(page).toHaveURL(/\/atlas\/$/);
 });
 
-test('unlocks L2 and L3 only after all twenty-four questions are answered', async ({ page }) => {
+test('unlocks each tier only after the previous tier is fully answered', async ({ page }) => {
   await page.goto('/');
 
-  const levelList = page.locator('.level-list');
-  await expect(levelList).not.toHaveAttribute('data-unlocked', 'true');
-  await expect(page.locator('[data-level="l2"] [data-level-state]')).toContainText(
-    '完成 24 题后开启',
-  );
-  await expect(page.locator('[data-level="l1"] [data-level-state]')).toContainText('起点');
+  const tierState = (tierId: string) => page.locator(`[data-level="${tierId}"] [data-level-state]`);
+  const tierItem = (tierId: string) => page.locator(`[data-level="${tierId}"]`);
+
+  // 起点：只有第一层可进入，后两层明确说明解锁条件。
+  await expect(tierItem('t1-recognize')).toHaveAttribute('data-unlocked', 'true');
+  await expect(tierState('t1-recognize')).toContainText('起点 · 30 道题');
+  await expect(tierItem('t2-judge')).toHaveAttribute('data-unlocked', 'false');
+  await expect(tierItem('t3-tradeoff')).toHaveAttribute('data-unlocked', 'false');
+  await expect(tierState('t2-judge')).toHaveText('完成上一层后开启');
+  await expect(tierState('t3-tradeoff')).toHaveText('完成上一层后开启');
+  await expect(page.locator('.level-list')).not.toHaveAttribute('data-unlocked', 'true');
 
   const orderRaw = await page.locator('[data-question-order]').getAttribute('data-question-order');
   const order: string[] = JSON.parse(orderRaw ?? '[]');
-  expect(order).toHaveLength(24);
+  expect(order).toHaveLength(90);
 
+  const tierIds = async (tierId: string) =>
+    JSON.parse((await tierItem(tierId).getAttribute('data-level-ids')) ?? '[]') as string[];
+  const t1 = await tierIds('t1-recognize');
+  const t2 = await tierIds('t2-judge');
+  const t3 = await tierIds('t3-tradeoff');
+  expect(t1).toHaveLength(30);
+  expect(t2).toHaveLength(30);
+  expect(t3).toHaveLength(30);
+
+  // 答完 T1：T2 解锁，但 T3 仍然锁着——解锁是逐层推进，不是一次全开。
+  await page.evaluate((answered) => {
+    localStorage.setItem('ai-native.progress', JSON.stringify({ answered, lastVisited: null }));
+  }, t1);
+  await page.reload();
+
+  await expect(tierState('t1-recognize')).toHaveText('已完成 · 30 / 30');
+  await expect(tierItem('t2-judge')).toHaveAttribute('data-unlocked', 'true');
+  await expect(tierState('t2-judge')).toHaveText('起点 · 30 道题');
+  await expect(tierItem('t3-tradeoff')).toHaveAttribute('data-unlocked', 'false');
+  await expect(page.locator('[data-hero-start]')).toHaveAttribute(
+    'href',
+    '/learn/questions/q31-long-doc-source/',
+  );
+
+  // 答完三层：路径全开，主 CTA 指向结业页。
   await page.evaluate((answered) => {
     localStorage.setItem('ai-native.progress', JSON.stringify({ answered, lastVisited: null }));
   }, order);
   await page.reload();
 
   await expect(page.locator('.level-list')).toHaveAttribute('data-unlocked', 'true');
-  await expect(page.locator('[data-level="l2"] [data-level-state]')).toHaveText('已开启');
-  await expect(page.locator('[data-level="l3"] [data-level-state]')).toHaveText('已开启');
-  await expect(page.locator('[data-level="l1"] [data-level-state]')).toContainText('已完成');
+  await expect(tierState('t1-recognize')).toHaveText('已完成 · 30 / 30');
+  await expect(tierState('t2-judge')).toHaveText('已完成 · 30 / 30');
+  await expect(tierState('t3-tradeoff')).toHaveText('已完成 · 30 / 30');
   await expect(page.locator('[data-hero-start]')).toHaveAttribute('href', '/learn/complete/');
 });
 
-test('records L1 graduation and points to L2 on the completion page', async ({ page }) => {
+test('records three-tier graduation and points to the case library', async ({ page }) => {
   await page.goto('/learn/complete/');
 
   await expect(page.locator('[data-complete-count]')).toHaveText('0');
   await expect(page.locator('.complete-page')).not.toHaveAttribute('data-complete-state', 'done');
+  await expect(page.locator('[data-tier-ids]')).toHaveCount(3);
+  await expect(page.locator('[data-cell-ids]')).toHaveCount(18);
 
   const orderRaw = await page.locator('[data-complete]').getAttribute('data-question-order');
   const order: string[] = JSON.parse(orderRaw ?? '[]');
-  expect(order).toHaveLength(24);
+  expect(order).toHaveLength(90);
 
+  // 只答完 T1：进度可见，但还不算结业。
+  await page.evaluate(
+    (answered) => {
+      localStorage.setItem('ai-native.progress', JSON.stringify({ answered, lastVisited: null }));
+    },
+    order.slice(0, 30),
+  );
+  await page.reload();
+
+  await expect(page.locator('[data-complete-count]')).toHaveText('30');
+  await expect(page.locator('.complete-page')).not.toHaveAttribute('data-complete-state', 'done');
+  await expect(page.locator('[data-tier-done="true"]')).toHaveCount(1);
+  await expect(page.locator('[data-cell-done="true"]')).toHaveCount(6);
+  await expect(page.locator('[data-tier-progress]').first()).toHaveText('30 / 30');
+
+  // 答满 90：结业状态、18 个阶段格、3 层全部标记完成。
   await page.evaluate((answered) => {
     localStorage.setItem('ai-native.progress', JSON.stringify({ answered, lastVisited: null }));
   }, order);
   await page.reload();
 
-  await expect(page.locator('[data-complete-count]')).toHaveText('24');
+  await expect(page.locator('[data-complete-count]')).toHaveText('90');
   await expect(page.locator('.complete-page')).toHaveAttribute('data-complete-state', 'done');
-  await expect(page.getByRole('link', { name: /进入 L2/ })).toHaveAttribute(
-    'href',
-    '/learn/cases/',
-  );
-  await expect(page.locator('[data-stage-done="true"]')).toHaveCount(6);
+  await expect(page.locator('[data-tier-done="true"]')).toHaveCount(3);
+  await expect(page.locator('[data-cell-done="true"]')).toHaveCount(18);
+  await expect(page.locator('[data-complete-next]')).toHaveAttribute('href', '/learn/cases/');
+  await expect(page.locator('[data-complete-next]')).toContainText('进入连续案例');
 });
 
 test('renders the designed 404 state', async ({ page }) => {
@@ -703,7 +857,7 @@ test('has no serious or critical automated accessibility violations', async ({ p
     '/',
     '/learn/',
     '/learn/questions/',
-    '/learn/questions/q21-support-rag/',
+    '/learn/questions/q61-accuracy-or-explain/',
     '/learn/cases/user-feedback-analysis/',
     '/learn/cases/user-feedback-analysis/decide-ai-boundary/',
     '/atlas/',

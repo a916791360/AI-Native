@@ -1,6 +1,12 @@
 ---
 import ContentScopeNav from '@/components/layout/ContentScopeNav.astro';
-import { LEARNING_MODULES, LEARNING_QUESTIONS, getQuestionsForModule } from '@/data/learning';
+import {
+  LEARNING_MODULES,
+  LEARNING_QUESTIONS,
+  LEARNING_TIERS,
+  getQuestionsForModule,
+  getQuestionsForTier,
+} from '@/data/learning';
 import { loadCaseStudies } from '@/lib/cases/io';
 import { loadProjectContent } from '@/lib/content/io';
 import { deriveSiteMetrics } from '@/lib/site/metrics';
@@ -25,12 +31,22 @@ const metrics = deriveSiteMetrics(project);
 
   <div class="catalog-layout">
     <aside class="catalog-sidebar">
-      <nav aria-label="课程阶段目录">
+      <nav aria-label="三层课程目录">
         {
-          LEARNING_MODULES.map((module, index) => (
-            <a href={`#module-${module.index}`} aria-current={index === 0 ? 'true' : undefined}>
-              {module.title}
-            </a>
+          LEARNING_TIERS.map((tier) => (
+            <div class="tier-nav" data-tier-nav={tier.id}>
+              <a class="tier-nav-head" href={`#tier-${tier.code}`} data-tier-jump={tier.id}>
+                <span>{tier.code}</span>
+                {tier.title}
+              </a>
+              <ul>
+                {LEARNING_MODULES.map((module) => (
+                  <li>
+                    <a href={`#module-${tier.code}-${module.index}`}>{module.title}</a>
+                  </li>
+                ))}
+              </ul>
+            </div>
           ))
         }
       </nav>
@@ -38,70 +54,106 @@ const metrics = deriveSiteMetrics(project);
 
     <div class="catalog-main">
       <label class="catalog-stage-picker">
-        <span>课程阶段</span>
+        <span>跳到某一层</span>
         <select data-course-stage>
           {
-            LEARNING_MODULES.map((module) => (
-              <option value={`module-${module.index}`}>{module.title}</option>
+            LEARNING_TIERS.map((tier) => (
+              <optgroup label={`${tier.code} ${tier.title}`}>
+                <option value={`tier-${tier.code}`}>整层 · {tier.title}</option>
+                {LEARNING_MODULES.map((module) => (
+                  <option value={`module-${tier.code}-${module.index}`}>{module.title}</option>
+                ))}
+              </optgroup>
             ))
           }
         </select>
       </label>
       <header class="catalog-title">
         <h1>AI 产品判断学习库</h1>
-        <p>按六个阶段浏览 24 道判断题，直接进入场景、选择方案并查看反馈。</p>
+        <p>
+          三层递进，每层把六个阶段完整走一遍：先认得出概念，再判断得了边界，最后做得了取舍。共
+          {LEARNING_QUESTIONS.length} 道判断题，按层折叠，一次只看一层。
+        </p>
         <p class="catalog-progress" data-catalog-progress hidden>
           <span data-progress-label>本机进度：已答</span>
           <strong data-progress-count>0</strong> / {LEARNING_QUESTIONS.length}
-          <a data-progress-next href="/learn/questions/q01-rules-or-ai/">继续下一题 →</a>
+          <a data-progress-next href={`/learn/questions/${LEARNING_QUESTIONS[0]!.id}/`}
+            >继续下一题 →</a
+          >
         </p>
       </header>
 
       {
-        LEARNING_MODULES.map((module) => {
-          const questions = getQuestionsForModule(module.id);
+        LEARNING_TIERS.map((tier, tierIndex) => {
+          const tierQuestions = getQuestionsForTier(tier.id);
+          const tierIds = tierQuestions.map((question) => question.id);
           return (
-            <section
-              id={`module-${module.index}`}
-              class="catalog-section"
-              aria-labelledby={`module-${module.index}-heading`}
+            <details
+              id={`tier-${tier.code}`}
+              class="tier-block"
+              open={tierIndex === 0}
+              data-tier-disclosure
+              data-tier-id={tier.id}
+              data-tier-ids={JSON.stringify(tierIds)}
             >
-              <header>
-                <h2 id={`module-${module.index}-heading`}>{module.title}</h2>
-                <span>{questions.length} 个条目</span>
-              </header>
+              <summary class="tier-head">
+                <span class="tier-code">{tier.code}</span>
+                <h2 id={`tier-${tier.code}-heading`}>{tier.title}</h2>
+                <span class="tier-meta">
+                  <span class="tier-count">
+                    <strong>{tierQuestions.length}</strong> 道题
+                  </span>
+                  <span class="tier-state" data-tier-state-label>
+                    {tierIndex === 0 ? '未开始' : '展开查看'}
+                  </span>
+                </span>
+                <i class="tier-chevron" aria-hidden="true" />
+              </summary>
 
-              <div class="learning-card-grid">
-                {questions.map((question, cardIndex) => (
-                  <article
-                    class="learning-card"
-                    data-question-id={question.id}
-                    data-reveal
-                    style={`--reveal-delay: ${cardIndex * 45}ms`}
-                  >
-                    <a href={`/learn/questions/${question.id}/`}>
-                      <div class="learning-card-heading">
-                        <h3>{question.shortTitle}</h3>
-                        <span>Q{question.index}</span>
+              <div class="tier-body">
+                <p class="tier-summary">{tier.summary}</p>
+                <p class="tier-goal">练成：{tier.goal}</p>
+
+                {LEARNING_MODULES.map((module) => {
+                  const questions = getQuestionsForModule(module.id, tier.id);
+                  return (
+                    <div id={`module-${tier.code}-${module.index}`} class="module-block">
+                      <header>
+                        <h3>
+                          阶段 {module.index} · {module.title}
+                        </h3>
+                        <span>{questions.length} 题</span>
+                      </header>
+                      <div class="learning-card-grid">
+                        {questions.map((question) => (
+                          <article class="learning-card" data-question-id={question.id}>
+                            <a href={`/learn/questions/${question.id}/`}>
+                              <div class="learning-card-heading">
+                                <h4>{question.shortTitle}</h4>
+                                <span>Q{question.index}</span>
+                              </div>
+                              <p class="learning-card-question">“{question.question}”</p>
+                              <div class="learning-card-preview">
+                                <p>
+                                  <span>场景</span>
+                                  {question.scenario}
+                                </p>
+                                <ul>
+                                  {question.facts.slice(0, 3).map((fact) => (
+                                    <li>{fact}</li>
+                                  ))}
+                                </ul>
+                                <strong>打开题目，先做判断 →</strong>
+                              </div>
+                            </a>
+                          </article>
+                        ))}
                       </div>
-                      <p class="learning-card-question">“{question.question}”</p>
-                      <div class="learning-card-preview">
-                        <p>
-                          <span>场景</span>
-                          {question.scenario}
-                        </p>
-                        <ul>
-                          {question.facts.slice(0, 3).map((fact) => (
-                            <li>{fact}</li>
-                          ))}
-                        </ul>
-                        <strong>打开题目，先做判断 →</strong>
-                      </div>
-                    </a>
-                  </article>
-                ))}
+                    </div>
+                  );
+                })}
               </div>
-            </section>
+            </details>
           );
         })
       }
@@ -110,18 +162,14 @@ const metrics = deriveSiteMetrics(project);
 </main>
 
 <script>
-  const stagePicker = document.querySelector<HTMLSelectElement>('[data-course-stage]');
-  stagePicker?.addEventListener('change', () => {
-    const target = document.getElementById(stagePicker.value);
-    target?.scrollIntoView({ block: 'start' });
-    window.history.replaceState({}, '', `#${stagePicker.value}`);
-  });
-
   const PROGRESS_KEY = 'ai-native.progress';
+
+  const disclosures = [...document.querySelectorAll<HTMLDetailsElement>('[data-tier-disclosure]')];
   const progressEl = document.querySelector<HTMLElement>('[data-catalog-progress]');
   const countEl = document.querySelector<HTMLElement>('[data-progress-count]');
   const nextLink = document.querySelector<HTMLAnchorElement>('[data-progress-next]');
   const cards = [...document.querySelectorAll<HTMLElement>('[data-question-id]')];
+  const tierNavs = [...document.querySelectorAll<HTMLElement>('[data-tier-nav]')];
 
   let answered: string[] = [];
   try {
@@ -130,9 +178,76 @@ const metrics = deriveSiteMetrics(project);
   } catch {
     /* localStorage unavailable */
   }
+  const answeredSet = new Set(answered);
 
-  if (answered.length > 0 && progressEl) {
-    const answeredSet = new Set(answered);
+  const readTierIds = (el: HTMLElement): string[] => {
+    try {
+      const parsed = JSON.parse(el.dataset.tierIds ?? '[]');
+      return Array.isArray(parsed) ? parsed : [];
+    } catch {
+      return [];
+    }
+  };
+
+  // 收起的层也显示「已完成 / 进行中」，不展开也能判断哪一层值得进。
+  let currentTierId: string | null = null;
+  disclosures.forEach((details) => {
+    const ids = readTierIds(details);
+    const done = ids.filter((id) => answeredSet.has(id)).length;
+    const state = details.querySelector<HTMLElement>('[data-tier-state-label]');
+    const complete = ids.length > 0 && done === ids.length;
+
+    if (state) {
+      // 题量已经由 .tier-count 显示，这里只报「进度状态」，不要重复数字。
+      if (complete) state.textContent = `已完成 ${done} / ${ids.length}`;
+      else if (done > 0) state.textContent = `进行中 ${done} / ${ids.length}`;
+      else state.textContent = '未开始';
+    }
+    details.dataset.tierState = complete ? 'complete' : done > 0 ? 'active' : 'idle';
+
+    // 第一个未答完的层就是学习者当前所在的位置。
+    if (!currentTierId && !complete) currentTierId = details.dataset.tierId ?? null;
+  });
+
+  // 侧栏只展开当前打开的层，避免 21 行目录在矮视口里把 sticky 区撑出屏幕。
+  const syncSidebar = () => {
+    tierNavs.forEach((nav) => {
+      const match = disclosures.find((details) => details.dataset.tierId === nav.dataset.tierNav);
+      nav.dataset.open = match?.open ? 'true' : 'false';
+    });
+  };
+
+  // 只展开目标层（进站定位用）。
+  const openOnly = (target: HTMLDetailsElement) => {
+    disclosures.forEach((details) => {
+      details.open = details === target;
+    });
+    syncSidebar();
+  };
+
+  // 跳到某层/某阶段时只展开、不收起别的层——用户手动展开的状态不该被抢走。
+  const openFor = (targetId: string) => {
+    if (!targetId) return;
+    const details = disclosures.find(
+      (item) => item.id === targetId || item.querySelector(`#${CSS.escape(targetId)}`) !== null,
+    );
+    if (!details) return;
+    details.open = true;
+    syncSidebar();
+  };
+
+  disclosures.forEach((details) => details.addEventListener('toggle', syncSidebar));
+
+  // 只展开学习者当前所在的层——进来先看到「我现在在哪」。
+  if (currentTierId) {
+    const target = disclosures.find((details) => details.dataset.tierId === currentTierId);
+    if (target) openOnly(target);
+    else syncSidebar();
+  } else {
+    syncSidebar();
+  }
+
+  if (answered.length > 0) {
     cards.forEach((card) => {
       if (answeredSet.has(card.dataset.questionId ?? '')) {
         card.dataset.answered = 'true';
@@ -140,18 +255,31 @@ const metrics = deriveSiteMetrics(project);
         if (badge) badge.textContent = `✓ ${badge.textContent}`;
       }
     });
-    if (countEl) countEl.textContent = String(answered.length);
-    const nextCard = cards.find((card) => !answeredSet.has(card.dataset.questionId ?? ''));
-    if (nextLink) {
+    if (progressEl && countEl && nextLink) {
+      countEl.textContent = String(answered.length);
+      const nextCard = cards.find((card) => !answeredSet.has(card.dataset.questionId ?? ''));
       if (nextCard) {
         nextLink.href = `/learn/questions/${nextCard.dataset.questionId}/`;
       } else {
         nextLink.href = '/learn/complete/';
-        nextLink.textContent = '查看 L1 结业 →';
+        nextLink.textContent = '查看结业 →';
         const labelEl = document.querySelector<HTMLElement>('[data-progress-label]');
-        if (labelEl) labelEl.textContent = '已答完全部判断题：';
+        if (labelEl) labelEl.textContent = '三层训练已完成：';
       }
+      progressEl.hidden = false;
     }
-    progressEl.hidden = false;
   }
+
+  // 侧栏与跳转选择器指向收起的层时，先把目标层展开。
+  document.querySelectorAll<HTMLAnchorElement>('.catalog-sidebar a[href^="#"]').forEach((link) => {
+    link.addEventListener('click', () => openFor(link.getAttribute('href')?.slice(1) ?? ''));
+  });
+
+  const stagePicker = document.querySelector<HTMLSelectElement>('[data-course-stage]');
+  stagePicker?.addEventListener('change', () => {
+    const targetId = stagePicker.value;
+    openFor(targetId);
+    document.getElementById(targetId)?.scrollIntoView({ block: 'start' });
+    window.history.replaceState({}, '', `#${targetId}`);
+  });
 </script>

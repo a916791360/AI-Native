@@ -1,3 +1,6 @@
+/* Hallmark · genre: editorial · macrostructure: Index-First / Narrative Workflow · design-system: design.md
+ * 目录与学习主线共用的卡片、层级与侧栏骨架。
+ */
 .content-catalog {
   min-width: 0;
   padding-bottom: var(--space-7);
@@ -11,7 +14,7 @@
   align-items: center;
   margin: var(--space-2) auto 0;
   border: 1px solid var(--color-line);
-  border-radius: 0.5rem;
+  border-radius: var(--radius-sm);
   padding: var(--space-1) var(--space-2);
   background: var(--color-panel);
 }
@@ -25,7 +28,7 @@
 .scope-strip nav {
   min-width: 0;
   display: flex;
-  gap: 0.2rem;
+  gap: var(--space-0);
   overflow-x: auto;
   scrollbar-width: thin;
 }
@@ -34,9 +37,9 @@
   min-height: var(--control-height);
   flex: 0 0 auto;
   display: inline-flex;
-  gap: 0.4rem;
+  gap: var(--space-1);
   align-items: center;
-  border-radius: 0.45rem;
+  border-radius: var(--radius-sm);
   padding: 0 var(--space-2);
   color: var(--color-muted);
   font-size: var(--text-sm);
@@ -76,7 +79,12 @@
   top: 4.5rem;
   display: flex;
   flex-direction: column;
-  gap: 0.15rem;
+  gap: var(--space-0);
+  /* 三层 × 六阶段共 21 行；矮视口下不设上限会把 sticky 区的下半截顶出屏幕且永远滚不到。 */
+  max-height: calc(100dvh - 6rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
 }
 
 .catalog-sidebar a {
@@ -110,10 +118,10 @@
 
 .catalog-title h1 {
   margin: 0;
-  font-size: 1.875rem;
-  font-weight: 650;
+  font-size: var(--text-xl);
+  font-weight: var(--weight-display);
   line-height: 1.25;
-  letter-spacing: -0.012em;
+  letter-spacing: var(--tracking-display);
 }
 
 .catalog-title p {
@@ -142,7 +150,7 @@
   margin-left: auto;
   color: var(--color-prerequisite);
   font-size: var(--text-sm);
-  font-weight: 600;
+  font-weight: var(--weight-display);
   text-decoration: none;
 }
 
@@ -168,9 +176,9 @@
 
 .catalog-section > header h2 {
   margin: 0;
-  font-size: 1.25rem;
+  font-size: var(--text-md);
   line-height: 1.4;
-  letter-spacing: 0;
+  letter-spacing: var(--tracking-display);
 }
 
 .catalog-section > header span {
@@ -211,7 +219,7 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  padding: 1.25rem;
+  padding: var(--space-4);
   text-decoration: none;
 }
 
@@ -223,20 +231,25 @@
   align-items: baseline;
 }
 
-.learning-card-heading h3,
+/* 目录里的层级只用一条 1.25 音阶 + 800 字重承担：h1 1.875 / h2 1.5 / h3 1.25 / h4 1rem。
+   400 对 800 的反差留给正文——中间字重（500/600/650）是「默认设置」，不算选择。 */
+.learning-card-heading h4,
 .case-card-heading h2 {
   margin: 0;
-  font-size: 1.2rem;
+  color: var(--color-ink);
+  font-size: var(--text-base);
+  font-weight: var(--weight-display);
   line-height: 1.35;
-  letter-spacing: 0;
+  letter-spacing: var(--tracking-display);
 }
 
 .learning-card-heading span,
 .case-card-heading span {
   flex: 0 0 auto;
   color: var(--color-prerequisite);
+  font-family: var(--font-mono);
   font-size: var(--text-xs);
-  font-weight: 700;
+  font-weight: var(--weight-body);
 }
 
 .learning-card-question,
@@ -276,15 +289,17 @@
 
 .learning-card-preview p span {
   display: block;
-  margin-bottom: 0.2rem;
+  margin-bottom: var(--space-0);
   color: var(--color-quiet);
-  font-weight: 700;
+  font-family: var(--font-mono);
+  font-weight: var(--weight-body);
+  letter-spacing: var(--tracking-label);
 }
 
 .learning-card-preview ul {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.35rem;
+  gap: var(--space-1);
   margin: var(--space-2) 0;
   padding: 0;
   list-style: none;
@@ -293,7 +308,7 @@
 .learning-card-preview li {
   border: 1px solid var(--color-line);
   border-radius: var(--radius-pill);
-  padding: 0.2rem 0.5rem;
+  padding: var(--space-0) var(--space-1);
   background: var(--color-panel);
   color: var(--color-muted);
   font-size: var(--text-xs);
@@ -368,7 +383,7 @@
   }
 
   .catalog-title h1 {
-    font-size: 1.75rem;
+    font-size: var(--text-lg);
   }
 
   .catalog-section {
@@ -400,5 +415,199 @@
   .learning-card-preview {
     min-height: 0;
     display: none;
+  }
+}
+
+/* 三层递进：每层是一块独立区域，层内再按六个阶段分组 */
+.tier-nav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-0);
+  margin-bottom: var(--space-2);
+}
+
+.catalog-sidebar .tier-nav-head {
+  color: var(--color-ink);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-label);
+}
+
+.catalog-sidebar .tier-nav-head span {
+  margin-right: 0.4rem;
+  color: var(--color-accent);
+}
+
+/* 侧栏跟着主区走：只列当前展开那一层的六个阶段，三层标题始终在。 */
+.tier-nav ul {
+  display: none;
+  flex-direction: column;
+  gap: var(--space-0);
+  margin: 0;
+  padding: 0 0 0 var(--space-2);
+  list-style: none;
+  border-left: 1px solid var(--color-line-soft);
+}
+
+.tier-nav[data-open='true'] ul {
+  display: flex;
+}
+
+.tier-nav[data-open='true'] .tier-nav-head {
+  color: var(--color-ink);
+}
+
+.tier-nav[data-open='true'] .tier-nav-head span {
+  color: var(--color-accent);
+}
+
+.tier-nav ul a {
+  min-height: 1.75rem;
+  color: var(--color-quiet);
+  font-size: var(--text-xs);
+}
+
+.tier-block {
+  scroll-margin-top: 5.5rem;
+  margin-bottom: var(--space-5);
+  border-top: 1px solid var(--color-line);
+}
+
+/* 层头就是折叠开关：标题、题量、进度、箭头在一行里，收起时也能读到状态。 */
+.tier-head {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  gap: var(--space-3);
+  align-items: center;
+  padding: var(--space-3) 0;
+  cursor: pointer;
+  list-style: none;
+}
+
+.tier-head::-webkit-details-marker {
+  display: none;
+}
+
+.tier-head:hover h2 {
+  color: var(--color-accent);
+}
+
+.tier-code {
+  color: var(--color-accent);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-label);
+}
+
+.tier-head h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-display);
+  line-height: 1.2;
+  letter-spacing: var(--tracking-display);
+  transition: color var(--transition-fast);
+}
+
+.tier-meta {
+  display: flex;
+  gap: var(--space-3);
+  align-items: baseline;
+  white-space: nowrap;
+}
+
+.tier-count {
+  color: var(--color-quiet);
+  font-size: var(--text-xs);
+}
+
+.tier-count strong {
+  color: var(--color-accent);
+  font-family: var(--font-mono);
+  font-size: var(--text-base);
+  font-weight: var(--weight-body);
+}
+
+.tier-state {
+  color: var(--color-quiet);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+}
+
+.tier-block[data-tier-state='complete'] .tier-state {
+  color: var(--color-accent-strong);
+}
+
+.tier-block[data-tier-state='active'] .tier-state {
+  color: var(--color-ink);
+}
+
+.tier-chevron {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-right: 1px solid var(--color-quiet);
+  border-bottom: 1px solid var(--color-quiet);
+  transform: rotate(45deg) translate(-1px, -1px);
+  transition: transform var(--transition-fast);
+}
+
+.tier-block[open] .tier-chevron {
+  transform: rotate(-135deg) translate(-1px, -1px);
+}
+
+.tier-body {
+  padding-bottom: var(--space-4);
+}
+
+.tier-summary {
+  max-width: var(--reading-max);
+  margin: 0;
+  color: var(--color-muted);
+  font-size: var(--text-base);
+  line-height: 1.75;
+  text-wrap: pretty;
+}
+
+.tier-goal {
+  max-width: var(--reading-max);
+  margin: var(--space-1) 0 var(--space-5);
+  color: var(--color-quiet);
+  font-size: var(--text-sm);
+}
+
+.module-block {
+  scroll-margin-top: 5.5rem;
+  margin-bottom: var(--space-4);
+}
+
+.module-block > header {
+  display: flex;
+  gap: var(--space-2);
+  align-items: baseline;
+  margin-bottom: var(--space-2);
+}
+
+.module-block > header h3 {
+  margin: 0;
+  color: var(--color-ink);
+  font-size: var(--text-md);
+  font-weight: var(--weight-display);
+  line-height: 1.4;
+  letter-spacing: var(--tracking-display);
+}
+
+.module-block > header span {
+  color: var(--color-quiet);
+  font-size: var(--text-xs);
+}
+
+@media (max-width: 900px) {
+  .tier-head {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    row-gap: var(--space-1);
+  }
+
+  .tier-meta {
+    grid-column: 2 / -1;
   }
 }

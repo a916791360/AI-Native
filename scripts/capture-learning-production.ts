@@ -10,8 +10,11 @@ const pages = [
   ['home', '/', false],
   ['curriculum', '/learn/', false],
   ['question-bank', '/learn/questions/', false],
-  ['question-support-rag', '/learn/questions/q21-support-rag/', false],
-  ['question-support-rag-feedback', '/learn/questions/q21-support-rag/', true],
+  ['question-tier1', '/learn/questions/q01-rules-or-ai/', false],
+  ['question-tier1-feedback', '/learn/questions/q01-rules-or-ai/', true],
+  ['question-tier3', '/learn/questions/q61-accuracy-or-explain/', false],
+  ['question-tier3-feedback', '/learn/questions/q61-accuracy-or-explain/', true],
+  ['complete', '/learn/complete/', false],
 ] as const;
 const viewports = [
   ['desktop', 1440, 900],
@@ -41,7 +44,7 @@ try {
       await page.evaluate(() => document.fonts.ready);
       if (showFeedback) {
         await page.locator('[data-option]').first().click();
-        await page.locator('[data-feedback-panel]').scrollIntoViewIfNeeded();
+        await page.locator('[data-option-item][data-state="chosen"]').scrollIntoViewIfNeeded();
       }
 
       const dimensions = await page.evaluate(() => ({

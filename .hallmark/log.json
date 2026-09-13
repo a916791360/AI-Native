@@ -1,0 +1,24 @@
+[
+  {
+    "date": "2026-09-13",
+    "scope": "app",
+    "macrostructure": "Narrative Workflow",
+    "macrostructure_family": {
+      "marketing": "Long Document",
+      "content": "Index-First",
+      "app": "Narrative Workflow"
+    },
+    "theme": "custom",
+    "theme_axes": "dark / 800-weight-display / fluorescent-lime oklch(0.88 0.21 121)",
+    "vibe": "荧光网格终端 · 深空墨绿",
+    "enrichment": "none",
+    "design_system": "design.md",
+    "pages": [
+      "/ (Long Document)",
+      "/learn (Narrative Workflow)",
+      "/learn/questions/[id] (Narrative Workflow · 阶段作业面)",
+      "/learn/complete (Narrative Workflow)"
+    ],
+    "brief": "方案 A 全局舒适度改造：判断题 24 → 90 题三层递进、答题交互改为一题一屏就地反馈、清除旧版答题页全局覆盖、目录按层折叠"
+  }
+]

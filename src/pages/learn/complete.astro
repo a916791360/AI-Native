@@ -1,22 +1,43 @@
 ---
 import PageIntro from '@/components/layout/PageIntro.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { LEARNING_MODULES, LEARNING_QUESTIONS, getQuestionsForModule } from '@/data/learning';
+import {
+  LEARNING_MODULES,
+  LEARNING_QUESTIONS,
+  LEARNING_TIERS,
+  getQuestionsForModule,
+  getQuestionsForTier,
+} from '@/data/learning';
 
 const total = LEARNING_QUESTIONS.length;
 const order = LEARNING_QUESTIONS.map((question) => question.id);
-const stages = LEARNING_MODULES.map((module) => ({
-  id: module.id,
+const firstQuestionId = LEARNING_QUESTIONS[0]!.id;
+
+const tiers = LEARNING_TIERS.map((tier) => ({
+  id: tier.id,
+  code: tier.code,
+  title: tier.title,
+  goal: tier.goal,
+  questionIds: getQuestionsForTier(tier.id).map((question) => question.id),
+}));
+
+const rows = LEARNING_MODULES.map((module) => ({
   index: module.index,
   title: module.title,
   decision: module.decision,
-  questionIds: getQuestionsForModule(module.id).map((question) => question.id),
+  cells: LEARNING_TIERS.map((tier) => {
+    const questions = getQuestionsForModule(module.id, tier.id);
+    return {
+      tierId: tier.id,
+      questionIds: questions.map((question) => question.id),
+    };
+  }),
 }));
 ---
 
 <BaseLayout
-  title="L1 结业 · 基础判断"
-  description={`走完 ${total} 道判断题后，这里记录你的 L1 完成情况，并给出 L2 与 L3 的下一步。`}
+  title="结业 · 三层训练"
+  description={`走完 ${total} 道判断题后，这里记录三层训练的完成情况，并给出下一步。`}
 >
   <main
     id="main-content"
@@ -26,12 +47,12 @@ const stages = LEARNING_MODULES.map((module) => ({
     data-question-order={JSON.stringify(order)}
   >
     <PageIntro
-      eyebrow={`Level 1 · ${total} questions`}
-      title="L1 结业 · 基础判断"
-      description={`走完 ${total} 道判断题，你就建立了「该不该用 AI、选什么方案、如何保证质量」的判断方法。这一页记录完成情况，并给出下一步。`}
+      eyebrow={`三层训练 · ${total} questions`}
+      title="结业 · 三层训练"
+      description={`三层递进，每层把六个阶段完整走一遍：先认得出概念，再判断得了边界，最后做得了取舍。走完 ${total} 题，你就把同一套判断方法在三种深度上各练了一遍。`}
     />
 
-    <section class="complete-status" aria-label="L1 完成情况" aria-live="polite">
+    <section class="complete-status" aria-label="完成情况" aria-live="polite">
       <p class="status-count">
         <strong data-complete-count>0</strong>
         <span>/ {total} 题已答</span>
@@ -39,22 +60,25 @@ const stages = LEARNING_MODULES.map((module) => ({
       <p class="status-note" data-complete-note>
         进度记录在本机浏览器，不上传、不注册账号。答满 {total} 题后，这里会显示结业状态。
       </p>
-      <a class="status-action" href="/learn/questions/q01-rules-or-ai/" data-complete-next>
+      <a class="status-action" href={`/learn/questions/${firstQuestionId}/`} data-complete-next>
         从第 01 题开始 →
       </a>
     </section>
 
-    <section class="complete-stages" aria-labelledby="stages-heading">
-      <h2 id="stages-heading">六个阶段的完成情况</h2>
+    <section class="complete-tiers" aria-labelledby="tiers-heading">
+      <h2 id="tiers-heading">三层完成情况</h2>
       <ol>
         {
-          stages.map((stage) => (
-            <li data-stage-ids={JSON.stringify(stage.questionIds)}>
-              <span class="stage-index">{stage.index}</span>
-              <div>
-                <h3>{stage.title}</h3>
-                <p>{stage.decision}</p>
-                <small data-stage-progress>0 / {stage.questionIds.length}</small>
+          tiers.map((tier) => (
+            <li data-tier-ids={JSON.stringify(tier.questionIds)}>
+              <div class="tier-row-head">
+                <span class="tier-code">{tier.code}</span>
+                <h3>{tier.title}</h3>
+                <small data-tier-progress>0 / {tier.questionIds.length}</small>
+              </div>
+              <p>{tier.goal}</p>
+              <div class="tier-rail">
+                <span data-tier-rail />
               </div>
             </li>
           ))
@@ -62,24 +86,142 @@ const stages = LEARNING_MODULES.map((module) => ({
       </ol>
     </section>
 
+    <section class="complete-matrix" aria-labelledby="matrix-heading">
+      <h2 id="matrix-heading">六个阶段 × 三层</h2>
+      <p class="matrix-note">每一格是「这一层的这个阶段」的完成题数，答满会标记出来。</p>
+      <div class="matrix-scroll">
+        <table>
+          <caption class="screen-reader-only">六个阶段在每一层的完成题数</caption>
+          <thead>
+            <tr>
+              <th scope="col">阶段</th>
+              {
+                tiers.map((tier) => (
+                  <th scope="col">
+                    {tier.code} {tier.title}
+                  </th>
+                ))
+              }
+            </tr>
+          </thead>
+          <tbody>
+            {
+              rows.map((row) => (
+                <tr>
+                  <th scope="row">
+                    <span>{row.index}</span>
+                    {row.title}
+                  </th>
+                  {row.cells.map((cell) => (
+                    <td data-cell-ids={JSON.stringify(cell.questionIds)}>
+                      <span data-cell-progress>0 / {cell.questionIds.length}</span>
+                    </td>
+                  ))}
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+    </section>
+
     <section class="complete-next" aria-labelledby="next-heading">
       <h2 id="next-heading">下一步</h2>
-      <p>L1 建立判断，L2 把判断放进真实情境反复练习，L3 交付一份可评审的产品档案。</p>
+      <p>判断题练的是判断力；把判断放进连续情境，才形成可交付的产品能力。</p>
       <div class="next-grid">
         <a href="/learn/cases/">
-          <span>L2</span>
+          <span>案例库</span>
           <strong>连续案例</strong>
           <small>同一个业务对象，连续六次评审</small>
         </a>
         <a href="/learn/cases/user-feedback-analysis/">
-          <span>L3</span>
+          <span>黄金项目</span>
           <strong>完整项目</strong>
-          <small>黄金项目：每日用户反馈分析与产品改进</small>
+          <small>每日用户反馈分析与产品改进</small>
+        </a>
+        <a href="/atlas/">
+          <span>知识库</span>
+          <strong>查漏补缺</strong>
+          <small>按领域查阅词条，补齐判断依据</small>
         </a>
       </div>
     </section>
   </main>
 </BaseLayout>
+
+<script>
+  const page = document.querySelector<HTMLElement>('[data-complete]');
+
+  if (page) {
+    const PROGRESS_KEY = 'ai-native.progress';
+    const total = Number(page.dataset.total ?? '0');
+    const countEl = page.querySelector<HTMLElement>('[data-complete-count]');
+    const noteEl = page.querySelector<HTMLElement>('[data-complete-note]');
+    const nextEl = page.querySelector<HTMLAnchorElement>('[data-complete-next]');
+    const tierRows = [...page.querySelectorAll<HTMLElement>('[data-tier-ids]')];
+    const cells = [...page.querySelectorAll<HTMLElement>('[data-cell-ids]')];
+
+    let answered = new Set<string>();
+    try {
+      const stored = JSON.parse(localStorage.getItem(PROGRESS_KEY) ?? '{"answered":[]}');
+      if (Array.isArray(stored.answered)) answered = new Set(stored.answered);
+    } catch {
+      /* localStorage unavailable; progress is optional */
+    }
+
+    const readIds = (element: HTMLElement, attribute: string): string[] => {
+      try {
+        const parsed = JSON.parse(element.dataset[attribute] ?? '[]');
+        return Array.isArray(parsed) ? parsed : [];
+      } catch {
+        return [];
+      }
+    };
+
+    let doneCells = 0;
+    cells.forEach((cell) => {
+      const ids = readIds(cell, 'cellIds');
+      const hit = ids.filter((id) => answered.has(id)).length;
+      const label = cell.querySelector<HTMLElement>('[data-cell-progress]');
+      if (label) label.textContent = `${hit} / ${ids.length}`;
+      if (ids.length > 0 && hit === ids.length) {
+        cell.dataset.cellDone = 'true';
+        doneCells += 1;
+      }
+    });
+
+    let doneTiers = 0;
+    tierRows.forEach((row) => {
+      const ids = readIds(row, 'tierIds');
+      const hit = ids.filter((id) => answered.has(id)).length;
+      const label = row.querySelector<HTMLElement>('[data-tier-progress]');
+      if (label) label.textContent = `${hit} / ${ids.length}`;
+      const rail = row.querySelector<HTMLElement>('[data-tier-rail]');
+      if (rail)
+        rail.style.width = `${ids.length === 0 ? 0 : Math.round((hit / ids.length) * 100)}%`;
+      if (ids.length > 0 && hit === ids.length) {
+        row.dataset.tierDone = 'true';
+        doneTiers += 1;
+      }
+    });
+
+    const bankIds = readIds(page, 'questionOrder');
+    const answeredInBank = bankIds.filter((id) => answered.has(id)).length;
+
+    if (countEl) countEl.textContent = String(answeredInBank);
+
+    if (total > 0 && answeredInBank === total) {
+      page.dataset.completeState = 'done';
+      if (noteEl) {
+        noteEl.textContent = `三层训练已全部完成：${doneTiers} 层结业、${doneCells} 个阶段格子答满。建议进入案例库，把判断放进连续情境。`;
+      }
+      if (nextEl) {
+        nextEl.href = '/learn/cases/';
+        nextEl.textContent = '进入连续案例 →';
+      }
+    }
+  }
+</script>
 
 <style>
   .complete-page {
@@ -92,6 +234,7 @@ const stages = LEARNING_MODULES.map((module) => ({
     display: grid;
     gap: var(--space-2);
     border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
     background: var(--color-panel);
     padding: 1.6rem 1.5rem;
     margin-bottom: var(--space-5);
@@ -108,216 +251,215 @@ const stages = LEARNING_MODULES.map((module) => ({
   .status-count strong {
     font-size: 2.4rem;
     line-height: 1;
-    color: var(--color-accent);
   }
 
   .status-count span {
-    color: var(--color-muted);
-    font-size: 0.9rem;
+    color: var(--color-quiet);
+    font-size: var(--text-sm);
   }
 
   .status-note {
-    max-width: 44rem;
+    max-width: 48rem;
     margin: 0;
     color: var(--color-muted);
-    font-size: 0.9rem;
+    font-size: var(--text-sm);
+    line-height: 1.75;
   }
 
   .status-action {
     justify-self: start;
-    min-height: 2.75rem;
-    display: inline-flex;
-    align-items: center;
-    margin-top: var(--space-1);
-    border-bottom: 1px solid var(--color-accent-strong);
-    color: var(--color-accent-strong);
-    font-family: var(--font-mono);
-    font-size: 0.9rem;
-    font-weight: 600;
+    border: 1px solid var(--color-accent);
+    border-radius: var(--radius-pill);
+    background: var(--color-accent);
+    color: oklch(0.2 0.04 120);
+    padding: 0.6rem 1.2rem;
+    font-size: var(--text-sm);
     text-decoration: none;
   }
 
-  .status-action:hover {
-    color: var(--color-accent);
+  .complete-tiers,
+  .complete-matrix,
+  .complete-next {
+    margin-bottom: var(--space-5);
   }
 
-  .complete-page[data-complete-state='done'] .complete-status {
-    border-color: color-mix(in oklch, var(--color-accent) 55%, var(--color-line));
-  }
-
-  .complete-stages h2,
+  .complete-tiers h2,
+  .complete-matrix h2,
   .complete-next h2 {
-    margin: 0 0 var(--space-3);
-    font-size: 1.4rem;
-    font-weight: 800;
+    margin: 0 0 var(--space-2);
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 650;
+    line-height: 1.25;
   }
 
-  .complete-stages ol {
+  .complete-tiers ol {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.9rem;
-    margin: 0 0 var(--space-6);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+    gap: var(--space-3);
+    margin: 0;
     padding: 0;
     list-style: none;
   }
 
-  .complete-stages li {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    gap: var(--space-3);
+  .complete-tiers li {
     border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
     background: var(--color-panel);
-    padding: 1.1rem 1.2rem;
+    padding: var(--space-3);
   }
 
-  .stage-index {
+  .complete-tiers li[data-tier-done='true'] {
+    border-color: var(--color-accent);
+  }
+
+  .tier-row-head {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-2);
+  }
+
+  .tier-code {
+    border: 1px solid var(--color-accent);
+    border-radius: var(--radius-pill);
+    padding: 0.1rem 0.5rem;
     color: var(--color-accent);
     font-family: var(--font-mono);
-    font-size: 0.85rem;
-    font-weight: 700;
+    font-size: var(--text-xs);
   }
 
-  .complete-stages h3 {
+  .tier-row-head h3 {
+    flex: 1;
     margin: 0;
-    font-size: 1.02rem;
-    font-weight: 700;
+    font-size: var(--text-base);
+    font-weight: 500;
   }
 
-  .complete-stages p {
-    margin: 0.3rem 0 0.5rem;
-    color: var(--color-muted);
-    font-size: 0.85rem;
-  }
-
-  .complete-stages small {
+  .tier-row-head small {
+    color: var(--color-quiet);
     font-family: var(--font-mono);
-    font-size: 0.76rem;
+    font-size: var(--text-xs);
+  }
+
+  .complete-tiers li > p {
+    margin: var(--space-2) 0 var(--space-2);
     color: var(--color-muted);
+    font-size: var(--text-xs);
+    line-height: 1.7;
   }
 
-  .complete-stages li[data-stage-done='true'] {
-    border-color: color-mix(in oklch, var(--color-accent) 45%, var(--color-line));
+  .tier-rail {
+    height: 3px;
+    overflow: hidden;
+    border-radius: var(--radius-pill);
+    background: var(--color-line-soft);
   }
 
-  .complete-stages li[data-stage-done='true'] small {
+  .tier-rail > span {
+    display: block;
+    width: 0;
+    height: 100%;
+    background: var(--color-accent);
+  }
+
+  .matrix-note {
+    margin: 0 0 var(--space-2);
+    color: var(--color-quiet);
+    font-size: var(--text-xs);
+  }
+
+  .matrix-scroll {
+    overflow-x: auto;
+  }
+
+  .complete-matrix table {
+    width: 100%;
+    min-width: 32rem;
+    border-collapse: collapse;
+    font-size: var(--text-sm);
+  }
+
+  .complete-matrix th,
+  .complete-matrix td {
+    border: 1px solid var(--color-line-soft);
+    padding: var(--space-2);
+    text-align: left;
+  }
+
+  .complete-matrix thead th {
+    color: var(--color-quiet);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 400;
+    letter-spacing: 0.06em;
+  }
+
+  .complete-matrix tbody th {
+    font-weight: 400;
+  }
+
+  .complete-matrix tbody th span {
+    margin-right: 0.4rem;
+    color: var(--color-quiet);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+  }
+
+  .complete-matrix td span {
+    color: var(--color-muted);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+  }
+
+  .complete-matrix td[data-cell-done='true'] {
+    background: var(--color-accent-wash);
+  }
+
+  .complete-matrix td[data-cell-done='true'] span {
     color: var(--color-accent);
-  }
-
-  .complete-next {
-    border-top: 1px solid var(--color-line);
-    padding-top: var(--space-4);
   }
 
   .complete-next > p {
-    max-width: 44rem;
+    max-width: 48rem;
     margin: 0 0 var(--space-3);
     color: var(--color-muted);
-    font-size: 0.9rem;
+    font-size: var(--text-sm);
   }
 
   .next-grid {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.9rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+    gap: var(--space-3);
   }
 
   .next-grid a {
     display: grid;
-    gap: 0.3rem;
+    gap: 0.25rem;
     border: 1px solid var(--color-line);
-    background: var(--color-panel);
-    padding: 1.2rem 1.3rem;
+    border-radius: var(--radius-md);
+    padding: var(--space-3);
     text-decoration: none;
-    transition:
-      transform var(--transition-fast),
-      border-color var(--transition-fast);
   }
 
   .next-grid a:hover {
-    transform: translateY(-3px);
-    border-color: var(--color-accent);
+    border-color: var(--color-control-border);
+    background: var(--color-panel);
   }
 
   .next-grid span {
-    color: var(--color-accent);
+    color: var(--color-accent-strong);
     font-family: var(--font-mono);
-    font-size: 0.78rem;
-    font-weight: 700;
+    font-size: var(--text-xs);
   }
 
   .next-grid strong {
-    font-size: 1.08rem;
+    font-size: var(--text-base);
+    font-weight: 500;
   }
 
   .next-grid small {
-    color: var(--color-muted);
-    font-size: 0.85rem;
-  }
-
-  @media (max-width: 720px) {
-    .complete-stages ol,
-    .next-grid {
-      grid-template-columns: 1fr;
-    }
+    color: var(--color-quiet);
+    font-size: var(--text-xs);
+    line-height: 1.7;
   }
 </style>
-
-<script>
-  const PROGRESS_KEY = 'ai-native.progress';
-  const root = document.querySelector<HTMLElement>('[data-complete]');
-  if (root) {
-    const total = Number(root.dataset.total ?? '24');
-    const order: string[] = JSON.parse(root.dataset.questionOrder ?? '[]');
-
-    let answered: string[] = [];
-    try {
-      const stored = JSON.parse(localStorage.getItem(PROGRESS_KEY) ?? '{"answered":[]}');
-      if (Array.isArray(stored.answered)) answered = stored.answered;
-    } catch {
-      /* localStorage unavailable; progress is optional */
-    }
-
-    const answeredSet = new Set(answered);
-    const done = Math.min(answered.length, total);
-
-    const countEl = root.querySelector<HTMLElement>('[data-complete-count]');
-    if (countEl) countEl.textContent = String(done);
-
-    const noteEl = root.querySelector<HTMLElement>('[data-complete-note]');
-    const nextEl = root.querySelector<HTMLAnchorElement>('[data-complete-next]');
-
-    if (done >= total) {
-      root.dataset.completeState = 'done';
-      if (noteEl) {
-        noteEl.textContent = `L1 已结业：${total} 道判断题全部完成。你已经建立了从「该不该用 AI」到「何时上线」的完整判断链。`;
-      }
-      if (nextEl) {
-        nextEl.href = '/learn/cases/';
-        nextEl.textContent = '进入 L2 连续案例 →';
-      }
-    } else {
-      const remaining = total - done;
-      if (noteEl) {
-        noteEl.textContent =
-          done > 0
-            ? `还差 ${remaining} 题。进度只记录在本机浏览器，不上传、不注册账号。`
-            : `进度记录在本机浏览器，不上传、不注册账号。答满 ${total} 题后，这里会显示结业状态。`;
-      }
-      if (nextEl) {
-        const nextId = order.find((id) => !answeredSet.has(id));
-        if (nextId) {
-          nextEl.href = `/learn/questions/${nextId}/`;
-          nextEl.textContent = done > 0 ? `继续第 ${done + 1} 题 →` : '从第 01 题开始 →';
-        }
-      }
-    }
-
-    root.querySelectorAll<HTMLElement>('[data-stage-ids]').forEach((stage) => {
-      const ids: string[] = JSON.parse(stage.dataset.stageIds ?? '[]');
-      const stageDone = ids.filter((id) => answeredSet.has(id)).length;
-      const progressEl = stage.querySelector<HTMLElement>('[data-stage-progress]');
-      if (progressEl) progressEl.textContent = `${stageDone} / ${ids.length}`;
-      if (ids.length > 0 && stageDone >= ids.length) stage.dataset.stageDone = 'true';
-    });
-  }
-</script>

@@ -1,5 +1,9 @@
 @import './tokens.css';
 
+/* Hallmark · genre: editorial · design-system: design.md · designed-as-app
+ * 全局壳层：网格底纹、焦点环、滚动揭示。
+ */
+
 *,
 *::before,
 *::after {
@@ -8,6 +12,8 @@
 
 html {
   min-width: 320px;
+  /* clip 而不是 hidden：hidden 会让 body 成为滚动容器，粘性元素会失效。 */
+  overflow-x: clip;
   background: var(--color-black);
   color: var(--color-ink);
   font-family: var(--font-body);
@@ -21,13 +27,14 @@ body {
   min-width: 320px;
   min-height: 100vh;
   margin: 0;
-  overflow-x: hidden;
+  overflow-x: clip;
   background-color: var(--color-black);
   background-image:
     linear-gradient(var(--color-grid) 1px, transparent 1px),
     linear-gradient(90deg, var(--color-grid) 1px, transparent 1px);
   background-size: 44px 44px;
   font-size: var(--text-base);
+  font-weight: var(--weight-body);
   line-height: 1.7;
 }
 
@@ -66,10 +73,8 @@ select {
     transform var(--transition-fast);
 }
 
-button:active:not(:disabled) {
-  transform: scale(0.98);
-}
-
+/* 交互反馈只改颜色与边框，不做全局缩放——满宽的行和卡片一旦缩放，
+   整页会跟着抖一下，而且键盘用户看不到任何反馈。 */
 button:disabled,
 input:disabled,
 select:disabled {
@@ -126,7 +131,7 @@ svg {
 .meta-label {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
-  letter-spacing: 0.1em;
+  letter-spacing: var(--tracking-label);
   text-transform: uppercase;
 }
 
@@ -145,15 +150,16 @@ svg {
 .display-title {
   margin: var(--space-2) 0 0;
   font-family: var(--font-display);
-  font-size: 2.75rem;
-  font-weight: 650;
-  line-height: 1.08;
-  letter-spacing: -0.012em;
+  font-size: var(--text-display);
+  font-weight: var(--weight-display);
+  line-height: 1.12;
+  letter-spacing: var(--tracking-display);
   text-wrap: balance;
+  overflow-wrap: anywhere;
 }
 
 .page-intro-copy {
-  max-width: 50rem;
+  max-width: var(--reading-max);
   margin: var(--space-2) 0 0;
   color: var(--color-muted);
   font-size: var(--text-lead);
@@ -164,10 +170,10 @@ svg {
 .section-heading {
   margin: 0;
   font-family: var(--font-display);
-  font-size: 2rem;
-  font-weight: 650;
-  line-height: 1.18;
-  letter-spacing: -0.01em;
+  font-size: var(--text-xl);
+  font-weight: var(--weight-display);
+  line-height: 1.2;
+  letter-spacing: var(--tracking-display);
 }
 
 .screen-reader-only {

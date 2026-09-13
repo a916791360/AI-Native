@@ -25,7 +25,7 @@ test('fits every primary page in all approved release viewports', async ({ page,
     '/learn/',
     '/learn/questions/',
     '/learn/cases/',
-    '/learn/questions/q21-support-rag/',
+    '/learn/questions/q61-accuracy-or-explain/',
     '/learn/cases/customer-support-knowledge-base/',
     '/learn/cases/customer-support-knowledge-base/decide-ai-boundary/',
     '/atlas/',
@@ -61,7 +61,7 @@ test('keeps every page family within the compact visual hierarchy', async ({ pag
   const paths = [
     '/',
     '/learn/',
-    '/learn/questions/q21-support-rag/',
+    '/learn/questions/q61-accuracy-or-explain/',
     '/learn/cases/',
     '/learn/cases/customer-support-knowledge-base/',
     '/learn/cases/customer-support-knowledge-base/decide-ai-boundary/',
@@ -94,7 +94,7 @@ test('keeps every page family within the compact visual hierarchy', async ({ pag
 
 test('uses one content scope navigation across secondary pages', async ({ page, isMobile }) => {
   const pages = [
-    ['/learn/questions/q21-support-rag/', '系统课程'],
+    ['/learn/questions/q61-accuracy-or-explain/', '系统课程'],
     ['/learn/cases/customer-support-knowledge-base/', '案例实战'],
     ['/atlas/', '知识词条'],
     ['/terms/retrieval-augmented-generation/', '知识词条'],

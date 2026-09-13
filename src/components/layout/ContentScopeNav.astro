@@ -1,4 +1,5 @@
 ---
+import { LEARNING_QUESTIONS } from '@/data/learning';
 import '@/styles/content-catalog.css';
 
 interface Props {
@@ -11,7 +12,7 @@ interface Props {
 
 const { active, caseCount, relationCount, routeCount, termCount } = Astro.props;
 const scopes = [
-  { id: 'course', href: '/learn/', label: '系统课程', count: 24 },
+  { id: 'course', href: '/learn/', label: '系统课程', count: LEARNING_QUESTIONS.length },
   { id: 'cases', href: '/learn/cases/', label: '案例实战', count: caseCount },
   { id: 'knowledge', href: '/atlas/', label: '知识词条', count: termCount },
   { id: 'routes', href: '/routes/', label: '阅读路线', count: routeCount },

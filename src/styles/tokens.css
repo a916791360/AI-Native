@@ -1,11 +1,16 @@
+/* Hallmark · genre: editorial · design-system: design.md · designed-as-app
+ * 荧光网格终端：深空墨绿底、荧光青柠主强调、青绿次强调。
+ * 层级由字重（400 → 800）、字距与等宽 outlier 承担，不引入第二个中文字面——
+ * 中文字体动辄数 MB，加进来会直接压垮性能预算（见 src/data/performance-baseline.json）。
+ */
 :root {
   color-scheme: dark;
 
   /* 荧光网格终端：深空墨绿底、荧光青柠主强调、青绿次强调 */
   --color-canvas: oklch(0.155 0.01 165);
   --color-ink: oklch(0.93 0.018 152);
-  --color-muted: oklch(0.72 0.024 160);
-  --color-quiet: oklch(0.64 0.022 162);
+  --color-muted: oklch(0.76 0.024 160);
+  --color-quiet: oklch(0.68 0.022 162);
   --color-black: var(--color-canvas);
   --color-panel: oklch(0.185 0.011 165);
   --color-panel-raised: oklch(0.215 0.013 165);
@@ -26,6 +31,7 @@
   --color-error: oklch(0.72 0.17 25);
   --color-focus: oklch(0.8 0.13 176);
 
+  /* display 与 body 共用同一中文字面是刻意的（见文件头）；--font-mono 是 outlier 语域。 */
   --font-display:
     'PingFang SC', 'HarmonyOS Sans SC', 'Source Han Sans SC', 'Noto Sans SC', 'Microsoft YaHei',
     -apple-system, BlinkMacSystemFont, sans-serif;
@@ -34,10 +40,23 @@
     -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: 'SF Mono', 'JetBrains Mono', 'Cascadia Code', 'Menlo', 'Consolas', monospace;
 
+  /* 标题与正文至少差 300 字重，否则层级只能靠字号，标题立不起来。 */
+  --weight-body: 400;
+  --weight-display: 800;
+  --tracking-display: -0.02em;
+  --tracking-label: 0.1em;
+
+  /* 1.25 主三度音阶，从 16px 正文起算 */
   --text-xs: 0.75rem;
   --text-sm: 0.875rem;
   --text-base: 1rem;
   --text-lead: 1.0625rem;
+  --text-md: 1.25rem;
+  --text-lg: 1.5rem;
+  --text-xl: 1.875rem;
+  --text-2xl: 2.25rem;
+  --text-display: clamp(2rem, 3.6vw, 3rem);
+
   --space-0: 0.25rem;
   --space-1: 0.5rem;
   --space-2: 0.75rem;
@@ -52,6 +71,7 @@
   --reading-max: 46rem;
   --control-height: 2.75rem;
   --control-height-mobile: 3rem;
+  --control-size-sm: 1.75rem;
 
   /* 圆角规则：容器 10px / 小件 8px / 交互控件与徽标全圆角 */
   --radius-sm: 0.5rem;

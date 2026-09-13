@@ -31,7 +31,8 @@
     "test": "pnpm test:unit && pnpm test:e2e",
     "test:unit": "vitest run",
     "test:e2e": "playwright test",
-    "ci": "pnpm format:check && pnpm lint && pnpm check && pnpm validate:data && pnpm check:generated && pnpm generate:data && git diff --exit-code -- src/generated && pnpm test:unit && pnpm build && pnpm check:performance && pnpm test:e2e"
+    "ci": "pnpm format:check && pnpm lint && pnpm check && pnpm validate:data && pnpm check:learning && pnpm check:generated && pnpm generate:data && git diff --exit-code -- src/generated && pnpm test:unit && pnpm build && pnpm check:performance && pnpm test:e2e",
+    "check:learning": "node --import tsx scripts/check-learning-bank.ts"
   },
   "dependencies": {
     "@astrojs/mdx": "7.0.5",

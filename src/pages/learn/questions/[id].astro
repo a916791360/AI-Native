@@ -7,6 +7,7 @@ import {
   LEARNING_QUESTIONS,
   PM_ACTIONS,
   getLearningQuestionContext,
+  getQuestionsForTier,
   type LearningQuestion,
 } from '@/data/learning';
 
@@ -25,773 +26,851 @@ const { question, termSummaries } = Astro.props as {
   question: LearningQuestion;
   termSummaries: Record<string, string>;
 };
+
 const context = getLearningQuestionContext(question.id)!;
-const { module, moduleQuestions, modulePosition, previous, next, nextModule, isModuleEnd } =
-  context;
-const continuationHref = next ? `/learn/questions/${next.id}/` : '/learn/';
-const continuationKicker =
-  nextModule && isModuleEnd
+const {
+  tier,
+  module,
+  moduleQuestions,
+  modulePosition,
+  tierPosition,
+  previous,
+  next,
+  nextModule,
+  nextTier,
+  isModuleEnd,
+} = context;
+
+const assessmentCopy = {
+  recommended: ['推荐路径', '这条路径最符合当前情境'],
+  conditional: ['有条件成立', '这条路径需要补充条件'],
+  risky: ['高风险路径', '这条路径忽略了关键约束'],
+} as const;
+
+const total = LEARNING_QUESTIONS.length;
+const tierTotal = getQuestionsForTier(tier.id).length;
+const overallPosition = Number(question.index);
+const progressPercent = Math.round((overallPosition / total) * 100);
+
+const continuationHref = next ? `/learn/questions/${next.id}/` : '/learn/complete/';
+const continuationKicker = nextTier
+  ? `进入 ${nextTier.code} ${nextTier.title}`
+  : nextModule && isModuleEnd
     ? `进入阶段 ${nextModule.index}`
     : next
       ? `继续第 ${next.index} 题`
-      : '完成 Level 1';
-const continuationTitle =
-  nextModule && isModuleEnd ? nextModule.title : next ? next.shortTitle : '回到三层学习中心';
+      : '三层训练完成';
+const continuationTitle = nextTier
+  ? nextTier.prompt
+  : nextModule && isModuleEnd
+    ? nextModule.title
+    : next
+      ? next.shortTitle
+      : '回到学习中心';
+
+const pmAction = PM_ACTIONS[question.id];
 ---
 
 <BaseLayout title={question.question} description={question.scenario}>
-  <main id="main-content" class="question-page">
-    <section class="course-location" aria-labelledby="course-location-heading">
-      <div class="course-location-title">
-        <p class="meta-label" id="course-location-heading">Level 1 · 基础判断位置</p>
-        <span>阶段 {module.index} / 06</span>
-        <strong>{module.title}</strong>
-      </div>
-      <div class="course-location-progress">
-        <div>
-          <span>本阶段</span>
-          <strong>{modulePosition + 1} / {moduleQuestions.length}</strong>
+  <main
+    id="main-content"
+    class="question-page"
+    data-question-page
+    data-question-id={question.id}
+    data-answer-count={question.options.length}
+    data-next-href={continuationHref}
+  >
+    <section class="progress" aria-label="学习进度">
+      <div class="shell progress-inner">
+        <p class="progress-tier">
+          <span class="tier-chip">{tier.code}</span>
+          <strong>{tier.title}</strong>
+          <span class="progress-module">阶段 {module.index} · {module.title}</span>
+        </p>
+        <div class="progress-rail">
+          <span style={`width: ${progressPercent}%`}></span>
         </div>
-        <ol aria-label={`本阶段第 ${modulePosition + 1} 题，共 ${moduleQuestions.length} 题`}>
+        <p class="progress-stats">
+          <span class="progress-position">
+            {question.index}
+            <i>/ {total}</i>
+          </span>
+          <span data-progress-answered>已答 0 / {total}</span>
+          <span data-progress-missed>错 0</span>
+        </p>
+      </div>
+    </section>
+
+    <article class="sheet">
+      <header class="q-head" data-reveal>
+        <p class="meta-label">
+          {tier.code} · 第 {tierPosition + 1} / {tierTotal} 题 · 阶段 {module.index} 第 {
+            modulePosition + 1
+          } / {moduleQuestions.length} 题
+        </p>
+        <h1>{question.question}</h1>
+      </header>
+
+      <section class="scenario" aria-labelledby="scenario-heading" data-reveal>
+        <div class="scenario-copy">
+          <p class="meta-label">情境</p>
+          <p id="scenario-heading">{question.scenario}</p>
+        </div>
+        <ol class="facts" aria-label="已知条件">
           {
-            moduleQuestions.map((item, index) => (
-              <li aria-current={item.id === question.id ? 'step' : undefined}>
-                <span class="visually-hidden">第 {index + 1} 题</span>
+            question.facts.map((fact, index) => (
+              <li>
+                <span>{String(index + 1).padStart(2, '0')}</span>
+                {fact}
               </li>
             ))
           }
         </ol>
-        <div>
-          <span>基础题</span>
-          <strong>{question.index} / {String(LEARNING_QUESTIONS.length).padStart(2, '0')}</strong>
+      </section>
+
+      <section class="decision" aria-labelledby="decision-heading" data-reveal>
+        <header class="decision-head">
+          <h2 id="decision-heading">你会选择哪一种决策？</h2>
+          <p class="decision-hint">
+            先做选择，再展开每条路径的判断。键盘按 <kbd>1</kbd>–<kbd>{question.options.length}</kbd> 作答。
+          </p>
+        </header>
+
+        <ol class="option-list" data-option-list>
+          {
+            question.options.map((option, index) => (
+              <li data-option-item data-assessment={option.assessment}>
+                <button type="button" data-option aria-pressed="false">
+                  <span class="option-key" aria-hidden="true">
+                    {String.fromCharCode(65 + index)}
+                  </span>
+                  <span class="option-label">{option.label}</span>
+                  <span class="option-marker" data-option-marker>
+                    你的选择
+                  </span>
+                </button>
+                <details class="option-feedback" data-option-feedback>
+                  <summary>查看这条路径的判断</summary>
+                  <p class="option-verdict">{assessmentCopy[option.assessment][0]}</p>
+                  <p class="option-why">{option.feedback}</p>
+                </details>
+              </li>
+            ))
+          }
+        </ol>
+        <p class="screen-reader-only" aria-live="polite" data-announce></p>
+      </section>
+
+      <section class="reasoning" aria-labelledby="reasoning-heading" data-reveal>
+        <header class="reasoning-head">
+          <h2 id="reasoning-heading">不只记答案，记住判断方法</h2>
+        </header>
+        {/* 标记为 open 是为了让禁用 JS 的读者直接读到原则；脚本会在启用 JS 时收起，答完再展开。 */}
+        <details class="principle" data-principle open>
+          <summary>
+            <span class="meta-label">核心原则</span>
+            <i>答完后展开</i>
+          </summary>
+          <blockquote>{question.principle}</blockquote>
+        </details>
+        <div class="checks">
+          <p class="meta-label">下次遇到类似问题，检查</p>
+          <ol>
+            {
+              question.checks.map((check, index) => (
+                <li>
+                  <span>{String(index + 1).padStart(2, '0')}</span>
+                  {check}
+                </li>
+              ))
+            }
+          </ol>
         </div>
-      </div>
-      <a href="/learn/">返回三层学习中心</a>
-    </section>
+        <nav class="refs" aria-label="相关知识词条">
+          <p class="meta-label">按需深挖</p>
+          {
+            question.references.map((reference) => (
+              <a href={`/terms/${reference.id}/`}>
+                <strong>{reference.label}</strong>
+                <span>{termSummaries[reference.id]}</span>
+              </a>
+            ))
+          }
+        </nav>
+      </section>
 
-    <header class="question-head" data-reveal>
-      <div class="question-position">
-        <p class="eyebrow">Question {question.index}</p>
-        <strong
-          ><span>{question.index}</span> / {
-            String(LEARNING_QUESTIONS.length).padStart(2, '0')
-          }</strong
-        >
-      </div>
-      <div class="question-title">
-        <p class="meta-label">{question.shortTitle}</p>
-        <h1>{question.question}</h1>
-      </div>
-    </header>
+      {
+        pmAction && (
+          <section class="pm-action" aria-labelledby="pm-action-heading" data-reveal>
+            <p class="eyebrow">PM 落地</p>
+            <h2 id="pm-action-heading">如果你是产品经理，下一步做什么</h2>
+            <p>{pmAction}</p>
+          </section>
+        )
+      }
 
-    <section class="question-context" aria-labelledby="scenario-heading" data-reveal>
-      <div>
-        <p class="meta-label">Scenario</p>
-        <h2 id="scenario-heading">情境</h2>
-        <p>{question.scenario}</p>
-      </div>
-      <ol aria-label="已知条件">
+      <nav class="question-nav" aria-label="题目导航">
         {
-          question.facts.map((fact, index) => (
-            <li>
-              <span>{String(index + 1).padStart(2, '0')}</span>
-              {fact}
-            </li>
-          ))
+          previous ? (
+            <a class="previous" href={`/learn/questions/${previous.id}/`}>
+              <span>上一题 · {previous.index}</span>
+              <strong>{previous.shortTitle}</strong>
+            </a>
+          ) : (
+            <a class="previous" href="/learn/">
+              <span>返回</span>
+              <strong>学习中心</strong>
+            </a>
+          )
         }
-      </ol>
-    </section>
-
-    <section
-      class="decision"
-      aria-labelledby="decision-heading"
-      data-question
-      data-question-id={question.id}
-      data-reveal
-    >
-      <header>
-        <p class="eyebrow">Make a judgment</p>
-        <h2 id="decision-heading">你会选择哪一种决策？</h2>
-        <p>先做选择，再查看这条路径的价值与风险。选择不会被记录。</p>
-      </header>
-      <div class="option-list" role="group" aria-label="决策选项">
-        {
-          question.options.map((option, index) => (
-            <button
-              type="button"
-              data-option
-              data-assessment={option.assessment}
-              data-feedback={option.feedback}
-              data-option-label={option.label}
-              aria-pressed="false"
-            >
-              <span>{String.fromCharCode(65 + index)}</span>
-              <strong>{option.label}</strong>
-              <i aria-hidden="true">选择</i>
-            </button>
-          ))
-        }
-      </div>
-      <div class="choice-feedback" data-feedback-panel hidden aria-live="polite" tabindex="-1">
-        <div>
-          <p class="meta-label" data-feedback-kicker>判断反馈</p>
-          <h3 data-feedback-title hidden></h3>
-        </div>
-        <p data-feedback-copy></p>
-        <a href={continuationHref} data-next-step>
+        <a class="next" href={continuationHref} data-next-step>
           <span>{continuationKicker}</span>
           <strong>{continuationTitle}</strong>
           <i aria-hidden="true">→</i>
         </a>
-      </div>
-    </section>
-
-    <section class="reasoning" aria-labelledby="reasoning-heading" data-reveal>
-      <header>
-        <p class="eyebrow">Decision logic</p>
-        <h2 id="reasoning-heading">不只记答案，记住判断方法</h2>
-      </header>
-      <details class="principle" data-principle open>
-        <summary>
-          <span class="meta-label">核心原则</span>
-          <i>先做选择，再查看</i>
-        </summary>
-        <blockquote>{question.principle}</blockquote>
-      </details>
-      <div class="checks">
-        <p class="meta-label">下次遇到类似问题，检查</p>
-        <ol>
-          {
-            question.checks.map((check, index) => (
-              <li>
-                <span>{String(index + 1).padStart(2, '0')}</span>
-                {check}
-              </li>
-            ))
-          }
-        </ol>
-      </div>
-      <nav aria-label="相关知识词条">
-        <p class="meta-label">按需深挖</p>
-        {
-          question.references.map((reference) => (
-            <a href={`/terms/${reference.id}/`}>
-              <strong>{reference.label}</strong>
-              <span>{termSummaries[reference.id]}</span>
-            </a>
-          ))
-        }
       </nav>
-    </section>
-
-    {
-      PM_ACTIONS[question.id] && (
-        <section class="pm-action" aria-labelledby="pm-action-heading" data-reveal>
-          <p class="eyebrow">PM 落地</p>
-          <h2 id="pm-action-heading">如果你是产品经理，下一步做什么</h2>
-          <p>{PM_ACTIONS[question.id]}</p>
-        </section>
-      )
-    }
-
-    <nav class="question-nav" aria-label="题目导航">
-      {
-        previous ? (
-          <a class="previous" href={`/learn/questions/${previous.id}/`}>
-            <>
-              <span>上一题 · {previous.index}</span>
-              <strong>{previous.shortTitle}</strong>
-            </>
-          </a>
-        ) : (
-          <a class="previous" href="/learn/questions/">
-            <>
-              <span>返回</span>
-              <strong>Level 1 基础题总览</strong>
-            </>
-          </a>
-        )
-      }
-      {
-        next ? (
-          <a class="next" href={`/learn/questions/${next.id}/`}>
-            <>
-              <span>
-                {nextModule && isModuleEnd
-                  ? `进入阶段 ${nextModule.index}`
-                  : `下一题 · ${next.index}`}
-              </span>
-              <strong>{nextModule && isModuleEnd ? nextModule.title : next.shortTitle}</strong>
-            </>
-          </a>
-        ) : (
-          <a class="next" href="/learn/">
-            <>
-              <span>完成 Level 1</span>
-              <strong>回到三层学习中心</strong>
-            </>
-          </a>
-        )
-      }
-    </nav>
+    </article>
   </main>
 </BaseLayout>
 
 <script>
-  const assessmentCopy = {
-    recommended: ['推荐路径', '这条路径最符合当前情境'],
-    conditional: ['有条件成立', '这条路径需要补充条件'],
-    risky: ['高风险路径', '这条路径忽略了关键约束'],
-  };
-  const buttons = [...document.querySelectorAll<HTMLButtonElement>('[data-option]')];
-  const panel = document.querySelector<HTMLElement>('[data-feedback-panel]');
-  const kicker = document.querySelector<HTMLElement>('[data-feedback-kicker]');
-  const title = document.querySelector<HTMLElement>('[data-feedback-title]');
-  const copy = document.querySelector<HTMLElement>('[data-feedback-copy]');
-  const principle = document.querySelector<HTMLElement>('[data-principle]');
-  principle?.removeAttribute('open');
-  const questionSection = document.querySelector<HTMLElement>('[data-question-id]');
-  const questionId = questionSection?.dataset.questionId ?? '';
   const PROGRESS_KEY = 'ai-native.progress';
+  const page = document.querySelector<HTMLElement>('[data-question-page]');
 
-  const recordProgress = () => {
-    if (!questionId) return;
-    try {
-      const stored = JSON.parse(
-        localStorage.getItem(PROGRESS_KEY) ?? '{"answered":[],"lastVisited":null}',
-      );
-      const answered = Array.isArray(stored.answered) ? stored.answered : [];
-      const next = answered.includes(questionId) ? answered : [...answered, questionId];
-      localStorage.setItem(
-        PROGRESS_KEY,
-        JSON.stringify({ ...stored, answered: next, lastVisited: questionId }),
-      );
-    } catch {
-      /* localStorage unavailable; progress is optional */
+  if (page) {
+    const questionId = page.dataset.questionId ?? '';
+    const answerCount = Number(page.dataset.answerCount ?? '0');
+    const nextHref = page.dataset.nextHref ?? '';
+    const total = document.querySelectorAll('[data-progress-answered]').length
+      ? Number(
+          document
+            .querySelector<HTMLElement>('[data-progress-answered]')
+            ?.textContent?.split('/')[1] ?? '0',
+        )
+      : 0;
+    const items = [...page.querySelectorAll<HTMLElement>('[data-option-item]')];
+    const answeredLabel = page.querySelector<HTMLElement>('[data-progress-answered]');
+    const missedLabel = page.querySelector<HTMLElement>('[data-progress-missed]');
+    const announce = page.querySelector<HTMLElement>('[data-announce]');
+    const principle = page.querySelector<HTMLDetailsElement>('[data-principle]');
+
+    interface Progress {
+      answered: string[];
+      missed: string[];
+      choices: Record<string, number>;
+      lastVisited: string | null;
     }
-  };
 
-  buttons.forEach((button) =>
-    button.addEventListener('click', () => {
-      const assessment = button.dataset.assessment as keyof typeof assessmentCopy;
-      const [label = '', heading = ''] = assessmentCopy[assessment];
-      buttons.forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
-      principle?.setAttribute('open', '');
-      recordProgress();
-      if (!panel || !kicker || !title || !copy) return;
-      panel.dataset.assessment = assessment;
-      kicker.textContent = label;
-      title.textContent = heading;
-      title.hidden = false;
-      copy.textContent = button.dataset.feedback ?? '';
-      panel.hidden = false;
-      panel.focus({ preventScroll: true });
-    }),
-  );
+    const readProgress = (): Progress => {
+      try {
+        const stored = JSON.parse(localStorage.getItem(PROGRESS_KEY) ?? '{}');
+        return {
+          answered: Array.isArray(stored.answered) ? stored.answered : [],
+          missed: Array.isArray(stored.missed) ? stored.missed : [],
+          choices:
+            stored.choices && typeof stored.choices === 'object' && !Array.isArray(stored.choices)
+              ? stored.choices
+              : {},
+          lastVisited: typeof stored.lastVisited === 'string' ? stored.lastVisited : null,
+        };
+      } catch {
+        return { answered: [], missed: [], choices: {}, lastVisited: null };
+      }
+    };
+
+    const renderStats = (progress: Progress) => {
+      if (answeredLabel) {
+        answeredLabel.textContent = `已答 ${progress.answered.length} / ${total}`;
+      }
+      if (missedLabel) {
+        missedLabel.textContent = `错 ${progress.missed.length}`;
+      }
+    };
+
+    let progress = readProgress();
+    renderStats(progress);
+
+    /** 把「已选哪一条」的视觉与展开状态应用到页面上。 */
+    const applyChoice = (index: number) => {
+      items.forEach((other, otherIndex) => {
+        other.dataset.state = otherIndex === index ? 'chosen' : 'other';
+        other
+          .querySelector('[data-option]')
+          ?.setAttribute('aria-pressed', String(otherIndex === index));
+        const details = other.querySelector<HTMLDetailsElement>('[data-option-feedback]');
+        if (details) details.open = true;
+      });
+      page.dataset.answered = 'true';
+      if (principle) principle.open = true;
+    };
+
+    const answer = (index: number) => {
+      const item = items[index];
+      if (!item || page.dataset.answered === 'true') return;
+
+      applyChoice(index);
+
+      const correct = item.dataset.assessment === 'recommended';
+      progress = readProgress();
+      progress = {
+        answered: progress.answered.includes(questionId)
+          ? progress.answered
+          : [...progress.answered, questionId],
+        missed: correct
+          ? progress.missed.filter((id) => id !== questionId)
+          : progress.missed.includes(questionId)
+            ? progress.missed
+            : [...progress.missed, questionId],
+        choices: { ...progress.choices, [questionId]: index },
+        lastVisited: questionId,
+      };
+      try {
+        localStorage.setItem(PROGRESS_KEY, JSON.stringify(progress));
+      } catch {
+        /* localStorage unavailable; progress is optional */
+      }
+      renderStats(progress);
+
+      if (announce) {
+        announce.textContent = correct
+          ? '选择正确。已展开全部路径的判断依据。'
+          : '这条路径不是推荐选项。已展开全部路径的判断依据，可对照查看。';
+      }
+      page.querySelector<HTMLElement>('[data-next-step]')?.focus({ preventScroll: true });
+    };
+
+    // 重访已答过的题：恢复上次的选择与全部判断依据，方便复习；不重复播报。
+    const previousChoice = progress.choices[questionId];
+    if (progress.answered.includes(questionId) && typeof previousChoice === 'number') {
+      if (items[previousChoice]) applyChoice(previousChoice);
+      else if (principle) principle.open = true;
+    } else if (principle) {
+      principle.open = false;
+    }
+
+    items.forEach((item, index) => {
+      item.querySelector('[data-option]')?.addEventListener('click', () => answer(index));
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.metaKey || event.ctrlKey || event.altKey) return;
+      const target = event.target;
+      if (target instanceof HTMLElement && /^(INPUT|TEXTAREA|SELECT)$/.test(target.tagName)) return;
+
+      const digit = Number(event.key);
+      if (Number.isInteger(digit) && digit >= 1 && digit <= answerCount) {
+        event.preventDefault();
+        answer(digit - 1);
+        return;
+      }
+      if (event.key === 'ArrowRight' && page.dataset.answered === 'true' && nextHref) {
+        event.preventDefault();
+        window.location.assign(nextHref);
+      }
+    });
+  }
 </script>
 
 <style>
-  .course-location {
-    min-height: 7.5rem;
-    display: grid;
-    grid-template-columns: minmax(18rem, 0.42fr) minmax(24rem, 0.43fr) auto;
-    align-items: stretch;
+  /* Hallmark · genre: editorial · macrostructure: Narrative Workflow · design-system: design.md
+   * designed-as-app · 答题页：单列选项 + 就地反馈，正文级字号，无整体外框
+   */
+  .progress {
     border-bottom: 1px solid var(--color-line);
-    background: var(--color-black);
+    background: color-mix(in oklch, var(--color-black) 88%, var(--color-panel));
   }
-  .course-location-title,
-  .course-location-progress,
-  .course-location > a {
-    min-width: 0;
-    border-right: 1px solid var(--color-line);
+  /* 与 .sheet 同宽，否则进度条内容会比题面更靠左。 */
+  .progress-inner {
+    width: min(100%, var(--content-standard));
+    margin-inline: auto;
+    display: grid;
+    grid-template-columns: auto minmax(6rem, 1fr) auto;
+    gap: var(--space-3) var(--space-4);
+    align-items: center;
     padding: var(--space-2) var(--page-gutter);
   }
-  .course-location-title {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    align-content: center;
-    gap: 0.35rem var(--space-2);
+  .progress-tier {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-width: 0;
+    margin: 0;
+    font-size: var(--text-sm);
   }
-  .course-location-title .meta-label {
-    grid-column: 1 / -1;
-  }
-  .course-location-title > span,
-  .course-location-progress span {
-    color: var(--color-quiet);
+  .tier-chip {
+    border: 1px solid var(--color-accent);
+    border-radius: var(--radius-pill);
+    padding: 0.1rem 0.5rem;
+    color: var(--color-accent);
     font-family: var(--font-mono);
     font-size: var(--text-xs);
+    letter-spacing: 0.06em;
   }
-  .course-location-title > strong {
-    overflow: hidden;
+  .progress-tier strong {
     color: var(--color-ink);
-    font-size: var(--text-sm);
     font-weight: 500;
+    white-space: nowrap;
+  }
+  .progress-module {
+    overflow: hidden;
+    color: var(--color-quiet);
+    font-size: var(--text-xs);
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-  .course-location-progress {
-    display: grid;
-    grid-template-columns: auto minmax(8rem, 1fr) auto;
-    gap: var(--space-3);
-    align-items: center;
+  .progress-rail {
+    position: relative;
+    height: 3px;
+    overflow: hidden;
+    border-radius: var(--radius-pill);
+    background: var(--color-line-soft);
   }
-  .course-location-progress > div {
+  .progress-rail > span {
+    display: block;
+    height: 100%;
+    background: var(--color-accent);
+  }
+  .progress-stats {
     display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-  }
-  .course-location-progress strong {
-    color: var(--color-ink);
+    gap: var(--space-3);
+    margin: 0;
+    color: var(--color-quiet);
     font-family: var(--font-mono);
-    font-size: var(--text-sm);
-    font-weight: 400;
+    font-size: var(--text-xs);
+    white-space: nowrap;
   }
-  .course-location-progress ol {
+  .progress-position {
+    color: var(--color-ink);
+  }
+  .progress-position i {
+    color: var(--color-quiet);
+    font-style: normal;
+  }
+
+  .sheet {
+    width: min(100%, var(--content-standard));
+    margin-inline: auto;
+    padding: var(--space-6) var(--page-gutter) var(--space-7);
+  }
+  .question-page {
+    padding-bottom: var(--space-6);
+  }
+
+  .q-head {
+    max-width: var(--reading-max);
+  }
+  .q-head .meta-label {
+    color: var(--color-quiet);
+  }
+  .q-head h1 {
+    margin: var(--space-2) 0 0;
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: var(--weight-display);
+    line-height: 1.18;
+    letter-spacing: var(--tracking-display);
+    text-wrap: balance;
+    overflow-wrap: anywhere;
+  }
+
+  .scenario {
     display: grid;
-    grid-template-columns: repeat(4, minmax(1rem, 1fr));
-    gap: 0.35rem;
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+    gap: var(--space-5);
+    align-items: start;
+    margin-top: var(--space-5);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--color-line-soft);
+  }
+  .scenario-copy {
+    max-width: var(--reading-max);
+  }
+  .scenario-copy .meta-label {
+    color: var(--color-quiet);
+  }
+  .scenario-copy p:last-child {
+    margin: var(--space-1) 0 0;
+    color: var(--color-ink);
+    font-size: var(--text-lead);
+    line-height: 1.8;
+    text-wrap: pretty;
+  }
+  /* 已知条件用竖线做条目语言，和上方的段落分开；字号提到正文级，
+     否则右栏会读成注释、左栏留出大片空白。 */
+  .facts {
+    display: grid;
+    gap: var(--space-1);
     margin: 0;
     padding: 0;
     list-style: none;
   }
-  .course-location-progress li {
-    height: 3px;
-    background: var(--color-line);
-  }
-  .course-location-progress li[aria-current='step'] {
-    background: var(--color-prerequisite);
-  }
-  .course-location > a {
-    min-height: 3rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--color-muted);
-    font-size: var(--text-sm);
-    text-decoration: none;
-  }
-  .course-location > a {
-    border-right: 0;
-  }
-  .course-location > a:hover {
-    background: var(--color-panel);
-    color: var(--color-ink);
-  }
-  .question-head {
-    min-height: 24rem;
+  .facts li {
     display: grid;
-    grid-template-columns: minmax(16rem, 0.28fr) minmax(0, 0.72fr);
-    border-bottom: 1px solid var(--color-line);
-  }
-  .question-position,
-  .question-title {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: var(--space-6) var(--page-gutter);
-  }
-  .question-position {
-    border-right: 1px solid var(--color-line);
-    background: var(--color-panel);
-  }
-  .question-position strong {
-    margin-top: var(--space-4);
-    color: var(--color-quiet);
-    font-family: var(--font-mono);
-    font-size: 1rem;
-    font-weight: 400;
-  }
-  .question-position strong span {
-    color: var(--color-prerequisite);
-    font-family: var(--font-display);
-    font-size: 6rem;
-    line-height: 1;
-  }
-  .question-title h1 {
-    max-width: 13em;
-    margin: var(--space-2) 0 0;
-    font-family: var(--font-display);
-    font-size: 3rem;
-    font-weight: 650;
-    line-height: 1.08;
-    letter-spacing: -0.014em;
-  }
-  .question-context {
-    display: grid;
-    grid-template-columns: minmax(22rem, 0.55fr) minmax(22rem, 0.45fr);
-    border-bottom: 1px solid var(--color-line);
-  }
-  .question-context > div,
-  .question-context > ol {
-    margin: 0;
-    padding: var(--space-5) var(--page-gutter);
-  }
-  .question-context > div {
-    border-right: 1px solid var(--color-line);
-  }
-  .question-context h2 {
-    margin: var(--space-1) 0;
-    font-family: var(--font-display);
-    font-size: 2.2rem;
-    font-weight: 400;
-  }
-  .question-context > div > p:last-child {
-    max-width: 45rem;
-    margin-bottom: 0;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: var(--space-2);
+    border-left: 2px solid var(--color-line);
+    padding: 0.35rem 0 0.35rem var(--space-3);
     color: var(--color-muted);
-    font-size: var(--text-lead);
+    font-size: var(--text-base);
+    line-height: 1.7;
   }
-  .question-context > ol {
-    list-style: none;
-  }
-  .question-context li {
-    display: grid;
-    grid-template-columns: 2.5rem 1fr;
-    border-top: 1px solid var(--color-line-soft);
-    padding: 0.85rem 0;
-    color: var(--color-muted);
-  }
-  .question-context li span {
-    color: var(--color-quiet);
+  .facts li > span {
+    color: var(--color-accent-strong);
     font-family: var(--font-mono);
     font-size: var(--text-xs);
   }
+
   .decision {
-    padding: var(--space-7) var(--page-gutter);
-    border-bottom: 1px solid var(--color-line);
+    margin-top: var(--space-6);
   }
-  .decision > header {
-    max-width: 50rem;
-    margin-bottom: var(--space-4);
-  }
-  .decision h2,
-  .reasoning h2 {
-    margin: var(--space-2) 0;
-    font-family: var(--font-display);
-    font-size: 2.3rem;
-    font-weight: 400;
-  }
-  .decision > header > p:last-child {
+  .decision-head h2,
+  .reasoning-head h2,
+  .pm-action h2 {
     margin: 0;
-    color: var(--color-muted);
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: var(--weight-display);
+    line-height: 1.25;
+    letter-spacing: var(--tracking-display);
   }
+  .decision-hint {
+    margin: var(--space-1) 0 0;
+    color: var(--color-quiet);
+    font-size: var(--text-sm);
+  }
+  kbd {
+    border: 1px solid var(--color-control-border);
+    border-radius: var(--radius-sm);
+    padding: 0.05rem 0.35rem;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+  }
+
+  /* 选项是一条一条读的，不是并排比较的——所以永远单列。
+     3–4 个选项排成多列时，中文标签会被压成 3 行、反馈被压成 6 行小字，
+     而反馈恰恰是这一页最需要读的内容。 */
   .option-list {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    border: 1px solid var(--color-line);
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-3);
+    margin: var(--space-4) 0 0;
+    padding: 0;
+    list-style: none;
   }
-  .option-list button {
-    min-height: 13rem;
+  [data-option-item] {
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    background: var(--color-panel);
+    overflow: hidden;
+  }
+  [data-option-item] button {
     display: grid;
-    grid-template-columns: 2.5rem 1fr;
-    grid-template-rows: 1fr auto;
-    gap: var(--space-2);
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: var(--space-3);
+    align-items: center;
+    width: 100%;
     border: 0;
-    border-right: 1px solid var(--color-line);
-    background: transparent;
-    padding: var(--space-4);
-    color: var(--color-ink);
-    cursor: pointer;
+    background: none;
+    padding: var(--space-3) var(--space-4);
     text-align: left;
   }
-  .option-list button:last-child {
-    border-right: 0;
+  [data-option-item] button:hover {
+    background: var(--color-panel-raised);
   }
-  .option-list button:hover,
-  .option-list button[aria-pressed='true'] {
-    background: var(--color-panel);
-  }
-  .option-list button[aria-pressed='true'] {
-    box-shadow: inset 0 -3px var(--color-prerequisite);
-  }
-  .option-list button > span {
-    color: var(--color-prerequisite);
-    font-family: var(--font-mono);
-  }
-  .option-list button strong {
-    align-self: start;
-    font-family: var(--font-display);
-    font-size: 1.35rem;
-    font-weight: 400;
-    line-height: 1.45;
-  }
-  .option-list button i {
-    grid-column: 2;
-    align-self: end;
-    color: var(--color-quiet);
-    font-size: var(--text-xs);
-    font-style: normal;
-  }
-  .choice-feedback {
+  .option-key {
     display: grid;
-    grid-template-columns: minmax(14rem, 0.25fr) minmax(18rem, 0.5fr) minmax(13rem, 0.25fr);
-    margin-top: var(--space-3);
-    border: 1px solid var(--color-line);
-    background: var(--color-panel);
-    outline: none;
-  }
-  .choice-feedback > div,
-  .choice-feedback > p,
-  .choice-feedback > a {
-    margin: 0;
-    padding: var(--space-4);
-  }
-  .choice-feedback > div,
-  .choice-feedback > p {
-    border-right: 1px solid var(--color-line);
-  }
-  .choice-feedback h3 {
-    margin: var(--space-1) 0 0;
-    font-family: var(--font-display);
-    font-size: 1.6rem;
-    font-weight: 400;
-  }
-  .choice-feedback > p {
-    align-self: center;
+    place-items: center;
+    width: var(--control-size-sm);
+    height: var(--control-size-sm);
+    border: 1px solid var(--color-control-border);
+    border-radius: var(--radius-pill);
     color: var(--color-muted);
-    font-size: var(--text-lead);
-  }
-  .choice-feedback > a {
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    color: var(--color-ink);
-    text-decoration: none;
-  }
-  .choice-feedback > a:hover {
-    background: var(--color-black);
-  }
-  .choice-feedback > a span {
-    color: var(--color-prerequisite);
     font-family: var(--font-mono);
     font-size: var(--text-xs);
   }
-  .choice-feedback > a strong {
-    margin-top: 0.45rem;
-    font-family: var(--font-display);
-    font-size: 1.25rem;
-    font-weight: 400;
+  .option-label {
+    max-width: var(--reading-max);
+    font-size: var(--text-lead);
+    line-height: 1.55;
+    text-wrap: pretty;
   }
-  .choice-feedback > a i {
-    align-self: flex-end;
-    margin-top: var(--space-2);
-    color: var(--color-prerequisite);
-    font-style: normal;
+  .option-marker {
+    display: none;
+    color: var(--color-quiet);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    white-space: nowrap;
   }
-  .choice-feedback[data-assessment='recommended'] .meta-label {
-    color: var(--color-prerequisite);
+
+  [data-option-item][data-state='chosen'] {
+    border-color: var(--color-accent);
+    background: var(--color-accent-wash);
   }
-  .choice-feedback[data-assessment='conditional'] .meta-label {
-    color: var(--color-comparison);
+  [data-option-item][data-state='chosen'] .option-key {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
   }
-  .choice-feedback[data-assessment='risky'] .meta-label {
-    color: var(--color-application);
+  [data-option-item][data-state='chosen'] .option-marker {
+    display: inline;
   }
+  [data-option-item][data-state='other'] button {
+    color: var(--color-muted);
+  }
+
+  /* 反馈缩进到与选项标签左对齐，读起来是「这一条的说明」，不是另起一段。 */
+  .option-feedback {
+    border-top: 1px solid var(--color-line-soft);
+    padding: 0 var(--space-4) var(--space-3)
+      calc(var(--space-4) + var(--control-size-sm) + var(--space-3));
+  }
+  .option-feedback summary {
+    padding: var(--space-2) 0;
+    color: var(--color-quiet);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.06em;
+  }
+  .option-feedback summary::marker {
+    color: var(--color-quiet);
+  }
+  /* 答完后所有反馈都展开，摘要行变成重复的标签——收起来。
+     无 JS 时 details 是折叠的，摘要仍然是在唯一的入口。 */
+  .option-feedback[open] > summary {
+    display: none;
+  }
+  .option-verdict {
+    margin: 0;
+    color: var(--color-accent-strong);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+  }
+  [data-assessment='risky'] .option-verdict {
+    color: var(--color-error);
+  }
+  /* 反馈是这一页的主要内容，用正文级字号，不缩成注释。 */
+  .option-why {
+    max-width: var(--reading-max);
+    margin: var(--space-1) 0 0;
+    color: var(--color-muted);
+    font-size: var(--text-base);
+    line-height: 1.75;
+    text-wrap: pretty;
+  }
+
+  /* 三段内容本来就没有共同的边框语义，硬套一个外框会读成一个表单。
+     Long Document 的处理：用规则线分节，不用容器。 */
   .reasoning {
-    display: grid;
-    grid-template-columns: 0.3fr 0.32fr 0.38fr;
-    border-bottom: 1px solid var(--color-line);
+    margin-top: var(--space-7);
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--color-line);
   }
-  .reasoning > * {
-    min-width: 0;
-    border-right: 1px solid var(--color-line);
-    padding: var(--space-6) var(--page-gutter);
-  }
-  .reasoning > *:last-child {
-    border-right: 0;
-  }
-  .reasoning blockquote {
-    margin: var(--space-3) 0 0;
-    color: var(--color-ink);
-    font-family: var(--font-display);
-    font-size: 1.7rem;
-    line-height: 1.45;
+  .principle {
+    margin-top: var(--space-4);
   }
   .principle summary {
     display: flex;
-    align-items: baseline;
     gap: var(--space-2);
-    list-style: none;
-    cursor: pointer;
+    align-items: baseline;
+    padding-bottom: var(--space-2);
   }
-  .principle summary::-webkit-details-marker {
-    display: none;
+  .principle summary .meta-label {
+    color: var(--color-quiet);
   }
   .principle summary i {
     color: var(--color-quiet);
     font-size: var(--text-xs);
     font-style: normal;
   }
-  .principle[open] summary i {
-    display: none;
+  .principle blockquote {
+    max-width: var(--reading-max);
+    margin: 0;
+    border-left: 2px solid var(--color-accent);
+    padding: 0 0 0 var(--space-4);
+    color: var(--color-ink);
+    font-size: var(--text-lg);
+    line-height: 1.7;
+    text-wrap: pretty;
+  }
+
+  .checks {
+    margin-top: var(--space-5);
+  }
+  .checks .meta-label {
+    color: var(--color-quiet);
   }
   .checks ol {
+    display: grid;
+    gap: var(--space-2);
     margin: var(--space-3) 0 0;
     padding: 0;
     list-style: none;
   }
   .checks li {
     display: grid;
-    grid-template-columns: 2rem 1fr;
-    border-top: 1px solid var(--color-line-soft);
-    padding: 0.7rem 0;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: var(--space-3);
+    max-width: var(--reading-max);
+    border-bottom: 1px solid var(--color-line-soft);
+    padding-bottom: var(--space-2);
     color: var(--color-muted);
+    font-size: var(--text-base);
+    line-height: 1.7;
   }
-  .checks li span {
-    color: var(--color-quiet);
+  .checks li:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+  }
+  .checks li > span {
+    color: var(--color-accent-strong);
     font-family: var(--font-mono);
     font-size: var(--text-xs);
   }
-  .reasoning nav a {
-    display: flex;
-    flex-direction: column;
-    gap: 0.2rem;
-    border-bottom: 1px solid var(--color-line-soft);
-    padding: 0.7rem 0;
-    color: var(--color-muted);
-    text-decoration: none;
-  }
-  .reasoning nav a strong {
-    color: var(--color-prerequisite);
-    font-size: var(--text-sm);
-    font-weight: 600;
-  }
-  .reasoning nav a span {
-    font-size: var(--text-xs);
-    line-height: 1.6;
-  }
-  .reasoning nav a:hover strong {
-    color: var(--color-ink);
-  }
-  .pm-action {
-    border-bottom: 1px solid var(--color-line);
-    background: var(--color-panel-raised);
-    padding: var(--space-5) var(--page-gutter);
-  }
-  .pm-action h2 {
-    margin: var(--space-2) 0;
-    font-family: var(--font-display);
-    font-size: 1.6rem;
-    font-weight: 400;
-  }
-  .pm-action > p:last-child {
-    max-width: 50rem;
-    margin: 0;
-    color: var(--color-muted);
-    font-size: var(--text-lead);
-    line-height: 1.7;
-  }
-  .question-nav {
+
+  .refs {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+    gap: var(--space-3);
+    margin-top: var(--space-5);
   }
-  .question-nav a {
-    min-height: 10rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: var(--space-4) var(--page-gutter);
-    color: var(--color-ink);
+  .refs .meta-label {
+    grid-column: 1 / -1;
+    color: var(--color-quiet);
+  }
+  .refs a {
+    display: grid;
+    gap: var(--space-1);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    padding: var(--space-3);
     text-decoration: none;
   }
-  .question-nav a:first-child {
-    border-right: 1px solid var(--color-line);
-  }
-  .question-nav a:hover {
+  .refs a:hover {
+    border-color: var(--color-control-border);
     background: var(--color-panel);
   }
-  .question-nav .next {
-    text-align: right;
+  .refs strong {
+    font-size: var(--text-sm);
+    font-weight: 500;
+  }
+  .refs span {
+    color: var(--color-quiet);
+    font-size: var(--text-xs);
+    line-height: 1.7;
+  }
+
+  /* PM 落地也是正文的一部分，不套卡片。 */
+  .pm-action {
+    margin-top: var(--space-7);
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--color-line);
+  }
+  .pm-action p:last-child {
+    max-width: var(--reading-max);
+    margin: var(--space-3) 0 0;
+    color: var(--color-muted);
+    font-size: var(--text-base);
+    line-height: 1.75;
+    text-wrap: pretty;
+  }
+
+  /* 底部导航：不对称两栏，主次分明；去掉高盒子和空角落。 */
+  .question-nav {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+    gap: var(--space-3);
+    margin-top: var(--space-7);
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--color-line);
+  }
+  .question-nav a {
+    display: grid;
+    gap: var(--space-1);
+    align-content: center;
+    min-height: 0;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    padding: var(--space-3) var(--space-4);
+    text-decoration: none;
+  }
+  .question-nav a:hover {
+    border-color: var(--color-control-border);
+    background: var(--color-panel);
   }
   .question-nav span {
     color: var(--color-quiet);
     font-family: var(--font-mono);
     font-size: var(--text-xs);
+    letter-spacing: 0.04em;
   }
   .question-nav strong {
-    margin-top: 0.5rem;
-    font-family: var(--font-display);
-    font-size: 1.4rem;
-    font-weight: 400;
+    font-size: var(--text-lead);
+    font-weight: 600;
+    line-height: 1.4;
   }
-  @media (max-width: 900px) {
-    .course-location {
-      grid-template-columns: 1fr 1fr;
+  .question-nav .next {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    border-color: color-mix(in oklch, var(--color-accent) 45%, var(--color-line));
+  }
+  .question-nav .next span,
+  .question-nav .next strong {
+    grid-column: 1;
+  }
+  .question-nav .next strong {
+    color: var(--color-ink);
+  }
+  .question-nav .next i {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    color: var(--color-accent);
+    font-size: var(--text-md);
+    font-style: normal;
+  }
+
+  @media (max-width: 860px) {
+    .progress-inner {
+      grid-template-columns: 1fr auto;
     }
-    .course-location-progress {
-      border-right: 0;
-    }
-    .course-location > a {
+    .progress-rail {
       grid-column: 1 / -1;
-      border-top: 1px solid var(--color-line);
+      order: 3;
     }
-    .reasoning {
-      grid-template-columns: 1fr 1fr;
+    .progress-module {
+      display: none;
     }
-    .reasoning > header {
-      grid-column: 1 / -1;
-      border-right: 0;
-      border-bottom: 1px solid var(--color-line);
-    }
-    .option-list {
+    .scenario {
       grid-template-columns: 1fr;
+      gap: var(--space-3);
     }
-    .option-list button {
-      min-height: 8rem;
-      border-right: 0;
-      border-bottom: 1px solid var(--color-line);
+    .facts {
+      border-left: 0;
+      padding-left: 0;
     }
-    .option-list button:last-child {
-      border-bottom: 0;
+    .question-nav {
+      grid-template-columns: minmax(0, 1fr);
     }
   }
-  @media (max-width: 700px) {
-    .question-head,
-    .question-context,
-    .choice-feedback,
-    .reasoning {
-      grid-template-columns: 1fr;
+
+  @media (max-width: 560px) {
+    [data-option-item] button {
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: var(--space-2);
+      padding: var(--space-3);
     }
-    .question-position,
-    .question-context > div,
-    .choice-feedback > div,
-    .choice-feedback > p,
-    .reasoning > * {
-      border-right: 0;
-      border-bottom: 1px solid var(--color-line);
+    .option-marker {
+      grid-column: 2;
+      justify-self: start;
     }
-    .question-position {
-      min-height: 10rem;
+    .option-feedback {
+      padding: 0 var(--space-3) var(--space-3) var(--space-3);
     }
-    .question-position strong {
-      margin-top: var(--space-2);
+    .principle blockquote {
+      font-size: var(--text-lead);
     }
-    .question-position strong span {
-      font-size: 3.5rem;
-    }
-    .question-title h1 {
-      font-size: 3rem;
-    }
-    .decision {
-      padding-block: var(--space-6);
-    }
-    .question-nav a {
-      min-height: 8rem;
-    }
-  }
-  @media (max-width: 520px) {
-    .course-location {
-      grid-template-columns: 1fr;
-    }
-    .course-location-title,
-    .course-location-progress {
-      border-right: 0;
-      border-bottom: 1px solid var(--color-line);
-    }
-    .course-location > a {
-      grid-column: auto;
-      border-top: 0;
+    .question-nav .next {
+      grid-template-columns: minmax(0, 1fr) auto;
     }
   }
 </style>

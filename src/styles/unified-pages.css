@@ -56,154 +56,6 @@ body .search-experience .search-result {
   padding: var(--space-3);
 }
 
-/* Course question */
-
-body .question-page.question-page {
-  width: min(calc(100% - 2.5rem), var(--content-max));
-  margin: var(--space-4) auto 0;
-  padding-bottom: var(--space-6);
-}
-
-body .question-page.question-page .course-location {
-  min-height: 0;
-  grid-template-columns: minmax(15rem, 0.34fr) minmax(22rem, 1fr) auto;
-  border: 1px solid var(--color-line);
-  border-radius: 0.5rem;
-  background: var(--color-panel);
-  overflow: hidden;
-}
-
-body .question-page.question-page .course-location-title,
-body .question-page.question-page .course-location-progress,
-body .question-page.question-page .course-location > a {
-  padding: var(--space-2) var(--space-3);
-}
-
-body .question-page.question-page .question-head {
-  min-height: 0;
-  grid-template-columns: 7rem minmax(0, 1fr);
-  margin-top: var(--space-3);
-  border: 1px solid var(--color-line);
-  border-radius: 0.5rem;
-  background: var(--color-panel);
-  overflow: hidden;
-}
-
-body .question-page.question-page .question-position,
-body .question-page.question-page .question-title {
-  padding: var(--space-4);
-}
-
-body .question-page.question-page .question-position strong {
-  margin-top: var(--space-2);
-}
-
-body .question-page.question-page .question-position strong span {
-  font-size: 2.125rem;
-}
-
-body .question-page.question-page .question-title h1 {
-  max-width: 32em;
-  font-size: 1.875rem;
-  font-weight: 650;
-  line-height: 1.35;
-}
-
-body .question-page.question-page .question-context {
-  grid-template-columns: minmax(18rem, 0.48fr) minmax(0, 0.52fr);
-  margin-top: var(--space-3);
-  border: 1px solid var(--color-line);
-  border-radius: 0.5rem;
-  background: var(--color-panel);
-  overflow: hidden;
-}
-
-body .question-page.question-page .question-context > div,
-body .question-page.question-page .question-context > ol {
-  padding: var(--space-4);
-}
-
-body .question-page.question-page .question-context h2 {
-  font-size: 1.4rem;
-  font-weight: 650;
-}
-
-body .question-page.question-page .question-context > div > p:last-child {
-  font-size: 1rem;
-}
-
-body .question-page.question-page .decision,
-body .question-page.question-page .reasoning {
-  margin-top: var(--space-3);
-  border: 1px solid var(--color-line);
-  border-radius: 0.5rem;
-  background: var(--color-panel);
-  overflow: hidden;
-}
-
-body .question-page.question-page .decision {
-  padding: var(--space-4);
-}
-
-body .question-page.question-page .decision h2,
-body .question-page.question-page .reasoning h2 {
-  font-size: 1.6rem;
-  font-weight: 650;
-  line-height: 1.35;
-}
-
-body .question-page.question-page .option-list {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--space-2);
-  border: 0;
-}
-
-body .question-page.question-page .option-list button {
-  min-height: 9rem;
-  border: 1px solid var(--color-line);
-  border-radius: 0.4rem;
-  background: var(--color-panel-raised);
-  padding: var(--space-3);
-}
-
-body .question-page.question-page .option-list button:last-child {
-  border: 1px solid var(--color-line);
-}
-
-body .question-page.question-page .choice-feedback {
-  grid-template-columns: minmax(12rem, 0.25fr) minmax(18rem, 0.5fr) minmax(12rem, 0.25fr);
-  border-radius: 0.4rem;
-  overflow: hidden;
-}
-
-body .question-page.question-page .reasoning {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-body .question-page.question-page .reasoning > * {
-  padding: var(--space-4);
-}
-
-body .question-page.question-page .reasoning blockquote {
-  font-size: 1.2rem;
-}
-
-body .question-page.question-page .question-nav {
-  gap: var(--space-3);
-  margin-top: var(--space-3);
-}
-
-body .question-page.question-page .question-nav a {
-  min-height: 6rem;
-  border: 1px solid var(--color-line);
-  border-radius: 0.5rem;
-  padding: var(--space-3);
-}
-
-body .question-page.question-page .question-nav a:first-child {
-  border: 1px solid var(--color-line);
-}
-
 /* Atlas */
 
 body .atlas-page .atlas-controls.atlas-controls,
@@ -863,7 +715,6 @@ body .not-found h1 {
   }
 
   body .search-experience.search-experience,
-  body .question-page.question-page,
   body .atlas-page .atlas-controls.atlas-controls,
   body .atlas-page .atlas-layout.atlas-layout,
   body .term-page .term-hero,
@@ -884,11 +735,6 @@ body .not-found h1 {
 
   body .search-experience .search-query,
   body .search-experience .search-result,
-  body .question-page.question-page .course-location,
-  body .question-page.question-page .question-head,
-  body .question-page.question-page .question-context,
-  body .question-page.question-page .choice-feedback,
-  body .question-page.question-page .reasoning,
   body .atlas-page .atlas-controls.atlas-controls,
   body .atlas-page .atlas-layout.atlas-layout,
   body .term-page .term-hero.term-hero,
@@ -922,23 +768,14 @@ body .not-found h1 {
     padding: var(--space-2) var(--space-3);
   }
 
-  body .question-page.question-page .option-list,
   body .atlas-page .term-list.term-list,
   body .term-page .term-meta dl,
-  body .question-page.question-page .question-nav,
-  body .case-shell .desk-evidence,
   body .case-shell .tradeoff-grid,
   body .case-shell .case-evidence-register,
   body .case-shell .case-navigation {
     grid-template-columns: 1fr;
   }
 
-  body .question-page .question-position,
-  body .question-page .question-context > div,
-  body .question-page .choice-feedback > div,
-  body .question-page .choice-feedback > p,
-  body .question-page .reasoning > *,
-  body .term-page .term-title,
   body .route-detail-page .route-hero > div:first-child,
   body .methodology-page .method-section > header,
   body .case-shell .case-hero > div,
@@ -947,92 +784,6 @@ body .not-found h1 {
   body .case-shell .artifact-change > header {
     border-right: 0;
     border-bottom: 1px solid var(--color-line);
-  }
-
-  body .question-page.question-page .option-list button,
-  body .question-page.question-page .option-list button:last-child {
-    min-height: 5.5rem;
-    border: 1px solid var(--color-line);
-    padding: var(--space-3);
-  }
-
-  body .question-page.question-page {
-    margin-top: var(--space-3);
-  }
-
-  body .question-page.question-page .course-location {
-    display: grid;
-    grid-template-columns: 1fr;
-  }
-
-  body .question-page.question-page .course-location-title,
-  body .question-page.question-page .course-location-progress,
-  body .question-page.question-page .course-location > a {
-    min-height: 0;
-    border-right: 0;
-    padding: var(--space-2) var(--space-3);
-  }
-
-  body .question-page.question-page .course-location-progress {
-    border-top: 1px solid var(--color-line-soft);
-  }
-
-  body .question-page.question-page .course-location > a {
-    min-height: var(--control-height);
-    border-top: 1px solid var(--color-line-soft);
-  }
-
-  body .question-page.question-page .question-head {
-    display: grid;
-    grid-template-columns: 1fr;
-  }
-
-  body .question-page.question-page .question-position {
-    min-height: 0;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    gap: var(--space-2);
-    align-items: baseline;
-    padding: var(--space-2) var(--space-3);
-  }
-
-  body .question-page.question-page .question-position .eyebrow,
-  body .question-page.question-page .question-position strong {
-    margin: 0;
-  }
-
-  body .question-page.question-page .question-position strong span {
-    font-size: 1.75rem;
-  }
-
-  body .question-page.question-page .question-title {
-    min-height: 0;
-    padding: var(--space-4);
-  }
-
-  body .question-page.question-page .question-title h1 {
-    margin-top: var(--space-2);
-    font-size: 1.75rem;
-    line-height: 1.35;
-  }
-
-  body .question-page.question-page .question-context > div,
-  body .question-page.question-page .question-context > ol {
-    padding: var(--space-3);
-  }
-
-  body .question-page.question-page .question-context h2 {
-    font-size: 1.25rem;
-  }
-
-  body .question-page.question-page .decision {
-    padding: var(--space-4);
-  }
-
-  body .question-page.question-page .decision h2,
-  body .question-page.question-page .reasoning h2 {
-    font-size: 1.5rem;
   }
 
   body .atlas-page .atlas-layout.atlas-layout {
@@ -1169,7 +920,6 @@ body .not-found h1 {
 }
 
 @media (max-width: 420px) {
-  body .question-page.question-page,
   body .search-experience.search-experience,
   body .atlas-page .atlas-controls.atlas-controls,
   body .atlas-page .atlas-layout.atlas-layout,
