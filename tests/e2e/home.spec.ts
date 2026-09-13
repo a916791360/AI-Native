@@ -106,9 +106,9 @@ test('provides stable skeletons for all primary page types', async ({ page }) =>
     ['/learn/cases/user-feedback-analysis/decide-ai-boundary/', '判断 AI 边界'],
     ['/learn/questions/q01-rules-or-ai/', '发票金额校验，需要引入大模型吗？'],
     ['/learn/questions/q31-long-doc-source/', '制度文档持续增长，还把全文拼进提示词吗？'],
-    ['/atlas/', '知识图鉴'],
+    ['/atlas/', '知识库'],
     ['/search/', '搜索'],
-    ['/routes/', '学习路线'],
+    ['/routes/', '阅读路线'],
     ['/routes/rag-from-zero/', 'RAG 从零到理解与应用'],
     ['/terms/retrieval-augmented-generation/', '检索增强生成'],
     ['/graph/', '概念图谱'],
@@ -249,17 +249,12 @@ test('keeps the course as one three-tier, ninety-card catalog', async ({ page, i
     'href',
     '/learn/questions/q01-rules-or-ai/',
   );
-  if (isMobile) {
-    await expect(page.locator('nav[aria-label="内容类型"]')).toBeHidden();
-    await revealMobileHeaderPanel(page, isMobile, '菜单');
-    await expect(
-      page.getByRole('navigation', { name: '主导航' }).getByRole('link', { name: '案例库' }),
-    ).toBeVisible();
-  } else {
-    const scope = page.getByRole('navigation', { name: '内容类型' });
-    await expect(scope).toContainText('系统课程 90');
-    await expect(scope).toContainText('案例实战 6');
-  }
+  // 目录页顶部只有一层导航——全站「内容分类条」已删除，不再与顶栏并列。
+  await expect(page.locator('nav[aria-label="内容类型"]')).toHaveCount(0);
+  await revealMobileHeaderPanel(page, isMobile, '菜单');
+  await expect(
+    page.getByRole('navigation', { name: '主导航' }).getByRole('link', { name: '案例库' }),
+  ).toBeVisible();
   await expect(page.locator('.task-list, .learning-levels, .course-summary')).toHaveCount(0);
 });
 

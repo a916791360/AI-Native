@@ -2,7 +2,6 @@
 import { SITE } from '@/config/site';
 import SiteFooter from '@/components/layout/SiteFooter.astro';
 import SiteHeader from '@/components/layout/SiteHeader.astro';
-import SiteScopeNav from '@/components/layout/SiteScopeNav.astro';
 import '@/styles/global.css';
 import unifiedPagesStylesheet from '@/styles/unified-pages.css?url';
 
@@ -31,20 +30,14 @@ const {
 } = Astro.props;
 const pageTitle = title === SITE.name ? title : `${title} | ${SITE.name}`;
 const currentPath = Astro.url.pathname;
+/**
+ * 内页壳层只有一层导航：顶栏（学习主线三项）+ 页脚（支撑层）。
+ * 曾经这里还会再渲染一条全站「内容分类条」，用另一套名词把同一批内容重新分了一遍，
+ * 于是每个内页顶部都叠着两组平行入口。那层已经删掉——页面内部的分组属于各板块自己，
+ * 不再由全站壳层代劳。
+ */
 const pagesWithEmbeddedScope = new Set(['/', '/learn/', '/learn/questions/', '/learn/cases/']);
 const loadUnifiedPagesStyles = !pagesWithEmbeddedScope.has(currentPath);
-const showSharedScope = title !== '页面未找到' && !pagesWithEmbeddedScope.has(currentPath);
-const activeScope = currentPath.startsWith('/learn/questions/')
-  ? 'course'
-  : currentPath.startsWith('/learn/cases/')
-    ? 'cases'
-    : currentPath.startsWith('/atlas/') || currentPath.startsWith('/terms/')
-      ? 'knowledge'
-      : currentPath.startsWith('/routes/')
-        ? 'routes'
-        : currentPath.startsWith('/graph/')
-          ? 'graph'
-          : undefined;
 const canonicalUrl = SITE.publicOrigin
   ? new URL(Astro.url.pathname.replace(/^\//, ''), `${SITE.publicOrigin}/`).toString()
   : undefined;
@@ -117,7 +110,6 @@ const structuredData =
   <body>
     <a class="skip-link" href="#main-content">跳到主要内容</a>
     <SiteHeader currentPath={currentPath} />
-    {showSharedScope && <SiteScopeNav active={activeScope} />}
     <slot />
     <SiteFooter />
     <script>

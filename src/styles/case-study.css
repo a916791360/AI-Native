@@ -26,7 +26,7 @@
   margin: var(--space-3) 0;
   font-family: var(--font-display);
   font-size: 3.1rem;
-  font-weight: 400;
+  font-weight: var(--weight-body);
   line-height: 1.05;
   letter-spacing: 0;
 }
@@ -54,7 +54,7 @@
   justify-content: center;
   gap: var(--space-2);
   padding: 0 var(--space-4);
-  font-weight: 600;
+  font-weight: var(--weight-display);
   text-decoration: none;
 }
 
@@ -80,7 +80,7 @@
   margin: var(--space-2) 0;
   font-family: var(--font-display);
   font-size: 2.35rem;
-  font-weight: 400;
+  font-weight: var(--weight-body);
   line-height: 1.2;
 }
 
@@ -134,7 +134,7 @@
   margin: var(--space-2) 0;
   font-family: var(--font-display);
   font-size: 2.5rem;
-  font-weight: 400;
+  font-weight: var(--weight-body);
   line-height: 1.2;
 }
 
@@ -229,7 +229,7 @@
   margin: 0.25rem 0;
   font-family: var(--font-display);
   font-size: 1.55rem;
-  font-weight: 400;
+  font-weight: var(--weight-body);
 }
 
 .case-directory p {
@@ -259,7 +259,7 @@
   margin: 0.25rem 0;
   font-family: var(--font-display);
   font-size: 1.65rem;
-  font-weight: 400;
+  font-weight: var(--weight-body);
   line-height: 1.25;
 }
 
@@ -337,7 +337,7 @@
   color: var(--color-prerequisite);
   font-family: var(--font-display);
   font-size: 6rem;
-  font-weight: 400;
+  font-weight: var(--weight-body);
   line-height: 1;
 }
 
@@ -346,7 +346,7 @@
   margin: var(--space-2) 0;
   font-family: var(--font-display);
   font-size: 3rem;
-  font-weight: 400;
+  font-weight: var(--weight-body);
   line-height: 1.08;
   letter-spacing: 0;
 }
@@ -373,7 +373,7 @@
   margin: var(--space-2) 0;
   font-family: var(--font-display);
   font-size: 2.5rem;
-  font-weight: 400;
+  font-weight: var(--weight-body);
   line-height: 1.2;
 }
 
@@ -400,7 +400,7 @@
 
 .recommended-decision strong {
   max-width: 52rem;
-  font-weight: 500;
+  font-weight: var(--weight-display);
 }
 
 .desk-evidence {
@@ -520,7 +520,7 @@
 .option-grid summary strong {
   font-family: var(--font-display);
   font-size: 1.45rem;
-  font-weight: 400;
+  font-weight: var(--weight-body);
 }
 
 .option-feedback {
@@ -567,7 +567,7 @@
 .tradeoff-grid h4 {
   margin: 0;
   font-size: var(--text-sm);
-  font-weight: 500;
+  font-weight: var(--weight-display);
 }
 
 .tradeoff-grid ul {
@@ -619,7 +619,7 @@
   margin: var(--space-2) 0;
   font-family: var(--font-display);
   font-size: 1.8rem;
-  font-weight: 400;
+  font-weight: var(--weight-body);
 }
 
 .artifact-change > div p {
@@ -648,7 +648,7 @@
 
 .case-evidence-register strong {
   display: block;
-  font-weight: 500;
+  font-weight: var(--weight-display);
 }
 
 .case-evidence-register p,
@@ -750,7 +750,7 @@
   margin-top: var(--space-1);
   font-family: var(--font-display);
   font-size: 1.45rem;
-  font-weight: 400;
+  font-weight: var(--weight-body);
 }
 
 .case-navigation a:hover {
@@ -780,7 +780,7 @@
   margin: var(--space-2) 0;
   font-family: var(--font-display);
   font-size: 5rem;
-  font-weight: 400;
+  font-weight: var(--weight-body);
   line-height: 1.05;
   letter-spacing: 0;
 }
@@ -851,7 +851,7 @@
   margin: var(--space-2) 0 0;
   font-family: var(--font-display);
   font-size: 2.5rem;
-  font-weight: 400;
+  font-weight: var(--weight-body);
   line-height: 1.2;
 }
 
@@ -921,7 +921,7 @@
   margin: var(--space-2) 0;
   font-family: var(--font-display);
   font-size: 2.5rem;
-  font-weight: 400;
+  font-weight: var(--weight-body);
   line-height: 1.2;
 }
 

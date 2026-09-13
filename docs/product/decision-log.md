@@ -727,3 +727,20 @@
 - 验收结果：`astro check` 109 个文件 0 错误 / 0 警告 / 0 提示；构建 **473 页**（407 → 473，+66 = 90−24）；Pagefind 索引 325 页；237 项单元测试通过；`validate:data`（13 domains / 325 terms / 333 relations / 5 routes / 6 cases）、`check:generated`、`check:performance`、格式与 lint 全部通过；`check:learning` 输出「90 questions across 3 tiers × 6 modules」。E2E **89 项通过、7 项按设备条件跳过、0 失败**（含新增用例「按层折叠目录且只展开学习者所在层」）。
 - 保留边界：未改动词条、关系、案例或路线内容，未重生成 `src/generated/`（题库不在内容集合内）；`unified-pages.css` 中 23 处 `font-weight: 650` 保留（词条/路线/案例/图谱/方法论页不在本次批准范围），已在 `design.md` 的「已知例外」中登记；未推送、未创建 Pull Request、未部署。
 - 后续待确认：①325 个词条由「独立入口」转为「题内即时查」的验收（同上条，仍未开始）；②`unified-pages.css` 的字重是否统一到 800/400 双档；③hero 是否彻底放弃终端词汇（本次只删了重绘的窗口外壳，等宽字体与荧光强调仍在）。
+
+## 2026-09-14：全站壳层删除第二层导航，板块命名收敛到唯一事实源
+
+- 状态：已执行；承接同日三条的「结构收敛」收尾，修正上一轮没做干净的一处。
+- 背景：用户原话——「案例库和知识库点击后还是下方的一个 tab 的内容而已，tab 的内容还是有什么阅读路线、概念关系、系统课程、案例实战，很乱，真的很乱」。这是对同日下午「学习入口收敛为单主线」的**直接反驳**：首页的四入口确实删了，但用户点进任一板块，顶部仍然是一条横排的分类条。
+- 诊断（先量化，再动手）：抓 10 个页面的 DOM 后发现，除首页外**每一页**都在顶栏下方渲染同一条 `.scope-strip`，内容恒为五项 `系统课程 90 / 案例实战 6 / 知识词条 325 / 阅读路线 5 / 概念关系 333`。根因是三个问题叠在一起：①`BaseLayout` 对不在 `pagesWithEmbeddedScope` 内的页面无条件下发 `SiteScopeNav`，所以这条分类条是**壳层级**的，跟页面本身无关；②`ContentScopeNav` 用的是**另一套名词**，把同一批内容重新命名并排展示（顶栏叫「案例库」，分类条叫「案例实战」；顶栏叫「知识库」，分类条叫「知识词条」）；③`.scope-strip` 的样式让它读起来就是一条常驻 tab。另有旁证：`/atlas/` 的 H1 是「知识图鉴」，顶栏写「知识库」，同一个板块两个名字——这就是「乱」的来源。
+- 决策（确立不变式）：**一个板块一个名字；正文之上只有一层导航；支撑层只进页脚。** 三条一起写进契约，而不是只删一个组件——否则下次还会以别的形式长回来。
+- 单一事实源：新增 `src/config/sections.ts`，把板块的 `navLabel`（导航用名）、`pageTitle`（`<title>` 与 H1 用名）、`surface`（primary / support）、`purpose`（一句话定位）收在一处，并导出 `PRIMARY_NAVIGATION` / `SUPPORT_NAVIGATION` / `NAVIGATION` / `sectionById`。`src/config/navigation.ts` 退化为纯再导出。此后改一个板块的名字只需改这一处。
+- 删除：`src/components/layout/ContentScopeNav.astro` 与 `SiteScopeNav.astro` 整体删除；`BaseLayout.astro` 去掉导入、`showSharedScope` / `activeScope` 派生与渲染行，正文结构回到「顶栏 + slot + 页脚」；`content-catalog.css` 中全部 `.scope-strip` 规则（含 `@media (max-width: 760px)` 内三条）一并删除，并留下成因注释。
+- 命名统一：`/routes/` 的「学习路线」→「**阅读路线**」，`/atlas/` 的「知识图鉴」→「**知识库**」——两处都改为与顶栏一致；同步修改的还有 404 页（`返回知识图鉴` ×2、「这条路径还没有连接到知识图谱」→ 概念图谱）、`methodology` 正文、首页 hero 支撑层文案、搜索页 noscript 文案，以及 4 处仍用旧名的 `aria-label`（`已发布学习路线`、`学习路线前后篇`、`阅读路线 · 已发布`、`相关知识词条`）。
+- 一处必须记下的副作用（截图发现，非预期）：`ContentScopeNav.astro` 曾 `import '@/styles/content-catalog.css'`，而它经 `SiteScopeNav` 挂在 `BaseLayout` 上——也就是说**整份目录样式表（约 10 KiB）被并进了全站共享的 `BaseLayout.css`**，首页也在加载一份它根本用不到的目录样式。删掉分类条后首页 CSS 从 35150 B 掉到 24645 B（−29.9%）。但同一改动也让 `/learn/` 与 `/learn/cases/` 丢掉了网格骨架，侧栏塌到标题上方：已改为由使用方显式声明 `import '@/styles/content-catalog.css'`（`LearningCatalog.astro` 与 `learn/cases/index.astro` 两处），该文件现在是独立 bundle 9898 B，只在真正需要它的两个页面加载。
+- 契约更新：`docs/product/brand-spec.md` 的「全局壳层」删去「水平内容分类条」，改写为「正文之上只有这一层导航」；新增「板块命名」条款，指明 `src/config/sections.ts` 是唯一事实源；品牌定位由「渐进式 AI 知识图鉴」更正为现行的「落地型 AI 产品学习系统」。`design.md` 的「What pages MUST share」新增两条（正文之上只有一层导航、板块命名同源），并把「已知例外」中 `unified-pages.css` 23 处 `font-weight: 650` 一条标记为已解决。
+- 测试更新：`tests/e2e/release-candidate.spec.ts` 中断言分类条存在的用例 `uses one content scope navigation across secondary pages` 整体重写为 `stacks exactly one navigation layer above the page body`——对 8 个页面计算「位于 `<main>` 之前的 `<nav>`」集合，断言恒等于 `['主导航']`，并断言支撑层链接只出现在页脚导航；这条用例是防回归的主体。`home.spec.ts` 与 `cases.spec.ts` 中三处依赖 `.scope-strip` 的断言同步删除，页面骨架表的两处标题名改为「知识库」「阅读路线」。
+- 验收结果：`astro check` 109 个文件 0 错误 / 0 警告 / 0 提示；构建 473 页、Pagefind 索引 325 页；237 项单元测试通过；`validate:data`、`check:learning`（90 题 / 3 层 × 6 模块）、`check:design`（110 处 font-weight 全部走令牌）、`check:generated`、`check:performance`、格式与 lint 全部通过；E2E **89 项通过、7 项按设备条件跳过、0 失败**。10 个页面逐一核实：正文之上只有 `主导航`（开始学习 / 案例库 / 知识库），页脚恒为 `开始学习 / 案例库 / 知识库 / 阅读路线 / 概念图谱 / 搜索 / 内容方法 / GitHub`。
+- 性能基线：**未放宽任何一项**。首页 CSS 24645 B（基线 31417 B，实为下降），首页首屏 JavaScript 2.3 KiB、Pagefind 1777.2 KiB、图谱 JavaScript 437.0 KiB、最大图片 118.5 KiB 均未变。
+- 保留边界：未改动词条、关系、案例或路线内容；未重生成 `src/generated/`；未推送、未创建 Pull Request、未部署。
+- 后续待确认：①325 个词条由「独立入口」转为「题内即时查」的验收（第 4 条，仍未开始）；②hero 是否彻底放弃终端词汇；③`/learn/cases/` 侧栏仍是页内筛选组（全部案例 / 已核验 / 内容草稿 / 完整项目），形态与已删除的分类条相近，需在下一轮判断是否也要收敛。

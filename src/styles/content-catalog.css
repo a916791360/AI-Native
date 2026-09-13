@@ -1,65 +1,13 @@
 /* Hallmark · genre: editorial · macrostructure: Index-First / Narrative Workflow · design-system: design.md
  * 目录与学习主线共用的卡片、层级与侧栏骨架。
+ *
+ * 这里曾经有一条全站「内容分类条」（.scope-strip）的样式：它把 系统课程 / 案例实战 /
+ * 知识词条 / 阅读路线 / 概念关系 五个平行入口贴在几乎每一页的顶部，用的是和顶栏
+ * 完全不同的一套名词。已随组件一并删除——内页顶部只允许一层导航（顶栏）。
  */
 .content-catalog {
   min-width: 0;
   padding-bottom: var(--space-7);
-}
-
-.scope-strip {
-  width: min(calc(100% - 2.5rem), var(--content-max));
-  min-height: 3.5rem;
-  display: flex;
-  gap: var(--space-3);
-  align-items: center;
-  margin: var(--space-2) auto 0;
-  border: 1px solid var(--color-line);
-  border-radius: var(--radius-sm);
-  padding: var(--space-1) var(--space-2);
-  background: var(--color-panel);
-}
-
-.scope-strip > span {
-  flex: 0 0 auto;
-  color: var(--color-quiet);
-  font-size: var(--text-sm);
-}
-
-.scope-strip nav {
-  min-width: 0;
-  display: flex;
-  gap: var(--space-0);
-  overflow-x: auto;
-  scrollbar-width: thin;
-}
-
-.scope-strip a {
-  min-height: var(--control-height);
-  flex: 0 0 auto;
-  display: inline-flex;
-  gap: var(--space-1);
-  align-items: center;
-  border-radius: var(--radius-sm);
-  padding: 0 var(--space-2);
-  color: var(--color-muted);
-  font-size: var(--text-sm);
-  text-decoration: none;
-}
-
-.scope-strip a:hover,
-.scope-strip a[aria-current='page'] {
-  background: var(--color-accent-wash);
-  color: var(--color-accent-strong);
-}
-
-.scope-strip a:hover small,
-.scope-strip a[aria-current='page'] small {
-  color: inherit;
-}
-
-.scope-strip small {
-  color: var(--color-quiet);
-  font-size: var(--text-xs);
 }
 
 .catalog-layout {
@@ -332,22 +280,8 @@
 }
 
 @media (max-width: 760px) {
-  .scope-strip {
-    display: none;
-  }
-
-  .scope-strip,
   .catalog-layout {
     width: calc(100% - 2rem);
-  }
-
-  .scope-strip {
-    min-height: 3.9rem;
-    margin-top: var(--space-2);
-    padding: var(--space-1) var(--space-2);
-  }
-
-  .catalog-layout {
     grid-template-columns: 1fr;
     gap: var(--space-3);
     margin-top: var(--space-3);

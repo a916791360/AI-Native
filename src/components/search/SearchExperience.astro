@@ -85,7 +85,7 @@ const feedbackUrl = buildContentIssueUrl({
 
   <noscript>
     <p class="search-noscript">
-      搜索需要 JavaScript；仍可前往<a href="/atlas/">知识图鉴</a>按领域浏览。
+      搜索需要 JavaScript；仍可前往<a href="/atlas/">知识库</a>按领域浏览。
     </p>
   </noscript>
 </section>
@@ -192,7 +192,7 @@ const feedbackUrl = buildContentIssueUrl({
     border-top: 1px solid var(--color-line);
     background: var(--color-panel);
     color: var(--color-accent);
-    font-weight: 600;
+    font-weight: var(--weight-display);
   }
   .search-more:hover {
     background: var(--color-panel-raised);
@@ -221,7 +221,7 @@ const feedbackUrl = buildContentIssueUrl({
   .search-result-title strong {
     font-family: var(--font-display);
     font-size: 1.35rem;
-    font-weight: 400;
+    font-weight: var(--weight-body);
   }
   .search-result-title small {
     overflow: hidden;
@@ -241,7 +241,7 @@ const feedbackUrl = buildContentIssueUrl({
   .search-result-copy mark {
     background: transparent;
     color: var(--color-prerequisite);
-    font-weight: 600;
+    font-weight: var(--weight-display);
   }
   .search-result-meta {
     display: grid;
@@ -263,7 +263,7 @@ const feedbackUrl = buildContentIssueUrl({
   .search-empty strong {
     font-family: var(--font-display);
     font-size: 2rem;
-    font-weight: 400;
+    font-weight: var(--weight-body);
   }
   .search-empty p,
   .search-noscript {
@@ -305,7 +305,7 @@ const feedbackUrl = buildContentIssueUrl({
       padding-inline: var(--space-3);
       color: var(--color-ink);
       font-size: var(--text-sm);
-      font-weight: 600;
+      font-weight: var(--weight-display);
       list-style: none;
     }
     .search-filter-panel > summary::-webkit-details-marker {
@@ -323,7 +323,7 @@ const feedbackUrl = buildContentIssueUrl({
       padding-right: var(--space-2);
       color: var(--color-quiet);
       font-size: var(--text-xs);
-      font-weight: 400;
+      font-weight: var(--weight-body);
     }
     .search-filters label {
       grid-template-columns: 1fr;

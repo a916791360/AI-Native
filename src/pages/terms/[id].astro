@@ -259,7 +259,7 @@ const localGraph = selectLocalGraph(generatedGraph as GraphData, term.id);
 
     {
       routeNav && (
-        <nav class="route-navigation" aria-label="学习路线前后篇">
+        <nav class="route-navigation" aria-label="阅读路线前后篇">
           <div class="route-position">
             <span>所属路线</span>
             <a href={`/routes/${routeNav.id}/`}>{routeNav.name}</a>
@@ -322,7 +322,7 @@ const localGraph = selectLocalGraph(generatedGraph as GraphData, term.id);
     margin: var(--space-3) 0 0;
     font-family: var(--font-display);
     font-size: 6rem;
-    font-weight: 400;
+    font-weight: var(--weight-body);
     line-height: 0.98;
   }
   .term-en {
@@ -445,7 +445,7 @@ const localGraph = selectLocalGraph(generatedGraph as GraphData, term.id);
     margin: var(--space-3) 0 var(--space-4);
     font-family: var(--font-display);
     font-size: 3rem;
-    font-weight: 400;
+    font-weight: var(--weight-body);
     line-height: 1.1;
   }
   .lead {
@@ -460,7 +460,7 @@ const localGraph = selectLocalGraph(generatedGraph as GraphData, term.id);
     color: var(--color-muted);
     font-family: var(--font-mono);
     font-size: var(--text-xs);
-    font-weight: 400;
+    font-weight: var(--weight-body);
   }
   .relation-list {
     border-top: 1px solid var(--color-line);
@@ -481,7 +481,7 @@ const localGraph = selectLocalGraph(generatedGraph as GraphData, term.id);
   .relation-row strong {
     font-family: var(--font-display);
     font-size: 1.15rem;
-    font-weight: 400;
+    font-weight: var(--weight-body);
   }
   .relation-row p {
     margin: 0;
@@ -541,7 +541,7 @@ const localGraph = selectLocalGraph(generatedGraph as GraphData, term.id);
     color: var(--color-prerequisite);
     font-family: var(--font-display);
     font-size: 2rem;
-    font-weight: 400;
+    font-weight: var(--weight-body);
   }
   .route-links {
     display: grid;
@@ -572,7 +572,7 @@ const localGraph = selectLocalGraph(generatedGraph as GraphData, term.id);
       var(--space-4);
     font-family: var(--font-display);
     font-size: 3rem;
-    font-weight: 400;
+    font-weight: var(--weight-body);
     line-height: 1.1;
     scroll-margin-top: 1rem;
   }
@@ -665,7 +665,7 @@ const localGraph = selectLocalGraph(generatedGraph as GraphData, term.id);
       color: var(--color-ink);
       cursor: pointer;
       font-size: var(--text-sm);
-      font-weight: 650;
+      font-weight: var(--weight-display);
       list-style: none;
     }
     .term-index > summary::-webkit-details-marker {

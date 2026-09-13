@@ -1,15 +1,14 @@
 ---
-import ContentScopeNav from '@/components/layout/ContentScopeNav.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import { sectionById } from '@/config/sections';
 import { loadCaseStudies } from '@/lib/cases/io';
 import { CASE_STATUS_LABELS, caseHref, gateHref, GOLDEN_CASE_ID } from '@/lib/cases/presentation';
-import { loadProjectContent } from '@/lib/content/io';
-import { deriveSiteMetrics } from '@/lib/site/metrics';
+import '@/styles/content-catalog.css';
 import '@/styles/case-study.css';
 import '@/styles/case-library.css';
 
-const [cases, project] = await Promise.all([loadCaseStudies(), loadProjectContent()]);
-const metrics = deriveSiteMetrics(project);
+const section = sectionById('cases');
+const cases = await loadCaseStudies();
 const libraryCases = cases.toSorted((left, right) => {
   if (left.data.status === 'verified' && right.data.status !== 'verified') return -1;
   if (right.data.status === 'verified' && left.data.status !== 'verified') return 1;
@@ -21,19 +20,11 @@ const goldenCases = libraryCases.filter(({ data }) => data.id === GOLDEN_CASE_ID
 ---
 
 <BaseLayout
-  title="AI 产品案例库"
-  description="浏览不同业务场景中的 AI 产品连续决策案例，并按内容状态选择可核验的学习材料。"
+  title={section.pageTitle}
+  description={section.purpose}
   structuredDataType="CollectionPage"
 >
   <main id="main-content" class="content-catalog case-catalog">
-    <ContentScopeNav
-      active="cases"
-      caseCount={cases.length}
-      relationCount={metrics.relationCount}
-      routeCount={metrics.publishedRouteCount}
-      termCount={metrics.termCount}
-    />
-
     <div class="catalog-layout">
       <aside class="catalog-sidebar">
         <nav aria-label="案例筛选">

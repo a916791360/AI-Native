@@ -102,7 +102,9 @@ system needs to grow.
 
 ## What pages MUST share
 
-- 站点字标与主导航。
+- 站点字标与主导航，且**正文之上只有这一层导航**（不允许再出现内容分类条 / 二级
+  tab 条）。支撑层只进页脚。
+- 板块名称的唯一事实源是 `src/config/sections.ts`；顶栏、页面 H1、页脚必须同名。
 - 强调色及其用量（每屏 ≤ 5%）。
 - display / body 字面与 **400 ↔ 800** 的字重立场。
 - CTA 的形状、圆角、内边距节奏。
@@ -116,10 +118,10 @@ system needs to grow.
 
 ## 已知例外（待后续处理，不在本次范围）
 
-- `src/styles/unified-pages.css` 里仍有 23 处 `font-weight: 650`，分布在术语 /
-  路线 / 案例 / 图谱 / 方法论页面。这些页面不在本次「学习主线三页 + 全局层」
-  的批准范围内，暂不扩散改动。**下次触碰这些页面时必须一并换成
-  `var(--weight-display)`。**
+- ~~`src/styles/unified-pages.css` 里的 23 处 `font-weight: 650`~~ — **已解决。**
+  全站 110 处 `font-weight` 声明已全部走 `var(--weight-display)` /
+  `var(--weight-body)`，中间档位清零，并由 `pnpm check:design` 守卫（禁止
+  500 / 600 / 650 / 700 / 750 与 `bold` / `bolder`，同时要求两档落差 ≥ 300）。
 - 首页 hero 原先的「假终端窗口」是 Hallmark 明令的 _re-drawn UI chrome_ 反模式
   （用 CSS 重绘一个并不存在的应用界面：三个圆点 + 假标题栏 + 虚构命令行）。已
   换成「判断三问」的排版框（上下各一道细线，无窗口外壳）。hero 是否彻底放弃

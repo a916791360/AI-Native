@@ -12,12 +12,12 @@ const popularDomains = domains.filter((domain) => domain.ring === 'core').slice(
     <div class="error-code" aria-hidden="true">404</div>
     <section>
       <p class="eyebrow">Unknown relation</p>
-      <h1>这条路径还没有连接到知识图谱。</h1>
-      <p>页面可能已经移动，或者对应词条尚未进入当前目录。你可以重新搜索，或返回知识图鉴。</p>
+      <h1>这条路径还没有连接到概念图谱。</h1>
+      <p>页面可能已经移动，或者对应词条尚未进入当前目录。你可以重新搜索，或返回知识库。</p>
       <SearchForm compact={true} />
       <div class="recovery-links">
         <a href="/">返回首页</a>
-        <a href="/atlas/">返回知识图鉴</a>
+        <a href="/atlas/">返回知识库</a>
       </div>
       <nav class="popular-domains" aria-label="热门领域">
         <span class="meta-label">热门领域</span>
@@ -54,7 +54,7 @@ const popularDomains = domains.filter((domain) => domain.ring === 'core').slice(
     margin: var(--space-3) 0;
     font-family: var(--font-display);
     font-size: 3rem;
-    font-weight: 400;
+    font-weight: var(--weight-body);
     line-height: 1.02;
   }
   section > p:not(.eyebrow) {

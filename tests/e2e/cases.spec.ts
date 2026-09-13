@@ -19,15 +19,11 @@ test('offers a first-class case library from the learning workspace', async ({
   );
   if (isMobile) {
     await page.getByRole('button', { name: '菜单', exact: true }).click();
-    await expect(
-      page.getByRole('navigation', { name: '主导航' }).getByRole('link', { name: '案例库' }),
-    ).toHaveAttribute('href', caseLibraryUrl);
-  } else {
-    await expect(page.getByRole('link', { name: /案例实战 6/ })).toHaveAttribute(
-      'href',
-      caseLibraryUrl,
-    );
   }
+  // 案例库是顶栏一级入口，不再依赖页内的平行内容分类条。
+  await expect(
+    page.getByRole('navigation', { name: '主导航' }).getByRole('link', { name: '案例库' }),
+  ).toHaveAttribute('href', caseLibraryUrl);
 
   await page.goto(caseLibraryUrl);
   await expect(page.getByRole('heading', { level: 1, name: 'AI 产品案例库' })).toBeVisible();

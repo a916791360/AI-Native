@@ -92,32 +92,48 @@ test('keeps every page family within the compact visual hierarchy', async ({ pag
   }
 });
 
-test('uses one content scope navigation across secondary pages', async ({ page, isMobile }) => {
-  const pages = [
-    ['/learn/questions/q61-accuracy-or-explain/', '系统课程'],
-    ['/learn/cases/customer-support-knowledge-base/', '案例实战'],
-    ['/atlas/', '知识词条'],
-    ['/terms/retrieval-augmented-generation/', '知识词条'],
-    ['/routes/rag-from-zero/', '阅读路线'],
-    ['/graph/', '概念关系'],
-  ] as const;
-
-  for (const [pagePath, activeLabel] of pages) {
+test('stacks exactly one navigation layer above the page body', async ({ page }) => {
+  // 曾经每个内页顶部都叠着两组平行入口：顶栏（开始学习 / 案例库 / 知识库）和一条用另一套
+  // 名词的全站「内容分类条」（系统课程 / 案例实战 / 知识词条 / 阅读路线 / 概念关系）。
+  // 现在页面正文之上只允许一层导航，支撑层只出现在页脚。
+  for (const pagePath of [
+    '/learn/',
+    '/learn/questions/q61-accuracy-or-explain/',
+    '/learn/cases/customer-support-knowledge-base/',
+    '/atlas/',
+    '/terms/retrieval-augmented-generation/',
+    '/routes/rag-from-zero/',
+    '/graph/',
+    '/methodology/',
+  ]) {
     await page.goto(pagePath);
-    if (isMobile) {
-      await expect(page.locator('nav[aria-label="内容类型"]')).toBeHidden();
-      continue;
-    }
-    const scope = page.getByRole('navigation', { name: '内容类型' });
-    await expect(scope.getByRole('link', { name: /阅读路线 5/ })).toBeVisible();
-    await expect(scope.getByRole('link', { name: new RegExp(activeLabel) })).toHaveAttribute(
-      'aria-current',
-      'page',
-    );
+
+    const shellNavigation = await page.evaluate(() => {
+      const main = document.querySelector('main');
+      if (!main) return null;
+      return [...document.querySelectorAll('nav')]
+        .filter((element) => !main.contains(element))
+        .filter(
+          (element) => element.compareDocumentPosition(main) & Node.DOCUMENT_POSITION_FOLLOWING,
+        )
+        .map((element) => element.getAttribute('aria-label'));
+    });
+
+    expect(shellNavigation, `${pagePath} 正文之上的导航层`).toEqual(['主导航']);
+    await expect(page.locator('nav[aria-label="内容类型"]')).toHaveCount(0);
   }
 
-  await page.goto('/not-a-real-concept/');
-  await expect(page.getByRole('navigation', { name: '内容类型' })).toHaveCount(0);
+  // 支撑层下沉到页脚，仍然可达。
+  await page.goto('/atlas/');
+  const footerNavigation = page.getByRole('navigation', { name: '页脚导航' });
+  await expect(footerNavigation.getByRole('link', { name: '阅读路线' })).toHaveAttribute(
+    'href',
+    '/routes/',
+  );
+  await expect(footerNavigation.getByRole('link', { name: '概念图谱' })).toHaveAttribute(
+    'href',
+    '/graph/',
+  );
 });
 
 test('keeps global controls and route cards compact', async ({ page, isMobile }) => {

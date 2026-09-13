@@ -1,5 +1,4 @@
 ---
-import ContentScopeNav from '@/components/layout/ContentScopeNav.astro';
 import {
   LEARNING_MODULES,
   LEARNING_QUESTIONS,
@@ -7,28 +6,12 @@ import {
   getQuestionsForModule,
   getQuestionsForTier,
 } from '@/data/learning';
-import { loadCaseStudies } from '@/lib/cases/io';
-import { loadProjectContent } from '@/lib/content/io';
-import { deriveSiteMetrics } from '@/lib/site/metrics';
-
-interface Props {
-  activeScope?: 'course';
-}
-
-const { activeScope = 'course' } = Astro.props;
-const [project, cases] = await Promise.all([loadProjectContent(), loadCaseStudies()]);
-const metrics = deriveSiteMetrics(project);
+// 目录骨架（.catalog-*）的事实源。这层样式原先由已删除的 ContentScopeNav 顺带引入，
+// 去掉内容分类条后必须由使用方自己声明。
+import '@/styles/content-catalog.css';
 ---
 
 <main id="main-content" class="content-catalog">
-  <ContentScopeNav
-    active={activeScope}
-    caseCount={cases.length}
-    relationCount={metrics.relationCount}
-    routeCount={metrics.publishedRouteCount}
-    termCount={metrics.termCount}
-  />
-
   <div class="catalog-layout">
     <aside class="catalog-sidebar">
       <nav aria-label="三层课程目录">

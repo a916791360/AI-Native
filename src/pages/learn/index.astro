@@ -1,12 +1,15 @@
 ---
 import LearningCatalog from '@/components/learning/LearningCatalog.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import { sectionById } from '@/config/sections';
+
+const section = sectionById('learn');
 ---
 
 <BaseLayout
-  title="系统课程"
-  description="通过 6 个阶段、24 道基础判断题，建立可迁移的 AI 产品判断。"
+  title={section.pageTitle}
+  description={section.purpose}
   structuredDataType="CollectionPage"
 >
-  <LearningCatalog activeScope="course" />
+  <LearningCatalog />
 </BaseLayout>

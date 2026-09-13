@@ -186,7 +186,7 @@ const pmAction = PM_ACTIONS[question.id];
             }
           </ol>
         </div>
-        <nav class="refs" aria-label="相关知识词条">
+        <nav class="refs" aria-label="相关知识库条目">
           <p class="meta-label">按需深挖</p>
           {
             question.references.map((reference) => (
@@ -408,7 +408,7 @@ const pmAction = PM_ACTIONS[question.id];
   }
   .progress-tier strong {
     color: var(--color-ink);
-    font-weight: 500;
+    font-weight: var(--weight-display);
     white-space: nowrap;
   }
   .progress-module {
@@ -643,7 +643,7 @@ const pmAction = PM_ACTIONS[question.id];
     color: var(--color-accent-strong);
     font-family: var(--font-mono);
     font-size: var(--text-sm);
-    font-weight: 600;
+    font-weight: var(--weight-display);
     letter-spacing: 0.06em;
   }
   [data-assessment='risky'] .option-verdict {
@@ -752,7 +752,7 @@ const pmAction = PM_ACTIONS[question.id];
   }
   .refs strong {
     font-size: var(--text-sm);
-    font-weight: 500;
+    font-weight: var(--weight-display);
   }
   .refs span {
     color: var(--color-quiet);
@@ -806,7 +806,7 @@ const pmAction = PM_ACTIONS[question.id];
   }
   .question-nav strong {
     font-size: var(--text-lead);
-    font-weight: 600;
+    font-weight: var(--weight-display);
     line-height: 1.4;
   }
   .question-nav .next {

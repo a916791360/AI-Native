@@ -145,7 +145,7 @@ const orderedQuestionIds = LEARNING_QUESTIONS.map((question) => question.id);
         <p>这些是「查」而不是「学」——按需查阅，不必按顺序读。</p>
       </header>
       <p class="structure-support" data-reveal>
-        <span class="prompt">$</span> 支撑层：<a href="/atlas/">知识图鉴</a>
+        <span class="prompt">$</span> 支撑层：<a href="/atlas/">知识库</a>
         {metrics.termCount} 词条 ·
         <a href="/routes/">阅读路线</a>
         {metrics.publishedRouteCount} 条 ·
@@ -204,7 +204,7 @@ const orderedQuestionIds = LEARNING_QUESTIONS.map((question) => question.id);
   .hero h1 {
     margin: 1.1rem 0 0;
     font-size: clamp(2.2rem, 3.6vw, 3rem);
-    font-weight: 800;
+    font-weight: var(--weight-display);
     line-height: 1.16;
     letter-spacing: -0.01em;
     text-wrap: balance;
@@ -225,7 +225,7 @@ const orderedQuestionIds = LEARNING_QUESTIONS.map((question) => question.id);
 
   .hero-sub b {
     color: var(--color-accent-strong);
-    font-weight: 600;
+    font-weight: var(--weight-display);
   }
 
   .cta-row {
@@ -244,7 +244,7 @@ const orderedQuestionIds = LEARNING_QUESTIONS.map((question) => question.id);
     color: oklch(0.2 0.05 120);
     font-family: var(--font-mono);
     font-size: 0.92rem;
-    font-weight: 800;
+    font-weight: var(--weight-display);
     padding: 0 1.7rem;
     text-decoration: none;
     white-space: nowrap;
@@ -357,7 +357,7 @@ const orderedQuestionIds = LEARNING_QUESTIONS.map((question) => question.id);
     margin: 0;
     font-family: var(--font-mono);
     font-size: 1.55rem;
-    font-weight: 600;
+    font-weight: var(--weight-display);
     color: var(--color-accent);
   }
 
@@ -437,7 +437,7 @@ const orderedQuestionIds = LEARNING_QUESTIONS.map((question) => question.id);
   .sec-head h2 {
     margin: 0;
     font-size: clamp(1.6rem, 3vw, 2.2rem);
-    font-weight: 800;
+    font-weight: var(--weight-display);
     letter-spacing: -0.01em;
   }
 
@@ -487,13 +487,13 @@ const orderedQuestionIds = LEARNING_QUESTIONS.map((question) => question.id);
     color: var(--color-accent);
     font-family: var(--font-mono);
     font-size: 0.85rem;
-    font-weight: 700;
+    font-weight: var(--weight-display);
   }
 
   .level-list h3 {
     margin: 0;
     font-size: 1.18rem;
-    font-weight: 800;
+    font-weight: var(--weight-display);
   }
 
   .level-list p {
@@ -550,7 +550,7 @@ const orderedQuestionIds = LEARNING_QUESTIONS.map((question) => question.id);
     color: var(--color-accent-strong);
     font-family: var(--font-mono);
     font-size: 0.85rem;
-    font-weight: 600;
+    font-weight: var(--weight-display);
     text-decoration: none;
   }
 
@@ -592,20 +592,20 @@ const orderedQuestionIds = LEARNING_QUESTIONS.map((question) => question.id);
   .outcome-index {
     font-family: var(--font-mono);
     font-size: 1.15rem;
-    font-weight: 700;
+    font-weight: var(--weight-display);
     color: var(--color-accent);
   }
 
   .outcome-list h3 {
     margin: 0;
     font-size: 1.02rem;
-    font-weight: 800;
+    font-weight: var(--weight-display);
   }
 
   .outcome-decision {
     margin: 0.3rem 0 0;
     font-size: 0.88rem;
-    font-weight: 600;
+    font-weight: var(--weight-display);
   }
 
   .outcome-result {

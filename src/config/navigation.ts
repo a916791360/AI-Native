@@ -1,17 +1,13 @@
 /**
- * 头部主导航只保留学习主线:开始学习 → 案例库,加一个知识库入口。
- * 支撑层(阅读路线 / 概念图谱 / 搜索)下沉到页脚,见 NAVIGATION。
- * 首页由左上角 wordmark 承担,不再占用导航位。
+ * 导航从 `src/config/sections.ts` 派生——不要在页面里硬编码板块名，
+ * 也不要在导航里另起别名（改名的成本应该只有一处）。
+ *
+ * 顶栏只放学习主线三项；阅读路线、概念图谱与搜索下沉到页脚，作为「按需查阅」的支撑层。
  */
-export const PRIMARY_NAVIGATION = [
-  { href: '/learn/', label: '开始学习' },
-  { href: '/learn/cases/', label: '案例库' },
-  { href: '/atlas/', label: '知识库' },
-] as const;
-
-export const NAVIGATION = [
-  ...PRIMARY_NAVIGATION,
-  { href: '/routes/', label: '阅读路线' },
-  { href: '/graph/', label: '概念图谱' },
-  { href: '/search/', label: '搜索' },
-] as const;
+export {
+  NAVIGATION,
+  PRIMARY_NAVIGATION,
+  SECTIONS,
+  SUPPORT_NAVIGATION,
+  sectionById,
+} from './sections';
