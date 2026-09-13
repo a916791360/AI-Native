@@ -7,41 +7,6 @@ import { deriveSiteMetrics } from '@/lib/site/metrics';
 const [project, cases] = await Promise.all([loadProjectContent(), loadCaseStudies()]);
 const metrics = deriveSiteMetrics(project);
 const orderedQuestionIds = LEARNING_QUESTIONS.map((question) => question.id);
-
-const entryPoints = [
-  {
-    href: '/routes/',
-    kicker: '转岗路径',
-    title: '按职业路径开始',
-    copy: '把「会判断」到「能落地」串成一条顺序。',
-    count: `${metrics.publishedRouteCount} 条路线`,
-    index: '01',
-  },
-  {
-    href: '/learn/',
-    kicker: '判断题库',
-    title: '做 24 道判断题',
-    copy: '六阶段、24 个真实场景，选择后有分档反馈。',
-    count: `${LEARNING_QUESTIONS.length} 道题`,
-    index: '02',
-  },
-  {
-    href: '/learn/cases/',
-    kicker: '案例实战',
-    title: '跟完整项目',
-    copy: '同一个业务连续六次评审，汇成评审档案。',
-    count: `${cases.length} 个案例`,
-    index: '03',
-  },
-  {
-    href: '/atlas/',
-    kicker: '知识图鉴',
-    title: '随时查概念',
-    copy: `${metrics.domainCount} 个领域、按关系连接的知识词条。`,
-    count: `${metrics.termCount} 个词条`,
-    index: '04',
-  },
-] as const;
 ---
 
 <main
@@ -86,11 +51,9 @@ const entryPoints = [
       </div>
     </div>
     <dl class="hero-stats" data-reveal style="--reveal-delay: 220ms">
-      <div><dd>{LEARNING_QUESTIONS.length}</dd><dt>SYS COURSE</dt></div>
-      <div><dd>{cases.length}</dd><dt>CASE LAB</dt></div>
-      <div><dd>{metrics.termCount}</dd><dt>TERMS</dt></div>
-      <div><dd>{metrics.publishedRouteCount}</dd><dt>ROUTES</dt></div>
-      <div><dd>{metrics.relationCount}</dd><dt>RELATIONS</dt></div>
+      <div><dd>{LEARNING_QUESTIONS.length}</dd><dt>QUESTIONS</dt></div>
+      <div><dd>{LEARNING_MODULES.length}</dd><dt>STAGES</dt></div>
+      <div><dd>{cases.length}</dd><dt>CASES</dt></div>
     </dl>
   </section>
 
@@ -141,50 +104,13 @@ const entryPoints = [
           </div>
         </li>
       </ol>
-      <p class="structure-support" data-reveal>
-        <span class="prompt">$</span> 支撑层：<a href="/atlas/">知识图鉴</a>
-        {metrics.termCount} 词条 ·
-        <a href="/routes/">阅读路线</a>
-        {metrics.publishedRouteCount} 条 ·
-        <a href="/graph/">概念图谱</a>
-        {metrics.relationCount} 关系 ·
-        <a href="/search/">搜索</a>
-      </p>
-    </div>
-  </section>
-
-  <section class="entries" aria-labelledby="entries-heading">
-    <div class="shell">
-      <header class="sec-head" data-reveal>
-        <p class="eyebrow">02/ Entry points</p>
-        <h2 id="entries-heading">四个入口，按你的目标选一个</h2>
-      </header>
-      <div class="entry-grid">
-        {
-          entryPoints.map((entry, position) => (
-            <a
-              class="entry-card"
-              href={entry.href}
-              data-reveal
-              style={`--reveal-delay: ${position * 70}ms`}
-            >
-              <span class="entry-bar" aria-hidden="true" />
-              <span class="entry-num">{entry.index}</span>
-              <span class="entry-kicker">{entry.kicker}</span>
-              <h3>{entry.title}</h3>
-              <p>{entry.copy}</p>
-              <small>{entry.count}</small>
-            </a>
-          ))
-        }
-      </div>
     </div>
   </section>
 
   <section class="outcomes" aria-labelledby="outcomes-heading">
     <div class="shell">
       <header class="sec-head" data-reveal>
-        <p class="eyebrow">03/ Six stages</p>
+        <p class="eyebrow">02/ Six stages</p>
         <h2 id="outcomes-heading">六个阶段，练成一套判断方法</h2>
       </header>
       <ol class="outcome-list">
@@ -201,6 +127,25 @@ const entryPoints = [
           ))
         }
       </ol>
+    </div>
+  </section>
+
+  <section class="support" aria-labelledby="support-heading">
+    <div class="shell">
+      <header class="sec-head" data-reveal>
+        <p class="eyebrow">03/ Knowledge base</p>
+        <h2 id="support-heading">学习中的知识支持</h2>
+        <p>这些是「查」而不是「学」——按需查阅，不必按顺序读。</p>
+      </header>
+      <p class="structure-support" data-reveal>
+        <span class="prompt">$</span> 支撑层：<a href="/atlas/">知识图鉴</a>
+        {metrics.termCount} 词条 ·
+        <a href="/routes/">阅读路线</a>
+        {metrics.publishedRouteCount} 条 ·
+        <a href="/graph/">概念图谱</a>
+        {metrics.relationCount} 关系 ·
+        <a href="/search/">搜索</a>
+      </p>
     </div>
   </section>
 </main>
@@ -495,8 +440,8 @@ const entryPoints = [
 
   /* 通用区块 */
   .structure,
-  .entries,
-  .outcomes {
+  .outcomes,
+  .support {
     padding-block: 4.2rem;
     border-bottom: 1px solid var(--color-line);
   }
@@ -602,77 +547,6 @@ const entryPoints = [
     font-size: 0.85rem;
   }
 
-  .entry-grid {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 1.1rem;
-  }
-
-  .entry-card {
-    position: relative;
-    min-height: 13rem;
-    display: flex;
-    flex-direction: column;
-    border: 1px solid var(--color-line);
-    background: var(--color-panel);
-    padding: 1.4rem;
-    overflow: hidden;
-    text-decoration: none;
-    transition:
-      transform var(--transition-fast),
-      border-color var(--transition-fast);
-  }
-
-  .entry-card:hover {
-    transform: translateY(-4px);
-    border-color: var(--color-accent-strong);
-  }
-
-  .entry-bar {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--color-accent), var(--color-accent-strong));
-    opacity: 0.55;
-  }
-
-  .entry-num {
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    color: var(--color-quiet);
-  }
-
-  .entry-kicker {
-    margin-top: 1rem;
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--color-accent-strong);
-  }
-
-  .entry-card h3 {
-    margin: 0.4rem 0 0;
-    font-size: 1.08rem;
-    font-weight: 800;
-  }
-
-  .entry-card p {
-    margin: 0.4rem 0 0;
-    color: var(--color-muted);
-    font-size: 0.85rem;
-  }
-
-  .entry-card small {
-    margin-top: auto;
-    padding-top: 1rem;
-    font-family: var(--font-mono);
-    font-size: 0.78rem;
-    color: var(--color-accent);
-  }
-
   .outcome-list {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -731,10 +605,6 @@ const entryPoints = [
       grid-template-columns: 1fr;
     }
 
-    .entry-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
     .sec-head {
       flex-direction: column;
       gap: 0.5rem;
@@ -766,13 +636,8 @@ const entryPoints = [
       border-bottom: 1px solid var(--color-line);
     }
 
-    .entry-grid,
     .outcome-list {
       grid-template-columns: 1fr;
-    }
-
-    .entry-card {
-      min-height: 0;
     }
   }
 </style>

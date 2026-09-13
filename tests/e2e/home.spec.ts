@@ -53,26 +53,14 @@ test('renders the content-catalog shell and a direct case-library entry', async 
     'href',
     '/learn/questions/q01-rules-or-ai/',
   );
-  const entries = page.locator('.entry-card');
-  await expect(entries).toHaveCount(4);
-  await expect(entries.filter({ hasText: '转岗路径' })).toHaveAttribute('href', '/routes/');
-  await expect(entries.filter({ hasText: '判断题库' })).toHaveAttribute('href', '/learn/');
-  await expect(entries.filter({ hasText: '案例实战' })).toHaveAttribute('href', '/learn/cases/');
-  await expect(entries.filter({ hasText: '知识图鉴' })).toHaveAttribute('href', '/atlas/');
   const header = page.getByRole('banner');
   await revealMobileHeaderPanel(page, isMobile, '菜单');
-  await expect(header.getByRole('link', { name: '首页', exact: true })).toHaveAttribute(
-    'href',
-    '/',
-  );
-  await expect(header.getByRole('link', { name: '系统课程' })).toHaveAttribute('href', '/learn/');
+  await expect(header.getByRole('link', { name: '开始学习' })).toHaveAttribute('href', '/learn/');
   await expect(header.getByRole('link', { name: '案例库' })).toHaveAttribute(
     'href',
     '/learn/cases/',
   );
-  await expect(header.getByRole('link', { name: '知识图鉴' })).toHaveAttribute('href', '/atlas/');
-  await expect(header.getByRole('link', { name: '阅读路线' })).toHaveAttribute('href', '/routes/');
-  await expect(header.getByRole('link', { name: '概念图谱' })).toHaveAttribute('href', '/graph/');
+  await expect(header.getByRole('link', { name: '知识库' })).toHaveAttribute('href', '/atlas/');
   await revealMobileHeaderPanel(page, isMobile, '搜索');
   await expect(header.getByRole('searchbox', { name: '搜索案例、问题或术语' })).toBeVisible();
 });
@@ -84,7 +72,6 @@ test('derives the homepage learning structure and knowledge scale from project d
   await page.goto('/');
 
   await expect(page.locator('.level-list li')).toHaveCount(3);
-  await expect(page.locator('.entry-card')).toHaveCount(4);
   await expect(page.locator('.outcome-list li')).toHaveCount(6);
   await expect(page.getByText(`${PUBLIC_TERM_COUNT} 词条`)).toBeVisible();
   await expect(page.getByText(`${PUBLIC_RELATION_COUNT} 关系`)).toBeVisible();
@@ -135,7 +122,7 @@ test('provides stable skeletons for all primary page types', async ({ page }) =>
   }
 });
 
-test('keeps all peer destinations in one navigation on every core page', async ({
+test('keeps the primary learning navigation consistent on every core page', async ({
   page,
   isMobile,
 }) => {
@@ -155,14 +142,7 @@ test('keeps all peer destinations in one navigation on every core page', async (
     await page.goto(url);
     await revealMobileHeaderPanel(page, isMobile, '菜单');
     const navigation = page.getByRole('navigation', { name: '主导航' });
-    const homeLink = navigation.getByRole('link', { name: '首页', exact: true });
-    await expect(homeLink).toHaveAttribute('href', '/');
-    if (url === '/') {
-      await expect(homeLink).toHaveAttribute('aria-current', 'page');
-    } else {
-      await expect(homeLink).not.toHaveAttribute('aria-current', 'page');
-    }
-    await expect(navigation.getByRole('link', { name: '系统课程' })).toHaveAttribute(
+    await expect(navigation.getByRole('link', { name: '开始学习' })).toHaveAttribute(
       'href',
       '/learn/',
     );
@@ -170,19 +150,11 @@ test('keeps all peer destinations in one navigation on every core page', async (
       'href',
       '/learn/cases/',
     );
-    await expect(navigation.getByRole('link', { name: '知识图鉴' })).toHaveAttribute(
+    await expect(navigation.getByRole('link', { name: '知识库' })).toHaveAttribute(
       'href',
       '/atlas/',
     );
-    await expect(navigation.getByRole('link', { name: '阅读路线' })).toHaveAttribute(
-      'href',
-      '/routes/',
-    );
-    await expect(navigation.getByRole('link', { name: '概念图谱' })).toHaveAttribute(
-      'href',
-      '/graph/',
-    );
-    await expect(navigation.getByRole('link')).toHaveCount(6);
+    await expect(navigation.getByRole('link')).toHaveCount(3);
     await expect(page.getByRole('navigation', { name: '知识工具' })).toHaveCount(0);
   }
 });
@@ -664,10 +636,8 @@ test('exposes the navigation on narrow screens', async ({ page, isMobile }) => {
   await page.getByRole('button', { name: '菜单', exact: true }).click();
   const primaryNavigation = page.getByRole('navigation', { name: '主导航' });
   await expect(primaryNavigation.getByRole('link', { name: '案例库' })).toBeVisible();
-  await primaryNavigation.getByRole('link', { name: '首页', exact: true }).click();
-  await expect(
-    page.getByRole('heading', { level: 1, name: '从看懂 AI，到做出可上线的 AI 产品' }),
-  ).toBeVisible();
+  await primaryNavigation.getByRole('link', { name: '知识库' }).click();
+  await expect(page).toHaveURL(/\/atlas\/$/);
 });
 
 test('renders the designed 404 state', async ({ page }) => {

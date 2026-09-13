@@ -8,8 +8,8 @@ interface Props {
 }
 
 const { currentPath } = Astro.props;
-const activeHref = PRIMARY_NAVIGATION.filter(({ href }) =>
-  href === '/' ? currentPath === href : currentPath === href || currentPath.startsWith(href),
+const activeHref = PRIMARY_NAVIGATION.filter(
+  ({ href }) => currentPath === href || currentPath.startsWith(href),
 ).toSorted((left, right) => right.href.length - left.href.length)[0]?.href;
 const isCurrent = (href: string) => href === activeHref;
 ---

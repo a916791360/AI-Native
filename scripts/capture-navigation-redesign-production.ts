@@ -53,7 +53,7 @@ try {
         );
       }
 
-      for (const label of ['系统课程', '案例库', '知识图鉴']) {
+      for (const label of ['开始学习', '案例库', '知识库']) {
         if (
           (await page.getByRole('navigation', { name: '主导航' }).getByText(label).count()) !== 1
         ) {
