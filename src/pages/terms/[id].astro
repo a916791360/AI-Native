@@ -7,12 +7,13 @@ import Breadcrumbs from '@/components/layout/Breadcrumbs.astro';
 import StatusTag from '@/components/ui/StatusTag.astro';
 import generatedGraph from '@/generated/graph.json';
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import { CHAIN_ROLE_LABELS, resolveTermChainPosition, type ChainRole } from '@/lib/content/chain';
 import { loadProjectContent } from '@/lib/content/io';
 import { selectLocalGraph, type GraphData } from '@/lib/graph/model';
 import { buildContentIssueUrl } from '@/lib/site/github';
 
 export const getStaticPaths = (async () => {
-  const [entries, { relations, domains, routes }] = await Promise.all([
+  const [entries, { relations, domains, routes, chain }] = await Promise.all([
     getCollection('terms'),
     loadProjectContent(),
   ]);
@@ -27,6 +28,7 @@ export const getStaticPaths = (async () => {
       .sort((left, right) => right.data.estimatedTerms - left.data.estimatedTerms)[0];
     const routeTerms = route?.data.chapters.flatMap((chapter) => chapter.terms) ?? [];
     const routeIndex = routeTerms.findIndex((step) => step.id === entry.data.id);
+    const chainPosition = resolveTermChainPosition(entry.data, chain);
 
     return {
       params: { id: entry.data.id },
@@ -37,6 +39,21 @@ export const getStaticPaths = (async () => {
           (relation) => relation.source === entry.data.id || relation.target === entry.data.id,
         ),
         termMap,
+        // 只透传渲染需要的字段：站点对象本身带 coreTerms 等与这一行无关的内容。
+        chainPosition: chainPosition
+          ? {
+              order: chainPosition.order,
+              role: chainPosition.role,
+              stationName: chainPosition.station.nameZh,
+              question: chainPosition.station.question,
+              previous: chainPosition.previous
+                ? { order: chainPosition.previous.order, nameZh: chainPosition.previous.nameZh }
+                : undefined,
+              next: chainPosition.next
+                ? { order: chainPosition.next.order, nameZh: chainPosition.next.nameZh }
+                : undefined,
+            }
+          : undefined,
         routeNav:
           route && routeIndex >= 0
             ? {
@@ -53,7 +70,7 @@ export const getStaticPaths = (async () => {
   });
 }) satisfies GetStaticPaths;
 
-const { entry, domain, relations, termMap, routeNav } = Astro.props;
+const { entry, domain, relations, termMap, routeNav, chainPosition } = Astro.props;
 const term = entry.data;
 const { Content } = await render(entry);
 const relationLabels = {
@@ -161,6 +178,43 @@ const breadcrumbTrail = [
         <div><dt>最近核验</dt><dd>{term.verifiedAt ?? '待核验'}</dd></div>
       </dl>
     </section>
+
+    {
+      /*
+       * 链路定位行。它不是第二套导航，而是一次定位：让读者在任何一条孤立词条上
+       * 都看得到自己在整条理解路径里的位置，从而产生「上一站是什么 / 下一站是什么」
+       * 的连续感。这正是 291 条无路线归属词条最缺的东西。
+       * 与页脚的「阅读路线前后篇」刻意用不同措辞（站 vs 篇）：两者可能同时出现，
+       * 读者需要一眼分清「沿链路走」和「沿某条路线走」是两条不同的路径。
+       */
+      chainPosition && (
+        <p class="term-chain" data-chain-station={chainPosition.order}>
+          <span class="chain-label">认知链路</span>
+          <a class="chain-station-link" href={`/map/#station-${chainPosition.order}`}>
+            第 {chainPosition.order} 站 · {chainPosition.stationName}
+          </a>
+          {chainPosition.role && (
+            <span class="chain-role">{CHAIN_ROLE_LABELS[chainPosition.role as ChainRole]}</span>
+          )}
+          <span class="chain-neighbors">
+            {chainPosition.previous ? (
+              <a href={`/map/#station-${chainPosition.previous.order}`}>
+                ← 上一站 {chainPosition.previous.nameZh}
+              </a>
+            ) : (
+              <span class="chain-edge">这是链路起点</span>
+            )}
+            {chainPosition.next ? (
+              <a href={`/map/#station-${chainPosition.next.order}`}>
+                下一站 {chainPosition.next.nameZh} →
+              </a>
+            ) : (
+              <span class="chain-edge">这是链路终点</span>
+            )}
+          </span>
+        </p>
+      )
+    }
 
     {
       statusNotice && (
@@ -390,6 +444,66 @@ const breadcrumbTrail = [
   .term-meta dd {
     margin: var(--space-1) 0 0;
     overflow-wrap: anywhere;
+  }
+  /* 链路定位行。用 mono 字体与顶栏/页脚的导航保持同一套「系统标签」语汇，
+     同时避开页脚「阅读路线前后篇」的 serif 观感——两者可能同页出现。 */
+  .term-chain {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-1) var(--space-3);
+    margin-top: 0;
+    border-bottom: 1px solid var(--color-line);
+    /* 与 .term-meta 同档内边距：两块的文字左沿才会对齐（实测不加时为 20px vs 68px）。 */
+    padding: var(--space-2) var(--page-gutter);
+    font-size: var(--text-sm);
+  }
+  .chain-label {
+    color: var(--color-quiet);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .chain-station-link {
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-display);
+    text-decoration: none;
+  }
+  .chain-station-link:hover {
+    text-decoration: underline;
+  }
+  .chain-role {
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-pill);
+    padding: 0.05rem 0.5rem;
+    color: var(--color-quiet);
+    font-size: var(--text-xs);
+  }
+  .chain-neighbors {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-3);
+    margin-left: auto;
+  }
+  .chain-neighbors a {
+    color: var(--color-muted);
+    font-size: var(--text-xs);
+    text-decoration: none;
+  }
+  .chain-neighbors a:hover {
+    color: var(--color-accent);
+  }
+  .chain-edge {
+    color: var(--color-quiet);
+    font-size: var(--text-xs);
+  }
+  @media (max-width: 720px) {
+    .chain-neighbors {
+      margin-left: 0;
+    }
   }
   .status-notice {
     display: flex;

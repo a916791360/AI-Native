@@ -30,6 +30,7 @@ test('fits every primary page in all approved release viewports', async ({ page,
     '/learn/cases/customer-support-knowledge-base/decide-ai-boundary/',
     '/atlas/',
     '/search/?q=RAG',
+    '/map/',
     '/routes/',
     '/routes/rag-from-zero/',
     '/graph/',
@@ -66,6 +67,7 @@ test('keeps every page family within the compact visual hierarchy', async ({ pag
     '/learn/cases/customer-support-knowledge-base/',
     '/learn/cases/customer-support-knowledge-base/decide-ai-boundary/',
     '/atlas/',
+    '/map/',
     '/terms/retrieval-augmented-generation/',
     '/routes/',
     '/routes/rag-from-zero/',
@@ -101,6 +103,7 @@ test('stacks exactly one navigation layer above the page body', async ({ page })
     '/learn/questions/q61-accuracy-or-explain/',
     '/learn/cases/customer-support-knowledge-base/',
     '/atlas/',
+    '/map/',
     '/terms/retrieval-augmented-generation/',
     '/routes/rag-from-zero/',
     '/graph/',
@@ -150,7 +153,7 @@ test('keeps global controls and route cards compact', async ({ page, isMobile })
     if (viewport.width <= 760) {
       await page.getByRole('button', { name: '菜单', exact: true }).click();
     }
-    await expect(navigation.getByRole('link')).toHaveCount(3);
+    await expect(navigation.getByRole('link')).toHaveCount(4);
     await expect(page.getByRole('navigation', { name: '知识工具' })).toHaveCount(0);
 
     if (viewport.width <= 760) {

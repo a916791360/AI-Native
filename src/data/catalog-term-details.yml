@@ -1,0 +1,121 @@
+# 目录词条的手工内容覆盖层 —— 只放「计划表产不出来」的字段。
+#
+# 为什么需要这个文件（而不是直接改词条的 .mdx）：
+#   scripts/sync-catalog.ts 会按 catalog-plan.yml 整体重写目录词条的 frontmatter。
+#   凡是计划表产不出的字段，写在那些 .mdx 里都会在下一次 `pnpm generate:data` 时被静默抹掉，
+#   而且 CI 不会报错（重写后的文件仍然是合法的）。2026-09-19 实测：30 条 chain 字段被抹。
+#
+# 规则（每条词条只有一个权威位置）：
+#   · 手写词条（deep-content，sync-catalog 不碰）→ 字段写在 .mdx 的 frontmatter 里；
+#   · 目录词条（由计划表生成）           → 字段写在这里，由生成器写进文件。
+#
+# 这里现在装 chain / chainRole；I3 的 boundaries / minAction 同样落到这里。
+# 字段含义见 src/lib/content/schema.ts 的 termSchema。
+#
+# 每站的站点定义（名称 / 提问 / 目标 / 动作 / coreTerms）在 src/data/chain.yml。
+
+# ---- 第 1 站 · 地基 · 模型是什么 ------------------------------------------
+next-token-prediction:
+  chain: 1
+  chainRole: advanced
+
+# ---- 第 2 站 · 沟通 · 怎么把需求说清楚 ------------------------------------
+zero-shot-prompting:
+  chain: 2
+  chainRole: advanced
+
+# ---- 第 3 站 · 给知识 · 怎么让它知道你家的资料 ------------------------------
+knowledge-base:
+  chain: 3
+  chainRole: intro
+hybrid-search:
+  chain: 3
+  chainRole: advanced
+query-rewriting:
+  chain: 3
+  chainRole: advanced
+document-parsing:
+  chain: 3
+  chainRole: advanced
+
+# ---- 第 4 站 · 给手脚 · 怎么让它做事 --------------------------------------
+autonomous-agent:
+  chain: 4
+  chainRole: intro
+agent-planning:
+  chain: 4
+  chainRole: core
+agent-memory:
+  chain: 4
+  chainRole: core
+
+# ---- 第 5 站 · 给接口 · 怎么标准化地接系统 ----------------------------------
+inference-server:
+  chain: 5
+  chainRole: intro
+model-context-protocol:
+  chain: 5
+  chainRole: core
+api-call:
+  chain: 5
+  chainRole: core
+model-serving:
+  chain: 5
+  chainRole: core
+rate-limiting:
+  chain: 5
+  chainRole: advanced
+
+# ---- 第 6 站 · 给流程 · 怎么把做法沉淀下来 ----------------------------------
+agentic-workflow:
+  chain: 6
+  chainRole: core
+workflow-automation:
+  chain: 6
+  chainRole: core
+state-management:
+  chain: 6
+  chainRole: advanced
+multi-agent-system:
+  chain: 6
+  chainRole: advanced
+agent-orchestration:
+  chain: 6
+  chainRole: advanced
+
+# ---- 第 7 站 · 给判断 · 怎么知道它行不行 ------------------------------------
+benchmark:
+  chain: 7
+  chainRole: intro
+eval-set:
+  chain: 7
+  chainRole: core
+llm-as-judge:
+  chain: 7
+  chainRole: core
+groundedness:
+  chain: 7
+  chainRole: core
+human-evaluation:
+  chain: 7
+  chainRole: advanced
+retrieval-recall:
+  chain: 7
+  chainRole: advanced
+
+# ---- 第 8 站 · 给安全 · 什么时候必须有人管 ----------------------------------
+ai-guardrail:
+  chain: 8
+  chainRole: core
+prompt-injection:
+  chain: 8
+  chainRole: core
+red-teaming:
+  chain: 8
+  chainRole: advanced
+jailbreak:
+  chain: 8
+  chainRole: advanced
+ai-governance:
+  chain: 8
+  chainRole: advanced

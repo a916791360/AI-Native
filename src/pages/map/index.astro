@@ -1,0 +1,619 @@
+---
+import { getCollection } from 'astro:content';
+
+import PageIntro from '@/components/layout/PageIntro.astro';
+import { sectionById } from '@/config/sections';
+import { LEARNING_QUESTIONS } from '@/data/learning';
+import {
+  CHAIN_ROLE_LABELS,
+  buildStationViews,
+  groupTermsByStation,
+  type ChainRole,
+} from '@/lib/content/chain';
+import { loadProjectContent } from '@/lib/content/io';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+
+/**
+ * 认知链路主入口。
+ *
+ * 这个页面回答的是全站唯一一个「我不知道该先学什么」的问题。
+ * 其余板块都预设读者已经知道自己要做什么：学习库＝我来练判断，
+ * 案例库＝我要看一个完整场景，知识库＝我知道要找什么。
+ *
+ * 8 站不是 8 个并列的主题，而是一条递进关系：语言模型缺什么，每一层补什么。
+ * 所以页面刻意不做成大图 hero + 卡片网格——那会把递进读成并列，
+ * 正是这个站原本 325 个平级入口的老毛病。这里用的是「索引优先」结构：
+ * 一条站点横条（兼导航）+ 8 个编号区块，每块给出目标、概念、判断、动作、展开清单。
+ */
+const section = sectionById('map');
+const [{ chain, routes, domains }, entries] = await Promise.all([
+  loadProjectContent(),
+  getCollection('terms'),
+]);
+
+const stations = buildStationViews(chain);
+const terms = entries.map(({ data }) => data);
+const termsById = new Map(terms.map((term) => [term.id, term]));
+const domainNameById = new Map(domains.map((domain) => [domain.id, domain.shortNameZh]));
+const termsByStation = groupTermsByStation(terms);
+
+/** 每条阅读路线能提供哪些词条，以及这些词条落在哪几站。 */
+const routesWithTerms = routes
+  .map(({ data }) => data)
+  .sort((left, right) => left.order - right.order)
+  .map((route) => {
+    const routeTermIds = new Set(
+      route.chapters.flatMap((chapter) => chapter.terms.map((step) => step.id)),
+    );
+    const stationTally = new Map<number, number>();
+    for (const termId of routeTermIds) {
+      const order = termsById.get(termId)?.chain;
+      if (typeof order !== 'number') continue;
+      stationTally.set(order, (stationTally.get(order) ?? 0) + 1);
+    }
+    return { route, routeTermIds, stationTally };
+  });
+
+/** 题目的 references 命中本站任一概念，就算这一站的练习。 */
+const questionsByStation = new Map<number, typeof LEARNING_QUESTIONS>();
+for (const station of stations) {
+  const stationTermIds = new Set((termsByStation.get(station.order) ?? []).map((term) => term.id));
+  questionsByStation.set(
+    station.order,
+    LEARNING_QUESTIONS.filter((question) =>
+      question.references.some((reference) => stationTermIds.has(reference.id)),
+    ),
+  );
+}
+
+const stationTermCount = (order: number) => (termsByStation.get(order) ?? []).length;
+const coveredTerms = terms.filter((term) => typeof term.chain === 'number').length;
+---
+
+<BaseLayout
+  title={section.pageTitle}
+  description="语言模型缺什么、每一层补什么：从「模型是什么」到「什么时候必须有人管」的 8 站递进路径。不知道自己该先学什么时，从第 1 站开始。"
+  structuredDataType="CollectionPage"
+>
+  <main id="main-content" class="map-page">
+    <PageIntro
+      eyebrow={`Cognitive chain · ${stations.length} stations · ${coveredTerms}/${terms.length} terms placed`}
+      title={section.pageTitle}
+      description="这 8 站回答同一个问题：语言模型缺什么，每一层补什么。它们是递进关系，不是并列清单——所以按顺序读，跳读会失去意义。"
+    />
+
+    <nav class="chain-rail" aria-label="链路站点导航">
+      <ol>
+        {
+          stations.map((station) => (
+            <li>
+              <a href={`#station-${station.order}`} data-chain-rail={station.order}>
+                <span class="rail-index">{String(station.order).padStart(2, '0')}</span>
+                <span class="rail-name">{station.nameZh}</span>
+                <span class="rail-count">{stationTermCount(station.order)} 个概念</span>
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+    </nav>
+
+    <div class="chain-stations">
+      {
+        stations.map((station) => {
+          const stationTerms = termsByStation.get(station.order) ?? [];
+          const questions = questionsByStation.get(station.order) ?? [];
+          const stationRoutes = routesWithTerms.filter(({ stationTally }) =>
+            stationTally.has(station.order),
+          );
+
+          return (
+            <section
+              id={`station-${station.order}`}
+              class="chain-station"
+              data-station={station.order}
+            >
+              <header class="station-head">
+                <p class="meta-label">
+                  Station {String(station.order).padStart(2, '0')} / {stations.length}
+                </p>
+                <h2>{station.nameZh}</h2>
+                <p class="station-question" data-pagefind-meta={`station-${station.order}`}>
+                  {station.question}
+                </p>
+                <p class="station-goal">{station.goal}</p>
+              </header>
+
+              <div class="station-grid">
+                <section class="station-block station-terms" aria-label="本站概念">
+                  <h3>本站概念</h3>
+                  {stationTerms.length > 0 ? (
+                    <ul>
+                      {stationTerms.map((term) => (
+                        <li data-role={term.chainRole ?? 'unplaced'}>
+                          <a class="term-link" href={`/terms/${term.id}/`}>
+                            {term.nameZh}
+                          </a>
+                          {term.chainRole && (
+                            <span class="role-tag">
+                              {CHAIN_ROLE_LABELS[term.chainRole as ChainRole]}
+                            </span>
+                          )}
+                          <span class="term-domain">
+                            {domainNameById.get(term.domain) ?? term.domain}
+                          </span>
+                          <p>{term.summary}</p>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p class="empty-note">这一站的核心概念尚未挂上词条。</p>
+                  )}
+                </section>
+
+                <div class="station-side">
+                  <section class="station-block station-action" aria-label="上手动作">
+                    <h3>上手动作</h3>
+                    <p>{station.action}</p>
+                  </section>
+
+                  <section class="station-block station-questions" aria-label="对应判断题">
+                    <h3>对应判断题</h3>
+                    {questions.length > 0 ? (
+                      <ul>
+                        {questions.map((question) => (
+                          <li>
+                            <a href={`/learn/questions/${question.id}/`}>{question.shortTitle}</a>
+                            <small>{question.index}</small>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p class="empty-note">这一站暂无对应题目。</p>
+                    )}
+                  </section>
+
+                  <section class="station-block station-routes" aria-label="展开阅读清单">
+                    <h3>展开阅读清单</h3>
+                    {stationRoutes.length > 0 ? (
+                      <ul>
+                        {stationRoutes.map(({ route, stationTally }) => (
+                          <li>
+                            <a href={`/routes/${route.id}/`}>{route.nameZh}</a>
+                            <small>{stationTally.get(station.order)} 个词条在本站</small>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p class="empty-note">暂无对应的展开阅读路线。</p>
+                    )}
+                  </section>
+                </div>
+              </div>
+
+              <nav class="station-nav" aria-label={`第 ${station.order} 站前后站`}>
+                {station.previous ? (
+                  <a class="station-prev" href={`#station-${station.previous.order}`}>
+                    ← 上一站 {station.previous.nameZh}
+                  </a>
+                ) : (
+                  <span class="station-edge">这是起点</span>
+                )}
+                {station.next ? (
+                  <a class="station-next" href={`#station-${station.next.order}`}>
+                    下一站 {station.next.nameZh} →
+                  </a>
+                ) : (
+                  <span class="station-edge">这是终点</span>
+                )}
+              </nav>
+            </section>
+          );
+        })
+      }
+    </div>
+  </main>
+</BaseLayout>
+
+<script>
+  // 站点横条高亮当前站。用 IntersectionObserver 而不是 scroll 事件：
+  // 后者要每帧读 getBoundingClientRect，而这个页面有 8 个高区块。
+  const links = [...document.querySelectorAll<HTMLAnchorElement>('[data-chain-rail]')];
+  const sections = links
+    .map((link) => document.getElementById(link.hash.slice(1)))
+    .filter((section): section is HTMLElement => section !== null);
+
+  if (links.length > 0 && sections.length === links.length) {
+    const setActive = (order: string) => {
+      for (const link of links) {
+        if (link.dataset.chainRail === order) link.setAttribute('aria-current', 'true');
+        else link.removeAttribute('aria-current');
+      }
+    };
+
+    // 维护「当前可见的站」集合，每次从全集里挑最靠前的一个。
+    // 只看本次回调里变化的那些 entry 是错的：快速滚动时最后一个回调可能只包含
+    // 新进入视口的一站，而它并不是视口里最靠上的那一个（实测点击第 5 站会亮第 4 站）。
+    const visible = new Set<string>();
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          const order = (entry.target as HTMLElement).dataset.station;
+          if (!order) continue;
+          if (entry.isIntersecting) visible.add(order);
+          else visible.delete(order);
+        }
+        const topmost = [...visible].sort((left, right) => Number(left) - Number(right))[0];
+        if (topmost) setActive(topmost);
+      },
+      // 上边距留出 sticky 顶栏高度，下边距吃掉大半个视口，
+      // 这样「当前站」是视口顶部那一块，而不是屏幕中央那一块。
+      { rootMargin: '-96px 0px -60% 0px', threshold: 0 },
+    );
+
+    for (const section of sections) observer.observe(section);
+
+    // 点击指示条立即高亮：平滑滚动期间观察器可能还没跟上，
+    // 那段时间里高亮停在上一站，读起来像是「点了没反应」。
+    for (const link of links) {
+      link.addEventListener('click', () => {
+        const order = link.dataset.chainRail;
+        if (order) setActive(order);
+      });
+    }
+  }
+</script>
+
+<style>
+  .map-page {
+    padding-bottom: var(--space-7);
+  }
+
+  /* ---- 站点横条：索引，同时也是导航 ---------------------------------- */
+
+  .chain-rail {
+    width: min(calc(100% - 2.5rem), var(--content-max));
+    margin: 0 auto var(--space-5);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-sm);
+    background: var(--color-panel);
+    overflow: hidden;
+  }
+
+  .chain-rail ol {
+    display: grid;
+    /* 8 列 → 4 列 → 2 列。刻意不用横向滚动容器：
+       320px 下横向滚动条会让「有没有下一站」变得不可见。 */
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .chain-rail li + li {
+    border-left: 1px solid var(--color-line-soft);
+  }
+
+  .chain-rail a {
+    min-height: 5.25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--space-0);
+    padding: var(--space-2);
+    text-decoration: none;
+  }
+
+  .chain-rail a:hover,
+  .chain-rail a[aria-current='true'] {
+    background: var(--color-panel-raised);
+  }
+
+  .chain-rail a[aria-current='true'] .rail-index {
+    color: var(--color-accent);
+  }
+
+  .chain-rail a[aria-current='true'] .rail-name {
+    color: var(--color-ink);
+  }
+
+  .rail-index {
+    color: var(--color-prerequisite);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    line-height: 1;
+  }
+
+  .rail-name {
+    color: var(--color-muted);
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    font-weight: var(--weight-display);
+    line-height: 1.35;
+  }
+
+  .rail-count {
+    color: var(--color-quiet);
+    font-size: var(--text-xs);
+    line-height: 1.4;
+  }
+
+  /* ---- 站区块 -------------------------------------------------------- */
+
+  .chain-stations {
+    width: min(calc(100% - 2.5rem), var(--content-max));
+    display: grid;
+    gap: var(--space-4);
+    margin: 0 auto;
+  }
+
+  .chain-station {
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-sm);
+    background: var(--color-panel);
+    overflow: hidden;
+    scroll-margin-top: 5.5rem;
+  }
+
+  .station-head {
+    border-bottom: 1px solid var(--color-line);
+    padding: var(--space-3) var(--space-3) var(--space-3);
+  }
+
+  .station-head h2 {
+    margin: var(--space-1) 0 var(--space-2);
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: var(--weight-display);
+    line-height: 1.3;
+  }
+
+  .station-question {
+    max-width: 44rem;
+    margin: 0;
+    color: var(--color-accent-strong);
+    font-family: var(--font-display);
+    font-size: var(--text-lead);
+    font-weight: var(--weight-body);
+    line-height: 1.55;
+  }
+
+  .station-goal {
+    max-width: 48rem;
+    margin: var(--space-2) 0 0;
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+    line-height: 1.7;
+  }
+
+  .station-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  }
+
+  .station-side {
+    border-left: 1px solid var(--color-line);
+  }
+
+  .station-block {
+    padding: var(--space-3);
+  }
+
+  .station-block + .station-block {
+    border-top: 1px solid var(--color-line-soft);
+  }
+
+  .station-block h3 {
+    margin: 0 0 var(--space-2);
+    color: var(--color-quiet);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: var(--weight-body);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .station-terms ul,
+  .station-questions ul,
+  .station-routes ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .station-terms li {
+    position: relative;
+    border-bottom: 1px solid var(--color-line-soft);
+    padding: var(--space-2) 0;
+  }
+
+  .station-terms li:first-child {
+    padding-top: 0;
+  }
+
+  .station-terms li:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .term-link {
+    color: var(--color-ink);
+    font-family: var(--font-display);
+    font-size: 1.0625rem;
+    font-weight: var(--weight-display);
+    text-decoration: none;
+  }
+
+  .term-link:hover {
+    color: var(--color-accent);
+  }
+
+  .role-tag {
+    display: inline-block;
+    margin-left: var(--space-1);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-pill);
+    padding: 0.05rem 0.5rem;
+    color: var(--color-quiet);
+    font-size: var(--text-xs);
+    line-height: 1.5;
+    vertical-align: 0.1em;
+  }
+
+  .station-terms li[data-role='core'] .role-tag {
+    border-color: color-mix(in oklch, var(--color-prerequisite) 45%, var(--color-line));
+    color: var(--color-prerequisite);
+  }
+
+  .station-terms li[data-role='intro'] .role-tag {
+    border-color: color-mix(in oklch, var(--color-accent) 45%, var(--color-line));
+    color: var(--color-accent);
+  }
+
+  .term-domain {
+    margin-left: var(--space-1);
+    color: var(--color-quiet);
+    font-size: var(--text-xs);
+  }
+
+  .station-terms p {
+    margin: var(--space-1) 0 0;
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+    line-height: 1.6;
+  }
+
+  .station-action p {
+    margin: 0;
+    color: var(--color-ink);
+    font-size: var(--text-sm);
+    line-height: 1.7;
+  }
+
+  .station-questions li,
+  .station-routes li {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: baseline;
+    gap: var(--space-2);
+    border-bottom: 1px solid var(--color-line-soft);
+    padding: var(--space-1) 0;
+  }
+
+  .station-questions li:last-child,
+  .station-routes li:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .station-questions a,
+  .station-routes a {
+    min-height: 2rem;
+    display: inline-flex;
+    align-items: center;
+    color: var(--color-ink);
+    font-size: var(--text-sm);
+    text-decoration: none;
+  }
+
+  .station-questions a:hover,
+  .station-routes a:hover {
+    color: var(--color-accent);
+  }
+
+  .station-questions small,
+  .station-routes small {
+    color: var(--color-quiet);
+    font-size: var(--text-xs);
+    white-space: nowrap;
+  }
+
+  .empty-note {
+    margin: 0;
+    color: var(--color-quiet);
+    font-size: var(--text-sm);
+  }
+
+  .station-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+    border-top: 1px solid var(--color-line);
+    padding: var(--space-2) var(--space-3);
+  }
+
+  .station-nav a {
+    min-height: 2.75rem;
+    display: inline-flex;
+    align-items: center;
+    color: var(--color-prerequisite);
+    font-size: var(--text-sm);
+    text-decoration: none;
+  }
+
+  .station-nav a:hover {
+    color: var(--color-accent);
+  }
+
+  .station-edge {
+    min-height: 2.75rem;
+    display: inline-flex;
+    align-items: center;
+    color: var(--color-quiet);
+    font-size: var(--text-sm);
+  }
+
+  @media (max-width: 1120px) {
+    .chain-rail ol {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .chain-rail li:nth-child(4n + 1) {
+      border-left: 0;
+    }
+
+    .chain-rail li:nth-child(n + 5) {
+      border-top: 1px solid var(--color-line-soft);
+    }
+
+    .station-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .station-side {
+      border-top: 1px solid var(--color-line);
+      border-left: 0;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .chain-rail ol {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .chain-rail li:nth-child(2n + 1) {
+      border-left: 0;
+    }
+
+    .chain-rail li:nth-child(n + 3) {
+      border-top: 1px solid var(--color-line-soft);
+    }
+
+    .chain-rail a {
+      min-height: 4.5rem;
+      padding: var(--space-1) var(--space-2);
+    }
+
+    .station-head h2 {
+      font-size: 1.25rem;
+    }
+
+    .station-nav {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0;
+    }
+  }
+</style>

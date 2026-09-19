@@ -64,19 +64,26 @@ console.log(
 );
 
 console.log(
-  `\n【6 · 图谱语义比】${pct(metrics.semanticEdgeRatio)}` +
+  `\n【6 · 阅读路线覆盖率】${pct(metrics.routeCoverage)}` +
+    `\n    ${metrics.routeLinkedTerms}/${metrics.totalTerms} 条词条出现在 ≥1 条阅读路线里` +
+    `\n    注：这是「有没有前后引导」的度量。未覆盖的词条既不在这条路线的上一站，也不在下一站，` +
+    `\n    读者读完只能自己找下一步。认知链路（【3】）是第二坐标，本项是链路在存量路线上的落点。`,
+);
+
+console.log(
+  `\n【7 · 图谱语义比】${pct(metrics.semanticEdgeRatio)}` +
     `\n    人工关系边 ${metrics.humanEdges} 条 / 全部 ${metrics.totalEdges} 条` +
     `（填充边 ${metrics.fillerEdges} 条，由 scripts/lib/catalog-generation.ts 按领域挂点批量生成）`,
 );
 
 console.log(
-  `\n【7 · 孤立词条数】` +
+  `\n【8 · 孤立词条数】` +
     `\n    含填充边口径：${metrics.orphanTerms} 条 ← 这是个假象，填充边把每个词条都挂到了领域锚点上` +
     `\n    仅人工边口径：${metrics.orphanTermsHumanOnly} 条 ← 这才是真实的语义连接度`,
 );
 
 console.log(
-  `\n【8 · 近义碎片簇】${details.synonymClusters.length} 簇` +
+  `\n【9 · 近义碎片簇】${details.synonymClusters.length} 簇` +
     `（涉及 ${details.synonymClusters.reduce((sum, cluster) => sum + cluster.members.length, 0)} 条词条）`,
 );
 for (const cluster of details.synonymClusters.slice(0, 6)) {

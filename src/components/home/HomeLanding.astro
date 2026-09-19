@@ -34,11 +34,11 @@ const orderedQuestionIds = LEARNING_QUESTIONS.map((question) => question.id);
             /*
             主入口必须是「学习起点」而不是第一道题：零基础用户点进判断题时还没有任何词汇量，
             题干里的场景与选项对他是噪声。题目退到次入口，由做得出判断的人自己选。
-            TODO(I2-03)：/map/ 认知链路页建好后，主 CTA 改为 /map/#foundation；
-            在此之前指向 /routes/（已存在的展开阅读清单），不留死链。
+            I2-03 已完成：主 CTA 指向 /map/ 第 1 站——认知链路是全站唯一直接回答
+            「我不知道该先学什么」的入口，其余板块都预设了读者已经知道自己要做什么。
           */
           }
-          <a class="cta-primary" href="/routes/">从链路第 1 站开始 →</a>
+          <a class="cta-primary" href="/map/#station-1">从链路第 1 站开始 →</a>
           <a class="cta-ghost" href="/learn/questions/q01-rules-or-ai/" data-hero-start>
             直接做第 01 题
           </a>

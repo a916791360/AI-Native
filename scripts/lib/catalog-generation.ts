@@ -7,6 +7,7 @@ import {
   type CatalogCandidate,
   type CatalogPlan,
   type CatalogSummaries,
+  type CatalogTermDetails,
 } from '../../src/lib/content/catalog';
 import type { Relation, Term } from '../../src/lib/content/schema';
 import { CATALOG_SOURCE_POOLS } from './catalog-source-pools';
@@ -182,6 +183,12 @@ export function buildPublishedCatalogTerms(
   catalog: CatalogPlan,
   summaries: CatalogSummaries,
   project: ProjectContent,
+  /**
+   * 手工内容覆盖层（src/data/catalog-term-details.yml）。
+   * 目录词条的文件每次生成都会被整体重写，所以「计划表产不出来的字段」
+   * 必须从这里注入，否则写进 .mdx 也会被下一次 generate:data 抹掉。
+   */
+  details: CatalogTermDetails = {},
 ): CatalogTermDocument[] {
   const candidateById = new Map(
     flattenCatalogCandidates(catalog).map((candidate) => [candidate.id, candidate]),
@@ -211,6 +218,9 @@ export function buildPublishedCatalogTerms(
         updatedAt: VERIFIED_PUBLICATION_DATE,
         verifiedAt: VERIFIED_PUBLICATION_DATE,
         sources,
+        // 手工内容覆盖层（chain / chainRole / boundaries / minAction）。
+        // 展开在最后：这些字段不属于计划表的产物，语义上就该由人写。
+        ...details[candidate.id],
       };
       return {
         candidate,

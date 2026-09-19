@@ -161,6 +161,9 @@ export interface MetricSet {
   /** 5. 被 ≥1 个案例 referenceIds 引用的词条占比 */
   caseLinkRate: number;
   caseLinkedTerms: number;
+  /** 5b. 出现在 ≥1 条阅读路线里的词条占比 —— 决定读者有没有「前后引导」 */
+  routeCoverage: number;
+  routeLinkedTerms: number;
   /** 6. 人工关系边 / 全部边 */
   semanticEdgeRatio: number;
   humanEdges: number;
@@ -185,6 +188,7 @@ export interface ContentQualityReport {
     termsMissingMinAction: string[];
     termsNotReferencedByQuestions: string[];
     termsNotReferencedByCases: string[];
+    termsNotOnAnyRoute: string[];
   };
 }
 
@@ -339,6 +343,28 @@ async function loadCaseReferencedIds(root: string): Promise<string[]> {
   return ids;
 }
 
+/** 阅读路线 → 词条的引用：路线是「展开清单」，决定读者有没有前后引导。 */
+async function loadRouteTermIds(root: string): Promise<Set<string>> {
+  const ids = new Set<string>();
+  const directory = path.join(root, 'src/content/routes');
+  const files = await readdir(directory).catch(() => [] as string[]);
+  for (const file of files) {
+    if (!file.endsWith('.mdx')) continue;
+    const source = await readFile(path.join(directory, file), 'utf8').catch(() => '');
+    const frontmatter = /^---\r?\n([\s\S]*?)\r?\n---/u.exec(source);
+    if (!frontmatter) continue;
+    const parsed = parseYaml(frontmatter[1] ?? '') as {
+      chapters?: { terms?: { id?: string }[] }[];
+    } | null;
+    for (const chapter of parsed?.chapters ?? []) {
+      for (const step of chapter.terms ?? []) {
+        if (step.id) ids.add(step.id);
+      }
+    }
+  }
+  return ids;
+}
+
 export async function analyzeContentQuality(
   root = process.cwd(),
   providedTerms?: TermRecord[],
@@ -406,6 +432,10 @@ export async function analyzeContentQuality(
   const caseReferenced = await loadCaseReferencedIds(root);
   const caseLinked = new Set(caseReferenced.filter((id) => termIds.has(id)));
 
+  // ---- 5b. 阅读路线覆盖 ---------------------------------------------------
+  const routeTermIds = await loadRouteTermIds(root);
+  const routeLinked = new Set([...routeTermIds].filter((id) => termIds.has(id)));
+
   // ---- 6/7. 图谱 ----------------------------------------------------------
   const humanEdges = await loadYamlArray<RelationEdge>(path.join(root, 'src/data/relations.yml'));
   const fillerEdges = await loadYamlArray<RelationEdge>(
@@ -453,6 +483,8 @@ export async function analyzeContentQuality(
     questionLinkedTerms: questionLinked.size,
     caseLinkRate: terms.length === 0 ? 0 : caseLinked.size / terms.length,
     caseLinkedTerms: caseLinked.size,
+    routeCoverage: terms.length === 0 ? 0 : routeLinked.size / terms.length,
+    routeLinkedTerms: routeLinked.size,
 
     semanticEdgeRatio: totalEdges === 0 ? 0 : humanEdges.length / totalEdges,
     humanEdges: humanEdges.length,
@@ -480,6 +512,7 @@ export async function analyzeContentQuality(
       termsNotReferencedByCases: terms
         .filter((term) => !caseLinked.has(term.id))
         .map((term) => term.id),
+      termsNotOnAnyRoute: terms.filter((term) => !routeLinked.has(term.id)).map((term) => term.id),
     },
   };
 }

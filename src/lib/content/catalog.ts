@@ -5,7 +5,7 @@ import { z } from 'astro/zod';
 import { parse as parseYaml } from 'yaml';
 
 import type { ProjectContent } from './io';
-import { stableIdSchema } from './schema';
+import { stableIdSchema, termSchema } from './schema';
 import { normalizeLookupKey } from './validation';
 
 const scoreSchema = z
@@ -69,6 +69,34 @@ export const PUBLISHED_CATALOG_BATCHES = ['B', 'C', 'D'] as const;
 
 const catalogSummariesSchema = z.record(stableIdSchema, z.string().min(10).max(160));
 export type CatalogSummaries = z.infer<typeof catalogSummariesSchema>;
+
+/**
+ * 目录词条的手工内容覆盖层。
+ *
+ * 为什么需要它：`scripts/sync-catalog.ts` 会按 catalog-plan.yml **整体重写**目录词条的
+ * frontmatter。也就是说，凡是「计划表产不出来的字段」，直接改那些 .mdx 文件都会在
+ * 下一次 `pnpm generate:data` 时被静默抹掉——这不是假设，2026-09-19 实测丢了 30 条
+ * `chain` 字段，而 CI 不会报错（文件仍然是合法的）。
+ *
+ * 所以规则只有一条，且必须机械执行：
+ *   · 手写词条（deep-content，sync-catalog 不碰它）→ 字段写在 .mdx 的 frontmatter 里；
+ *   · 目录词条（由计划表生成）→ 字段写在 catalog-term-details.yml 里，由生成器写进文件。
+ * 每条词条只有一个权威位置，不会出现两处互相覆盖。
+ *
+ * 现在装 chain / chainRole，后续 I3 的 boundaries / minAction 同样会落到这里。
+ */
+export const catalogTermDetailsSchema = z.record(
+  stableIdSchema,
+  termSchema.pick({ chain: true, chainRole: true, boundaries: true, minAction: true }).strict(),
+);
+export type CatalogTermDetails = z.infer<typeof catalogTermDetailsSchema>;
+
+export async function loadCatalogTermDetails(root = process.cwd()): Promise<CatalogTermDetails> {
+  const filePath = path.join(root, 'src/data/catalog-term-details.yml');
+  const source = await readFile(filePath, 'utf8').catch(() => '');
+  if (source.trim() === '') return {};
+  return catalogTermDetailsSchema.parse(parseYaml(source));
+}
 
 export interface CatalogCandidate {
   id: string;

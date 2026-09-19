@@ -55,16 +55,18 @@ test('renders the content-catalog shell and a direct case-library entry', async 
   );
   // 首屏三个入口：主 CTA 用强调色指向学习起点，题目与搜索都是 ghost。
   // 零基础用户不该被直接丢进判断题——他还没有做判断所需的词汇量。
-  // 这里不断言主 CTA 的具体路径：I2 建好 /map/ 后它会从 /routes/ 切过去。
+  // I2-03 之后主 CTA 锁定到 /map/ 第 1 站：认知链路是全站唯一直接回答
+  // 「我不知道该先学什么」的入口。
   const heroCtas = page.locator('.hero .cta-row > a');
   await expect(heroCtas).toHaveCount(3);
   await expect(heroCtas.nth(0)).toHaveClass(/cta-primary/);
-  await expect(heroCtas.nth(0)).not.toHaveAttribute('href', /^\/learn\/questions\//);
+  await expect(heroCtas.nth(0)).toHaveAttribute('href', '/map/#station-1');
   await expect(heroCtas.nth(1)).toHaveClass(/cta-ghost/);
   await expect(heroCtas.nth(2)).toHaveClass(/cta-ghost/);
   await expect(heroCtas.nth(2)).toHaveAttribute('href', '/search/');
   const header = page.getByRole('banner');
   await revealMobileHeaderPanel(page, isMobile, '菜单');
+  await expect(header.getByRole('link', { name: '认知链路' })).toHaveAttribute('href', '/map/');
   await expect(header.getByRole('link', { name: '开始学习' })).toHaveAttribute('href', '/learn/');
   await expect(header.getByRole('link', { name: '案例库' })).toHaveAttribute(
     'href',
@@ -118,6 +120,7 @@ test('provides stable skeletons for all primary page types', async ({ page }) =>
     ['/learn/questions/q31-long-doc-source/', '制度文档持续增长，还把全文拼进提示词吗？'],
     ['/atlas/', '知识库'],
     ['/search/', '搜索'],
+    ['/map/', 'AI 认知链路'],
     ['/routes/', '阅读路线'],
     ['/routes/rag-from-zero/', 'RAG 从零到理解与应用'],
     ['/terms/retrieval-augmented-generation/', '检索增强生成'],
@@ -144,6 +147,7 @@ test('keeps the primary learning navigation consistent on every core page', asyn
     '/learn/cases/user-feedback-analysis/',
     '/learn/cases/user-feedback-analysis/decide-ai-boundary/',
     '/atlas/',
+    '/map/',
     '/routes/',
     '/graph/',
     '/methodology/',
@@ -152,6 +156,12 @@ test('keeps the primary learning navigation consistent on every core page', asyn
     await page.goto(url);
     await revealMobileHeaderPanel(page, isMobile, '菜单');
     const navigation = page.getByRole('navigation', { name: '主导航' });
+    // 顺序也是契约：认知链路必须排在首位——它回答的是其余三项都预设了的问题。
+    await expect(navigation.getByRole('link').nth(0)).toHaveAttribute('href', '/map/');
+    await expect(navigation.getByRole('link', { name: '认知链路' })).toHaveAttribute(
+      'href',
+      '/map/',
+    );
     await expect(navigation.getByRole('link', { name: '开始学习' })).toHaveAttribute(
       'href',
       '/learn/',
@@ -164,7 +174,7 @@ test('keeps the primary learning navigation consistent on every core page', asyn
       'href',
       '/atlas/',
     );
-    await expect(navigation.getByRole('link')).toHaveCount(3);
+    await expect(navigation.getByRole('link')).toHaveCount(4);
     await expect(page.getByRole('navigation', { name: '知识工具' })).toHaveCount(0);
   }
 });
@@ -778,6 +788,7 @@ test('keeps key pages within the viewport without horizontal overflow', async ({
     '/learn/cases/user-feedback-analysis/decide-ai-boundary/',
     '/atlas/',
     '/search/?q=RAG',
+    '/map/',
     '/routes/',
     '/graph/',
     '/terms/retrieval-augmented-generation/',

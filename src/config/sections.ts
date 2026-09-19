@@ -14,7 +14,7 @@
  *      支撑层不允许再在页面顶部出现，否则「下沉」等于没做。
  */
 
-export type SectionId = 'learn' | 'cases' | 'knowledge' | 'routes' | 'graph';
+export type SectionId = 'map' | 'learn' | 'cases' | 'knowledge' | 'routes' | 'graph';
 
 export interface Section {
   id: SectionId;
@@ -30,6 +30,18 @@ export interface Section {
 }
 
 export const SECTIONS: readonly Section[] = [
+  {
+    // 排在首位不是排版偏好：学习入口的答案是「我不知道该先学什么」，
+    // 而认知链路是唯一直接回答这个问题的板块。学习库回答「我来练判断」，
+    // 案例库回答「我要看一个完整场景」，知识库回答「我知道要找什么」——
+    // 三者都预设了读者已经知道自己要做什么。
+    id: 'map',
+    href: '/map/',
+    navLabel: '认知链路',
+    pageTitle: 'AI 认知链路',
+    surface: 'primary',
+    purpose: '模型缺什么、每一层补什么——8 站递进路径，从第 1 站开始读。',
+  },
   {
     id: 'learn',
     href: '/learn/',
@@ -78,7 +90,7 @@ export const sectionById = (id: SectionId): Section => {
   return section;
 };
 
-/** 顶栏三项：学习主线 */
+/** 顶栏：认知链路 + 学习主线三项 */
 export const PRIMARY_NAVIGATION = SECTIONS.filter(({ surface }) => surface === 'primary').map(
   ({ href, navLabel }) => ({ href, label: navLabel }),
 );

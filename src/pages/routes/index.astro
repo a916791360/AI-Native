@@ -2,6 +2,7 @@
 import PageIntro from '@/components/layout/PageIntro.astro';
 import StatusTag from '@/components/ui/StatusTag.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import { resolveRouteStations } from '@/lib/content/chain';
 import { loadProjectContent } from '@/lib/content/io';
 import { deriveSiteMetrics } from '@/lib/site/metrics';
 
@@ -10,6 +11,24 @@ const metrics = deriveSiteMetrics(project);
 const routes = project.routes
   .map(({ data }) => data)
   .sort((left, right) => left.order - right.order);
+
+/**
+ * 每条路线落在链路的第几站。
+ *
+ * 路线是「展开清单」，链路是主路径——两者必须能互相指认。原先路线只出现在页脚，
+ * 读者无从知道「这条路线补的是哪一层」，也就无法在读完词条卡住时找到下一步。
+ * 这里按词条落点算出每条路线的主站，标注出来，并在 /map/ 反向列出每站的展开清单。
+ */
+const termsById = new Map(project.terms.map(({ data }) => [data.id, data]));
+const stationByOrder = new Map(project.chain.map((station) => [station.order, station]));
+const routeStations = new Map(
+  routes.map((route) => [
+    route.id,
+    resolveRouteStations(route, termsById)
+      .map((order) => stationByOrder.get(order))
+      .filter((station) => station !== undefined),
+  ]),
+);
 
 // 推荐起点:职业导向的「转岗 AI 产品经理」路线;其余作为专题路线。
 // 5 条路线内容与数量不变,只调整呈现层级,避免首页之外的第五套并列坐标系。
@@ -52,6 +71,26 @@ const routeGroups = [
                   <h3>
                     <a href={`/routes/${route.id}/`}>{route.nameZh}</a>
                   </h3>
+                  <p class="route-chain">
+                    {(routeStations.get(route.id) ?? []).length > 0 ? (
+                      <>
+                        <span>认知链路</span>
+                        {(routeStations.get(route.id) ?? []).map((station, index) => (
+                          <>
+                            {index > 0 && <i>·</i>}
+                            <a href={`/map/#station-${station.order}`}>
+                              第 {station.order} 站 {station.nameZh}
+                            </a>
+                          </>
+                        ))}
+                      </>
+                    ) : (
+                      <>
+                        <span>认知链路</span>
+                        <em>暂未挂到任一站</em>
+                      </>
+                    )}
+                  </p>
                   <p>{route.summary}</p>
                   <dl>
                     <div>
@@ -153,6 +192,39 @@ const routeGroups = [
     margin: 0;
     color: var(--color-muted);
     font-size: 0.9375rem;
+  }
+  /* 链路归属行：跑在摘要上方，用 mono 与链路主色，和正文摘要刻意分开。 */
+  .route-copy .route-chain {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-0) var(--space-1);
+    margin: var(--space-2) 0 0;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+  }
+  .route-chain > span {
+    color: var(--color-quiet);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .route-chain a {
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+  .route-chain a:hover {
+    text-decoration: underline;
+  }
+  .route-chain i {
+    color: var(--color-quiet);
+    font-style: normal;
+  }
+  .route-chain em {
+    color: var(--color-quiet);
+    font-style: normal;
+  }
+  .route-copy .route-chain + p {
+    margin-top: var(--space-2);
   }
   .route-copy dl {
     width: 100%;
