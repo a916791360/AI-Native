@@ -53,9 +53,9 @@ agent-memory:
 inference-server:
   chain: 5
   chainRole: intro
-model-context-protocol:
-  chain: 5
-  chainRole: core
+# model-context-protocol 已转为手写词条（I3-02），字段写在它自己的 .mdx 里，
+# 并从 src/data/hand-written-terms.yml 登记保护。同一条词条不在这里重复登记 ——
+# 一处字段两个来源，迟早会出现「改了这里没改那里」。
 api-call:
   chain: 5
   chainRole: core

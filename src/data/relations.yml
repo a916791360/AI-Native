@@ -117,3 +117,39 @@
   target: retrieval-augmented-generation
   type: application
   explanation: RAG 把大语言模型的生成能力用于整合检索证据，使回答能够利用模型参数之外的知识。
+
+- id: agent-skills-compared-with-prompt-template
+  source: agent-skills
+  target: prompt-template
+  type: comparison
+  explanation: 两者都在沉淀反复交代的做法，但提示词模板是单点复用的一段文本，Agent 技能是带元数据、按需加载的文件夹。
+
+- id: langchain-compared-with-model-context-protocol
+  source: langchain
+  target: model-context-protocol
+  type: comparison
+  explanation: LangChain 是跑在进程内的编排代码库，MCP 是跨进程的工具接入约定；两者不同层，可以叠加而不是替代。
+
+- id: agent-skills-applied-to-ai-agent
+  source: agent-skills
+  target: ai-agent
+  type: application
+  explanation: Agent 技能为 Agent 提供可复用的做法，让同一套流程在不同会话与不同 Agent 之间保持一致。
+
+- id: langchain-applied-to-ai-agent
+  source: langchain
+  target: ai-agent
+  type: application
+  explanation: LangChain 用来搭建 Agent 的运行时外壳，把模型、工具与提示循环封装成可复用的代码。
+
+- id: fine-tuning-compared-with-rag
+  source: fine-tuning
+  target: retrieval-augmented-generation
+  type: comparison
+  explanation: 微调改模型权重、管行为与风格，RAG 改上下文、管可更新的知识；两者不同层，可以叠加而不是二选一。
+
+- id: long-context-compared-with-rag
+  source: long-context
+  target: retrieval-augmented-generation
+  type: comparison
+  explanation: 长上下文提高单次可容纳的篇幅，RAG 决定该把哪些证据放进去；容量变大不替代「选对证据」这件事。

@@ -1,0 +1,133 @@
+---
+id: langchain
+nameZh: LangChain
+nameEn: LangChain
+abbreviations: []
+aliases: []
+summary: 跑在你自己进程里的应用层代码库，把「调模型、接工具、管提示」这些重复劳动封起来。
+domain: ai-engineering-deployment-operations
+difficulty: intermediate
+ring: core
+status: verified
+priority: 2
+featured: false
+publishedAt: '2026-09-19'
+updatedAt: '2026-09-19'
+verifiedAt: '2026-09-19'
+sources:
+  - id: langchain-overview
+    type: official-doc
+    title: LangChain overview
+    url: https://docs.langchain.com/oss/python/langchain/overview
+    publisher: LangChain
+    accessedAt: '2026-09-19'
+  - id: mcp-specification-2026-07-28
+    type: standard
+    title: Model Context Protocol Specification（2026-07-28）
+    url: https://modelcontextprotocol.io/specification/2026-07-28
+    publisher: Model Context Protocol
+    publishedAt: '2026-07-28'
+    accessedAt: '2026-09-19'
+chain: 6
+chainRole: core
+boundaries:
+  solves: 把「模型 + 提示 + 工具 + 中间件」这套围绕模型循环的样板代码封成可复用的积木，让你少写胶水、多写业务。
+  notSolves: 不是协议、不是服务、也不是一套标准——它不解决跨系统对接的问题，工具怎么被外部发现与复用不归它管。
+  confusions:
+    - with: model-context-protocol
+      difference: 不同层，可叠加而非竞争。LangChain 是跑在你进程里的代码库，管编排；MCP 是跨进程的接口约定，管工具与数据的暴露与发现。缺编排用前者，缺标准化接入用后者。
+    - with: agent-orchestration
+      difference: LangChain 的 create_agent 是一个可配置的「模型 + 外壳」起点；把确定性流程与自主决策混在一起、需要显式状态图时，那是更深一层的编排框架（生态里对应 LangGraph）的职责。
+minAction: 约 30 分钟。用约 30 行代码跑通一条最小链（检索 → 拼提示 → 生成），然后把其中「检索」这一步换成由 MCP Server 提供的工具，再跑一次。观察点是「换掉数据来源时，你的业务代码改了几行」。
+---
+
+<h2 id="what-it-is">它是什么</h2>
+
+LangChain 是一个**跑在你自己进程里的代码库**——一个应用层的编排框架。
+
+官方对它的最新定位是「一个最小、高度可配置的 agent harness（外壳）」，并给了一句很好记的等式：**Agent = 模型 + 外壳**，而外壳就是「模型循环之外的一切」——提示、工具，以及任何塑造行为的中间件。
+
+所以它是一个库，**不是协议、不是服务、也不是模型**。你 `pip install` 它，在你的代码里 `import` 它，它和你的程序在同一个进程里跑。这一点是理解它和 MCP 关系的全部前提。
+
+<h2 id="why-it-matters">为什么需要它</h2>
+
+直接调模型 API 时，真正花时间的从来不是那一次 HTTP 请求，而是它周围那些每次都差不多的活儿：把提示拼好、把工具描述转成模型能读的格式、解析模型返回的调用意图、把结果回喂、处理重试与超时、在出错时降级。
+
+一个框架的价值就是把这些从「每个项目各写一遍」变成「import 一下」。它不让你能做原本做不到的事——**它让你少写那些和业务无关的代码**。
+
+而它带来的代价也很具体：多一层依赖、多一层抽象，出问题时你得先判断是模型的问题还是框架的问题。这笔账是否划算，取决于你要编排的组件有几个。
+
+<h2 id="how-it-works">它如何工作</h2>
+
+核心入口是 `create_agent`。官方的最小示例里，你给它三样东西——模型、工具、系统提示：
+
+```python
+from langchain.agents import create_agent
+
+def get_weather(city: str) -> str:
+    """Get weather for a given city."""
+    return f"It's always sunny in {city}!"
+
+agent = create_agent(
+    model="openai:gpt-5.5",
+    tools=[get_weather],
+    system_prompt="You are a helpful assistant",
+)
+```
+
+从这段代码能读出三个机制事实：**工具就是一个普通函数**，写好之后作为参数传进去；模型的提供方是字符串（`openai:` 前缀），换模型不改业务代码；agent 的调用形态是 `invoke` 一个消息字典，返回的也是消息列表。
+
+官方把这个生态切成了几层，这个划分比「LangChain 是什么」更值得记住：**LangChain** 负责「可定制的 agent 外壳」；**LangGraph** 是更底层的编排框架，用于把确定性流程与自主决策结合起来的高级场景；**LangSmith** 负责追踪、调试与评估。也就是说，当你需要显式状态图、需要人在中间某个节点介入、需要断点续跑时，你往往会下沉到 LangGraph 那一层，而不是继续在 LangChain 上堆。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**LangChain ≠ MCP。** 这是最常见的误解——把不同层的东西当成竞品。它们是两个维度上的东西，下面这张表是四维对比：
+
+| 维度         | LangChain                                | MCP                                         |
+| ------------ | ---------------------------------------- | ------------------------------------------- |
+| 工具定义方式 | 代码里的普通函数，写在应用内             | 独立的 Server，自成一份实现                 |
+| 发现方式     | 编译期就写死在应用里，传进 `tools=[...]` | 连接时动态发现，Server 自己声明提供哪些工具 |
+| 复用范围     | 跨项目复制代码                           | 一次实现，任何兼容客户端都能连              |
+| 运行位置     | 你的进程内                               | 独立进程（本地子进程或远程 HTTP 端点）      |
+
+**决策规则一句话就能说清：缺工作流控制用 LangChain，缺标准化接入用 MCP，两者都需要时叠加。** 这两件事经常同时成立——比如你要编排一条「先检索、再判断、再生成」的流程，同时希望检索能力由第三方以标准 Server 的形式提供。
+
+**LangChain ≠ 一切编排。** 如果你的问题变成了「需要一张明确的状态图、要在某一步强制人工审批、要让流程可以从中间恢复」，那已经越过 `create_agent` 的舒适区了。继续在同一个抽象上打补丁，通常比下沉一层更贵。
+
+<h2 id="example">真实例子</h2>
+
+官方文档自己给出的推荐路径，本身就是个能说明分层的例子。它把选择整理成三档：
+
+- 想要「开箱即用、功能齐」的 agent（自动上下文压缩、虚拟文件系统、能派生子 agent），从 **Deep Agents** 起步——官方说它「batteries-included」。
+- 需要把外壳按自己的业务和数据高度定制，用 **LangChain** 的 `create_agent`。
+- 需要把确定性的流程与自主决策组合起来，用 **LangGraph**。
+
+还有一处细节很能说明这层抽象的边界感：LangChain 的官方文档站自己提供了一个 MCP 入口，让你把文档接进 Claude、VS Code 等客户端使用。**同一个产品，一边是「用代码编排」，一边是「用 MCP 把能力暴露出去」——它们出现在同一个页面上，谁也没替掉谁。**
+
+<h2 id="tradeoffs">什么时候适合与不适合</h2>
+
+**适合**：你要编排的组件超过两三个，而且需要在不同模型提供方之间切换。工具定义写成函数、模型提供方写成字符串这两个设计，让「换模型」和「加工具」都变成小改动，这在原型阶段很值钱。需要追踪与评估时，同生态的 LangSmith 能直接接上，不用自己搭观测。
+
+**不适合**：只调一个模型、提示也不复杂时，引入框架只会增加一层需要排查的东西——直接调 API 更短、更透明。**如果你的工具需要跨团队共享**，那也不该用 LangChain 解决：写死在应用里的函数只能靠复制代码扩散，换成 [MCP Server](/terms/model-context-protocol/) 才是对的抽象。
+
+另外要留意一处容易踩空的地方：这类框架的 API 迭代很快，官方文档本身就在推荐「新项目从哪个入口起步」。这意味着**版本升级会带来 API 迁移成本**——如果团队里没人愿意跟这个节奏，用官方 SDK 直连反而更省心。
+
+<h2 id="try-it">亲自试一下</h2>
+
+用约 30 行代码跑通一条最小链：**检索 → 拼提示 → 生成**。检索这一步先用最简单的实现（比如从本地文件里按关键词捞几段），重点是把三段接起来。
+
+跑通之后做那个真正有价值的对比——**把「检索」这一步换成由 MCP Server 提供的工具，再跑一次**。
+
+全程约 30 分钟。**观察点是「换掉数据来源时，你的业务代码改了几行」**：如果只改了工具注册的那几行，说明分层是对的；如果连提示拼装和结果处理都得跟着改，说明你把「数据从哪来」和「数据怎么用」写在了一起——这个观察结果，比这篇词条的任何一句话都能帮你判断该不该引入这一层。
+
+<h2 id="next">接下来学什么</h2>
+
+LangChain 属于第 6 站 [给流程 · 怎么把做法沉淀下来](/map/#station-6) 的「实现层」：它和 [Agent 技能](/terms/agent-skills/)（做法怎么沉淀）、[多智能体系统](/terms/multi-agent-system/)（多个角色怎么协作）一起回答同一类问题。
+
+如果你还在纠结「它和 MCP 到底谁管什么」，先把上一站的 [模型上下文协议](/terms/model-context-protocol/) 读完（[给接口](/map/#station-5)）——那张四维对比表在那里会被反过来用一次。再往前一步是 [给判断](/map/#station-7)：你换了实现方式之后，凭什么说它变好了。
+
+<h2 id="sources-and-revisions">来源与修订</h2>
+
+定位、`create_agent` 的示例代码、「Agent = 模型 + 外壳」的表述，以及 LangChain / LangGraph / LangSmith / Deep Agents 的分层与推荐路径，均来自 **LangChain overview** 官方文档（访问于 2026-09-19）。四维对比里 MCP 一侧的描述以 **Model Context Protocol Specification（2026-07-28）** 为准——两侧都引权威源，是为了避免「拿 A 的官方说法去描述 B」这类常见错误。
+
+新增日期 2026-09-19（本词条为新建，此前全站 0 命中）。这类框架的 API 迭代较快，官方文档的推荐入口此前发生过变化（从链式组合转向 agent harness）；若后续再次调整，应先核对官方 overview 再修订正文。

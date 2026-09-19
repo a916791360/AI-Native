@@ -5,7 +5,7 @@ nameEn: Model Context Protocol
 abbreviations:
   - MCP
 aliases: []
-summary: 以统一方式向 AI 应用提供工具、资源和提示上下文的开放协议，便于连接外部系统。
+summary: 把「模型接外部工具与数据」从每个客户端 × 每个系统的重复对接，收敛成一次协议实现。
 domain: agents-tool-use-automation
 difficulty: intermediate
 ring: core
@@ -13,54 +13,116 @@ status: verified
 priority: 1
 featured: false
 publishedAt: '2026-08-20'
-updatedAt: '2026-08-20'
-verifiedAt: '2026-08-20'
+updatedAt: '2026-09-19'
+verifiedAt: '2026-09-19'
 sources:
-  - id: anthropic-effective-agents
+  - id: mcp-specification-2026-07-28
+    type: standard
+    title: Model Context Protocol Specification（2026-07-28）
+    url: https://modelcontextprotocol.io/specification/2026-07-28
+    publisher: Model Context Protocol
+    publishedAt: '2026-07-28'
+    accessedAt: '2026-09-19'
+  - id: mcp-transports-2026-07-28
+    type: standard
+    title: Transports — Model Context Protocol Specification
+    url: https://modelcontextprotocol.io/specification/2026-07-28/basic/transports
+    publisher: Model Context Protocol
+    accessedAt: '2026-09-19'
+  - id: anthropic-mcp-introduction
     type: engineering-practice
-    title: Building Effective Agents
-    url: https://www.anthropic.com/engineering/building-effective-agents
+    title: Introducing the Model Context Protocol
+    url: https://www.anthropic.com/news/model-context-protocol
     publisher: Anthropic
-    publishedAt: '2024-12-19'
-    accessedAt: '2026-07-29'
-  - id: anthropic-trustworthy-agents
-    type: research-institute
-    title: Trustworthy Agents in Practice
-    url: https://www.anthropic.com/research/trustworthy-agents
-    publisher: Anthropic
-    accessedAt: '2026-07-29'
+    publishedAt: '2024-11-25'
+    accessedAt: '2026-09-19'
 chain: 5
 chainRole: core
+boundaries:
+  solves: 把「N 个客户端 × M 个外部系统」的对接矩阵压成 N + M，并让工具能在连接时被动态发现，而不是写死在应用代码里。
+  notSolves: 不保证第三方 Server 可信、不替你做权限判断、也不决定工具该不该被调用——规范明确说自己无法在协议层强制这些安全原则。
+  confusions:
+    - with: function-calling
+      difference: Function Calling 是模型厂商自己的「调用意图表达格式」，解决模型怎么说出要调什么；MCP 是工具与数据的提供方式，解决它由谁提供、怎么被发现。两者叠在一起用，也可以各自单独存在。
+    - with: langchain
+      difference: 两者不在同一层。LangChain 是跑在你进程里的代码库，负责编排模型、工具与记忆；MCP 是跨进程的接口约定，规定工具怎么被暴露与发现。可以叠加，不是替代。
+minAction: 约 15 分钟，不写代码。装一个官方 filesystem Server，在你的 AI 客户端里连上它，确认它的工具出现在工具列表里，并让它读到你本地目录下的一个文件。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
 
-模型上下文协议是以统一方式向 AI 应用提供工具、资源和提示上下文的开放协议，便于连接外部系统。在Agent 与自动化里，它通常作为一个可复核的入口，用来把概念、对象和判断条件对齐。[S1][S2]
+模型上下文协议是一个**接口标准**：它规定 AI 应用怎么把外部工具与数据接进来，不规定这些工具和数据是什么。
+
+它的规范原文把自己定义为「一个开放协议，让 LLM 应用与外部数据源和工具之间实现无缝集成」，并明确它借鉴了 Language Server Protocol 的思路——那套协议把「给编辑器加一门语言的语法支持」标准化，MCP 想做同一件事，只是对象换成了「给 AI 应用加一份上下文与一组工具」。所以它是一个协议，**不是工具、不是框架、也不是某种模型能力**。
+
+一个常被引用的比喻是「AI 世界的 USB-C」：它不发电，也不决定你插上去的是什么设备，它只规定插头形状。
 
 <h2 id="why-it-matters">为什么需要它</h2>
 
-理解模型上下文协议能帮助你判断问题是否真的落在这个概念上，而不是被相近名词带偏。它属于这个领域的基础入口，适合放在前面学习。再把机制、前提和依赖关系补齐。
+没有这层标准时，对接量是**乘法**。假设你有 3 个用到大模型的入口（IDE 插件、内部聊天工具、一个自动化脚本），要接 10 个内部系统，那就是 30 份适配代码；再加一个入口，成本再乘一轮。
+
+MCP 把这个矩阵压成加法：每个系统实现一次 Server，每个客户端实现一次 Client，两边靠协议对接。省下来的主要不是代码量，而是**维护边界**——「数据库的权限口径改了」以前要在 3 个客户端里各改一遍，现在改在 Server 一处。
+
+Anthropic 在 2024 年 11 月 25 日提出它时，对此的说法很直接：最先进的模型也被数据隔离困住，每接一个新数据源就要写一份定制实现，系统规模一大就推不动。
 
 <h2 id="how-it-works">它如何工作</h2>
 
-它通常先确认输入、约束、流程和输出，再检查这些部分能否被复核。这样做可以把抽象名词落到具体判断上，也方便和其他词条做关系对照。
+**三个角色，职责不能混**（规范原文的定义）：
+
+- **Hosts**：发起连接的 LLM 应用——你的 IDE、聊天客户端、Agent 运行时。
+- **Clients**：Host 应用内部的连接器，一条 Client 对一条 Server 连接。
+- **Servers**：提供上下文与能力的服务。
+
+**通信格式是 JSON-RPC 2.0**，消息必须 UTF-8 编码。Server 向 Client 提供三类能力：
+
+- **Resources**：上下文与数据，供用户或模型读取。
+- **Prompts**：给用户用的模板化消息与工作流。
+- **Tools**：可被模型调用的函数。
+
+**传输层是「绑定」（binding），而协议语义在每种绑定上完全一致**。标准绑定有两种：**stdio**——在客户端拉起的子进程的标准流上跑按行分隔的消息，本地工具走这条；**Streamable HTTP**——每条消息都是对单一 MCP 端点的 HTTP POST，回复以 JSON 对象或请求作用域的 SSE 流返回，远程服务走这条。
+
+有个容易读错版本的细节：早期协议要求先做 `initialize` 握手建立连接作用域会话，服务端也能反向发起请求；**2026-07-28 这版把基础协议改成了无状态、自包含的请求**，协议版本与客户端能力随每个请求的 `_meta` 字段传递，能力协商逐请求进行。旧教程里「有状态连接」的说法对当时的版本没错，规范至今为它保留向后兼容路径，但那已不是当前形态。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**MCP ≠ Function Calling。** Function Calling 是各家模型厂商自己的格式，解决「模型怎么表达我要调什么」——它只到「输出一段结构化调用指令」为止。MCP 解决的是「这个工具由谁提供、怎么被发现、怎么被调用」。两者是叠着的：模型用 Function Calling 表达调用意图，Host 再把这次调用按 MCP 发给自己连着的 Server。它们也各自能单独存在——工具写死在应用代码里，不用 MCP 也能跑；模型不支持原生 Function Calling，Host 代劳也能走 MCP。
+
+**MCP ≠ LangChain。** 不同层，可以叠加，不是竞品。LangChain 是跑在你自己进程里的代码库，负责编排模型、工具与记忆；MCP 是跨进程的接口约定。你可以用 LangChain 写应用再让它连 MCP Server，也可以不用任何框架、直接实现一个 MCP Client。
+
+**还有一句必须说清的：MCP 不是安全保险柜。** 规范自己写明「MCP 本身无法在协议层强制这些安全原则」，并把责任推给实现方：工具代表任意代码执行，必须谨慎对待；**工具对自身行为的描述（包括注解）应被视为不可信，除非它来自可信 Server**；Host 在调用任何工具前必须取得用户明确同意；Host 在把用户数据暴露给 Server 前也必须取得同意。
 
 <h2 id="example">真实例子</h2>
 
-例如，在一个真实的Agent 与自动化场景中，团队会先把模型上下文协议放进当前问题里，再决定要不要继续拆成数据、流程、接口或评估步骤。Building Effective Agents 和 Trustworthy Agents in Practice 会是很好的核验起点。
+2024 年 11 月 25 日 MCP 发布时，官方同时开源了一个 MCP Server 仓库，并提供了面向常见企业系统的预置 Server：Google Drive、Slack、GitHub、Git、Postgres、Puppeteer。
+
+这些 Server 的形态很能说明问题：**Git** 那个暴露的是本地仓库的读、提交、分支等能力；**Postgres** 那个暴露的是「列出表、读 schema、执行只读查询」——它们是同一份协议下、不同系统各自的 Server，任何实现了 MCP Client 的客户端都能连它们，而不需要为每一个客户端重写一遍 GitHub 或 Postgres 的适配。这也是「一次实现、多处可用」第一次有了可验证的样本，而不是一句愿景。
 
 <h2 id="tradeoffs">什么时候适合与不适合</h2>
 
-它适合被用来统一语言、减少歧义和梳理边界，但不适合被当成万能解释。若定义太粗，容易掩盖条件差异；若过早套用，也会把本来简单的问题说复杂。
+**适合**：你要接的外部系统超过一个，或者用到大模型的入口超过一个。只要出现「同一套工具要在第二个客户端里再接一遍」，MCP 就开始回本。它尤其适合把内部系统改造成「一次实现、多个 AI 入口共用」的基础设施。
+
+**不适合**：只有一个客户端、一个工具，而且短期内不会变——这时直连 API 更快，引入协议只是多一层要维护的东西。另外两类场景要格外谨慎：**工具本身有强副作用且不可撤回**（转账、删除、对外发送），此时需要的是审批与权限设计，MCP 不提供这层保障；**第三方 Server 来源不明**时，装它等于让陌生代码进入你的工具链，规范已明确要求把工具描述视为不可信。
+
+它也不解决「工具该不该被调用」这个判断。护栏、最小授权、人在回路（见 [AI 护栏](/terms/ai-guardrail/) 与 [人在回路](/terms/human-in-the-loop/)）仍然要单独设计。
 
 <h2 id="try-it">亲自试一下</h2>
 
-把模型上下文协议放进你正在看的一个真实项目里，写下三件事：它是什么、它不是什么、什么时候不该用它。再在本站搜索相邻词条，比较它与其它概念的差别。
+装一个官方 filesystem Server，在你常用的 AI 客户端里连上它，然后做三件事：
+
+1. 看它的工具是否出现在工具列表里（不需要你写适配代码）。
+2. 让它读你本地某个目录下的一个文件，确认读到的是真实内容。
+3. 打开这个 Server 的启动配置，看一眼它是怎么被拉起来的。
+
+全程约 15 分钟，不需要写代码。**观察点是「你没有为这个客户端写任何适配代码」**——这一条如果成立了，你就亲眼看到了这层协议存在的全部理由。反过来，如果你发现自己要先研究「这个客户端的工具格式是什么」，那正是 MCP 想消掉的那部分工作。
 
 <h2 id="next">接下来学什么</h2>
 
-接着阅读 [AI Agent](/terms/ai-agent/) 与 [大语言模型](/terms/large-language-model/)，把这个概念放回更大的关系网里。先看前置，再看组成和应用，通常更容易把模型上下文协议放进完整链路。
+这一站（[给接口](/map/#station-5)）解决的是「工具怎么标准化地接进来」；下一步要解决的是「怎么把做法沉淀下来」——同一个团队反复交代的流程，不该每次重新说一遍。顺着链路走是 [给流程 · 怎么把做法沉淀下来](/map/#station-6)，从 [Agent Skills](/terms/agent-skills/) 开始。
+
+想补齐本站的其他概念，可以接着读 [模型服务](/terms/model-serving/)（Server 背后的部署形态）与 [API 调用](/terms/api-call/)（MCP 之外的另一种对接方式）。
 
 <h2 id="sources-and-revisions">来源与修订</h2>
 
-本文参考 Building Effective Agents 和 Trustworthy Agents in Practice。核验日期为 2026-08-20；后续若官方定义、研究结论或产品接口变化，应先更新来源，再修订正文。
+正文的协议细节以 **Model Context Protocol Specification（2026-07-28）** 为准，传输层细节来自同一版本的 Transports 章节；发布背景、预置 Server 清单与开源仓库来自 Anthropic 2024-11-25 的公告。三份来源都是讲 MCP 本身的权威源，不是相邻主题的二手转述。
+
+核验日期 2026-09-19：当前最新规范为 2026-07-28 版，相对 2025-06-18 版在基础协议上有实质变化（无状态化、能力协商改为逐请求、客户端能力项收敛）。若后续规范版本更新，应先核对这三处，再修订正文。

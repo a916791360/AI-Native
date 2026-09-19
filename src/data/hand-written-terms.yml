@@ -1,0 +1,72 @@
+# 手写词条清单 —— 列在这里的词条由人逐字撰写，生成器不得覆盖。
+#
+# 为什么需要这份清单：
+#   scripts/sync-catalog.ts 会按 src/data/catalog-plan.yml 整份重写 220 个目录词条的
+#   .mdx（frontmatter + 正文）。不登记就改，改动会在下一次 `pnpm generate:data`
+#   被静默清空，而重写后的文件仍然 schema 合法——构建、类型检查、CI 全部照常通过。
+#
+# 登记规则：
+#   1. 一条词条只出现在一个地方。深度内容批次（src/data/content-production.yml 里
+#      status ≠ planned 的批次）已自带保护与研究包机制，不要再列到这里——
+#      两个脚本都会报错，因为「谁拥有这条词条」出现分歧时必须有人做决定。
+#   2. reason 写清属于哪一批整改，便于日后判断能否收编回生成管线。
+#   3. 登记后该 .mdx 完全由人维护：frontmatter（含 sources / summary / priority）
+#      与正文都不再由生成器产出。生成器只是「不碰它」，不是「帮你维护它」。
+#
+# 规格依据：《迭代开发说明书》第七节 I3 决策页重写、第十二节决策页内容规范。
+#
+# 注：I3-05 要改写的 ai-agent 不在这里——它本来就在深度内容批次
+# （src/data/content-production.yml）里，已由那套机制保护并自带研究包。
+# 同一条词条登记两次会让 scripts/sync-catalog.ts 直接报错，这是故意的：
+# 「谁拥有这条词条」出现分歧时必须有人做决定，不能静默取并集。
+
+version: 1
+
+terms:
+  - id: model-context-protocol
+    reason: I3-02 决策页重写：原正文与来源都不讲 MCP，按 Host/Client/Server 与 JSON-RPC 2.0 重写
+    rewrittenAt: '2026-09-19'
+
+  - id: agent-skills
+    reason: I3-03 新建：Agent Skills 全库 0 命中，是当前最容易与 MCP 混淆的概念
+    rewrittenAt: '2026-09-19'
+
+  - id: langchain
+    reason: I3-04 新建：全库 0 命中，用户最常见的困惑是「它和 MCP 是不是竞品」
+    rewrittenAt: '2026-09-19'
+
+  - id: retrieval-augmented-generation
+    reason: I3-06 决策页重写：补离线/在线两段链路与 2026 年现状，避免把 demo 当生产
+    rewrittenAt: '2026-09-19'
+
+  - id: token
+    reason: I3-08 A 档批次 1：从名词解释改为带边界、取舍和上手动作的决策页
+    rewrittenAt: '2026-09-19'
+
+  - id: context-window
+    reason: I3-08 A 档批次 1：从名词解释改为带边界、取舍和上手动作的决策页
+    rewrittenAt: '2026-09-19'
+
+  - id: embedding
+    reason: I3-08 A 档批次 1：从名词解释改为带边界、取舍和上手动作的决策页
+    rewrittenAt: '2026-09-19'
+
+  - id: hallucination
+    reason: I3-08 A 档批次 1：从名词解释改为带边界、取舍和上手动作的决策页
+    rewrittenAt: '2026-09-19'
+
+  - id: document-chunking
+    reason: I3-08 A 档批次 1：从名词解释改为带边界、取舍和上手动作的决策页
+    rewrittenAt: '2026-09-19'
+
+  - id: vector-database
+    reason: I3-08 A 档批次 1：从名词解释改为带边界、取舍和上手动作的决策页
+    rewrittenAt: '2026-09-19'
+
+  - id: reranking
+    reason: I3-08 A 档批次 1：从名词解释改为带边界、取舍和上手动作的决策页
+    rewrittenAt: '2026-09-19'
+
+  - id: large-language-model
+    reason: I3-08 A 档批次 1：从名词解释改为带边界、取舍和上手动作的决策页
+    rewrittenAt: '2026-09-19'

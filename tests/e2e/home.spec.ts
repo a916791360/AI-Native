@@ -538,14 +538,20 @@ test('publishes all five ordered learning routes', async ({ page }) => {
   }
 });
 
-test('renders every verified term as an eight-section article', async ({ page }) => {
+test('renders every verified term as a complete decision article during migration', async ({
+  page,
+}) => {
   test.setTimeout(120_000);
   const termIds = registry.terms.filter(({ status }) => status === 'verified').map(({ id }) => id);
 
   for (const termId of termIds) {
     await page.goto(`/terms/${termId}/`);
     await expect(page.getByText('已核验', { exact: true }).first()).toBeVisible();
-    await expect(page.locator('.term-content h2')).toHaveCount(8);
+    const sectionCount = await page.locator('.term-content h2').count();
+    expect([8, 9]).toContain(sectionCount);
+    if (sectionCount === 9) {
+      await expect(page.locator('#confusions')).toHaveText('必须澄清的误会');
+    }
     await expect(page.locator('#what-it-is')).toHaveText('它是什么');
     await expect(page.locator('#sources-and-revisions')).toHaveText('来源与修订');
     expect(await page.locator('.source-register li').count()).toBeGreaterThanOrEqual(2);

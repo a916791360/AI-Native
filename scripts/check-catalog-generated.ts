@@ -6,7 +6,8 @@ import {
   loadCatalogSummaries,
   loadCatalogTermDetails,
 } from '../src/lib/content/catalog';
-import { deepContentTermIds, loadContentProductionPlan } from '../src/lib/content/production';
+import { loadHandWrittenTerms, protectedTermIds } from '../src/lib/content/authorship';
+import { loadContentProductionPlan } from '../src/lib/content/production';
 import { loadValidatedProjectContent } from './lib/project';
 import {
   buildPublishedCatalogRelations,
@@ -16,14 +17,18 @@ import {
 } from './lib/catalog-generation';
 
 const root = process.cwd();
-const [catalog, summaries, production, project, details] = await Promise.all([
+const [catalog, summaries, production, project, details, handWritten] = await Promise.all([
   loadCatalogPlan(root),
   loadCatalogSummaries(root),
   loadContentProductionPlan(root),
   loadValidatedProjectContent(root),
   loadCatalogTermDetails(root),
+  loadHandWrittenTerms(root),
 ]);
-const protectedIds = deepContentTermIds(production);
+// 必须与 sync-catalog.ts 用同一个保护集合。只接一边的话，这里会拿「生成器视角」
+// 的基线去比对「人手写的」产物，把正确内容判为过期——而它给的修复建议
+//（重跑 sync:catalog）恰好是错的：重跑什么都不会变。
+const protectedIds = protectedTermIds(production, handWritten);
 const stale: string[] = [];
 
 for (const { candidate, ...document } of buildPublishedCatalogTerms(

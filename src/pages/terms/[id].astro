@@ -9,6 +9,7 @@ import generatedGraph from '@/generated/graph.json';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { CHAIN_ROLE_LABELS, resolveTermChainPosition, type ChainRole } from '@/lib/content/chain';
 import { loadProjectContent } from '@/lib/content/io';
+import { TERM_SECTIONS } from '@/lib/content/term-sections';
 import { selectLocalGraph, type GraphData } from '@/lib/graph/model';
 import { buildContentIssueUrl } from '@/lib/site/github';
 
@@ -80,16 +81,10 @@ const relationLabels = {
   application: '实际应用',
 } as const;
 const difficultyLabels = { beginner: '入门', intermediate: '进阶', advanced: '深入' } as const;
-const sectionLinks = [
-  ['what-it-is', '它是什么'],
-  ['why-it-matters', '为什么需要它'],
-  ['how-it-works', '它如何工作'],
-  ['example', '真实例子'],
-  ['tradeoffs', '适合与不适合'],
-  ['try-it', '亲自试一下'],
-  ['next', '接下来学什么'],
-  ['sources-and-revisions', '来源与修订'],
-] as const;
+// 段落锚点导航：从决策页模板 v2 的唯一事实源生成，不在这里手写。
+// 手写的话，改了正文模板忘了改这里，锚点就会少一项或跳错位置，而构建不报错。
+// 门禁 5 会逐条比对「正文实际的 h2 序列」与这份定义是否相等。
+const sectionLinks = TERM_SECTIONS.map(({ id, label }) => [id, label] as const);
 const relationGroups = Object.entries(relationLabels).map(([type, label]) => ({
   type,
   label,

@@ -1,0 +1,1607 @@
+# A/B/C 档位表 —— 内容质量门禁分级生效的依据（《迭代开发说明书》第十三节）。
+#
+# 由 pnpm build:term-tiers 依据机器预判信号生成：命中 ≥3 个正向信号 → A，
+# 1–2 个 → B，0 个 → C。反向信号（同域名称包含，即近义碎片）记在 signals 里但
+# 不计分，只作人工复核时的提示。
+#
+# 人工终判请把 reviewed 改成 true，此后本脚本不再改动该条的 tier ——
+# 机器负责把 325 条压到需要人工看的规模，不负责替人拍板。
+#
+# 当前分布：A 23 / B 126 / C 178（共 327 条）。其中 5 条为人工终判（I3-02 至 I3-06 的决策页）。
+version: 1
+terms:
+  - id: ab-testing
+    tier: B
+    signals:
+      - routes:1
+    reviewed: false
+  - id: acceptance-criteria
+    tier: B
+    signals:
+      - questions:2
+      - routes:1
+    reviewed: false
+  - id: accountability
+    tier: B
+    signals:
+      - questions:2
+    reviewed: false
+  - id: advanced-packaging
+    tier: C
+    signals: []
+    reviewed: false
+  - id: adversarial-testing
+    tier: C
+    signals: []
+    reviewed: false
+  - id: agent-memory
+    tier: B
+    signals:
+      - chain-core
+    reviewed: false
+  - id: agent-orchestration
+    tier: B
+    signals:
+      - questions:1
+    reviewed: false
+  - id: agent-planning
+    tier: B
+    signals:
+      - chain-core
+    reviewed: false
+  - id: agent-sandbox
+    tier: B
+    signals:
+      - questions:1
+    reviewed: false
+  - id: agent-skills
+    tier: A
+    signals:
+      - relations:2
+    reviewed: true
+    note: 人工终判。I3-03 新建的决策页，按《迭代开发说明书》第十二节验收；机器只给了 2 个信号，但它与 MCP 是当前最易混淆的一对，必须受 A 档门禁约束。
+  - id: agentic-workflow
+    tier: B
+    signals:
+      - chain-core
+      - questions:1
+    reviewed: false
+  - id: ai-accelerator
+    tier: C
+    signals: []
+    reviewed: false
+  - id: ai-adoption
+    tier: B
+    signals:
+      - questions:4
+    reviewed: false
+  - id: ai-agent
+    tier: A
+    signals:
+      - chain-core
+      - questions:3
+      - relations:2
+    reviewed: true
+    note: 人工终判。I3-05 决策页重写，第 4 站入口概念；机器已判 A，人工确认并锁定，避免后续重新生成时被降档。
+  - id: ai-application
+    tier: B
+    signals:
+      - questions:1
+    reviewed: false
+  - id: ai-capability-boundary
+    tier: A
+    signals:
+      - questions:5
+      - cases:1
+      - routes:1
+    reviewed: false
+  - id: ai-effect
+    tier: C
+    signals: []
+    reviewed: false
+  - id: ai-governance
+    tier: C
+    signals: []
+    reviewed: false
+  - id: ai-guardrail
+    tier: B
+    signals:
+      - chain-core
+      - questions:5
+    reviewed: false
+  - id: ai-onboarding
+    tier: B
+    signals:
+      - questions:3
+      - containment:1
+    reviewed: false
+  - id: ai-pm-career-path
+    tier: B
+    signals:
+      - routes:1
+      - containment:2
+    reviewed: false
+  - id: ai-pm-competency
+    tier: B
+    signals:
+      - routes:1
+      - containment:2
+    reviewed: false
+  - id: ai-product
+    tier: B
+    signals:
+      - cases:5
+      - routes:1
+    reviewed: false
+  - id: ai-product-manager
+    tier: B
+    signals:
+      - routes:1
+      - containment:1
+    reviewed: false
+  - id: ai-risk-management
+    tier: A
+    signals:
+      - chain-core
+      - questions:5
+      - cases:1
+      - routes:1
+    reviewed: false
+  - id: ai-safety
+    tier: C
+    signals: []
+    reviewed: false
+  - id: ai-use-case
+    tier: B
+    signals:
+      - questions:3
+    reviewed: false
+  - id: ai-winter
+    tier: C
+    signals:
+      - containment:1
+    reviewed: false
+  - id: algorithmic-bias
+    tier: C
+    signals: []
+    reviewed: false
+  - id: answer-correctness
+    tier: C
+    signals: []
+    reviewed: false
+  - id: api-call
+    tier: B
+    signals:
+      - chain-core
+    reviewed: false
+  - id: approximate-nearest-neighbor
+    tier: C
+    signals: []
+    reviewed: false
+  - id: artificial-general-intelligence
+    tier: C
+    signals:
+      - containment:1
+    reviewed: false
+  - id: artificial-intelligence
+    tier: A
+    signals:
+      - questions:1
+      - relations:2
+      - routes:5
+    reviewed: false
+  - id: attention-mechanism
+    tier: C
+    signals: []
+    reviewed: false
+  - id: audio-understanding
+    tier: C
+    signals: []
+    reviewed: false
+  - id: auditability
+    tier: B
+    signals:
+      - questions:3
+    reviewed: false
+  - id: automatic-evaluation
+    tier: C
+    signals: []
+    reviewed: false
+  - id: automation-trigger
+    tier: C
+    signals: []
+    reviewed: false
+  - id: autonomous-agent
+    tier: C
+    signals: []
+    reviewed: false
+  - id: autopilot-pattern
+    tier: B
+    signals:
+      - questions:2
+    reviewed: false
+  - id: autoscaling
+    tier: C
+    signals: []
+    reviewed: false
+  - id: backpropagation
+    tier: C
+    signals: []
+    reviewed: false
+  - id: batch-size
+    tier: C
+    signals: []
+    reviewed: false
+  - id: benchmark
+    tier: C
+    signals: []
+    reviewed: false
+  - id: bias-evaluation
+    tier: C
+    signals: []
+    reviewed: false
+  - id: browser-use
+    tier: C
+    signals: []
+    reviewed: false
+  - id: business-model
+    tier: B
+    signals:
+      - questions:2
+      - routes:1
+    reviewed: false
+  - id: canary-release
+    tier: B
+    signals:
+      - questions:5
+      - cases:5
+    reviewed: false
+  - id: chain-of-thought
+    tier: C
+    signals:
+      - containment:1
+    reviewed: false
+  - id: chip-fabrication
+    tier: C
+    signals: []
+    reviewed: false
+  - id: chip-interconnect
+    tier: C
+    signals: []
+    reviewed: false
+  - id: citation-generation
+    tier: B
+    signals:
+      - questions:5
+      - cases:1
+    reviewed: false
+  - id: classification
+    tier: B
+    signals:
+      - questions:1
+    reviewed: false
+  - id: cloud-computing
+    tier: C
+    signals: []
+    reviewed: false
+  - id: clustering
+    tier: C
+    signals: []
+    reviewed: false
+  - id: code-execution
+    tier: C
+    signals: []
+    reviewed: false
+  - id: cognitive-computing
+    tier: C
+    signals: []
+    reviewed: false
+  - id: competitive-analysis
+    tier: B
+    signals:
+      - questions:1
+    reviewed: false
+  - id: compute
+    tier: C
+    signals: []
+    reviewed: false
+  - id: computer-use
+    tier: C
+    signals: []
+    reviewed: false
+  - id: computer-vision
+    tier: C
+    signals: []
+    reviewed: false
+  - id: computer-vision-field
+    tier: C
+    signals: []
+    reviewed: false
+  - id: confidence-calibration
+    tier: B
+    signals:
+      - questions:2
+    reviewed: false
+  - id: connectionism
+    tier: C
+    signals: []
+    reviewed: false
+  - id: containerization
+    tier: C
+    signals: []
+    reviewed: false
+  - id: content-moderation
+    tier: B
+    signals:
+      - questions:3
+    reviewed: false
+  - id: context-compression
+    tier: B
+    signals:
+      - questions:1
+    reviewed: false
+  - id: context-engineering
+    tier: B
+    signals:
+      - chain-core
+    reviewed: false
+  - id: context-relevance
+    tier: C
+    signals: []
+    reviewed: false
+  - id: context-retrieval
+    tier: B
+    signals:
+      - cases:1
+      - containment:1
+    reviewed: false
+  - id: context-window
+    tier: A
+    signals:
+      - chain-core
+      - questions:3
+      - relations:3
+      - routes:4
+    reviewed: false
+  - id: continuous-delivery
+    tier: B
+    signals:
+      - questions:2
+    reviewed: false
+  - id: conversation-context
+    tier: B
+    signals:
+      - questions:1
+    reviewed: false
+  - id: conversational-ui
+    tier: C
+    signals: []
+    reviewed: false
+  - id: copilot-pattern
+    tier: B
+    signals:
+      - questions:1
+    reviewed: false
+  - id: copyright
+    tier: C
+    signals: []
+    reviewed: false
+  - id: cost-optimization
+    tier: B
+    signals:
+      - questions:9
+      - cases:1
+    reviewed: false
+  - id: cpu
+    tier: C
+    signals: []
+    reviewed: false
+  - id: cross-modal-retrieval
+    tier: C
+    signals:
+      - containment:1
+    reviewed: false
+  - id: cuda
+    tier: C
+    signals:
+      - containment:1
+    reviewed: false
+  - id: dartmouth-workshop
+    tier: C
+    signals: []
+    reviewed: false
+  - id: data-center
+    tier: C
+    signals: []
+    reviewed: false
+  - id: data-governance
+    tier: B
+    signals:
+      - questions:2
+    reviewed: false
+  - id: data-ingestion
+    tier: B
+    signals:
+      - questions:2
+    reviewed: false
+  - id: data-poisoning
+    tier: C
+    signals: []
+    reviewed: false
+  - id: data-protection
+    tier: B
+    signals:
+      - questions:2
+    reviewed: false
+  - id: decoding
+    tier: C
+    signals: []
+    reviewed: false
+  - id: deep-learning
+    tier: C
+    signals: []
+    reviewed: false
+  - id: deep-learning-boom
+    tier: C
+    signals: []
+    reviewed: false
+  - id: dense-vector
+    tier: C
+    signals: []
+    reviewed: false
+  - id: design-collaboration
+    tier: C
+    signals: []
+    reviewed: false
+  - id: diffusion-model
+    tier: C
+    signals: []
+    reviewed: false
+  - id: distillation
+    tier: C
+    signals: []
+    reviewed: false
+  - id: distributed-training
+    tier: C
+    signals: []
+    reviewed: false
+  - id: document-chunking
+    tier: A
+    signals:
+      - chain-core
+      - questions:1
+      - relations:2
+      - routes:1
+    reviewed: false
+  - id: document-parsing
+    tier: B
+    signals:
+      - questions:1
+    reviewed: false
+  - id: document-understanding
+    tier: C
+    signals: []
+    reviewed: false
+  - id: edge-ai
+    tier: C
+    signals: []
+    reviewed: false
+  - id: embedding
+    tier: A
+    signals:
+      - chain-core
+      - relations:2
+      - routes:1
+    reviewed: false
+  - id: energy-efficiency
+    tier: C
+    signals: []
+    reviewed: false
+  - id: epoch
+    tier: C
+    signals: []
+    reviewed: false
+  - id: error-recovery
+    tier: B
+    signals:
+      - questions:3
+      - cases:1
+    reviewed: false
+  - id: eval-set
+    tier: B
+    signals:
+      - chain-core
+      - questions:6
+    reviewed: false
+  - id: evaluation
+    tier: A
+    signals:
+      - chain-core
+      - questions:1
+      - cases:1
+    reviewed: false
+  - id: evaluation-rubric
+    tier: B
+    signals:
+      - questions:1
+    reviewed: false
+  - id: experiment-tracking
+    tier: C
+    signals: []
+    reviewed: false
+  - id: expert-system
+    tier: C
+    signals: []
+    reviewed: false
+  - id: explainable-ai
+    tier: B
+    signals:
+      - questions:1
+    reviewed: false
+  - id: explanation-interface
+    tier: B
+    signals:
+      - questions:3
+    reviewed: false
+  - id: factuality
+    tier: C
+    signals: []
+    reviewed: false
+  - id: fairness
+    tier: C
+    signals: []
+    reviewed: false
+  - id: faithfulness
+    tier: B
+    signals:
+      - cases:2
+    reviewed: false
+  - id: fallback-experience
+    tier: B
+    signals:
+      - questions:4
+    reviewed: false
+  - id: fallback-model
+    tier: B
+    signals:
+      - questions:2
+    reviewed: false
+  - id: feature-engineering
+    tier: C
+    signals: []
+    reviewed: false
+  - id: feedback-loop
+    tier: B
+    signals:
+      - questions:3
+    reviewed: false
+  - id: few-shot-prompting
+    tier: B
+    signals:
+      - chain-core
+      - questions:1
+      - containment:1
+    reviewed: false
+  - id: fine-tuning
+    tier: B
+    signals:
+      - questions:4
+      - relations:1
+    reviewed: false
+  - id: flops
+    tier: C
+    signals: []
+    reviewed: false
+  - id: foundation-model
+    tier: C
+    signals: []
+    reviewed: false
+  - id: foundation-model-era
+    tier: C
+    signals: []
+    reviewed: false
+  - id: foundry
+    tier: C
+    signals:
+      - containment:1
+    reviewed: false
+  - id: function-calling
+    tier: B
+    signals:
+      - questions:2
+    reviewed: false
+  - id: generalization
+    tier: C
+    signals: []
+    reviewed: false
+  - id: generative-ai
+    tier: A
+    signals:
+      - questions:1
+      - relations:3
+      - routes:4
+    reviewed: false
+  - id: generative-ui
+    tier: C
+    signals: []
+    reviewed: false
+  - id: go-to-market
+    tier: B
+    signals:
+      - questions:1
+      - routes:1
+    reviewed: false
+  - id: golden-dataset
+    tier: B
+    signals:
+      - questions:3
+      - cases:1
+    reviewed: false
+  - id: gpu
+    tier: C
+    signals: []
+    reviewed: false
+  - id: gpu-serving
+    tier: C
+    signals: []
+    reviewed: false
+  - id: gradient-descent
+    tier: C
+    signals: []
+    reviewed: false
+  - id: groundedness
+    tier: B
+    signals:
+      - chain-core
+      - questions:1
+    reviewed: false
+  - id: grounding
+    tier: B
+    signals:
+      - questions:2
+    reviewed: false
+  - id: hallucination
+    tier: A
+    signals:
+      - chain-core
+      - questions:6
+      - relations:2
+      - routes:4
+    reviewed: false
+  - id: heuristic
+    tier: C
+    signals: []
+    reviewed: false
+  - id: high-bandwidth-memory
+    tier: C
+    signals: []
+    reviewed: false
+  - id: human-ai-collaboration
+    tier: A
+    signals:
+      - questions:3
+      - cases:5
+      - routes:1
+    reviewed: false
+  - id: human-escalation
+    tier: B
+    signals:
+      - questions:7
+      - cases:7
+    reviewed: false
+  - id: human-evaluation
+    tier: B
+    signals:
+      - questions:2
+    reviewed: false
+  - id: human-in-the-loop
+    tier: A
+    signals:
+      - chain-core
+      - questions:12
+      - cases:1
+    reviewed: false
+  - id: human-oversight
+    tier: B
+    signals:
+      - chain-core
+      - questions:3
+    reviewed: false
+  - id: hybrid-search
+    tier: C
+    signals:
+      - containment:1
+    reviewed: false
+  - id: hyperparameter
+    tier: C
+    signals: []
+    reviewed: false
+  - id: image-captioning
+    tier: C
+    signals: []
+    reviewed: false
+  - id: image-generation
+    tier: C
+    signals: []
+    reviewed: false
+  - id: image-to-image
+    tier: C
+    signals: []
+    reviewed: false
+  - id: image-understanding
+    tier: C
+    signals: []
+    reviewed: false
+  - id: in-context-learning
+    tier: C
+    signals: []
+    reviewed: false
+  - id: indexing-pipeline
+    tier: B
+    signals:
+      - questions:1
+    reviewed: false
+  - id: inference
+    tier: C
+    signals: []
+    reviewed: false
+  - id: inference-compute
+    tier: C
+    signals:
+      - containment:1
+    reviewed: false
+  - id: inference-server
+    tier: C
+    signals: []
+    reviewed: false
+  - id: informed-consent
+    tier: B
+    signals:
+      - questions:2
+    reviewed: false
+  - id: instruction-hierarchy
+    tier: B
+    signals:
+      - questions:1
+    reviewed: false
+  - id: instruction-tuning
+    tier: B
+    signals:
+      - questions:1
+      - containment:1
+    reviewed: false
+  - id: jailbreak
+    tier: C
+    signals: []
+    reviewed: false
+  - id: keyword-search
+    tier: C
+    signals:
+      - containment:1
+    reviewed: false
+  - id: knowledge-base
+    tier: B
+    signals:
+      - questions:2
+      - cases:1
+    reviewed: false
+  - id: knowledge-representation
+    tier: C
+    signals: []
+    reviewed: false
+  - id: langchain
+    tier: A
+    signals:
+      - relations:2
+    reviewed: true
+    note: 人工终判。I3-04 新建的决策页，按《迭代开发说明书》第十二节验收；用户最常见的困惑是「它和 MCP 是不是竞品」，必须受 A 档门禁约束。
+  - id: large-language-model
+    tier: A
+    signals:
+      - chain-core
+      - relations:5
+      - routes:4
+    reviewed: false
+  - id: latency
+    tier: B
+    signals:
+      - cases:1
+    reviewed: false
+  - id: latency-budget
+    tier: B
+    signals:
+      - questions:4
+    reviewed: false
+  - id: latency-optimization
+    tier: B
+    signals:
+      - questions:1
+    reviewed: false
+  - id: learning-rate
+    tier: C
+    signals: []
+    reviewed: false
+  - id: lip-sync
+    tier: C
+    signals: []
+    reviewed: false
+  - id: llm-as-judge
+    tier: B
+    signals:
+      - chain-core
+    reviewed: false
+  - id: load-balancing
+    tier: C
+    signals: []
+    reviewed: false
+  - id: long-context
+    tier: B
+    signals:
+      - questions:1
+      - relations:1
+    reviewed: false
+  - id: long-term-memory
+    tier: C
+    signals: []
+    reviewed: false
+  - id: lora
+    tier: B
+    signals:
+      - questions:2
+    reviewed: false
+  - id: loss-function
+    tier: C
+    signals: []
+    reviewed: false
+  - id: machine-intelligence
+    tier: C
+    signals: []
+    reviewed: false
+  - id: machine-learning
+    tier: C
+    signals: []
+    reviewed: false
+  - id: memory-bandwidth
+    tier: C
+    signals: []
+    reviewed: false
+  - id: metadata-filtering
+    tier: B
+    signals:
+      - questions:1
+    reviewed: false
+  - id: mixture-of-experts
+    tier: C
+    signals: []
+    reviewed: false
+  - id: modality
+    tier: C
+    signals: []
+    reviewed: false
+  - id: model-api
+    tier: B
+    signals:
+      - chain-core
+      - questions:1
+    reviewed: false
+  - id: model-capability
+    tier: B
+    signals:
+      - questions:1
+    reviewed: false
+  - id: model-context-protocol
+    tier: A
+    signals:
+      - chain-core
+      - relations:1
+    reviewed: true
+    note: 人工终判。I3-02 决策页重写，第 5 站核心概念；机器只给了 2 个信号，但它是「给接口」这一站的入口，必须受 A 档门禁约束。
+  - id: model-deployment
+    tier: C
+    signals: []
+    reviewed: false
+  - id: model-parameter
+    tier: C
+    signals: []
+    reviewed: false
+  - id: model-registry
+    tier: C
+    signals: []
+    reviewed: false
+  - id: model-routing
+    tier: B
+    signals:
+      - questions:5
+    reviewed: false
+  - id: model-serving
+    tier: B
+    signals:
+      - chain-core
+    reviewed: false
+  - id: model-theft
+    tier: C
+    signals: []
+    reviewed: false
+  - id: multi-agent-system
+    tier: C
+    signals: []
+    reviewed: false
+  - id: multimodal-ai
+    tier: C
+    signals:
+      - containment:1
+    reviewed: false
+  - id: multimodal-embedding
+    tier: C
+    signals:
+      - containment:1
+    reviewed: false
+  - id: multimodal-fusion
+    tier: C
+    signals:
+      - containment:1
+    reviewed: false
+  - id: mvp
+    tier: B
+    signals:
+      - questions:5
+      - routes:1
+    reviewed: false
+  - id: narrow-ai
+    tier: C
+    signals:
+      - containment:1
+    reviewed: false
+  - id: native-multimodal-model
+    tier: C
+    signals:
+      - containment:1
+    reviewed: false
+  - id: natural-language-processing
+    tier: C
+    signals: []
+    reviewed: false
+  - id: negative-prompt
+    tier: C
+    signals:
+      - containment:1
+    reviewed: false
+  - id: neural-network
+    tier: C
+    signals: []
+    reviewed: false
+  - id: next-token-prediction
+    tier: C
+    signals:
+      - containment:1
+    reviewed: false
+  - id: north-star-metric
+    tier: A
+    signals:
+      - questions:2
+      - cases:4
+      - routes:1
+    reviewed: false
+  - id: npu
+    tier: C
+    signals: []
+    reviewed: false
+  - id: observability
+    tier: A
+    signals:
+      - chain-core
+      - questions:6
+      - cases:6
+    reviewed: false
+  - id: offline-evaluation
+    tier: B
+    signals:
+      - questions:3
+      - cases:6
+    reviewed: false
+  - id: on-device-ai
+    tier: C
+    signals: []
+    reviewed: false
+  - id: online-evaluation
+    tier: B
+    signals:
+      - questions:4
+      - cases:1
+    reviewed: false
+  - id: open-weight-model
+    tier: C
+    signals: []
+    reviewed: false
+  - id: optical-character-recognition
+    tier: C
+    signals: []
+    reviewed: false
+  - id: optimizer
+    tier: C
+    signals: []
+    reviewed: false
+  - id: overfitting
+    tier: C
+    signals: []
+    reviewed: false
+  - id: pairwise-comparison
+    tier: C
+    signals: []
+    reviewed: false
+  - id: parameter-count
+    tier: C
+    signals: []
+    reviewed: false
+  - id: parameter-efficient-fine-tuning
+    tier: C
+    signals:
+      - containment:1
+    reviewed: false
+  - id: perceived-latency
+    tier: B
+    signals:
+      - questions:2
+    reviewed: false
+  - id: perception
+    tier: C
+    signals: []
+    reviewed: false
+  - id: perceptron-history
+    tier: C
+    signals: []
+    reviewed: false
+  - id: post-training
+    tier: C
+    signals: []
+    reviewed: false
+  - id: prd
+    tier: B
+    signals:
+      - routes:1
+    reviewed: false
+  - id: pretraining
+    tier: C
+    signals: []
+    reviewed: false
+  - id: pricing-strategy
+    tier: C
+    signals: []
+    reviewed: false
+  - id: prioritization
+    tier: B
+    signals:
+      - questions:6
+      - routes:1
+    reviewed: false
+  - id: privacy
+    tier: B
+    signals:
+      - questions:1
+    reviewed: false
+  - id: problem-solution-fit
+    tier: B
+    signals:
+      - questions:5
+      - cases:10
+    reviewed: false
+  - id: product-analytics
+    tier: B
+    signals:
+      - questions:2
+      - routes:1
+    reviewed: false
+  - id: product-lifecycle
+    tier: B
+    signals:
+      - routes:1
+    reviewed: false
+  - id: product-manager
+    tier: C
+    signals: []
+    reviewed: false
+  - id: progressive-disclosure
+    tier: B
+    signals:
+      - questions:4
+    reviewed: false
+  - id: project-management
+    tier: B
+    signals:
+      - questions:3
+    reviewed: false
+  - id: prompt
+    tier: B
+    signals:
+      - chain-core
+      - questions:1
+    reviewed: false
+  - id: prompt-cache
+    tier: B
+    signals:
+      - questions:2
+    reviewed: false
+  - id: prompt-chaining
+    tier: B
+    signals:
+      - chain-core
+      - containment:1
+    reviewed: false
+  - id: prompt-constraint
+    tier: B
+    signals:
+      - questions:2
+      - containment:1
+    reviewed: false
+  - id: prompt-debugging
+    tier: C
+    signals:
+      - containment:1
+    reviewed: false
+  - id: prompt-evaluation
+    tier: B
+    signals:
+      - questions:1
+      - containment:1
+    reviewed: false
+  - id: prompt-injection
+    tier: B
+    signals:
+      - chain-core
+      - cases:5
+    reviewed: false
+  - id: prompt-interface
+    tier: C
+    signals: []
+    reviewed: false
+  - id: prompt-template
+    tier: B
+    signals:
+      - chain-core
+      - relations:1
+      - containment:1
+    reviewed: false
+  - id: prompt-versioning
+    tier: B
+    signals:
+      - questions:1
+      - containment:1
+    reviewed: false
+  - id: quantization
+    tier: C
+    signals: []
+    reviewed: false
+  - id: query-expansion
+    tier: C
+    signals: []
+    reviewed: false
+  - id: query-rewriting
+    tier: C
+    signals: []
+    reviewed: false
+  - id: rate-limiting
+    tier: B
+    signals:
+      - questions:1
+    reviewed: false
+  - id: reasoning-system
+    tier: C
+    signals: []
+    reviewed: false
+  - id: red-teaming
+    tier: C
+    signals: []
+    reviewed: false
+  - id: reflection
+    tier: C
+    signals: []
+    reviewed: false
+  - id: regression
+    tier: C
+    signals: []
+    reviewed: false
+  - id: reinforcement-learning
+    tier: C
+    signals: []
+    reviewed: false
+  - id: relevance
+    tier: C
+    signals: []
+    reviewed: false
+  - id: request-batching
+    tier: C
+    signals: []
+    reviewed: false
+  - id: requirement-analysis
+    tier: B
+    signals:
+      - questions:1
+      - routes:1
+    reviewed: false
+  - id: reranking
+    tier: A
+    signals:
+      - chain-core
+      - questions:3
+      - relations:2
+      - routes:2
+    reviewed: false
+  - id: response-caching
+    tier: C
+    signals: []
+    reviewed: false
+  - id: responsible-ai
+    tier: C
+    signals: []
+    reviewed: false
+  - id: retrieval
+    tier: B
+    signals:
+      - relations:6
+      - routes:2
+    reviewed: false
+  - id: retrieval-augmented-generation
+    tier: A
+    signals:
+      - chain-core
+      - questions:10
+      - cases:1
+      - relations:10
+      - routes:2
+      - containment:1
+    reviewed: true
+    note: 人工终判。I3-06 决策页重写，第 3 站入口概念；机器已判 A，人工确认并锁定，避免后续重新生成时被降档。
+  - id: retrieval-context
+    tier: C
+    signals: []
+    reviewed: false
+  - id: retrieval-precision
+    tier: B
+    signals:
+      - questions:1
+      - cases:1
+    reviewed: false
+  - id: retrieval-query
+    tier: C
+    signals:
+      - containment:1
+    reviewed: false
+  - id: retrieval-recall
+    tier: B
+    signals:
+      - questions:3
+      - cases:1
+    reviewed: false
+  - id: retry-policy
+    tier: C
+    signals: []
+    reviewed: false
+  - id: roadmap
+    tier: B
+    signals:
+      - questions:3
+      - routes:1
+    reviewed: false
+  - id: robotics
+    tier: C
+    signals: []
+    reviewed: false
+  - id: role-prompting
+    tier: C
+    signals:
+      - containment:1
+    reviewed: false
+  - id: rollback
+    tier: B
+    signals:
+      - questions:6
+      - cases:6
+    reviewed: false
+  - id: safety-filter
+    tier: B
+    signals:
+      - questions:1
+    reviewed: false
+  - id: sampling
+    tier: C
+    signals: []
+    reviewed: false
+  - id: search-algorithm
+    tier: C
+    signals: []
+    reviewed: false
+  - id: self-attention
+    tier: C
+    signals: []
+    reviewed: false
+  - id: self-correction
+    tier: C
+    signals: []
+    reviewed: false
+  - id: semantic-cache
+    tier: B
+    signals:
+      - questions:1
+    reviewed: false
+  - id: semantic-search
+    tier: B
+    signals:
+      - questions:1
+      - containment:1
+    reviewed: false
+  - id: semiconductor
+    tier: C
+    signals: []
+    reviewed: false
+  - id: service-level-objective
+    tier: B
+    signals:
+      - questions:1
+    reviewed: false
+  - id: short-term-memory
+    tier: B
+    signals:
+      - questions:1
+    reviewed: false
+  - id: similarity-search
+    tier: C
+    signals:
+      - containment:1
+    reviewed: false
+  - id: sparse-vector
+    tier: C
+    signals: []
+    reviewed: false
+  - id: speech-recognition
+    tier: C
+    signals: []
+    reviewed: false
+  - id: speech-synthesis
+    tier: C
+    signals: []
+    reviewed: false
+  - id: speech-technology
+    tier: C
+    signals: []
+    reviewed: false
+  - id: stakeholder-management
+    tier: B
+    signals:
+      - questions:2
+    reviewed: false
+  - id: state-management
+    tier: B
+    signals:
+      - questions:1
+    reviewed: false
+  - id: streaming-response
+    tier: B
+    signals:
+      - questions:3
+    reviewed: false
+  - id: structured-output
+    tier: B
+    signals:
+      - questions:5
+      - cases:1
+    reviewed: false
+  - id: supervised-learning
+    tier: C
+    signals: []
+    reviewed: false
+  - id: symbolic-ai
+    tier: C
+    signals:
+      - containment:1
+    reviewed: false
+  - id: system-prompt
+    tier: B
+    signals:
+      - chain-core
+      - containment:1
+    reviewed: false
+  - id: task-decomposition
+    tier: B
+    signals:
+      - questions:2
+      - cases:1
+    reviewed: false
+  - id: task-success-rate
+    tier: B
+    signals:
+      - questions:4
+    reviewed: false
+  - id: tech-collaboration
+    tier: B
+    signals:
+      - questions:5
+      - routes:1
+    reviewed: false
+  - id: temperature
+    tier: B
+    signals:
+      - questions:1
+    reviewed: false
+  - id: tensor-parallelism
+    tier: C
+    signals: []
+    reviewed: false
+  - id: text-to-image
+    tier: C
+    signals: []
+    reviewed: false
+  - id: text-to-speech
+    tier: C
+    signals: []
+    reviewed: false
+  - id: throughput
+    tier: C
+    signals: []
+    reviewed: false
+  - id: token
+    tier: A
+    signals:
+      - chain-core
+      - relations:3
+      - routes:3
+    reviewed: false
+  - id: tokenizer
+    tier: C
+    signals:
+      - containment:1
+    reviewed: false
+  - id: tool-use
+    tier: B
+    signals:
+      - chain-core
+      - questions:1
+    reviewed: false
+  - id: top-k
+    tier: B
+    signals:
+      - questions:1
+      - containment:1
+    reviewed: false
+  - id: top-p
+    tier: C
+    signals:
+      - containment:1
+    reviewed: false
+  - id: toxicity-evaluation
+    tier: C
+    signals: []
+    reviewed: false
+  - id: tpu
+    tier: C
+    signals: []
+    reviewed: false
+  - id: trace
+    tier: B
+    signals:
+      - questions:3
+    reviewed: false
+  - id: train-validation-test-split
+    tier: C
+    signals: []
+    reviewed: false
+  - id: training-compute
+    tier: C
+    signals:
+      - containment:1
+    reviewed: false
+  - id: training-data
+    tier: B
+    signals:
+      - questions:2
+    reviewed: false
+  - id: transfer-learning
+    tier: C
+    signals: []
+    reviewed: false
+  - id: transformer
+    tier: C
+    signals: []
+    reviewed: false
+  - id: transparency
+    tier: B
+    signals:
+      - questions:1
+    reviewed: false
+  - id: turing-test
+    tier: C
+    signals: []
+    reviewed: false
+  - id: uncertainty-display
+    tier: B
+    signals:
+      - questions:3
+    reviewed: false
+  - id: underfitting
+    tier: C
+    signals: []
+    reviewed: false
+  - id: undo-action
+    tier: B
+    signals:
+      - questions:7
+    reviewed: false
+  - id: unsupervised-learning
+    tier: C
+    signals:
+      - containment:1
+    reviewed: false
+  - id: user-control
+    tier: B
+    signals:
+      - questions:7
+      - cases:4
+    reviewed: false
+  - id: user-interview
+    tier: B
+    signals:
+      - questions:3
+    reviewed: false
+  - id: user-prompt
+    tier: C
+    signals:
+      - containment:1
+    reviewed: false
+  - id: user-research
+    tier: B
+    signals:
+      - questions:3
+      - routes:1
+    reviewed: false
+  - id: user-story
+    tier: B
+    signals:
+      - routes:1
+    reviewed: false
+  - id: user-trust
+    tier: B
+    signals:
+      - questions:3
+    reviewed: false
+  - id: vector-database
+    tier: A
+    signals:
+      - chain-core
+      - relations:2
+      - routes:1
+    reviewed: false
+  - id: vector-index
+    tier: C
+    signals: []
+    reviewed: false
+  - id: video-generation
+    tier: C
+    signals: []
+    reviewed: false
+  - id: video-understanding
+    tier: C
+    signals: []
+    reviewed: false
+  - id: vision-language-model
+    tier: C
+    signals: []
+    reviewed: false
+  - id: visual-question-answering
+    tier: C
+    signals: []
+    reviewed: false
+  - id: voice-cloning
+    tier: C
+    signals: []
+    reviewed: false
+  - id: workflow-automation
+    tier: A
+    signals:
+      - chain-core
+      - questions:4
+      - cases:2
+    reviewed: false
+  - id: zero-shot-prompting
+    tier: C
+    signals:
+      - containment:1
+    reviewed: false

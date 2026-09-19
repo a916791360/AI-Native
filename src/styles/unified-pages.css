@@ -296,6 +296,48 @@ body .term-page .term-content h2:not(:first-child) {
   border-top: 1px solid var(--color-line-soft);
 }
 
+/*
+ * 决策页 v2 允许在正文里放对比表（典型用法：LangChain 与 MCP 的四维对比）。
+ * 在这之前全站正文没有表格，所以这里从头补一套，语言对齐学习完成页的
+ * .complete-matrix：1px 细线、等宽字体表头、表头用 quiet 色。
+ *
+ * 两条硬约束：
+ *   1. 必须与正文同宽（max-width: var(--reading-max) + 居中），否则表格会
+ *      比它上面的段落宽出一截，在宽屏上尤其明显；
+ *   2. 320px 下不得横向溢出——所以用 table-layout: fixed + 允许在词内断行，
+ *      而不是让表格撑破容器，也不做 display:block 的横向滚动（那会让
+ *      thead/tbody 失去表格布局，列不再对齐）。
+ */
+body .term-page.term-page .term-content.term-content table {
+  width: 100%;
+  max-width: var(--reading-max);
+  margin: var(--space-3) auto 0;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-size: var(--text-sm);
+}
+
+body .term-page.term-page .term-content.term-content th,
+body .term-page.term-page .term-content.term-content td {
+  border: 1px solid var(--color-line-soft);
+  padding: var(--space-2) var(--space-3);
+  text-align: left;
+  vertical-align: top;
+  overflow-wrap: anywhere;
+}
+
+body .term-page.term-page .term-content.term-content thead th {
+  color: var(--color-quiet);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-body);
+  letter-spacing: 0.06em;
+}
+
+body .term-page.term-page .term-content.term-content tbody th {
+  font-weight: var(--weight-body);
+}
+
 body .term-page.term-page .relations-section.relations-section,
 body .term-page.term-page .source-register.source-register,
 body .term-page.term-page .catalogued-copy.catalogued-copy {
@@ -894,7 +936,8 @@ body .not-found h1 {
   body .term-page .term-content h2 ~ ul,
   body .term-page .term-content h2 ~ ol,
   body .term-page .term-content h2 ~ blockquote,
-  body .term-page .term-content h2 ~ pre {
+  body .term-page .term-content h2 ~ pre,
+  body .term-page .term-content h2 ~ table {
     margin-inline: var(--space-4);
   }
 

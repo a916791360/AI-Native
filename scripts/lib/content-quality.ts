@@ -3,6 +3,11 @@ import path from 'node:path';
 
 import { parse as parseYaml } from 'yaml';
 
+import {
+  diffSectionStructure,
+  type SectionStructureDiff,
+} from '../../src/lib/content/term-sections';
+
 /**
  * 内容质量分析：把「内容质量」从主观话题变成一组可以打印出来的数字。
  *
@@ -74,6 +79,8 @@ export interface TermRecord {
   chainRole?: string;
   hasBoundaries: boolean;
   minAction?: string;
+  /** 正文 h2 序列与决策页模板 v2 的差集（门禁 5 用）。 */
+  sectionDiff: SectionStructureDiff;
 }
 
 export async function loadTerms(root = process.cwd()): Promise<TermRecord[]> {
@@ -97,17 +104,19 @@ export async function loadTerms(root = process.cwd()): Promise<TermRecord[]> {
       continue;
     }
 
+    const body = (match[2] ?? '').trim();
     terms.push({
       id: String(frontmatter.id ?? path.basename(file, '.mdx')),
       nameZh: String(frontmatter.nameZh ?? ''),
       nameEn: String(frontmatter.nameEn ?? ''),
       domain: String(frontmatter.domain ?? ''),
       filePath: path.relative(root, file),
-      body: (match[2] ?? '').trim(),
+      body,
       chain: typeof frontmatter.chain === 'number' ? frontmatter.chain : undefined,
       chainRole: typeof frontmatter.chainRole === 'string' ? frontmatter.chainRole : undefined,
       hasBoundaries: Boolean(frontmatter.boundaries),
       minAction: typeof frontmatter.minAction === 'string' ? frontmatter.minAction : undefined,
+      sectionDiff: diffSectionStructure(body),
     });
   }
   return terms;

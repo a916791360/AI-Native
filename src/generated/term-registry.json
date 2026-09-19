@@ -177,7 +177,7 @@
           "language": "zh-CN"
         }
       ],
-      "summary": "能够围绕目标管理状态、选择步骤并调用工具执行任务的 AI 系统形态。",
+      "summary": "能自己决定下一步做什么、并调用工具把事办完的系统形态——产物是已经发生的事，不只是文字。",
       "domain": "agents-tool-use-automation",
       "domainNameZh": "Agent、工具调用与自动化",
       "difficulty": "beginner",
@@ -962,7 +962,7 @@
           "language": "zh-CN"
         }
       ],
-      "summary": "模型一次推理能够共同处理的输入、历史信息、工具结果和输出所占 Token 范围。",
+      "summary": "一次推理能同时参考的 Token 容量——是「当下能看见」的范围，不是记忆，也不是训练语料。",
       "domain": "prompt-context-engineering",
       "domainNameZh": "提示词与上下文工程",
       "difficulty": "beginner",
@@ -1272,7 +1272,7 @@
           "language": "en"
         }
       ],
-      "summary": "按结构或语义把长文档拆成较小知识单元，以便建立索引、检索和放入上下文。",
+      "summary": "把长文档切成「取回来能直接看懂」的知识单元——切片质量常常比换哪个模型更决定检索效果。",
       "domain": "data-retrieval-rag",
       "domainNameZh": "数据、检索与 RAG",
       "difficulty": "intermediate",
@@ -1363,7 +1363,7 @@
           "language": "en"
         }
       ],
-      "summary": "把文本、图像或其他对象表示为数值向量，使语义或特征关系可以被计算和比较。",
+      "summary": "把内容变成一串数字向量的表示方法——让「意思接不接近」第一次变成可以算的东西。",
       "domain": "data-retrieval-rag",
       "domainNameZh": "数据、检索与 RAG",
       "difficulty": "intermediate",
@@ -1445,7 +1445,7 @@
       "nameEn": "AI Evaluation",
       "abbreviations": [],
       "aliases": [],
-      "summary": "用明确任务、数据和标准衡量 AI 系统表现，并据此发现问题和指导改进的过程。",
+      "summary": "用样本、标准和可复现的流程回答「到底变好了没有」——没有它，每一次改动都只是感觉。",
       "domain": "evaluation-observability-quality",
       "domainNameZh": "评估、可观测性与质量",
       "difficulty": "beginner",
@@ -1914,7 +1914,7 @@
           "language": "zh-CN"
         }
       ],
-      "summary": "生成模型给出看似合理但无法由事实、输入或可靠证据支持的内容这一现象。",
+      "summary": "说得流畅、具体、格式像真的，但事实或依据站不住——它是生成方式的必然后果，不是偶发故障。",
       "domain": "evaluation-observability-quality",
       "domainNameZh": "评估、可观测性与质量",
       "difficulty": "beginner",
@@ -2018,7 +2018,7 @@
       "nameEn": "Human in the Loop",
       "abbreviations": [],
       "aliases": [],
-      "summary": "在 AI 工作流的关键判断、审核或异常环节引入人员参与，以提高控制力和责任清晰度。",
+      "summary": "把人员放在风险最高或信息最不足的那个节点上——关键是人在动作生效前能不能真正否决。",
       "domain": "agents-tool-use-automation",
       "domainNameZh": "Agent、工具调用与自动化",
       "difficulty": "beginner",
@@ -2305,7 +2305,7 @@
           "language": "zh-CN"
         }
       ],
-      "summary": "在大量文本或多模态数据上训练、能够理解和生成语言序列的深度学习模型。",
+      "summary": "一个模型覆盖一大批语言任务的通用模型——它的知识在参数里、说不清依据，也不会因为你这次说了什么而改变。",
       "domain": "large-language-models-generative-ai",
       "domainNameZh": "大语言模型与生成式 AI",
       "difficulty": "beginner",
@@ -2540,7 +2540,7 @@
         "MCP"
       ],
       "aliases": [],
-      "summary": "以统一方式向 AI 应用提供工具、资源和提示上下文的开放协议，便于连接外部系统。",
+      "summary": "把「模型接外部工具与数据」从每个客户端 × 每个系统的重复对接，收敛成一次协议实现。",
       "domain": "agents-tool-use-automation",
       "domainNameZh": "Agent、工具调用与自动化",
       "difficulty": "intermediate",
@@ -3441,7 +3441,7 @@
           "language": "zh-CN"
         }
       ],
-      "summary": "使用更精细的相关性模型对初次召回结果再次评分并调整顺序的检索步骤。",
+      "summary": "用更贵、更准的模型给候选重新打分——它只调整顺序，不创造你没召回到的证据。",
       "domain": "data-retrieval-rag",
       "domainNameZh": "数据、检索与 RAG",
       "difficulty": "advanced",
@@ -3535,7 +3535,7 @@
           "language": "zh-CN"
         }
       ],
-      "summary": "在模型生成回答前检索外部资料，并把候选证据作为上下文提供给生成模型的方法。",
+      "summary": "生成前先去外部取证据、再把证据放进上下文的方法——改的是模型看到什么，不是模型权重。",
       "domain": "data-retrieval-rag",
       "domainNameZh": "数据、检索与 RAG",
       "difficulty": "intermediate",
@@ -4024,7 +4024,7 @@
           "language": "zh-CN"
         }
       ],
-      "summary": "模型读取和生成文本时使用的离散单位，一个 Token 不一定对应一个完整汉字或单词。",
+      "summary": "模型读写文本的最小计量单位——是切分与计费的单位，不等于一个字，也不等于一个词。",
       "domain": "large-language-models-generative-ai",
       "domainNameZh": "大语言模型与生成式 AI",
       "difficulty": "beginner",
@@ -4313,7 +4313,7 @@
           "language": "zh-CN"
         }
       ],
-      "summary": "专门存储、索引并按相似度查询高维向量的数据系统，常用于语义检索。",
+      "summary": "存向量、按相似度查向量的底座——不生成向量，也不保证你召回到的一定是对的。",
       "domain": "data-retrieval-rag",
       "domainNameZh": "数据、检索与 RAG",
       "difficulty": "intermediate",
@@ -4466,6 +4466,29 @@
       "searchKeys": [
         "agent 沙箱",
         "agent sandbox"
+      ]
+    },
+    {
+      "id": "agent-skills",
+      "url": "/terms/agent-skills/",
+      "nameZh": "Agent 技能",
+      "nameEn": "Agent Skills",
+      "abbreviations": [
+        "Skill"
+      ],
+      "aliases": [],
+      "summary": "把「这件事该怎么做」写成可复用的文件夹——元数据常驻、正文按需加载，而不是每次重述一遍。",
+      "domain": "agents-tool-use-automation",
+      "domainNameZh": "Agent、工具调用与自动化",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "verified",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "agent 技能",
+        "agent skills",
+        "skill"
       ]
     },
     {
@@ -5135,6 +5158,26 @@
       "searchKeys": [
         "索引管线",
         "indexing pipeline"
+      ]
+    },
+    {
+      "id": "langchain",
+      "url": "/terms/langchain/",
+      "nameZh": "LangChain",
+      "nameEn": "LangChain",
+      "abbreviations": [],
+      "aliases": [],
+      "summary": "跑在你自己进程里的应用层代码库，把「调模型、接工具、管提示」这些重复劳动封起来。",
+      "domain": "ai-engineering-deployment-operations",
+      "domainNameZh": "AI 工程、部署与运维",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "verified",
+      "priority": 2,
+      "featured": false,
+      "searchKeys": [
+        "langchain",
+        "langchain"
       ]
     },
     {

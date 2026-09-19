@@ -1,6 +1,9 @@
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 
+import { parse as parseYaml } from 'yaml';
+
+import { TERM_SECTION_IDS } from '../src/lib/content/term-sections';
 import {
   analyzeContentQuality,
   loadTerms,
@@ -11,8 +14,9 @@ import {
 /**
  * 内容质量门禁。
  *
- * 四道规则（规格见《迭代开发说明书》第十一节）：
+ * 五道规则（规格见《迭代开发说明书》第十一节）：
  *   1 · 模板复用   —— 正文句子与他条逐字重复 / 两两相似度超上限
+ *   5 · 段落结构   —— 正文的 h2 序列是否等于决策页模板 v2（I3-01 新增）
  *   2 · 边界声明   —— 是否声明了站点归属（chain）与邻居差别（boundaries）
  *   3 · 上手动作   —— 「亲自试一下」是否真能上手
  *   4 · 配额与近义 —— 数量是否还被配额决定；同域是否还有近义碎片（永远只告警）
@@ -21,9 +25,9 @@ import {
  *   A 档 fail / B 档 warn / C 档豁免。当前 325 条里有 220 条逐字复用模板句，
  *   若一上来全库 fail，CI 会立刻红，团队就会绕过它——这是能让门禁活下来的唯一路径。
  *
- * 档位来源：reports/term-tiers.csv（由 I6-01 的 A/B/C 判定表产出）。
- * 该文件尚不存在时（I6 之前），全部词条按「未分档」处理，一律只告警，
- * 目的是先让全部问题可见，而不是先把 CI 打红。
+ * 档位来源：src/data/term-tiers.yml（由 scripts/build-term-tiers.ts 依据第十三节
+ * 的机器预判信号生成，人工复核后入库）。该文件尚不存在时，全部词条按「未分档」处理，
+ * 一律只告警，目的是先让全部问题可见，而不是先把 CI 打红。
  *
  * 运行：
  *   pnpm check:content-quality          警告模式：打印完整违规清单，退出码 0
@@ -47,10 +51,11 @@ const DETAIL_LIMIT = 12;
 type Tier = 'A' | 'B' | 'C';
 type Scope = Tier | 'unranked';
 type Severity = 'fail' | 'warn';
-type RuleId = 'reuse' | 'boundary' | 'action' | 'quota';
+type RuleId = 'reuse' | 'structure' | 'boundary' | 'action' | 'quota';
 
 const RULE_LABEL: Record<RuleId, string> = {
   reuse: '门禁 1 · 模板复用',
+  structure: '门禁 5 · 段落结构',
   boundary: '门禁 2 · 边界声明',
   action: '门禁 3 · 上手动作',
   quota: '门禁 4 · 配额与近义',
@@ -60,12 +65,15 @@ const HINT = [
   '修复建议：',
   '  · 门禁 1 模板复用：正文要写这一条自己的机制、角色与流程；',
   '    模板结构可以留，模板句子必须清空（整改总则约束 4）。',
+  '  · 门禁 5 段落结构：正文的 9 个 <h2 id> 必须与决策页模板 v2 完全一致；',
+  '    段落定义在 src/lib/content/term-sections.ts，词条页锚点导航从同一处生成，',
+  '    两侧不会各改一半——缺段、拼错段名、顺序颠倒都会被这条抓住。',
   '  · 门禁 2 边界声明：补 chain（理解路径第几站）与 boundaries',
   '    （solves / notSolves / confusions），见《迭代开发说明书》第十二节「决策页内容规范」。',
   '  · 门禁 3 上手动作：minAction 要能在 30 分钟内完成、且结果可观察；',
   '    「写下三件事」「再在本站搜索相邻词条」属于空动作，必被判不合格。',
   '  · 门禁 4 配额与近义：合并或降级近义碎片（用 status: deprecated + replacedBy），不要物理删文件。',
-  '  · 档位表与完整清单：reports/term-tiers.csv（I6-01 产出）、reports/content-quality.json。',
+  '  · 档位表与完整清单：src/data/term-tiers.yml、reports/content-quality.json。',
 ].join('\n');
 
 const root = process.cwd();
@@ -75,29 +83,44 @@ const STRICT = process.argv.includes('--strict');
 // 档位
 // ---------------------------------------------------------------------------
 
-async function loadTermTiers(): Promise<Map<string, Tier>> {
-  const source = await readFile(path.join(root, 'reports/term-tiers.csv'), 'utf8').catch(() => '');
-  const tiers = new Map<string, Tier>();
+/**
+ * 档位表读 src/data/term-tiers.yml（入库文件），不读 reports/term-tiers.csv。
+ *
+ * 为什么偏离说明书第十一节写的路径：reports/ 在本仓库是 .gitignore 的工具产物目录，
+ * 而档位表是**人工判定结果**、不是构建产物。放在不入库的位置，门禁行为就会随机器而异
+ * （CI 上读不到 → 全部按「未分档」处理 → 该 fail 的不 fail），
+ * 而档位恰恰是「哪些词条必须合规」的唯一依据，必须随代码一起版本化。
+ */
+interface TermTier {
+  tier: Tier;
+  signals: string[];
+  note?: string;
+}
+
+async function loadTermTiers(): Promise<Map<string, TermTier>> {
+  const tiers = new Map<string, TermTier>();
+  const source = await readFile(path.join(root, 'src/data/term-tiers.yml'), 'utf8').catch(() => '');
   if (!source.trim()) return tiers;
 
-  const [headerLine, ...rows] = source.trim().split(/\r?\n/u);
-  const header = (headerLine ?? '').split(',').map((cell) => cell.trim().toLowerCase());
-  const idIndex = header.indexOf('id');
-  const tierIndex = header.indexOf('tier');
-  if (idIndex === -1 || tierIndex === -1) return tiers;
+  const parsed = parseYaml(source) as
+    { terms?: { id?: unknown; tier?: unknown; signals?: unknown; note?: unknown }[] } | undefined;
 
-  for (const row of rows) {
-    const cells = row.split(',').map((cell) => cell.trim());
-    const id = cells[idIndex];
-    const tier = cells[tierIndex]?.toUpperCase();
-    if (id && (tier === 'A' || tier === 'B' || tier === 'C')) tiers.set(id, tier);
+  for (const entry of parsed?.terms ?? []) {
+    const id = typeof entry.id === 'string' ? entry.id : '';
+    const tier = typeof entry.tier === 'string' ? entry.tier.toUpperCase() : '';
+    if (!id || (tier !== 'A' && tier !== 'B' && tier !== 'C')) continue;
+    tiers.set(id, {
+      tier,
+      signals: Array.isArray(entry.signals) ? entry.signals.map(String) : [],
+      note: typeof entry.note === 'string' ? entry.note : undefined,
+    });
   }
   return tiers;
 }
 
 const TIERS = await loadTermTiers();
 const HAS_TIERS = TIERS.size > 0;
-const scopeOf = (id: string): Scope => TIERS.get(id) ?? (HAS_TIERS ? 'C' : 'unranked');
+const scopeOf = (id: string): Scope => TIERS.get(id)?.tier ?? (HAS_TIERS ? 'C' : 'unranked');
 
 function severityFor(scope: Scope, rule: RuleId): Severity | 'skip' {
   // 配额类是趋势，不是单条错误——永远只告警（第十一节）
@@ -200,6 +223,31 @@ for (const pair of similarPairs) {
     severity,
     `${pair.a} ↔ ${pair.b}`,
     `正文相似度 ${(pair.score * 100).toFixed(0)}%，超过 ${JACCARD_LIMIT * 100}% 上限`,
+  );
+}
+
+// ---- 门禁 5 · 段落结构 ----------------------------------------------------
+// 正文的 h2 序列必须与决策页模板 v2 完全一致。这条同时替「词条页锚点导航」
+// 兜底：导航项从同一份定义生成，所以正文一旦跑偏，锚点就会指向不存在的段落。
+// 以前这两处是各写一遍、无人校验的，死锚点只能靠读者点下去才发现。
+
+for (const term of terms) {
+  const severity = severityFor(scopeOf(term.id), 'structure');
+  if (severity === 'skip') continue;
+  const { missing, unexpected, outOfOrder } = term.sectionDiff;
+  if (missing.length === 0 && unexpected.length === 0 && !outOfOrder) continue;
+
+  const parts: string[] = [];
+  if (missing.length > 0) parts.push(`缺少 ${missing.join(' / ')}`);
+  if (unexpected.length > 0) parts.push(`多出或拼错 ${unexpected.join(' / ')}`);
+  if (outOfOrder) parts.push('顺序与模板不一致');
+  add(
+    'structure',
+    severity,
+    term.id,
+    `${parts.join('；')}——模板 v2 共 ${TERM_SECTION_IDS.length} 段，当前正文 ${
+      TERM_SECTION_IDS.length - missing.length + unexpected.length
+    } 段`,
   );
 }
 
@@ -315,7 +363,7 @@ for (const issue of issues) {
   byRule.set(issue.rule, list);
 }
 
-for (const rule of ['reuse', 'boundary', 'action', 'quota'] as const) {
+for (const rule of ['reuse', 'structure', 'boundary', 'action', 'quota'] as const) {
   const list = byRule.get(rule) ?? [];
   const failCount = list.filter((issue) => issue.severity === 'fail').length;
   console.log(

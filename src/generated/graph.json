@@ -12,8 +12,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 610,
-        "y": 65
+        "x": 657,
+        "y": 76
       }
     },
     {
@@ -27,8 +27,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 618,
-        "y": 67
+        "x": 665,
+        "y": 78
       }
     },
     {
@@ -42,8 +42,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 626,
-        "y": 68
+        "x": 673,
+        "y": 81
       }
     },
     {
@@ -57,8 +57,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 634,
-        "y": 70
+        "x": 681,
+        "y": 83
       }
     },
     {
@@ -72,8 +72,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 642,
-        "y": 72
+        "x": 688,
+        "y": 86
       }
     },
     {
@@ -87,8 +87,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 650,
-        "y": 74
+        "x": 696,
+        "y": 88
       }
     },
     {
@@ -102,8 +102,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 658,
-        "y": 76
+        "x": 703,
+        "y": 91
       }
     },
     {
@@ -117,8 +117,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 666,
-        "y": 79
+        "x": 711,
+        "y": 94
       }
     },
     {
@@ -132,8 +132,23 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 674,
-        "y": 81
+        "x": 718,
+        "y": 97
+      }
+    },
+    {
+      "id": "agent-skills",
+      "label": "Agent 技能",
+      "labelEn": "Agent Skills",
+      "url": "/terms/agent-skills/",
+      "summary": "把「这件事该怎么做」写成可复用的文件夹——元数据常驻、正文按需加载，而不是每次重述一遍。",
+      "domain": "agents-tool-use-automation",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "verified",
+      "position": {
+        "x": 576,
+        "y": 60
       }
     },
     {
@@ -147,8 +162,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 682,
-        "y": 84
+        "x": 725,
+        "y": 100
       }
     },
     {
@@ -162,8 +177,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 689,
-        "y": 86
+        "x": 732,
+        "y": 103
       }
     },
     {
@@ -177,8 +192,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 697,
-        "y": 89
+        "x": 740,
+        "y": 107
       }
     },
     {
@@ -186,14 +201,14 @@
       "label": "AI Agent",
       "labelEn": "AI Agent",
       "url": "/terms/ai-agent/",
-      "summary": "能够围绕目标管理状态、选择步骤并调用工具执行任务的 AI 系统形态。",
+      "summary": "能自己决定下一步做什么、并调用工具把事办完的系统形态——产物是已经发生的事，不只是文字。",
       "domain": "agents-tool-use-automation",
       "difficulty": "beginner",
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 370,
-        "y": 554
+        "x": 792,
+        "y": 408
       }
     },
     {
@@ -222,8 +237,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 704,
-        "y": 92
+        "x": 747,
+        "y": 110
       }
     },
     {
@@ -237,8 +252,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 712,
-        "y": 95
+        "x": 753,
+        "y": 114
       }
     },
     {
@@ -252,8 +267,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 719,
-        "y": 98
+        "x": 760,
+        "y": 117
       }
     },
     {
@@ -267,8 +282,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 727,
-        "y": 101
+        "x": 767,
+        "y": 121
       }
     },
     {
@@ -282,8 +297,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 734,
-        "y": 104
+        "x": 774,
+        "y": 125
       }
     },
     {
@@ -297,8 +312,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 741,
-        "y": 107
+        "x": 780,
+        "y": 129
       }
     },
     {
@@ -312,8 +327,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 748,
-        "y": 111
+        "x": 786,
+        "y": 132
       }
     },
     {
@@ -327,7 +342,7 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 630,
+        "x": 370,
         "y": 554
       }
     },
@@ -357,8 +372,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 755,
-        "y": 114
+        "x": 793,
+        "y": 137
       }
     },
     {
@@ -387,8 +402,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 762,
-        "y": 118
+        "x": 799,
+        "y": 141
       }
     },
     {
@@ -402,8 +417,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 768,
-        "y": 122
+        "x": 805,
+        "y": 145
       }
     },
     {
@@ -417,8 +432,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 775,
-        "y": 125
+        "x": 811,
+        "y": 149
       }
     },
     {
@@ -432,8 +447,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 781,
-        "y": 129
+        "x": 817,
+        "y": 154
       }
     },
     {
@@ -447,8 +462,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 788,
-        "y": 133
+        "x": 822,
+        "y": 158
       }
     },
     {
@@ -462,8 +477,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 794,
-        "y": 137
+        "x": 828,
+        "y": 163
       }
     },
     {
@@ -477,8 +492,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 800,
-        "y": 142
+        "x": 833,
+        "y": 167
       }
     },
     {
@@ -507,8 +522,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 806,
-        "y": 146
+        "x": 838,
+        "y": 172
       }
     },
     {
@@ -522,8 +537,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 812,
-        "y": 150
+        "x": 844,
+        "y": 177
       }
     },
     {
@@ -537,8 +552,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 818,
-        "y": 155
+        "x": 849,
+        "y": 181
       }
     },
     {
@@ -552,8 +567,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 824,
-        "y": 159
+        "x": 854,
+        "y": 186
       }
     },
     {
@@ -567,8 +582,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 829,
-        "y": 164
+        "x": 858,
+        "y": 191
       }
     },
     {
@@ -582,8 +597,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 835,
-        "y": 168
+        "x": 863,
+        "y": 196
       }
     },
     {
@@ -597,8 +612,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 840,
-        "y": 173
+        "x": 867,
+        "y": 201
       }
     },
     {
@@ -612,8 +627,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 845,
-        "y": 178
+        "x": 872,
+        "y": 207
       }
     },
     {
@@ -627,8 +642,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 850,
-        "y": 183
+        "x": 876,
+        "y": 212
       }
     },
     {
@@ -642,8 +657,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 855,
-        "y": 188
+        "x": 880,
+        "y": 217
       }
     },
     {
@@ -657,8 +672,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 860,
-        "y": 193
+        "x": 884,
+        "y": 222
       }
     },
     {
@@ -672,8 +687,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 864,
-        "y": 198
+        "x": 888,
+        "y": 228
       }
     },
     {
@@ -687,8 +702,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 869,
-        "y": 203
+        "x": 891,
+        "y": 233
       }
     },
     {
@@ -702,8 +717,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 873,
-        "y": 208
+        "x": 895,
+        "y": 239
       }
     },
     {
@@ -717,8 +732,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 877,
-        "y": 214
+        "x": 898,
+        "y": 244
       }
     },
     {
@@ -732,8 +747,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 881,
-        "y": 219
+        "x": 901,
+        "y": 250
       }
     },
     {
@@ -747,8 +762,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 885,
-        "y": 224
+        "x": 904,
+        "y": 256
       }
     },
     {
@@ -762,8 +777,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 889,
-        "y": 230
+        "x": 907,
+        "y": 261
       }
     },
     {
@@ -777,8 +792,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 892,
-        "y": 235
+        "x": 909,
+        "y": 267
       }
     },
     {
@@ -792,8 +807,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 896,
-        "y": 241
+        "x": 912,
+        "y": 273
       }
     },
     {
@@ -807,8 +822,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 899,
-        "y": 246
+        "x": 914,
+        "y": 278
       }
     },
     {
@@ -822,8 +837,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 902,
-        "y": 252
+        "x": 917,
+        "y": 284
       }
     },
     {
@@ -837,8 +852,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 905,
-        "y": 258
+        "x": 919,
+        "y": 290
       }
     },
     {
@@ -852,8 +867,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 908,
-        "y": 263
+        "x": 920,
+        "y": 296
       }
     },
     {
@@ -867,8 +882,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 911,
-        "y": 269
+        "x": 922,
+        "y": 302
       }
     },
     {
@@ -882,7 +897,7 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 509,
+        "x": 508,
         "y": 55
       }
     },
@@ -897,8 +912,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 913,
-        "y": 275
+        "x": 924,
+        "y": 308
       }
     },
     {
@@ -912,8 +927,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 915,
-        "y": 281
+        "x": 925,
+        "y": 314
       }
     },
     {
@@ -927,8 +942,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 917,
-        "y": 287
+        "x": 926,
+        "y": 320
       }
     },
     {
@@ -942,8 +957,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 919,
-        "y": 293
+        "x": 927,
+        "y": 326
       }
     },
     {
@@ -957,8 +972,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 921,
-        "y": 298
+        "x": 928,
+        "y": 332
       }
     },
     {
@@ -972,8 +987,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 923,
-        "y": 304
+        "x": 929,
+        "y": 337
       }
     },
     {
@@ -987,8 +1002,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 924,
-        "y": 310
+        "x": 929,
+        "y": 343
       }
     },
     {
@@ -1002,8 +1017,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 926,
-        "y": 316
+        "x": 930,
+        "y": 349
       }
     },
     {
@@ -1017,8 +1032,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 927,
-        "y": 322
+        "x": 930,
+        "y": 355
       }
     },
     {
@@ -1032,8 +1047,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 928,
-        "y": 328
+        "x": 930,
+        "y": 362
       }
     },
     {
@@ -1047,8 +1062,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 928,
-        "y": 334
+        "x": 930,
+        "y": 368
       }
     },
     {
@@ -1056,14 +1071,14 @@
       "label": "上下文窗口",
       "labelEn": "Context Window",
       "url": "/terms/context-window/",
-      "summary": "模型一次推理能够共同处理的输入、历史信息、工具结果和输出所占 Token 范围。",
+      "summary": "一次推理能同时参考的 Token 容量——是「当下能看见」的范围，不是记忆，也不是训练语料。",
       "domain": "prompt-context-engineering",
       "difficulty": "beginner",
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 735,
-        "y": 226
+        "x": 630,
+        "y": 554
       }
     },
     {
@@ -1077,8 +1092,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 929,
-        "y": 340
+        "x": 930,
+        "y": 374
       }
     },
     {
@@ -1092,8 +1107,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 930,
-        "y": 346
+        "x": 929,
+        "y": 380
       }
     },
     {
@@ -1107,8 +1122,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 930,
-        "y": 352
+        "x": 928,
+        "y": 386
       }
     },
     {
@@ -1122,8 +1137,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 930,
-        "y": 358
+        "x": 928,
+        "y": 391
       }
     },
     {
@@ -1137,8 +1152,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 930,
-        "y": 365
+        "x": 927,
+        "y": 397
       }
     },
     {
@@ -1152,8 +1167,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 930,
-        "y": 371
+        "x": 926,
+        "y": 403
       }
     },
     {
@@ -1167,8 +1182,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 929,
-        "y": 377
+        "x": 924,
+        "y": 409
       }
     },
     {
@@ -1182,8 +1197,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 929,
-        "y": 383
+        "x": 923,
+        "y": 415
       }
     },
     {
@@ -1197,8 +1212,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 928,
-        "y": 389
+        "x": 921,
+        "y": 421
       }
     },
     {
@@ -1212,8 +1227,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 927,
-        "y": 395
+        "x": 919,
+        "y": 427
       }
     },
     {
@@ -1227,8 +1242,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 926,
-        "y": 401
+        "x": 918,
+        "y": 433
       }
     },
     {
@@ -1242,8 +1257,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 925,
-        "y": 407
+        "x": 915,
+        "y": 439
       }
     },
     {
@@ -1257,8 +1272,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 924,
-        "y": 413
+        "x": 913,
+        "y": 444
       }
     },
     {
@@ -1272,8 +1287,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 922,
-        "y": 419
+        "x": 911,
+        "y": 450
       }
     },
     {
@@ -1287,8 +1302,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 920,
-        "y": 424
+        "x": 908,
+        "y": 456
       }
     },
     {
@@ -1302,8 +1317,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 918,
-        "y": 430
+        "x": 905,
+        "y": 462
       }
     },
     {
@@ -1317,8 +1332,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 916,
-        "y": 436
+        "x": 903,
+        "y": 467
       }
     },
     {
@@ -1332,8 +1347,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 914,
-        "y": 442
+        "x": 899,
+        "y": 473
       }
     },
     {
@@ -1347,8 +1362,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 912,
-        "y": 448
+        "x": 896,
+        "y": 478
       }
     },
     {
@@ -1362,8 +1377,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 909,
-        "y": 454
+        "x": 893,
+        "y": 484
       }
     },
     {
@@ -1377,8 +1392,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 907,
-        "y": 459
+        "x": 889,
+        "y": 489
       }
     },
     {
@@ -1392,8 +1407,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 904,
-        "y": 465
+        "x": 886,
+        "y": 495
       }
     },
     {
@@ -1407,8 +1422,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 901,
-        "y": 471
+        "x": 882,
+        "y": 500
       }
     },
     {
@@ -1416,14 +1431,14 @@
       "label": "文档切片",
       "labelEn": "Document Chunking",
       "url": "/terms/document-chunking/",
-      "summary": "按结构或语义把长文档拆成较小知识单元，以便建立索引、检索和放入上下文。",
+      "summary": "把长文档切成「取回来能直接看懂」的知识单元——切片质量常常比换哪个模型更决定检索效果。",
       "domain": "data-retrieval-rag",
       "difficulty": "intermediate",
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 576,
-        "y": 60
+        "x": 584,
+        "y": 61
       }
     },
     {
@@ -1437,8 +1452,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 897,
-        "y": 476
+        "x": 878,
+        "y": 506
       }
     },
     {
@@ -1452,8 +1467,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 894,
-        "y": 482
+        "x": 874,
+        "y": 511
       }
     },
     {
@@ -1467,8 +1482,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 891,
-        "y": 487
+        "x": 870,
+        "y": 516
       }
     },
     {
@@ -1476,14 +1491,14 @@
       "label": "嵌入",
       "labelEn": "Embedding",
       "url": "/terms/embedding/",
-      "summary": "把文本、图像或其他对象表示为数值向量，使语义或特征关系可以被计算和比较。",
+      "summary": "把内容变成一串数字向量的表示方法——让「意思接不接近」第一次变成可以算的东西。",
       "domain": "data-retrieval-rag",
       "difficulty": "intermediate",
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 585,
-        "y": 61
+        "x": 592,
+        "y": 62
       }
     },
     {
@@ -1497,8 +1512,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 887,
-        "y": 493
+        "x": 865,
+        "y": 521
       }
     },
     {
@@ -1512,8 +1527,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 883,
-        "y": 498
+        "x": 861,
+        "y": 526
       }
     },
     {
@@ -1527,8 +1542,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 879,
-        "y": 504
+        "x": 856,
+        "y": 531
       }
     },
     {
@@ -1542,8 +1557,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 875,
-        "y": 509
+        "x": 851,
+        "y": 536
       }
     },
     {
@@ -1551,7 +1566,7 @@
       "label": "AI 评估",
       "labelEn": "AI Evaluation",
       "url": "/terms/evaluation/",
-      "summary": "用明确任务、数据和标准衡量 AI 系统表现，并据此发现问题和指导改进的过程。",
+      "summary": "用样本、标准和可复现的流程回答「到底变好了没有」——没有它，每一次改动都只是感觉。",
       "domain": "evaluation-observability-quality",
       "difficulty": "beginner",
       "ring": "core",
@@ -1572,8 +1587,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 871,
-        "y": 514
+        "x": 846,
+        "y": 541
       }
     },
     {
@@ -1587,8 +1602,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 867,
-        "y": 519
+        "x": 841,
+        "y": 546
       }
     },
     {
@@ -1602,8 +1617,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 862,
-        "y": 525
+        "x": 836,
+        "y": 550
       }
     },
     {
@@ -1617,8 +1632,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 857,
-        "y": 530
+        "x": 830,
+        "y": 555
       }
     },
     {
@@ -1632,8 +1647,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 853,
-        "y": 535
+        "x": 825,
+        "y": 560
       }
     },
     {
@@ -1647,8 +1662,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 848,
-        "y": 540
+        "x": 819,
+        "y": 564
       }
     },
     {
@@ -1662,8 +1677,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 843,
-        "y": 544
+        "x": 814,
+        "y": 569
       }
     },
     {
@@ -1677,8 +1692,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 837,
-        "y": 549
+        "x": 808,
+        "y": 573
       }
     },
     {
@@ -1692,8 +1707,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 832,
-        "y": 554
+        "x": 802,
+        "y": 577
       }
     },
     {
@@ -1707,8 +1722,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 826,
-        "y": 558
+        "x": 796,
+        "y": 581
       }
     },
     {
@@ -1722,8 +1737,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 821,
-        "y": 563
+        "x": 790,
+        "y": 586
       }
     },
     {
@@ -1737,8 +1752,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 815,
-        "y": 568
+        "x": 783,
+        "y": 590
       }
     },
     {
@@ -1752,8 +1767,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 809,
-        "y": 572
+        "x": 777,
+        "y": 593
       }
     },
     {
@@ -1767,8 +1782,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 803,
-        "y": 576
+        "x": 601,
+        "y": 63
       }
     },
     {
@@ -1782,8 +1797,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 797,
-        "y": 580
+        "x": 770,
+        "y": 597
       }
     },
     {
@@ -1797,8 +1812,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 791,
-        "y": 585
+        "x": 764,
+        "y": 601
       }
     },
     {
@@ -1812,8 +1827,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 785,
-        "y": 589
+        "x": 757,
+        "y": 605
       }
     },
     {
@@ -1827,8 +1842,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 778,
-        "y": 593
+        "x": 750,
+        "y": 608
       }
     },
     {
@@ -1842,8 +1857,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 772,
-        "y": 596
+        "x": 743,
+        "y": 612
       }
     },
     {
@@ -1857,8 +1872,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 765,
-        "y": 600
+        "x": 736,
+        "y": 615
       }
     },
     {
@@ -1887,8 +1902,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 758,
-        "y": 604
+        "x": 729,
+        "y": 618
       }
     },
     {
@@ -1902,8 +1917,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 751,
-        "y": 607
+        "x": 722,
+        "y": 621
       }
     },
     {
@@ -1917,8 +1932,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 744,
-        "y": 611
+        "x": 714,
+        "y": 624
       }
     },
     {
@@ -1932,8 +1947,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 737,
-        "y": 614
+        "x": 707,
+        "y": 627
       }
     },
     {
@@ -1947,8 +1962,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 730,
-        "y": 618
+        "x": 700,
+        "y": 630
       }
     },
     {
@@ -1962,8 +1977,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 723,
-        "y": 621
+        "x": 692,
+        "y": 633
       }
     },
     {
@@ -1977,8 +1992,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 716,
-        "y": 624
+        "x": 684,
+        "y": 636
       }
     },
     {
@@ -1992,8 +2007,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 708,
-        "y": 627
+        "x": 677,
+        "y": 638
       }
     },
     {
@@ -2001,7 +2016,7 @@
       "label": "幻觉",
       "labelEn": "Hallucination",
       "url": "/terms/hallucination/",
-      "summary": "生成模型给出看似合理但无法由事实、输入或可靠证据支持的内容这一现象。",
+      "summary": "说得流畅、具体、格式像真的，但事实或依据站不住——它是生成方式的必然后果，不是偶发故障。",
       "domain": "evaluation-observability-quality",
       "difficulty": "beginner",
       "ring": "core",
@@ -2022,8 +2037,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 701,
-        "y": 630
+        "x": 669,
+        "y": 640
       }
     },
     {
@@ -2037,8 +2052,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 693,
-        "y": 633
+        "x": 661,
+        "y": 643
       }
     },
     {
@@ -2052,8 +2067,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 685,
-        "y": 635
+        "x": 653,
+        "y": 645
       }
     },
     {
@@ -2067,8 +2082,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 678,
-        "y": 638
+        "x": 645,
+        "y": 647
       }
     },
     {
@@ -2082,8 +2097,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 670,
-        "y": 640
+        "x": 637,
+        "y": 649
       }
     },
     {
@@ -2091,14 +2106,14 @@
       "label": "人在回路",
       "labelEn": "Human in the Loop",
       "url": "/terms/human-in-the-loop/",
-      "summary": "在 AI 工作流的关键判断、审核或异常环节引入人员参与，以提高控制力和责任清晰度。",
+      "summary": "把人员放在风险最高或信息最不足的那个节点上——关键是人在动作生效前能不能真正否决。",
       "domain": "agents-tool-use-automation",
       "difficulty": "beginner",
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 662,
-        "y": 643
+        "x": 629,
+        "y": 651
       }
     },
     {
@@ -2112,8 +2127,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 654,
-        "y": 645
+        "x": 621,
+        "y": 653
       }
     },
     {
@@ -2127,8 +2142,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 646,
-        "y": 647
+        "x": 613,
+        "y": 654
       }
     },
     {
@@ -2142,8 +2157,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 638,
-        "y": 649
+        "x": 605,
+        "y": 656
       }
     },
     {
@@ -2157,8 +2172,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 630,
-        "y": 651
+        "x": 597,
+        "y": 657
       }
     },
     {
@@ -2172,8 +2187,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 622,
-        "y": 652
+        "x": 588,
+        "y": 659
       }
     },
     {
@@ -2187,8 +2202,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 614,
-        "y": 654
+        "x": 580,
+        "y": 660
       }
     },
     {
@@ -2202,8 +2217,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 605,
-        "y": 656
+        "x": 572,
+        "y": 661
       }
     },
     {
@@ -2217,8 +2232,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 597,
-        "y": 657
+        "x": 563,
+        "y": 662
       }
     },
     {
@@ -2232,8 +2247,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 589,
-        "y": 658
+        "x": 555,
+        "y": 663
       }
     },
     {
@@ -2247,8 +2262,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 580,
-        "y": 660
+        "x": 546,
+        "y": 663
       }
     },
     {
@@ -2262,8 +2277,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 572,
-        "y": 661
+        "x": 538,
+        "y": 664
       }
     },
     {
@@ -2277,8 +2292,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 564,
-        "y": 662
+        "x": 530,
+        "y": 664
       }
     },
     {
@@ -2292,8 +2307,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 555,
-        "y": 662
+        "x": 521,
+        "y": 665
       }
     },
     {
@@ -2307,8 +2322,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 547,
-        "y": 663
+        "x": 513,
+        "y": 665
       }
     },
     {
@@ -2322,8 +2337,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 538,
-        "y": 664
+        "x": 504,
+        "y": 665
       }
     },
     {
@@ -2337,8 +2352,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 530,
-        "y": 664
+        "x": 496,
+        "y": 665
       }
     },
     {
@@ -2352,7 +2367,7 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 521,
+        "x": 487,
         "y": 665
       }
     },
@@ -2367,7 +2382,7 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 513,
+        "x": 479,
         "y": 665
       }
     },
@@ -2382,8 +2397,23 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 504,
-        "y": 665
+        "x": 470,
+        "y": 664
+      }
+    },
+    {
+      "id": "langchain",
+      "label": "LangChain",
+      "labelEn": "LangChain",
+      "url": "/terms/langchain/",
+      "summary": "跑在你自己进程里的应用层代码库，把「调模型、接工具、管提示」这些重复劳动封起来。",
+      "domain": "ai-engineering-deployment-operations",
+      "difficulty": "intermediate",
+      "ring": "core",
+      "status": "verified",
+      "position": {
+        "x": 609,
+        "y": 65
       }
     },
     {
@@ -2391,14 +2421,14 @@
       "label": "大语言模型",
       "labelEn": "Large Language Model",
       "url": "/terms/large-language-model/",
-      "summary": "在大量文本或多模态数据上训练、能够理解和生成语言序列的深度学习模型。",
+      "summary": "一个模型覆盖一大批语言任务的通用模型——它的知识在参数里、说不清依据，也不会因为你这次说了什么而改变。",
       "domain": "large-language-models-generative-ai",
       "difficulty": "beginner",
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 500,
-        "y": 145
+        "x": 735,
+        "y": 226
       }
     },
     {
@@ -2412,8 +2442,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 496,
-        "y": 665
+        "x": 462,
+        "y": 664
       }
     },
     {
@@ -2427,8 +2457,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 487,
-        "y": 665
+        "x": 454,
+        "y": 663
       }
     },
     {
@@ -2442,8 +2472,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 479,
-        "y": 665
+        "x": 445,
+        "y": 663
       }
     },
     {
@@ -2457,8 +2487,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 470,
-        "y": 664
+        "x": 437,
+        "y": 662
       }
     },
     {
@@ -2472,8 +2502,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 462,
-        "y": 664
+        "x": 428,
+        "y": 661
       }
     },
     {
@@ -2487,8 +2517,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 453,
-        "y": 663
+        "x": 420,
+        "y": 660
       }
     },
     {
@@ -2502,8 +2532,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 445,
-        "y": 662
+        "x": 412,
+        "y": 659
       }
     },
     {
@@ -2517,8 +2547,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 436,
-        "y": 662
+        "x": 617,
+        "y": 67
       }
     },
     {
@@ -2532,8 +2562,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 428,
-        "y": 661
+        "x": 403,
+        "y": 657
       }
     },
     {
@@ -2547,8 +2577,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 420,
-        "y": 660
+        "x": 395,
+        "y": 656
       }
     },
     {
@@ -2562,8 +2592,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 411,
-        "y": 658
+        "x": 387,
+        "y": 654
       }
     },
     {
@@ -2577,8 +2607,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 403,
-        "y": 657
+        "x": 379,
+        "y": 653
       }
     },
     {
@@ -2607,8 +2637,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 395,
-        "y": 656
+        "x": 371,
+        "y": 651
       }
     },
     {
@@ -2622,8 +2652,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 386,
-        "y": 654
+        "x": 363,
+        "y": 649
       }
     },
     {
@@ -2637,8 +2667,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 378,
-        "y": 652
+        "x": 355,
+        "y": 647
       }
     },
     {
@@ -2652,8 +2682,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 370,
-        "y": 651
+        "x": 347,
+        "y": 645
       }
     },
     {
@@ -2667,8 +2697,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 362,
-        "y": 649
+        "x": 339,
+        "y": 643
       }
     },
     {
@@ -2682,8 +2712,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 354,
-        "y": 647
+        "x": 331,
+        "y": 640
       }
     },
     {
@@ -2691,14 +2721,14 @@
       "label": "模型上下文协议",
       "labelEn": "Model Context Protocol",
       "url": "/terms/model-context-protocol/",
-      "summary": "以统一方式向 AI 应用提供工具、资源和提示上下文的开放协议，便于连接外部系统。",
+      "summary": "把「模型接外部工具与数据」从每个客户端 × 每个系统的重复对接，收敛成一次协议实现。",
       "domain": "agents-tool-use-automation",
       "difficulty": "intermediate",
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 346,
-        "y": 645
+        "x": 625,
+        "y": 68
       }
     },
     {
@@ -2712,8 +2742,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 338,
-        "y": 643
+        "x": 323,
+        "y": 638
       }
     },
     {
@@ -2727,8 +2757,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 330,
-        "y": 640
+        "x": 316,
+        "y": 636
       }
     },
     {
@@ -2742,8 +2772,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 322,
-        "y": 638
+        "x": 308,
+        "y": 633
       }
     },
     {
@@ -2757,8 +2787,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 315,
-        "y": 635
+        "x": 300,
+        "y": 630
       }
     },
     {
@@ -2772,8 +2802,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 307,
-        "y": 633
+        "x": 293,
+        "y": 627
       }
     },
     {
@@ -2787,8 +2817,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 299,
-        "y": 630
+        "x": 286,
+        "y": 624
       }
     },
     {
@@ -2802,8 +2832,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 292,
-        "y": 627
+        "x": 278,
+        "y": 621
       }
     },
     {
@@ -2817,7 +2847,7 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 526,
+        "x": 525,
         "y": 56
       }
     },
@@ -2832,8 +2862,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 284,
-        "y": 624
+        "x": 271,
+        "y": 618
       }
     },
     {
@@ -2847,8 +2877,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 277,
-        "y": 621
+        "x": 264,
+        "y": 615
       }
     },
     {
@@ -2862,8 +2892,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 270,
-        "y": 618
+        "x": 257,
+        "y": 612
       }
     },
     {
@@ -2877,8 +2907,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 263,
-        "y": 614
+        "x": 250,
+        "y": 608
       }
     },
     {
@@ -2892,8 +2922,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 256,
-        "y": 611
+        "x": 243,
+        "y": 605
       }
     },
     {
@@ -2907,8 +2937,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 249,
-        "y": 607
+        "x": 236,
+        "y": 601
       }
     },
     {
@@ -2922,8 +2952,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 242,
-        "y": 604
+        "x": 230,
+        "y": 597
       }
     },
     {
@@ -2937,8 +2967,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 235,
-        "y": 600
+        "x": 223,
+        "y": 593
       }
     },
     {
@@ -2952,8 +2982,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 228,
-        "y": 596
+        "x": 217,
+        "y": 590
       }
     },
     {
@@ -2967,8 +2997,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 222,
-        "y": 593
+        "x": 210,
+        "y": 586
       }
     },
     {
@@ -2982,8 +3012,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 215,
-        "y": 589
+        "x": 204,
+        "y": 581
       }
     },
     {
@@ -2997,8 +3027,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 209,
-        "y": 585
+        "x": 198,
+        "y": 577
       }
     },
     {
@@ -3012,8 +3042,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 203,
-        "y": 580
+        "x": 192,
+        "y": 573
       }
     },
     {
@@ -3027,8 +3057,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 197,
-        "y": 576
+        "x": 186,
+        "y": 569
       }
     },
     {
@@ -3042,8 +3072,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 191,
-        "y": 572
+        "x": 181,
+        "y": 564
       }
     },
     {
@@ -3057,8 +3087,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 185,
-        "y": 568
+        "x": 175,
+        "y": 560
       }
     },
     {
@@ -3072,8 +3102,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 179,
-        "y": 563
+        "x": 170,
+        "y": 555
       }
     },
     {
@@ -3087,8 +3117,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 174,
-        "y": 558
+        "x": 164,
+        "y": 550
       }
     },
     {
@@ -3102,8 +3132,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 168,
-        "y": 554
+        "x": 159,
+        "y": 546
       }
     },
     {
@@ -3117,8 +3147,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 163,
-        "y": 549
+        "x": 154,
+        "y": 541
       }
     },
     {
@@ -3132,8 +3162,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 157,
-        "y": 544
+        "x": 149,
+        "y": 536
       }
     },
     {
@@ -3147,8 +3177,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 152,
-        "y": 540
+        "x": 144,
+        "y": 531
       }
     },
     {
@@ -3162,8 +3192,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 147,
-        "y": 535
+        "x": 139,
+        "y": 526
       }
     },
     {
@@ -3177,8 +3207,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 143,
-        "y": 530
+        "x": 135,
+        "y": 521
       }
     },
     {
@@ -3192,8 +3222,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 138,
-        "y": 525
+        "x": 130,
+        "y": 516
       }
     },
     {
@@ -3207,8 +3237,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 133,
-        "y": 519
+        "x": 126,
+        "y": 511
       }
     },
     {
@@ -3222,8 +3252,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 129,
-        "y": 514
+        "x": 122,
+        "y": 506
       }
     },
     {
@@ -3237,8 +3267,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 125,
-        "y": 509
+        "x": 118,
+        "y": 500
       }
     },
     {
@@ -3252,8 +3282,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 121,
-        "y": 504
+        "x": 114,
+        "y": 495
       }
     },
     {
@@ -3267,8 +3297,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 117,
-        "y": 498
+        "x": 111,
+        "y": 489
       }
     },
     {
@@ -3282,8 +3312,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 113,
-        "y": 493
+        "x": 107,
+        "y": 484
       }
     },
     {
@@ -3297,8 +3327,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 109,
-        "y": 487
+        "x": 104,
+        "y": 478
       }
     },
     {
@@ -3312,8 +3342,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 106,
-        "y": 482
+        "x": 101,
+        "y": 473
       }
     },
     {
@@ -3327,8 +3357,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 103,
-        "y": 476
+        "x": 97,
+        "y": 467
       }
     },
     {
@@ -3342,8 +3372,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 99,
-        "y": 471
+        "x": 95,
+        "y": 462
       }
     },
     {
@@ -3357,8 +3387,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 96,
-        "y": 465
+        "x": 92,
+        "y": 456
       }
     },
     {
@@ -3372,8 +3402,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 93,
-        "y": 459
+        "x": 89,
+        "y": 450
       }
     },
     {
@@ -3387,8 +3417,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 91,
-        "y": 454
+        "x": 87,
+        "y": 444
       }
     },
     {
@@ -3402,8 +3432,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 88,
-        "y": 448
+        "x": 85,
+        "y": 439
       }
     },
     {
@@ -3417,8 +3447,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 86,
-        "y": 442
+        "x": 82,
+        "y": 433
       }
     },
     {
@@ -3432,8 +3462,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 84,
-        "y": 436
+        "x": 81,
+        "y": 427
       }
     },
     {
@@ -3447,8 +3477,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 82,
-        "y": 430
+        "x": 79,
+        "y": 421
       }
     },
     {
@@ -3462,8 +3492,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 80,
-        "y": 424
+        "x": 77,
+        "y": 415
       }
     },
     {
@@ -3477,8 +3507,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 78,
-        "y": 419
+        "x": 76,
+        "y": 409
       }
     },
     {
@@ -3492,8 +3522,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 76,
-        "y": 413
+        "x": 74,
+        "y": 403
       }
     },
     {
@@ -3507,8 +3537,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 75,
-        "y": 407
+        "x": 633,
+        "y": 70
       }
     },
     {
@@ -3522,8 +3552,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 74,
-        "y": 401
+        "x": 73,
+        "y": 397
       }
     },
     {
@@ -3537,8 +3567,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 73,
-        "y": 395
+        "x": 72,
+        "y": 391
       }
     },
     {
@@ -3553,7 +3583,7 @@
       "status": "verified",
       "position": {
         "x": 72,
-        "y": 389
+        "y": 386
       }
     },
     {
@@ -3568,7 +3598,7 @@
       "status": "verified",
       "position": {
         "x": 71,
-        "y": 383
+        "y": 380
       }
     },
     {
@@ -3582,8 +3612,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 71,
-        "y": 377
+        "x": 70,
+        "y": 374
       }
     },
     {
@@ -3598,7 +3628,7 @@
       "status": "verified",
       "position": {
         "x": 70,
-        "y": 371
+        "y": 368
       }
     },
     {
@@ -3613,7 +3643,7 @@
       "status": "verified",
       "position": {
         "x": 70,
-        "y": 365
+        "y": 362
       }
     },
     {
@@ -3628,7 +3658,7 @@
       "status": "verified",
       "position": {
         "x": 70,
-        "y": 358
+        "y": 355
       }
     },
     {
@@ -3643,7 +3673,7 @@
       "status": "verified",
       "position": {
         "x": 70,
-        "y": 352
+        "y": 349
       }
     },
     {
@@ -3657,8 +3687,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 70,
-        "y": 346
+        "x": 71,
+        "y": 343
       }
     },
     {
@@ -3673,7 +3703,7 @@
       "status": "verified",
       "position": {
         "x": 71,
-        "y": 340
+        "y": 337
       }
     },
     {
@@ -3688,7 +3718,7 @@
       "status": "verified",
       "position": {
         "x": 72,
-        "y": 334
+        "y": 332
       }
     },
     {
@@ -3702,8 +3732,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 72,
-        "y": 328
+        "x": 73,
+        "y": 326
       }
     },
     {
@@ -3711,14 +3741,14 @@
       "label": "重排",
       "labelEn": "Reranking",
       "url": "/terms/reranking/",
-      "summary": "使用更精细的相关性模型对初次召回结果再次评分并调整顺序的检索步骤。",
+      "summary": "用更贵、更准的模型给候选重新打分——它只调整顺序，不创造你没召回到的证据。",
       "domain": "data-retrieval-rag",
       "difficulty": "advanced",
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 593,
-        "y": 62
+        "x": 641,
+        "y": 72
       }
     },
     {
@@ -3732,8 +3762,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 73,
-        "y": 322
+        "x": 74,
+        "y": 320
       }
     },
     {
@@ -3747,8 +3777,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 74,
-        "y": 316
+        "x": 75,
+        "y": 314
       }
     },
     {
@@ -3762,7 +3792,7 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 543,
+        "x": 542,
         "y": 56
       }
     },
@@ -3771,14 +3801,14 @@
       "label": "检索增强生成",
       "labelEn": "Retrieval-Augmented Generation",
       "url": "/terms/retrieval-augmented-generation/",
-      "summary": "在模型生成回答前检索外部资料，并把候选证据作为上下文提供给生成模型的方法。",
+      "summary": "生成前先去外部取证据、再把证据放进上下文的方法——改的是模型看到什么，不是模型权重。",
       "domain": "data-retrieval-rag",
       "difficulty": "intermediate",
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 792,
-        "y": 408
+        "x": 500,
+        "y": 145
       }
     },
     {
@@ -3793,7 +3823,7 @@
       "status": "verified",
       "position": {
         "x": 76,
-        "y": 310
+        "y": 308
       }
     },
     {
@@ -3807,8 +3837,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 77,
-        "y": 304
+        "x": 78,
+        "y": 302
       }
     },
     {
@@ -3822,8 +3852,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 79,
-        "y": 298
+        "x": 80,
+        "y": 296
       }
     },
     {
@@ -3838,7 +3868,7 @@
       "status": "verified",
       "position": {
         "x": 81,
-        "y": 293
+        "y": 290
       }
     },
     {
@@ -3853,7 +3883,7 @@
       "status": "verified",
       "position": {
         "x": 83,
-        "y": 287
+        "y": 284
       }
     },
     {
@@ -3867,8 +3897,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 85,
-        "y": 281
+        "x": 86,
+        "y": 278
       }
     },
     {
@@ -3882,8 +3912,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 87,
-        "y": 275
+        "x": 88,
+        "y": 273
       }
     },
     {
@@ -3897,8 +3927,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 89,
-        "y": 269
+        "x": 91,
+        "y": 267
       }
     },
     {
@@ -3912,8 +3942,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 92,
-        "y": 263
+        "x": 93,
+        "y": 261
       }
     },
     {
@@ -3927,8 +3957,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 95,
-        "y": 258
+        "x": 96,
+        "y": 256
       }
     },
     {
@@ -3942,8 +3972,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 98,
-        "y": 252
+        "x": 99,
+        "y": 250
       }
     },
     {
@@ -3957,8 +3987,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 101,
-        "y": 246
+        "x": 102,
+        "y": 244
       }
     },
     {
@@ -3972,8 +4002,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 104,
-        "y": 241
+        "x": 105,
+        "y": 239
       }
     },
     {
@@ -3987,8 +4017,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 108,
-        "y": 235
+        "x": 109,
+        "y": 233
       }
     },
     {
@@ -4002,8 +4032,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 111,
-        "y": 230
+        "x": 112,
+        "y": 228
       }
     },
     {
@@ -4017,8 +4047,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 115,
-        "y": 224
+        "x": 116,
+        "y": 222
       }
     },
     {
@@ -4032,8 +4062,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 119,
-        "y": 219
+        "x": 120,
+        "y": 217
       }
     },
     {
@@ -4047,8 +4077,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 123,
-        "y": 214
+        "x": 124,
+        "y": 212
       }
     },
     {
@@ -4062,8 +4092,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 127,
-        "y": 208
+        "x": 128,
+        "y": 207
       }
     },
     {
@@ -4077,8 +4107,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 131,
-        "y": 203
+        "x": 133,
+        "y": 201
       }
     },
     {
@@ -4092,8 +4122,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 136,
-        "y": 198
+        "x": 137,
+        "y": 196
       }
     },
     {
@@ -4107,8 +4137,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 140,
-        "y": 193
+        "x": 142,
+        "y": 191
       }
     },
     {
@@ -4122,8 +4152,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 145,
-        "y": 188
+        "x": 146,
+        "y": 186
       }
     },
     {
@@ -4137,8 +4167,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 150,
-        "y": 183
+        "x": 151,
+        "y": 181
       }
     },
     {
@@ -4152,8 +4182,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 155,
-        "y": 178
+        "x": 156,
+        "y": 177
       }
     },
     {
@@ -4167,8 +4197,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 160,
-        "y": 173
+        "x": 162,
+        "y": 172
       }
     },
     {
@@ -4182,8 +4212,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 165,
-        "y": 168
+        "x": 167,
+        "y": 167
       }
     },
     {
@@ -4197,8 +4227,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 171,
-        "y": 164
+        "x": 172,
+        "y": 163
       }
     },
     {
@@ -4212,8 +4242,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 176,
-        "y": 159
+        "x": 178,
+        "y": 158
       }
     },
     {
@@ -4227,8 +4257,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 182,
-        "y": 155
+        "x": 183,
+        "y": 154
       }
     },
     {
@@ -4242,8 +4272,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 188,
-        "y": 150
+        "x": 189,
+        "y": 149
       }
     },
     {
@@ -4257,8 +4287,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 194,
-        "y": 146
+        "x": 195,
+        "y": 145
       }
     },
     {
@@ -4272,8 +4302,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 200,
-        "y": 142
+        "x": 201,
+        "y": 141
       }
     },
     {
@@ -4287,7 +4317,7 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 206,
+        "x": 207,
         "y": 137
       }
     },
@@ -4302,8 +4332,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 212,
-        "y": 133
+        "x": 214,
+        "y": 132
       }
     },
     {
@@ -4317,7 +4347,7 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 219,
+        "x": 220,
         "y": 129
       }
     },
@@ -4332,7 +4362,7 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 225,
+        "x": 226,
         "y": 125
       }
     },
@@ -4347,8 +4377,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 232,
-        "y": 122
+        "x": 233,
+        "y": 121
       }
     },
     {
@@ -4362,8 +4392,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 238,
-        "y": 118
+        "x": 240,
+        "y": 117
       }
     },
     {
@@ -4371,13 +4401,13 @@
       "label": "Token",
       "labelEn": "Token",
       "url": "/terms/token/",
-      "summary": "模型读取和生成文本时使用的离散单位，一个 Token 不一定对应一个完整汉字或单词。",
+      "summary": "模型读写文本的最小计量单位——是切分与计费的单位，不等于一个字，也不等于一个词。",
       "domain": "large-language-models-generative-ai",
       "difficulty": "beginner",
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 568,
+        "x": 567,
         "y": 59
       }
     },
@@ -4392,7 +4422,7 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 245,
+        "x": 247,
         "y": 114
       }
     },
@@ -4407,8 +4437,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 252,
-        "y": 111
+        "x": 253,
+        "y": 110
       }
     },
     {
@@ -4422,7 +4452,7 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 259,
+        "x": 260,
         "y": 107
       }
     },
@@ -4437,8 +4467,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 266,
-        "y": 104
+        "x": 268,
+        "y": 103
       }
     },
     {
@@ -4452,8 +4482,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 273,
-        "y": 101
+        "x": 275,
+        "y": 100
       }
     },
     {
@@ -4467,8 +4497,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 281,
-        "y": 98
+        "x": 282,
+        "y": 97
       }
     },
     {
@@ -4482,8 +4512,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 288,
-        "y": 95
+        "x": 289,
+        "y": 94
       }
     },
     {
@@ -4497,8 +4527,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 296,
-        "y": 92
+        "x": 297,
+        "y": 91
       }
     },
     {
@@ -4512,8 +4542,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 303,
-        "y": 89
+        "x": 304,
+        "y": 88
       }
     },
     {
@@ -4527,7 +4557,7 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 311,
+        "x": 312,
         "y": 86
       }
     },
@@ -4542,8 +4572,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 318,
-        "y": 84
+        "x": 319,
+        "y": 83
       }
     },
     {
@@ -4557,7 +4587,7 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 326,
+        "x": 327,
         "y": 81
       }
     },
@@ -4572,8 +4602,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 334,
-        "y": 79
+        "x": 335,
+        "y": 78
       }
     },
     {
@@ -4587,7 +4617,7 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 342,
+        "x": 343,
         "y": 76
       }
     },
@@ -4602,7 +4632,7 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 350,
+        "x": 351,
         "y": 74
       }
     },
@@ -4617,7 +4647,7 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 358,
+        "x": 359,
         "y": 72
       }
     },
@@ -4632,7 +4662,7 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 366,
+        "x": 367,
         "y": 70
       }
     },
@@ -4647,7 +4677,7 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 374,
+        "x": 375,
         "y": 68
       }
     },
@@ -4662,7 +4692,7 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 382,
+        "x": 383,
         "y": 67
       }
     },
@@ -4677,7 +4707,7 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 390,
+        "x": 391,
         "y": 65
       }
     },
@@ -4693,7 +4723,7 @@
       "status": "verified",
       "position": {
         "x": 399,
-        "y": 64
+        "y": 63
       }
     },
     {
@@ -4707,7 +4737,7 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 407,
+        "x": 408,
         "y": 62
       }
     },
@@ -4722,7 +4752,7 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 415,
+        "x": 416,
         "y": 61
       }
     },
@@ -4746,14 +4776,14 @@
       "label": "向量数据库",
       "labelEn": "Vector Database",
       "url": "/terms/vector-database/",
-      "summary": "专门存储、索引并按相似度查询高维向量的数据系统，常用于语义检索。",
+      "summary": "存向量、按相似度查向量的底座——不生成向量，也不保证你召回到的一定是对的。",
       "domain": "data-retrieval-rag",
       "difficulty": "intermediate",
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 601,
-        "y": 64
+        "x": 649,
+        "y": 74
       }
     },
     {
@@ -4767,7 +4797,7 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 432,
+        "x": 433,
         "y": 59
       }
     },
@@ -4812,7 +4842,7 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 457,
+        "x": 458,
         "y": 56
       }
     },
@@ -4842,7 +4872,7 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 474,
+        "x": 475,
         "y": 56
       }
     },
@@ -4872,7 +4902,7 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 491,
+        "x": 492,
         "y": 55
       }
     }
@@ -4940,6 +4970,20 @@
       "target": "ai-agent",
       "type": "application",
       "explanation": "Agent 沙箱是理解和应用AI Agent时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
+      "id": "agent-skills-applied-to-ai-agent",
+      "source": "agent-skills",
+      "target": "ai-agent",
+      "type": "application",
+      "explanation": "Agent 技能为 Agent 提供可复用的做法，让同一套流程在不同会话与不同 Agent 之间保持一致。"
+    },
+    {
+      "id": "agent-skills-compared-with-prompt-template",
+      "source": "agent-skills",
+      "target": "prompt-template",
+      "type": "comparison",
+      "explanation": "两者都在沉淀反复交代的做法，但提示词模板是单点复用的一段文本，Agent 技能是带元数据、按需加载的文件夹。"
     },
     {
       "id": "agentic-workflow-connected-to-ai-agent",
@@ -5719,6 +5763,13 @@
       "explanation": "少样本提示是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
+      "id": "fine-tuning-compared-with-rag",
+      "source": "fine-tuning",
+      "target": "retrieval-augmented-generation",
+      "type": "comparison",
+      "explanation": "微调改模型权重、管行为与风格，RAG 改上下文、管可更新的知识；两者不同层，可以叠加而不是二选一。"
+    },
+    {
       "id": "fine-tuning-connected-to-large-language-model",
       "source": "fine-tuning",
       "target": "large-language-model",
@@ -6013,6 +6064,20 @@
       "explanation": "知识表示是理解和应用人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
     },
     {
+      "id": "langchain-applied-to-ai-agent",
+      "source": "langchain",
+      "target": "ai-agent",
+      "type": "application",
+      "explanation": "LangChain 用来搭建 Agent 的运行时外壳，把模型、工具与提示循环封装成可复用的代码。"
+    },
+    {
+      "id": "langchain-compared-with-model-context-protocol",
+      "source": "langchain",
+      "target": "model-context-protocol",
+      "type": "comparison",
+      "explanation": "LangChain 是跑在进程内的编排代码库，MCP 是跨进程的工具接入约定；两者不同层，可以叠加而不是替代。"
+    },
+    {
       "id": "latency-budget-connected-to-ai-product",
       "source": "latency-budget",
       "target": "ai-product",
@@ -6081,6 +6146,13 @@
       "target": "ai-application",
       "type": "application",
       "explanation": "负载均衡是理解和应用AI 应用时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+    },
+    {
+      "id": "long-context-compared-with-rag",
+      "source": "long-context",
+      "target": "retrieval-augmented-generation",
+      "type": "comparison",
+      "explanation": "长上下文提高单次可容纳的篇幅，RAG 决定该把哪些证据放进去；容量变大不替代「选对证据」这件事。"
     },
     {
       "id": "long-context-connected-to-context-window",
@@ -7292,6 +7364,22 @@
         "explanation": "Agent 沙箱是理解和应用AI Agent时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
+    "agent-skills": [
+      {
+        "edgeId": "agent-skills-applied-to-ai-agent",
+        "neighbor": "ai-agent",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "Agent 技能为 Agent 提供可复用的做法，让同一套流程在不同会话与不同 Agent 之间保持一致。"
+      },
+      {
+        "edgeId": "agent-skills-compared-with-prompt-template",
+        "neighbor": "prompt-template",
+        "type": "comparison",
+        "direction": "symmetric",
+        "explanation": "两者都在沉淀反复交代的做法，但提示词模板是单点复用的一段文本，Agent 技能是带元数据、按需加载的文件夹。"
+      }
+    ],
     "agentic-workflow": [
       {
         "edgeId": "agentic-workflow-connected-to-ai-agent",
@@ -7347,6 +7435,13 @@
         "type": "application",
         "direction": "incoming",
         "explanation": "Agent 沙箱是理解和应用AI Agent时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "agent-skills-applied-to-ai-agent",
+        "neighbor": "agent-skills",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "Agent 技能为 Agent 提供可复用的做法，让同一套流程在不同会话与不同 Agent 之间保持一致。"
       },
       {
         "edgeId": "agentic-workflow-connected-to-ai-agent",
@@ -7410,6 +7505,13 @@
         "type": "application",
         "direction": "incoming",
         "explanation": "人在回路是理解和应用AI Agent时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "langchain-applied-to-ai-agent",
+        "neighbor": "langchain",
+        "type": "application",
+        "direction": "incoming",
+        "explanation": "LangChain 用来搭建 Agent 的运行时外壳，把模型、工具与提示循环封装成可复用的代码。"
       },
       {
         "edgeId": "ai-agent-connected-to-large-language-model",
@@ -9853,6 +9955,13 @@
         "type": "application",
         "direction": "outgoing",
         "explanation": "微调是理解和应用大语言模型时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "fine-tuning-compared-with-rag",
+        "neighbor": "retrieval-augmented-generation",
+        "type": "comparison",
+        "direction": "symmetric",
+        "explanation": "微调改模型权重、管行为与风格，RAG 改上下文、管可更新的知识；两者不同层，可以叠加而不是二选一。"
       }
     ],
     "flops": [
@@ -10259,6 +10368,22 @@
         "explanation": "知识表示是理解和应用人工智能时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       }
     ],
+    "langchain": [
+      {
+        "edgeId": "langchain-applied-to-ai-agent",
+        "neighbor": "ai-agent",
+        "type": "application",
+        "direction": "outgoing",
+        "explanation": "LangChain 用来搭建 Agent 的运行时外壳，把模型、工具与提示循环封装成可复用的代码。"
+      },
+      {
+        "edgeId": "langchain-compared-with-model-context-protocol",
+        "neighbor": "model-context-protocol",
+        "type": "comparison",
+        "direction": "symmetric",
+        "explanation": "LangChain 是跑在进程内的编排代码库，MCP 是跨进程的工具接入约定；两者不同层，可以叠加而不是替代。"
+      }
+    ],
     "large-language-model": [
       {
         "edgeId": "ai-agent-connected-to-large-language-model",
@@ -10527,6 +10652,13 @@
         "type": "application",
         "direction": "outgoing",
         "explanation": "长上下文是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "long-context-compared-with-rag",
+        "neighbor": "retrieval-augmented-generation",
+        "type": "comparison",
+        "direction": "symmetric",
+        "explanation": "长上下文提高单次可容纳的篇幅，RAG 决定该把哪些证据放进去；容量变大不替代「选对证据」这件事。"
       }
     ],
     "long-term-memory": [
@@ -10803,6 +10935,13 @@
         "type": "application",
         "direction": "outgoing",
         "explanation": "模型上下文协议是理解和应用AI Agent时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "langchain-compared-with-model-context-protocol",
+        "neighbor": "langchain",
+        "type": "comparison",
+        "direction": "symmetric",
+        "explanation": "LangChain 是跑在进程内的编排代码库，MCP 是跨进程的工具接入约定；两者不同层，可以叠加而不是替代。"
       }
     ],
     "model-deployment": [
@@ -11457,6 +11596,13 @@
         "type": "application",
         "direction": "outgoing",
         "explanation": "提示词模板是理解和应用上下文窗口时的重要概念，可帮助判断相关机制、场景或实现取舍。"
+      },
+      {
+        "edgeId": "agent-skills-compared-with-prompt-template",
+        "neighbor": "agent-skills",
+        "type": "comparison",
+        "direction": "symmetric",
+        "explanation": "两者都在沉淀反复交代的做法，但提示词模板是单点复用的一段文本，Agent 技能是带元数据、按需加载的文件夹。"
       }
     ],
     "prompt-versioning": [
@@ -11796,11 +11942,25 @@
         "explanation": "向量索引是理解和应用检索增强生成时的重要概念，可帮助判断相关机制、场景或实现取舍。"
       },
       {
+        "edgeId": "fine-tuning-compared-with-rag",
+        "neighbor": "fine-tuning",
+        "type": "comparison",
+        "direction": "symmetric",
+        "explanation": "微调改模型权重、管行为与风格，RAG 改上下文、管可更新的知识；两者不同层，可以叠加而不是二选一。"
+      },
+      {
         "edgeId": "hallucination-compared-with-rag",
         "neighbor": "hallucination",
         "type": "comparison",
         "direction": "symmetric",
         "explanation": "幻觉描述生成结果可能失真，RAG 是降低部分知识性错误风险的方法而不是彻底消除机制。"
+      },
+      {
+        "edgeId": "long-context-compared-with-rag",
+        "neighbor": "long-context",
+        "type": "comparison",
+        "direction": "symmetric",
+        "explanation": "长上下文提高单次可容纳的篇幅，RAG 决定该把哪些证据放进去；容量变大不替代「选对证据」这件事。"
       },
       {
         "edgeId": "chunking-component-of-rag",

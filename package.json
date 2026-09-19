@@ -1,6 +1,6 @@
 {
   "name": "ai-native",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "type": "module",
   "packageManager": "pnpm@11.9.0",
@@ -36,7 +36,8 @@
     "check:design": "node --import tsx scripts/check-design-system.ts",
     "report:content": "node --import tsx scripts/report-content-quality.ts",
     "check:content-quality": "node --import tsx scripts/check-content-quality.ts",
-    "check:content-quality:strict": "node --import tsx scripts/check-content-quality.ts --strict"
+    "check:content-quality:strict": "node --import tsx scripts/check-content-quality.ts --strict",
+    "build:term-tiers": "node --import tsx scripts/build-term-tiers.ts"
   },
   "dependencies": {
     "@astrojs/mdx": "7.0.5",

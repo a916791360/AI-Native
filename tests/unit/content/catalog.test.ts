@@ -44,10 +44,10 @@ describe('stage 8 catalog plan', () => {
       project.relations.flatMap((relation) => [relation.source, relation.target]),
     );
 
-    expect(project.terms).toHaveLength(325);
+    expect(project.terms).toHaveLength(327);
     expect(catalogued).toHaveLength(0);
     expect(drafts).toHaveLength(0);
-    expect(verified).toHaveLength(325);
+    expect(verified).toHaveLength(327);
     expect(catalogued.every(({ data }) => connected.has(data.id))).toBe(true);
   });
 });
