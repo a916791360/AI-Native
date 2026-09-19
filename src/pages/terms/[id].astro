@@ -3,6 +3,7 @@ import { getCollection, render } from 'astro:content';
 import type { GetStaticPaths } from 'astro';
 
 import GraphExplorer from '@/components/knowledge/GraphExplorer.astro';
+import Breadcrumbs from '@/components/layout/Breadcrumbs.astro';
 import StatusTag from '@/components/ui/StatusTag.astro';
 import generatedGraph from '@/generated/graph.json';
 import BaseLayout from '@/layouts/BaseLayout.astro';
@@ -91,6 +92,13 @@ const statusNotice = {
 }[term.status];
 const hasDeepContent = term.status !== 'catalogued';
 const localGraph = selectLocalGraph(generatedGraph as GraphData, term.id);
+// 知识库 → 领域 → 词条名。领域用 shortNameZh：完整领域名（如「智能体与工具调用自动化」）
+// 在 320px 下会把面包屑挤断，而中间层本来就只是「往上一级」的落点。
+const breadcrumbTrail = [
+  { label: '知识库', href: '/atlas/' },
+  { label: domain?.shortNameZh ?? term.domain, href: `/atlas/#${term.domain}` },
+  { label: term.nameZh },
+];
 ---
 
 <BaseLayout
@@ -121,6 +129,10 @@ const localGraph = selectLocalGraph(generatedGraph as GraphData, term.id);
     data-pagefind-body={term.status !== 'draft' ? true : undefined}
     data-pagefind-ignore={term.status === 'draft' ? true : undefined}
   >
+    <div class="term-breadcrumbs">
+      <Breadcrumbs trail={breadcrumbTrail} />
+    </div>
+
     <header class="term-hero">
       <div class="term-title">
         <p class="eyebrow">{domain?.nameZh ?? term.domain} · {difficultyLabels[term.difficulty]}</p>

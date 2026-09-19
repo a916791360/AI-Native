@@ -1,5 +1,5 @@
 import type { ContentDocument, ProjectContent } from '../../../src/lib/content/io';
-import type { Domain, Relation, Route, Term } from '../../../src/lib/content/schema';
+import type { ChainStation, Domain, Relation, Route, Term } from '../../../src/lib/content/schema';
 
 export const VERIFIED_BODY = `<h2 id="what-it-is">它是什么</h2>
 
@@ -129,9 +129,26 @@ function makeRoute(): ContentDocument<Route> {
   };
 }
 
+function makeChain(): ChainStation[] {
+  // 夹具里只有 alpha-term / beta-term 两个词条可供引用，因此每站只放一个核心词条。
+  // 真实内容的「每站 3–5 个」由 chainStationSchema 约束，而这里不经过 schema 解析。
+  // 交替引用是为了同时满足「相邻两站重叠不超过 1 个」的结构约束。
+  const core = ['alpha-term', 'beta-term'];
+  return Array.from({ length: 8 }, (_, index) => ({
+    id: `station-${index + 1}`,
+    order: index + 1,
+    nameZh: `测试链路第 ${index + 1} 站`,
+    question: `第 ${index + 1} 站要回答的核心问题是什么？`,
+    goal: `第 ${index + 1} 站的一句话目标：说清这一层为语言模型补上了什么。`,
+    coreTerms: [core[index % core.length]!],
+    action: `在第 ${index + 1} 站完成一个 30 分钟内能做完、且结果可观察的动作。`,
+  }));
+}
+
 export function makeValidProject(): ProjectContent {
   return {
     domains: makeDomains(),
+    chain: makeChain(),
     terms: [makeTerm('alpha-term', '甲术语'), makeTerm('beta-term', '乙术语')],
     relations: [makeRelation()],
     routes: [makeRoute()],

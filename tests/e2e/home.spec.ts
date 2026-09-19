@@ -49,10 +49,20 @@ test('renders the content-catalog shell and a direct case-library entry', async 
   await expect(
     page.getByRole('heading', { level: 1, name: '从看懂 AI，到做出可上线的 AI 产品' }),
   ).toBeVisible();
-  await expect(page.getByRole('link', { name: '从第 01 题开始' })).toHaveAttribute(
+  await expect(page.getByRole('link', { name: '直接做第 01 题' })).toHaveAttribute(
     'href',
     '/learn/questions/q01-rules-or-ai/',
   );
+  // 首屏三个入口：主 CTA 用强调色指向学习起点，题目与搜索都是 ghost。
+  // 零基础用户不该被直接丢进判断题——他还没有做判断所需的词汇量。
+  // 这里不断言主 CTA 的具体路径：I2 建好 /map/ 后它会从 /routes/ 切过去。
+  const heroCtas = page.locator('.hero .cta-row > a');
+  await expect(heroCtas).toHaveCount(3);
+  await expect(heroCtas.nth(0)).toHaveClass(/cta-primary/);
+  await expect(heroCtas.nth(0)).not.toHaveAttribute('href', /^\/learn\/questions\//);
+  await expect(heroCtas.nth(1)).toHaveClass(/cta-ghost/);
+  await expect(heroCtas.nth(2)).toHaveClass(/cta-ghost/);
+  await expect(heroCtas.nth(2)).toHaveAttribute('href', '/search/');
   const header = page.getByRole('banner');
   await revealMobileHeaderPanel(page, isMobile, '菜单');
   await expect(header.getByRole('link', { name: '开始学习' })).toHaveAttribute('href', '/learn/');
@@ -91,7 +101,7 @@ test('keeps the homepage oriented around positioning instead of a selected quest
   await expect(
     page.getByRole('heading', { level: 1, name: '从看懂 AI，到做出可上线的 AI 产品' }),
   ).toBeVisible();
-  await expect(page.getByRole('link', { name: '从第 01 题开始' })).toHaveAttribute(
+  await expect(page.getByRole('link', { name: '直接做第 01 题' })).toHaveAttribute(
     'href',
     '/learn/questions/q01-rules-or-ai/',
   );
@@ -339,24 +349,28 @@ test('folds the catalog by tier and only expands the tier the learner is on', as
     await page.locator('[data-course-stage]').selectOption('tier-T3');
     await expect(tiers.nth(2)).toHaveJSProperty('open', true);
   } else {
-    // 桌面侧栏跟着主区走：只列当前展开那一层的六个阶段。
+    // 桌面侧栏只列「当前层」——最后被打开的那一层，任何时候都只有一层。
+    // 三层共用同一组六个阶段名，一旦同时列出，就退化成 18 行里 6 个名字各三遍的菜单。
     await expect(page.locator('[data-tier-nav="t1-recognize"]')).toHaveAttribute(
       'data-open',
-      'true',
+      'false',
     );
     await expect(page.locator('[data-tier-nav="t2-judge"]')).toHaveAttribute('data-open', 'true');
     await expect(page.locator('[data-tier-nav="t3-tradeoff"]')).toHaveAttribute(
       'data-open',
       'false',
     );
+    await expect(page.locator('.catalog-sidebar .tier-nav ul a:visible')).toHaveCount(6);
 
-    // 侧栏的层标题始终可见，点它要能把收起的层展开。
+    // 侧栏的层标题始终可见，点它要能把目标层变成当前层。
     await page.locator('[data-tier-jump="t3-tradeoff"]').click();
     await expect(tiers.nth(2)).toHaveJSProperty('open', true);
     await expect(page.locator('[data-tier-nav="t3-tradeoff"]')).toHaveAttribute(
       'data-open',
       'true',
     );
+    await expect(page.locator('[data-tier-nav="t2-judge"]')).toHaveAttribute('data-open', 'false');
+    await expect(page.locator('.catalog-sidebar .tier-nav ul a:visible')).toHaveCount(6);
   }
 });
 
@@ -365,11 +379,21 @@ test('keeps the question and decision logic readable without JavaScript', async 
   const page = await context.newPage();
 
   await page.goto(`${PLAYWRIGHT_BASE_URL}/`);
-  await page.getByRole('link', { name: '从第 01 题开始' }).click();
+  // 无 JS 时 data-hero-start 不会被改写成「继续学习」，但它指向的题目必须是可进的。
+  await page.getByRole('link', { name: '直接做第 01 题' }).click();
   await expect(
     page.getByRole('heading', { level: 1, name: '发票金额校验，需要引入大模型吗？' }),
   ).toBeVisible();
   await expect(page.getByText('能被稳定规则完整描述的问题，优先使用确定性系统。')).toBeVisible();
+
+  // 面包屑是服务端渲染的，无 JS 也必须完整可用（中间层可点、末项不带链接）。
+  const breadcrumbs = page.getByRole('navigation', { name: '面包屑' });
+  await expect(breadcrumbs).toBeVisible();
+  await expect(breadcrumbs.getByRole('link', { name: '开始学习' })).toHaveAttribute(
+    'href',
+    '/learn/',
+  );
+  await expect(breadcrumbs.locator('[aria-current="page"]')).toHaveText('规则优先判断');
 
   await context.close();
 });

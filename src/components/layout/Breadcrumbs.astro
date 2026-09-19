@@ -1,0 +1,153 @@
+---
+/**
+ * 面包屑 —— 深层页面回答「我在哪一层」的那一条。
+ *
+ * 为什么要有它：这个站的页面深度并不浅（词条页两层、答题页三层、案例关卡页两层），
+ * 而原先全站唯一的上行出口只有一条「返回列表」。用户进到第三层就失去了位置感。
+ *
+ * 两条硬约束：
+ *   1. **必须渲染在 <main> 内部**。这个站只允许正文之上存在一层导航（顶栏），
+ *      多出一条贴顶的导航条会被 release-candidate 的场景守卫判定为「第二层导航」。
+ *   2. 末项是当前页，用 aria-current="page" 且**不带链接**——保留一个指向自己的链接
+ *      会让键盘用户多停一次、也让「上一级」变得不可辨。
+ *
+ * 窄屏中段省略的策略写在样式里：crumb 数量已知，于是用 data-crumbs 精确命中
+ * 「哪些是中间项」，把它们整条隐藏、并把分隔符换成省略号，
+ * 而不是靠 CSS 猜内容宽度。
+ */
+import { SITE } from '@/config/site';
+
+export interface Crumb {
+  /** 面包屑上的字。过长时请传缩写版本（如领域用 shortNameZh）。 */
+  label: string;
+  /** 省略即当前页（末项），渲染成不可点的 <span>。 */
+  href?: string;
+}
+
+interface Props {
+  trail: Crumb[];
+}
+
+const { trail } = Astro.props;
+const items = trail.filter((item) => item.label.trim().length > 0);
+const currentPath = Astro.url.pathname;
+const origin = SITE.publicOrigin;
+
+const absolute = (pathname: string) =>
+  new URL(pathname.replace(/^\//, ''), `${origin}/`).toString();
+
+const structuredData =
+  origin && items.length > 1
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: items.map((item, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          name: item.label,
+          item: absolute(item.href ?? currentPath),
+        })),
+      }
+    : undefined;
+---
+
+<nav class="breadcrumbs" aria-label="面包屑">
+  <ol data-crumbs={items.length}>
+    {
+      items.map((item, index) => {
+        const isLast = index === items.length - 1;
+        return (
+          <li>
+            {item.href && !isLast ? (
+              <a href={item.href}>{item.label}</a>
+            ) : (
+              <span aria-current={isLast ? 'page' : undefined}>{item.label}</span>
+            )}
+          </li>
+        );
+      })
+    }
+  </ol>
+</nav>
+
+{
+  structuredData && (
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(structuredData)} />
+  )
+}
+
+<style>
+  /* 组件本身不设外边距：三处宿主的间距需求不同（词条页在页头之上、答题页在进度条之上、
+     案例页在卡片内），由宿主自己声明，避免与卡片内边距叠加出不对称的留白。 */
+  .breadcrumbs ol {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-label);
+  }
+
+  /* 每一项都可以被压缩（min-width: 0 才能让 flex 子项真正缩下去），
+     文字用省略号收尾——保证 320px 下永远不换行、不溢出。 */
+  .breadcrumbs li {
+    min-width: 0;
+    flex: 0 1 auto;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+  }
+
+  /* 中间项先让位：同样溢出时优先压扁它们，首项与末项保留更多可读宽度。 */
+  .breadcrumbs li:not(:first-child):not(:last-child) {
+    flex-shrink: 3;
+  }
+
+  .breadcrumbs li + li::before {
+    flex: 0 0 auto;
+    margin-inline: 0.4rem;
+    color: var(--color-line);
+    content: '/';
+  }
+
+  .breadcrumbs a,
+  .breadcrumbs span {
+    min-width: 0;
+    overflow: hidden;
+    display: block;
+    text-overflow: ellipsis;
+    text-decoration: none;
+  }
+
+  .breadcrumbs a {
+    color: var(--color-muted);
+  }
+
+  .breadcrumbs a:hover {
+    color: var(--color-accent-strong);
+  }
+
+  .breadcrumbs span {
+    color: var(--color-ink);
+  }
+
+  /* 窄屏中段省略：crumb 数量在服务端已知，按数量精确命中中间项。
+     词条名可能很长（「检索增强生成」两层合起来就超过一屏宽），
+     与其让它挤成两行，不如只留「第一层 … 当前页」。 */
+  @media (max-width: 480px) {
+    .breadcrumbs ol[data-crumbs='3'] li:nth-child(2),
+    .breadcrumbs ol[data-crumbs='4'] li:nth-child(2),
+    .breadcrumbs ol[data-crumbs='4'] li:nth-child(3) {
+      display: none;
+    }
+
+    .breadcrumbs ol[data-crumbs='3'] li:last-child::before,
+    .breadcrumbs ol[data-crumbs='4'] li:last-child::before {
+      content: '…';
+    }
+  }
+</style>

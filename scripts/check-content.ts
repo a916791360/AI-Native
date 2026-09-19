@@ -7,5 +7,5 @@ const cases = await loadCaseStudies();
 assertValidCaseStudies(cases, project);
 
 console.log(
-  `Content valid: ${project.domains.length} domains, ${project.terms.length} terms, ${project.relations.length} relations, ${project.routes.length} routes, ${cases.length} cases.`,
+  `Content valid: ${project.domains.length} domains, ${project.chain.length} chain stations, ${project.terms.length} terms, ${project.relations.length} relations, ${project.routes.length} routes, ${cases.length} cases.`,
 );

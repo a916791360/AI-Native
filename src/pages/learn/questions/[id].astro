@@ -2,6 +2,7 @@
 import type { GetStaticPaths } from 'astro';
 import { getCollection } from 'astro:content';
 
+import Breadcrumbs from '@/components/layout/Breadcrumbs.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import {
   LEARNING_QUESTIONS,
@@ -69,6 +70,14 @@ const continuationTitle = nextTier
       : '回到学习中心';
 
 const pmAction = PM_ACTIONS[question.id];
+// 学习库 → 某层 → 某阶段 → 某题。中间两层都指向 /learn/ 的锚点，
+// 点击时侧栏与主区会自动展开对应层（LearningCatalog 里的 openFor）。
+const breadcrumbTrail = [
+  { label: '开始学习', href: '/learn/' },
+  { label: `${tier.code} ${tier.title}`, href: `/learn/#tier-${tier.code}` },
+  { label: `阶段 ${module.index}`, href: `/learn/#module-${tier.code}-${module.index}` },
+  { label: question.shortTitle },
+];
 ---
 
 <BaseLayout title={question.question} description={question.scenario}>
@@ -80,6 +89,10 @@ const pmAction = PM_ACTIONS[question.id];
     data-answer-count={question.options.length}
     data-next-href={continuationHref}
   >
+    <div class="question-breadcrumbs">
+      <Breadcrumbs trail={breadcrumbTrail} />
+    </div>
+
     <section class="progress" aria-label="学习进度">
       <div class="shell progress-inner">
         <p class="progress-tier">
@@ -454,6 +467,12 @@ const pmAction = PM_ACTIONS[question.id];
   }
   .question-page {
     padding-bottom: var(--space-6);
+  }
+  /* 与 .progress-inner / .sheet 同宽同内边距，否则面包屑会比题面更靠左。 */
+  .question-breadcrumbs {
+    width: min(100%, var(--content-standard));
+    margin: var(--space-3) auto var(--space-2);
+    padding-inline: var(--page-gutter);
   }
 
   .q-head {

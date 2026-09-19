@@ -173,6 +173,7 @@ body .term-page.term-page {
   padding-bottom: var(--space-6);
 }
 
+body .term-page .term-breadcrumbs,
 body .term-page .term-hero,
 body .term-page .term-meta,
 body .term-page .status-notice,
@@ -180,6 +181,11 @@ body .term-page .term-layout,
 body .term-page .route-navigation {
   width: min(calc(100% - 2.5rem), var(--content-max));
   margin-inline: auto;
+}
+
+/* 面包屑在这一页自成一行，与下方 term-hero 的 margin-top 用同一档间距。 */
+body .term-page .term-breadcrumbs {
+  margin-top: var(--space-4);
 }
 
 body .term-page .term-hero.term-hero {
@@ -551,6 +557,7 @@ body .case-shell.case-shell {
   padding-bottom: var(--space-6);
 }
 
+body .case-shell .case-breadcrumbs,
 body .case-shell .case-hero.case-hero,
 body .case-shell .case-context.case-context,
 body .case-shell .case-archive.case-archive,
@@ -604,6 +611,11 @@ body .case-shell .case-archive > header {
 body .case-shell .case-archive > ol > li {
   grid-template-columns: 2.5rem minmax(15rem, 0.45fr) minmax(16rem, 0.55fr);
   padding: var(--space-4);
+}
+
+/* 面包屑与「案例位置」用同一档内边距，两条卡片的文字左沿才会对齐。 */
+body .case-shell .case-breadcrumbs {
+  padding: var(--space-2) var(--space-3);
 }
 
 body .case-shell .case-location.case-location {

@@ -20,7 +20,7 @@ import '@/styles/content-catalog.css';
             <div class="tier-nav" data-tier-nav={tier.id}>
               <a class="tier-nav-head" href={`#tier-${tier.code}`} data-tier-jump={tier.id}>
                 <span>{tier.code}</span>
-                {tier.title}
+                {` · ${tier.title}`}
               </a>
               <ul>
                 {LEARNING_MODULES.map((module) => (
@@ -192,11 +192,14 @@ import '@/styles/content-catalog.css';
     if (!currentTierId && !complete) currentTierId = details.dataset.tierId ?? null;
   });
 
-  // 侧栏只展开当前打开的层，避免 21 行目录在矮视口里把 sticky 区撑出屏幕。
+  // 侧栏只跟随「当前层」——最后被打开的那一层。
+  // 主区允许多层同时展开（那是用户自己的选择，不该被抢走），但侧栏必须始终只列一层：
+  // 三层的六个阶段同名，一旦同时出现，就退化成 18 行里 6 个名字各三遍的菜单。
+  let sidebarTierId: string | null = null;
+
   const syncSidebar = () => {
     tierNavs.forEach((nav) => {
-      const match = disclosures.find((details) => details.dataset.tierId === nav.dataset.tierNav);
-      nav.dataset.open = match?.open ? 'true' : 'false';
+      nav.dataset.open = nav.dataset.tierNav === sidebarTierId ? 'true' : 'false';
     });
   };
 
@@ -205,10 +208,12 @@ import '@/styles/content-catalog.css';
     disclosures.forEach((details) => {
       details.open = details === target;
     });
+    sidebarTierId = target.dataset.tierId ?? null;
     syncSidebar();
   };
 
-  // 跳到某层/某阶段时只展开、不收起别的层——用户手动展开的状态不该被抢走。
+  // 跳到某层/某阶段时只展开、不收起别的层——用户手动展开的状态不该被抢走；
+  // 但侧栏的「当前层」跟着移到目标层。
   const openFor = (targetId: string) => {
     if (!targetId) return;
     const details = disclosures.find(
@@ -216,10 +221,22 @@ import '@/styles/content-catalog.css';
     );
     if (!details) return;
     details.open = true;
+    sidebarTierId = details.dataset.tierId ?? null;
     syncSidebar();
   };
 
-  disclosures.forEach((details) => details.addEventListener('toggle', syncSidebar));
+  disclosures.forEach((details) =>
+    details.addEventListener('toggle', () => {
+      const tierId = details.dataset.tierId ?? null;
+      if (details.open) {
+        sidebarTierId = tierId;
+      } else if (sidebarTierId === tierId) {
+        // 当前层被收起：顺位给仍在展开的层，一层都不剩就让侧栏收空。
+        sidebarTierId = disclosures.find((item) => item.open)?.dataset.tierId ?? null;
+      }
+      syncSidebar();
+    }),
+  );
 
   // 只展开学习者当前所在的层——进来先看到「我现在在哪」。
   if (currentTierId) {
@@ -227,6 +244,8 @@ import '@/styles/content-catalog.css';
     if (target) openOnly(target);
     else syncSidebar();
   } else {
+    // 三层都答完时没有「当前层」，侧栏跟随第一个仍展开的层（默认是 T1），不留空目录。
+    sidebarTierId = disclosures.find((item) => item.open)?.dataset.tierId ?? null;
     syncSidebar();
   }
 

@@ -1,5 +1,49 @@
 [
   {
+    "date": "2026-09-19",
+    "scope": "site",
+    "macrostructure": "既有站点局部改造（非新建）",
+    "theme": "沿用 design.md 锁定系统（荧光网格终端 / 深空墨绿 / 800-400 双档字重）",
+    "vibe": "不改视觉语言，只改信息架构与路径",
+    "enrichment": "none",
+    "design_system": "design.md",
+    "pages": [
+      "src/components/layout/Breadcrumbs.astro（新建，接入 3 处深层页面）",
+      "src/components/learning/LearningCatalog.astro（侧栏收敛为只列当前层）",
+      "src/components/home/HomeLanding.astro（首屏三入口重排）",
+      "src/components/layout/SiteFooter.astro（页脚去重）"
+    ],
+    "brief": "I1 信息架构收敛。新建面包屑组件并接入词条页/答题页/案例关卡页——三页宽度容器各不相同（词条页走 unified-pages.css 白名单、答题页对齐 .progress-inner 的 content-standard、案例页被整套重皮成卡片），组件本身不设外边距、由宿主声明间距。侧栏改为单一 sidebarTierId 的「只列当前层」。首屏主 CTA 让位给学习起点，题目退为次入口并继承 data-hero-start。"
+  },
+  {
+    "date": "2026-09-19",
+    "scope": "doc",
+    "macrostructure": "Long Document",
+    "theme": "custom",
+    "theme_axes": "dark / 800-weight-display / fluorescent-lime oklch(0.88 0.21 121)",
+    "vibe": "荧光网格终端 · 深空墨绿（沿用 design.md 锁定系统）",
+    "enrichment": "none",
+    "design_system": "design.md",
+    "pages": [
+      "AI-Native-迭代开发说明书.html（施工文档，非站点路由页面）"
+    ],
+    "brief": "依据诊断报告的施工版：14 项问题拆成 7 个迭代 I0–I6、33 张可执行工单（含文件行号/字段/验收命令/风险）；含数据结构变更规格、4 道内容门禁规格、决策页 9 段规范、存量 A/B/C 判定作业指导、指标替换表。实测踩坑：flex 子项 min-width:auto 被 34rem 表格撑宽整页，须 min-width:0 + 行内 code overflow-wrap:anywhere"
+  },
+  {
+    "date": "2026-09-19",
+    "scope": "doc",
+    "macrostructure": "Long Document",
+    "theme": "custom",
+    "theme_axes": "dark / 800-weight-display / fluorescent-lime oklch(0.88 0.21 121)",
+    "vibe": "荧光网格终端 · 深空墨绿（沿用 design.md 锁定系统）",
+    "enrichment": "none",
+    "design_system": "design.md",
+    "pages": [
+      "AI-Native-诊断报告.html（项目诊断文档，非站点路由页面）"
+    ],
+    "brief": "内容与信息架构诊断报告：325 词条全量静态审计，UX / 学习成效 / 实际可用性三维度；核心结论为「学科分类法被当成学习路径」，给出 8 站认知链路与 MCP·Skill·Agent·LangChain·RAG 五概念的示范性组织"
+  },
+  {
     "date": "2026-09-13",
     "scope": "app",
     "macrostructure": "Narrative Workflow",

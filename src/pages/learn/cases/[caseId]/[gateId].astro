@@ -3,6 +3,7 @@ import type { GetStaticPaths } from 'astro';
 
 import CaseGateDesk from '@/components/cases/CaseGateDesk.astro';
 import CaseStageDirectory from '@/components/cases/CaseStageDirectory.astro';
+import Breadcrumbs from '@/components/layout/Breadcrumbs.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { loadCaseStudies } from '@/lib/cases/io';
 import type { CaseStudy } from '@/lib/cases/schema';
@@ -23,10 +24,21 @@ const { caseStudy, gateId } = Astro.props as { caseStudy: CaseStudy; gateId: str
 const context = getGateContext(caseStudy, gateId)!;
 const { gate, previous, next, resources, accumulatedArtifacts } = context;
 const formedArtifactIds = new Set(accumulatedArtifacts.map(({ id }) => id));
+// 案例库 → 案例 → 关卡。「案例位置」条已经报了 Gate 03/06 与返回项目档案，
+// 但它没有可点回案例库的路径——面包屑补的正是这一段上行。
+const breadcrumbTrail = [
+  { label: '案例库', href: '/learn/cases/' },
+  { label: caseStudy.title, href: caseHref(caseStudy.id) },
+  { label: `Gate ${String(gate.order).padStart(2, '0')} · ${gate.title}` },
+];
 ---
 
 <BaseLayout title={`${gate.title} · ${caseStudy.title}`} description={gate.question}>
   <main id="main-content" class="case-shell">
+    <div class="case-breadcrumbs">
+      <Breadcrumbs trail={breadcrumbTrail} />
+    </div>
+
     <section class="case-location" aria-label="案例位置">
       <div><span>连续案例</span><strong>{caseStudy.title}</strong></div>
       <div>

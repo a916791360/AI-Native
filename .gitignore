@@ -6,6 +6,8 @@ dist/
 coverage/
 playwright-report/
 test-results/
+# 内容质量报告的产物：每次运行都会重算，不入版本库（口径定义在脚本里）。
+reports/
 .DS_Store
 *.log
 .learnings/

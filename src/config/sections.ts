@@ -60,7 +60,7 @@ export const SECTIONS: readonly Section[] = [
     navLabel: '阅读路线',
     pageTitle: '阅读路线',
     surface: 'support',
-    purpose: '按顺序读完一组词条，适合有明确目标时按需查阅。',
+    purpose: '认知链路的展开阅读清单：按顺序读完一组词条，适合有明确目标时按需查阅。',
   },
   {
     id: 'graph',
@@ -83,13 +83,14 @@ export const PRIMARY_NAVIGATION = SECTIONS.filter(({ surface }) => surface === '
   ({ href, navLabel }) => ({ href, label: navLabel }),
 );
 
-/** 页脚支撑层：阅读路线、概念图谱，加搜索这个工具型入口 */
+/** 页脚支撑层：阅读路线、概念图谱。搜索与「内容方法」由页脚自己补。 */
 export const SUPPORT_NAVIGATION = SECTIONS.filter(({ surface }) => surface === 'support').map(
   ({ href, navLabel }) => ({ href, label: navLabel }),
 );
 
-export const NAVIGATION = [
-  ...PRIMARY_NAVIGATION,
-  ...SUPPORT_NAVIGATION,
-  { href: '/search/', label: '搜索' },
-] as const;
+/**
+ * 这里曾经有一个 `NAVIGATION = [...PRIMARY_NAVIGATION, ...SUPPORT_NAVIGATION, 搜索]`，
+ * 页脚直接把它整条铺出来，于是顶栏那三项在页脚又出现了一遍——「下沉」等于没做。
+ * 已删除：需要顶栏就用 PRIMARY_NAVIGATION，需要页脚就用 SUPPORT_NAVIGATION，
+ * 不要再造一个把两层混在一起的常量。
+ */

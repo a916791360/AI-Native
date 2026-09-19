@@ -30,10 +30,19 @@ const orderedQuestionIds = LEARNING_QUESTIONS.map((question) => question.id);
           >，并把它做成可评审的产品方案。
         </p>
         <div class="cta-row" data-reveal style="--reveal-delay: 180ms">
-          <a class="cta-primary" href="/learn/questions/q01-rules-or-ai/" data-hero-start>
-            从第 01 题开始 →
+          {
+            /*
+            主入口必须是「学习起点」而不是第一道题：零基础用户点进判断题时还没有任何词汇量，
+            题干里的场景与选项对他是噪声。题目退到次入口，由做得出判断的人自己选。
+            TODO(I2-03)：/map/ 认知链路页建好后，主 CTA 改为 /map/#foundation；
+            在此之前指向 /routes/（已存在的展开阅读清单），不留死链。
+          */
+          }
+          <a class="cta-primary" href="/routes/">从链路第 1 站开始 →</a>
+          <a class="cta-ghost" href="/learn/questions/q01-rules-or-ai/" data-hero-start>
+            直接做第 01 题
           </a>
-          <a class="cta-ghost" href="#learning-structure">先看学习结构</a>
+          <a class="cta-ghost" href="/search/">我只想搜一个名词</a>
         </div>
       </div>
       <figure class="specimen" data-reveal style="--reveal-delay: 140ms">
@@ -664,6 +673,8 @@ const orderedQuestionIds = LEARNING_QUESTIONS.map((question) => question.id);
 <script>
   const PROGRESS_KEY = 'ai-native.progress';
   const landing = document.querySelector<HTMLElement>('[data-question-order]');
+  // data-hero-start 现在是「直接做第 01 题」那条次入口——有进度时它就地变成续做入口。
+  // 主 CTA（从链路第 1 站开始）指向链路，不受进度影响，标签始终稳定。
   const startLink = document.querySelector<HTMLAnchorElement>('[data-hero-start]');
   const levelList = document.querySelector<HTMLElement>('[data-level-list]');
 

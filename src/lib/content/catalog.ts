@@ -55,7 +55,10 @@ export const catalogPlanSchema = z
   .object({
     version: z.literal(1),
     targetCount: z.number().int().min(300).max(500),
-    groups: z.array(catalogGroupSchema).length(13),
+    // 原为 .length(13)：这份计划表是配额制度（13 领域 × 25 条 = 325）的历史快照，
+    // 分组数曾被强制等于领域数。配额取消后（见 schema.ts 的 domainsSchema），
+    // 领域可以增删，历史计划表不应该跟着报错——它只是当时的生产排期，不是当前内容结构。
+    groups: z.array(catalogGroupSchema).min(1),
     mergeReviews: z.array(mergeReviewSchema),
   })
   .strict();
@@ -141,16 +144,14 @@ export function validateCatalogPlan(
   const batchCounts = { A: 0, B: 0, C: 0, D: 0 };
 
   catalog.groups.forEach((group, groupIndex) => {
-    const expectedDomain = project.domains.toSorted((left, right) => left.order - right.order)[
-      groupIndex
-    ];
-    if (group.domain !== expectedDomain?.id) {
-      add(
-        'CATALOG_DOMAIN_ORDER',
-        `groups.${groupIndex}.domain`,
-        `expected ${expectedDomain?.id ?? 'no domain'} at this position`,
-      );
-    }
+    // 这里刻意**不再**校验两件事：
+    //   1. 分组顺序必须与领域顺序一一对应；
+    //   2. 每个分组恰好 25 条 candidates（曾经的「每域 25 条」配额约束）。
+    //
+    // 原因：catalog-plan.yml 是首批 325 条内容的生产档案——排期（batch）、
+    // 人工评分、命名仲裁（mergeReviews）的历史记录。它不是当前内容结构的约束：
+    // 领域可以按知识结构增删，每域词条数也不再由配额决定。
+    // 计划表自身的引用正确性仍然保留（引用的领域必须存在、分组不得重复）。
     if (!domainIds.has(group.domain)) {
       add(
         'CATALOG_DOMAIN_UNKNOWN',
@@ -166,13 +167,6 @@ export function validateCatalogPlan(
       );
     }
     groupIds.add(group.domain);
-    if (group.terms.length !== 25) {
-      add(
-        'CATALOG_DOMAIN_QUOTA',
-        `groups.${groupIndex}.terms`,
-        `expected 25 candidates; received ${group.terms.length}`,
-      );
-    }
 
     group.terms.forEach((tuple, termIndex) => {
       const [id, nameZh, nameEn, , , batch] = tuple;
@@ -194,10 +188,7 @@ export function validateCatalogPlan(
     });
   });
 
-  for (const domainId of domainIds) {
-    if (!groupIds.has(domainId))
-      add('CATALOG_DOMAIN_MISSING', 'groups', `missing domain ${domainId}`);
-  }
+  // 同理不再要求「每个领域都必须出现在计划表里」：新增领域不需要回填历史计划表。
 
   if (candidates.size !== catalog.targetCount) {
     add(
@@ -223,29 +214,15 @@ export function validateCatalogPlan(
     add('CATALOG_BATCH_C_RANGE', 'groups', `batch A+B+C contains ${cumulativeC}; expected 220-300`);
   }
 
-  for (const termDocument of project.terms) {
-    const term = termDocument.data;
-    const candidate = candidates.get(term.id);
-    if (!candidate) {
-      add('CATALOG_EXISTING_TERM_MISSING', 'groups', `missing existing term ${term.id}`);
-      continue;
-    }
-    const [, nameZh, nameEn, , , batch] = candidate.tuple;
-    if (candidate.domain !== term.domain || nameZh !== term.nameZh || nameEn !== term.nameEn) {
-      add(
-        'CATALOG_EXISTING_TERM_DRIFT',
-        'groups',
-        `existing term ${term.id} must keep its candidate identity and domain assignment`,
-      );
-    }
-    if (!['A', ...PUBLISHED_CATALOG_BATCHES].includes(batch)) {
-      add(
-        'CATALOG_UNSCHEDULED_TERM_PUBLISHED',
-        'groups',
-        `existing term ${term.id} belongs to unpublished batch ${batch}`,
-      );
-    }
-  }
+  // 这里刻意**不再**要求「每个已存在的词条都必须在计划表里登记」。
+  //
+  // 原先的三条规则（CATALOG_EXISTING_TERM_MISSING / _DRIFT /
+  // CATALOG_UNSCHEDULED_TERM_PUBLISHED）合起来构成一道登记制度：
+  // 任何新词条都必须先写进 catalog-plan.yml 才能通过构建。
+  // 那是首批 325 条的生产流程要求，不是内容结构的要求。
+  // 解耦之后：词条是当前内容的唯一事实源，计划表是历史档案，
+  // 两者不必再逐条对齐；新词条只受内容质量门禁管辖。
+  // 命名唯一性仍由 validation.ts 的 validateLookupKeys 全库兜底，能力没有丢失。
 
   const variantOwners = new Map<string, string>();
   catalog.mergeReviews.forEach((review, reviewIndex) => {
@@ -279,19 +256,8 @@ export function validateCatalogPlan(
     });
   });
 
-  for (const termDocument of project.terms) {
-    const term = termDocument.data;
-    const variants = [...term.abbreviations, ...term.aliases.map((alias) => alias.value)];
-    for (const variant of variants) {
-      if (variantOwners.get(normalizeLookupKey(variant)) !== term.id) {
-        add(
-          'CATALOG_EXISTING_VARIANT_MISSING',
-          'mergeReviews',
-          `${variant} must resolve to existing term ${term.id}`,
-        );
-      }
-    }
-  }
+  // 同样不再要求「已存在词条的别名都必须在 mergeReviews 里登记」：
+  // 那是首批内容的命名仲裁记录，新词条的别名由 validateLookupKeys 全库查重即可。
 
   return diagnostics;
 }

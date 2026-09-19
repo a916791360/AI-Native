@@ -5,10 +5,12 @@ import type { ZodType } from 'astro/zod';
 import { parse as parseYaml } from 'yaml';
 
 import {
+  chainSchema,
   domainsSchema,
   relationsSchema,
   routeSchema,
   termSchema,
+  type ChainStation,
   type Domain,
   type Relation,
   type Route,
@@ -23,6 +25,8 @@ export interface ContentDocument<T> {
 
 export interface ProjectContent {
   domains: Domain[];
+  /** 认知链路：8 站，词条的第二坐标轴（用于学习顺序），与 domains 并用不互相替代。 */
+  chain: ChainStation[];
   relations: Relation[];
   terms: ContentDocument<Term>[];
   routes: ContentDocument<Route>[];
@@ -116,13 +120,14 @@ async function loadYaml<T>(root: string, filePath: string, schema: ZodType<T>): 
 }
 
 export async function loadProjectContent(root = process.cwd()): Promise<ProjectContent> {
-  const [domains, relations, catalogRelations, terms, routes] = await Promise.all([
+  const [domains, chain, relations, catalogRelations, terms, routes] = await Promise.all([
     loadYaml(root, 'src/data/domains.yml', domainsSchema),
+    loadYaml(root, 'src/data/chain.yml', chainSchema),
     loadYaml(root, 'src/data/relations.yml', relationsSchema),
     loadYaml(root, 'src/data/catalog-relations.yml', relationsSchema),
     loadDocuments(root, 'src/content/terms', termSchema),
     loadDocuments(root, 'src/content/routes', routeSchema),
   ]);
 
-  return { domains, relations: [...relations, ...catalogRelations], terms, routes };
+  return { domains, chain, relations: [...relations, ...catalogRelations], terms, routes };
 }

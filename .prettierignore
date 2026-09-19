@@ -5,3 +5,6 @@ playwright-report/
 test-results/
 src/generated/
 docs/product/design-demos/
+# 单文件交付文档（诊断报告 / 迭代开发说明书）：排版由自身 CSS 控制，
+# 交给 prettier 重排会破坏手工控制的版面与内联样式。
+AI-Native-*.html

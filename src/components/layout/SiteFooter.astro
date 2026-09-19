@@ -1,5 +1,5 @@
 ---
-import { NAVIGATION } from '@/config/navigation';
+import { SUPPORT_NAVIGATION } from '@/config/navigation';
 import { SITE } from '@/config/site';
 ---
 
@@ -10,7 +10,8 @@ import { SITE } from '@/config/site';
       <p>{SITE.description}</p>
     </div>
     <nav aria-label="页脚导航">
-      {NAVIGATION.map((item) => <a href={item.href}>{item.label}</a>)}
+      {SUPPORT_NAVIGATION.map((item) => <a href={item.href}>{item.label}</a>)}
+      <a href="/search/">搜索</a>
       <a href="/methodology/">内容方法</a>
       <a href={SITE.repositoryUrl}>GitHub</a>
     </nav>

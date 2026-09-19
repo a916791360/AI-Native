@@ -288,6 +288,124 @@ function validateTermStatus(
   }
 }
 
+/**
+ * 认知链路（8 站）的结构校验。
+ *
+ * 这里只管「结构是否成立」，不管「内容写得好不好」：
+ *   · 站序必须是 1..8 的连续序列 —— 缺号说明链路断了，学习顺序无从谈起；
+ *   · coreTerms 必须指向真实存在的词条 —— 核心节点指向空处，等于这一站不存在；
+ *   · 相邻两站重叠不超过 1 个 —— 否则分站失去意义，又退化成一个平级清单。
+ *
+ * 「A 档词条是否填了 chain」这类完整性问题属于内容质量门禁的职责
+ * （见 scripts/check-content-quality.ts），不在这里按档位判定。
+ */
+function validateChain(project: ProjectContent, diagnostics: ContentDiagnostic[]): void {
+  const filePath = 'src/data/chain.yml';
+  const termIds = new Set(project.terms.map(({ data }) => data.id));
+  const stationIds = new Map<string, number>();
+
+  project.chain.forEach((station, index) => {
+    const previousIndex = stationIds.get(station.id);
+    if (previousIndex !== undefined) {
+      addDiagnostic(
+        diagnostics,
+        'CHAIN_DUPLICATE_ID',
+        filePath,
+        `${index}.id`,
+        `duplicates item ${previousIndex}`,
+      );
+    }
+    stationIds.set(station.id, index);
+
+    if (station.order !== index + 1) {
+      addDiagnostic(
+        diagnostics,
+        'CHAIN_ORDER_SEQUENCE',
+        filePath,
+        `${index}.order`,
+        `must be ${index + 1} so stations form a continuous 1..${project.chain.length} sequence`,
+      );
+    }
+
+    station.coreTerms.forEach((termId, termIndex) => {
+      if (!termIds.has(termId)) {
+        addDiagnostic(
+          diagnostics,
+          'CHAIN_TERM_UNKNOWN',
+          filePath,
+          `${index}.coreTerms.${termIndex}`,
+          `unknown term ${termId}`,
+        );
+      }
+    });
+
+    const next = project.chain[index + 1];
+    if (next) {
+      const overlap = station.coreTerms.filter((termId) => next.coreTerms.includes(termId));
+      if (overlap.length > 1) {
+        addDiagnostic(
+          diagnostics,
+          'CHAIN_ADJACENT_OVERLAP',
+          filePath,
+          `${index}.coreTerms`,
+          `shares ${overlap.length} terms with ${next.id} (${overlap.join(', ')}); at most 1 allowed`,
+        );
+      }
+    }
+  });
+}
+
+/**
+ * 边界声明的引用校验。
+ *
+ * `boundaries` 是可选字段，但一旦填写，里面的引用就必须是客观正确的事实：
+ * confusions[].with 指向的词条必须存在，且不能是自己。
+ * 填错引用是 bug，不分档位、一律硬失败；
+ * 「A 档到底有没有填 boundaries」才是按档位判定的内容质量问题。
+ */
+function validateTermBoundaries(
+  termDocument: ContentDocument<Term>,
+  termIds: Set<string>,
+  diagnostics: ContentDiagnostic[],
+): void {
+  const { data: term, filePath } = termDocument;
+  if (!term.boundaries) return;
+
+  const seen = new Set<string>();
+  term.boundaries.confusions.forEach((confusion, index) => {
+    const fieldPath = `boundaries.confusions.${index}.with`;
+
+    if (confusion.with === term.id) {
+      addDiagnostic(
+        diagnostics,
+        'BOUNDARY_SELF_REFERENCE',
+        filePath,
+        fieldPath,
+        'cannot point at the term itself',
+      );
+    } else if (!termIds.has(confusion.with)) {
+      addDiagnostic(
+        diagnostics,
+        'BOUNDARY_TERM_UNKNOWN',
+        filePath,
+        fieldPath,
+        `unknown term ${confusion.with}`,
+      );
+    }
+
+    if (seen.has(confusion.with)) {
+      addDiagnostic(
+        diagnostics,
+        'BOUNDARY_DUPLICATE',
+        filePath,
+        fieldPath,
+        `duplicate confusion target ${confusion.with}`,
+      );
+    }
+    seen.add(confusion.with);
+  });
+}
+
 function validateLookupKeys(
   terms: ContentDocument<Term>[],
   diagnostics: ContentDiagnostic[],
@@ -696,8 +814,10 @@ export function validateProjectContent(project: ProjectContent): ContentDiagnost
   for (const term of project.terms) {
     validateTermIdentity(term, domainIds, diagnostics);
     validateTermStatus(term, termIds, diagnostics);
+    validateTermBoundaries(term, termIds, diagnostics);
   }
 
+  validateChain(project, diagnostics);
   validateLookupKeys(project.terms, diagnostics);
   validateRelations(project, diagnostics);
   validateRoutes(project, diagnostics);
