@@ -14,3 +14,6 @@ reports/
 .env
 .env.*
 !.env.example
+
+# hallmark 设计技能的本机运行日志：每次调用都会追加，同 reports/ 一样不入版本库。
+.hallmark/

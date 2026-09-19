@@ -1,0 +1,1908 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AI-Native 学习站 · 内容与信息架构诊断报告</title>
+<style>
+/* Hallmark · macrostructure: Long Document · genre: editorial
+ * theme: custom（design.md 锁定 · 荧光网格终端 · 深空墨绿）· diversification inverted (system-managed project)
+ * anchor hue: fluorescent-lime oklch(0.88 0.21 121) · tokens 取自 src/styles/tokens.css
+ * pre-emit critique: P5 H4 E5 S5 R5 V4
+ */
+
+:root {
+  color-scheme: dark;
+
+  /* —— 以下 token 原样取自 AI-Native/src/styles/tokens.css（事实来源），不新增、不改值 —— */
+  --color-canvas: oklch(0.155 0.01 165);
+  --color-ink: oklch(0.93 0.018 152);
+  --color-muted: oklch(0.76 0.024 160);
+  --color-quiet: oklch(0.68 0.022 162);
+  --color-panel: oklch(0.185 0.011 165);
+  --color-panel-raised: oklch(0.215 0.013 165);
+  --color-line: oklch(0.31 0.02 162);
+  --color-line-soft: oklch(0.245 0.016 162);
+  --color-accent: oklch(0.88 0.21 121);
+  --color-accent-strong: oklch(0.8 0.13 176);
+  --color-accent-wash: oklch(0.88 0.21 121 / 0.12);
+  --color-prerequisite: oklch(0.8 0.13 176);
+  --color-component: oklch(0.74 0.12 250);
+  --color-comparison: oklch(0.8 0.13 75);
+  --color-application: oklch(0.78 0.14 140);
+  --color-error: oklch(0.72 0.17 25);
+  --color-focus: oklch(0.8 0.13 176);
+
+  --font-display: 'PingFang SC','HarmonyOS Sans SC','Source Han Sans SC','Noto Sans SC','Microsoft YaHei',-apple-system,BlinkMacSystemFont,sans-serif;
+  --font-body: var(--font-display);
+  --font-mono: 'SF Mono','JetBrains Mono','Cascadia Code','Menlo','Consolas',monospace;
+
+  --weight-body: 400;
+  --weight-display: 800;
+  --tracking-display: -0.02em;
+  --tracking-label: 0.1em;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lead: 1.0625rem;
+  --text-md: 1.25rem;
+  --text-lg: 1.5rem;
+  --text-xl: 1.875rem;
+  --text-2xl: 2.25rem;
+  --text-display: clamp(2rem, 3.6vw, 3rem);
+
+  --space-0: 0.25rem;
+  --space-1: 0.5rem;
+  --space-2: 0.75rem;
+  --space-3: 1rem;
+  --space-4: 1.5rem;
+  --space-5: 2rem;
+  --space-6: 3rem;
+  --space-7: 4.5rem;
+  --page-gutter: clamp(1.25rem, 4vw, 3rem);
+  --content-standard: 76rem;
+  --reading-max: 46rem;
+
+  --radius-sm: 0.5rem;
+  --radius-md: 0.625rem;
+  --radius-pill: 999px;
+
+  --transition-fast: 170ms cubic-bezier(0.2, 0, 0, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { box-sizing: border-box; }
+
+html {
+  overflow-x: clip;
+  scroll-behavior: smooth;
+  background: var(--color-canvas);
+}
+
+body {
+  overflow-x: clip;
+  margin: 0;
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: var(--weight-body);
+  line-height: 1.75;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--color-accent-strong); text-underline-offset: 3px; }
+a:hover { color: var(--color-accent); }
+:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+
+code, .mono { font-family: var(--font-mono); font-size: 0.92em; }
+
+/* ————————————————————————— 报头 ————————————————————————— */
+.masthead {
+  border-bottom: 1px solid var(--color-line);
+  padding: var(--space-6) var(--page-gutter) var(--space-5);
+  background: var(--color-canvas);
+}
+.masthead-inner {
+  width: min(100%, var(--content-standard));
+  margin-inline: auto;
+}
+.brandline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-3);
+  align-items: baseline;
+  margin-bottom: var(--space-5);
+}
+.brandline strong {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-body);
+  letter-spacing: var(--tracking-label);
+  color: var(--color-accent);
+}
+.brandline span {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-quiet);
+}
+h1 {
+  max-width: 34ch;
+  margin: 0 0 var(--space-3);
+  font-size: var(--text-display);
+  font-weight: var(--weight-display);
+  letter-spacing: var(--tracking-display);
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+.deck {
+  max-width: 62ch;
+  margin: 0;
+  color: var(--color-muted);
+  font-size: var(--text-lead);
+}
+.meta-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr));
+  gap: var(--space-3);
+  margin: var(--space-5) 0 0;
+  padding: var(--space-4) 0 0;
+  border-top: 1px solid var(--color-line-soft);
+}
+.meta-grid div { min-width: 0; }
+.meta-grid dt {
+  margin-bottom: var(--space-0);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-label);
+  color: var(--color-quiet);
+  text-transform: uppercase;
+}
+.meta-grid dd {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--color-ink);
+  overflow-wrap: anywhere;
+}
+
+/* ————————————————————————— 版面 ————————————————————————— */
+.layout {
+  width: min(100%, var(--content-standard));
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-6);
+  margin-inline: auto;
+  padding: var(--space-6) var(--page-gutter) var(--space-7);
+}
+
+@media (min-width: 62rem) {
+  .layout {
+    grid-template-columns: 15rem minmax(0, 1fr);
+    align-items: start;
+    gap: var(--space-5);
+  }
+  .toc { position: sticky; top: var(--space-4); }
+}
+
+.toc {
+  border-top: 1px solid var(--color-line);
+  padding-top: var(--space-3);
+}
+.toc p {
+  margin: 0 0 var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-label);
+  color: var(--color-quiet);
+  text-transform: uppercase;
+}
+.toc ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 1px;
+}
+.toc a {
+  display: block;
+  padding: var(--space-1) 0;
+  border-bottom: 1px solid var(--color-line-soft);
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+  text-decoration: none;
+  line-height: 1.5;
+}
+.toc a:hover { color: var(--color-accent); }
+
+article { min-width: 0; max-width: var(--reading-max); }
+
+section { margin-bottom: var(--space-7); }
+
+h2 {
+  margin: 0 0 var(--space-3);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-line);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-display);
+  letter-spacing: var(--tracking-display);
+  line-height: 1.25;
+}
+h3 {
+  margin: var(--space-5) 0 var(--space-2);
+  font-size: var(--text-md);
+  font-weight: var(--weight-display);
+  line-height: 1.35;
+}
+h4 {
+  margin: var(--space-4) 0 var(--space-1);
+  font-size: var(--text-base);
+  font-weight: var(--weight-display);
+}
+p { margin: 0 0 var(--space-3); }
+ul, ol { margin: 0 0 var(--space-3); padding-left: 1.4em; }
+li { margin-bottom: var(--space-1); }
+li:last-child { margin-bottom: 0; }
+strong { font-weight: var(--weight-display); }
+em { font-style: italic; }
+
+.lede { font-size: var(--text-lead); color: var(--color-muted); }
+
+/* ————————————————————————— 数字带 ————————————————————————— */
+.figures {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr));
+  gap: 1px;
+  margin: var(--space-4) 0;
+  background: var(--color-line-soft);
+  border: 1px solid var(--color-line-soft);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.figures div {
+  min-width: 0;
+  padding: var(--space-3) var(--space-3);
+  background: var(--color-panel);
+}
+.figures b {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-body);
+  color: var(--color-accent);
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+.figures span {
+  display: block;
+  margin-top: var(--space-0);
+  font-size: var(--text-xs);
+  color: var(--color-muted);
+  line-height: 1.5;
+}
+
+/* ————————————————————————— 判定块 ————————————————————————— */
+.verdict {
+  margin: var(--space-4) 0;
+  padding: var(--space-3) var(--space-4);
+  border-left: 2px solid var(--color-accent);
+  background: var(--color-panel);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+.verdict > :first-child { margin-top: 0; }
+.verdict > :last-child { margin-bottom: 0; }
+.verdict-label {
+  display: block;
+  margin-bottom: var(--space-1);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-label);
+  color: var(--color-accent);
+  text-transform: uppercase;
+}
+.verdict.sev-high { border-left-color: var(--color-error); }
+.verdict.sev-high .verdict-label { color: var(--color-error); }
+.verdict.sev-mid { border-left-color: var(--color-comparison); }
+.verdict.sev-mid .verdict-label { color: var(--color-comparison); }
+.verdict.sev-good { border-left-color: var(--color-application); }
+.verdict.sev-good .verdict-label { color: var(--color-application); }
+
+/* ————————————————————————— 问题卡 ————————————————————————— */
+.issue {
+  margin: var(--space-5) 0;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  background: var(--color-panel);
+  overflow: hidden;
+}
+.issue-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-2);
+  align-items: baseline;
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--color-line-soft);
+  background: var(--color-panel-raised);
+}
+.issue-id {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-label);
+  color: var(--color-quiet);
+}
+.issue-sev {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  padding: 0 var(--space-1);
+  border-radius: var(--radius-pill);
+  border: 1px solid currentColor;
+}
+.sev-p0 { color: var(--color-error); }
+.sev-p1 { color: var(--color-comparison); }
+.sev-p2 { color: var(--color-component); }
+.issue-head h3 {
+  flex: 1 1 12rem;
+  min-width: 0;
+  margin: 0;
+  font-size: var(--text-base);
+  line-height: 1.4;
+}
+.issue-body { padding: var(--space-3); }
+.issue-body > :first-child { margin-top: 0; }
+.issue-body > :last-child { margin-bottom: 0; }
+.evidence {
+  margin: var(--space-3) 0 0;
+  padding-top: var(--space-2);
+  border-top: 1px dashed var(--color-line);
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+}
+.evidence b { color: var(--color-ink); }
+
+/* ————————————————————————— 表格 ————————————————————————— */
+.table-wrap {
+  margin: var(--space-3) 0;
+  overflow-x: auto;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+}
+table {
+  width: 100%;
+  min-width: 30rem;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+}
+th, td {
+  padding: var(--space-2) var(--space-3);
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--color-line-soft);
+}
+th {
+  background: var(--color-panel-raised);
+  font-weight: var(--weight-display);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-label);
+  color: var(--color-muted);
+  white-space: nowrap;
+}
+tbody tr:last-child td { border-bottom: 0; }
+td { color: var(--color-muted); line-height: 1.6; }
+td strong { color: var(--color-ink); }
+td code { color: var(--color-ink); }
+
+/* ————————————————————————— 代码/引文 ————————————————————————— */
+pre {
+  margin: var(--space-3) 0;
+  padding: var(--space-3);
+  border: 1px solid var(--color-line-soft);
+  border-radius: var(--radius-sm);
+  background: var(--color-panel);
+  overflow-x: auto;
+  font-size: var(--text-xs);
+  line-height: 1.7;
+}
+blockquote {
+  margin: var(--space-3) 0;
+  padding-left: var(--space-3);
+  border-left: 2px solid var(--color-line);
+  color: var(--color-quiet);
+  font-size: var(--text-sm);
+}
+blockquote p:last-child { margin-bottom: 0; }
+
+/* ————————————————————————— 链路图 ————————————————————————— */
+.chain {
+  margin: var(--space-4) 0;
+  display: grid;
+  gap: 1px;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--color-line-soft);
+}
+.chain li {
+  display: grid;
+  grid-template-columns: 2.75rem minmax(0, 1fr);
+  gap: var(--space-2);
+  align-items: baseline;
+  margin: 0;
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-panel);
+  list-style: none;
+}
+.chain { padding: 0; list-style: none; }
+.chain b {
+  display: block;
+  font-size: var(--text-base);
+  font-weight: var(--weight-display);
+}
+.chain span {
+  display: block;
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+}
+.chain i {
+  font-family: var(--font-mono);
+  font-style: normal;
+  font-size: var(--text-sm);
+  color: var(--color-accent);
+}
+
+/* ————————————————————————— 页脚 ————————————————————————— */
+footer {
+  border-top: 1px solid var(--color-line);
+  padding: var(--space-5) var(--page-gutter);
+}
+.footer-inner {
+  width: min(100%, var(--content-standard));
+  margin-inline: auto;
+  font-size: var(--text-sm);
+  color: var(--color-quiet);
+}
+.footer-inner p { margin: 0 0 var(--space-1); }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <p class="brandline">
+      <strong>诊断报告</strong>
+      <span>AI-Native · 面向中文 AI 初学者与产品人的渐进式知识图鉴</span>
+    </p>
+    <h1>325 个词条，8 个模板标题——这个站的问题不在内容太少</h1>
+    <p class="deck">
+      对 AI-Native 学习站的全量静态审计：遍历 325 个词条、90 道判断题、6 个案例、5 条阅读路线的源码与内容数据，
+      从<strong>用户体验</strong>、<strong>学习成效</strong>、<strong>实际可用性</strong>三个维度定位问题，
+      并给出把「名词解释库」改造成「能带人上手的概念路径」的具体做法。
+    </p>
+    <dl class="meta-grid">
+      <div><dt>诊断对象</dt><dd>a916791360/AI-Native<br />commit <code>ae92504</code></dd></div>
+      <div><dt>诊断范围</dt><dd>信息架构 · 导航路径 · 内容资产质量</dd></div>
+      <div><dt>样本规模</dt><dd>325 词条 / 90 题 / 6 案例 / 5 路线</dd></div>
+      <div><dt>方法</dt><dd>源码与内容数据全量扫描<br />非抽样、非主观印象</dd></div>
+      <div><dt>日期</dt><dd>2026-09-19</dd></div>
+    </dl>
+  </div>
+</header>
+
+<div class="layout">
+
+  <nav class="toc" aria-label="报告目录">
+    <p>目录</p>
+    <ol>
+      <li><a href="#summary">一、结论摘要</a></li>
+      <li><a href="#inventory">二、被测对象全貌</a></li>
+      <li><a href="#ux">三、用户体验：导航与路径</a></li>
+      <li><a href="#learning">四、学习成效：内容组织</a></li>
+      <li><a href="#utility">五、实际可用性：词库质量</a></li>
+      <li><a href="#causes">六、成因分析</a></li>
+      <li><a href="#fixes">七、改进建议</a></li>
+      <li><a href="#playbook">八、五个概念的示范性组织</a></li>
+      <li><a href="#roadmap">九、优先级与落地节奏</a></li>
+      <li><a href="#credits">十、值得肯定的部分</a></li>
+      <li><a href="#appendix">附录：证据与复现</a></li>
+    </ol>
+  </nav>
+
+  <article>
+
+  <!-- ═══════════════ 一、结论摘要 ═══════════════ -->
+  <section id="summary">
+    <h2>一、结论摘要</h2>
+
+    <p class="lede">
+      这个站的瓶颈不是内容太少，而是<strong>内容太多、且没有组织逻辑</strong>。
+      325 个词条的产量已经明显超过维护能力，但用户拿到的不是一个「能走通的理解路径」，
+      而是一个<strong>按 13 个学科领域归档的档案柜</strong>。
+    </p>
+
+    <p>
+      三个数字可以概括全部问题。它们不是抽样印象，是对全部 325 个词条逐字符扫描的结果：
+    </p>
+
+    <div class="figures">
+      <div><b>8 / 325</b><span>八个二级标题<br />覆盖全部 325 个词条<br />一致性 <strong>100%</strong></span></div>
+      <div><b>220 / 325</b><span>词条正文逐字复用<br />同一批模板句<br />占比 <strong>67.7%</strong></span></div>
+      <div><b>34 / 325</b><span>词条被纳入阅读路线<br />其余 <strong>89.5%</strong><br />没有任何顺序引导</span></div>
+    </div>
+
+    <p>
+      第一个数字说明<strong>没有一条词条拥有属于自己的结构</strong>；第二个说明<strong>三分之二的词条正文是填空产物</strong>；
+      第三个说明<strong>近九成词条孤立在路径之外</strong>。三者叠加，得到用户的实际感受：
+      三百多条目，点进去每条都长得一样，读完记不住区别，也不知道下一条该看什么。
+    </p>
+
+    <div class="verdict">
+      <span class="verdict-label">核心判断</span>
+      <p>
+        站点已经把「结构治理」做过一轮——顶栏从两套名词收敛到三项、板块命名收敛到唯一事实源
+        （<code>src/config/sections.ts</code>），这说明信息架构的混乱<strong>曾经被识别并修复过</strong>。
+        但同样的治理从未施加在<strong>内容</strong>上：13 个学科领域是照搬教科书分类，
+        它回答「这个名词属于哪个学科」，不回答学习者真正的问题——「这些东西之间是什么关系、我该按什么顺序理解」。
+      </p>
+    </div>
+
+    <p>
+      因此本报告的重心不是「再写一批词条」，而是三件事：
+      <strong>给词库加上第二条坐标轴</strong>（认知链路）、
+      <strong>把词条从「名词解释」改成「决策页」</strong>、
+      <strong>把内容质量也纳入已有的工程门禁</strong>。
+    </p>
+  </section>
+
+  <!-- ═══════════════ 二、被测对象全貌 ═══════════════ -->
+  <section id="inventory">
+    <h2>二、被测对象全貌</h2>
+
+    <p>先建立共同语言。这个站由五个模块构成，各自的组织方式和入口位置并不一致：</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>模块</th>
+            <th>体量</th>
+            <th>组织方式</th>
+            <th>用户从哪里进</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>学习库</strong><br /><span class="mono">/learn/</span></td>
+            <td>90 道判断题<br />3 层 × 6 阶段</td>
+            <td>深度轴（层）× 主题轴（阶段）<br />的二维矩阵</td>
+            <td>顶栏「开始学习」<br />首页主按钮</td>
+          </tr>
+          <tr>
+            <td><strong>案例库</strong><br /><span class="mono">/learn/cases/</span></td>
+            <td>6 个案例<br />含关卡递进</td>
+            <td>按业务场景<br />（客服 / 合同 / 销售 …）</td>
+            <td>顶栏「案例库」<br />结业页出口</td>
+          </tr>
+          <tr>
+            <td><strong>知识库</strong><br /><span class="mono">/atlas/</span></td>
+            <td>325 个词条<br />13 个领域 × 25 条</td>
+            <td>按学科领域（教科书目录式）</td>
+            <td>顶栏「知识库」</td>
+          </tr>
+          <tr>
+            <td><strong>阅读路线</strong><br /><span class="mono">/routes/</span></td>
+            <td>5 条路线<br />覆盖 34 个词条</td>
+            <td>按目标场景串联词条</td>
+            <td>仅页脚</td>
+          </tr>
+          <tr>
+            <td><strong>概念图谱</strong><br /><span class="mono">/graph/</span></td>
+            <td>325 节点<br />333 条边</td>
+            <td>网状关系</td>
+            <td>仅页脚</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>
+      值得先肯定一点：<strong>「阅读路线」其实就是本报告建议的「认知链路」的雏形</strong>。
+      它已经知道要按目标场景把词条串起来（AI 零基础入门 / 高效人机协作 / RAG 从零到应用 /
+      转岗 AI 产品经理 / AI 产品与场景判断）。问题是它<strong>只覆盖了 10.5% 的词条，
+      且被放在页脚——最重要的引导机制，被放在了最不被看见的位置</strong>。
+    </p>
+  </section>
+
+  <!-- ═══════════════ 三、用户体验 ═══════════════ -->
+  <section id="ux">
+    <h2>三、用户体验：导航与路径</h2>
+
+    <p>四个问题，按严重度排列。</p>
+
+    <div class="issue">
+      <div class="issue-head">
+        <span class="issue-id">UX-01</span>
+        <span class="issue-sev sev-p1">P1</span>
+        <h3>学习页侧栏是「3 层 × 6 模块」，产生 18 个同名条目</h3>
+      </div>
+      <div class="issue-body">
+        <p>
+          这正是你提到的「同层级菜单命名重复且无实际意义」的最准确落点。
+          学习页左栏的结构是：三个层（T1 概念识别 / T2 场景判断 / T3 权衡取舍），
+          每一层下面列出<strong>同样那六个阶段</strong>。
+        </p>
+        <p>
+          于是侧栏渲染出 18 个链接，而显示文字里：
+          <strong>「AI 基础与模型边界」出现 3 次</strong>、
+          「场景与机会判断」出现 3 次、
+          「方案选择」出现 3 次……六个名字各重复三遍。
+        </p>
+        <p>
+          它们的锚点其实不同（<code>#module-T1-01</code> / <code>#module-T2-01</code> / <code>#module-T3-01</code>），
+          但<strong>用户看不到锚点，只看到文字</strong>。面对 18 行里 6 个名字各出现三遍的菜单，
+          人无法判断该点哪一个——这不是「难用」，是<strong>菜单失去了指示能力</strong>。
+        </p>
+        <div class="evidence">
+          <b>代码位置</b>：<code>src/components/learning/LearningCatalog.astro</code> L26–30 —
+          三层各自的 <code>&lt;ul&gt;</code> 遍历的是同一个 <code>LEARNING_MODULES</code> 数组。
+        </div>
+      </div>
+    </div>
+
+    <div class="issue">
+      <div class="issue-head">
+        <span class="issue-id">UX-02</span>
+        <span class="issue-sev sev-p1">P1</span>
+        <h3>同一个内容池有四套入口，且四套的分类法互不映射</h3>
+      </div>
+      <div class="issue-body">
+        <p>现在同时存在四层入口体系：</p>
+        <ul>
+          <li><strong>顶栏 3 项</strong>：开始学习 / 案例库 / 知识库</li>
+          <li><strong>页脚 6 项</strong>：以上 3 项 + 阅读路线 / 概念图谱 / 搜索，另加「内容方法」与 GitHub</li>
+          <li><strong>页内左栏</strong>：知识库是 13 个学科领域；学习页是 3 层 × 6 阶段</li>
+          <li><strong>页内锚点</strong>：词条页是「内容概览 / 概念关系」</li>
+        </ul>
+        <p>
+          问题不在「入口多」，而在<strong>四套入口用的是四套不同的分类法</strong>，
+          彼此无法翻译。用户从顶栏「知识库」进入，看到的是 13 个学科领域；
+          点开一个词条，右栏叫「概念关系」；想按顺序读，得退回页脚找「阅读路线」。
+          <strong>每下一层，都要重建一次心理模型。</strong>
+        </p>
+        <div class="evidence">
+          <b>代码位置</b>：<code>src/config/sections.ts</code>（顶栏 / 页脚）
+          · <code>src/pages/atlas/index.astro</code>（13 领域左栏）
+          · <code>src/pages/terms/[id].astro</code>（页内锚点）。
+        </div>
+      </div>
+    </div>
+
+    <div class="issue">
+      <div class="issue-head">
+        <span class="issue-id">UX-03</span>
+        <span class="issue-sev sev-p2">P2</span>
+        <h3>全站没有面包屑，深层页面只能「回列表」</h3>
+      </div>
+      <div class="issue-body">
+        <p>
+          <code>src/components/layout/</code> 下只有三个组件：SiteHeader、SiteFooter、PageIntro，
+          <strong>没有面包屑组件</strong>。而这个站的页面深度并不浅：
+        </p>
+        <ul>
+          <li>词条页：知识库 → 13 个领域之一 → 词条，<strong>两层</strong></li>
+          <li>答题页：学习库 → 某层 → 某阶段 → 某题，<strong>三层</strong></li>
+          <li>案例关卡页：案例库 → 案例 → 关卡，<strong>两层</strong></li>
+        </ul>
+        <p>
+          325 个词条页 + 90 个答题页 + 6 个案例的多级关卡页，进入之后都没有一条
+          「我在哪里、怎么回去上一层」的常驻指示。用户靠浏览器的后退键导航，
+          这意味着<strong>站内的层级结构在体验上是不存在的</strong>。
+        </p>
+      </div>
+    </div>
+
+    <div class="issue">
+      <div class="issue-head">
+        <span class="issue-id">UX-04</span>
+        <span class="issue-sev sev-p1">P1</span>
+        <h3>首页第一屏就把零基础用户推进第 01 题</h3>
+      </div>
+      <div class="issue-body">
+        <p>
+          首页 hero 的主按钮直接是「从第 01 题开始 →」，跳转到
+          <code>/learn/questions/q01-rules-or-ai/</code>。
+        </p>
+        <p>
+          对一个「AI 零基础用户」来说，第一屏的<strong>唯一主动作是立刻做一道判断题</strong>，
+          而此刻他连题目里可能出现的基本词汇都还没有。
+          更矛盾的是，同一屏的副标题写着「不是背名词，而是学会判断」——
+          可<strong>判断的前提恰恰是先有名词</strong>。这个站有完整的词库和五条路线，
+          却在入口处把它们全部跳过了。
+        </p>
+        <p>
+          首页往下第三屏才是「知识库」的介绍，但那时用户已经被引导走了。
+          <strong>引导的次序反了</strong>：应该是「先建立共同语言 → 再做判断 → 再看完整案例」。
+        </p>
+        <div class="evidence">
+          <b>代码位置</b>：<code>src/components/home/HomeLanding.astro</code> L33 —
+          <code>href="/learn/questions/q01-rules-or-ai/"</code>。
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ 四、学习成效 ═══════════════ -->
+  <section id="learning">
+    <h2>四、学习成效：内容组织</h2>
+
+    <p>这是最根本的一组问题，也是「词库读不懂」的真正成因。</p>
+
+    <div class="issue">
+      <div class="issue-head">
+        <span class="issue-id">LN-01</span>
+        <span class="issue-sev sev-p0">P0 · 根本</span>
+        <h3>用「学科分类法」承载「学习路径」——两件事被混为一谈</h3>
+      </div>
+      <div class="issue-body">
+        <p>
+          知识库用 13 个<strong>学科领域</strong>组织全部词条：AI 基础与发展史、机器学习与深度学习、
+          大语言模型与生成式 AI、提示词与上下文工程、多模态、数据检索与 RAG、
+          Agent 与工具调用、AI 产品与用户体验、评估与可观测性、AI 工程运维、
+          安全伦理与治理、算力芯片与产业、AI 产品经理基本功。
+        </p>
+        <p>
+          这是一份<strong>教科书目录</strong>。它天然适合「查阅」——当我明确知道要找什么时，
+          我知道该翻到哪一章。但它<strong>不表达任何依赖关系</strong>：
+          <code>embedding</code> 和 <code>agent-memory</code> 被平等地放进两个领域，
+          读者无法从中得知「先有 Token，才谈得上上下文窗口；先懂检索，RAG 才有意义」。
+        </p>
+        <div class="verdict sev-high">
+          <span class="verdict-label">关键区分</span>
+          <p>
+            <strong>分类法回答「它属于哪个学科」；学习路径回答「我该先理解什么」。</strong>
+            这两件事需要两套坐标，而站点目前只有一套。
+            这就是为什么 325 个入口在体验上等于零个入口——
+            每个入口看起来同等重要，用户无法做任何决策。
+          </p>
+        </div>
+        <p>
+          站点在「结构」层面其实已经理解了这个问题的一部分：阅读路线就是按目标场景而非学科来串词条的。
+          但它只覆盖 34 条，且被放在页脚，<strong>正确的机制被用在了最小的规模上</strong>。
+        </p>
+      </div>
+    </div>
+
+    <div class="issue">
+      <div class="issue-head">
+        <span class="issue-id">LN-02</span>
+        <span class="issue-sev sev-p0">P0</span>
+        <h3>三个内容库互不连通，学习闭环只通一半</h3>
+      </div>
+      <div class="issue-body">
+        <p>对全部 325 个词条做外链方向的统计，结果是：</p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>链接方向</th><th>覆盖数</th><th>含义</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>词条 → <strong>判断题</strong></td>
+                <td><strong>0</strong> / 325</td>
+                <td>读完一个概念，无法立刻做题验证</td>
+              </tr>
+              <tr>
+                <td>词条 → <strong>案例</strong></td>
+                <td><strong>0</strong> / 325</td>
+                <td>读完一个概念，看不到它在真实业务里的样子</td>
+              </tr>
+              <tr>
+                <td>词条 → 阅读路线</td>
+                <td><strong>1</strong> / 325</td>
+                <td>只有一条词条知道自己归属哪条路线</td>
+              </tr>
+              <tr>
+                <td>判断题 → <strong>词条</strong></td>
+                <td>有（<code>references</code> 字段）</td>
+                <td>答题页有「按需深挖」区，能跳进词条</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          <strong>引用是单向的</strong>：从「做题」可以回到「看概念」，
+          但从「看概念」到不了「做题」。而学习闭环需要的恰恰是双向循环——
+          概念建立预期，题目检验预期，案例提供真实语境。
+        </p>
+        <p>
+          实际后果：一个用户在知识库读了 20 个词条，他没有任何机会知道
+          「这个概念对应哪道题、哪个案例」。他读完就离开了，
+          <strong>90 道精心校验过的题和 6 个写得不错的案例，与 325 个词条之间没有通路</strong>。
+        </p>
+      </div>
+    </div>
+
+    <div class="issue">
+      <div class="issue-head">
+        <span class="issue-id">LN-03</span>
+        <span class="issue-sev sev-p1">P1</span>
+        <h3>89.5% 的词条没有顺序引导，且「相关推荐」是模板分配的</h3>
+      </div>
+      <div class="issue-body">
+        <p>
+          五条阅读路线声明覆盖 55 个词条，实际覆盖 <strong>34 个</strong>。
+          剩下的 <strong>291 个词条（89.5%）不属于任何路线</strong>，
+          因此词条页底部的「上一个 / 下一个」不渲染。
+        </p>
+        <p>
+          这些词条唯一的引导，是正文末尾那句「接下来学什么」。它的形态是：
+        </p>
+        <blockquote>
+          <p>接着阅读 <em>[X]</em> 与 <em>[Y]</em>，把这个概念放回更大的关系网里。</p>
+        </blockquote>
+        <p>
+          全量统计后：这 325 段推荐只产生了 <strong>48 种不同的链接组合</strong>——
+          同一个组合最多被 <strong>24 个词条共用</strong>。
+          也就是说，<strong>从十几个不同概念出发，用户会被引导到完全相同的两个地方</strong>。
+          推荐不是基于语义邻接计算的，而是按领域和优先级批量分配的。
+        </p>
+        <div class="evidence">
+          <b>最典型的组合</b>：24 个词条的「接下来学什么」都是
+          <code>算力 → 人工智能</code>；另有 23 个都是 <code>人工智能 → 生成式 AI</code>；
+          20 个都是 <code>AI 应用 → 人工智能</code>。
+        </div>
+      </div>
+    </div>
+
+    <div class="issue">
+      <div class="issue-head">
+        <span class="issue-id">LN-04</span>
+        <span class="issue-sev sev-p2">P2</span>
+        <h3>「概念图谱」画得出网，但网里没有语义</h3>
+      </div>
+      <div class="issue-body">
+        <p>
+          图谱数据 <code>graph.json</code>：325 个节点、333 条边，<strong>0 个孤立节点</strong>。
+          单看这组数字，图谱是完整的。但边类型分布是：
+        </p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>边类型</th><th>数量</th><th>占比</th><th>来源</th></tr></thead>
+            <tbody>
+              <tr><td><code>application</code>（应用）</td><td>315</td><td><strong>94.6%</strong></td><td>程序补边</td></tr>
+              <tr><td><code>prerequisite</code>（前置）</td><td>8</td><td>2.4%</td><td>人工撰写</td></tr>
+              <tr><td><code>component</code>（组成）</td><td>7</td><td>2.1%</td><td>人工撰写</td></tr>
+              <tr><td><code>comparison</code>（比较）</td><td>3</td><td>0.9%</td><td>人工撰写</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          人工撰写的语义关系在 <code>src/data/relations.yml</code> 里只有 <strong>20 条</strong>，
+          而词条有 325 个。其余 315 条边是为了让图谱看起来连通而补上的同一类型边。
+        </p>
+        <p>
+          这产生了一个<strong>比空白更糟的结果</strong>：用户看到一张密集的网，
+          会以为里面编码了知识结构，于是花时间去看。
+          但一张 94.6% 的边都是同一种类型、且不区分方向的网，
+          <strong>传达不了任何结构信息</strong>。
+          初学者最需要的那类关系——「A 是理解 B 的前提」——恰恰只有 8 条。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ 五、实际可用性 ═══════════════ -->
+  <section id="utility">
+    <h2>五、实际可用性：词库质量</h2>
+
+    <p>
+      这一节是全报告最严重的部分。「300 多个条目结构庞杂、难以理解、实际使用价值低」
+      是一个准确的感受，下面说明它<strong>为什么</strong>会这样，以及严重到什么程度。
+    </p>
+
+    <div class="issue">
+      <div class="issue-head">
+        <span class="issue-id">KB-01</span>
+        <span class="issue-sev sev-p0">P0 · 最严重</span>
+        <h3>325 个词条 100% 共用同一套八段模板</h3>
+      </div>
+      <div class="issue-body">
+        <p>对全部 325 个词条做标题结构扫描，结果没有任何例外：</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>二级标题</th><th>出现次数</th></tr></thead>
+            <tbody>
+              <tr><td>它是什么</td><td><strong>325</strong> / 325</td></tr>
+              <tr><td>为什么需要它</td><td><strong>325</strong> / 325</td></tr>
+              <tr><td>它如何工作</td><td><strong>325</strong> / 325</td></tr>
+              <tr><td>真实例子</td><td><strong>325</strong> / 325</td></tr>
+              <tr><td>什么时候适合与不适合</td><td><strong>325</strong> / 325</td></tr>
+              <tr><td>亲自试一下</td><td><strong>325</strong> / 325</td></tr>
+              <tr><td>接下来学什么</td><td><strong>325</strong> / 325</td></tr>
+              <tr><td>来源与修订</td><td><strong>325</strong> / 325</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          八个标题本身是好的设计——它们覆盖了理解一个概念所需的完整面向。
+          问题在于<strong>每条都一模一样</strong>：正文长度集中在 791–1576 字符，
+          均值 1113，分布异常收紧。
+          「向量数据库」和「AI 产品经理胜任力」这两个概念，需要的篇幅和结构不可能相同。
+          如此均匀的长度只说明一件事：<strong>内容是被插进模板的，不是被写出来的</strong>。
+        </p>
+      </div>
+    </div>
+
+    <div class="issue">
+      <div class="issue-head">
+        <span class="issue-id">KB-02</span>
+        <span class="issue-sev sev-p0">P0 · 最严重</span>
+        <h3>220 个词条（67.7%）的正文逐字复用了同一批句子</h3>
+      </div>
+      <div class="issue-body">
+        <p>
+          这是「读了等于没读」的直接原因。以下几句话，
+          在 <strong>220 个不同的词条</strong>里<strong>一字不差</strong>地出现：
+        </p>
+        <pre>「它通常先确认输入、约束、流程和输出，再检查这些部分能否被复核。
+ 这样做可以把抽象名词落到具体判断上」
+
+「它适合被用来统一语言、减少歧义和梳理边界，但不适合被当成万能解释。
+ 若定义太粗，容易掩盖条件差异；若过早套用，也会把本来简单的问题说复杂」
+
+「把【概念名】放进你正在看的一个真实项目里，写下三件事：
+ 它是什么、它不是什么、什么时候不该用它」
+
+「【来源 A】和【来源 B】会是很好的核验起点」</pre>
+        <p>
+          关键在于：<strong>这些句子对任何概念都成立，因此对任何概念都不提供信息</strong>。
+          「先确认输入、约束、流程和输出」既适用于向量数据库，也适用于绩效考核。
+          把这样的句子放进 220 个词条的「它如何工作」下面，
+          读者每一篇都花了时间，却<strong>每次都没有获得该概念的任何具体知识</strong>。
+        </p>
+        <div class="verdict sev-high">
+          <span class="verdict-label">实例解剖 · MCP 词条</span>
+          <p>
+            MCP 是受众最关心、也最容易搞混的概念之一，正好可以看看模板产出了什么。
+            文件：<code>src/content/terms/agents-tool-use-automation/model-context-protocol.mdx</code>
+          </p>
+          <ul>
+            <li>
+              <strong>「它如何工作」写的是</strong>：
+              「它通常先确认输入、约束、流程和输出，再检查这些部分能否被复核」——
+              <strong>Host / Client / Server 三个角色、JSON-RPC、Resources / Prompts / Tools
+              三类能力，一个都没出现</strong>。而这恰恰是 MCP 的全部机制。
+            </li>
+            <li>
+              <strong>「真实例子」没有例子</strong>，只有一句
+              「在一个真实的 Agent 与自动化场景中，团队会先把模型上下文协议放进当前问题里」。
+            </li>
+            <li>
+              <strong>引用来源与内容不匹配</strong>：词条引用的两篇是 Anthropic 的
+              《Building Effective Agents》与《Trustworthy Agents in Practice》——
+              <strong>这两篇都不是讲 MCP 的</strong>，前者讲 Agent 的设计模式。
+              MCP 的权威来源是协议规范本身（modelcontextprotocol.io）。
+            </li>
+            <li>
+              <strong>最危险的后果</strong>：读者读完会形成「MCP 是一种梳理边界、统一语言的方法」
+              这种印象，而它实际是一个<strong>标准化的接口协议</strong>。
+              这不是内容为空，是<strong>内容给出了错误的认知框架</strong>。
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="issue">
+      <div class="issue-head">
+        <span class="issue-id">KB-03</span>
+        <span class="issue-sev sev-p0">P0</span>
+        <h3>词条数量由配额决定，不由知识需求决定</h3>
+      </div>
+      <div class="issue-body">
+        <p>两个数字碰在一起，暴露了生产方式：</p>
+        <ul>
+          <li><code>src/lib/content/schema.ts</code> L37：<code>z.array(domainSchema).length(13)</code> —— 领域数<strong>硬编码为 13</strong></li>
+          <li>每个领域目录下的词条数：<strong>全部恰好 25 个</strong>（13 × 25 = 325）</li>
+        </ul>
+        <p>
+          「AI 基础与发展史」「机器学习」「算力芯片与产业」「AI 产品经理基本功」——
+          这四个领域的知识边界和体量差异极大，不可能真的都恰好需要 25 条。
+        </p>
+        <p>
+          配额制的后果是结构性的：
+          <strong>当「凑够 25 条」成为约束，就必须拆分本不该拆的概念</strong>（见下一个问题），
+          或者为凑数引入次要条目。<strong>内容的粒度被配额绑架了，而不是被读者的理解需要决定</strong>。
+        </p>
+      </div>
+    </div>
+
+    <div class="issue">
+      <div class="issue-head">
+        <span class="issue-id">KB-04</span>
+        <span class="issue-sev sev-p0">P0</span>
+        <h3>同一领域内近义碎片化，用户无法选择</h3>
+      </div>
+      <div class="issue-body">
+        <p>
+          以「数据、检索与 RAG」领域为例，25 条里并存着这些条目：
+        </p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>概念簇</th><th>并存条目</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>检索</strong></td>
+                <td><code>retrieval</code><br /><code>context-retrieval</code><br /><code>retrieval-query</code><br /><code>retrieval-augmented-generation</code></td>
+              </tr>
+              <tr>
+                <td><strong>搜索</strong></td>
+                <td><code>similarity-search</code><br /><code>semantic-search</code><br /><code>keyword-search</code><br /><code>hybrid-search</code></td>
+              </tr>
+              <tr>
+                <td><strong>向量</strong></td>
+                <td><code>embedding</code><br /><code>dense-vector</code><br /><code>sparse-vector</code></td>
+              </tr>
+              <tr>
+                <td><strong>索引</strong></td>
+                <td><code>vector-index</code><br /><code>indexing-pipeline</code></td>
+              </tr>
+              <tr>
+                <td><strong>查询改写</strong></td>
+                <td><code>query-expansion</code><br /><code>query-rewriting</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          一个初学者看到「检索」「上下文检索」「检索查询」三个平级条目，
+          <strong>没有任何线索判断它们的差别、更不知道该先点哪个</strong>。
+          而按配额逻辑，这个领域必须凑满 25 条，于是同一件事的各个侧面被拆成了独立页面。
+        </p>
+        <p>
+          「AI 产品经理基本功」领域是同一个毛病的另一例：
+          <code>product-manager</code>、<code>ai-product-manager</code>、
+          <code>ai-pm-competency</code>、<code>ai-pm-career-path</code> 四条并存，
+          边界高度重叠。
+        </p>
+        <p>
+          <strong>词条数量在这里不是资产，是负债</strong>：它把用户的注意力摊薄到 325 个
+          无法互相区分的选项上，而人面对无法区分的选项时的行为是<strong>放弃选择</strong>。
+        </p>
+      </div>
+    </div>
+
+    <div class="issue">
+      <div class="issue-head">
+        <span class="issue-id">KB-05</span>
+        <span class="issue-sev sev-p0">P0</span>
+        <h3>你点名要的几个概念，存在结构性缺口</h3>
+      </div>
+      <div class="issue-body">
+        <p>全库检索你提到的五个概念，结果如下：</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>概念</th><th>当前状态</th><th>缺口性质</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>MCP</strong></td>
+                <td>有词条 <code>model-context-protocol</code></td>
+                <td>内容为空壳，且给出错误框架<br />（见 KB-02 实例解剖）</td>
+              </tr>
+              <tr>
+                <td><strong>Skill</strong><br /><span class="mono">Agent Skills</span></td>
+                <td><strong>完全没有</strong></td>
+                <td>概念缺失。而这已是开放标准<br />（agentskills.io），且是受众最容易与 MCP 混淆的一个</td>
+              </tr>
+              <tr>
+                <td><strong>LangChain</strong></td>
+                <td><strong>完全没有</strong></td>
+                <td>概念缺失，连带整个<br />「编排框架」层次缺席</td>
+              </tr>
+              <tr>
+                <td><strong>Agent</strong></td>
+                <td>有 25 条领域<br />（<code>agents-tool-use-automation</code>）</td>
+                <td>有材料但没有总纲：<br />缺一篇「Agent 到底是什么、和 Workflow 差在哪」的入口文章</td>
+              </tr>
+              <tr>
+                <td><strong>RAG</strong></td>
+                <td>有词条，且路线「RAG 从零到理解与应用」覆盖它</td>
+                <td>相对最好，但被埋在<br />25 条检索碎片里，入口不显眼</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          这个缺口的性质值得单独说：<strong>缺的不是词条数量，是「概念之间的边界说明」</strong>。
+          MCP 与 Skill、MCP 与 LangChain、Agent 与 Workflow、
+          RAG 与微调——这四组边界，是用户真正卡住的地方。
+          而模板化的词条结构里，<strong>没有任何一处是为「和邻居的差别」预留的</strong>。
+        </p>
+      </div>
+    </div>
+
+    <div class="issue">
+      <div class="issue-head">
+        <span class="issue-id">KB-06</span>
+        <span class="issue-sev sev-p1">P1</span>
+        <h3>「亲自试一下」这个标题下面是零上手</h3>
+      </div>
+      <div class="issue-body">
+        <p>
+          325 个词条里，220 个的「亲自试一下」写的是同一句话：
+          把概念放进你的项目里，<strong>写下三件事</strong>——它是什么、它不是什么、什么时候不该用它。
+        </p>
+        <p>
+          这个动作对「梳理思路」有点用，但它<strong>不解决「上手」</strong>，而且被放在了
+          一个承诺「试一下」的标题下面。真实的差别是：
+        </p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>概念</th><th>模板给的动作</th><th>真正的「上手」是什么</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>MCP</strong></td>
+                <td>写下三件事</td>
+                <td>装一个官方 MCP Server，在客户端里连上，<br />看到工具出现在工具列表并能读一个本地文件</td>
+              </tr>
+              <tr>
+                <td><strong>Skill</strong></td>
+                <td>（词条不存在）</td>
+                <td>写一个 20 行的 <code>SKILL.md</code>，<br />观察它何时被加载、何时不被加载</td>
+              </tr>
+              <tr>
+                <td><strong>RAG</strong></td>
+                <td>写下三件事</td>
+                <td>拿 5 份真实文档跑一次检索，<br />故意问一个「资料里没有」的问题，看系统如何处理</td>
+              </tr>
+              <tr>
+                <td><strong>Agent</strong></td>
+                <td>写下三件事</td>
+                <td>给模型两个工具（读文件 + 写文件），<br />让它完成一次多步任务，观察你在哪一步必须介入</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          <strong>「上手」的定义是可观察的行为变化</strong>：你做完之后，
+          你的环境里多了一个东西、或者你亲眼看到了一个现象。
+          「写下三件事」不产生这两种结果。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ 六、成因分析 ═══════════════ -->
+  <section id="causes">
+    <h2>六、成因分析</h2>
+
+    <p>
+      上面 14 个问题不是 14 个独立的疏忽，它们由四个根因产生。
+      找到根因的价值在于：<strong>修问题只能修 14 次，修根因可以防止它们再长出来</strong>。
+    </p>
+
+    <h3>根因一：产量驱动，而非需求驱动</h3>
+    <p>
+      先定下「13 个领域 × 25 条 = 325 条」这个数字，再用模板把数字填满。
+      证据链完整闭合：<code>schema.ts</code> 硬编码领域数 13
+      → 每个领域恰好 25 条
+      → 八个标题在 325 条里 100% 一致
+      → 220 条正文逐字同句。
+    </p>
+    <p>
+      当「产出量」是目标时，「这一条该不该存在」「这一条对读者有没有增量」
+      就不再是决策点，而变成了阻碍交付的麻烦。
+      <strong>配额制度把内容决策降级成了填充作业</strong>。
+    </p>
+
+    <h3>根因二：把「分类法」当成了「学习路径」</h3>
+    <p>
+      站点做过一轮信息架构治理——顶栏从两套名词收敛到三项、
+      板块命名收敛到 <code>sections.ts</code> 这一个事实源，
+      文件头注释里甚至记录了一次「典型的信息架构事故」。
+      这说明<strong>结构的混乱已经被识别、被修复过</strong>。
+    </p>
+    <p>
+      但那一轮治理解决的是<strong>命名</strong>问题，没有触及<strong>顺序</strong>问题。
+      13 个学科领域是照搬教科书分类，它对「这个名词属于哪个学科」回答得很好，
+      对「我该先理解什么」完全没有回答。
+      <strong>命名收敛了，认知路径仍然是 325 个平级入口。</strong>
+    </p>
+
+    <h3>根因三：三个内容库由三条独立流水线生产，缺少共同的用户旅程锚点</h3>
+    <p>三个模块的质量控制水平差异极大：</p>
+    <ul>
+      <li>
+        <strong>90 道判断题</strong>：有契约校验，
+        <code>scripts/check-learning-bank.ts</code> 会逐题检查形态，
+        任何一层出现不达标的题都会<strong>让构建失败</strong>——质量受控。
+      </li>
+      <li>
+        <strong>6 个案例</strong>：手工撰写，有真实业务背景、当前流程、风险条件——质量受控。
+      </li>
+      <li>
+        <strong>325 个词条</strong>：模板批量生成，<strong>没有任何内容质量门禁</strong>——
+        而这恰好是体量最大、用户接触最多的模块。
+      </li>
+    </ul>
+    <p>
+      更关键的是三者之间只有「题目 → 词条」这一个单向引用。
+      <strong>没有任何一个环节在负责「用户从进入网站到能上手一个概念」这条完整路径</strong>。
+      每个模块都在自己的职责范围内做得不错，但它们没有被同一条用户旅程串起来。
+    </p>
+
+    <h3>根因四：选错了可验证的指标</h3>
+    <p>
+      这个项目在工程侧做得相当好，已经建立了：
+      性能预算（<code>src/data/performance-baseline.json</code>）、
+      设计守卫（<code>pnpm check:design</code> 禁止中间字重、要求字重落差 ≥ 300）、
+      内容契约校验（学习题库）。这些都是把「隐性标准」变成「可自动检查的红线」。
+    </p>
+    <p>
+      但<strong>内容侧没有对应的守卫</strong>。没有脚本检查
+      「这条词条是不是只是模板」、「这个领域是不是装了不该拆的概念」、
+      「同一领域内是否出现了近义碎片」。
+    </p>
+    <div class="verdict sev-high">
+      <span class="verdict-label">一句话总结根因</span>
+      <p>
+        <strong>能被测量的东西被持续优化了，不能被测量的东西——内容与读者理解需求的匹配度——被忽略了。</strong>
+        这不是团队能力问题，是「可验证性」决定了注意力的分配。
+        解法就是把内容质量也变成可验证的。
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══════════════ 七、改进建议 ═══════════════ -->
+  <section id="fixes">
+    <h2>七、改进建议</h2>
+
+    <p>四个方向，按依赖关系排列。方向一是地基，其余三个都建立在它上面。</p>
+
+    <h3>方向一｜给词库加上第二条坐标轴：从「学科分类法」到「认知链路」</h3>
+
+    <p>
+      核心动作：<strong>在 13 个学科领域之上，增加一层「认知链路」</strong>，
+      用 8 站把用户从「不知道从哪开始」带到「能自己走了」。
+    </p>
+
+    <p>
+      这 8 站不是凭感觉排的，它对应的是业界当前对这套技术栈的共识理解——
+      整条链路在回答同一类问题：<strong>语言模型缺什么，每一层补什么</strong>。
+    </p>
+
+    <ol class="chain">
+      <li><i>01</i><span><b>地基 · 模型是什么</b><span>LLM 的概率本质、Token、上下文窗口、能力边界。回答「它为什么不是检索、也为什么必然会编」。</span></span></li>
+      <li><i>02</i><span><b>沟通 · 怎么把需求说清楚</b><span>Prompt 与上下文工程。回答「为什么同样的模型，别人用得比你好」。</span></span></li>
+      <li><i>03</i><span><b>给知识 · 怎么让它知道你家的资料</b><span>RAG：切片、向量化、检索、重排。回答「怎么让它答我司的内部问题」。</span></span></li>
+      <li><i>04</i><span><b>给手脚 · 怎么让它做事</b><span>Agent：工具调用、规划、记忆、人机介入点。回答「怎么从给答案变成把事办完」。</span></span></li>
+      <li><i>05</i><span><b>给接口 · 怎么标准化地接系统</b><span>MCP：Host / Client / Server，一次对接处处可用。回答「为什么每个工具不再各接一遍」。</span></span></li>
+      <li><i>06</i><span><b>给流程 · 怎么把做法沉淀下来</b><span>Skill / SOP：把「这件事该怎么做」写成可复用模块。回答「怎么不每次都从头教一遍」。</span></span></li>
+      <li><i>07</i><span><b>给判断 · 怎么知道它行不行</b><span>评估、观测、成本与延迟。回答「上线之后，你凭什么说它变好了」。</span></span></li>
+      <li><i>08</i><span><b>给安全 · 什么时候必须有人管</b><span>护栏、权限、最小授权、human-in-the-loop。回答「哪些动作永远不能让模型自己决定」。</span></span></li>
+    </ol>
+
+    <p>
+      <strong>关键设计约束：这 8 站不是第 14 个领域，而是词条的第二套坐标。</strong>
+      每个词条同时拥有两个位置——
+      <strong>学科归属</strong>（它在档案柜的哪一格，用于查阅）和
+      <strong>链路位置</strong>（它在理解路径的第几站，用于学习）。
+      前者服务「我知道要找什么」，后者服务「我不知道要找什么」。两套坐标必须同时存在，
+      不能用一套替换另一套。
+    </p>
+
+    <p>落地方式（具体到字段）：</p>
+    <pre>// 词条 frontmatter 增加两个字段
+chain: [3]                        // 归属第 3 站（给知识 / RAG）
+chainRole: 'intro' | 'core' | 'advanced'   // 在本站里的角色
+
+// 新增页面 /map/
+// 把 8 站画成一条可点击的线，每站显示：
+//   · 一句话目标
+//   · 3–5 个核心词条（chainRole: intro → core）
+//   · 对应的判断题
+//   · 一个上手动作</pre>
+
+    <h3>方向二｜把词条从「名词解释」改成「决策页」</h3>
+
+    <p>
+      现在的词条在回答「X 是什么」。读者读完之后，仍然无法回答三个真正的问题。
+      建议把词条的目标重写为<strong>读完能回答这三问</strong>：
+    </p>
+
+    <ol>
+      <li><strong>它解决什么、不解决什么？</strong>（边界，而不是定义）</li>
+      <li><strong>它和最容易混淆的邻居差在哪？</strong>（这个站现在完全没有为这个预留位置）</li>
+      <li><strong>我今天能拿它做什么？</strong>（一个可完成的最小动作）</li>
+    </ol>
+
+    <p>
+      相应地，八段模板的「来源与修订」可以保留（这个设计是好的），
+      但「它如何工作」必须填入<strong>真实的组件名与流程</strong>，
+      「真实例子」必须是真的例子，「亲自试一下」必须换成可执行动作。
+      <strong>模板结构可以留，模板句子必须清空</strong>。
+    </p>
+
+    <h3>方向三｜信息架构收敛</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>问题</th><th>建议动作</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>学习页 18 个同名条目</strong></td>
+            <td>两种改法择一：<br />① 侧栏只列<strong>当前展开层</strong>的 6 个阶段，18 项降到 6 项<br />② 保留 18 项但给模块名加层前缀（<code>T1 · AI 基础与模型边界</code>）</td>
+          </tr>
+          <tr>
+            <td><strong>无面包屑</strong></td>
+            <td>新增面包屑组件，至少覆盖三处：<br />词条页、答题页、案例关卡页</td>
+          </tr>
+          <tr>
+            <td><strong>四套入口分类法互不映射</strong></td>
+            <td>明确收成<strong>两条路径</strong>：<br />· <strong>主路径（第一次来）</strong>：链路图 → 8 站 → 每站核心词条 + 对应题目<br />· <strong>查阅路径（知道要什么）</strong>：领域目录 + 搜索 + 图谱<br />顶栏只放这两个，其余全部下沉到页脚</td>
+          </tr>
+          <tr>
+            <td><strong>阅读路线被埋在页脚</strong></td>
+            <td><code>/routes/</code> 是现有资产里最接近「认知链路」的东西，<br />应提到主路径，而不是重做一套</td>
+          </tr>
+          <tr>
+            <td><strong>首页 CTA 次序反了</strong></td>
+            <td>主 CTA 改为「从链路第 1 站开始」，<br />次级为「直接做题」「搜索某个名词」</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>方向四｜三库打通 + 把内容质量纳入工程门禁</h3>
+
+    <h4>打通（补齐双向引用）</h4>
+    <ul>
+      <li>
+        <strong>词条 → 题目</strong>：每站的核心词条必须至少挂 1 道对应对的题。
+        现状是 0，这是最短缺的一环。
+      </li>
+      <li>
+        <strong>词条 → 案例</strong>：在案例页标出「本案例用到哪些概念」并链回词条；
+        反向在词条页显示「这个概念出现于哪个案例」。
+      </li>
+      <li>
+        <strong>题目 → 词条</strong>：已有（<code>references</code> 字段 + 答题页「按需深挖」区），保留。
+      </li>
+    </ul>
+
+    <h4>门禁（把内容变成可自动检查的红线）</h4>
+    <p>
+      这个项目已经证明了自己有能力执行门禁——
+      <code>check:design</code> 和题库契约校验都在跑。把同样的事做一遍到内容侧：
+    </p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>门禁</th><th>检查什么</th><th>拦住的失败模式</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>门禁 1<br />模板复用</strong></td>
+            <td>新词条与既有词条的正文相似度上限</td>
+            <td>阻止再出现「220 条逐字同句」</td>
+          </tr>
+          <tr>
+            <td><strong>门禁 2<br />边界声明</strong></td>
+            <td>每条词条必须声明：<br />归属哪一站 + 与哪 2 个邻居的差别</td>
+            <td>阻止词条退化成孤立的名词解释</td>
+          </tr>
+          <tr>
+            <td><strong>门禁 3<br />上手动作</strong></td>
+            <td>「亲自试一下」必须含一个可执行命令<br />或一个可完成的最小任务</td>
+            <td>阻止「写下三件事」这类空动作</td>
+          </tr>
+          <tr>
+            <td><strong>门禁 4<br />配额取消</strong></td>
+            <td>校验领域词条数<strong>不再是固定值</strong>；<br />领域内近义词自动聚类告警</td>
+            <td>阻止为凑数拆分概念<br />（retrieval 拆成 4 条）</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>方向五｜存量 325 条的处置建议（务实版）</h3>
+
+    <p>
+      <strong>不要重写 325 条，也不要删掉它们。</strong>
+      存量按三档处置，把人力集中在真正重要的部分：
+    </p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>档位</th><th>规模</th><th>判定标准</th><th>处置</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>A 档</strong></td>
+            <td>约 40–60 条</td>
+            <td>8 站链路的核心概念<br />（含 MCP / Skill / Agent / LangChain / RAG）</td>
+            <td><strong>按方向二重写</strong>为决策页<br />这是全部投入的重点</td>
+          </tr>
+          <tr>
+            <td><strong>B 档</strong></td>
+            <td>约 100 条</td>
+            <td>有真实区分度的概念</td>
+            <td>保留正文，补一句<br />「与相邻词条的差别」，挂进链路作拓展阅读</td>
+          </tr>
+          <tr>
+            <td><strong>C 档</strong></td>
+            <td>其余<br />（含全部近义碎片）</td>
+            <td>与同域词条高度重叠、<br />或纯填充条目</td>
+            <td><strong>合并或降级</strong>：<br />不再单独成页，改为 A/B 档词条页内的「相关名词」小注</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>
+      处置前需要一次人工判定（领域 × 词条 → 打 A/B/C）。
+      这是整个方案里唯一需要密集人工投入的环节，
+      但它<strong>比再写 325 条模板便宜得多，而且是唯一能止住问题复发的环节</strong>。
+    </p>
+  </section>
+
+  <!-- ═══════════════ 八、五个概念的示范性组织 ═══════════════ -->
+  <section id="playbook">
+    <h2>八、五个概念的示范性组织</h2>
+
+    <p>
+      MCP、Skill、Agent、LangChain、RAG——这五个是你点名的概念，
+      也是当前受众「听说过、说不清」的典型。它们值得单独设计，原因有两个：
+    </p>
+    <ol>
+      <li>它们<strong>不是五个并列的名词，而是一条链上五个不同层次</strong>——这正是最难传达的部分；</li>
+      <li>用户对它们的困惑有高度重复的模式：<strong>能说出名字，说不出边界，因此容易糊成一团</strong>。</li>
+    </ol>
+
+    <h3>先建立总图：五个概念各在哪一层</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>概念</th><th>它所在的层</th><th>一句话定位</th><th>用户最常见的困惑</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>MCP</strong></td>
+            <td>接口层</td>
+            <td>怎么<strong>标准化地</strong>把模型接到外部工具和数据</td>
+            <td>「它和 Function Calling 是什么关系？」</td>
+          </tr>
+          <tr>
+            <td><strong>Skill</strong></td>
+            <td>流程层</td>
+            <td>怎么把「这件事该怎么做」<strong>沉淀成可复用的 SOP</strong></td>
+            <td>「它和 Prompt、和 MCP 又是什么关系？」</td>
+          </tr>
+          <tr>
+            <td><strong>Agent</strong></td>
+            <td>控制层</td>
+            <td>模型自己规划、行动、观察、再规划的<strong>循环</strong></td>
+            <td>「它和 Workflow 到底差在哪？」</td>
+          </tr>
+          <tr>
+            <td><strong>LangChain</strong></td>
+            <td>实现层</td>
+            <td>用<strong>代码</strong>把上面这些编排起来的框架</td>
+            <td>「它和 MCP 是不是竞品？」</td>
+          </tr>
+          <tr>
+            <td><strong>RAG</strong></td>
+            <td>知识层</td>
+            <td>回答之前<strong>先查你自己的资料</strong></td>
+            <td>「它和微调该选哪个？」</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="verdict">
+      <span class="verdict-label">这张表本身就是缺失的内容</span>
+      <p>
+        站点目前没有任何一个页面在回答「这五个词之间是什么关系」。
+        它们分散在 13 个领域中的两个里，彼此之间没有链接。
+        <strong>对受众而言，这张表的价值大于其中任意五篇词条。</strong>
+        建议把它做成链路第 4–6 站的引导页。
+      </p>
+    </div>
+
+    <h3>每个概念该怎么写：五个具体示范</h3>
+
+    <p>
+      下面给出每个概念的<strong>必备要素</strong>——不是完整稿，
+      而是「这一条必须出现什么、必须澄清什么误会、上手动作是什么」。
+      判定标准很简单：<strong>一个读者读完，能不能向同事复述出它的边界</strong>。
+    </p>
+
+    <h4>MCP（模型上下文协议）</h4>
+    <ul>
+      <li>
+        <strong>定位必须写清</strong>：它是一个<strong>接口标准</strong>，
+        不是工具本身、不是框架、不是模型能力。
+        类比可用「AI 世界的 USB-C」——一次对接，处处可用。
+      </li>
+      <li>
+        <strong>机制必须出现</strong>：三个角色 <strong>Host / Client / Server</strong>；
+        通信基于 <strong>JSON-RPC 2.0</strong>；
+        Server 能向客户端提供三类能力——<strong>Resources（数据）/ Prompts（模板）/ Tools（可执行动作）</strong>；
+        传输方式分本地 stdio 与远程 HTTP。
+      </li>
+      <li>
+        <strong>必须澄清的误会</strong>：
+        <strong>MCP ≠ Function Calling</strong>——后者是各模型厂商自家的调用格式，
+        前者是把「工具接入」这件事标准化的<strong>协议</strong>；
+        <strong>MCP ≠ LangChain</strong>——两者在不同层，可以叠加使用。
+      </li>
+      <li>
+        <strong>必须提到的局限</strong>：MCP 是连接标准，<strong>不是安全保险柜</strong>。
+        规范本身就建议保留 human-in-the-loop、向用户明确展示工具调用并允许否决。
+        第三方 Server 应视为不可信来源。
+      </li>
+      <li>
+        <strong>上手动作（约 15 分钟）</strong>：装一个官方 filesystem MCP Server，
+        在支持 MCP 的客户端里连上，<strong>看到工具出现在工具列表，并成功读到一个本地文件</strong>。
+        观察点：这一步不需要改任何代码。
+      </li>
+      <li>
+        <strong>权威来源</strong>：协议规范（modelcontextprotocol.io），
+        <strong>而不是</strong>一篇讲 Agent 设计模式的博客——这正是现在词条引用的东西，
+        也是它给出错误框架的原因。
+      </li>
+    </ul>
+
+    <h4>Skill（Agent Skills）— 当前完全缺失</h4>
+    <ul>
+      <li>
+        <strong>定位</strong>：<strong>程序性知识的封装</strong>——
+        回答「这件事该怎么做」，而不是「能访问什么」。
+        一个 Skill 就是一个目录 + 一个 <code>SKILL.md</code>
+        （带 YAML frontmatter 的 <code>name</code> 与 <code>description</code>），可以附脚本与参考文件。
+      </li>
+      <li>
+        <strong>机制核心是「渐进式披露」</strong>：未被激活时，
+        模型只看到每个 Skill 的名字和描述；只有相关时才读全文。
+        <strong>这一点必须讲透</strong>——它是「为什么可以装几十个 Skill 而不撑爆上下文」的答案，
+        也是最容易被误解为「就是个长 Prompt」的地方。
+      </li>
+      <li>
+        <strong>必须澄清的误会（最重要的一条）</strong>：
+        <strong>Skill 与 MCP 是互补而非竞争</strong>。
+        业界官方表述可以直接引用：
+        <em>「MCP 给模型工具访问权限，Skill 教它如何有效地使用这些工具。」</em>
+        <strong>Skill 也不等于 Prompt</strong>：前者按需动态加载、跨会话存在、可携带代码资产；
+        后者是单次对话内的一次性指令。
+      </li>
+      <li>
+        <strong>必须提到的现状</strong>：Agent Skills 规范已作为<strong>开放标准</strong>发布，
+        同一份 Skill 格式可在采纳该标准的多个平台上使用——这解释了它为什么重要。
+      </li>
+      <li>
+        <strong>安全提醒（不能省）</strong>：第三方 Skill 应视为<strong>不可信代码</strong>。
+        一个恶意 Skill 可以指示模型执行命令或调用工具，且行为可能与其声称的用途不符。
+        装之前通读，必要时在沙箱里跑。
+      </li>
+      <li>
+        <strong>上手动作（约 20 分钟）</strong>：写一个 20 行的 <code>SKILL.md</code>
+        （例如「本团队周报的固定格式」），
+        <strong>然后观察它何时被加载、何时不被加载</strong>。
+        观察点是「触发条件」，不是「输出质量」——这是理解 Skill 的关键。
+      </li>
+    </ul>
+
+    <h4>Agent（智能体）</h4>
+    <ul>
+      <li>
+        <strong>定位必须打掉一个直觉</strong>：Agent 不是「更聪明的聊天机器人」，
+        而是<strong>一个循环</strong>——规划 → 行动 → 观察结果 → 再规划，直到任务完成。
+        聊天机器人负责「说」，Agent 负责「做」。
+      </li>
+      <li>
+        <strong>必须给出与 Workflow 的分界线</strong>：这是用户最常问的。
+        一句话——<strong>路径由人预先定死的是 Workflow；路径由模型在运行时决定的是 Agent</strong>。
+        两者不是先进与落后，是适用场景不同：流程稳定就该用 Workflow，因为它可预测、可审计。
+      </li>
+      <li>
+        <strong>机制必须出现</strong>：工具调用是「能动手」的开关（模型输出结构化指令 → 外部程序执行 → 结果回喂 → 模型基于结果继续）；
+        记忆分短期（当前上下文窗口内）与长期（写入外部存储）；
+        <strong>自主度是一个可调的旋钮</strong>，不是有/无的开关——从「模型只填空」到「完全自主」之间有很多档，
+        生产环境通常落在偏保守的一端。
+      </li>
+      <li>
+        <strong>必须写清的风险</strong>：一旦允许写文件、跑命令、发消息，
+        错误的性质就从「说错话」升级为「做错事」。
+        所以护栏、权限控制、人类可否决，不是附加项而是必需品。
+      </li>
+      <li>
+        <strong>上手动作（约 30 分钟）</strong>：给模型两个工具（读文件 + 写文件），
+        交给它一个多步任务（例如「把 A 文件里的清单整理成表格写进 B 文件」），
+        <strong>观察它在哪一步需要你介入</strong>。
+        观察点是「介入点出现在哪里」——这直接对应生产环境的审批设计。
+      </li>
+    </ul>
+
+    <h4>LangChain — 当前完全缺失</h4>
+    <ul>
+      <li>
+        <strong>定位</strong>：<strong>应用层的编排框架</strong>——
+        一个跑在你<strong>自己的进程里</strong>的代码库，不是一个协议，也不是一个服务。
+        它帮你把「调模型、接工具、管记忆、组链条」这些重复劳动封装起来。
+      </li>
+      <li>
+        <strong>必须出现的对比维度</strong>：工具定义方式（代码装饰器 vs 独立服务进程）、
+        发现方式（写死在应用里 vs 连接时动态发现）、
+        复用范围（跨项目复制代码 vs 装一次任何兼容客户端都能用）、
+        运行位置（你的进程内 vs 独立进程）。
+      </li>
+      <li>
+        <strong>必须澄清的误会</strong>：<strong>LangChain 和 MCP 不是竞品，它们在不同层</strong>。
+        可以给一句可操作的决策规则：
+        <strong>缺工作流控制，用 LangChain；缺标准化接入，用 MCP；两者都需要时叠加使用。</strong>
+        同时应提到它在生态中的演进（图式、状态化编排的路线在生产环境中更常被选中）。
+      </li>
+      <li>
+        <strong>上手动作（约 30 分钟）</strong>：用约 30 行代码跑通一条最小链
+        （检索 → 拼提示 → 生成），
+        <strong>然后把同一个检索换成由 MCP Server 提供的工具，体会分层的差别</strong>。
+        这个对比动作是本条词条存在的全部理由。
+      </li>
+    </ul>
+
+    <h4>RAG（检索增强生成）</h4>
+    <ul>
+      <li>
+        <strong>定位</strong>：<strong>知识层</strong>——回答之前先去你的资料里查一次，
+        让模型「开卷答题」，而不是把知识塞进模型参数。
+      </li>
+      <li>
+        <strong>机制必须分两段讲</strong>：
+        <strong>离线准备</strong>（文档解析 → 切片 → 向量化 → 入库）与
+        <strong>在线问答</strong>（查询改写 → 检索 → 重排 → 拼进提示 → 生成）。
+        只讲「向量检索」是不完整的，因为很多问题出在切片和重排，而不是检索本身。
+      </li>
+      <li>
+        <strong>必须写清的现状</strong>：到 2026 年，
+        混合检索（关键词 + 向量）、重排器、以及「能真正衡量检索质量」的评估，
+        已经是<strong>默认配置而非高级选项</strong>。这一句能防止用户把 demo 当生产。
+      </li>
+      <li>
+        <strong>必须澄清的误会</strong>：
+        <strong>RAG 与微调不是二选一</strong>——通常的答案是「先检索」，
+        检索解决不了（例如需要改变输出风格或固定的推理模式）再考虑微调。
+        <strong>RAG 也不等于「接上知识库就准」</strong>：切片质量、召回率、重排效果决定了它的上限。
+      </li>
+      <li>
+        <strong>上手动作（约 30 分钟）</strong>：拿 5 份真实文档跑一次检索，
+        然后<strong>故意问一个「资料里没有」的问题</strong>，
+        看系统如何处理「检索不到」这种情况。
+        观察点是「兜底行为」——这是判断一个 RAG 系统是否可用的最快方法。
+      </li>
+    </ul>
+
+    <div class="verdict sev-good">
+      <span class="verdict-label">这五条的共同结构</span>
+      <p>
+        五个示范里反复出现的是同一个骨架：
+        <strong>一句定位 → 真实机制（有名字、有角色、有流程） → 必须澄清的误会 → 上手动作 → 权威来源</strong>。
+        其中<strong>「必须澄清的误会」这一栏是当前词库完全空白的部分</strong>，
+        也是用户真正卡住的地方。
+        <strong>建议把它固化为所有核心词条的必填字段。</strong>
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══════════════ 九、优先级 ═══════════════ -->
+  <section id="roadmap">
+    <h2>九、优先级与落地节奏</h2>
+
+    <p>按「依赖关系」而非「工作量」排序——先做能解放后面所有动作的事。</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>阶段</th><th>动作</th><th>解决什么</th><th>依赖</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>P0</strong></td>
+            <td>存量词条 A/B/C 判定表<br />合并近义碎片（KB-04）</td>
+            <td>让词库从「325 个无法区分的选项」<br />变成「一个有索引价值的量」</td>
+            <td>无</td>
+          </tr>
+          <tr>
+            <td><strong>P0</strong></td>
+            <td>定义 8 站认知链路<br />词条增加 <code>chain</code> 字段并挂链</td>
+            <td>解决「不知道从哪开始」<br />（LN-01 根本问题）</td>
+            <td>无</td>
+          </tr>
+          <tr>
+            <td><strong>P1</strong></td>
+            <td>MCP / Skill / Agent / LangChain / RAG<br />按决策页重写</td>
+            <td>你点名要的概念真正可用<br />（KB-02、KB-05、KB-06）</td>
+            <td>P0 链路</td>
+          </tr>
+          <tr>
+            <td><strong>P1</strong></td>
+            <td>学习页侧栏收敛 + 面包屑<br />+ 首页 CTA 次序调整</td>
+            <td>导航与路径（UX-01 ~ 04）</td>
+            <td>无<br />（可与 P0 并行）</td>
+          </tr>
+          <tr>
+            <td><strong>P2</strong></td>
+            <td>三库打通：<br />词条 ↔ 题目 ↔ 案例</td>
+            <td>学习闭环（LN-02）</td>
+            <td>P0 链路<br />（打通需要链路的挂点）</td>
+          </tr>
+          <tr>
+            <td><strong>P2</strong></td>
+            <td>四条内容门禁进 CI</td>
+            <td>防止回退到模板生产<br />（根因一、四）</td>
+            <td>P1 重写完成<br />（需要合规样本作基线）</td>
+          </tr>
+          <tr>
+            <td><strong>P3</strong></td>
+            <td>概念图谱改为真实语义关系<br />（先做 8 站链路内的关系）</td>
+            <td>图谱从「好看」变成「有用」<br />（LN-04）</td>
+            <td>P0 链路</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>
+      一个执行上的提醒：<strong>P0 的判定表是唯一需要密集人工投入的环节</strong>，
+      但它的产出（A/B/C 三档清单）会直接决定后面所有工作的规模。
+      先做这件事，其余的规模才有意义——否则会在 325 条上继续摊薄投入。
+    </p>
+  </section>
+
+  <!-- ═══════════════ 十、值得肯定 ═══════════════ -->
+  <section id="credits">
+    <h2>十、值得肯定的部分</h2>
+
+    <p>
+      这份报告的措辞是严厉的，但需要明确：<strong>问题集中在内容治理这一块，
+      而工程与结构侧的水平明显在平均线以上</strong>。以下是审计中确认站得住的部分，
+      它们也是后续改造可以直接依赖的基础：
+    </p>
+
+    <ul>
+      <li>
+        <strong>板块命名有唯一事实源</strong>——
+        <code>src/config/sections.ts</code> 强制「一个板块一个名字」，
+        并在文件头记录了曾经的事故与现在的约定。这是正确的治理方式。
+      </li>
+      <li>
+        <strong>顶栏已从两套名词收敛到三项</strong>，支撑层下沉页脚——
+        说明团队能识别并修复信息架构问题。
+      </li>
+      <li>
+        <strong>90 道题有契约校验</strong>——
+        <code>check-learning-bank.ts</code> 会逐题检查形态，
+        不达标直接让构建失败。这是整个项目里最好的工程实践，
+        <strong>值得原样复制到内容侧</strong>。
+      </li>
+      <li>
+        <strong>答题页的续接逻辑做得好</strong>——上一题 / 下一题齐备，
+        且下一题是按「未答的第一题」智能计算的，答完能自动推进，不需要回列表。
+      </li>
+      <li>
+        <strong>词条互链 801 条，0 死链</strong>——生成过程保证了引用有效性。
+      </li>
+      <li>
+        <strong>词条有来源引用、核验日期与修订入口</strong>——
+        每个词条都有 <code>sources</code>、<code>verifiedAt</code>，
+        页面上有「提交修订建议」的出口。这个机制是对的，
+        问题只在引用的<strong>内容</strong>与正文不匹配。
+      </li>
+      <li>
+        <strong>有性能预算与设计守卫</strong>——
+        <code>performance-baseline.json</code> 卡体积，
+        <code>pnpm check:design</code> 禁止中间字重并要求字重落差 ≥ 300。
+      </li>
+      <li>
+        <strong>有锁定设计系统</strong>——
+        <code>design.md</code> 记录了主题、字体、间距、动效立场与页面家族，
+        并明确说明「display 与 body 共用同一中文字面是刻意的决定」及其性能理由。
+        这份文件的质量很高。
+      </li>
+      <li>
+        <strong>「阅读路线」这个机制本身是对的</strong>——
+        按目标场景而非学科串联词条，正是本报告建议的方向。
+        它需要的不是重做，是<strong>扩大覆盖 + 提到主路径</strong>。
+      </li>
+    </ul>
+
+    <p>
+      一句话：<strong>这个站缺的不是能力，是把已有的能力用在了内容侧。</strong>
+    </p>
+  </section>
+
+  <!-- ═══════════════ 附录 ═══════════════ -->
+  <section id="appendix">
+    <h2>附录：证据与复现</h2>
+
+    <p>
+      本报告所有数字均来自对仓库的快照扫描，项目根目录为
+      <code>AI-Native/</code>，对应提交 <code>ae92504</code>。以下命令可复现：
+    </p>
+
+    <pre># 词条总数与领域分布（13 领域 × 25 条）
+find src/content/terms -name "*.mdx" | wc -l
+for d in src/content/terms/*/; do
+  echo "$(ls "$d" | wc -l)  $(basename "$d")"; done
+
+# 八个 h2 标题在 325 条里的一致性（结果：各 325 次）
+grep -ho '<h2[^>]*>[^<]*</h2>' src/content/terms/**/*.mdx \
+  | sort | uniq -c | sort -rn
+
+# 模板句命中率（结果：220 / 325）
+grep -rl "它通常先确认输入、约束、流程和输出" src/content/terms | wc -l
+
+# 词条外链方向（结果：指向题目 0、指向案例 0、指向路线 1）
+grep -rl "](/learn/questions/" src/content/terms | wc -l
+grep -rl "](/learn/cases/"    src/content/terms | wc -l
+grep -rl "](/routes/"         src/content/terms | wc -l
+
+# 图谱边类型分布（结果：application 315 / prerequisite 8
+#   / component 7 / comparison 3，共 333）
+python3 -c "
+import json,collections
+g=json.load(open('src/generated/graph.json'))
+print(collections.Counter(e['type'] for e in g['edges']))
+print('nodes',len(g['nodes']),'edges',len(g['edges']))"
+
+# 人工语义关系条数（结果：20）
+grep -c '^- id:' src/data/relations.yml
+
+# 领域数硬编码（src/lib/content/schema.ts L37）
+grep -n 'length(13)' src/lib/content/schema.ts
+
+# 首页主 CTA 目标（src/components/home/HomeLanding.astro L33）
+grep -n 'q01-rules-or-ai' src/components/home/HomeLanding.astro
+
+# 学习页侧栏 3×6 同名模块（LearningCatalog.astro L26-30）
+grep -n 'LEARNING_MODULES.map' \
+  src/components/learning/LearningCatalog.astro</pre>
+
+    <h3>关键文件索引</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>文件</th><th>本报告引用处</th></tr></thead>
+        <tbody>
+          <tr><td><code>src/config/sections.ts</code></td><td>架构治理现状（肯定项）</td></tr>
+          <tr><td><code>src/lib/content/schema.ts</code></td><td>KB-03 领域数硬编码</td></tr>
+          <tr><td><code>src/data/domains.yml</code></td><td>13 个学科领域定义</td></tr>
+          <tr><td><code>src/data/relations.yml</code></td><td>LN-04 人工语义关系仅 20 条</td></tr>
+          <tr><td><code>src/generated/graph.json</code></td><td>LN-04 边类型 94.6% 单一</td></tr>
+          <tr><td><code>src/components/learning/LearningCatalog.astro</code></td><td>UX-01 侧栏 18 同名条目</td></tr>
+          <tr><td><code>src/components/home/HomeLanding.astro</code></td><td>UX-04 首页 CTA 次序</td></tr>
+          <tr><td><code>src/components/layout/</code></td><td>UX-03 无面包屑组件</td></tr>
+          <tr><td><code>src/content/terms/agents-tool-use-automation/<br />model-context-protocol.mdx</code></td><td>KB-02 MCP 实例解剖</td></tr>
+          <tr><td><code>src/content/routes/*.mdx</code></td><td>LN-03 路线仅覆盖 34 词条</td></tr>
+          <tr><td><code>design.md</code> · <code>src/styles/tokens.css</code></td><td>本报告自身采用的设计系统来源</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="lede" style="margin-top: var(--space-5)">
+      本报告本身即采用该项目的锁定设计系统（<code>design.md</code> / <code>tokens.css</code>）渲染，
+      因此页面视觉与站点同源——所有颜色、字体、间距、圆角均取自项目自身 token，未引入新的设计变量。
+    </p>
+  </section>
+
+  </article>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <p>AI-Native 学习站 · 内容与信息架构诊断报告</p>
+    <p>诊断日期 2026-09-19 · 对象提交 <code>ae92504</code> · 全量样本 325 词条 / 90 题 / 6 案例 / 5 路线</p>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -2,6 +2,8 @@
 
 AI-Native 是面向中文 AI 初学者与转型产品经理的落地型 AI 产品学习系统，帮助用户通过单点判断、连续案例、完整项目和知识参考，学会判断是否需要 AI、拆解任务、选择方案、处理失败、控制成本并形成可上线迭代的产品方案。
 
+**当前版本：v0.1.0**（2026-09-19）——内容度量地基与信息架构收敛（迭代 I0 + I1）。
+
 ## 当前阶段
 
 产品技术基线于 2026-07-29 书面批准，阶段 0-10 已完成；2026-08-03 学习体系 V2 获得批准，阶段 11-13 已完成：
@@ -30,6 +32,8 @@ AI-Native 是面向中文 AI 初学者与转型产品经理的落地型 AI 产�
 
 - 学习主线三层递进改造：题库由「六阶段 × 24 题」扩展为「三层 × 六阶段 × 90 题」。六个阶段是主题轴，三层是深度轴——T1 概念识别（2–3 条条件、3 个选项）、T2 场景判断（3–4 条条件、3–4 个选项，至少 1 个「有条件成立」项）、T3 权衡取舍（4–5 条条件、4 个选项，至少 2 个「有条件成立」项）。难度不再是标题换词，而是由 `pnpm check:learning` 逐题校验的可度量契约；正确答案在渲染时按题目 id 稳定打散（原 24 题的正确项全部落在第一位，等于点击 A 就能满分）。答题页重写为一题一屏、就地展开该题全部路径的判断依据，支持数字键作答、已答题恢复与三层依次解锁；引用词条由 33 个增至 120 个。详见 `docs/product/decision-log.md`。
 
+- 内容度量地基与信息架构收敛（I0 + I1）：把「一眼看不出好坏」的内容质量变成可复算的数字——新增 `scripts/lib/content-quality.ts` 作为度量单一事实源，并开放 `pnpm report:content`（产出 `reports/content-quality.json`）与 `pnpm check:content-quality`（warn 模式，`--strict` 转为门禁）三个入口；基线为模板复用 67.7%（220/325）、结构一致 100%、认知链路覆盖 0%、语义边占比 6.0%（20/333）。同时解开词条配额硬锁（`catalog-plan.yml` 冻结为 325 词条历史快照，不再反向约束内容），新增 8 站认知链路 `src/data/chain.yml` 作为主题域之外的第二坐标，重建可读面包屑、把词库侧边栏收敛为单层当前层级、并把首页主起点收敛为「从链路第 1 站开始」。详见[诊断报告](docs/product/ai-native-remediation/AI-Native-诊断报告.html)与[迭代开发说明书](docs/product/ai-native-remediation/AI-Native-迭代开发说明书.html)。
+
 销售跟进助手、合同条款审核助手、内容生产助手、内部运营自动化已完成 6-Gate 案例 YAML 初稿（`draft`，销售助手研究包见 `docs/product/learning-v2/research/sales-follow-up-assistant/`），案例库由 2 例增至 6 例；下一步推进四个新案例的逐项来源核验与生产验收。项目尚未部署；阶段 16 仍需新的明确部署授权。
 
 ## 关键文档
@@ -46,6 +50,8 @@ AI-Native 是面向中文 AI 初学者与转型产品经理的落地型 AI 产�
 - [学习体验重构共同规格](docs/product/learning-redesign/design-spec.md)
 - [品牌上下文](docs/product/brand-spec.md)
 - [决策日志](docs/product/decision-log.md)
+- [信息架构与内容质量诊断报告](docs/product/ai-native-remediation/AI-Native-诊断报告.html)
+- [整改迭代开发说明书](docs/product/ai-native-remediation/AI-Native-迭代开发说明书.html)
 - [阶段 10 发布候选审查](docs/product/release-candidate/stage-10-audit.md)
 - [阶段 8 领域边界](docs/product/catalog/domain-boundaries.md)
 - [阶段 8 名称归并评审](docs/product/catalog/merge-review.md)
@@ -75,3 +81,11 @@ canonical、Open Graph URL、结构化数据、公开 sitemap 和 robots 索引�
 ## 首版边界
 
 首版采用静态内容架构，不包含账号、后端 CMS、AI 问答、资讯流、付费或社区。推送、创建 Pull Request 和部署均需用户明确授权。
+
+## 版本历史
+
+版本号同时写在 `package.json#version` 与本文件「当前版本」一行；每个版本在对应提交上打注释 tag（`git tag -a vX.Y.Z -m "..."`）并与 `main` 一并推送。
+
+| 版本   | 日期       | 内容                                                                                                                                                                                       |
+| ------ | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| v0.1.0 | 2026-09-19 | 内容度量地基与信息架构收敛：新增内容质量度量三入口（模板复用 / 结构一致 / 认知链路覆盖 / 语义边占比）、解开词条配额硬锁、新增 8 站认知链路第二坐标、重建面包屑与单层侧边栏、收敛首页主起点 |
