@@ -251,6 +251,15 @@ function validateCase(
 
   caseStudy.references.forEach((reference, index) => {
     validateReferenceShape(reference, index, filePath, diagnostics);
+    if (reference.id.startsWith('term-') && reference.kind !== 'term') {
+      addDiagnostic(
+        diagnostics,
+        'CASE_TERM_REFERENCE_KIND',
+        filePath,
+        `references.${index}.kind`,
+        `term-* references must use kind: term, received ${reference.kind}`,
+      );
+    }
     if (reference.kind === 'term' && reference.targetId && !termIds.has(reference.targetId)) {
       addDiagnostic(
         diagnostics,
@@ -337,13 +346,24 @@ function validateCase(
     }
 
     gate.referenceIds.forEach((referenceId, referenceIndex) => {
-      if (!references.has(referenceId)) {
+      const reference = references.get(referenceId);
+      if (!reference) {
         addDiagnostic(
           diagnostics,
           'CASE_GATE_REFERENCE_UNKNOWN',
           filePath,
           `gates.${index}.referenceIds.${referenceIndex}`,
           `unknown reference ${referenceId}`,
+        );
+        return;
+      }
+      if (referenceId.startsWith('term-') && reference.kind !== 'term') {
+        addDiagnostic(
+          diagnostics,
+          'CASE_TERM_REFERENCE_KIND',
+          filePath,
+          `gates.${index}.referenceIds.${referenceIndex}`,
+          `term-* references must resolve to kind: term, received ${reference.kind}`,
         );
       }
     });

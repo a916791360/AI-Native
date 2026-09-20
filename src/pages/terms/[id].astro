@@ -7,17 +7,19 @@ import Breadcrumbs from '@/components/layout/Breadcrumbs.astro';
 import StatusTag from '@/components/ui/StatusTag.astro';
 import generatedGraph from '@/generated/graph.json';
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import { CASE_STAGE_LABELS, caseHref, gateHref } from '@/lib/cases/presentation';
+import { loadCaseStudies } from '@/lib/cases/io';
 import { CHAIN_ROLE_LABELS, resolveTermChainPosition, type ChainRole } from '@/lib/content/chain';
 import { loadProjectContent } from '@/lib/content/io';
+import { getLearningRecommendations } from '@/lib/content/recommendations';
 import { TERM_SECTIONS } from '@/lib/content/term-sections';
+import { LEARNING_QUESTIONS, getLearningQuestionContext } from '@/data/learning';
 import { selectLocalGraph, type GraphData } from '@/lib/graph/model';
 import { buildContentIssueUrl } from '@/lib/site/github';
 
 export const getStaticPaths = (async () => {
-  const [entries, { relations, domains, routes, chain }] = await Promise.all([
-    getCollection('terms'),
-    loadProjectContent(),
-  ]);
+  const [entries, { relations, semanticRelations, domains, routes, chain }, cases] =
+    await Promise.all([getCollection('terms'), loadProjectContent(), loadCaseStudies()]);
   const termMap = Object.fromEntries(entries.map(({ data }) => [data.id, data]));
   const domainMap = Object.fromEntries(domains.map((domain) => [domain.id, domain]));
 
@@ -30,6 +32,48 @@ export const getStaticPaths = (async () => {
     const routeTerms = route?.data.chapters.flatMap((chapter) => chapter.terms) ?? [];
     const routeIndex = routeTerms.findIndex((step) => step.id === entry.data.id);
     const chainPosition = resolveTermChainPosition(entry.data, chain);
+    const learningRecommendations = getLearningRecommendations(
+      entry.data,
+      entries.map(({ data }) => data),
+      semanticRelations,
+      chain,
+    );
+    const relatedQuestions = LEARNING_QUESTIONS.filter((question) =>
+      question.references.some((reference) => reference.id === entry.data.id),
+    ).map((question) => {
+      const context = getLearningQuestionContext(question.id);
+      return {
+        id: question.id,
+        index: question.index,
+        shortTitle: question.shortTitle,
+        question: question.question,
+        tierCode: context?.tier.code ?? '',
+        tierTitle: context?.tier.title ?? '',
+        moduleTitle: context?.module.title ?? '',
+      };
+    });
+    const relatedCases = cases.flatMap(({ data: caseStudy }) => {
+      const termReferenceIds = new Set(
+        caseStudy.references
+          .filter((reference) => reference.kind === 'term' && reference.targetId === entry.data.id)
+          .map((reference) => reference.id),
+      );
+      return caseStudy.gates.flatMap((gate) =>
+        gate.referenceIds.flatMap((referenceId) => {
+          if (!termReferenceIds.has(referenceId)) return [];
+          return [
+            {
+              caseId: caseStudy.id,
+              caseTitle: caseStudy.title,
+              gateId: gate.id,
+              gateOrder: gate.order,
+              gateTitle: gate.title,
+              stageLabel: CASE_STAGE_LABELS[gate.stageId],
+            },
+          ];
+        }),
+      );
+    });
 
     return {
       params: { id: entry.data.id },
@@ -39,6 +83,9 @@ export const getStaticPaths = (async () => {
         relations: relations.filter(
           (relation) => relation.source === entry.data.id || relation.target === entry.data.id,
         ),
+        relatedQuestions,
+        relatedCases,
+        learningRecommendations,
         termMap,
         // 只透传渲染需要的字段：站点对象本身带 coreTerms 等与这一行无关的内容。
         chainPosition: chainPosition
@@ -71,7 +118,17 @@ export const getStaticPaths = (async () => {
   });
 }) satisfies GetStaticPaths;
 
-const { entry, domain, relations, termMap, routeNav, chainPosition } = Astro.props;
+const {
+  entry,
+  domain,
+  relations,
+  relatedQuestions,
+  relatedCases,
+  learningRecommendations,
+  termMap,
+  routeNav,
+  chainPosition,
+} = Astro.props;
 const term = entry.data;
 const { Content } = await render(entry);
 const relationLabels = {
@@ -253,6 +310,88 @@ const breadcrumbTrail = [
               <p>
                 名称、摘要、领域和关系已经通过结构校验。完整解释、真实例子、适用边界和来源证据会在深度内容阶段补充。
               </p>
+            </section>
+          )
+        }
+
+        {
+          relatedQuestions.length > 0 && (
+            <section class="linked-resources" aria-labelledby="linked-questions-heading">
+              <p class="section-number">Learning questions</p>
+              <h2 id="linked-questions-heading">这个概念出现在哪些题里</h2>
+              <p class="linked-resources-intro">
+                下面的题目直接引用了本词条，适合先做判断，再回到正文核对边界。
+              </p>
+              <div class="linked-resource-list">
+                {relatedQuestions.map((question) => (
+                  <a class="linked-resource-row" href={`/learn/questions/${question.id}/`}>
+                    <span class="linked-resource-kicker">
+                      {question.tierCode} · {question.tierTitle} · 阶段：{question.moduleTitle}
+                    </span>
+                    <strong>
+                      {question.index} · {question.shortTitle}
+                    </strong>
+                    <span>{question.question}</span>
+                  </a>
+                ))}
+              </div>
+            </section>
+          )
+        }
+
+        {
+          relatedCases.length > 0 && (
+            <section class="linked-resources" aria-labelledby="linked-cases-heading">
+              <p class="section-number">Case practice</p>
+              <h2 id="linked-cases-heading">这个概念出现在哪些案例里</h2>
+              <p class="linked-resources-intro">
+                案例中的这些关卡会把概念放进业务约束、证据与取舍里练一遍。
+              </p>
+              <div class="linked-resource-list">
+                {relatedCases.map((item) => (
+                  <a class="linked-resource-row" href={gateHref(item.caseId, item.gateId)}>
+                    <span class="linked-resource-kicker">
+                      {item.caseTitle} · Gate {String(item.gateOrder).padStart(2, '0')} ·{' '}
+                      {item.stageLabel}
+                    </span>
+                    <strong>{item.gateTitle}</strong>
+                    <span>
+                      进入关卡查看证据与取舍 ·{' '}
+                      <span class="linked-resource-secondary">返回案例档案</span>
+                    </span>
+                  </a>
+                ))}
+              </div>
+              <p class="linked-resource-footer">
+                <a href={caseHref(relatedCases[0]!.caseId)}>查看第一个案例的完整档案</a>
+              </p>
+            </section>
+          )
+        }
+
+        {
+          learningRecommendations && (
+            <section
+              class="linked-resources learning-recommendations"
+              aria-labelledby="learning-recommendations-heading"
+            >
+              <p class="section-number">Learning navigation</p>
+              <h2 id="learning-recommendations-heading">学习导航</h2>
+              <p class="linked-resources-intro">
+                <strong>{learningRecommendations.sourceLabel}</strong>：
+                {learningRecommendations.reason}
+              </p>
+              <div class="linked-resource-list">
+                {learningRecommendations.items.map((item) => (
+                  <a class="linked-resource-row" href={`/terms/${item.termId}/`}>
+                    <span class="linked-resource-kicker">
+                      {item.relationLabel ?? learningRecommendations.sourceLabel}
+                    </span>
+                    <strong>{item.nameZh}</strong>
+                    <span>{item.explanation ?? item.summary}</span>
+                  </a>
+                ))}
+              </div>
             </section>
           )
         }
@@ -550,7 +689,8 @@ const breadcrumbTrail = [
   }
   .catalogued-copy,
   .relations-section,
-  .source-register {
+  .source-register,
+  .linked-resources {
     border-bottom: 1px solid var(--color-line);
     padding: var(--space-7) max(var(--page-gutter), calc((100% - var(--reading-max)) / 2));
     scroll-margin-top: 1rem;
@@ -561,6 +701,54 @@ const breadcrumbTrail = [
     font-family: var(--font-mono);
     font-size: var(--text-xs);
     text-transform: uppercase;
+  }
+  .linked-resources-intro {
+    max-width: var(--reading-max);
+    margin: 0;
+    color: var(--color-muted);
+  }
+  .linked-resource-list {
+    margin-top: var(--space-4);
+    border-top: 1px solid var(--color-line);
+  }
+  .linked-resource-row {
+    display: grid;
+    gap: var(--space-1);
+    border-bottom: 1px solid var(--color-line-soft);
+    padding: var(--space-3) 0;
+    text-decoration: none;
+  }
+  .linked-resource-row:hover strong,
+  .linked-resource-row:focus-visible strong {
+    color: var(--color-accent-strong);
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+  }
+  .linked-resource-kicker {
+    color: var(--color-quiet);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+  }
+  .linked-resource-row strong {
+    font-size: var(--text-lead);
+    font-weight: var(--weight-display);
+  }
+  .linked-resource-row > span:last-child {
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+  }
+  .linked-resource-secondary {
+    color: var(--color-quiet);
+  }
+  .linked-resource-footer {
+    margin: var(--space-3) 0 0;
+    font-size: var(--text-sm);
+  }
+  .learning-recommendations {
+    background: var(--color-panel-raised);
+  }
+  .learning-recommendations .linked-resources-intro strong {
+    color: var(--color-prerequisite);
   }
   .term-article h2 {
     margin: var(--space-3) 0 var(--space-4);
@@ -817,6 +1005,9 @@ const breadcrumbTrail = [
     }
     .relation-row {
       grid-template-columns: 1fr;
+    }
+    .linked-resources h2 {
+      font-size: 2.25rem;
     }
     .relation-row p {
       font-size: 1rem;

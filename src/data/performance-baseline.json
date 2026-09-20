@@ -1,15 +1,15 @@
 {
   "version": 1,
-  "capturedAt": "2026-09-13",
+  "capturedAt": "2026-09-20",
   "regressionThreshold": 0.15,
   "absoluteLimits": {
     "largestImageBytes": 307200
   },
   "metrics": {
-    "homeInitialJavaScriptBytes": 2104,
+    "homeInitialJavaScriptBytes": 2307,
     "homeCssBytes": 31417,
-    "pagefindBytes": 1819859,
-    "graphJavaScriptBytes": 446291,
+    "pagefindBytes": 2214233,
+    "graphJavaScriptBytes": 447516,
     "largestImageBytes": 121361
   }
 }

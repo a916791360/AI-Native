@@ -27,6 +27,9 @@ export interface ProjectContent {
   domains: Domain[];
   /** 认知链路：8 站，词条的第二坐标轴（用于学习顺序），与 domains 并用不互相替代。 */
   chain: ChainStation[];
+  /** 手工维护的语义关系；不含 catalog-relations.yml 的批量邻接边。 */
+  semanticRelations: Relation[];
+  /** 完整关系集合，供图谱与关系区块使用。 */
   relations: Relation[];
   terms: ContentDocument<Term>[];
   routes: ContentDocument<Route>[];
@@ -129,5 +132,12 @@ export async function loadProjectContent(root = process.cwd()): Promise<ProjectC
     loadDocuments(root, 'src/content/routes', routeSchema),
   ]);
 
-  return { domains, chain, relations: [...relations, ...catalogRelations], terms, routes };
+  return {
+    domains,
+    chain,
+    semanticRelations: relations,
+    relations: [...relations, ...catalogRelations],
+    terms,
+    routes,
+  };
 }

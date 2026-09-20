@@ -81,6 +81,20 @@ describe('stage 12B case content model', () => {
     );
   });
 
+  it('rejects a term-* reference that is not a term resource', async () => {
+    const { cases, project } = await loadFixture();
+    const invalid = structuredClone(cases);
+    const goldenCase = invalid.find(({ data }) => data.id === 'user-feedback-analysis')!.data;
+    const termReference = goldenCase.references.find((reference) => reference.kind === 'term')!;
+    termReference.id = 'term-route-mismatch';
+    termReference.kind = 'route';
+    termReference.targetId = 'ai-product-scenario-judgment';
+
+    expect(validateCaseStudies(invalid, project).map(({ code }) => code)).toContain(
+      'CASE_TERM_REFERENCE_KIND',
+    );
+  });
+
   it('rejects a gate without a failure mode', async () => {
     const { cases, project } = await loadFixture();
     const invalid = structuredClone(cases);

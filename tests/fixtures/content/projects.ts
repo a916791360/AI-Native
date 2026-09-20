@@ -149,6 +149,7 @@ export function makeValidProject(): ProjectContent {
   return {
     domains: makeDomains(),
     chain: makeChain(),
+    semanticRelations: [makeRelation()],
     terms: [makeTerm('alpha-term', '甲术语'), makeTerm('beta-term', '乙术语')],
     relations: [makeRelation()],
     routes: [makeRoute()],

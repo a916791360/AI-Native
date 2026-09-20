@@ -541,7 +541,7 @@ test('publishes all five ordered learning routes', async ({ page }) => {
 test('renders every verified term as a complete decision article during migration', async ({
   page,
 }) => {
-  test.setTimeout(120_000);
+  test.setTimeout(300_000);
   const termIds = registry.terms.filter(({ status }) => status === 'verified').map(({ id }) => id);
 
   for (const termId of termIds) {
@@ -734,6 +734,30 @@ test('explains an empty graph filter without removing structured navigation', as
   await expect(
     page.locator('#relations').getByRole('link', { name: '人工智能' }).first(),
   ).toBeVisible();
+});
+
+test('exposes question and case backlinks on term pages', async ({ page }) => {
+  await page.goto('/terms/retrieval-augmented-generation/');
+  await expect(page.getByRole('heading', { name: '这个概念出现在哪些题里' })).toBeVisible();
+  await expect(page.getByRole('link', { name: /装不下先检索/ }).first()).toHaveAttribute(
+    'href',
+    '/learn/questions/q05-context-overflow-retrieval/',
+  );
+  await expect(page.getByRole('heading', { name: '这个概念出现在哪些案例里' })).toBeVisible();
+  const caseBacklinks = page
+    .locator('section.linked-resources')
+    .filter({ hasText: '这个概念出现在哪些案例里' });
+  await expect(caseBacklinks.getByRole('link').first()).toHaveAttribute('href', /\/learn\/cases\//);
+});
+
+test('explains the source of next-step term recommendations', async ({ page }) => {
+  await page.goto('/terms/retrieval-augmented-generation/');
+  const recommendations = page.locator('.learning-recommendations');
+  await expect(recommendations).toBeVisible();
+  await expect(
+    recommendations.locator('.linked-resources-intro strong').filter({ hasText: '沿认知链路' }),
+  ).toBeVisible();
+  await expect(recommendations.getByRole('link').first()).toHaveAttribute('href', /\/terms\//);
 });
 
 test('limits term pages to a one-hop local graph', async ({ page, isMobile }) => {

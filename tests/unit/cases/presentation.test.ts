@@ -57,4 +57,23 @@ describe('stage 13 case presentation model', () => {
     expect(referenceHref(route)).toBe(`/routes/${route.targetId}/`);
     expect(referenceHref(source)).toBe(source.url);
   });
+
+  it('keeps every term-* gate resource linked back to a term page', async () => {
+    const data = await loadGoldenCase();
+    const termReferences = new Map(
+      data.references
+        .filter(({ kind }) => kind === 'term')
+        .map((reference) => [reference.id, reference]),
+    );
+    const termReferenceIds = data.gates.flatMap(({ referenceIds }) =>
+      referenceIds.filter((referenceId) => referenceId.startsWith('term-')),
+    );
+
+    expect(termReferenceIds.length).toBeGreaterThan(0);
+    for (const referenceId of termReferenceIds) {
+      const reference = termReferences.get(referenceId);
+      expect(reference).toBeDefined();
+      expect(referenceHref(reference!)).toBe(`/terms/${reference?.targetId}/`);
+    }
+  });
 });
