@@ -125,6 +125,19 @@ function buildVerifiedBody(
   domain: ProjectContent['domains'][number],
   candidateById: Map<string, CatalogCandidate>,
   sources: Term['sources'],
+  /**
+   * 手工覆盖层里能影响正文的部分（I6-02）。
+   *
+   * 为什么正文也必须读覆盖层：决策页模板 v2 的第 4 段「必须澄清的误会」和
+   * 「亲自试一下」都不是计划表能产出的内容，但它们**是正文结构的一部分**。
+   * 覆盖层只写 frontmatter、不落正文的话，词条会同时出现两种坏状态：
+   * 门禁 5 报「缺少 confusions」，而读者也永远看不到那句差别。
+   */
+  handWritten: {
+    boundaries?: Term['boundaries'];
+    minAction?: string;
+    termNameById: Map<string, string>;
+  },
 ): string {
   const normalizedSummary = summary.replace(/[。！？.!?]+$/u, '');
   const summaryPrefix = /^[A-Za-z]/.test(normalizedSummary) ? ' ' : '';
@@ -144,6 +157,32 @@ function buildVerifiedBody(
       ? '它属于这个领域的基础入口，适合放在前面学习。'
       : '它更偏扩展理解，适合在基础概念之后补充。';
 
+  // 「必须澄清的误会」只在覆盖层写了 boundaries 时才出现——不写就不生成空段落。
+  // 空壳段落比缺段落更糟：它会让门禁通过，却留着一段什么也没说的话。
+  const confusions = handWritten.boundaries?.confusions ?? [];
+  const confusionSection =
+    confusions.length > 0
+      ? [
+          '<h2 id="confusions">必须澄清的误会</h2>',
+          '',
+          // 与手写词条的「必须澄清的误会」保持同一种写法（加粗行内 + 一句差别）。
+          // 两种格式并存会出现「同一段在两个页面长得不一样」——读者看不出这是刻意的，
+          // 只会以为其中一个是漏改的旧版。
+          ...confusions.map((confusion) => {
+            const other = handWritten.termNameById.get(confusion.with) ?? confusion.with;
+            return `**${candidate.nameZh} ≠ ${other}。** ${confusion.difference}`;
+          }),
+          '',
+        ]
+      : [];
+
+  // 「亲自试一下」同理：有 minAction 就用它，否则退回模板引导句。
+  // 模板句不允许含「写下三件事」这类空动作（门禁 3 的黑名单），
+  // 所以这里的兜底句必须真的指向一个可观察的结果。
+  const tryItText = handWritten.minAction
+    ? `拿一件你正在处理的事试一次：${handWritten.minAction}`
+    : `把${candidate.nameZh}放进你正在看的一个真实项目里，指出它适用的一个条件和不适用的一条边界，并说明你的依据来自哪里。`;
+
   return [
     '<h2 id="what-it-is">它是什么</h2>',
     '',
@@ -157,6 +196,9 @@ function buildVerifiedBody(
     '',
     '它通常先确认输入、约束、流程和输出，再检查这些部分能否被复核。这样做可以把抽象名词落到具体判断上，也方便和其他词条做关系对照。',
     '',
+    // I6-01：门禁 5 会逐条比对正文 h2 序列，与「必须澄清的误会」段共用的
+    // 上下两段都写死在这里，所以插入位置由这份数组的顺序唯一决定。
+    ...confusionSection,
     '<h2 id="example">真实例子</h2>',
     '',
     `例如，在一个真实的${domain.shortNameZh}场景中，团队会先把${candidate.nameZh}放进当前问题里，再决定要不要继续拆成数据、流程、接口或评估步骤。${sourceTitles} 会是很好的核验起点。`,
@@ -167,7 +209,7 @@ function buildVerifiedBody(
     '',
     '<h2 id="try-it">亲自试一下</h2>',
     '',
-    `把${candidate.nameZh}放进你正在看的一个真实项目里，写下三件事：它是什么、它不是什么、什么时候不该用它。再在本站搜索相邻词条，比较它与其它概念的差别。`,
+    tryItText,
     '',
     '<h2 id="next">接下来学什么</h2>',
     '',
@@ -194,6 +236,13 @@ export function buildPublishedCatalogTerms(
     flattenCatalogCandidates(catalog).map((candidate) => [candidate.id, candidate]),
   );
   const domainById = new Map(project.domains.map((domain) => [domain.id, domain]));
+  // 正文里要写出「甲 ≠ 乙」，所以需要把 boundaries.confusions[].with 的 id
+  // 还原成读者看得懂的中文名。两个来源都要：手写词条只在 project.terms 里，
+  // 本次新生成的候选只在前者之外——少一个就会出现一串英文 id 露在正文里。
+  const termNameById = new Map<string, string>([
+    ...project.terms.map(({ data }) => [data.id, data.nameZh] as [string, string]),
+    ...flattenCatalogCandidates(catalog).map(({ id, nameZh }) => [id, nameZh] as [string, string]),
+  ]);
 
   return flattenCatalogCandidates(catalog)
     .filter((candidate) => PUBLISHED_CATALOG_BATCHES.includes(candidate.batch as 'B' | 'C' | 'D'))
@@ -231,6 +280,11 @@ export function buildPublishedCatalogTerms(
           domain!,
           candidateById,
           sources,
+          {
+            boundaries: details[candidate.id]?.boundaries,
+            minAction: details[candidate.id]?.minAction,
+            termNameById,
+          },
         ),
       };
     });

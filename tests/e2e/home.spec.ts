@@ -717,6 +717,50 @@ test('loads the full graph lazily and supports focus, filters and viewport contr
   await expect(graph.locator('[data-graph-detail-title]')).toHaveText('检索');
 });
 
+test('keeps the relation filter shareable through the URL', async ({ page, isMobile }) => {
+  await page.goto('/graph/');
+  const graph = page.locator('[data-graph-explorer][data-graph-mode="full"]');
+  if (isMobile) await page.locator('[data-graph-load]').click();
+  await expect(graph).toHaveAttribute('data-graph-state', 'ready');
+
+  // 只留比较边：这是图谱最实用的读法——一张查混淆的表。
+  for (const type of ['prerequisite', 'component', 'application']) {
+    await graph.locator(`[data-graph-relation][value="${type}"]`).uncheck();
+  }
+  await expect(graph.locator('[data-graph-relation][value="comparison"]')).toBeChecked();
+  await expect.poll(() => new URL(page.url()).searchParams.get('types')).toBe('comparison');
+
+  const comparisonEdges = (graphData.edges as { type: string }[]).filter(
+    ({ type }) => type === 'comparison',
+  ).length;
+  await expect
+    .poll(async () => Number(await graph.getAttribute('data-graph-visible-edges')))
+    .toBe(comparisonEdges);
+
+  // 重新加载后筛选状态必须还原，否则「分享给同事」名不副实。
+  await page.reload();
+  const reloaded = page.locator('[data-graph-explorer][data-graph-mode="full"]');
+  if (isMobile) await page.locator('[data-graph-load]').click();
+  await expect(reloaded).toHaveAttribute('data-graph-state', 'ready');
+  await expect(reloaded.locator('[data-graph-relation][value="comparison"]')).toBeChecked();
+  await expect(reloaded.locator('[data-graph-relation][value="prerequisite"]')).not.toBeChecked();
+  await expect
+    .poll(async () => Number(await reloaded.getAttribute('data-graph-visible-edges')))
+    .toBe(comparisonEdges);
+
+  // 领域筛选同样进 URL，且「复制链接」在剪贴板不可用时如实反馈。
+  const domainValue = await reloaded
+    .locator('[data-graph-domain] option')
+    .nth(1)
+    .getAttribute('value');
+  await reloaded.locator('[data-graph-domain]').selectOption(domainValue ?? '');
+  await expect.poll(() => new URL(page.url()).searchParams.get('domain')).toBe(domainValue);
+  await reloaded.locator('[data-graph-action="share"]').click();
+  await expect(reloaded.locator('[data-graph-action="share"]')).toHaveText(
+    /链接已复制|已更新地址栏/,
+  );
+});
+
 test('keeps the structured graph usable when Cytoscape cannot initialize', async ({
   page,
   isMobile,

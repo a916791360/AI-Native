@@ -735,3 +735,33 @@
   target: ai-safety
   type: application
   explanation: 版权问题提醒系统在训练、生成和分发内容时处理权利边界，是 AI 安全与治理的一部分。
+
+# ---- I5-02 追补：说明书点名的五组混淆对，补齐剩余两组 ----------------------
+# 这五组是「用户会把它们当成一回事」的高频误配，必须用 comparison 写清差别。
+# 现有：MCP ↔ Function Calling、LangChain ↔ MCP、RAG ↔ 微调；本次补 Skill ↔ MCP、Agent ↔ Workflow。
+
+- id: agent-skills-compared-with-model-context-protocol
+  source: agent-skills
+  target: model-context-protocol
+  type: comparison
+  explanation: Skill 是把「这件事该怎么做」写成可复用的说明书，MCP 是把「工具怎么接进来」标准化的接口约定；一个管做法，一个管通道。
+
+- id: ai-agent-compared-with-workflow-automation
+  source: ai-agent
+  target: workflow-automation
+  type: comparison
+  explanation: Agent 根据中间结果自己决定下一步，工作流自动化按预先定义的步骤和规则执行；前者动态规划，后者稳定可查。
+
+# ---- I5-02 追补：第 8 站核心词条 AI 风险管理原本没有任何语义边 ---------------
+
+- id: responsible-ai-precedes-ai-risk-management
+  source: responsible-ai
+  target: ai-risk-management
+  type: prerequisite
+  explanation: 先明确负责任 AI 要守住的原则，才知道风险管理需要识别、评估和处置哪些具体风险。
+
+- id: ai-risk-management-component-of-ai-governance
+  source: ai-risk-management
+  target: ai-governance
+  type: component
+  explanation: 风险管理负责识别和处置具体风险，是 AI 治理落地的一部分，但治理还包括问责、透明度与合规要求。

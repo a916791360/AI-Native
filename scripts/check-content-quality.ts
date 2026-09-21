@@ -22,16 +22,24 @@ import {
  *   4 · 配额与近义 —— 数量是否还被配额决定；同域是否还有近义碎片（永远只告警）
  *
  * 分级生效，不搞全库一刀切（整改总则约束 3）：
- *   A 档 fail / B 档 warn / C 档豁免。当前 325 条里有 220 条逐字复用模板句，
+ *   A 档 fail / B 档 warn / C 档豁免。全库还有六成以上词条的正文由模板句构成，
  *   若一上来全库 fail，CI 会立刻红，团队就会绕过它——这是能让门禁活下来的唯一路径。
  *
  * 档位来源：src/data/term-tiers.yml（由 scripts/build-term-tiers.ts 依据第十三节
  * 的机器预判信号生成，人工复核后入库）。该文件尚不存在时，全部词条按「未分档」处理，
  * 一律只告警，目的是先让全部问题可见，而不是先把 CI 打红。
  *
+ * 退出码（I6-04 门禁转硬）：
+ *   默认         —— 有 fail 档违规即退出码 1，只有 warn 时退出码 0。CI 跑的就是这一档：
+ *                   A 档违规让 CI 红，B 档只印清单。
+ *   --strict     —— 任何一条违规（含 warn）都退出码 1。用于单条验收时的零容忍检查。
+ *   --term <id>  —— 只报告该词条的违规，其余词条仍参与分析（否则「与他条重复」这条
+ *                   会因为把语料裁到一条而失效，测试对象反过来变成了测试环境）。
+ *
  * 运行：
- *   pnpm check:content-quality          警告模式：打印完整违规清单，退出码 0
- *   pnpm check:content-quality:strict   严格模式：有违规即退出码 1
+ *   pnpm check:content-quality                     有 A 档违规即失败
+ *   pnpm check:content-quality:strict              零容忍（用于单条验收）
+ *   node --import tsx scripts/check-content-quality.ts --strict --term <id>
  */
 
 // ---------------------------------------------------------------------------
@@ -78,6 +86,9 @@ const HINT = [
 
 const root = process.cwd();
 const STRICT = process.argv.includes('--strict');
+/** --term <id>：只看这一条的违规。语料仍是全库——裁掉上下文会让「与他条重复」判不出来。 */
+const TERM_FLAG_INDEX = process.argv.indexOf('--term');
+const TERM_FILTER = TERM_FLAG_INDEX >= 0 ? (process.argv[TERM_FLAG_INDEX + 1] ?? '') : '';
 
 // ---------------------------------------------------------------------------
 // 档位
@@ -337,20 +348,49 @@ for (const cluster of report.details.synonymClusters) {
 }
 
 // ---------------------------------------------------------------------------
+// 单条模式（--term）
+// ---------------------------------------------------------------------------
+
+/**
+ * --term 只裁「报告范围」，不裁语料。
+ *
+ * gate 1 的判据是「同一句出现在 ≥5 条词条里」，如果把语料裁成一条，
+ * 任何句子都只出现一次，这条规则就会永远通过——测试对象变成了测试环境。
+ * 所以全库照常分析，只在最后按 subject 过滤。
+ */
+const matchesTerm = (subject: string, id: string): boolean =>
+  subject === id || subject.split(' ↔ ').includes(id);
+
+if (TERM_FILTER) {
+  const kept = issues.filter((issue) => matchesTerm(issue.subject, TERM_FILTER));
+  issues.length = 0;
+  issues.push(...kept);
+}
+
+// 门禁 4（配额与近义）是全库趋势，单条模式下没有意义，也不该被算进这一条的判定。
+if (TERM_FILTER) {
+  const kept = issues.filter((issue) => issue.rule !== 'quota');
+  issues.length = 0;
+  issues.push(...kept);
+}
+
+// ---------------------------------------------------------------------------
 // 报告
 // ---------------------------------------------------------------------------
 
-const header = STRICT ? '内容质量门禁未通过' : '内容质量问题（警告模式，不阻断 CI）';
+const failTotal = issues.filter((issue) => issue.severity === 'fail').length;
+const scope = TERM_FILTER ? `词条 ${TERM_FILTER}` : `词条 ${terms.length} 条`;
+const mode = STRICT ? '严格模式（任何违规即失败）' : 'CI 模式（A 档违规即失败）';
 
-console.log(STRICT ? '内容质量门禁（严格模式）' : '内容质量门禁（警告模式）');
+console.log(`内容质量门禁（${mode}）`);
 console.log('='.repeat(74));
 if (!HAS_TIERS) {
   console.log(
-    '档位说明：未找到 reports/term-tiers.csv（由 I6-01 产出），当前全部词条按「未分档」处理，一律只告警。',
+    '档位说明：未找到 src/data/term-tiers.yml（由 I6-01 产出），当前全部词条按「未分档」处理，一律只告警。',
   );
 }
 console.log(
-  `词条 ${terms.length} 条 · 基线指标：模板复用率 ${(report.metrics.templateReuseRate * 100).toFixed(1)}%` +
+  `${scope} · 基线指标：模板复用率 ${(report.metrics.templateReuseRate * 100).toFixed(1)}%` +
     ` · 链路覆盖率 ${(report.metrics.chainCoverage * 100).toFixed(1)}%` +
     ` · 图谱语义比 ${(report.metrics.semanticEdgeRatio * 100).toFixed(1)}%`,
 );
@@ -370,7 +410,12 @@ for (const rule of ['reuse', 'structure', 'boundary', 'action', 'quota'] as cons
     `\n${RULE_LABEL[rule]}：${list.length} 条` +
       `（fail ${failCount} / warn ${list.length - failCount}）`,
   );
-  for (const issue of list.slice(0, DETAIL_LIMIT)) {
+  // 失败项排在最前：截断发生在 12 条，而 fail 恰好可能排在 warn 后面被截掉，
+  // 那样「CI 红在哪一条」就只能去翻 JSON —— 门禁的价值一半在清单可读性上。
+  const ordered = [...list].sort(
+    (left, right) => Number(right.severity === 'fail') - Number(left.severity === 'fail'),
+  );
+  for (const issue of ordered.slice(0, DETAIL_LIMIT)) {
     const mark = issue.severity === 'fail' ? '✗' : '·';
     console.log(`   ${mark} ${issue.subject}：${issue.detail}`);
   }
@@ -379,14 +424,30 @@ for (const rule of ['reuse', 'structure', 'boundary', 'action', 'quota'] as cons
   }
 }
 
-const failTotal = issues.filter((issue) => issue.severity === 'fail').length;
 console.log('\n' + '='.repeat(74));
 console.log(`合计 ${issues.length} 条（fail ${failTotal} / warn ${issues.length - failTotal}）`);
 
-if (issues.length > 0) {
-  const message = `${header}：共 ${issues.length} 条（fail ${failTotal}）\n\n${HINT}`;
-  if (STRICT) throw new Error(message);
-  console.warn(`\n${message}`);
-} else {
+// 退出码：CI 模式只在有 fail 时失败（B 档留观察余地）；严格模式任何违规都失败。
+const shouldFail = STRICT ? issues.length > 0 : failTotal > 0;
+
+if (issues.length === 0) {
   console.log('全部规则通过。');
+} else if (shouldFail) {
+  // 失败项逐条写进异常消息本身：CI 日志里最先被看到的是异常，不是上面的清单。
+  const failing = issues.filter((issue) => STRICT || issue.severity === 'fail');
+  const lines = failing
+    .slice(0, 10)
+    .map((issue) => `  · [${RULE_LABEL[issue.rule]}] ${issue.subject}：${issue.detail}`);
+  const more =
+    failing.length > 10
+      ? `\n  …… 另有 ${failing.length - 10} 条见 reports/content-quality.json`
+      : '';
+  const headline = STRICT
+    ? `内容质量门禁未通过（严格模式）：共 ${issues.length} 条`
+    : `内容质量门禁未通过：A 档 ${failTotal} 条违规`;
+  throw new Error(`${headline}\n\n${lines.join('\n')}${more}\n\n${HINT}`);
+} else {
+  console.warn(
+    `\n内容质量问题（B/C 档，只告警不阻断 CI）：共 ${issues.length} 条（fail 0）\n\n${HINT}`,
+  );
 }

@@ -98,6 +98,93 @@ function selectedTypes(root: HTMLElement): GraphRelationType[] {
     );
 }
 
+/**
+ * 筛选状态写进网址（I5-03 验收：筛选状态可分享）。
+ *
+ * 为什么值得做：图谱真正的用法不是「看全图」，而是「只留比较边，得到一张查混淆的表」。
+ * 这个状态如果不能贴给同事，对方就只能照着截图手动勾一遍——所以状态必须落在 URL 上。
+ *
+ * 只保留非默认值：四类全开（默认）时删掉 types 参数，裸链接保持干净。
+ * 用 replaceState 而不是 pushState：每次勾选都往历史里塞一条记录，会让浏览器后退键失效。
+ */
+function writeUrlState(root: HTMLElement): void {
+  const params = new URLSearchParams(window.location.search);
+  const types = selectedTypes(root);
+  if (types.length === RELATION_TYPES.length) params.delete('types');
+  else params.set('types', types.join(','));
+
+  const domain = root.querySelector<HTMLSelectElement>('[data-graph-domain]')?.value ?? '';
+  if (domain) params.set('domain', domain);
+  else params.delete('domain');
+
+  const query = params.toString();
+  const next = `${window.location.pathname}${query ? `?${query}` : ''}`;
+  window.history.replaceState(null, '', next);
+}
+
+/**
+ * 初始化时把网址里的筛选状态读回控件。
+ *
+ * 和 writeUrlState 的默认值口径必须一致：没有 types 参数 = 四类全开。
+ * 显式写空的 `?types=`（一个都不勾）也要能还原，否则分享不出去「只看空图」这种状态。
+ */
+function applyUrlState(root: HTMLElement): void {
+  const params = new URLSearchParams(window.location.search);
+  const rawTypes = params.get('types');
+  if (rawTypes !== null) {
+    const wanted = new Set(
+      rawTypes
+        .split(',')
+        .map((value) => value.trim())
+        .filter((value): value is GraphRelationType =>
+          RELATION_TYPES.includes(value as GraphRelationType),
+        ),
+    );
+    root.querySelectorAll<HTMLInputElement>('[data-graph-relation]').forEach((input) => {
+      input.checked = wanted.has(input.value as GraphRelationType);
+    });
+  }
+
+  const wantedDomain = params.get('domain');
+  const select = root.querySelector<HTMLSelectElement>('[data-graph-domain]');
+  if (wantedDomain && select && [...select.options].some((option) => option.value === wantedDomain))
+    select.value = wantedDomain;
+}
+
+/**
+ * 「复制筛选链接」。
+ *
+ * 反馈写在按钮自己身上（文字临时变「链接已复制」）而不是状态行：状态行由
+ * applyFilters 复用为「当前筛选没有可显示的词条关系」，两处抢同一行会让读者看不懂
+ * 到底是复制成功了还是筛选空了。
+ *
+ * 剪贴板 API 在非安全上下文（或用户拒绝授权）下不可用，这时不能假装成功——
+ * 网址其实已经写进地址栏了，如实告诉用户可以手动复制。
+ */
+async function copyShareLink(root: HTMLElement): Promise<void> {
+  writeUrlState(root);
+  const button = root.querySelector<HTMLButtonElement>('[data-graph-action="share"]');
+  const label = button?.textContent ?? '';
+  const flash = (text: string): void => {
+    if (!button) return;
+    button.textContent = text;
+    window.setTimeout(() => {
+      button.textContent = label;
+    }, 2000);
+  };
+
+  if (!navigator.clipboard?.writeText) {
+    flash('已更新地址栏');
+    return;
+  }
+  try {
+    await navigator.clipboard.writeText(window.location.href);
+    flash('链接已复制');
+  } catch {
+    flash('已更新地址栏');
+  }
+}
+
 function applyFilters(root: HTMLElement, cy: Core, updateState = true): void {
   const domain = root.querySelector<HTMLSelectElement>('[data-graph-domain]')?.value ?? '';
   const types = new Set(selectedTypes(root));
@@ -309,6 +396,7 @@ async function initializeGraph(root: HTMLElement): Promise<void> {
       button.addEventListener('click', () => {
         if (button.dataset.graphAction === 'zoom-in') setZoom(root, cy, cy.zoom() * 1.2);
         if (button.dataset.graphAction === 'zoom-out') setZoom(root, cy, cy.zoom() / 1.2);
+        if (button.dataset.graphAction === 'share') void copyShareLink(root);
         if (button.dataset.graphAction === 'reset') {
           const selected = cy.nodes(':selected').first();
           if (selected.length) focusNode(root, cy, graph, selected.id(), reducedMotion);
@@ -320,6 +408,7 @@ async function initializeGraph(root: HTMLElement): Promise<void> {
     root.querySelectorAll<HTMLInputElement>('[data-graph-relation]').forEach((input) =>
       input.addEventListener('change', () => {
         applyFilters(root, cy);
+        writeUrlState(root);
         const selected = cy.nodes(':selected:visible').first();
         const target = selected.length ? selected : cy.nodes(':visible').first();
         if (target.length) focusNode(root, cy, graph, target.id(), true);
@@ -327,6 +416,7 @@ async function initializeGraph(root: HTMLElement): Promise<void> {
     );
     root.querySelector<HTMLSelectElement>('[data-graph-domain]')?.addEventListener('change', () => {
       applyFilters(root, cy);
+      writeUrlState(root);
       const selected = cy.nodes(':selected:visible').first();
       const target = selected.length ? selected : cy.nodes(':visible').first();
       if (target.length) focusNode(root, cy, graph, target.id(), true);
@@ -362,6 +452,7 @@ async function initializeGraph(root: HTMLElement): Promise<void> {
       event.preventDefault();
     });
 
+    applyUrlState(root);
     applyFilters(root, cy, false);
     cy.fit(cy.elements(':visible'), 110);
     root.dataset.graphNodeCount = String(graph.nodes.length);

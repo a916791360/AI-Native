@@ -5,12 +5,22 @@
 #   凡是计划表产不出的字段，写在那些 .mdx 里都会在下一次 `pnpm generate:data` 时被静默抹掉，
 #   而且 CI 不会报错（重写后的文件仍然是合法的）。2026-09-19 实测：30 条 chain 字段被抹。
 #
-# 规则（每条词条只有一个权威位置）：
-#   · 手写词条（deep-content，sync-catalog 不碰）→ 字段写在 .mdx 的 frontmatter 里；
-#   · 目录词条（由计划表生成）           → 字段写在这里，由生成器写进文件。
+# 规则（每条词条只有一个权威位置，判定入口是 src/lib/content/authorship.ts 的 protectedTermIds）：
+#   · 手写词条（deep-content 批次 / hand-written-terms.yml）→ 字段写在 .mdx 的 frontmatter 里；
+#   · 目录词条（由计划表生成）                             → 字段写在这里，由生成器写进文件。
 #
-# 这里现在装 chain / chainRole；I3 的 boundaries / minAction 同样落到这里。
+#   判断某条属于哪一边：`pnpm explain:authorship <id…>`（不带参数则列出手写词条清单）。
+#   写错位置的后果是不对称的：写进 .mdx 会被静默抹掉，写进这里则**完全无效**——
+#   因为受保护的词条不会经过 buildPublishedCatalogTerms，覆盖层根本读不到它。
+#   2026-09-21 实测：把 tool-use 的 boundaries 写在这里，generate:data 后正文仍是 8 段，
+#   而 validate:data 全绿（schema 不要求 boundaries 必须存在）。
+#
+# 这里装 chain / chainRole / boundaries / minAction。
 # 字段含义见 src/lib/content/schema.ts 的 termSchema。
+#
+# boundaries.confusions 会**同时**进正文的第 4 段「必须澄清的误会」（见
+# scripts/lib/catalog-generation.ts 的 buildVerifiedBody）：只写 frontmatter 而不落正文，
+# 词条就会同时出现两种坏状态——门禁 5 报缺段落，读者也永远看不到那句差别。
 #
 # 每站的站点定义（名称 / 提问 / 目标 / 动作 / coreTerms）在 src/data/chain.yml。
 
@@ -20,6 +30,8 @@ next-token-prediction:
   chainRole: advanced
 
 # ---- 第 2 站 · 沟通 · 怎么把需求说清楚 ------------------------------------
+# prompt / system-prompt / few-shot-prompting / context-engineering 这四条属深度内容批次，
+# 字段写在各自的 .mdx 里（I6-02 批次 1 补的 boundaries / minAction 也在那里）。
 zero-shot-prompting:
   chain: 2
   chainRole: advanced
@@ -42,37 +54,25 @@ document-parsing:
 autonomous-agent:
   chain: 4
   chainRole: intro
-agent-planning:
-  chain: 4
-  chainRole: core
-agent-memory:
-  chain: 4
-  chainRole: core
+# ai-agent 属深度内容批次；tool-use / agent-planning / agent-memory 已于 2026-09-21
+# 重写为决策页并登记进 hand-written-terms.yml，字段写在各自的 .mdx 里。
 
 # ---- 第 5 站 · 给接口 · 怎么标准化地接系统 ----------------------------------
 inference-server:
   chain: 5
   chainRole: intro
-# model-context-protocol 已转为手写词条（I3-02），字段写在它自己的 .mdx 里，
-# 并从 src/data/hand-written-terms.yml 登记保护。同一条词条不在这里重复登记 ——
-# 一处字段两个来源，迟早会出现「改了这里没改那里」。
 api-call:
   chain: 5
-  chainRole: core
-model-serving:
-  chain: 5
-  chainRole: core
+  chainRole: advanced
+# model-context-protocol 属手写清单（I3-02）、model-api 属深度内容批次、
+# model-serving 属手写清单（I6-02 批次 1），三者的字段都写在各自的 .mdx 里。
 rate-limiting:
   chain: 5
   chainRole: advanced
 
 # ---- 第 6 站 · 给流程 · 怎么把做法沉淀下来 ----------------------------------
-agentic-workflow:
-  chain: 6
-  chainRole: core
-workflow-automation:
-  chain: 6
-  chainRole: core
+# prompt-template / prompt-chaining 属深度内容批次；agentic-workflow / workflow-automation
+# 属手写清单，字段写在各自的 .mdx 里。
 state-management:
   chain: 6
   chainRole: advanced
@@ -87,15 +87,8 @@ agent-orchestration:
 benchmark:
   chain: 7
   chainRole: intro
-eval-set:
-  chain: 7
-  chainRole: core
-llm-as-judge:
-  chain: 7
-  chainRole: core
-groundedness:
-  chain: 7
-  chainRole: core
+# evaluation / observability 属深度内容批次；eval-set / groundedness / llm-as-judge
+# 属手写清单（I6-02 批次 1），字段写在各自的 .mdx 里。
 human-evaluation:
   chain: 7
   chainRole: advanced
@@ -104,12 +97,8 @@ retrieval-recall:
   chainRole: advanced
 
 # ---- 第 8 站 · 给安全 · 什么时候必须有人管 ----------------------------------
-ai-guardrail:
-  chain: 8
-  chainRole: core
-prompt-injection:
-  chain: 8
-  chainRole: core
+# ai-guardrail / prompt-injection 属手写清单（I6-02 批次 1）；ai-risk-management /
+# human-oversight 属深度内容批次，字段都写在各自的 .mdx 里。
 red-teaming:
   chain: 8
   chainRole: advanced

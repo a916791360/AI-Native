@@ -13,7 +13,7 @@
       "status": "verified",
       "position": {
         "x": 928,
-        "y": 386
+        "y": 391
       }
     },
     {
@@ -27,8 +27,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 928,
-        "y": 391
+        "x": 927,
+        "y": 397
       }
     },
     {
@@ -42,8 +42,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 927,
-        "y": 397
+        "x": 926,
+        "y": 403
       }
     },
     {
@@ -57,8 +57,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 926,
-        "y": 403
+        "x": 924,
+        "y": 409
       }
     },
     {
@@ -72,8 +72,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 924,
-        "y": 409
+        "x": 923,
+        "y": 415
       }
     },
     {
@@ -81,13 +81,13 @@
       "label": "Agent 记忆",
       "labelEn": "Agent Memory",
       "url": "/terms/agent-memory/",
-      "summary": "Agent 为跨步骤或跨会话任务保存并取回相关状态、经验与用户信息的机制。",
+      "summary": "应用在轮次之外主动写入和取回的状态仓库，让 Agent 跨步骤、跨会话延续任务，而不是每轮从零开始。",
       "domain": "agents-tool-use-automation",
       "difficulty": "intermediate",
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 525,
+        "x": 534,
         "y": 56
       }
     },
@@ -102,8 +102,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 793,
-        "y": 137
+        "x": 805,
+        "y": 145
       }
     },
     {
@@ -111,13 +111,13 @@
       "label": "Agent 规划",
       "labelEn": "Agent Planning",
       "url": "/terms/agent-planning/",
-      "summary": "Agent 根据目标、约束和当前状态选择后续步骤及工具的过程，需要支持更新和停止。",
+      "summary": "Agent 在运行时根据目标、约束和当前状态选择下一步动作的过程，必须自带更新与停止条件。",
       "domain": "agents-tool-use-automation",
       "difficulty": "intermediate",
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 534,
+        "x": 542,
         "y": 56
       }
     },
@@ -132,8 +132,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 923,
-        "y": 415
+        "x": 921,
+        "y": 421
       }
     },
     {
@@ -147,7 +147,7 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 508,
+        "x": 500,
         "y": 55
       }
     },
@@ -156,14 +156,14 @@
       "label": "Agent 工作流",
       "labelEn": "Agentic Workflow",
       "url": "/terms/agentic-workflow/",
-      "summary": "把模型决策嵌入预定义步骤、工具和检查点的工作流，在灵活性与可控性之间取舍。",
+      "summary": "保留固定步骤骨架与检查点、只在若干判断处把控制权交给模型的工作流，用可控性换一部分适应能力。",
       "domain": "agents-tool-use-automation",
       "difficulty": "intermediate",
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 592,
-        "y": 62
+        "x": 609,
+        "y": 65
       }
     },
     {
@@ -177,8 +177,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 921,
-        "y": 421
+        "x": 919,
+        "y": 427
       }
     },
     {
@@ -192,8 +192,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 919,
-        "y": 427
+        "x": 918,
+        "y": 433
       }
     },
     {
@@ -208,7 +208,7 @@
       "status": "verified",
       "position": {
         "x": 500,
-        "y": 145
+        "y": 360
       }
     },
     {
@@ -222,8 +222,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 918,
-        "y": 433
+        "x": 915,
+        "y": 439
       }
     },
     {
@@ -237,8 +237,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 915,
-        "y": 439
+        "x": 913,
+        "y": 444
       }
     },
     {
@@ -252,8 +252,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 913,
-        "y": 444
+        "x": 911,
+        "y": 450
       }
     },
     {
@@ -267,8 +267,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 601,
-        "y": 63
+        "x": 551,
+        "y": 57
       }
     },
     {
@@ -276,7 +276,7 @@
       "label": "AI 护栏",
       "labelEn": "AI Guardrail",
       "url": "/terms/ai-guardrail/",
-      "summary": "对 AI 系统输入、工具权限、输出和执行结果施加的运行时约束与检查，用于降低已知风险。",
+      "summary": "在请求进入模型、工具执行与结果返回这几个时点上施加的运行时约束与检查，覆盖你能预设的那部分风险。",
       "domain": "safety-ethics-governance",
       "difficulty": "intermediate",
       "ring": "core",
@@ -297,8 +297,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 911,
-        "y": 450
+        "x": 908,
+        "y": 456
       }
     },
     {
@@ -312,8 +312,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 908,
-        "y": 456
+        "x": 905,
+        "y": 462
       }
     },
     {
@@ -327,8 +327,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 905,
-        "y": 462
+        "x": 903,
+        "y": 467
       }
     },
     {
@@ -342,8 +342,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 903,
-        "y": 467
+        "x": 899,
+        "y": 473
       }
     },
     {
@@ -357,8 +357,8 @@
       "ring": "extended",
       "status": "verified",
       "position": {
-        "x": 899,
-        "y": 473
+        "x": 896,
+        "y": 478
       }
     },
     {
@@ -372,8 +372,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 896,
-        "y": 478
+        "x": 681,
+        "y": 83
       }
     },
     {
@@ -456,14 +456,14 @@
       "label": "API 调用",
       "labelEn": "API Call",
       "url": "/terms/api-call/",
-      "summary": "按接口协议向外部服务发送请求并处理响应，是 AI 工具调用和系统集成的常见方式。",
+      "summary": "应用按接口协议向外部服务发送请求并处理响应的动作，是工具连接现实系统最常见的执行方式。",
       "domain": "agents-tool-use-automation",
       "difficulty": "beginner",
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 799,
-        "y": 141
+        "x": 811,
+        "y": 149
       }
     },
     {
@@ -507,8 +507,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 681,
-        "y": 83
+        "x": 688,
+        "y": 86
       }
     },
     {
@@ -597,8 +597,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 805,
-        "y": 145
+        "x": 817,
+        "y": 154
       }
     },
     {
@@ -672,8 +672,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 811,
-        "y": 149
+        "x": 822,
+        "y": 158
       }
     },
     {
@@ -702,8 +702,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 817,
-        "y": 154
+        "x": 828,
+        "y": 163
       }
     },
     {
@@ -792,8 +792,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 822,
-        "y": 158
+        "x": 833,
+        "y": 167
       }
     },
     {
@@ -852,8 +852,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 828,
-        "y": 163
+        "x": 838,
+        "y": 172
       }
     },
     {
@@ -912,8 +912,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 833,
-        "y": 167
+        "x": 844,
+        "y": 177
       }
     },
     {
@@ -927,8 +927,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 838,
-        "y": 172
+        "x": 849,
+        "y": 181
       }
     },
     {
@@ -957,8 +957,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 844,
-        "y": 177
+        "x": 854,
+        "y": 186
       }
     },
     {
@@ -1002,8 +1002,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 849,
-        "y": 181
+        "x": 858,
+        "y": 191
       }
     },
     {
@@ -1032,8 +1032,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 609,
-        "y": 65
+        "x": 617,
+        "y": 67
       }
     },
     {
@@ -1062,8 +1062,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 854,
-        "y": 186
+        "x": 863,
+        "y": 196
       }
     },
     {
@@ -1077,8 +1077,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 542,
-        "y": 56
+        "x": 559,
+        "y": 58
       }
     },
     {
@@ -1152,8 +1152,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 858,
-        "y": 191
+        "x": 867,
+        "y": 201
       }
     },
     {
@@ -1257,8 +1257,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 863,
-        "y": 196
+        "x": 872,
+        "y": 207
       }
     },
     {
@@ -1437,8 +1437,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 688,
-        "y": 86
+        "x": 696,
+        "y": 88
       }
     },
     {
@@ -1452,8 +1452,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 867,
-        "y": 201
+        "x": 876,
+        "y": 212
       }
     },
     {
@@ -1497,8 +1497,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 617,
-        "y": 67
+        "x": 625,
+        "y": 68
       }
     },
     {
@@ -1551,14 +1551,14 @@
       "label": "评测集",
       "labelEn": "Evaluation Set",
       "url": "/terms/eval-set/",
-      "summary": "为固定评估目标组织的输入、期望结果和必要标签集合，用于可重复比较模型或系统版本。",
+      "summary": "按自己的场景组织的输入、期望结果与必要标签的集合，用来把「这次改动有没有变好」变成可重复回答的问题。",
       "domain": "evaluation-observability-quality",
       "difficulty": "intermediate",
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 872,
-        "y": 207
+        "x": 880,
+        "y": 217
       }
     },
     {
@@ -1722,8 +1722,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 876,
-        "y": 212
+        "x": 884,
+        "y": 222
       }
     },
     {
@@ -1767,8 +1767,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 880,
-        "y": 217
+        "x": 888,
+        "y": 228
       }
     },
     {
@@ -1782,8 +1782,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 551,
-        "y": 57
+        "x": 567,
+        "y": 59
       }
     },
     {
@@ -1857,8 +1857,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 696,
-        "y": 88
+        "x": 703,
+        "y": 91
       }
     },
     {
@@ -1986,14 +1986,14 @@
       "label": "依据一致性",
       "labelEn": "Groundedness",
       "url": "/terms/groundedness/",
-      "summary": "输出中的主张能否由给定上下文或证据支持的质量维度，常用于评估 RAG 回答。",
+      "summary": "输出中的主张能否被给定上下文或证据支持的质量维度，用于判断回答是「基于资料」还是「基于想象」。",
       "domain": "evaluation-observability-quality",
       "difficulty": "intermediate",
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 559,
-        "y": 58
+        "x": 576,
+        "y": 60
       }
     },
     {
@@ -2022,8 +2022,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 625,
-        "y": 68
+        "x": 633,
+        "y": 70
       }
     },
     {
@@ -2097,8 +2097,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 703,
-        "y": 91
+        "x": 711,
+        "y": 94
       }
     },
     {
@@ -2112,8 +2112,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 711,
-        "y": 94
+        "x": 718,
+        "y": 97
       }
     },
     {
@@ -2127,8 +2127,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 718,
-        "y": 97
+        "x": 725,
+        "y": 100
       }
     },
     {
@@ -2142,8 +2142,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 884,
-        "y": 222
+        "x": 891,
+        "y": 233
       }
     },
     {
@@ -2187,8 +2187,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 567,
-        "y": 59
+        "x": 584,
+        "y": 61
       }
     },
     {
@@ -2292,8 +2292,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 888,
-        "y": 228
+        "x": 895,
+        "y": 239
       }
     },
     {
@@ -2352,8 +2352,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 891,
-        "y": 233
+        "x": 898,
+        "y": 244
       }
     },
     {
@@ -2367,8 +2367,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 895,
-        "y": 239
+        "x": 901,
+        "y": 250
       }
     },
     {
@@ -2382,8 +2382,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 725,
-        "y": 100
+        "x": 732,
+        "y": 103
       }
     },
     {
@@ -2412,8 +2412,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 633,
-        "y": 70
+        "x": 641,
+        "y": 72
       }
     },
     {
@@ -2511,14 +2511,14 @@
       "label": "大模型裁判",
       "labelEn": "LLM-as-a-Judge",
       "url": "/terms/llm-as-judge/",
-      "summary": "使用大语言模型依据量规评价其他输出的方法，需控制位置偏差、自我偏好和不稳定性。",
+      "summary": "用另一个大语言模型按量规给输出打分的方法，把评估成本压到可日常运行，但必须校准位置偏差与自我偏好。",
       "domain": "evaluation-observability-quality",
       "difficulty": "intermediate",
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 898,
-        "y": 244
+        "x": 904,
+        "y": 256
       }
     },
     {
@@ -2547,8 +2547,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 641,
-        "y": 72
+        "x": 649,
+        "y": 74
       }
     },
     {
@@ -2562,8 +2562,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 901,
-        "y": 250
+        "x": 907,
+        "y": 261
       }
     },
     {
@@ -2697,8 +2697,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 904,
-        "y": 256
+        "x": 909,
+        "y": 267
       }
     },
     {
@@ -2727,8 +2727,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 649,
-        "y": 74
+        "x": 592,
+        "y": 62
       }
     },
     {
@@ -2787,8 +2787,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 732,
-        "y": 103
+        "x": 740,
+        "y": 107
       }
     },
     {
@@ -2796,7 +2796,7 @@
       "label": "模型服务",
       "labelEn": "Model Serving",
       "url": "/terms/model-serving/",
-      "summary": "把训练完成的模型部署为稳定可调用服务，并持续管理性能、版本和容量的工程过程。",
+      "summary": "把模型变成可长期调用的服务，并持续管理并发、延迟、版本与容量的工程过程，而不是一次性部署动作。",
       "domain": "ai-engineering-deployment-operations",
       "difficulty": "intermediate",
       "ring": "core",
@@ -2832,8 +2832,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 907,
-        "y": 261
+        "x": 912,
+        "y": 273
       }
     },
     {
@@ -2847,8 +2847,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 576,
-        "y": 60
+        "x": 601,
+        "y": 63
       }
     },
     {
@@ -2937,8 +2937,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 909,
-        "y": 267
+        "x": 914,
+        "y": 278
       }
     },
     {
@@ -3027,8 +3027,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 740,
-        "y": 107
+        "x": 747,
+        "y": 110
       }
     },
     {
@@ -3312,8 +3312,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 747,
-        "y": 110
+        "x": 753,
+        "y": 114
       }
     },
     {
@@ -3447,8 +3447,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 912,
-        "y": 273
+        "x": 917,
+        "y": 284
       }
     },
     {
@@ -3477,8 +3477,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 914,
-        "y": 278
+        "x": 919,
+        "y": 290
       }
     },
     {
@@ -3501,14 +3501,14 @@
       "label": "提示词注入",
       "labelEn": "Prompt Injection",
       "url": "/terms/prompt-injection/",
-      "summary": "恶意或不可信内容试图覆盖原有指令、诱导模型泄露信息或执行越权操作的攻击。",
+      "summary": "不可信内容伪装成指令混进模型输入，试图覆盖原有规则、诱导信息泄露或触发越权动作的一类攻击。",
       "domain": "safety-ethics-governance",
       "difficulty": "intermediate",
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 753,
-        "y": 114
+        "x": 760,
+        "y": 117
       }
     },
     {
@@ -3537,8 +3537,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 760,
-        "y": 117
+        "x": 767,
+        "y": 121
       }
     },
     {
@@ -3552,8 +3552,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 917,
-        "y": 284
+        "x": 920,
+        "y": 296
       }
     },
     {
@@ -3597,8 +3597,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 919,
-        "y": 290
+        "x": 922,
+        "y": 302
       }
     },
     {
@@ -3612,8 +3612,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 920,
-        "y": 296
+        "x": 924,
+        "y": 308
       }
     },
     {
@@ -3642,8 +3642,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 922,
-        "y": 302
+        "x": 925,
+        "y": 314
       }
     },
     {
@@ -3747,8 +3747,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 767,
-        "y": 121
+        "x": 774,
+        "y": 125
       }
     },
     {
@@ -3777,8 +3777,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 924,
-        "y": 308
+        "x": 780,
+        "y": 129
       }
     },
     {
@@ -3808,7 +3808,7 @@
       "status": "verified",
       "position": {
         "x": 500,
-        "y": 360
+        "y": 145
       }
     },
     {
@@ -3867,8 +3867,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 774,
-        "y": 125
+        "x": 786,
+        "y": 132
       }
     },
     {
@@ -3957,8 +3957,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 925,
-        "y": 314
+        "x": 926,
+        "y": 320
       }
     },
     {
@@ -4017,8 +4017,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 926,
-        "y": 320
+        "x": 927,
+        "y": 326
       }
     },
     {
@@ -4047,8 +4047,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 927,
-        "y": 326
+        "x": 928,
+        "y": 332
       }
     },
     {
@@ -4092,8 +4092,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 928,
-        "y": 332
+        "x": 929,
+        "y": 337
       }
     },
     {
@@ -4108,7 +4108,7 @@
       "status": "verified",
       "position": {
         "x": 929,
-        "y": 337
+        "y": 343
       }
     },
     {
@@ -4197,8 +4197,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 929,
-        "y": 343
+        "x": 930,
+        "y": 349
       }
     },
     {
@@ -4227,8 +4227,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 780,
-        "y": 129
+        "x": 793,
+        "y": 137
       }
     },
     {
@@ -4273,7 +4273,7 @@
       "status": "verified",
       "position": {
         "x": 930,
-        "y": 349
+        "y": 355
       }
     },
     {
@@ -4288,7 +4288,7 @@
       "status": "verified",
       "position": {
         "x": 930,
-        "y": 355
+        "y": 362
       }
     },
     {
@@ -4303,7 +4303,7 @@
       "status": "verified",
       "position": {
         "x": 930,
-        "y": 362
+        "y": 368
       }
     },
     {
@@ -4333,7 +4333,7 @@
       "status": "verified",
       "position": {
         "x": 930,
-        "y": 368
+        "y": 374
       }
     },
     {
@@ -4437,7 +4437,7 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 500,
+        "x": 508,
         "y": 55
       }
     },
@@ -4452,8 +4452,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 930,
-        "y": 374
+        "x": 929,
+        "y": 380
       }
     },
     {
@@ -4722,8 +4722,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 929,
-        "y": 380
+        "x": 928,
+        "y": 386
       }
     },
     {
@@ -4782,8 +4782,8 @@
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 786,
-        "y": 132
+        "x": 799,
+        "y": 141
       }
     },
     {
@@ -4881,14 +4881,14 @@
       "label": "工作流自动化",
       "labelEn": "Workflow Automation",
       "url": "/terms/workflow-automation/",
-      "summary": "用规则、事件和工具调用自动执行重复业务步骤的方式，适合边界明确且结果可检查的流程。",
+      "summary": "用预先写好的代码路径把模型和工具串起来执行的自动化方式，步骤可枚举、结果可检查。",
       "domain": "agents-tool-use-automation",
-      "difficulty": "beginner",
+      "difficulty": "intermediate",
       "ring": "core",
       "status": "verified",
       "position": {
-        "x": 584,
-        "y": 61
+        "x": 525,
+        "y": 56
       }
     },
     {
@@ -4951,6 +4951,13 @@
       "explanation": "Agent 技能为 Agent 提供可复用的做法，让同一套流程在不同会话与不同 Agent 之间保持一致。"
     },
     {
+      "id": "agent-skills-compared-with-model-context-protocol",
+      "source": "agent-skills",
+      "target": "model-context-protocol",
+      "type": "comparison",
+      "explanation": "Skill 是把「这件事该怎么做」写成可复用的说明书，MCP 是把「工具怎么接进来」标准化的接口约定；一个管做法，一个管通道。"
+    },
+    {
       "id": "agent-skills-compared-with-prompt-template",
       "source": "agent-skills",
       "target": "prompt-template",
@@ -4977,6 +4984,13 @@
       "target": "large-language-model",
       "type": "comparison",
       "explanation": "大语言模型主要生成内容，Agent 在模型之外增加规划、工具、状态和执行闭环。"
+    },
+    {
+      "id": "ai-agent-compared-with-workflow-automation",
+      "source": "ai-agent",
+      "target": "workflow-automation",
+      "type": "comparison",
+      "explanation": "Agent 根据中间结果自己决定下一步，工作流自动化按预先定义的步骤和规则执行；前者动态规划，后者稳定可查。"
     },
     {
       "id": "ai-agent-precedes-tool-use",
@@ -5012,6 +5026,13 @@
       "target": "generative-ai",
       "type": "prerequisite",
       "explanation": "先理解人工智能的整体范围，才能判断生成式 AI 在其中解决的是哪一类问题。"
+    },
+    {
+      "id": "ai-risk-management-component-of-ai-governance",
+      "source": "ai-risk-management",
+      "target": "ai-governance",
+      "type": "component",
+      "explanation": "风险管理负责识别和处置具体风险，是 AI 治理落地的一部分，但治理还包括问责、透明度与合规要求。"
     },
     {
       "id": "ai-safety-compared-with-ai-governance",
@@ -5602,6 +5623,13 @@
       "explanation": "负责任 AI 将公平、透明、问责和风险管理等原则转成组织的治理要求与工作流程。"
     },
     {
+      "id": "responsible-ai-precedes-ai-risk-management",
+      "source": "responsible-ai",
+      "target": "ai-risk-management",
+      "type": "prerequisite",
+      "explanation": "先明确负责任 AI 要守住的原则，才知道风险管理需要识别、评估和处置哪些具体风险。"
+    },
+    {
       "id": "retrieval-augmented-generation-precedes-evaluation",
       "source": "retrieval-augmented-generation",
       "target": "evaluation",
@@ -5862,6 +5890,13 @@
         "explanation": "提示词版本管理帮助追踪技能中的指令变化，便于回溯改动与比较输出质量。"
       },
       {
+        "edgeId": "agent-skills-compared-with-model-context-protocol",
+        "neighbor": "model-context-protocol",
+        "type": "comparison",
+        "direction": "symmetric",
+        "explanation": "Skill 是把「这件事该怎么做」写成可复用的说明书，MCP 是把「工具怎么接进来」标准化的接口约定；一个管做法，一个管通道。"
+      },
+      {
         "edgeId": "agent-skills-compared-with-prompt-template",
         "neighbor": "prompt-template",
         "type": "comparison",
@@ -5973,6 +6008,13 @@
         "explanation": "大语言模型主要生成内容，Agent 在模型之外增加规划、工具、状态和执行闭环。"
       },
       {
+        "edgeId": "ai-agent-compared-with-workflow-automation",
+        "neighbor": "workflow-automation",
+        "type": "comparison",
+        "direction": "symmetric",
+        "explanation": "Agent 根据中间结果自己决定下一步，工作流自动化按预先定义的步骤和规则执行；前者动态规划，后者稳定可查。"
+      },
+      {
         "edgeId": "agent-memory-component-of-ai-agent",
         "neighbor": "agent-memory",
         "type": "component",
@@ -6039,6 +6081,13 @@
         "type": "comparison",
         "direction": "symmetric",
         "explanation": "AI 安全关注系统可能造成的伤害与失控，AI 治理进一步规定组织如何负责、记录、审计和问责。"
+      },
+      {
+        "edgeId": "ai-risk-management-component-of-ai-governance",
+        "neighbor": "ai-risk-management",
+        "type": "component",
+        "direction": "incoming",
+        "explanation": "风险管理负责识别和处置具体风险，是 AI 治理落地的一部分，但治理还包括问责、透明度与合规要求。"
       }
     ],
     "ai-guardrail": [
@@ -6062,7 +6111,22 @@
     "ai-pm-competency": [],
     "ai-product": [],
     "ai-product-manager": [],
-    "ai-risk-management": [],
+    "ai-risk-management": [
+      {
+        "edgeId": "ai-risk-management-component-of-ai-governance",
+        "neighbor": "ai-governance",
+        "type": "component",
+        "direction": "outgoing",
+        "explanation": "风险管理负责识别和处置具体风险，是 AI 治理落地的一部分，但治理还包括问责、透明度与合规要求。"
+      },
+      {
+        "edgeId": "responsible-ai-precedes-ai-risk-management",
+        "neighbor": "responsible-ai",
+        "type": "prerequisite",
+        "direction": "incoming",
+        "explanation": "先明确负责任 AI 要守住的原则，才知道风险管理需要识别、评估和处置哪些具体风险。"
+      }
+    ],
     "ai-safety": [
       {
         "edgeId": "ai-governance-applied-to-ai-safety",
@@ -7007,6 +7071,13 @@
         "explanation": "MCP 为工具和数据提供标准化接入方式，工具调用仍由客户端与模型应用共同完成执行。"
       },
       {
+        "edgeId": "agent-skills-compared-with-model-context-protocol",
+        "neighbor": "agent-skills",
+        "type": "comparison",
+        "direction": "symmetric",
+        "explanation": "Skill 是把「这件事该怎么做」写成可复用的说明书，MCP 是把「工具怎么接进来」标准化的接口约定；一个管做法，一个管通道。"
+      },
+      {
         "edgeId": "function-calling-compared-with-model-context-protocol",
         "neighbor": "function-calling",
         "type": "comparison",
@@ -7373,6 +7444,13 @@
         "type": "application",
         "direction": "outgoing",
         "explanation": "负责任 AI 将公平、透明、问责和风险管理等原则转成组织的治理要求与工作流程。"
+      },
+      {
+        "edgeId": "responsible-ai-precedes-ai-risk-management",
+        "neighbor": "ai-risk-management",
+        "type": "prerequisite",
+        "direction": "outgoing",
+        "explanation": "先明确负责任 AI 要守住的原则，才知道风险管理需要识别、评估和处置哪些具体风险。"
       }
     ],
     "retrieval": [
@@ -7888,6 +7966,13 @@
         "type": "comparison",
         "direction": "symmetric",
         "explanation": "Agent 规划可以根据状态动态调整步骤，工作流自动化通常沿预先定义且可检查的路径执行。"
+      },
+      {
+        "edgeId": "ai-agent-compared-with-workflow-automation",
+        "neighbor": "ai-agent",
+        "type": "comparison",
+        "direction": "symmetric",
+        "explanation": "Agent 根据中间结果自己决定下一步，工作流自动化按预先定义的步骤和规则执行；前者动态规划，后者稳定可查。"
       },
       {
         "edgeId": "multi-agent-system-compared-with-workflow-automation",

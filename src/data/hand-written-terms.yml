@@ -70,3 +70,52 @@ terms:
   - id: large-language-model
     reason: I3-08 A 档批次 1：从名词解释改为带边界、取舍和上手动作的决策页
     rewrittenAt: '2026-09-19'
+
+  - id: workflow-automation
+    reason: I6-04 前置：A 档里唯一还是模板正文的词条，按「谁决定下一步」重写为决策页，否则门禁转硬后 CI 必红
+    rewrittenAt: '2026-09-21'
+
+  # ---- I6-02 批次 1 · 链路 8 站的站点 coreTerms（骨架词条）------------------
+  # 判据：它们在 src/data/chain.yml 的 station.coreTerms 里，属于「缺了它就讲不通
+  # 下一站」的一类。这 10 条此前是模板正文（各命中 14 句复用句），因此既过不了
+  # 门禁 1，也升不了 A 档——先重写正文，再谈档位。
+
+  - id: agent-memory
+    reason: I6-02 站点骨架：第 4 站 coreTerms。原为模板正文，按「写入 / 取回 / 更新 / 删除」四动作重写
+    rewrittenAt: '2026-09-21'
+
+  - id: agent-planning
+    reason: I6-02 站点骨架：第 4 站 coreTerms。原为模板正文，按「运行时选下一步 + 停止条件」重写
+    rewrittenAt: '2026-09-21'
+
+  - id: agentic-workflow
+    reason: I6-02 站点骨架：第 6 站 coreTerms。原为模板正文，按「混合结构：骨架固定、判断外放」重写
+    rewrittenAt: '2026-09-21'
+
+  - id: api-call
+    reason: I6-02 站点骨架：第 5 站 coreTerms。原为模板正文，按「鉴权 / 超时 / 幂等 / 失败分类」重写
+    rewrittenAt: '2026-09-21'
+
+  - id: model-serving
+    reason: I6-02 站点骨架：第 5 站 coreTerms。原为模板正文，按「并发 / 延迟 / 版本 / 成本」四职责重写
+    rewrittenAt: '2026-09-21'
+
+  - id: eval-set
+    reason: I6-02 站点骨架：第 7 站 coreTerms。原为模板正文，按「先定判定再出题 + 按失败类型配比」重写
+    rewrittenAt: '2026-09-21'
+
+  - id: groundedness
+    reason: I6-02 站点骨架：第 7 站 coreTerms。原为模板正文，按「拆主张逐条核查」重写
+    rewrittenAt: '2026-09-21'
+
+  - id: llm-as-judge
+    reason: I6-02 站点骨架：第 7 站 coreTerms。原为模板正文，按「量规四要素 + 三类偏差校准」重写
+    rewrittenAt: '2026-09-21'
+
+  - id: ai-guardrail
+    reason: I6-02 站点骨架：第 8 站 coreTerms。原为模板正文，按「四个时点 × 四类机制」重写
+    rewrittenAt: '2026-09-21'
+
+  - id: prompt-injection
+    reason: I6-02 站点骨架：第 8 站 coreTerms。原为模板正文，按「内容层 / 结构层 / 权限层」重写
+    rewrittenAt: '2026-09-21'

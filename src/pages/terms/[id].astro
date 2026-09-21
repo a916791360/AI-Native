@@ -12,7 +12,7 @@ import { loadCaseStudies } from '@/lib/cases/io';
 import { CHAIN_ROLE_LABELS, resolveTermChainPosition, type ChainRole } from '@/lib/content/chain';
 import { loadProjectContent } from '@/lib/content/io';
 import { getLearningRecommendations } from '@/lib/content/recommendations';
-import { TERM_SECTIONS } from '@/lib/content/term-sections';
+import { TERM_SECTIONS, extractSectionIds } from '@/lib/content/term-sections';
 import { LEARNING_QUESTIONS, getLearningQuestionContext } from '@/data/learning';
 import { selectLocalGraph, type GraphData } from '@/lib/graph/model';
 import { buildContentIssueUrl } from '@/lib/site/github';
@@ -141,7 +141,15 @@ const difficultyLabels = { beginner: '入门', intermediate: '进阶', advanced:
 // 段落锚点导航：从决策页模板 v2 的唯一事实源生成，不在这里手写。
 // 手写的话，改了正文模板忘了改这里，锚点就会少一项或跳错位置，而构建不报错。
 // 门禁 5 会逐条比对「正文实际的 h2 序列」与这份定义是否相等。
-const sectionLinks = TERM_SECTIONS.map(({ id, label }) => [id, label] as const);
+//
+// 但「模板有 9 段」不等于「这一条已经写满 9 段」：存量词条里还有一批是 8 段。
+// 对它们照模板渲染导航，读者点「必须澄清的误会」会落到页面底部——模板注释里
+// 点名要防的正是这种静默死锚点。所以导航按正文实际段落过滤：段落补齐后自动出现，
+// 不需要谁记得回来加一行。
+const actualSectionIds = entry.body ? new Set(extractSectionIds(entry.body)) : null;
+const sectionLinks = TERM_SECTIONS.filter(
+  ({ id }) => !actualSectionIds || actualSectionIds.has(id),
+).map(({ id, label }) => [id, label] as const);
 const relationGroups = Object.entries(relationLabels).map(([type, label]) => ({
   type,
   label,

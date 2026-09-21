@@ -7,7 +7,7 @@
 # 人工终判请把 reviewed 改成 true，此后本脚本不再改动该条的 tier ——
 # 机器负责把 325 条压到需要人工看的规模，不负责替人拍板。
 #
-# 当前分布：A 23 / B 126 / C 178（共 327 条）。其中 5 条为人工终判（I3-02 至 I3-06 的决策页）。
+# 当前分布：A 42 / B 133 / C 152（共 327 条）。
 version: 1
 terms:
   - id: ab-testing
@@ -35,20 +35,23 @@ terms:
     signals: []
     reviewed: false
   - id: agent-memory
-    tier: B
+    tier: A
     signals:
       - chain-core
-    reviewed: false
+    reviewed: true
+    note: 站点第 4 站「给手脚 · 怎么让它做事」的 coreTerms：缺了它就讲不通这一站。机器按分数只给 1–2 个信号（判为 B），人工按第十三节的强信号上调为 A——骨架词条必须受门禁约束。
   - id: agent-orchestration
     tier: B
     signals:
       - questions:1
+      - relations:1
     reviewed: false
   - id: agent-planning
-    tier: B
+    tier: A
     signals:
       - chain-core
-    reviewed: false
+    reviewed: true
+    note: 站点第 4 站「给手脚 · 怎么让它做事」的 coreTerms：缺了它就讲不通这一站。机器按分数只给 1–2 个信号（判为 B），人工按第十三节的强信号上调为 A——骨架词条必须受门禁约束。
   - id: agent-sandbox
     tier: B
     signals:
@@ -59,13 +62,14 @@ terms:
     signals:
       - relations:2
     reviewed: true
-    note: 人工终判。I3-03 新建的决策页，按《迭代开发说明书》第十二节验收；机器只给了 2 个信号，但它与 MCP 是当前最易混淆的一对，必须受 A 档门禁约束。
+    note: I3-03 新建的决策页：全库原为 0 命中，且与 MCP 是最易混淆的一对，锁为 A 档。
   - id: agentic-workflow
-    tier: B
+    tier: A
     signals:
       - chain-core
       - questions:1
-    reviewed: false
+    reviewed: true
+    note: 站点第 6 站「给流程 · 怎么把做法沉淀下来」的 coreTerms：缺了它就讲不通这一站。机器按分数只给 1–2 个信号（判为 B），人工按第十三节的强信号上调为 A——骨架词条必须受门禁约束。
   - id: ai-accelerator
     tier: C
     signals: []
@@ -82,7 +86,7 @@ terms:
       - questions:3
       - relations:2
     reviewed: true
-    note: 人工终判。I3-05 决策页重写，第 4 站入口概念；机器已判 A，人工确认并锁定，避免后续重新生成时被降档。
+    note: 站点第 4 站「给手脚 · 怎么让它做事」的 coreTerms：缺了它就讲不通这一站。机器按分数只给 1–2 个信号（判为 B），人工按第十三节的强信号上调为 A——骨架词条必须受门禁约束。
   - id: ai-application
     tier: B
     signals:
@@ -94,21 +98,24 @@ terms:
       - questions:5
       - cases:1
       - routes:1
-    reviewed: false
+    reviewed: true
+    note: 人工确认：回答「AI 到底不能做什么」，是本站全部能力讨论的前提，按质量基准锁为 A 档。
   - id: ai-effect
     tier: C
     signals: []
     reviewed: false
   - id: ai-governance
-    tier: C
-    signals: []
+    tier: B
+    signals:
+      - relations:4
     reviewed: false
   - id: ai-guardrail
-    tier: B
+    tier: A
     signals:
       - chain-core
       - questions:5
-    reviewed: false
+    reviewed: true
+    note: 站点第 8 站「给安全 · 什么时候必须有人管」的 coreTerms：缺了它就讲不通这一站。机器按分数只给 1–2 个信号（判为 B），人工按第十三节的强信号上调为 A——骨架词条必须受门禁约束。
   - id: ai-onboarding
     tier: B
     signals:
@@ -145,11 +152,14 @@ terms:
       - chain-core
       - questions:5
       - cases:1
+      - relations:2
       - routes:1
-    reviewed: false
+    reviewed: true
+    note: 站点第 8 站「给安全 · 什么时候必须有人管」的 coreTerms：缺了它就讲不通这一站。机器按分数只给 1–2 个信号（判为 B），人工按第十三节的强信号上调为 A——骨架词条必须受门禁约束。
   - id: ai-safety
-    tier: C
-    signals: []
+    tier: B
+    signals:
+      - relations:9
     reviewed: false
   - id: ai-use-case
     tier: B
@@ -170,10 +180,11 @@ terms:
     signals: []
     reviewed: false
   - id: api-call
-    tier: B
+    tier: A
     signals:
       - chain-core
-    reviewed: false
+    reviewed: true
+    note: 站点第 5 站「给接口 · 怎么标准化地接系统」的 coreTerms：缺了它就讲不通这一站。机器按分数只给 1–2 个信号（判为 B），人工按第十三节的强信号上调为 A——骨架词条必须受门禁约束。
   - id: approximate-nearest-neighbor
     tier: C
     signals: []
@@ -189,7 +200,8 @@ terms:
       - questions:1
       - relations:2
       - routes:5
-    reviewed: false
+    reviewed: true
+    note: 人工确认：整站最大的上位概念，被 5 条阅读路线引用，按质量基准锁为 A 档。
   - id: attention-mechanism
     tier: C
     signals: []
@@ -212,8 +224,9 @@ terms:
     signals: []
     reviewed: false
   - id: autonomous-agent
-    tier: C
-    signals: []
+    tier: B
+    signals:
+      - relations:1
     reviewed: false
   - id: autopilot-pattern
     tier: B
@@ -233,16 +246,18 @@ terms:
     signals: []
     reviewed: false
   - id: benchmark
-    tier: C
-    signals: []
+    tier: B
+    signals:
+      - relations:1
     reviewed: false
   - id: bias-evaluation
     tier: C
     signals: []
     reviewed: false
   - id: browser-use
-    tier: C
-    signals: []
+    tier: B
+    signals:
+      - relations:1
     reviewed: false
   - id: business-model
     tier: B
@@ -274,7 +289,9 @@ terms:
     signals:
       - questions:5
       - cases:1
-    reviewed: false
+      - relations:1
+    reviewed: true
+    note: 机器按分数判为 A（命中 ≥3 个正向信号），但正文仍是模板正文、缺 boundaries 与 minAction，放进 A 档会让 CI 立刻红。按 I6-02 先降回 B 档：重写为决策页后再升 A，届时把这条 note 换成重写记录。
   - id: classification
     tier: B
     signals:
@@ -289,8 +306,9 @@ terms:
     signals: []
     reviewed: false
   - id: code-execution
-    tier: C
-    signals: []
+    tier: B
+    signals:
+      - relations:1
     reviewed: false
   - id: cognitive-computing
     tier: C
@@ -306,12 +324,14 @@ terms:
     signals: []
     reviewed: false
   - id: computer-use
-    tier: C
-    signals: []
+    tier: B
+    signals:
+      - relations:1
     reviewed: false
   - id: computer-vision
-    tier: C
-    signals: []
+    tier: B
+    signals:
+      - relations:1
     reviewed: false
   - id: computer-vision-field
     tier: C
@@ -321,6 +341,7 @@ terms:
     tier: B
     signals:
       - questions:2
+      - relations:1
     reviewed: false
   - id: connectionism
     tier: C
@@ -334,6 +355,7 @@ terms:
     tier: B
     signals:
       - questions:3
+      - relations:1
     reviewed: false
   - id: context-compression
     tier: B
@@ -341,10 +363,11 @@ terms:
       - questions:1
     reviewed: false
   - id: context-engineering
-    tier: B
+    tier: A
     signals:
       - chain-core
-    reviewed: false
+    reviewed: true
+    note: 站点第 2 站「沟通 · 怎么把需求说清楚」的 coreTerms：缺了它就讲不通这一站。机器按分数只给 1–2 个信号（判为 B），人工按第十三节的强信号上调为 A——骨架词条必须受门禁约束。
   - id: context-relevance
     tier: C
     signals: []
@@ -353,6 +376,7 @@ terms:
     tier: B
     signals:
       - cases:1
+      - relations:1
       - containment:1
     reviewed: false
   - id: context-window
@@ -360,9 +384,10 @@ terms:
     signals:
       - chain-core
       - questions:3
-      - relations:3
+      - relations:4
       - routes:4
-    reviewed: false
+    reviewed: true
+    note: 站点第 1 站「地基 · 模型是什么」的 coreTerms：缺了它就讲不通这一站。机器按分数只给 1–2 个信号（判为 B），人工按第十三节的强信号上调为 A——骨架词条必须受门禁约束。
   - id: continuous-delivery
     tier: B
     signals:
@@ -383,8 +408,9 @@ terms:
       - questions:1
     reviewed: false
   - id: copyright
-    tier: C
-    signals: []
+    tier: B
+    signals:
+      - relations:1
     reviewed: false
   - id: cost-optimization
     tier: B
@@ -418,6 +444,7 @@ terms:
     tier: B
     signals:
       - questions:2
+      - relations:1
     reviewed: false
   - id: data-ingestion
     tier: B
@@ -472,11 +499,13 @@ terms:
       - questions:1
       - relations:2
       - routes:1
-    reviewed: false
+    reviewed: true
+    note: 站点第 3 站「给知识 · 怎么让它知道你家的资料」的 coreTerms：缺了它就讲不通这一站。机器按分数只给 1–2 个信号（判为 B），人工按第十三节的强信号上调为 A——骨架词条必须受门禁约束。
   - id: document-parsing
     tier: B
     signals:
       - questions:1
+      - relations:1
     reviewed: false
   - id: document-understanding
     tier: C
@@ -490,9 +519,10 @@ terms:
     tier: A
     signals:
       - chain-core
-      - relations:2
+      - relations:3
       - routes:1
-    reviewed: false
+    reviewed: true
+    note: 站点第 3 站「给知识 · 怎么让它知道你家的资料」的 coreTerms：缺了它就讲不通这一站。机器按分数只给 1–2 个信号（判为 B），人工按第十三节的强信号上调为 A——骨架词条必须受门禁约束。
   - id: energy-efficiency
     tier: C
     signals: []
@@ -508,18 +538,21 @@ terms:
       - cases:1
     reviewed: false
   - id: eval-set
-    tier: B
+    tier: A
     signals:
       - chain-core
       - questions:6
-    reviewed: false
+    reviewed: true
+    note: 站点第 7 站「给判断 · 怎么知道它行不行」的 coreTerms：缺了它就讲不通这一站。机器按分数只给 1–2 个信号（判为 B），人工按第十三节的强信号上调为 A——骨架词条必须受门禁约束。
   - id: evaluation
     tier: A
     signals:
       - chain-core
       - questions:1
       - cases:1
-    reviewed: false
+      - relations:9
+    reviewed: true
+    note: 站点第 7 站「给判断 · 怎么知道它行不行」的 coreTerms：缺了它就讲不通这一站。机器按分数只给 1–2 个信号（判为 B），人工按第十三节的强信号上调为 A——骨架词条必须受门禁约束。
   - id: evaluation-rubric
     tier: B
     signals:
@@ -565,6 +598,7 @@ terms:
     tier: B
     signals:
       - questions:2
+      - relations:1
     reviewed: false
   - id: feature-engineering
     tier: C
@@ -576,17 +610,18 @@ terms:
       - questions:3
     reviewed: false
   - id: few-shot-prompting
-    tier: B
+    tier: A
     signals:
       - chain-core
       - questions:1
       - containment:1
-    reviewed: false
+    reviewed: true
+    note: 站点第 2 站「沟通 · 怎么把需求说清楚」的 coreTerms：缺了它就讲不通这一站。机器按分数只给 1–2 个信号（判为 B），人工按第十三节的强信号上调为 A——骨架词条必须受门禁约束。
   - id: fine-tuning
     tier: B
     signals:
       - questions:4
-      - relations:1
+      - relations:4
     reviewed: false
   - id: flops
     tier: C
@@ -609,6 +644,7 @@ terms:
     tier: B
     signals:
       - questions:2
+      - relations:2
     reviewed: false
   - id: generalization
     tier: C
@@ -618,9 +654,10 @@ terms:
     tier: A
     signals:
       - questions:1
-      - relations:3
+      - relations:7
       - routes:4
-    reviewed: false
+    reviewed: true
+    note: 人工确认：与「大语言模型」是最高频的混用对，按质量基准锁为 A 档。
   - id: generative-ui
     tier: C
     signals: []
@@ -650,11 +687,12 @@ terms:
     signals: []
     reviewed: false
   - id: groundedness
-    tier: B
+    tier: A
     signals:
       - chain-core
       - questions:1
-    reviewed: false
+    reviewed: true
+    note: 站点第 7 站「给判断 · 怎么知道它行不行」的 coreTerms：缺了它就讲不通这一站。机器按分数只给 1–2 个信号（判为 B），人工按第十三节的强信号上调为 A——骨架词条必须受门禁约束。
   - id: grounding
     tier: B
     signals:
@@ -665,9 +703,10 @@ terms:
     signals:
       - chain-core
       - questions:6
-      - relations:2
+      - relations:3
       - routes:4
-    reviewed: false
+    reviewed: true
+    note: 站点第 1 站「地基 · 模型是什么」的 coreTerms：缺了它就讲不通这一站。机器按分数只给 1–2 个信号（判为 B），人工按第十三节的强信号上调为 A——骨架词条必须受门禁约束。
   - id: heuristic
     tier: C
     signals: []
@@ -682,7 +721,8 @@ terms:
       - questions:3
       - cases:5
       - routes:1
-    reviewed: false
+    reviewed: true
+    note: 人工确认：被 5 个案例引用，是「人在哪一步介入」这条主线的总入口，按质量基准锁为 A 档。
   - id: human-escalation
     tier: B
     signals:
@@ -693,6 +733,7 @@ terms:
     tier: B
     signals:
       - questions:2
+      - relations:2
     reviewed: false
   - id: human-in-the-loop
     tier: A
@@ -700,16 +741,20 @@ terms:
       - chain-core
       - questions:12
       - cases:1
-    reviewed: false
+      - relations:2
+    reviewed: true
+    note: 站点第 4 站「给手脚 · 怎么让它做事」的 coreTerms：缺了它就讲不通这一站。机器按分数只给 1–2 个信号（判为 B），人工按第十三节的强信号上调为 A——骨架词条必须受门禁约束。
   - id: human-oversight
-    tier: B
+    tier: A
     signals:
       - chain-core
       - questions:3
-    reviewed: false
+    reviewed: true
+    note: 站点第 8 站「给安全 · 什么时候必须有人管」的 coreTerms：缺了它就讲不通这一站。机器按分数只给 1–2 个信号（判为 B），人工按第十三节的强信号上调为 A——骨架词条必须受门禁约束。
   - id: hybrid-search
-    tier: C
+    tier: B
     signals:
+      - relations:1
       - containment:1
     reviewed: false
   - id: hyperparameter
@@ -721,8 +766,9 @@ terms:
     signals: []
     reviewed: false
   - id: image-generation
-    tier: C
-    signals: []
+    tier: B
+    signals:
+      - relations:4
     reviewed: false
   - id: image-to-image
     tier: C
@@ -751,8 +797,9 @@ terms:
       - containment:1
     reviewed: false
   - id: inference-server
-    tier: C
-    signals: []
+    tier: B
+    signals:
+      - relations:1
     reviewed: false
   - id: informed-consent
     tier: B
@@ -771,12 +818,14 @@ terms:
       - containment:1
     reviewed: false
   - id: jailbreak
-    tier: C
-    signals: []
+    tier: B
+    signals:
+      - relations:1
     reviewed: false
   - id: keyword-search
-    tier: C
+    tier: B
     signals:
+      - relations:1
       - containment:1
     reviewed: false
   - id: knowledge-base
@@ -784,7 +833,9 @@ terms:
     signals:
       - questions:2
       - cases:1
-    reviewed: false
+      - relations:2
+    reviewed: true
+    note: 机器按分数判为 A（命中 ≥3 个正向信号），但正文仍是模板正文、缺 boundaries 与 minAction，放进 A 档会让 CI 立刻红。按 I6-02 先降回 B 档：重写为决策页后再升 A，届时把这条 note 换成重写记录。
   - id: knowledge-representation
     tier: C
     signals: []
@@ -794,14 +845,15 @@ terms:
     signals:
       - relations:2
     reviewed: true
-    note: 人工终判。I3-04 新建的决策页，按《迭代开发说明书》第十二节验收；用户最常见的困惑是「它和 MCP 是不是竞品」，必须受 A 档门禁约束。
+    note: I3-04 新建的决策页：用户最常见的困惑是「它和 MCP 是不是竞品」，锁为 A 档。
   - id: large-language-model
     tier: A
     signals:
       - chain-core
-      - relations:5
+      - relations:11
       - routes:4
-    reviewed: false
+    reviewed: true
+    note: 站点第 1 站「地基 · 模型是什么」的 coreTerms：缺了它就讲不通这一站。机器按分数只给 1–2 个信号（判为 B），人工按第十三节的强信号上调为 A——骨架词条必须受门禁约束。
   - id: latency
     tier: B
     signals:
@@ -826,10 +878,11 @@ terms:
     signals: []
     reviewed: false
   - id: llm-as-judge
-    tier: B
+    tier: A
     signals:
       - chain-core
-    reviewed: false
+    reviewed: true
+    note: 站点第 7 站「给判断 · 怎么知道它行不行」的 coreTerms：缺了它就讲不通这一站。机器按分数只给 1–2 个信号（判为 B），人工按第十三节的强信号上调为 A——骨架词条必须受门禁约束。
   - id: load-balancing
     tier: C
     signals: []
@@ -838,11 +891,12 @@ terms:
     tier: B
     signals:
       - questions:1
-      - relations:1
+      - relations:3
     reviewed: false
   - id: long-term-memory
-    tier: C
-    signals: []
+    tier: B
+    signals:
+      - relations:1
     reviewed: false
   - id: lora
     tier: B
@@ -879,11 +933,12 @@ terms:
     signals: []
     reviewed: false
   - id: model-api
-    tier: B
+    tier: A
     signals:
       - chain-core
       - questions:1
-    reviewed: false
+    reviewed: true
+    note: 站点第 5 站「给接口 · 怎么标准化地接系统」的 coreTerms：缺了它就讲不通这一站。机器按分数只给 1–2 个信号（判为 B），人工按第十三节的强信号上调为 A——骨架词条必须受门禁约束。
   - id: model-capability
     tier: B
     signals:
@@ -895,7 +950,7 @@ terms:
       - chain-core
       - relations:1
     reviewed: true
-    note: 人工终判。I3-02 决策页重写，第 5 站核心概念；机器只给了 2 个信号，但它是「给接口」这一站的入口，必须受 A 档门禁约束。
+    note: 站点第 5 站「给接口 · 怎么标准化地接系统」的 coreTerms：缺了它就讲不通这一站。机器按分数只给 1–2 个信号（判为 B），人工按第十三节的强信号上调为 A——骨架词条必须受门禁约束。
   - id: model-deployment
     tier: C
     signals: []
@@ -912,23 +967,27 @@ terms:
     tier: B
     signals:
       - questions:5
+      - relations:2
     reviewed: false
   - id: model-serving
-    tier: B
+    tier: A
     signals:
       - chain-core
-    reviewed: false
+    reviewed: true
+    note: 站点第 5 站「给接口 · 怎么标准化地接系统」的 coreTerms：缺了它就讲不通这一站。机器按分数只给 1–2 个信号（判为 B），人工按第十三节的强信号上调为 A——骨架词条必须受门禁约束。
   - id: model-theft
     tier: C
     signals: []
     reviewed: false
   - id: multi-agent-system
-    tier: C
-    signals: []
+    tier: B
+    signals:
+      - relations:1
     reviewed: false
   - id: multimodal-ai
-    tier: C
+    tier: B
     signals:
+      - relations:4
       - containment:1
     reviewed: false
   - id: multimodal-embedding
@@ -958,8 +1017,9 @@ terms:
       - containment:1
     reviewed: false
   - id: natural-language-processing
-    tier: C
-    signals: []
+    tier: B
+    signals:
+      - relations:1
     reviewed: false
   - id: negative-prompt
     tier: C
@@ -981,7 +1041,8 @@ terms:
       - questions:2
       - cases:4
       - routes:1
-    reviewed: false
+    reviewed: true
+    note: 人工确认：被 4 个案例引用，是产品侧唯一的核心判断指标，按质量基准锁为 A 档。
   - id: npu
     tier: C
     signals: []
@@ -992,7 +1053,9 @@ terms:
       - chain-core
       - questions:6
       - cases:6
-    reviewed: false
+      - relations:2
+    reviewed: true
+    note: 站点第 7 站「给判断 · 怎么知道它行不行」的 coreTerms：缺了它就讲不通这一站。机器按分数只给 1–2 个信号（判为 B），人工按第十三节的强信号上调为 A——骨架词条必须受门禁约束。
   - id: offline-evaluation
     tier: B
     signals:
@@ -1078,6 +1141,7 @@ terms:
     tier: B
     signals:
       - questions:1
+      - relations:2
     reviewed: false
   - id: problem-solution-fit
     tier: B
@@ -1111,22 +1175,24 @@ terms:
       - questions:3
     reviewed: false
   - id: prompt
-    tier: B
+    tier: A
     signals:
       - chain-core
       - questions:1
-    reviewed: false
+    reviewed: true
+    note: 站点第 2 站「沟通 · 怎么把需求说清楚」的 coreTerms：缺了它就讲不通这一站。机器按分数只给 1–2 个信号（判为 B），人工按第十三节的强信号上调为 A——骨架词条必须受门禁约束。
   - id: prompt-cache
     tier: B
     signals:
       - questions:2
     reviewed: false
   - id: prompt-chaining
-    tier: B
+    tier: A
     signals:
       - chain-core
       - containment:1
-    reviewed: false
+    reviewed: true
+    note: 站点第 6 站「给流程 · 怎么把做法沉淀下来」的 coreTerms：缺了它就讲不通这一站。机器按分数只给 1–2 个信号（判为 B），人工按第十三节的强信号上调为 A——骨架词条必须受门禁约束。
   - id: prompt-constraint
     tier: B
     signals:
@@ -1134,8 +1200,9 @@ terms:
       - containment:1
     reviewed: false
   - id: prompt-debugging
-    tier: C
+    tier: B
     signals:
+      - relations:1
       - containment:1
     reviewed: false
   - id: prompt-evaluation
@@ -1145,26 +1212,29 @@ terms:
       - containment:1
     reviewed: false
   - id: prompt-injection
-    tier: B
+    tier: A
     signals:
       - chain-core
       - cases:5
-    reviewed: false
+    reviewed: true
+    note: 站点第 8 站「给安全 · 什么时候必须有人管」的 coreTerms：缺了它就讲不通这一站。机器按分数只给 1–2 个信号（判为 B），人工按第十三节的强信号上调为 A——骨架词条必须受门禁约束。
   - id: prompt-interface
     tier: C
     signals: []
     reviewed: false
   - id: prompt-template
-    tier: B
+    tier: A
     signals:
       - chain-core
       - relations:1
       - containment:1
-    reviewed: false
+    reviewed: true
+    note: 站点第 6 站「给流程 · 怎么把做法沉淀下来」的 coreTerms：缺了它就讲不通这一站。机器按分数只给 1–2 个信号（判为 B），人工按第十三节的强信号上调为 A——骨架词条必须受门禁约束。
   - id: prompt-versioning
     tier: B
     signals:
       - questions:1
+      - relations:1
       - containment:1
     reviewed: false
   - id: quantization
@@ -1176,21 +1246,24 @@ terms:
     signals: []
     reviewed: false
   - id: query-rewriting
-    tier: C
-    signals: []
+    tier: B
+    signals:
+      - relations:1
     reviewed: false
   - id: rate-limiting
     tier: B
     signals:
       - questions:1
+      - relations:1
     reviewed: false
   - id: reasoning-system
     tier: C
     signals: []
     reviewed: false
   - id: red-teaming
-    tier: C
-    signals: []
+    tier: B
+    signals:
+      - relations:1
     reviewed: false
   - id: reflection
     tier: C
@@ -1225,19 +1298,21 @@ terms:
       - questions:3
       - relations:2
       - routes:2
-    reviewed: false
+    reviewed: true
+    note: 站点第 3 站「给知识 · 怎么让它知道你家的资料」的 coreTerms：缺了它就讲不通这一站。机器按分数只给 1–2 个信号（判为 B），人工按第十三节的强信号上调为 A——骨架词条必须受门禁约束。
   - id: response-caching
     tier: C
     signals: []
     reviewed: false
   - id: responsible-ai
-    tier: C
-    signals: []
+    tier: B
+    signals:
+      - relations:2
     reviewed: false
   - id: retrieval
     tier: B
     signals:
-      - relations:6
+      - relations:13
       - routes:2
     reviewed: false
   - id: retrieval-augmented-generation
@@ -1250,7 +1325,7 @@ terms:
       - routes:2
       - containment:1
     reviewed: true
-    note: 人工终判。I3-06 决策页重写，第 3 站入口概念；机器已判 A，人工确认并锁定，避免后续重新生成时被降档。
+    note: 站点第 3 站「给知识 · 怎么让它知道你家的资料」的 coreTerms：缺了它就讲不通这一站。机器按分数只给 1–2 个信号（判为 B），人工按第十三节的强信号上调为 A——骨架词条必须受门禁约束。
   - id: retrieval-context
     tier: C
     signals: []
@@ -1271,7 +1346,9 @@ terms:
     signals:
       - questions:3
       - cases:1
-    reviewed: false
+      - relations:2
+    reviewed: true
+    note: 机器按分数判为 A（命中 ≥3 个正向信号），但正文仍是模板正文、缺 boundaries 与 minAction，放进 A 档会让 CI 立刻红。按 I6-02 先降回 B 档：重写为决策页后再升 A，届时把这条 note 换成重写记录。
   - id: retry-policy
     tier: C
     signals: []
@@ -1301,6 +1378,7 @@ terms:
     tier: B
     signals:
       - questions:1
+      - relations:1
     reviewed: false
   - id: sampling
     tier: C
@@ -1315,8 +1393,9 @@ terms:
     signals: []
     reviewed: false
   - id: self-correction
-    tier: C
-    signals: []
+    tier: B
+    signals:
+      - relations:1
     reviewed: false
   - id: semantic-cache
     tier: B
@@ -1327,6 +1406,7 @@ terms:
     tier: B
     signals:
       - questions:1
+      - relations:1
       - containment:1
     reviewed: false
   - id: semiconductor
@@ -1342,10 +1422,12 @@ terms:
     tier: B
     signals:
       - questions:1
+      - relations:1
     reviewed: false
   - id: similarity-search
-    tier: C
+    tier: B
     signals:
+      - relations:1
       - containment:1
     reviewed: false
   - id: sparse-vector
@@ -1373,6 +1455,7 @@ terms:
     tier: B
     signals:
       - questions:1
+      - relations:1
     reviewed: false
   - id: streaming-response
     tier: B
@@ -1384,7 +1467,9 @@ terms:
     signals:
       - questions:5
       - cases:1
-    reviewed: false
+      - relations:2
+    reviewed: true
+    note: 机器按分数判为 A（命中 ≥3 个正向信号），但正文仍是模板正文、缺 boundaries 与 minAction，放进 A 档会让 CI 立刻红。按 I6-02 先降回 B 档：重写为决策页后再升 A，届时把这条 note 换成重写记录。
   - id: supervised-learning
     tier: C
     signals: []
@@ -1395,21 +1480,25 @@ terms:
       - containment:1
     reviewed: false
   - id: system-prompt
-    tier: B
+    tier: A
     signals:
       - chain-core
       - containment:1
-    reviewed: false
+    reviewed: true
+    note: 站点第 2 站「沟通 · 怎么把需求说清楚」的 coreTerms：缺了它就讲不通这一站。机器按分数只给 1–2 个信号（判为 B），人工按第十三节的强信号上调为 A——骨架词条必须受门禁约束。
   - id: task-decomposition
     tier: B
     signals:
       - questions:2
       - cases:1
-    reviewed: false
+      - relations:1
+    reviewed: true
+    note: 机器按分数判为 A（命中 ≥3 个正向信号），但正文仍是模板正文、缺 boundaries 与 minAction，放进 A 档会让 CI 立刻红。按 I6-02 先降回 B 档：重写为决策页后再升 A，届时把这条 note 换成重写记录。
   - id: task-success-rate
     tier: B
     signals:
       - questions:4
+      - relations:1
     reviewed: false
   - id: tech-collaboration
     tier: B
@@ -1421,6 +1510,7 @@ terms:
     tier: B
     signals:
       - questions:1
+      - relations:1
     reviewed: false
   - id: tensor-parallelism
     tier: C
@@ -1444,22 +1534,25 @@ terms:
       - chain-core
       - relations:3
       - routes:3
-    reviewed: false
+    reviewed: true
+    note: 站点第 1 站「地基 · 模型是什么」的 coreTerms：缺了它就讲不通这一站。机器按分数只给 1–2 个信号（判为 B），人工按第十三节的强信号上调为 A——骨架词条必须受门禁约束。
   - id: tokenizer
     tier: C
     signals:
       - containment:1
     reviewed: false
   - id: tool-use
-    tier: B
+    tier: A
     signals:
       - chain-core
       - questions:1
-    reviewed: false
+    reviewed: true
+    note: 站点第 4 站「给手脚 · 怎么让它做事」的 coreTerms：缺了它就讲不通这一站。机器按分数只给 1–2 个信号（判为 B），人工按第十三节的强信号上调为 A——骨架词条必须受门禁约束。
   - id: top-k
     tier: B
     signals:
       - questions:1
+      - relations:1
       - containment:1
     reviewed: false
   - id: top-p
@@ -1542,8 +1635,9 @@ terms:
       - questions:3
     reviewed: false
   - id: user-prompt
-    tier: C
+    tier: B
     signals:
+      - relations:1
       - containment:1
     reviewed: false
   - id: user-research
@@ -1568,14 +1662,16 @@ terms:
       - chain-core
       - relations:2
       - routes:1
-    reviewed: false
+    reviewed: true
+    note: 站点第 3 站「给知识 · 怎么让它知道你家的资料」的 coreTerms：缺了它就讲不通这一站。机器按分数只给 1–2 个信号（判为 B），人工按第十三节的强信号上调为 A——骨架词条必须受门禁约束。
   - id: vector-index
     tier: C
     signals: []
     reviewed: false
   - id: video-generation
-    tier: C
-    signals: []
+    tier: B
+    signals:
+      - relations:3
     reviewed: false
   - id: video-understanding
     tier: C
@@ -1599,7 +1695,9 @@ terms:
       - chain-core
       - questions:4
       - cases:2
-    reviewed: false
+      - relations:5
+    reviewed: true
+    note: 站点第 6 站「给流程 · 怎么把做法沉淀下来」的 coreTerms：缺了它就讲不通这一站。机器按分数只给 1–2 个信号（判为 B），人工按第十三节的强信号上调为 A——骨架词条必须受门禁约束。
   - id: zero-shot-prompting
     tier: C
     signals:
