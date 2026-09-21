@@ -28,6 +28,16 @@ sources:
     url: https://airc.nist.gov/airmf-resources/playbook/
     publisher: NIST
     accessedAt: '2026-07-31'
+chain: 8
+chainRole: advanced
+boundaries:
+  solves: 让每个决定都有可回查的记录，包括输入、模型版本与人工干预点。
+  notSolves: 不等于合规，有完整日志不代表做法本身合法。
+  confusions:
+    - with: transparency
+      difference: 可审计性面向内部与监管的记录完整性，透明度面向公众的知情程度，受众不同。
+    - with: trace
+      difference: 调用追踪是技术手段，可审计性是它对制度要求满足的程度。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -41,6 +51,11 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 它通常先确认输入、约束、流程和输出，再检查这些部分能否被复核。这样做可以把抽象名词落到具体判断上，也方便和其他词条做关系对照。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**可审计性 ≠ 透明度。** 可审计性面向内部与监管的记录完整性，透明度面向公众的知情程度，受众不同。
+**可审计性 ≠ 调用追踪。** 调用追踪是技术手段，可审计性是它对制度要求满足的程度。
 
 <h2 id="example">真实例子</h2>
 

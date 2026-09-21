@@ -159,7 +159,15 @@ export interface MetricSet {
   templateReuseTerms: number;
   repeatedSentenceCount: number;
   sentenceCount: number;
-  /** 2. 共用同一组 h2 的词条占比（取最大分组） */
+  /**
+   * 2. 共用同一组 h2 的词条占比（取最大分组）
+   *
+   * ⚠️ 这个数**下降不等于变差，方向常常是反的**。它量的是「集中度」而不是「合规度」：
+   * 2026-09-21 给 79 条词条补上第 4 段后，占比从 87.2% 掉到 63.0%——
+   * 因为此前占多数的那个分组本身就是**缺章少段**的 8 段签名（285 条），
+   * 补全后多数派缩到 206 条。要看「结构有没有变好」请看门禁 5 的违规条数
+   * （同一次改动 133 → 54），或直接用 `TERM_SECTION_IDS` 比对模板合规率。
+   */
   structureUniformity: number;
   /** 3. 已打 chain 的词条占比 */
   chainCoverage: number;

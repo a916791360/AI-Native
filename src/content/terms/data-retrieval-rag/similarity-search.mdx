@@ -27,6 +27,16 @@ sources:
     url: https://docs.digitalocean.com/products/knowledge-bases/reference/data-services-chunking-strategies/
     publisher: DigitalOcean
     accessedAt: '2026-07-29'
+chain: 3
+chainRole: advanced
+boundaries:
+  solves: 用向量距离找出与查询最接近的若干条目，是语义检索的底层计算方式。
+  notSolves: 不判断相似是否等于有用，距离最近的条目可能恰好是在讲反例。
+  confusions:
+    - with: semantic-search
+      difference: 相似度检索是算法层面的做法，语义检索是产品层面的目标，后者可以换用不同度量。
+    - with: top-k
+      difference: 相似度检索负责排序与计算，Top-K 负责决定截取前几条，两者是排序与取数的分工。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -40,6 +50,11 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 它通常先确认输入、约束、流程和输出，再检查这些部分能否被复核。这样做可以把抽象名词落到具体判断上，也方便和其他词条做关系对照。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**相似度检索 ≠ 语义检索。** 相似度检索是算法层面的做法，语义检索是产品层面的目标，后者可以换用不同度量。
+**相似度检索 ≠ Top-K 召回。** 相似度检索负责排序与计算，Top-K 负责决定截取前几条，两者是排序与取数的分工。
 
 <h2 id="example">真实例子</h2>
 

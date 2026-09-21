@@ -27,6 +27,16 @@ sources:
     url: https://docs.digitalocean.com/products/knowledge-bases/reference/data-services-chunking-strategies/
     publisher: DigitalOcean
     accessedAt: '2026-07-29'
+chain: 3
+chainRole: advanced
+boundaries:
+  solves: 把散在各处的原始资料按统一格式收进知识库的入口环节。
+  notSolves: 不清洗语义也不保证质量，脏数据接进来仍然是脏数据。
+  confusions:
+    - with: document-parsing
+      difference: 数据接入解决从哪来与怎么搬，文档解析解决搬进来之后怎么读成文本。
+    - with: indexing-pipeline
+      difference: 数据接入是索引管线的前半段，索引管线还包含切片、嵌入与写入索引。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -40,6 +50,11 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 它通常先确认输入、约束、流程和输出，再检查这些部分能否被复核。这样做可以把抽象名词落到具体判断上，也方便和其他词条做关系对照。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**数据接入 ≠ 文档解析。** 数据接入解决从哪来与怎么搬，文档解析解决搬进来之后怎么读成文本。
+**数据接入 ≠ 索引管线。** 数据接入是索引管线的前半段，索引管线还包含切片、嵌入与写入索引。
 
 <h2 id="example">真实例子</h2>
 

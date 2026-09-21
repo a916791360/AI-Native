@@ -27,6 +27,16 @@ sources:
     url: https://developers.google.com/machine-learning/problem-framing/problem
     publisher: Google for Developers
     accessedAt: '2026-07-29'
+chain: 4
+chainRole: advanced
+boundaries:
+  solves: 在模型超时、不可用或越权时给出可接受的替代结果，而不是直接报错。
+  notSolves: 不保证降级结果同样好，它只保证流程不中断。
+  confusions:
+    - with: fallback-model
+      difference: 备用模型是服务端的调度策略，降级体验是用户看到的结果，前者是原因后者是表现。
+    - with: error-recovery
+      difference: 降级体验是在失败之前主动换路，错误恢复是在失败之后收拾，前者是预案后者是补救。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -40,6 +50,11 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 它通常先确认输入、约束、流程和输出，再检查这些部分能否被复核。这样做可以把抽象名词落到具体判断上，也方便和其他词条做关系对照。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**降级体验 ≠ 备用模型。** 备用模型是服务端的调度策略，降级体验是用户看到的结果，前者是原因后者是表现。
+**降级体验 ≠ 错误恢复。** 降级体验是在失败之前主动换路，错误恢复是在失败之后收拾，前者是预案后者是补救。
 
 <h2 id="example">真实例子</h2>
 

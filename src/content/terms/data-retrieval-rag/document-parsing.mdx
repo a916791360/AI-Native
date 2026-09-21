@@ -29,6 +29,14 @@ sources:
     accessedAt: '2026-07-29'
 chain: 3
 chainRole: advanced
+boundaries:
+  solves: 把 PDF、扫描件与网页还原成结构化的文本与表格，作为后续切片的输入。
+  notSolves: 不保证复杂版式不出错，多栏、公式与跨页表格仍是主要失败点。
+  confusions:
+    - with: document-chunking
+      difference: 文档解析把文件读成文本，文档切片把文本切成适合检索的片段，顺序有先后。
+    - with: data-ingestion
+      difference: 数据接入负责把文件取进来，文档解析负责把它读懂，前者管搬运后者管理解。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -42,6 +50,11 @@ chainRole: advanced
 <h2 id="how-it-works">它如何工作</h2>
 
 它通常先确认输入、约束、流程和输出，再检查这些部分能否被复核。这样做可以把抽象名词落到具体判断上，也方便和其他词条做关系对照。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**文档解析 ≠ 文档切片。** 文档解析把文件读成文本，文档切片把文本切成适合检索的片段，顺序有先后。
+**文档解析 ≠ 数据接入。** 数据接入负责把文件取进来，文档解析负责把它读懂，前者管搬运后者管理解。
 
 <h2 id="example">真实例子</h2>
 

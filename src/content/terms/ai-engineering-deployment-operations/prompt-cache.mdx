@@ -34,6 +34,16 @@ sources:
     url: https://docs.cloud.google.com/architecture/framework/perspectives/ai-ml/cost-optimization
     publisher: Google Cloud
     accessedAt: '2026-07-30'
+chain: 5
+chainRole: advanced
+boundaries:
+  solves: 命中完全相同的提示词前缀时直接复用计算结果，省掉重复推理的开销。
+  notSolves: 对措辞变化无效，差一个字就是未命中，命中率低时收益接近于零。
+  confusions:
+    - with: semantic-cache
+      difference: 提示词缓存要求前缀逐字相同，语义缓存允许问法不同只要意思接近，后者命中率高但有误命中风险。
+    - with: cost-optimization
+      difference: 提示词缓存是达成成本优化的手段之一，成本优化还包括选型、批处理与蒸馏等其它路径。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -47,6 +57,11 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 它通常先确认输入、约束、流程和输出，再检查这些部分能否被复核。这样做可以把抽象名词落到具体判断上，也方便和其他词条做关系对照。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**提示词缓存 ≠ 语义缓存。** 提示词缓存要求前缀逐字相同，语义缓存允许问法不同只要意思接近，后者命中率高但有误命中风险。
+**提示词缓存 ≠ 成本优化。** 提示词缓存是达成成本优化的手段之一，成本优化还包括选型、批处理与蒸馏等其它路径。
 
 <h2 id="example">真实例子</h2>
 

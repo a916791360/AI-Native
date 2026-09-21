@@ -30,6 +30,14 @@ sources:
     accessedAt: '2026-07-29'
 chain: 7
 chainRole: advanced
+boundaries:
+  solves: 衡量该找到的资料有没有被找齐，它是问答正确率的上限。
+  notSolves: 不关心准不准，把所有片段都召回时召回率满分，但上下文会被噪声淹没。
+  confusions:
+    - with: retrieval-precision
+      difference: 召回率看有没有漏，精确率看有没有混进无关内容，两者必须一起看才有意义。
+    - with: top-k
+      difference: 检索召回率是被评估的结果指标，Top-K 是影响它的参数，调大 k 通常提高召回率但降低精确率。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -43,6 +51,11 @@ chainRole: advanced
 <h2 id="how-it-works">它如何工作</h2>
 
 它通常先确认输入、约束、流程和输出，再检查这些部分能否被复核。这样做可以把抽象名词落到具体判断上，也方便和其他词条做关系对照。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**检索召回率 ≠ 检索精确率。** 召回率看有没有漏，精确率看有没有混进无关内容，两者必须一起看才有意义。
+**检索召回率 ≠ Top-K 召回。** 检索召回率是被评估的结果指标，Top-K 是影响它的参数，调大 k 通常提高召回率但降低精确率。
 
 <h2 id="example">真实例子</h2>
 

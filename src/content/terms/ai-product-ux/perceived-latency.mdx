@@ -27,6 +27,16 @@ sources:
     url: https://developers.google.com/machine-learning/problem-framing/problem
     publisher: Google for Developers
     accessedAt: '2026-07-29'
+chain: 4
+chainRole: advanced
+boundaries:
+  solves: 关注用户主观感受到的快慢，用流式输出与即时反馈让等待变得可接受。
+  notSolves: 不等于真实延迟，首字变快不等于总耗时变短，后者才是成本与容量问题。
+  confusions:
+    - with: latency
+      difference: 延迟是测量出来的耗时，感知延迟是用户的体感，两者经常不一致但只有前者能进监控。
+    - with: streaming-response
+      difference: 流式响应是降低感知延迟的具体手段，感知延迟是需要被优化的目标。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -40,6 +50,11 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 它通常先确认输入、约束、流程和输出，再检查这些部分能否被复核。这样做可以把抽象名词落到具体判断上，也方便和其他词条做关系对照。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**感知延迟 ≠ 延迟。** 延迟是测量出来的耗时，感知延迟是用户的体感，两者经常不一致但只有前者能进监控。
+**感知延迟 ≠ 流式响应。** 流式响应是降低感知延迟的具体手段，感知延迟是需要被优化的目标。
 
 <h2 id="example">真实例子</h2>
 

@@ -31,6 +31,16 @@ sources:
     url: https://airc.nist.gov/airmf-resources/playbook/
     publisher: NIST
     accessedAt: '2026-07-31'
+chain: 8
+chainRole: advanced
+boundaries:
+  solves: 让模型的判断过程能被追溯与理解，服务于复核、申诉与合规。
+  notSolves: 在超大规模模型上很难彻底做到，多数方案给出的是近似解释，不等于真实推理过程。
+  confusions:
+    - with: explanation-interface
+      difference: 可解释人工智能是模型侧的能力，解释界面是把它呈现到用户眼前的界面设计。
+    - with: transparency
+      difference: 可解释人工智能解释单个判断是怎么来的，透明度说明系统整体的运作方式与限制。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -44,6 +54,11 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 它通常先确认输入、约束、流程和输出，再检查这些部分能否被复核。这样做可以把抽象名词落到具体判断上，也方便和其他词条做关系对照。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**可解释人工智能 ≠ 解释界面。** 可解释人工智能是模型侧的能力，解释界面是把它呈现到用户眼前的界面设计。
+**可解释人工智能 ≠ 透明度。** 可解释人工智能解释单个判断是怎么来的，透明度说明系统整体的运作方式与限制。
 
 <h2 id="example">真实例子</h2>
 

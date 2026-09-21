@@ -28,6 +28,16 @@ sources:
     url: https://www.anthropic.com/research/trustworthy-agents
     publisher: Anthropic
     accessedAt: '2026-07-29'
+chain: 4
+chainRole: advanced
+boundaries:
+  solves: 给 Agent 一个隔离的执行环境，让它能跑代码、开浏览器而不碰到真实系统。
+  notSolves: 不解决判断错误，沙箱只限制破坏范围，不会让 Agent 少犯错。
+  confusions:
+    - with: code-execution
+      difference: 代码执行是能力，沙箱是承载这份能力的隔离容器，前者回答能做什么后者回答在哪做。
+    - with: tool-use
+      difference: 工具调用是 Agent 使用外部能力的方式，沙箱是这些能力被允许活动的地盘。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -41,6 +51,11 @@ Agent 沙箱是限制 Agent 可访问资源、工具和执行范围的隔离环�
 <h2 id="how-it-works">它如何工作</h2>
 
 它通常先确认输入、约束、流程和输出，再检查这些部分能否被复核。这样做可以把抽象名词落到具体判断上，也方便和其他词条做关系对照。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**Agent 沙箱 ≠ 代码执行。** 代码执行是能力，沙箱是承载这份能力的隔离容器，前者回答能做什么后者回答在哪做。
+**Agent 沙箱 ≠ 工具调用。** 工具调用是 Agent 使用外部能力的方式，沙箱是这些能力被允许活动的地盘。
 
 <h2 id="example">真实例子</h2>
 

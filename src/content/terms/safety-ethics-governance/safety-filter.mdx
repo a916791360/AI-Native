@@ -28,6 +28,16 @@ sources:
     url: https://airc.nist.gov/airmf-resources/playbook/
     publisher: NIST
     accessedAt: '2026-07-31'
+chain: 8
+chainRole: advanced
+boundaries:
+  solves: 在输入输出两端做实时拦截，挡住违禁内容与提示词攻击的常见变体。
+  notSolves: 可以被绕过，过滤规则是黑名单式的，改写与编码往往就能穿透。
+  confusions:
+    - with: ai-guardrail
+      difference: 安全过滤器是具体的技术组件，AI 护栏是包括策略、过滤器与人工介入的整体机制。
+    - with: content-moderation
+      difference: 安全过滤器聚焦模型交互层的风险，内容审核覆盖更广的业务与社区内容治理。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -41,6 +51,11 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 它通常先确认输入、约束、流程和输出，再检查这些部分能否被复核。这样做可以把抽象名词落到具体判断上，也方便和其他词条做关系对照。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**安全过滤器 ≠ AI 护栏。** 安全过滤器是具体的技术组件，AI 护栏是包括策略、过滤器与人工介入的整体机制。
+**安全过滤器 ≠ 内容审核。** 安全过滤器聚焦模型交互层的风险，内容审核覆盖更广的业务与社区内容治理。
 
 <h2 id="example">真实例子</h2>
 

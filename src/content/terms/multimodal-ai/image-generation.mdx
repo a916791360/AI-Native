@@ -27,6 +27,16 @@ sources:
     url: https://arxiv.org/abs/2301.12597
     publisher: arXiv
     accessedAt: '2026-08-20'
+chain: 1
+chainRole: advanced
+boundaries:
+  solves: 按文字描述直接产出图像，把设计的第一步从动手画变成动嘴描述。
+  notSolves: 不保证语义精确与可复现，同一个提示词两次运行的结果可能明显不同。
+  confusions:
+    - with: video-generation
+      difference: 图像生成只需单帧语义自洽，视频生成还要保证帧与帧之间的时序连贯。
+    - with: computer-vision
+      difference: 图像生成从文字出发造图，计算机视觉从图像出发产出判断，两者的输入输出正好对调。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -40,6 +50,11 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 它通常先确认输入、约束、流程和输出，再检查这些部分能否被复核。这样做可以把抽象名词落到具体判断上，也方便和其他词条做关系对照。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**图像生成 ≠ 视频生成。** 图像生成只需单帧语义自洽，视频生成还要保证帧与帧之间的时序连贯。
+**图像生成 ≠ 计算机视觉。** 图像生成从文字出发造图，计算机视觉从图像出发产出判断，两者的输入输出正好对调。
 
 <h2 id="example">真实例子</h2>
 

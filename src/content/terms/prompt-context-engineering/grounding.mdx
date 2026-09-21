@@ -28,6 +28,16 @@ sources:
     url: https://platform.claude.com/docs/en/build-with-claude/context-editing
     publisher: Anthropic
     accessedAt: '2026-07-30'
+chain: 2
+chainRole: advanced
+boundaries:
+  solves: 要求模型只依据给定材料作答，把一个可能乱编的助手变成只能引用的助手。
+  notSolves: 不解决材料本身就有错的情况，依据错了回答会错得更自信。
+  confusions:
+    - with: groundedness
+      difference: 事实依据约束是写提示词时的手段，依据一致性是事后衡量它有没有守住这条约束的指标。
+    - with: retrieval-augmented-generation
+      difference: 检索增强生成解决材料怎么拿进来，事实依据约束解决拿进来之后怎么保证它只用这些材料。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -41,6 +51,11 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 它通常先确认输入、约束、流程和输出，再检查这些部分能否被复核。这样做可以把抽象名词落到具体判断上，也方便和其他词条做关系对照。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**事实依据约束 ≠ 依据一致性。** 事实依据约束是写提示词时的手段，依据一致性是事后衡量它有没有守住这条约束的指标。
+**事实依据约束 ≠ 检索增强生成。** 检索增强生成解决材料怎么拿进来，事实依据约束解决拿进来之后怎么保证它只用这些材料。
 
 <h2 id="example">真实例子</h2>
 

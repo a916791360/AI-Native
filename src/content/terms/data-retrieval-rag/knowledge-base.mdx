@@ -29,6 +29,14 @@ sources:
     accessedAt: '2026-07-29'
 chain: 3
 chainRole: intro
+boundaries:
+  solves: 把组织的资料集中成可被检索的统一语料，它是问答准确率的上限来源。
+  notSolves: 不自动保持更新，没人维护的知识库会迅速过期，而系统不会告诉你它已经过期。
+  confusions:
+    - with: retrieval-augmented-generation
+      difference: 知识库是资料本身，检索增强生成是使用这批资料的方法，前者是资产后者是用法。
+    - with: vector-database
+      difference: 知识库面向内容维护者，向量数据库面向工程存储，前者是业务概念后者是技术组件。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -42,6 +50,11 @@ chainRole: intro
 <h2 id="how-it-works">它如何工作</h2>
 
 它通常先确认输入、约束、流程和输出，再检查这些部分能否被复核。这样做可以把抽象名词落到具体判断上，也方便和其他词条做关系对照。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**知识库 ≠ 检索增强生成。** 知识库是资料本身，检索增强生成是使用这批资料的方法，前者是资产后者是用法。
+**知识库 ≠ 向量数据库。** 知识库面向内容维护者，向量数据库面向工程存储，前者是业务概念后者是技术组件。
 
 <h2 id="example">真实例子</h2>
 

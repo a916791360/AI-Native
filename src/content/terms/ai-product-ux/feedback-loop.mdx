@@ -27,6 +27,16 @@ sources:
     url: https://developers.google.com/machine-learning/problem-framing/problem
     publisher: Google for Developers
     accessedAt: '2026-07-29'
+chain: 4
+chainRole: advanced
+boundaries:
+  solves: 把用户的使用结果收回来，用于改提示词、换模型与补数据。
+  notSolves: 不自动生效，没有收集口径与责任人，反馈收上来也只是一堆意见。
+  confusions:
+    - with: online-evaluation
+      difference: 反馈闭环收的是用户行为与主观评价，在线评估用的是线上指标与灰度实验，前者更宽后者更硬。
+    - with: human-evaluation
+      difference: 反馈闭环是持续机制，人工评估是阶段性动作，前者往往要靠后者来校准口径。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -40,6 +50,11 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 它通常先确认输入、约束、流程和输出，再检查这些部分能否被复核。这样做可以把抽象名词落到具体判断上，也方便和其他词条做关系对照。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**反馈闭环 ≠ 在线评估。** 反馈闭环收的是用户行为与主观评价，在线评估用的是线上指标与灰度实验，前者更宽后者更硬。
+**反馈闭环 ≠ 人工评估。** 反馈闭环是持续机制，人工评估是阶段性动作，前者往往要靠后者来校准口径。
 
 <h2 id="example">真实例子</h2>
 

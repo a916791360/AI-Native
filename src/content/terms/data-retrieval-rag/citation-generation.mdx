@@ -27,6 +27,16 @@ sources:
     url: https://docs.digitalocean.com/products/knowledge-bases/reference/data-services-chunking-strategies/
     publisher: DigitalOcean
     accessedAt: '2026-07-29'
+chain: 3
+chainRole: advanced
+boundaries:
+  solves: 让回答带上出处，读者可以自己回去核对，把信不信的问题变成查不查的问题。
+  notSolves: 不能证明引用是对的，它可能引用了真实存在但与结论无关的段落。
+  confusions:
+    - with: groundedness
+      difference: 引用生成产出可核对的出处，依据一致性判断结论有没有被材料支持，前者是形式后者是实质。
+    - with: hallucination
+      difference: 引用生成对抗的是说得没根据，幻觉指的是说得是假的，有引用并不等于没有幻觉。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -40,6 +50,11 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 它通常先确认输入、约束、流程和输出，再检查这些部分能否被复核。这样做可以把抽象名词落到具体判断上，也方便和其他词条做关系对照。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**引用生成 ≠ 依据一致性。** 引用生成产出可核对的出处，依据一致性判断结论有没有被材料支持，前者是形式后者是实质。
+**引用生成 ≠ 幻觉。** 引用生成对抗的是说得没根据，幻觉指的是说得是假的，有引用并不等于没有幻觉。
 
 <h2 id="example">真实例子</h2>
 

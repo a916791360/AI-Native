@@ -30,6 +30,14 @@ sources:
     accessedAt: '2026-07-29'
 chain: 6
 chainRole: advanced
+boundaries:
+  solves: 决定多个步骤或多个 Agent 之间谁先谁后、什么时候把结果交给下一个。
+  notSolves: 不提升单个步骤的质量，编排只能让流程跑通，不能把错的结果变对。
+  confusions:
+    - with: multi-agent-system
+      difference: Agent 编排是调度逻辑，多智能体系统是采用多个 Agent 的整体架构，前者是方法后者是形态。
+    - with: agentic-workflow
+      difference: Agent 编排面向运行时的动态调度，智能体工作流是事先固化下来的步骤，前者灵活后者稳定。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -43,6 +51,11 @@ Agent 编排是协调模型、工具、子任务和检查点执行顺序的系�
 <h2 id="how-it-works">它如何工作</h2>
 
 它通常先确认输入、约束、流程和输出，再检查这些部分能否被复核。这样做可以把抽象名词落到具体判断上，也方便和其他词条做关系对照。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**Agent 编排 ≠ 多智能体系统。** Agent 编排是调度逻辑，多智能体系统是采用多个 Agent 的整体架构，前者是方法后者是形态。
+**Agent 编排 ≠ Agent 工作流。** Agent 编排面向运行时的动态调度，智能体工作流是事先固化下来的步骤，前者灵活后者稳定。
 
 <h2 id="example">真实例子</h2>
 

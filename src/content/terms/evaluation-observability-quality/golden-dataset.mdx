@@ -28,6 +28,16 @@ sources:
     publisher: NIST
     publishedAt: '2025-11-13'
     accessedAt: '2026-07-29'
+chain: 7
+chainRole: advanced
+boundaries:
+  solves: 用一小批人工确认过标准答案的样本做回归，防止改一处坏一片。
+  notSolves: 覆盖面有限，样本太少会漏掉长尾问题，太多则维护成本迅速上升。
+  confusions:
+    - with: eval-set
+      difference: 黄金数据集强调答案已被人确认，评测集只是用例集合，未必都有标准答案。
+    - with: benchmark
+      difference: 黄金数据集是自建私有的、面向自身业务，基准测试多是公开通用的，两者目标不同。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -41,6 +51,11 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 它通常先确认输入、约束、流程和输出，再检查这些部分能否被复核。这样做可以把抽象名词落到具体判断上，也方便和其他词条做关系对照。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**黄金数据集 ≠ 评测集。** 黄金数据集强调答案已被人确认，评测集只是用例集合，未必都有标准答案。
+**黄金数据集 ≠ 基准测试。** 黄金数据集是自建私有的、面向自身业务，基准测试多是公开通用的，两者目标不同。
 
 <h2 id="example">真实例子</h2>
 

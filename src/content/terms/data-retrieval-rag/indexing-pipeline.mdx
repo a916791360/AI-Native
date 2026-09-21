@@ -27,6 +27,16 @@ sources:
     url: https://docs.digitalocean.com/products/knowledge-bases/reference/data-services-chunking-strategies/
     publisher: DigitalOcean
     accessedAt: '2026-07-29'
+chain: 3
+chainRole: advanced
+boundaries:
+  solves: 把原始文档自动加工成可被检索的索引，让新资料能持续进入而不是靠人工重跑。
+  notSolves: 不提升回答质量，索引只是把资料准备好，问答效果取决于切片与检索策略。
+  confusions:
+    - with: document-chunking
+      difference: 文档切片是索引管线里的一个步骤，索引管线还包含解析、嵌入、写库与增量更新。
+    - with: data-ingestion
+      difference: 数据接入只负责把资料搬进来，索引管线负责把它变成能检索的形态并保持更新。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -40,6 +50,11 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 它通常先确认输入、约束、流程和输出，再检查这些部分能否被复核。这样做可以把抽象名词落到具体判断上，也方便和其他词条做关系对照。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**索引管线 ≠ 文档切片。** 文档切片是索引管线里的一个步骤，索引管线还包含解析、嵌入、写库与增量更新。
+**索引管线 ≠ 数据接入。** 数据接入只负责把资料搬进来，索引管线负责把它变成能检索的形态并保持更新。
 
 <h2 id="example">真实例子</h2>
 

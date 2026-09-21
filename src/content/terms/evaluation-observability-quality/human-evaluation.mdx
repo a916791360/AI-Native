@@ -30,6 +30,14 @@ sources:
     accessedAt: '2026-07-29'
 chain: 7
 chainRole: advanced
+boundaries:
+  solves: 在机器指标说不清的地方用人工打分，提供最贴近实际感受的判断。
+  notSolves: 贵且慢，样本量上不去，而且评分者之间的一致性本身就是需要检验的问题。
+  confusions:
+    - with: llm-as-judge
+      difference: 人工评估是标准来源，大模型裁判是它的规模化替代品，后者的口径要靠前者校准。
+    - with: online-evaluation
+      difference: 人工评估在离线抽样上进行，在线评估用真实流量的指标说话，前者更细后者更真。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -43,6 +51,11 @@ chainRole: advanced
 <h2 id="how-it-works">它如何工作</h2>
 
 它通常先确认输入、约束、流程和输出，再检查这些部分能否被复核。这样做可以把抽象名词落到具体判断上，也方便和其他词条做关系对照。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**人工评估 ≠ 大模型裁判。** 人工评估是标准来源，大模型裁判是它的规模化替代品，后者的口径要靠前者校准。
+**人工评估 ≠ 在线评估。** 人工评估在离线抽样上进行，在线评估用真实流量的指标说话，前者更细后者更真。
 
 <h2 id="example">真实例子</h2>
 

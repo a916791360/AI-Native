@@ -28,6 +28,16 @@ sources:
     publisher: NIST
     publishedAt: '2025-11-13'
     accessedAt: '2026-07-29'
+chain: 7
+chainRole: advanced
+boundaries:
+  solves: 把一次请求经过的每一步串起来，让失败能被定位到具体环节。
+  notSolves: 不告诉你为什么差，它能证明检索没召回，但不能解释用户为什么不满意。
+  confusions:
+    - with: observability
+      difference: 调用追踪是观测能力的其中一种手段，可观测性还包括指标、日志与告警的整体体系。
+    - with: latency
+      difference: 调用追踪记录每一步的耗时与入参，延迟只是它顺带暴露出来的一个维度。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -41,6 +51,11 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 它通常先确认输入、约束、流程和输出，再检查这些部分能否被复核。这样做可以把抽象名词落到具体判断上，也方便和其他词条做关系对照。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**调用追踪 ≠ 可观测性。** 调用追踪是观测能力的其中一种手段，可观测性还包括指标、日志与告警的整体体系。
+**调用追踪 ≠ 延迟。** 调用追踪记录每一步的耗时与入参，延迟只是它顺带暴露出来的一个维度。
 
 <h2 id="example">真实例子</h2>
 

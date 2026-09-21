@@ -28,6 +28,16 @@ sources:
     publisher: NIST
     publishedAt: '2025-11-13'
     accessedAt: '2026-07-29'
+chain: 7
+chainRole: advanced
+boundaries:
+  solves: 衡量回答是否严格依据给定材料，是检索类系统最有说服力的质量指标。
+  notSolves: 不衡量有用性，完全忠实但答非所问的回答，忠实度依然是满分。
+  confusions:
+    - with: groundedness
+      difference: 忠实度要求回答不超出材料，依据一致性允许结合常识但要求关键结论有材料支撑，宽严不同。
+    - with: hallucination
+      difference: 幻觉是现象，忠实度是把这一现象量化之后的指标，前者定性后者定量。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -41,6 +51,11 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 它通常先确认输入、约束、流程和输出，再检查这些部分能否被复核。这样做可以把抽象名词落到具体判断上，也方便和其他词条做关系对照。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**忠实度 ≠ 依据一致性。** 忠实度要求回答不超出材料，依据一致性允许结合常识但要求关键结论有材料支撑，宽严不同。
+**忠实度 ≠ 幻觉。** 幻觉是现象，忠实度是把这一现象量化之后的指标，前者定性后者定量。
 
 <h2 id="example">真实例子</h2>
 

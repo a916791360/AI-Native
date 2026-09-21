@@ -34,6 +34,16 @@ sources:
     url: https://docs.cloud.google.com/architecture/framework/perspectives/ai-ml/cost-optimization
     publisher: Google Cloud
     accessedAt: '2026-07-30'
+chain: 5
+chainRole: advanced
+boundaries:
+  solves: 把够不够稳定成可测量的目标，例如一个月内绝大多数请求在约定时间内返回。
+  notSolves: 不是成本问题，目标定得越严，需要的冗余与花费就越高。
+  confusions:
+    - with: latency
+      difference: 服务等级目标把延迟等指标包成对外承诺，延迟本身只是被纳入其中的一个数值。
+    - with: observability
+      difference: 服务等级目标定义什么叫达标，可观测性提供判断达标的证据，前者是标准后者是手段。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -47,6 +57,11 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 它通常先确认输入、约束、流程和输出，再检查这些部分能否被复核。这样做可以把抽象名词落到具体判断上，也方便和其他词条做关系对照。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**服务等级目标 ≠ 延迟。** 服务等级目标把延迟等指标包成对外承诺，延迟本身只是被纳入其中的一个数值。
+**服务等级目标 ≠ 可观测性。** 服务等级目标定义什么叫达标，可观测性提供判断达标的证据，前者是标准后者是手段。
 
 <h2 id="example">真实例子</h2>
 

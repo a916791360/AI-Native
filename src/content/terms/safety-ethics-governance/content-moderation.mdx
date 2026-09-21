@@ -28,6 +28,16 @@ sources:
     url: https://airc.nist.gov/airmf-resources/playbook/
     publisher: NIST
     accessedAt: '2026-07-31'
+chain: 8
+chainRole: advanced
+boundaries:
+  solves: 在内容进入或离开系统时拦下违规内容，控制公开风险。
+  notSolves: 不解决边界模糊的判断，讽刺、学术讨论与真实违规在模型眼里经常长得一样。
+  confusions:
+    - with: safety-filter
+      difference: 内容审核面向业务内容，安全过滤器面向模型输入输出，前者偏产品后者偏技术层。
+    - with: ai-guardrail
+      difference: 内容审核关注内容本身是否合规，AI 护栏还包括权限、频率与工具调用等行为约束。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -41,6 +51,11 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 它通常先确认输入、约束、流程和输出，再检查这些部分能否被复核。这样做可以把抽象名词落到具体判断上，也方便和其他词条做关系对照。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**内容审核 ≠ 安全过滤器。** 内容审核面向业务内容，安全过滤器面向模型输入输出，前者偏产品后者偏技术层。
+**内容审核 ≠ AI 护栏。** 内容审核关注内容本身是否合规，AI 护栏还包括权限、频率与工具调用等行为约束。
 
 <h2 id="example">真实例子</h2>
 

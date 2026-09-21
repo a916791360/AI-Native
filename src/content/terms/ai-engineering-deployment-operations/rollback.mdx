@@ -34,6 +34,16 @@ sources:
     url: https://docs.cloud.google.com/architecture/framework/perspectives/ai-ml/cost-optimization
     publisher: Google Cloud
     accessedAt: '2026-07-30'
+chain: 5
+chainRole: advanced
+boundaries:
+  solves: 出问题后把线上版本退回上一个可用状态，是发布流程的安全绳。
+  notSolves: 不解决数据副作用，已经写进数据库或已经发出去的副作用退不回来。
+  confusions:
+    - with: canary-release
+      difference: 回滚发生在事后且需要触发条件，金丝雀发布发生在事前用于控制影响面。
+    - with: continuous-delivery
+      difference: 回滚是持续交付敢高频发布的前提之一，前者是保险后者是节奏。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -47,6 +57,11 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 它通常先确认输入、约束、流程和输出，再检查这些部分能否被复核。这样做可以把抽象名词落到具体判断上，也方便和其他词条做关系对照。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**回滚 ≠ 金丝雀发布。** 回滚发生在事后且需要触发条件，金丝雀发布发生在事前用于控制影响面。
+**回滚 ≠ 持续交付。** 回滚是持续交付敢高频发布的前提之一，前者是保险后者是节奏。
 
 <h2 id="example">真实例子</h2>
 

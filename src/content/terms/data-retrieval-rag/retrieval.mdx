@@ -9,12 +9,14 @@ summary: 根据查询从文档、数据库或其他知识源中找到相关候�
 domain: data-retrieval-rag
 difficulty: intermediate
 ring: core
+chain: 3
+chainRole: advanced
 status: verified
 priority: 1
 featured: true
 publishedAt: '2026-07-29'
-updatedAt: '2026-07-29'
-verifiedAt: '2026-07-29'
+updatedAt: '2026-09-21'
+verifiedAt: '2026-09-21'
 sources:
   - id: stanford-ir-book
     type: textbook
@@ -29,6 +31,15 @@ sources:
     publisher: arXiv
     publishedAt: '2020-04-10'
     accessedAt: '2026-07-29'
+boundaries:
+  solves: 从你的资料里挑出与当前问题最相关的片段，把「整个知识库」缩小成「几段可能用得上的证据」，是后续重排与生成的上限。
+  notSolves: 不判断挑出来的内容对不对。它只按相关性排序，过期资料、错资料与越权资料照样会被排到最前——相关不等于正确。
+  confusions:
+    - with: retrieval-augmented-generation
+      difference: 检索只是「找片段」这一步。检索增强生成是完整链路，还包括把片段拼进提示词、让模型据此作答，以及答案里带不带出处。
+    - with: keyword-search
+      difference: 检索按语义相关度召回，关键词检索按字面是否出现匹配。前者能应对同义改写，后者对编号、金额、错误码更可靠。
+minAction: 约 40 分钟。从真实问题里挑 20 条建一个评测集并标出正确片段，分别跑关键词、向量与混合三种检索，比较 Top-3 与 Top-10 的召回率与噪声，记下哪种问题类型上三者分歧最大。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -42,6 +53,14 @@ RAG 无法让生成模型阅读整个知识库，必须先缩小到少量候选�
 <h2 id="how-it-works">它如何工作</h2>
 
 系统解析查询，应用权限与业务过滤，在索引中召回 Top-K 候选并给出初始分数。评测常分别观察相关内容是否被召回，以及无关内容占了多少位置。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**检索 ≠ 检索增强生成。** 前者只是整条链路里的第一步。RAG 还要把召回的片段拼进提示词、让模型只依据这些片段作答，并决定答案带不带出处。只把检索做好，模型照样可以拿着正确证据给出错误结论；反过来，检索漏掉了关键片段，后面的重排与生成再精细也补不回来。
+
+**检索 ≠ 关键词检索。** 「检索」是这一类动作的统称，关键词只是其中一种做法。按语义召回（[语义检索](/terms/semantic-search/)）能应付「出差住酒店能报多少」这类口语改写，而按字面召回（[关键词检索](/terms/keyword-search/)）在订单号、金额、错误码上更可靠。生产环境的默认做法是两条路一起跑再合并，也就是[混合检索](/terms/hybrid-search/)。
+
+**找得到 ≠ 能用。** 检索只回答「哪几段和问题相关」，不回答「哪几段是对的」。过期版本、别的权限范围的资料、以及看起来很像的反例，都会被它一视同仁地排到前面。所以检索之后通常还要有[重排](/terms/reranking/)和权限过滤，而不是直接信 Top-1。
 
 <h2 id="example">真实例子</h2>
 

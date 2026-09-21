@@ -27,6 +27,16 @@ sources:
     url: https://docs.digitalocean.com/products/knowledge-bases/reference/data-services-chunking-strategies/
     publisher: DigitalOcean
     accessedAt: '2026-07-29'
+chain: 3
+chainRole: advanced
+boundaries:
+  solves: 在多轮对话里把历史轮次中相关的内容重新捞回来，避免长对话越聊越忘。
+  notSolves: 不解决检索质量本身的问题，它只决定去哪一段历史里找。
+  confusions:
+    - with: retrieval
+      difference: 检索面向外部资料库，上下文检索面向本次会话的历史，数据源与时效性都不同。
+    - with: conversation-context
+      difference: 会话上下文把历史直接放进窗口，上下文检索从历史里挑出相关部分，前者受窗口长度限制。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -40,6 +50,11 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 它通常先确认输入、约束、流程和输出，再检查这些部分能否被复核。这样做可以把抽象名词落到具体判断上，也方便和其他词条做关系对照。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**上下文检索 ≠ 检索。** 检索面向外部资料库，上下文检索面向本次会话的历史，数据源与时效性都不同。
+**上下文检索 ≠ 对话上下文。** 会话上下文把历史直接放进窗口，上下文检索从历史里挑出相关部分，前者受窗口长度限制。
 
 <h2 id="example">真实例子</h2>
 

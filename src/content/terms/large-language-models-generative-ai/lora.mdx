@@ -30,6 +30,16 @@ sources:
     publisher: arXiv
     publishedAt: '2017-06-12'
     accessedAt: '2026-07-29'
+chain: 1
+chainRole: advanced
+boundaries:
+  solves: 用极小的额外参数把大模型调向具体任务，让微调从要一屋子显卡变成单卡可做。
+  notSolves: 不增加模型的知识总量与上下文长度，也不解决训练数据本身质量差带来的偏差。
+  confusions:
+    - with: fine-tuning
+      difference: 全量微调更新所有权重，低秩适配冻结原权重只训练一小块低秩矩阵，显存与存储成本低一个量级。
+    - with: parameter-efficient-fine-tuning
+      difference: 参数高效微调是一类方法的总称，低秩适配是其中被采用最多的一种具体实现。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -43,6 +53,11 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 它通常先确认输入、约束、流程和输出，再检查这些部分能否被复核。这样做可以把抽象名词落到具体判断上，也方便和其他词条做关系对照。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**低秩适配 ≠ 微调。** 全量微调更新所有权重，低秩适配冻结原权重只训练一小块低秩矩阵，显存与存储成本低一个量级。
+**低秩适配 ≠ 参数高效微调。** 参数高效微调是一类方法的总称，低秩适配是其中被采用最多的一种具体实现。
 
 <h2 id="example">真实例子</h2>
 

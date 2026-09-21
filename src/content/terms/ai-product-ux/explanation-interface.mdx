@@ -27,6 +27,16 @@ sources:
     url: https://developers.google.com/machine-learning/problem-framing/problem
     publisher: Google for Developers
     accessedAt: '2026-07-29'
+chain: 4
+chainRole: advanced
+boundaries:
+  solves: 把输出背后的依据与置信程度摆到界面上，让人能判断该不该采信。
+  notSolves: 不能替代准确性，解释得再清楚也可能是在为一个错误结论辩护。
+  confusions:
+    - with: explainable-ai
+      difference: 解释界面是产品层的呈现方式，可解释人工智能是模型层的能力，前者依赖后者但不止于后者。
+    - with: uncertainty-display
+      difference: 不确定性呈现是解释界面的一个组成元素，解释界面还包括引用、推理步骤与来源。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -40,6 +50,11 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 它通常先确认输入、约束、流程和输出，再检查这些部分能否被复核。这样做可以把抽象名词落到具体判断上，也方便和其他词条做关系对照。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**解释界面 ≠ 可解释人工智能。** 解释界面是产品层的呈现方式，可解释人工智能是模型层的能力，前者依赖后者但不止于后者。
+**解释界面 ≠ 不确定性呈现。** 不确定性呈现是解释界面的一个组成元素，解释界面还包括引用、推理步骤与来源。
 
 <h2 id="example">真实例子</h2>
 

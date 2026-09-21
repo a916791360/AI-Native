@@ -27,6 +27,16 @@ sources:
     url: https://docs.digitalocean.com/products/knowledge-bases/reference/data-services-chunking-strategies/
     publisher: DigitalOcean
     accessedAt: '2026-07-29'
+chain: 3
+chainRole: advanced
+boundaries:
+  solves: 决定每次检索带回几条候选，直接控制留给模型的上下文预算。
+  notSolves: 不提升召回质量，把 k 调大只是把更多噪声一并塞进上下文。
+  confusions:
+    - with: reranking
+      difference: Top-K 决定先取多少条，重排决定取回来之后怎么重新排序，通常先取再排。
+    - with: similarity-search
+      difference: Top-K 是一个数量参数，相似度检索是一整套计算过程，参数作用在检索之上。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -40,6 +50,11 @@ Top-K 召回是从检索结果中保留得分最高的 K 个候选的操作，K 
 <h2 id="how-it-works">它如何工作</h2>
 
 它通常先确认输入、约束、流程和输出，再检查这些部分能否被复核。这样做可以把抽象名词落到具体判断上，也方便和其他词条做关系对照。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**Top-K 召回 ≠ 重排。** Top-K 决定先取多少条，重排决定取回来之后怎么重新排序，通常先取再排。
+**Top-K 召回 ≠ 相似度检索。** Top-K 是一个数量参数，相似度检索是一整套计算过程，参数作用在检索之上。
 
 <h2 id="example">真实例子</h2>
 

@@ -30,6 +30,14 @@ sources:
     accessedAt: '2026-07-31'
 chain: 8
 chainRole: advanced
+boundaries:
+  solves: 由人主动扮演攻击方，在上线前把防护的失效点找出来。
+  notSolves: 结论不可穷尽，测过不等于安全，只能说明当前这批攻击没有成功。
+  confusions:
+    - with: jailbreak
+      difference: 红队测试是系统性的测试活动，越狱提示是它使用的具体攻击手段之一。
+    - with: ai-risk-management
+      difference: 红队测试用于发现风险，AI 风险管理负责把发现的风险纳入台账并跟踪处置。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -43,6 +51,11 @@ chainRole: advanced
 <h2 id="how-it-works">它如何工作</h2>
 
 它通常先确认输入、约束、流程和输出，再检查这些部分能否被复核。这样做可以把抽象名词落到具体判断上，也方便和其他词条做关系对照。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**红队测试 ≠ 越狱提示。** 红队测试是系统性的测试活动，越狱提示是它使用的具体攻击手段之一。
+**红队测试 ≠ AI 风险管理。** 红队测试用于发现风险，AI 风险管理负责把发现的风险纳入台账并跟踪处置。
 
 <h2 id="example">真实例子</h2>
 

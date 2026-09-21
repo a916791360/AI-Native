@@ -36,6 +36,14 @@ sources:
     accessedAt: '2026-07-30'
 chain: 5
 chainRole: advanced
+boundaries:
+  solves: 限制单位时间内的请求量，防止个别调用方把共享容量吃光。
+  notSolves: 不区分请求价值，它按数量拦，不判断这个请求该不该优先放行。
+  confusions:
+    - with: service-level-objective
+      difference: 限流是保住服务等级目标的手段，服务等级目标是限流要服务的那个承诺。
+    - with: cost-optimization
+      difference: 限流控的是流量规模，成本优化控的是单次调用的花费，两者目标不同但都会影响账单。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -49,6 +57,11 @@ chainRole: advanced
 <h2 id="how-it-works">它如何工作</h2>
 
 它通常先确认输入、约束、流程和输出，再检查这些部分能否被复核。这样做可以把抽象名词落到具体判断上，也方便和其他词条做关系对照。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**限流 ≠ 服务等级目标。** 限流是保住服务等级目标的手段，服务等级目标是限流要服务的那个承诺。
+**限流 ≠ 成本优化。** 限流控的是流量规模，成本优化控的是单次调用的花费，两者目标不同但都会影响账单。
 
 <h2 id="example">真实例子</h2>
 

@@ -34,6 +34,16 @@ sources:
     url: https://docs.cloud.google.com/architecture/framework/perspectives/ai-ml/cost-optimization
     publisher: Google Cloud
     accessedAt: '2026-07-30'
+chain: 5
+chainRole: advanced
+boundaries:
+  solves: 把模型能力、数据与交互组装成用户能直接使用的产品。
+  notSolves: 不等于模型本身，换一个更强的模型，产品体验不一定同步变好。
+  confusions:
+    - with: model-serving
+      difference: 模型服务是把模型跑起来对外提供接口，AI 应用是在接口之上做出完整产品。
+    - with: langchain
+      difference: LangChain 是搭建 AI 应用的一种工具库，AI 应用是最终交付给用户的东西。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -47,6 +57,11 @@ AI 应用是将模型、数据、提示、工具和界面组合起来，为用�
 <h2 id="how-it-works">它如何工作</h2>
 
 它通常先确认输入、约束、流程和输出，再检查这些部分能否被复核。这样做可以把抽象名词落到具体判断上，也方便和其他词条做关系对照。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**AI 应用 ≠ 模型服务。** 模型服务是把模型跑起来对外提供接口，AI 应用是在接口之上做出完整产品。
+**AI 应用 ≠ LangChain。** LangChain 是搭建 AI 应用的一种工具库，AI 应用是最终交付给用户的东西。
 
 <h2 id="example">真实例子</h2>
 

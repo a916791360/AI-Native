@@ -36,6 +36,14 @@ sources:
     accessedAt: '2026-07-30'
 chain: 5
 chainRole: intro
+boundaries:
+  solves: 把模型加载起来并对外提供稳定接口，处理并发、批处理与显存调度。
+  notSolves: 不提升模型能力，同一份权重换个推理服务器，回答质量不会变。
+  confusions:
+    - with: model-serving
+      difference: 模型服务是能力与流程的统称，推理服务器是承载它的具体软件组件。
+    - with: model-api
+      difference: 模型 API 是对外暴露的调用契约，推理服务器是契约背后的执行体。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -49,6 +57,11 @@ chainRole: intro
 <h2 id="how-it-works">它如何工作</h2>
 
 它通常先确认输入、约束、流程和输出，再检查这些部分能否被复核。这样做可以把抽象名词落到具体判断上，也方便和其他词条做关系对照。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**推理服务器 ≠ 模型服务。** 模型服务是能力与流程的统称，推理服务器是承载它的具体软件组件。
+**推理服务器 ≠ 模型 API。** 模型 API 是对外暴露的调用契约，推理服务器是契约背后的执行体。
 
 <h2 id="example">真实例子</h2>
 

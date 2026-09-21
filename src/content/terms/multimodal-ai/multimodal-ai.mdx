@@ -27,6 +27,16 @@ sources:
     url: https://arxiv.org/abs/2301.12597
     publisher: arXiv
     accessedAt: '2026-08-20'
+chain: 1
+chainRole: advanced
+boundaries:
+  solves: 让同一个模型同时理解文字、图像与声音，并能在这些形态之间做转换。
+  notSolves: 不保证跨模态的对齐可靠，它能看图说话，但说不清自己看错在哪一处。
+  confusions:
+    - with: large-language-model
+      difference: 大语言模型只吃文本符号，多模态模型把图像与声音也编码进同一个向量空间。
+    - with: computer-vision
+      difference: 计算机视觉是只处理图像的单模态领域，多模态强调图像与语言在同一个模型里互相指认。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -40,6 +50,11 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 它通常先确认输入、约束、流程和输出，再检查这些部分能否被复核。这样做可以把抽象名词落到具体判断上，也方便和其他词条做关系对照。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**多模态人工智能 ≠ 大语言模型。** 大语言模型只吃文本符号，多模态模型把图像与声音也编码进同一个向量空间。
+**多模态人工智能 ≠ 计算机视觉。** 计算机视觉是只处理图像的单模态领域，多模态强调图像与语言在同一个模型里互相指认。
 
 <h2 id="example">真实例子</h2>
 

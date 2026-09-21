@@ -27,6 +27,16 @@ sources:
     url: https://docs.digitalocean.com/products/knowledge-bases/reference/data-services-chunking-strategies/
     publisher: DigitalOcean
     accessedAt: '2026-07-29'
+chain: 3
+chainRole: advanced
+boundaries:
+  solves: 按意思而不是字面找内容，用户换个说法也能召回同一批资料。
+  notSolves: 不擅长精确匹配编号与专名，向量最近邻常把意思像但不相干的条目排到前面。
+  confusions:
+    - with: similarity-search
+      difference: 语义检索强调意思相近，相似度检索只描述用距离度量这件事，不保证度量的是语义。
+    - with: keyword-search
+      difference: 语义检索能命中同义改写，关键词检索只能命中字面出现，两者的失败模式刚好互补。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -40,6 +50,11 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 它通常先确认输入、约束、流程和输出，再检查这些部分能否被复核。这样做可以把抽象名词落到具体判断上，也方便和其他词条做关系对照。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**语义检索 ≠ 相似度检索。** 语义检索强调意思相近，相似度检索只描述用距离度量这件事，不保证度量的是语义。
+**语义检索 ≠ 关键词检索。** 语义检索能命中同义改写，关键词检索只能命中字面出现，两者的失败模式刚好互补。
 
 <h2 id="example">真实例子</h2>
 

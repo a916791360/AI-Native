@@ -5,15 +5,19 @@
 #   凡是计划表产不出的字段，写在那些 .mdx 里都会在下一次 `pnpm generate:data` 时被静默抹掉，
 #   而且 CI 不会报错（重写后的文件仍然是合法的）。2026-09-19 实测：30 条 chain 字段被抹。
 #
-# 规则（每条词条只有一个权威位置，判定入口是 src/lib/content/authorship.ts 的 protectedTermIds）：
+# 规则（每条词条只有一个权威位置，判定入口是 `pnpm explain:authorship <id…>`）：
 #   · 手写词条（deep-content 批次 / hand-written-terms.yml）→ 字段写在 .mdx 的 frontmatter 里；
-#   · 目录词条（由计划表生成）                             → 字段写在这里，由生成器写进文件。
+#   · 计划表 batch A 的条目（12 条）                        → 字段写在 .mdx 的 frontmatter 里；
+#   · 计划表 batch B/C/D 且未受保护的条目                    → 字段写在这里。
 #
-#   判断某条属于哪一边：`pnpm explain:authorship <id…>`（不带参数则列出手写词条清单）。
-#   写错位置的后果是不对称的：写进 .mdx 会被静默抹掉，写进这里则**完全无效**——
-#   因为受保护的词条不会经过 buildPublishedCatalogTerms，覆盖层根本读不到它。
-#   2026-09-21 实测：把 tool-use 的 boundaries 写在这里，generate:data 后正文仍是 8 段，
-#   而 validate:data 全绿（schema 不要求 boundaries 必须存在）。
+# 三分法的后两类容易被混为一谈：batch A 的条目**在计划表里**，看起来像「生成词条」，
+# 但 PUBLISHED_CATALOG_BATCHES 只含 B/C/D，它们永远不参与生成，.mdx 才是唯一事实源。
+# 把它们写进覆盖层会静默失效。2026-09-21 实测：retrieval 写在这里，generate:data 通过、
+# validate:data 全绿，而它的 .mdx 一个字都没变。
+#
+#   写错位置的后果是不对称的：写进 .mdx（对可生成词条）会被静默抹掉，写进这里（对受保护
+#   与 batch A 词条）则**完全无效**。两个方向都出现过：2026-09-21 分别踩了 tool-use
+#   （受保护）与 retrieval（batch A）。
 #
 # 这里装 chain / chainRole / boundaries / minAction。
 # 字段含义见 src/lib/content/schema.ts 的 termSchema。
@@ -23,11 +27,83 @@
 # 词条就会同时出现两种坏状态——门禁 5 报缺段落，读者也永远看不到那句差别。
 #
 # 每站的站点定义（名称 / 提问 / 目标 / 动作 / coreTerms）在 src/data/chain.yml。
+#
+# ---- I6-02 批次 2（2026-09-21）--------------------------------------------
+# 本轮给 B 档里由计划表生成的 79 条补上 boundaries（solves / notSolves / confusions）。
+# B 档不做全文重写，只补「与最易混的那一条差在哪」，并把它挂进链路作为拓展阅读——
+# 因此 chainRole 统一为 advanced（站点骨架词条才是 intro / core）。
+# 剩下 54 条 B 档属受保护词条，字段写在各自的 .mdx 里。
 
 # ---- 第 1 站 · 地基 · 模型是什么 ------------------------------------------
 next-token-prediction:
   chain: 1
   chainRole: advanced
+natural-language-processing:
+  chain: 1
+  chainRole: advanced
+  boundaries:
+    solves: 把人类语言变成机器能计算的对象，是机器翻译、摘要与对话等一切语言任务的上游。
+    notSolves: 不保证输出符合事实，也不负责记住你的资料，它处理语言形式而不核实内容真假。
+    confusions:
+      - with: large-language-model
+        difference: 自然语言处理是任务与研究领域的统称，大语言模型只是当前实现它的其中一种具体模型。
+      - with: artificial-intelligence
+        difference: 自然语言处理只管语言，人工智能还包括视觉、决策与机器人等其它能力方向。
+lora:
+  chain: 1
+  chainRole: advanced
+  boundaries:
+    solves: 用极小的额外参数把大模型调向具体任务，让微调从要一屋子显卡变成单卡可做。
+    notSolves: 不增加模型的知识总量与上下文长度，也不解决训练数据本身质量差带来的偏差。
+    confusions:
+      - with: fine-tuning
+        difference: 全量微调更新所有权重，低秩适配冻结原权重只训练一小块低秩矩阵，显存与存储成本低一个量级。
+      - with: parameter-efficient-fine-tuning
+        difference: 参数高效微调是一类方法的总称，低秩适配是其中被采用最多的一种具体实现。
+multimodal-ai:
+  chain: 1
+  chainRole: advanced
+  boundaries:
+    solves: 让同一个模型同时理解文字、图像与声音，并能在这些形态之间做转换。
+    notSolves: 不保证跨模态的对齐可靠，它能看图说话，但说不清自己看错在哪一处。
+    confusions:
+      - with: large-language-model
+        difference: 大语言模型只吃文本符号，多模态模型把图像与声音也编码进同一个向量空间。
+      - with: computer-vision
+        difference: 计算机视觉是只处理图像的单模态领域，多模态强调图像与语言在同一个模型里互相指认。
+computer-vision:
+  chain: 1
+  chainRole: advanced
+  boundaries:
+    solves: 把图像与视频变成可判断的结构化结果，用于识别、检测、分割与测量。
+    notSolves: 不懂常识与意图，它能框出这是一只猫，却说不出这只猫为什么在冰箱里。
+    confusions:
+      - with: image-generation
+        difference: 计算机视觉在读图，图像生成在画图，方向相反且评测指标完全不通用。
+      - with: multimodal-ai
+        difference: 计算机视觉只处理视觉输入，多模态人工智能要求视觉与语言能够互相解释。
+image-generation:
+  chain: 1
+  chainRole: advanced
+  boundaries:
+    solves: 按文字描述直接产出图像，把设计的第一步从动手画变成动嘴描述。
+    notSolves: 不保证语义精确与可复现，同一个提示词两次运行的结果可能明显不同。
+    confusions:
+      - with: video-generation
+        difference: 图像生成只需单帧语义自洽，视频生成还要保证帧与帧之间的时序连贯。
+      - with: computer-vision
+        difference: 图像生成从文字出发造图，计算机视觉从图像出发产出判断，两者的输入输出正好对调。
+video-generation:
+  chain: 1
+  chainRole: advanced
+  boundaries:
+    solves: 按描述或参考图产出连续画面，用于分镜预演、素材补拍与动态效果验证。
+    notSolves: 不解决长时一致性，时长越长，人物、场景与物理规则越容易漂移。
+    confusions:
+      - with: image-generation
+        difference: 视频生成的难点在时间维度的一致性，图像生成只需单帧成立，成本与失败率都低得多。
+      - with: multimodal-ai
+        difference: 多模态是模型的输入输出能力，视频生成是具体产物形态，前者是能力后者是作品。
 
 # ---- 第 2 站 · 沟通 · 怎么把需求说清楚 ------------------------------------
 # prompt / system-prompt / few-shot-prompting / context-engineering 这四条属深度内容批次，
@@ -35,40 +111,514 @@ next-token-prediction:
 zero-shot-prompting:
   chain: 2
   chainRole: advanced
+grounding:
+  chain: 2
+  chainRole: advanced
+  boundaries:
+    solves: 要求模型只依据给定材料作答，把一个可能乱编的助手变成只能引用的助手。
+    notSolves: 不解决材料本身就有错的情况，依据错了回答会错得更自信。
+    confusions:
+      - with: groundedness
+        difference: 事实依据约束是写提示词时的手段，依据一致性是事后衡量它有没有守住这条约束的指标。
+      - with: retrieval-augmented-generation
+        difference: 检索增强生成解决材料怎么拿进来，事实依据约束解决拿进来之后怎么保证它只用这些材料。
+prompt-constraint:
+  chain: 2
+  chainRole: advanced
+  boundaries:
+    solves: 用明确的禁止项与格式要求把输出收窄到可直接使用的范围，减少来回返工。
+    notSolves: 不保证模型真的遵守，约束是概率性的，条件越多越容易被部分忽略。
+    confusions:
+      - with: structured-output
+        difference: 提示约束靠自然语言提要求，结构化输出靠接口层强校验格式，后者才是硬约束。
+      - with: system-prompt
+        difference: 系统提示词设定长期角色与边界，提示约束通常只针对某一次任务的具体限制。
 
 # ---- 第 3 站 · 给知识 · 怎么让它知道你家的资料 ------------------------------
 knowledge-base:
   chain: 3
   chainRole: intro
+  boundaries:
+    solves: 把组织的资料集中成可被检索的统一语料，它是问答准确率的上限来源。
+    notSolves: 不自动保持更新，没人维护的知识库会迅速过期，而系统不会告诉你它已经过期。
+    confusions:
+      - with: retrieval-augmented-generation
+        difference: 知识库是资料本身，检索增强生成是使用这批资料的方法，前者是资产后者是用法。
+      - with: vector-database
+        difference: 知识库面向内容维护者，向量数据库面向工程存储，前者是业务概念后者是技术组件。
 hybrid-search:
   chain: 3
   chainRole: advanced
+  boundaries:
+    solves: 把关键词与语义两路结果融合，兼顾精确命中与同义召回。
+    notSolves: 不自动决定权重，融合比例要按业务调，调错了可能比只用一路更差。
+    confusions:
+      - with: keyword-search
+        difference: 混合检索包含关键词检索这一路，另一路是语义检索，融合后才取长补短。
+      - with: reranking
+        difference: 混合检索解决召回得全不全，重排解决排序得准不准，先混合再重排是常见组合。
 query-rewriting:
   chain: 3
   chainRole: advanced
+  boundaries:
+    solves: 把口语化的提问改写成更容易命中的检索式，用于提升召回。
+    notSolves: 有改错的风险，改写一旦偏离原意，检索会自信地找到一堆无关内容。
+    confusions:
+      - with: retrieval
+        difference: 查询改写发生在检索之前且作用于问题本身，检索作用于资料集合。
+      - with: context-retrieval
+        difference: 查询改写改的是问句，上下文检索调整的是搜索范围，一个动输入一个动集合。
 document-parsing:
   chain: 3
   chainRole: advanced
+  boundaries:
+    solves: 把 PDF、扫描件与网页还原成结构化的文本与表格，作为后续切片的输入。
+    notSolves: 不保证复杂版式不出错，多栏、公式与跨页表格仍是主要失败点。
+    confusions:
+      - with: document-chunking
+        difference: 文档解析把文件读成文本，文档切片把文本切成适合检索的片段，顺序有先后。
+      - with: data-ingestion
+        difference: 数据接入负责把文件取进来，文档解析负责把它读懂，前者管搬运后者管理解。
+# retrieval 不在本文件里 —— 它属计划表 batch A，见文件头的「三分法」说明。
+# batch A 不在 PUBLISHED_CATALOG_BATCHES 里，永远不参与生成，因此覆盖层对它无效，
+# chain / chainRole / boundaries 写在 src/content/terms/data-retrieval-rag/retrieval.mdx。
+# 2026-09-21 实测：写在这里，generate:data 通过、validate:data 全绿、字段没有落盘。
+context-retrieval:
+  chain: 3
+  chainRole: advanced
+  boundaries:
+    solves: 在多轮对话里把历史轮次中相关的内容重新捞回来，避免长对话越聊越忘。
+    notSolves: 不解决检索质量本身的问题，它只决定去哪一段历史里找。
+    confusions:
+      - with: retrieval
+        difference: 检索面向外部资料库，上下文检索面向本次会话的历史，数据源与时效性都不同。
+      - with: conversation-context
+        difference: 会话上下文把历史直接放进窗口，上下文检索从历史里挑出相关部分，前者受窗口长度限制。
+data-ingestion:
+  chain: 3
+  chainRole: advanced
+  boundaries:
+    solves: 把散在各处的原始资料按统一格式收进知识库的入口环节。
+    notSolves: 不清洗语义也不保证质量，脏数据接进来仍然是脏数据。
+    confusions:
+      - with: document-parsing
+        difference: 数据接入解决从哪来与怎么搬，文档解析解决搬进来之后怎么读成文本。
+      - with: indexing-pipeline
+        difference: 数据接入是索引管线的前半段，索引管线还包含切片、嵌入与写入索引。
+indexing-pipeline:
+  chain: 3
+  chainRole: advanced
+  boundaries:
+    solves: 把原始文档自动加工成可被检索的索引，让新资料能持续进入而不是靠人工重跑。
+    notSolves: 不提升回答质量，索引只是把资料准备好，问答效果取决于切片与检索策略。
+    confusions:
+      - with: document-chunking
+        difference: 文档切片是索引管线里的一个步骤，索引管线还包含解析、嵌入、写库与增量更新。
+      - with: data-ingestion
+        difference: 数据接入只负责把资料搬进来，索引管线负责把它变成能检索的形态并保持更新。
+keyword-search:
+  chain: 3
+  chainRole: advanced
+  boundaries:
+    solves: 按字面匹配精确命中专有名词、编号与型号，结果可解释且成本极低。
+    notSolves: 不懂同义与语义，用户换个说法就搜不到，召回率随表达方式波动。
+    confusions:
+      - with: semantic-search
+        difference: 关键词检索匹配字面，语义检索匹配向量距离，后者能找到没提这个词但意思一样的段落。
+      - with: hybrid-search
+        difference: 混合检索把关键词与语义两路结果融合，单一的关键词检索只是其中一路。
+semantic-search:
+  chain: 3
+  chainRole: advanced
+  boundaries:
+    solves: 按意思而不是字面找内容，用户换个说法也能召回同一批资料。
+    notSolves: 不擅长精确匹配编号与专名，向量最近邻常把意思像但不相干的条目排到前面。
+    confusions:
+      - with: similarity-search
+        difference: 语义检索强调意思相近，相似度检索只描述用距离度量这件事，不保证度量的是语义。
+      - with: keyword-search
+        difference: 语义检索能命中同义改写，关键词检索只能命中字面出现，两者的失败模式刚好互补。
+similarity-search:
+  chain: 3
+  chainRole: advanced
+  boundaries:
+    solves: 用向量距离找出与查询最接近的若干条目，是语义检索的底层计算方式。
+    notSolves: 不判断相似是否等于有用，距离最近的条目可能恰好是在讲反例。
+    confusions:
+      - with: semantic-search
+        difference: 相似度检索是算法层面的做法，语义检索是产品层面的目标，后者可以换用不同度量。
+      - with: top-k
+        difference: 相似度检索负责排序与计算，Top-K 负责决定截取前几条，两者是排序与取数的分工。
+top-k:
+  chain: 3
+  chainRole: advanced
+  boundaries:
+    solves: 决定每次检索带回几条候选，直接控制留给模型的上下文预算。
+    notSolves: 不提升召回质量，把 k 调大只是把更多噪声一并塞进上下文。
+    confusions:
+      - with: reranking
+        difference: Top-K 决定先取多少条，重排决定取回来之后怎么重新排序，通常先取再排。
+      - with: similarity-search
+        difference: Top-K 是一个数量参数，相似度检索是一整套计算过程，参数作用在检索之上。
+metadata-filtering:
+  chain: 3
+  chainRole: advanced
+  boundaries:
+    solves: 用时间、来源与权限等附加字段先把范围缩小，避免在错误的资料里检索。
+    notSolves: 不提升语义相关性，过滤只是划范围，圈错了范围再好的检索也没用。
+    confusions:
+      - with: retrieval
+        difference: 元数据过滤在检索之前先划范围，检索在范围内按相关性排序，前者是硬条件后者是软排序。
+      - with: query-rewriting
+        difference: 查询改写改的是问题本身，元数据过滤改的是搜索范围，一个动输入一个动集合。
+citation-generation:
+  chain: 3
+  chainRole: advanced
+  boundaries:
+    solves: 让回答带上出处，读者可以自己回去核对，把信不信的问题变成查不查的问题。
+    notSolves: 不能证明引用是对的，它可能引用了真实存在但与结论无关的段落。
+    confusions:
+      - with: groundedness
+        difference: 引用生成产出可核对的出处，依据一致性判断结论有没有被材料支持，前者是形式后者是实质。
+      - with: hallucination
+        difference: 引用生成对抗的是说得没根据，幻觉指的是说得是假的，有引用并不等于没有幻觉。
 
 # ---- 第 4 站 · 给手脚 · 怎么让它做事 --------------------------------------
 autonomous-agent:
   chain: 4
   chainRole: intro
-# ai-agent 属深度内容批次；tool-use / agent-planning / agent-memory 已于 2026-09-21
-# 重写为决策页并登记进 hand-written-terms.yml，字段写在各自的 .mdx 里。
+  boundaries:
+    solves: 让系统自己决定下一步做什么，人只在目标层面给输入。
+    notSolves: 不适合开放的高风险场景，自主程度越高越需要限制它的行动范围。
+    confusions:
+      - with: ai-agent
+        difference: AI Agent 指能使用工具的智能体，自主智能体强调决策自主程度，后者是前者的一种激进形态。
+      - with: human-in-the-loop
+        difference: 自主智能体尽量减少人的介入，人在回路要求关键节点必须有人确认，两者是相反的取舍。
+agent-sandbox:
+  chain: 4
+  chainRole: advanced
+  boundaries:
+    solves: 给 Agent 一个隔离的执行环境，让它能跑代码、开浏览器而不碰到真实系统。
+    notSolves: 不解决判断错误，沙箱只限制破坏范围，不会让 Agent 少犯错。
+    confusions:
+      - with: code-execution
+        difference: 代码执行是能力，沙箱是承载这份能力的隔离容器，前者回答能做什么后者回答在哪做。
+      - with: tool-use
+        difference: 工具调用是 Agent 使用外部能力的方式，沙箱是这些能力被允许活动的地盘。
+browser-use:
+  chain: 4
+  chainRole: advanced
+  boundaries:
+    solves: 让 Agent 直接操作网页界面，处理那些没有接口的老系统与内部后台。
+    notSolves: 不稳定，页面结构一变就会失效，比调接口脆弱得多。
+    confusions:
+      - with: computer-use
+        difference: 浏览器操作只限于网页之内，计算机操作作用于整个桌面，包括本地软件与文件管理器。
+      - with: api-call
+        difference: 接口调用稳定且结构化，浏览器操作靠识别界面元素，后者是接口缺失时的兜底手段。
+code-execution:
+  chain: 4
+  chainRole: advanced
+  boundaries:
+    solves: 让模型把算不准的事情交给程序算，例如统计、格式转换与批量处理。
+    notSolves: 不保证代码正确，它执行的可能是逻辑有误但语法完全合法的代码。
+    confusions:
+      - with: agent-sandbox
+        difference: 代码执行说明能跑，沙箱说明跑在隔离环境里，生产环境两者必须配套。
+      - with: tool-use
+        difference: 工具调用调的是预先定义好的能力，代码执行是现场生成程序，灵活但更不可控。
+computer-use:
+  chain: 4
+  chainRole: advanced
+  boundaries:
+    solves: 让 Agent 像人一样看屏幕、点鼠标与敲键盘，接管没有接口的桌面软件。
+    notSolves: 不解决稳定性与速度问题，它比接口调用慢一到两个数量级且容易点错。
+    confusions:
+      - with: browser-use
+        difference: 计算机操作覆盖整个桌面，浏览器操作只覆盖网页，后者的识别与回放更容易稳定。
+      - with: autonomous-agent
+        difference: 自主智能体描述的是决策自主程度，计算机操作描述的是作用在哪一层界面。
+short-term-memory:
+  chain: 4
+  chainRole: advanced
+  boundaries:
+    solves: 保存当前任务进行到哪一步，让 Agent 在多轮工具调用之间不丢上下文。
+    notSolves: 不跨任务，会话结束就清空，下一次进来仍然是白纸一张。
+    confusions:
+      - with: long-term-memory
+        difference: 短期记忆只在本次会话内有效，长期记忆跨会话保留，前者管进度后者管积累。
+      - with: context-window
+        difference: 上下文窗口是模型能一次读入的容量上限，短期记忆是这份容量里被有意维护的那部分状态。
+long-term-memory:
+  chain: 4
+  chainRole: advanced
+  boundaries:
+    solves: 把跨会话的事实与偏好沉淀下来，让 Agent 第二次见你时不用重新自我介绍。
+    notSolves: 不解决过期与冲突，记错了或情况变了它会一直按旧事实办事。
+    confusions:
+      - with: short-term-memory
+        difference: 长期记忆跨会话持久化，短期记忆随会话销毁，前者还需要写入与淘汰策略。
+      - with: retrieval-augmented-generation
+        difference: 长期记忆存的是交互沉淀且会自我增长，检索的资料库多为静态的既有文档。
+ai-adoption:
+  chain: 4
+  chainRole: advanced
+  boundaries:
+    solves: 描述一个团队从不用到真正把 AI 用进日常工作的过程与阻力。
+    notSolves: 不等同于采购，买了工具不等于用起来了，采购完成与习惯形成是两件事。
+    confusions:
+      - with: ai-onboarding
+        difference: AI 采用是组织层面的长期过程，AI 产品引导是首次使用时的界面设计，时间尺度差很多。
+      - with: human-ai-collaboration
+        difference: 人机协作是任务分工方式，AI 采用是接受度与习惯问题，前者可用即可后者需要改变行为。
+ai-onboarding:
+  chain: 4
+  chainRole: advanced
+  boundaries:
+    solves: 在用户第一次使用时建立正确预期，说明它擅长什么、会在哪里出错。
+    notSolves: 不弥补能力缺陷，引导做得再好也救不回一个本来就答不对的场景。
+    confusions:
+      - with: explanation-interface
+        difference: 产品引导发生在第一次使用之前，解释界面发生在每次输出之后，一个管预期一个管复核。
+      - with: progressive-disclosure
+        difference: 渐进披露是按需展开复杂能力的手法，产品引导是首次使用的路径设计，后者会用上前者。
+autopilot-pattern:
+  chain: 4
+  chainRole: advanced
+  boundaries:
+    solves: 让 AI 端到端完成任务、人只在结束时验收，换取最大效率。
+    notSolves: 不适合高代价或不可逆的操作，一旦做错省下的时间远不及返工成本。
+    confusions:
+      - with: copilot-pattern
+        difference: 自动驾驶模式由 AI 主导人验收，副驾驶模式由人主导 AI 辅助，差别在谁持有最终决定权。
+      - with: human-oversight
+        difference: 自动驾驶模式是一种产品形态，人工监督是配套的兜底机制，前者越激进后者越不能省。
+copilot-pattern:
+  chain: 4
+  chainRole: advanced
+  boundaries:
+    solves: 由人主导、AI 提供建议与初稿，把效率提升建立在人仍然掌舵的前提上。
+    notSolves: 不提速到自动化水平，人必须逐条确认，产出速度受人的审阅速度限制。
+    confusions:
+      - with: autopilot-pattern
+        difference: 副驾驶模式由人做决定 AI 出力，自动驾驶模式由 AI 做决定人验收，风险与效率同时差一个量级。
+      - with: user-control
+        difference: 副驾驶模式是交互形态，用户控制权是它要保障的性质，前者是实现后者是目的。
+error-recovery:
+  chain: 4
+  chainRole: advanced
+  boundaries:
+    solves: 让用户在 AI 出错之后有明确的路可走，而不是只能从头开始。
+    notSolves: 不降低出错率，它只让错误更容易被收拾。
+    confusions:
+      - with: undo-action
+        difference: 撤销操作只针对刚刚那一步，错误恢复还包含纠正、重试与转人工等更大范围的处理。
+      - with: fallback-experience
+        difference: 降级体验是在能力不可用时换一条路，错误恢复是在已经出错之后收拾现场，触发时机不同。
+explanation-interface:
+  chain: 4
+  chainRole: advanced
+  boundaries:
+    solves: 把输出背后的依据与置信程度摆到界面上，让人能判断该不该采信。
+    notSolves: 不能替代准确性，解释得再清楚也可能是在为一个错误结论辩护。
+    confusions:
+      - with: explainable-ai
+        difference: 解释界面是产品层的呈现方式，可解释人工智能是模型层的能力，前者依赖后者但不止于后者。
+      - with: uncertainty-display
+        difference: 不确定性呈现是解释界面的一个组成元素，解释界面还包括引用、推理步骤与来源。
+fallback-experience:
+  chain: 4
+  chainRole: advanced
+  boundaries:
+    solves: 在模型超时、不可用或越权时给出可接受的替代结果，而不是直接报错。
+    notSolves: 不保证降级结果同样好，它只保证流程不中断。
+    confusions:
+      - with: fallback-model
+        difference: 备用模型是服务端的调度策略，降级体验是用户看到的结果，前者是原因后者是表现。
+      - with: error-recovery
+        difference: 降级体验是在失败之前主动换路，错误恢复是在失败之后收拾，前者是预案后者是补救。
+feedback-loop:
+  chain: 4
+  chainRole: advanced
+  boundaries:
+    solves: 把用户的使用结果收回来，用于改提示词、换模型与补数据。
+    notSolves: 不自动生效，没有收集口径与责任人，反馈收上来也只是一堆意见。
+    confusions:
+      - with: online-evaluation
+        difference: 反馈闭环收的是用户行为与主观评价，在线评估用的是线上指标与灰度实验，前者更宽后者更硬。
+      - with: human-evaluation
+        difference: 反馈闭环是持续机制，人工评估是阶段性动作，前者往往要靠后者来校准口径。
+perceived-latency:
+  chain: 4
+  chainRole: advanced
+  boundaries:
+    solves: 关注用户主观感受到的快慢，用流式输出与即时反馈让等待变得可接受。
+    notSolves: 不等于真实延迟，首字变快不等于总耗时变短，后者才是成本与容量问题。
+    confusions:
+      - with: latency
+        difference: 延迟是测量出来的耗时，感知延迟是用户的体感，两者经常不一致但只有前者能进监控。
+      - with: streaming-response
+        difference: 流式响应是降低感知延迟的具体手段，感知延迟是需要被优化的目标。
+progressive-disclosure:
+  chain: 4
+  chainRole: advanced
+  boundaries:
+    solves: 先给最关键的信息，把复杂选项与参数按需展开，降低首次上手的成本。
+    notSolves: 不解决能力不足，把功能藏得再好，找不到的仍然找不到。
+    confusions:
+      - with: ai-onboarding
+        difference: 渐进披露是贯穿全流程的信息组织原则，产品引导只覆盖第一次使用的路径。
+      - with: explanation-interface
+        difference: 解释界面决定给出多少依据，渐进披露决定什么时候给，一个管内容一个管节奏。
+undo-action:
+  chain: 4
+  chainRole: advanced
+  boundaries:
+    solves: 给 AI 的每一步留退路，降低用户试用与自动执行的心理成本。
+    notSolves: 不适用于不可逆动作，已经发出的邮件与已经提交的工单无法靠撤销挽回。
+    confusions:
+      - with: user-control
+        difference: 撤销操作是具体的安全网，用户控制权是更宽的设计原则，前者是后者最容易落地的一种。
+      - with: error-recovery
+        difference: 撤销操作是在出错之前就准备好的退路，错误恢复是出错之后才开始的一系列补救动作。
+user-trust:
+  chain: 4
+  chainRole: advanced
+  boundaries:
+    solves: 让用户愿意把更多任务交给 AI，是使用深度与留存的前提。
+    notSolves: 不靠文案获得，一次明显的事故就能抵消长期积累，只能靠持续准确与可控来换。
+    confusions:
+      - with: user-control
+        difference: 用户控制权是可设计的机制，用户信任是机制带来的结果，前者是手段后者是产出。
+      - with: confidence-calibration
+        difference: 置信度校准影响模型表现出的把握程度，用户信任是长期形成的整体态度，前者是输入后者是结果。
 
 # ---- 第 5 站 · 给接口 · 怎么标准化地接系统 ----------------------------------
+# api-call 曾是这里的条目，但它属手写清单（I6-02 批次 1 重写为决策页），
+# 覆盖层对它完全无效——2026-09-21 用 `pnpm explain:authorship api-call` 发现后已移除，
+# 它的 chain 由自己的 .mdx 提供（实测确实是 5 / advanced，所以之前没暴露成故障）。
 inference-server:
   chain: 5
   chainRole: intro
-api-call:
-  chain: 5
-  chainRole: advanced
-# model-context-protocol 属手写清单（I3-02）、model-api 属深度内容批次、
-# model-serving 属手写清单（I6-02 批次 1），三者的字段都写在各自的 .mdx 里。
+  boundaries:
+    solves: 把模型加载起来并对外提供稳定接口，处理并发、批处理与显存调度。
+    notSolves: 不提升模型能力，同一份权重换个推理服务器，回答质量不会变。
+    confusions:
+      - with: model-serving
+        difference: 模型服务是能力与流程的统称，推理服务器是承载它的具体软件组件。
+      - with: model-api
+        difference: 模型 API 是对外暴露的调用契约，推理服务器是契约背后的执行体。
 rate-limiting:
   chain: 5
   chainRole: advanced
+  boundaries:
+    solves: 限制单位时间内的请求量，防止个别调用方把共享容量吃光。
+    notSolves: 不区分请求价值，它按数量拦，不判断这个请求该不该优先放行。
+    confusions:
+      - with: service-level-objective
+        difference: 限流是保住服务等级目标的手段，服务等级目标是限流要服务的那个承诺。
+      - with: cost-optimization
+        difference: 限流控的是流量规模，成本优化控的是单次调用的花费，两者目标不同但都会影响账单。
+ai-application:
+  chain: 5
+  chainRole: advanced
+  boundaries:
+    solves: 把模型能力、数据与交互组装成用户能直接使用的产品。
+    notSolves: 不等于模型本身，换一个更强的模型，产品体验不一定同步变好。
+    confusions:
+      - with: model-serving
+        difference: 模型服务是把模型跑起来对外提供接口，AI 应用是在接口之上做出完整产品。
+      - with: langchain
+        difference: LangChain 是搭建 AI 应用的一种工具库，AI 应用是最终交付给用户的东西。
+canary-release:
+  chain: 5
+  chainRole: advanced
+  boundaries:
+    solves: 先把新版本放给一小部分流量，确认指标没坏再逐步放大。
+    notSolves: 不保证能发现问题，灰度比例太小或指标没覆盖到，坏版本照样能蒙过去。
+    confusions:
+      - with: rollback
+        difference: 金丝雀发布负责小步放量，回滚负责放量后出事怎么退回去，两者是发布流程的上下游。
+      - with: continuous-delivery
+        difference: 持续交付是让发布随时可做的能力，金丝雀发布是发布时采用的放量策略。
+continuous-delivery:
+  chain: 5
+  chainRole: advanced
+  boundaries:
+    solves: 让每次改动都能随时安全上线，把发布从事件变成日常。
+    notSolves: 不保证质量，交付频率高不等于缺陷少，前提是自动化测试与监控跟得上。
+    confusions:
+      - with: rollback
+        difference: 持续交付让发布变容易，回滚让撤销变容易，两者共同构成敢频繁发布的前提。
+      - with: canary-release
+        difference: 持续交付是工程能力与流程，金丝雀发布是其中一种放量手段，前者包含后者。
+latency-optimization:
+  chain: 5
+  chainRole: advanced
+  boundaries:
+    solves: 通过缓存、批处理与路由把响应时间压下来，直接影响可用性。
+    notSolves: 不是白给的，优化延迟通常要以成本或质量为代价，例如降级到更小的模型。
+    confusions:
+      - with: latency
+        difference: 延迟是要测量出来的指标，延迟优化是降低它的动作，前者是尺子后者是手术。
+      - with: cost-optimization
+        difference: 延迟优化让响应更快，成本优化让每次调用更便宜，两者常互相冲突需要一起权衡。
+prompt-cache:
+  chain: 5
+  chainRole: advanced
+  boundaries:
+    solves: 命中完全相同的提示词前缀时直接复用计算结果，省掉重复推理的开销。
+    notSolves: 对措辞变化无效，差一个字就是未命中，命中率低时收益接近于零。
+    confusions:
+      - with: semantic-cache
+        difference: 提示词缓存要求前缀逐字相同，语义缓存允许问法不同只要意思接近，后者命中率高但有误命中风险。
+      - with: cost-optimization
+        difference: 提示词缓存是达成成本优化的手段之一，成本优化还包括选型、批处理与蒸馏等其它路径。
+rollback:
+  chain: 5
+  chainRole: advanced
+  boundaries:
+    solves: 出问题后把线上版本退回上一个可用状态，是发布流程的安全绳。
+    notSolves: 不解决数据副作用，已经写进数据库或已经发出去的副作用退不回来。
+    confusions:
+      - with: canary-release
+        difference: 回滚发生在事后且需要触发条件，金丝雀发布发生在事前用于控制影响面。
+      - with: continuous-delivery
+        difference: 回滚是持续交付敢高频发布的前提之一，前者是保险后者是节奏。
+semantic-cache:
+  chain: 5
+  chainRole: advanced
+  boundaries:
+    solves: 把意思相同但措辞不同的问题映射到同一个答案，显著提升缓存命中率。
+    notSolves: 有误命中风险，两句话向量很近但答案可能完全相反。
+    confusions:
+      - with: prompt-cache
+        difference: 语义缓存按意思命中因此更有效，但要设相似度阈值防误命中，实现与风险都比精确缓存高。
+      - with: embedding
+        difference: 语义缓存靠嵌入向量做判断，嵌入是它的实现依赖而不是它的同义词。
+service-level-objective:
+  chain: 5
+  chainRole: advanced
+  boundaries:
+    solves: 把够不够稳定成可测量的目标，例如一个月内绝大多数请求在约定时间内返回。
+    notSolves: 不是成本问题，目标定得越严，需要的冗余与花费就越高。
+    confusions:
+      - with: latency
+        difference: 服务等级目标把延迟等指标包成对外承诺，延迟本身只是被纳入其中的一个数值。
+      - with: observability
+        difference: 服务等级目标定义什么叫达标，可观测性提供判断达标的证据，前者是标准后者是手段。
+streaming-response:
+  chain: 5
+  chainRole: advanced
+  boundaries:
+    solves: 让内容逐段吐出而不是等全部生成完，把长等待变成可感知的进展。
+    notSolves: 不减少总耗时，它只改变等待的体感，推理成本一分不少。
+    confusions:
+      - with: perceived-latency
+        difference: 流式响应是降低感知延迟的手段，感知延迟是它要改善的目标，前者是做法后者是效果。
+      - with: latency
+        difference: 流式响应优化的是首字时间，总延迟可能完全没变，两个指标要分开看。
 
 # ---- 第 6 站 · 给流程 · 怎么把做法沉淀下来 ----------------------------------
 # prompt-template / prompt-chaining 属深度内容批次；agentic-workflow / workflow-automation
@@ -76,25 +626,137 @@ rate-limiting:
 state-management:
   chain: 6
   chainRole: advanced
+  boundaries:
+    solves: 维护任务进行到哪一步、哪些工具已经调用过，避免重复劳动与自相矛盾。
+    notSolves: 不解决信息遗忘，状态记得住进度却记不住内容，内容仍要靠记忆机制。
+    confusions:
+      - with: agent-memory
+        difference: 状态管理记录流程进度与中间结果，Agent 记忆保存跨轮次的事实与经验。
+      - with: short-term-memory
+        difference: 短期记忆是模型能看到的上下文，状态管理是流程框架自己维护的结构化进度。
 multi-agent-system:
   chain: 6
   chainRole: advanced
+  boundaries:
+    solves: 把任务拆给多个各有分工的 Agent，用并行与互审换取复杂任务的成功率。
+    notSolves: 不必然更好，协调成本与错误传播会让它比单 Agent 更贵也更不稳定。
+    confusions:
+      - with: agent-orchestration
+        difference: 多智能体系统是架构选择，Agent 编排是让它跑起来的调度逻辑，前者决定有多少角色后者决定怎么配合。
+      - with: ai-agent
+        difference: AI Agent 通常指单个能调用工具的执行体，多智能体系统由多个这样的执行体组成。
 agent-orchestration:
   chain: 6
   chainRole: advanced
+  boundaries:
+    solves: 决定多个步骤或多个 Agent 之间谁先谁后、什么时候把结果交给下一个。
+    notSolves: 不提升单个步骤的质量，编排只能让流程跑通，不能把错的结果变对。
+    confusions:
+      - with: multi-agent-system
+        difference: Agent 编排是调度逻辑，多智能体系统是采用多个 Agent 的整体架构，前者是方法后者是形态。
+      - with: agentic-workflow
+        difference: Agent 编排面向运行时的动态调度，智能体工作流是事先固化下来的步骤，前者灵活后者稳定。
 
 # ---- 第 7 站 · 给判断 · 怎么知道它行不行 ------------------------------------
 benchmark:
   chain: 7
   chainRole: intro
-# evaluation / observability 属深度内容批次；eval-set / groundedness / llm-as-judge
-# 属手写清单（I6-02 批次 1），字段写在各自的 .mdx 里。
+  boundaries:
+    solves: 用统一题库横向比较不同模型或版本，给出可公开引用的能力参考。
+    notSolves: 不代表你的场景，榜单高的模型在特定业务上可能表现更差，且存在针对榜单的过拟合。
+    confusions:
+      - with: eval-set
+        difference: 基准测试多为公开通用题库用于横向比较，评测集是面向自身业务的私有用例。
+      - with: golden-dataset
+        difference: 黄金数据集强调答案经人工确认并用于回归，基准测试主要看排名与分数。
 human-evaluation:
   chain: 7
   chainRole: advanced
+  boundaries:
+    solves: 在机器指标说不清的地方用人工打分，提供最贴近实际感受的判断。
+    notSolves: 贵且慢，样本量上不去，而且评分者之间的一致性本身就是需要检验的问题。
+    confusions:
+      - with: llm-as-judge
+        difference: 人工评估是标准来源，大模型裁判是它的规模化替代品，后者的口径要靠前者校准。
+      - with: online-evaluation
+        difference: 人工评估在离线抽样上进行，在线评估用真实流量的指标说话，前者更细后者更真。
 retrieval-recall:
   chain: 7
   chainRole: advanced
+  boundaries:
+    solves: 衡量该找到的资料有没有被找齐，它是问答正确率的上限。
+    notSolves: 不关心准不准，把所有片段都召回时召回率满分，但上下文会被噪声淹没。
+    confusions:
+      - with: retrieval-precision
+        difference: 召回率看有没有漏，精确率看有没有混进无关内容，两者必须一起看才有意义。
+      - with: top-k
+        difference: 检索召回率是被评估的结果指标，Top-K 是影响它的参数，调大 k 通常提高召回率但降低精确率。
+evaluation-rubric:
+  chain: 7
+  chainRole: advanced
+  boundaries:
+    solves: 把回答好不好拆成可打分的维度与档位描述，让不同人打出的分数能够对齐。
+    notSolves: 不消除主观，它是把主观判断变得可比较，不是把主观变成客观。
+    confusions:
+      - with: eval-set
+        difference: 评估量规定义怎么打分，评测集定义拿什么题来打，标准与题库是两件事。
+      - with: llm-as-judge
+        difference: 评估量规要么给人用要么写进裁判提示词，大模型裁判是按量规执行的打分者。
+faithfulness:
+  chain: 7
+  chainRole: advanced
+  boundaries:
+    solves: 衡量回答是否严格依据给定材料，是检索类系统最有说服力的质量指标。
+    notSolves: 不衡量有用性，完全忠实但答非所问的回答，忠实度依然是满分。
+    confusions:
+      - with: groundedness
+        difference: 忠实度要求回答不超出材料，依据一致性允许结合常识但要求关键结论有材料支撑，宽严不同。
+      - with: hallucination
+        difference: 幻觉是现象，忠实度是把这一现象量化之后的指标，前者定性后者定量。
+golden-dataset:
+  chain: 7
+  chainRole: advanced
+  boundaries:
+    solves: 用一小批人工确认过标准答案的样本做回归，防止改一处坏一片。
+    notSolves: 覆盖面有限，样本太少会漏掉长尾问题，太多则维护成本迅速上升。
+    confusions:
+      - with: eval-set
+        difference: 黄金数据集强调答案已被人确认，评测集只是用例集合，未必都有标准答案。
+      - with: benchmark
+        difference: 黄金数据集是自建私有的、面向自身业务，基准测试多是公开通用的，两者目标不同。
+latency:
+  chain: 7
+  chainRole: advanced
+  boundaries:
+    solves: 量化一次请求到底等了多久，是容量规划与体验优化的共同起点。
+    notSolves: 不反映主观感受，首字快与整体快在用户眼里是两件事。
+    confusions:
+      - with: perceived-latency
+        difference: 延迟是客观耗时，感知延迟是用户的主观体感，优化后者往往比重构前者更划算。
+      - with: service-level-objective
+        difference: 延迟是原始测量值，服务等级目标是把这类值包装成对外承诺。
+retrieval-precision:
+  chain: 7
+  chainRole: advanced
+  boundaries:
+    solves: 衡量召回的片段里有多少是真相关的，直接决定模型被噪声带偏的概率。
+    notSolves: 不反映漏没漏，只取一条最准的片段时精确率满分，但很可能漏掉了关键信息。
+    confusions:
+      - with: retrieval-recall
+        difference: 精确率看召回的准不准，召回率看该找的有没有找齐，两者通常此消彼长必须一起看。
+      - with: top-k
+        difference: 检索精确率是评估指标，Top-K 是影响它的参数，把 k 调小通常能提高精确率但降低召回率。
+trace:
+  chain: 7
+  chainRole: advanced
+  boundaries:
+    solves: 把一次请求经过的每一步串起来，让失败能被定位到具体环节。
+    notSolves: 不告诉你为什么差，它能证明检索没召回，但不能解释用户为什么不满意。
+    confusions:
+      - with: observability
+        difference: 调用追踪是观测能力的其中一种手段，可观测性还包括指标、日志与告警的整体体系。
+      - with: latency
+        difference: 调用追踪记录每一步的耗时与入参，延迟只是它顺带暴露出来的一个维度。
 
 # ---- 第 8 站 · 给安全 · 什么时候必须有人管 ----------------------------------
 # ai-guardrail / prompt-injection 属手写清单（I6-02 批次 1）；ai-risk-management /
@@ -102,9 +764,165 @@ retrieval-recall:
 red-teaming:
   chain: 8
   chainRole: advanced
+  boundaries:
+    solves: 由人主动扮演攻击方，在上线前把防护的失效点找出来。
+    notSolves: 结论不可穷尽，测过不等于安全，只能说明当前这批攻击没有成功。
+    confusions:
+      - with: jailbreak
+        difference: 红队测试是系统性的测试活动，越狱提示是它使用的具体攻击手段之一。
+      - with: ai-risk-management
+        difference: 红队测试用于发现风险，AI 风险管理负责把发现的风险纳入台账并跟踪处置。
 jailbreak:
   chain: 8
   chainRole: advanced
+  boundaries:
+    solves: 通过角色扮演与改写绕过模型的拒绝策略，用于暴露防护缺口。
+    notSolves: 不是漏洞利用，它利用的是模型对指令的服从倾向，要修的是提示层而不是系统层。
+    confusions:
+      - with: prompt-injection
+        difference: 越狱提示由使用者主动发起以绕过限制，提示词注入是把恶意指令藏在被处理的资料里。
+      - with: red-teaming
+        difference: 越狱提示是一种攻击手法，红队测试是有组织地使用这类手法找问题。
 ai-governance:
   chain: 8
   chainRole: advanced
+  boundaries:
+    solves: 用制度、流程与责任人把 AI 的风险管起来，让安全要求能落到具体岗位。
+    notSolves: 不产生技术防护，治理定的是规则，真正的拦截要靠护栏与过滤器。
+    confusions:
+      - with: ai-risk-management
+        difference: AI 治理是组织层面的制度安排，AI 风险管理是针对具体风险项的识别与处置。
+      - with: accountability
+        difference: AI 治理覆盖制度、流程与评审，问责只解决其中出事谁负责这一环。
+accountability:
+  chain: 8
+  chainRole: advanced
+  boundaries:
+    solves: 明确 AI 出错之后由谁负责、依据什么追责，让责任不落在系统自己决定上。
+    notSolves: 不防止出错，问责解决的是事后归属，不是事前的风险控制。
+    confusions:
+      - with: ai-governance
+        difference: 问责是治理体系里的责任分配环节，AI 治理还包括制度、流程与评审机制。
+      - with: auditability
+        difference: 问责解决谁来负责，可审计性解决凭什么判断，前者是制度后者是证据。
+auditability:
+  chain: 8
+  chainRole: advanced
+  boundaries:
+    solves: 让每个决定都有可回查的记录，包括输入、模型版本与人工干预点。
+    notSolves: 不等于合规，有完整日志不代表做法本身合法。
+    confusions:
+      - with: transparency
+        difference: 可审计性面向内部与监管的记录完整性，透明度面向公众的知情程度，受众不同。
+      - with: trace
+        difference: 调用追踪是技术手段，可审计性是它对制度要求满足的程度。
+content-moderation:
+  chain: 8
+  chainRole: advanced
+  boundaries:
+    solves: 在内容进入或离开系统时拦下违规内容，控制公开风险。
+    notSolves: 不解决边界模糊的判断，讽刺、学术讨论与真实违规在模型眼里经常长得一样。
+    confusions:
+      - with: safety-filter
+        difference: 内容审核面向业务内容，安全过滤器面向模型输入输出，前者偏产品后者偏技术层。
+      - with: ai-guardrail
+        difference: 内容审核关注内容本身是否合规，AI 护栏还包括权限、频率与工具调用等行为约束。
+copyright:
+  chain: 8
+  chainRole: advanced
+  boundaries:
+    solves: 处理训练数据与生成内容涉及的权利归属与使用边界问题。
+    notSolves: 没有一刀切的答案，不同司法辖区的规则仍在变化，要依赖具体用途判断。
+    confusions:
+      - with: privacy
+        difference: 著作权保护表达形式与创作成果，隐私保护个人信息，两者受损方式与救济路径都不同。
+      - with: data-protection
+        difference: 数据保护关注个人数据能不能被处理，著作权关注内容能不能被使用，前者管数据后者管作品。
+data-governance:
+  chain: 8
+  chainRole: advanced
+  boundaries:
+    solves: 规定数据从哪来、谁能用、留多久，把数据当成有主的资产来管。
+    notSolves: 不提升数据质量，治理是规则与权责，清洗与标注是另外的工序。
+    confusions:
+      - with: data-protection
+        difference: 数据治理是内部管理框架，数据保护是对个人信息处理的法律要求，前者更宽后者更硬。
+      - with: training-data
+        difference: 数据治理覆盖全生命周期的规则，训练数据只是其中被用于训练的那一部分。
+data-protection:
+  chain: 8
+  chainRole: advanced
+  boundaries:
+    solves: 约束个人信息的收集、使用与跨境流动，避免法律与信任的双重风险。
+    notSolves: 不等于安全防护，加密做得好也可能违反告知与同意的要求。
+    confusions:
+      - with: privacy
+        difference: 隐私是权益本身，数据保护是保护这份权益的法律与技术措施。
+      - with: data-governance
+        difference: 数据保护有明确的法律义务与罚则，数据治理多是内部规范，约束力不同。
+explainable-ai:
+  chain: 8
+  chainRole: advanced
+  boundaries:
+    solves: 让模型的判断过程能被追溯与理解，服务于复核、申诉与合规。
+    notSolves: 在超大规模模型上很难彻底做到，多数方案给出的是近似解释，不等于真实推理过程。
+    confusions:
+      - with: explanation-interface
+        difference: 可解释人工智能是模型侧的能力，解释界面是把它呈现到用户眼前的界面设计。
+      - with: transparency
+        difference: 可解释人工智能解释单个判断是怎么来的，透明度说明系统整体的运作方式与限制。
+informed-consent:
+  chain: 8
+  chainRole: advanced
+  boundaries:
+    solves: 在采集与使用数据之前把用途、范围与后果讲清楚，并取得明确同意。
+    notSolves: 不解决同意疲劳，条款过长时用户实际并未理解，同意也就流于形式。
+    confusions:
+      - with: privacy
+        difference: 知情同意是取得授权的程序，隐私是被保护的对象，前者是手段后者是目的。
+      - with: data-protection
+        difference: 知情同意是数据保护的其中一项要求，后者还包括最小化、留存期限与安全措施。
+privacy:
+  chain: 8
+  chainRole: advanced
+  boundaries:
+    solves: 界定哪些个人信息不该被无理由地收集、推断或传播。
+    notSolves: 不阻止合法使用，合规地使用个人信息与侵犯隐私是需要分别判断的两件事。
+    confusions:
+      - with: data-protection
+        difference: 隐私是权益，数据保护是落实这份权益的合规动作，前者是名后者是实。
+      - with: transparency
+        difference: 隐私关心信息被不被收集，透明度关心有没有告诉用户，公开说明并不等于获得授权。
+responsible-ai:
+  chain: 8
+  chainRole: advanced
+  boundaries:
+    solves: 把公平、安全、透明与问责等要求整合成一套可落地的开发准则。
+    notSolves: 不是清单打勾，原则写得再全，没有具体的评估与责任人就不会真的生效。
+    confusions:
+      - with: ai-governance
+        difference: 负责任人工智能偏价值准则与工程实践，AI 治理偏组织制度与决策流程。
+      - with: ai-safety
+        difference: AI 安全聚焦系统不造成伤害，负责任人工智能还要覆盖公平、隐私与问责等更宽的价值维度。
+safety-filter:
+  chain: 8
+  chainRole: advanced
+  boundaries:
+    solves: 在输入输出两端做实时拦截，挡住违禁内容与提示词攻击的常见变体。
+    notSolves: 可以被绕过，过滤规则是黑名单式的，改写与编码往往就能穿透。
+    confusions:
+      - with: ai-guardrail
+        difference: 安全过滤器是具体的技术组件，AI 护栏是包括策略、过滤器与人工介入的整体机制。
+      - with: content-moderation
+        difference: 安全过滤器聚焦模型交互层的风险，内容审核覆盖更广的业务与社区内容治理。
+transparency:
+  chain: 8
+  chainRole: advanced
+  boundaries:
+    solves: 主动说明系统能做什么、不能做什么、用了什么数据，让用户能做出知情选择。
+    notSolves: 不等于可信，说明得清楚也不代表系统真的做得好。
+    confusions:
+      - with: explainable-ai
+        difference: 透明度说明系统的整体运作与局限，可解释人工智能解释某一次具体判断的形成过程。
+      - with: auditability
+        difference: 透明度面向外部公开说明，可审计性面向内部与监管留下可核查的记录。

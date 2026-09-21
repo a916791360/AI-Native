@@ -27,6 +27,16 @@ sources:
     url: https://developers.google.com/machine-learning/problem-framing/problem
     publisher: Google for Developers
     accessedAt: '2026-07-29'
+chain: 4
+chainRole: advanced
+boundaries:
+  solves: 由人主导、AI 提供建议与初稿，把效率提升建立在人仍然掌舵的前提上。
+  notSolves: 不提速到自动化水平，人必须逐条确认，产出速度受人的审阅速度限制。
+  confusions:
+    - with: autopilot-pattern
+      difference: 副驾驶模式由人做决定 AI 出力，自动驾驶模式由 AI 做决定人验收，风险与效率同时差一个量级。
+    - with: user-control
+      difference: 副驾驶模式是交互形态，用户控制权是它要保障的性质，前者是实现后者是目的。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -40,6 +50,11 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 它通常先确认输入、约束、流程和输出，再检查这些部分能否被复核。这样做可以把抽象名词落到具体判断上，也方便和其他词条做关系对照。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**副驾驶模式 ≠ 自动驾驶模式。** 副驾驶模式由人做决定 AI 出力，自动驾驶模式由 AI 做决定人验收，风险与效率同时差一个量级。
+**副驾驶模式 ≠ 用户控制权。** 副驾驶模式是交互形态，用户控制权是它要保障的性质，前者是实现后者是目的。
 
 <h2 id="example">真实例子</h2>
 

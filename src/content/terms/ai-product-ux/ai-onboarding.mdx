@@ -27,6 +27,16 @@ sources:
     url: https://developers.google.com/machine-learning/problem-framing/problem
     publisher: Google for Developers
     accessedAt: '2026-07-29'
+chain: 4
+chainRole: advanced
+boundaries:
+  solves: 在用户第一次使用时建立正确预期，说明它擅长什么、会在哪里出错。
+  notSolves: 不弥补能力缺陷，引导做得再好也救不回一个本来就答不对的场景。
+  confusions:
+    - with: explanation-interface
+      difference: 产品引导发生在第一次使用之前，解释界面发生在每次输出之后，一个管预期一个管复核。
+    - with: progressive-disclosure
+      difference: 渐进披露是按需展开复杂能力的手法，产品引导是首次使用的路径设计，后者会用上前者。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -40,6 +50,11 @@ AI 产品引导是帮助新用户理解 AI 产品适用场景、输入方式、�
 <h2 id="how-it-works">它如何工作</h2>
 
 它通常先确认输入、约束、流程和输出，再检查这些部分能否被复核。这样做可以把抽象名词落到具体判断上，也方便和其他词条做关系对照。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**AI 产品引导 ≠ 解释界面。** 产品引导发生在第一次使用之前，解释界面发生在每次输出之后，一个管预期一个管复核。
+**AI 产品引导 ≠ 渐进披露。** 渐进披露是按需展开复杂能力的手法，产品引导是首次使用的路径设计，后者会用上前者。
 
 <h2 id="example">真实例子</h2>
 

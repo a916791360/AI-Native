@@ -28,6 +28,16 @@ sources:
     url: https://airc.nist.gov/airmf-resources/playbook/
     publisher: NIST
     accessedAt: '2026-07-31'
+chain: 8
+chainRole: advanced
+boundaries:
+  solves: 规定数据从哪来、谁能用、留多久，把数据当成有主的资产来管。
+  notSolves: 不提升数据质量，治理是规则与权责，清洗与标注是另外的工序。
+  confusions:
+    - with: data-protection
+      difference: 数据治理是内部管理框架，数据保护是对个人信息处理的法律要求，前者更宽后者更硬。
+    - with: training-data
+      difference: 数据治理覆盖全生命周期的规则，训练数据只是其中被用于训练的那一部分。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -41,6 +51,11 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 它通常先确认输入、约束、流程和输出，再检查这些部分能否被复核。这样做可以把抽象名词落到具体判断上，也方便和其他词条做关系对照。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**数据治理 ≠ 数据保护。** 数据治理是内部管理框架，数据保护是对个人信息处理的法律要求，前者更宽后者更硬。
+**数据治理 ≠ 训练数据。** 数据治理覆盖全生命周期的规则，训练数据只是其中被用于训练的那一部分。
 
 <h2 id="example">真实例子</h2>
 

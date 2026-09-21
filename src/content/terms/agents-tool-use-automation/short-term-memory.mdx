@@ -28,6 +28,16 @@ sources:
     url: https://www.anthropic.com/research/trustworthy-agents
     publisher: Anthropic
     accessedAt: '2026-07-29'
+chain: 4
+chainRole: advanced
+boundaries:
+  solves: 保存当前任务进行到哪一步，让 Agent 在多轮工具调用之间不丢上下文。
+  notSolves: 不跨任务，会话结束就清空，下一次进来仍然是白纸一张。
+  confusions:
+    - with: long-term-memory
+      difference: 短期记忆只在本次会话内有效，长期记忆跨会话保留，前者管进度后者管积累。
+    - with: context-window
+      difference: 上下文窗口是模型能一次读入的容量上限，短期记忆是这份容量里被有意维护的那部分状态。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -41,6 +51,11 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 它通常先确认输入、约束、流程和输出，再检查这些部分能否被复核。这样做可以把抽象名词落到具体判断上，也方便和其他词条做关系对照。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**短期记忆 ≠ 长期记忆。** 短期记忆只在本次会话内有效，长期记忆跨会话保留，前者管进度后者管积累。
+**短期记忆 ≠ 上下文窗口。** 上下文窗口是模型能一次读入的容量上限，短期记忆是这份容量里被有意维护的那部分状态。
 
 <h2 id="example">真实例子</h2>
 

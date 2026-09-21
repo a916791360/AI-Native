@@ -30,6 +30,14 @@ sources:
     accessedAt: '2026-07-29'
 chain: 6
 chainRole: advanced
+boundaries:
+  solves: 维护任务进行到哪一步、哪些工具已经调用过，避免重复劳动与自相矛盾。
+  notSolves: 不解决信息遗忘，状态记得住进度却记不住内容，内容仍要靠记忆机制。
+  confusions:
+    - with: agent-memory
+      difference: 状态管理记录流程进度与中间结果，Agent 记忆保存跨轮次的事实与经验。
+    - with: short-term-memory
+      difference: 短期记忆是模型能看到的上下文，状态管理是流程框架自己维护的结构化进度。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -43,6 +51,11 @@ chainRole: advanced
 <h2 id="how-it-works">它如何工作</h2>
 
 它通常先确认输入、约束、流程和输出，再检查这些部分能否被复核。这样做可以把抽象名词落到具体判断上，也方便和其他词条做关系对照。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**状态管理 ≠ Agent 记忆。** 状态管理记录流程进度与中间结果，Agent 记忆保存跨轮次的事实与经验。
+**状态管理 ≠ 短期记忆。** 短期记忆是模型能看到的上下文，状态管理是流程框架自己维护的结构化进度。
 
 <h2 id="example">真实例子</h2>
 

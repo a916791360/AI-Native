@@ -34,6 +34,16 @@ sources:
     url: https://docs.cloud.google.com/architecture/framework/perspectives/ai-ml/cost-optimization
     publisher: Google Cloud
     accessedAt: '2026-07-30'
+chain: 5
+chainRole: advanced
+boundaries:
+  solves: 把意思相同但措辞不同的问题映射到同一个答案，显著提升缓存命中率。
+  notSolves: 有误命中风险，两句话向量很近但答案可能完全相反。
+  confusions:
+    - with: prompt-cache
+      difference: 语义缓存按意思命中因此更有效，但要设相似度阈值防误命中，实现与风险都比精确缓存高。
+    - with: embedding
+      difference: 语义缓存靠嵌入向量做判断，嵌入是它的实现依赖而不是它的同义词。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -47,6 +57,11 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 它通常先确认输入、约束、流程和输出，再检查这些部分能否被复核。这样做可以把抽象名词落到具体判断上，也方便和其他词条做关系对照。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**语义缓存 ≠ 提示词缓存。** 语义缓存按意思命中因此更有效，但要设相似度阈值防误命中，实现与风险都比精确缓存高。
+**语义缓存 ≠ 嵌入。** 语义缓存靠嵌入向量做判断，嵌入是它的实现依赖而不是它的同义词。
 
 <h2 id="example">真实例子</h2>
 

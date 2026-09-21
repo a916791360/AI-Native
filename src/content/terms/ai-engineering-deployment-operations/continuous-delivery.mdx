@@ -34,6 +34,16 @@ sources:
     url: https://docs.cloud.google.com/architecture/framework/perspectives/ai-ml/cost-optimization
     publisher: Google Cloud
     accessedAt: '2026-07-30'
+chain: 5
+chainRole: advanced
+boundaries:
+  solves: 让每次改动都能随时安全上线，把发布从事件变成日常。
+  notSolves: 不保证质量，交付频率高不等于缺陷少，前提是自动化测试与监控跟得上。
+  confusions:
+    - with: rollback
+      difference: 持续交付让发布变容易，回滚让撤销变容易，两者共同构成敢频繁发布的前提。
+    - with: canary-release
+      difference: 持续交付是工程能力与流程，金丝雀发布是其中一种放量手段，前者包含后者。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -47,6 +57,11 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 它通常先确认输入、约束、流程和输出，再检查这些部分能否被复核。这样做可以把抽象名词落到具体判断上，也方便和其他词条做关系对照。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**持续交付 ≠ 回滚。** 持续交付让发布变容易，回滚让撤销变容易，两者共同构成敢频繁发布的前提。
+**持续交付 ≠ 金丝雀发布。** 持续交付是工程能力与流程，金丝雀发布是其中一种放量手段，前者包含后者。
 
 <h2 id="example">真实例子</h2>
 

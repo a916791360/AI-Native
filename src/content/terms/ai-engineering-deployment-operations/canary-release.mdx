@@ -34,6 +34,16 @@ sources:
     url: https://docs.cloud.google.com/architecture/framework/perspectives/ai-ml/cost-optimization
     publisher: Google Cloud
     accessedAt: '2026-07-30'
+chain: 5
+chainRole: advanced
+boundaries:
+  solves: 先把新版本放给一小部分流量，确认指标没坏再逐步放大。
+  notSolves: 不保证能发现问题，灰度比例太小或指标没覆盖到，坏版本照样能蒙过去。
+  confusions:
+    - with: rollback
+      difference: 金丝雀发布负责小步放量，回滚负责放量后出事怎么退回去，两者是发布流程的上下游。
+    - with: continuous-delivery
+      difference: 持续交付是让发布随时可做的能力，金丝雀发布是发布时采用的放量策略。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -47,6 +57,11 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 它通常先确认输入、约束、流程和输出，再检查这些部分能否被复核。这样做可以把抽象名词落到具体判断上，也方便和其他词条做关系对照。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**金丝雀发布 ≠ 回滚。** 金丝雀发布负责小步放量，回滚负责放量后出事怎么退回去，两者是发布流程的上下游。
+**金丝雀发布 ≠ 持续交付。** 持续交付是让发布随时可做的能力，金丝雀发布是发布时采用的放量策略。
 
 <h2 id="example">真实例子</h2>
 

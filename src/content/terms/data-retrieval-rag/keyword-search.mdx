@@ -27,6 +27,16 @@ sources:
     url: https://docs.digitalocean.com/products/knowledge-bases/reference/data-services-chunking-strategies/
     publisher: DigitalOcean
     accessedAt: '2026-07-29'
+chain: 3
+chainRole: advanced
+boundaries:
+  solves: 按字面匹配精确命中专有名词、编号与型号，结果可解释且成本极低。
+  notSolves: 不懂同义与语义，用户换个说法就搜不到，召回率随表达方式波动。
+  confusions:
+    - with: semantic-search
+      difference: 关键词检索匹配字面，语义检索匹配向量距离，后者能找到没提这个词但意思一样的段落。
+    - with: hybrid-search
+      difference: 混合检索把关键词与语义两路结果融合，单一的关键词检索只是其中一路。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -40,6 +50,11 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 它通常先确认输入、约束、流程和输出，再检查这些部分能否被复核。这样做可以把抽象名词落到具体判断上，也方便和其他词条做关系对照。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**关键词检索 ≠ 语义检索。** 关键词检索匹配字面，语义检索匹配向量距离，后者能找到没提这个词但意思一样的段落。
+**关键词检索 ≠ 混合检索。** 混合检索把关键词与语义两路结果融合，单一的关键词检索只是其中一路。
 
 <h2 id="example">真实例子</h2>
 

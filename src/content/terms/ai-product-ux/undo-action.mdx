@@ -27,6 +27,16 @@ sources:
     url: https://developers.google.com/machine-learning/problem-framing/problem
     publisher: Google for Developers
     accessedAt: '2026-07-29'
+chain: 4
+chainRole: advanced
+boundaries:
+  solves: 给 AI 的每一步留退路，降低用户试用与自动执行的心理成本。
+  notSolves: 不适用于不可逆动作，已经发出的邮件与已经提交的工单无法靠撤销挽回。
+  confusions:
+    - with: user-control
+      difference: 撤销操作是具体的安全网，用户控制权是更宽的设计原则，前者是后者最容易落地的一种。
+    - with: error-recovery
+      difference: 撤销操作是在出错之前就准备好的退路，错误恢复是出错之后才开始的一系列补救动作。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -40,6 +50,11 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 它通常先确认输入、约束、流程和输出，再检查这些部分能否被复核。这样做可以把抽象名词落到具体判断上，也方便和其他词条做关系对照。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**撤销操作 ≠ 用户控制权。** 撤销操作是具体的安全网，用户控制权是更宽的设计原则，前者是后者最容易落地的一种。
+**撤销操作 ≠ 错误恢复。** 撤销操作是在出错之前就准备好的退路，错误恢复是出错之后才开始的一系列补救动作。
 
 <h2 id="example">真实例子</h2>
 

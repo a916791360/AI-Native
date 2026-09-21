@@ -28,6 +28,16 @@ sources:
     url: https://platform.claude.com/docs/en/build-with-claude/context-editing
     publisher: Anthropic
     accessedAt: '2026-07-30'
+chain: 2
+chainRole: advanced
+boundaries:
+  solves: 用明确的禁止项与格式要求把输出收窄到可直接使用的范围，减少来回返工。
+  notSolves: 不保证模型真的遵守，约束是概率性的，条件越多越容易被部分忽略。
+  confusions:
+    - with: structured-output
+      difference: 提示约束靠自然语言提要求，结构化输出靠接口层强校验格式，后者才是硬约束。
+    - with: system-prompt
+      difference: 系统提示词设定长期角色与边界，提示约束通常只针对某一次任务的具体限制。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -41,6 +51,11 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 它通常先确认输入、约束、流程和输出，再检查这些部分能否被复核。这样做可以把抽象名词落到具体判断上，也方便和其他词条做关系对照。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**提示约束 ≠ 结构化输出。** 提示约束靠自然语言提要求，结构化输出靠接口层强校验格式，后者才是硬约束。
+**提示约束 ≠ 系统提示词。** 系统提示词设定长期角色与边界，提示约束通常只针对某一次任务的具体限制。
 
 <h2 id="example">真实例子</h2>
 

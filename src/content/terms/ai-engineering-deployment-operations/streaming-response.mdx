@@ -34,6 +34,16 @@ sources:
     url: https://docs.cloud.google.com/architecture/framework/perspectives/ai-ml/cost-optimization
     publisher: Google Cloud
     accessedAt: '2026-07-30'
+chain: 5
+chainRole: advanced
+boundaries:
+  solves: 让内容逐段吐出而不是等全部生成完，把长等待变成可感知的进展。
+  notSolves: 不减少总耗时，它只改变等待的体感，推理成本一分不少。
+  confusions:
+    - with: perceived-latency
+      difference: 流式响应是降低感知延迟的手段，感知延迟是它要改善的目标，前者是做法后者是效果。
+    - with: latency
+      difference: 流式响应优化的是首字时间，总延迟可能完全没变，两个指标要分开看。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -47,6 +57,11 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 它通常先确认输入、约束、流程和输出，再检查这些部分能否被复核。这样做可以把抽象名词落到具体判断上，也方便和其他词条做关系对照。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**流式响应 ≠ 感知延迟。** 流式响应是降低感知延迟的手段，感知延迟是它要改善的目标，前者是做法后者是效果。
+**流式响应 ≠ 延迟。** 流式响应优化的是首字时间，总延迟可能完全没变，两个指标要分开看。
 
 <h2 id="example">真实例子</h2>
 

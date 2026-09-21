@@ -27,6 +27,16 @@ sources:
     url: https://arxiv.org/abs/2301.12597
     publisher: arXiv
     accessedAt: '2026-08-20'
+chain: 1
+chainRole: advanced
+boundaries:
+  solves: 把图像与视频变成可判断的结构化结果，用于识别、检测、分割与测量。
+  notSolves: 不懂常识与意图，它能框出这是一只猫，却说不出这只猫为什么在冰箱里。
+  confusions:
+    - with: image-generation
+      difference: 计算机视觉在读图，图像生成在画图，方向相反且评测指标完全不通用。
+    - with: multimodal-ai
+      difference: 计算机视觉只处理视觉输入，多模态人工智能要求视觉与语言能够互相解释。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -40,6 +50,11 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 它通常先确认输入、约束、流程和输出，再检查这些部分能否被复核。这样做可以把抽象名词落到具体判断上，也方便和其他词条做关系对照。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**计算机视觉 ≠ 图像生成。** 计算机视觉在读图，图像生成在画图，方向相反且评测指标完全不通用。
+**计算机视觉 ≠ 多模态人工智能。** 计算机视觉只处理视觉输入，多模态人工智能要求视觉与语言能够互相解释。
 
 <h2 id="example">真实例子</h2>
 

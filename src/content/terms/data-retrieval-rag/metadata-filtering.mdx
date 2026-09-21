@@ -27,6 +27,16 @@ sources:
     url: https://docs.digitalocean.com/products/knowledge-bases/reference/data-services-chunking-strategies/
     publisher: DigitalOcean
     accessedAt: '2026-07-29'
+chain: 3
+chainRole: advanced
+boundaries:
+  solves: 用时间、来源与权限等附加字段先把范围缩小，避免在错误的资料里检索。
+  notSolves: 不提升语义相关性，过滤只是划范围，圈错了范围再好的检索也没用。
+  confusions:
+    - with: retrieval
+      difference: 元数据过滤在检索之前先划范围，检索在范围内按相关性排序，前者是硬条件后者是软排序。
+    - with: query-rewriting
+      difference: 查询改写改的是问题本身，元数据过滤改的是搜索范围，一个动输入一个动集合。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -40,6 +50,11 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 它通常先确认输入、约束、流程和输出，再检查这些部分能否被复核。这样做可以把抽象名词落到具体判断上，也方便和其他词条做关系对照。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**元数据过滤 ≠ 检索。** 元数据过滤在检索之前先划范围，检索在范围内按相关性排序，前者是硬条件后者是软排序。
+**元数据过滤 ≠ 查询改写。** 查询改写改的是问题本身，元数据过滤改的是搜索范围，一个动输入一个动集合。
 
 <h2 id="example">真实例子</h2>
 

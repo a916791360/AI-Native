@@ -30,6 +30,14 @@ sources:
     accessedAt: '2026-07-29'
 chain: 6
 chainRole: advanced
+boundaries:
+  solves: 把任务拆给多个各有分工的 Agent，用并行与互审换取复杂任务的成功率。
+  notSolves: 不必然更好，协调成本与错误传播会让它比单 Agent 更贵也更不稳定。
+  confusions:
+    - with: agent-orchestration
+      difference: 多智能体系统是架构选择，Agent 编排是让它跑起来的调度逻辑，前者决定有多少角色后者决定怎么配合。
+    - with: ai-agent
+      difference: AI Agent 通常指单个能调用工具的执行体，多智能体系统由多个这样的执行体组成。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -43,6 +51,11 @@ chainRole: advanced
 <h2 id="how-it-works">它如何工作</h2>
 
 它通常先确认输入、约束、流程和输出，再检查这些部分能否被复核。这样做可以把抽象名词落到具体判断上，也方便和其他词条做关系对照。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**多智能体系统 ≠ Agent 编排。** 多智能体系统是架构选择，Agent 编排是让它跑起来的调度逻辑，前者决定有多少角色后者决定怎么配合。
+**多智能体系统 ≠ AI Agent。** AI Agent 通常指单个能调用工具的执行体，多智能体系统由多个这样的执行体组成。
 
 <h2 id="example">真实例子</h2>
 

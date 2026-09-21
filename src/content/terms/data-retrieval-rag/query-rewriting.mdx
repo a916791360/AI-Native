@@ -29,6 +29,14 @@ sources:
     accessedAt: '2026-07-29'
 chain: 3
 chainRole: advanced
+boundaries:
+  solves: 把口语化的提问改写成更容易命中的检索式，用于提升召回。
+  notSolves: 有改错的风险，改写一旦偏离原意，检索会自信地找到一堆无关内容。
+  confusions:
+    - with: retrieval
+      difference: 查询改写发生在检索之前且作用于问题本身，检索作用于资料集合。
+    - with: context-retrieval
+      difference: 查询改写改的是问句，上下文检索调整的是搜索范围，一个动输入一个动集合。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -42,6 +50,11 @@ chainRole: advanced
 <h2 id="how-it-works">它如何工作</h2>
 
 它通常先确认输入、约束、流程和输出，再检查这些部分能否被复核。这样做可以把抽象名词落到具体判断上，也方便和其他词条做关系对照。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**查询改写 ≠ 检索。** 查询改写发生在检索之前且作用于问题本身，检索作用于资料集合。
+**查询改写 ≠ 上下文检索。** 查询改写改的是问句，上下文检索调整的是搜索范围，一个动输入一个动集合。
 
 <h2 id="example">真实例子</h2>
 
