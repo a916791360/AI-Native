@@ -8,6 +8,8 @@ summary: 通过一对一提问与追问获取用户真实目标、行为与障�
 domain: ai-pm-fundamentals
 difficulty: beginner
 ring: extended
+chain: 7
+chainRole: advanced
 status: verified
 priority: 1
 featured: false
@@ -27,6 +29,15 @@ sources:
     url: https://pair.withgoogle.com/
     publisher: Google PAIR
     accessedAt: '2026-08-13'
+boundaries:
+  solves: 通过一次有结构的对话，还原用户过去真实发生过的行为与判断依据。
+  notSolves: 它不适合收集需求清单——问「你想要什么」得到的多是礼貌的猜测，而不是可靠信息。
+  confusions:
+    - with: user-research
+      difference: 访谈是方法之一，用户研究是包含多种方法与取样设计的一整项工作。
+    - with: requirement-analysis
+      difference: 访谈拿回素材，需求分析判断这些素材指向什么问题。
+minAction: 用约 30 分钟，把你要问的 5 个问题改写成「回忆过去某次具体经历」的形式，然后先在同事身上试一遍。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -40,6 +51,12 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 先明确要验证的假设，再准备开放问题，围绕真实经历追问细节。过程中避免引导（不暗示答案）和兜售（不推销功能），记录原话与情境，结束后归纳主题而非罗列意见。一次访谈回答一个具体问题，比一次问所有事更有效。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**用户访谈 ≠ 用户研究。** 访谈是方法之一，用户研究是包含多种方法与取样设计的一整项工作。
+
+**用户访谈 ≠ 需求分析。** 访谈拿回素材，需求分析判断这些素材指向什么问题。
 
 <h2 id="example">真实例子</h2>
 

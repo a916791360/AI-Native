@@ -8,6 +8,8 @@ summary: 使用指令与期望回答数据继续训练模型，使其更能理�
 domain: large-language-models-generative-ai
 difficulty: intermediate
 ring: core
+chain: 1
+chainRole: advanced
 status: verified
 publishedAt: '2026-07-30'
 updatedAt: '2026-07-30'
@@ -29,6 +31,15 @@ sources:
     publisher: arXiv
     publishedAt: '2022-03-04'
     accessedAt: '2026-07-30'
+boundaries:
+  solves: 让预训练完的模型学会「按指令办事」——理解任务描述、遵循格式要求、在对话里保持角色。
+  notSolves: 它不注入你的私有知识，也不保证模型在所有领域都可靠——指令遵循是通用能力，不等于领域正确。
+  confusions:
+    - with: fine-tuning
+      difference: 指令微调通常指厂商在通用指令数据上做的那一轮对齐，是模型的出厂设置；微调是你用自己数据做的再训练。
+    - with: post-training
+      difference: 后训练是预训练之后所有阶段的统称，指令微调与人类反馈对齐都在其中，是更大的集合。
+minAction: 用约 20 分钟，拿同一条指令分别给一个基础模型和一个指令微调模型，观察前者是不是把它当成续写文本而不是任务。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -42,6 +53,12 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 团队收集多种任务，为每种任务编写一个或多个指令模板，并把指令、输入和参考输出组成训练样本。训练过程根据模型输出与参考输出之间的损失更新参数。FLAN 使用六十多项自然语言处理任务的指令化版本训练同一个模型；任务数量、模型规模和自然语言指令都影响实验结果。[S1] InstructGPT 则把标注者示范用于监督微调，再进入后续偏好训练。[S2]
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**指令微调 ≠ 微调。** 指令微调通常指厂商在通用指令数据上做的那一轮对齐，是模型的出厂设置；微调是你用自己数据做的再训练。
+
+**指令微调 ≠ 后训练。** 后训练是预训练之后所有阶段的统称，指令微调与人类反馈对齐都在其中，是更大的集合。
 
 <h2 id="example">真实例子</h2>
 

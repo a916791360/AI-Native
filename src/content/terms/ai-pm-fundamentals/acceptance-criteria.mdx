@@ -8,6 +8,8 @@ summary: 用可观察、可验证的条件描述功能完成标准，用于对�
 domain: ai-pm-fundamentals
 difficulty: beginner
 ring: extended
+chain: 6
+chainRole: advanced
 status: verified
 priority: 1
 featured: false
@@ -27,6 +29,15 @@ sources:
     url: https://en.wikipedia.org/wiki/Acceptance_testing
     publisher: Wikipedia
     accessedAt: '2026-08-13'
+boundaries:
+  solves: 事先写明「做到什么算完成」，让开发自测、测试验收与产品确认用同一把尺子。
+  notSolves: 它不覆盖所有质量问题——写清功能完成条件，不等于覆盖了性能、安全与体验。
+  confusions:
+    - with: user-story
+      difference: 用户故事描述要什么，验收标准定义做完的样子，两者常成对出现。
+    - with: eval-set
+      difference: 验收标准面向功能交付、逐条判定；评测集面向模型效果、批量统计。前者是验收项，后者是测量工具。
+minAction: 用约 30 分钟，给一条需求写 5 条验收标准，每条都写成能被观察到的现象，然后数一数有几条无法客观判定。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -40,6 +51,12 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 针对每个需求写若干条可验证条件，每条都能被观察到「是」或「否」，并覆盖正常路径、边界与失败情况。验收标准回答「完成时会发生什么」，而不是「怎么做」（后者是实现细节）。写完后任何一方都能独立判断是否达标。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**验收标准 ≠ 用户故事。** 用户故事描述要什么，验收标准定义做完的样子，两者常成对出现。
+
+**验收标准 ≠ 评测集。** 验收标准面向功能交付、逐条判定；评测集面向模型效果、批量统计。前者是验收项，后者是测量工具。
 
 <h2 id="example">真实例子</h2>
 

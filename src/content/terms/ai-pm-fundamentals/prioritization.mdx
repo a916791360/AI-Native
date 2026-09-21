@@ -8,6 +8,8 @@ summary: 依据价值、成本、风险与依赖对需求排序，让有限资�
 domain: ai-pm-fundamentals
 difficulty: intermediate
 ring: extended
+chain: 7
+chainRole: advanced
 status: verified
 priority: 1
 featured: false
@@ -27,6 +29,15 @@ sources:
     url: https://www.svpg.com/
     publisher: Silicon Valley Product Group
     accessedAt: '2026-08-13'
+boundaries:
+  solves: 在资源有限时决定先做哪个，把「都重要」变成可比较的排序依据。
+  notSolves: 它不判断需求值不值得做——排序方法只处理相对顺序，全错的需求排得再好也没用。
+  confusions:
+    - with: roadmap
+      difference: 优先级是排序的判断，路线图是排序结果在时间轴上的展开。
+    - with: mvp
+      difference: MVP 关注用最小投入验证一个假设，优先级关注在多个候选中先投哪一个，两者的取舍对象不同。
+minAction: 用约 30 分钟，把 backlog 里前 10 条按「影响人数 × 影响程度 ÷ 成本」粗排一遍，再看结果与你心里的答案差在哪。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -40,6 +51,12 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 常见做法是用一个可比较的框架打分，例如 RICE 按触达（Reach）、影响（Impact）、信心（Confidence）和投入（Effort）估算每个需求的优先级。关键是先统一「价值」与「成本」的口径，用同一套标准比较，再结合依赖和战略目标做最终判断，而不是把公式当答案。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**需求优先级 ≠ 产品路线图。** 优先级是排序的判断，路线图是排序结果在时间轴上的展开。
+
+**需求优先级 ≠ 最小可行产品。** MVP 关注用最小投入验证一个假设，优先级关注在多个候选中先投哪一个，两者的取舍对象不同。
 
 <h2 id="example">真实例子</h2>
 

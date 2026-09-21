@@ -8,6 +8,8 @@ summary: 使用固定任务、样本和标准比较提示词版本效果的过�
 domain: prompt-context-engineering
 difficulty: intermediate
 ring: core
+chain: 7
+chainRole: advanced
 status: verified
 publishedAt: '2026-07-30'
 updatedAt: '2026-07-30'
@@ -27,6 +29,15 @@ sources:
     url: https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
     publisher: Anthropic
     accessedAt: '2026-07-30'
+boundaries:
+  solves: 用一组固定输入与判分标准，把「这版提示词比上版好」变成可比较的结论，而不是凭几次试用的印象。
+  notSolves: 它不改进提示词本身——评测只告诉你哪版更好，好在哪里、接下来怎么改仍要人来判断。
+  confusions:
+    - with: prompt-debugging
+      difference: 调试针对个案定位原因；评测对一组样本做整体比较，回答的是「这次改动是否普遍变好」。
+    - with: eval-set
+      difference: 评测集是跑评测用的那份题；提示词评测还包括判分方式（规则、模型裁判、人工）与对比口径。
+minAction: 用约 40 分钟，为你正在调的提示词攒 15 条输入，把当前版本与上一版各跑一遍，逐条标注「更好 / 一样 / 更差」。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -40,6 +51,12 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 先写清任务目标和不能接受的失败，再建立包含典型、边界及对抗输入的代表性数据集。随后按任务性质选择确定性代码检查、人工量规或经过校准的模型评分器，保存当前基线，运行候选版本并逐类检查差异。评测集还要持续吸收生产失败和新输入，不能在上线前只跑一次。[S1][S2]
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**提示词评测 ≠ 提示词调试。** 调试针对个案定位原因；评测对一组样本做整体比较，回答的是「这次改动是否普遍变好」。
+
+**提示词评测 ≠ 评测集。** 评测集是跑评测用的那份题；提示词评测还包括判分方式（规则、模型裁判、人工）与对比口径。
 
 <h2 id="example">真实例子</h2>
 

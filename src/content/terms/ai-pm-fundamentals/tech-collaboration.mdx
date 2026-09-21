@@ -8,6 +8,8 @@ summary: 产品经理与工程师在方案、排期、权衡与风险上的协�
 domain: ai-pm-fundamentals
 difficulty: intermediate
 ring: extended
+chain: 6
+chainRole: advanced
 status: verified
 priority: 1
 featured: false
@@ -27,6 +29,15 @@ sources:
     url: https://en.wikipedia.org/wiki/Cross-functional_team
     publisher: Wikipedia
     accessedAt: '2026-08-13'
+boundaries:
+  solves: 把需求翻译成工程能评估的形式——讲清场景、约束与验收，让技术判断得以发生。
+  notSolves: 它不替代技术决策——方案选型与实现代价由工程判断，产品侧越权指定实现只会放大风险。
+  confusions:
+    - with: prd
+      difference: PRD 是协作的载体，与工程师协作是把这份文档变成共同理解的过程，前者是物后者是事。
+    - with: design-collaboration
+      difference: 与设计师协作解决「体验怎么组织」，与工程师协作解决「能不能做、代价多大」，两者常交叠但回答的问题不同。
+minAction: 用约 30 分钟，把你最近一次需求评审里工程师提的问题记下来，看它们是不是都指向「你没说清的那部分」。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -40,6 +51,12 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 把「用户问题」和「解决方案」分开：产品经理负责讲清问题、价值和验收标准，工程师负责提出实现方案和成本。通过讨论权衡（范围、性能、可维护性），一起决定先做什么。关键是用可验证的验收标准代替模糊描述，让双方对「完成」有一致定义。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**与工程师协作 ≠ 产品需求文档。** PRD 是协作的载体，与工程师协作是把这份文档变成共同理解的过程，前者是物后者是事。
+
+**与工程师协作 ≠ 与设计师协作。** 与设计师协作解决「体验怎么组织」，与工程师协作解决「能不能做、代价多大」，两者常交叠但回答的问题不同。
 
 <h2 id="example">真实例子</h2>
 

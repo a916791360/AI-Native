@@ -8,6 +8,8 @@ summary: 通过埋点、漏斗、留存等数据理解用户行为与产品健�
 domain: ai-pm-fundamentals
 difficulty: intermediate
 ring: extended
+chain: 7
+chainRole: advanced
 status: verified
 priority: 1
 featured: false
@@ -27,6 +29,15 @@ sources:
     url: https://en.wikipedia.org/wiki/Analytics
     publisher: Wikipedia
     accessedAt: '2026-08-13'
+boundaries:
+  solves: 用埋点与漏斗把用户的实际行为量出来，让决策基于发生了什么，而不是谁的声音更大。
+  notSolves: 它不告诉你为什么——数据能显示流失在哪一步，原因要靠访谈与实验补上。
+  confusions:
+    - with: ab-testing
+      difference: 数据分析看已发生的整体行为，A/B 测试用随机对照检验某个改动，前者描述后者归因。
+    - with: task-success-rate
+      difference: 任务成功率是数据分析里的一个具体指标，产品数据分析是采集、定义与解读指标的整体工作。
+minAction: 用约 30 分钟，挑产品最核心的一条操作路径画成漏斗，标出每一步的人数，看哪一步掉得最多。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -40,6 +51,12 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 先确定要回答的问题，再据此设计埋点（记录关键事件与属性），用漏斗看转化、用留存看长期价值、用分群看差异。关键是先有「北极星指标 + 护栏指标」，再围绕它们搭看板，而不是堆一堆没人看的报表。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**产品数据分析 ≠ A/B 测试。** 数据分析看已发生的整体行为，A/B 测试用随机对照检验某个改动，前者描述后者归因。
+
+**产品数据分析 ≠ 任务成功率。** 任务成功率是数据分析里的一个具体指标，产品数据分析是采集、定义与解读指标的整体工作。
 
 <h2 id="example">真实例子</h2>
 

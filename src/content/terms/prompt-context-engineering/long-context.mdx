@@ -8,6 +8,8 @@ summary: 模型一次能够处理较长输入与历史信息的能力，容量�
 domain: prompt-context-engineering
 difficulty: intermediate
 ring: core
+chain: 1
+chainRole: advanced
 status: verified
 publishedAt: '2026-07-30'
 updatedAt: '2026-07-30'
@@ -28,6 +30,15 @@ sources:
     publisher: arXiv
     publishedAt: '2023-07-06'
     accessedAt: '2026-07-30'
+boundaries:
+  solves: 让模型一次能读进整份报告、整个模块的代码，减少「先切片再检索」带来的信息割裂。
+  notSolves: 它不等于读得准——上下文越长，位于中段的信息越容易被忽略，而且成本与延迟同步上升。
+  confusions:
+    - with: context-window
+      difference: 上下文窗口是容量的技术定义（多少 token），长上下文是「这个容量足够装下你的一整份材料」的能力描述，说的是同一个参数的不同侧面。
+    - with: context-compression
+      difference: 压缩是容量不够时的补救，长上下文是容量本身的扩大；两者常一起用，但不互相替代。
+minAction: 用约 30 分钟，把一份长文档整篇放进上下文，然后把同一个问题分别问「开头的信息」和「中段的信息」，比较回答质量。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -41,6 +52,12 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 输入被转换为一个有顺序的 Token 序列，与本轮输出共同占用窗口。模型通过注意力等机制组合序列信息，但实际召回会受长度、位置、训练分布、干扰内容和任务形式影响。[S1][S2] “Lost in the Middle”实验通过改变相关文档的位置，观察到部分模型在输入开头或结尾表现较好、在中部明显下降。[S2]
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**长上下文 ≠ 上下文窗口。** 上下文窗口是容量的技术定义（多少 token），长上下文是「这个容量足够装下你的一整份材料」的能力描述，说的是同一个参数的不同侧面。
+
+**长上下文 ≠ 上下文压缩。** 压缩是容量不够时的补救，长上下文是容量本身的扩大；两者常一起用，但不互相替代。
 
 <h2 id="example">真实例子</h2>
 

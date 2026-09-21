@@ -8,6 +8,8 @@ summary: 模型在给定任务、语言、模态和约束下表现出的可测�
 domain: large-language-models-generative-ai
 difficulty: beginner
 ring: core
+chain: 1
+chainRole: advanced
 status: verified
 publishedAt: '2026-07-30'
 updatedAt: '2026-07-30'
@@ -28,6 +30,15 @@ sources:
     url: https://developers.openai.com/api/docs/guides/evaluation-best-practices
     publisher: OpenAI
     accessedAt: '2026-07-30'
+boundaries:
+  solves: 用来描述一个模型在没有额外工程手段时能稳定做到什么，这是选型与设定预期的起点。
+  notSolves: 它不等于你的产品效果——同一模型在不同提示、不同数据、不同流程下表现差很远，能力是上限不是结果。
+  confusions:
+    - with: ai-capability-boundary
+      difference: 能力边界讲的是整类 AI 做不到什么（例如无法保证事实正确）；模型能力讲某个具体模型在基准与实测中的表现，两者是类别与个体的关系。
+    - with: benchmark
+      difference: 基准测试是测量手段，模型能力是被测对象，而且基准分数只覆盖它的其中一部分。
+minAction: 用约 30 分钟，选两个候选模型各跑你那 20 条真实题目，把「谁在什么类型上更强」写成一张两列表，而不是只看排行榜。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -41,6 +52,12 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 先定义任务输入、期望输出和不能接受的失败，再收集覆盖典型、边界与对抗情况的代表性样本。固定提示、工具、温度、输出格式和模型版本，选择与任务相关的准确性、校准、稳健性、公平性、延迟或成本指标，运行候选模型并逐类分析。自动评分器要用人工判断校准，评测集还应持续吸收生产失败。多指标结果用于看取舍，而不是合成一个脱离情境的万能分数。[S1][S2]
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**模型能力 ≠ AI 能力边界。** 能力边界讲的是整类 AI 做不到什么（例如无法保证事实正确）；模型能力讲某个具体模型在基准与实测中的表现，两者是类别与个体的关系。
+
+**模型能力 ≠ 基准测试。** 基准测试是测量手段，模型能力是被测对象，而且基准分数只覆盖它的其中一部分。
 
 <h2 id="example">真实例子</h2>
 

@@ -8,6 +8,8 @@ summary: 用「作为…我希望…以便…」句式表达用户价值的最�
 domain: ai-pm-fundamentals
 difficulty: beginner
 ring: extended
+chain: 6
+chainRole: advanced
 status: verified
 priority: 2
 featured: false
@@ -27,6 +29,15 @@ sources:
     url: https://en.wikipedia.org/wiki/User_story
     publisher: Wikipedia
     accessedAt: '2026-08-13'
+boundaries:
+  solves: 用「作为…我想要…以便…」一句话把需求压回用户与目的，避免需求退化成功能清单。
+  notSolves: 它不含验收细节——一句话说不清边界与异常，直接拿去开发会留下一堆各自理解。
+  confusions:
+    - with: prd
+      difference: 用户故事是讨论用的卡片，短且开放；PRD 是把讨论结果固化成范围、验收与边界的文档。
+    - with: requirement-analysis
+      difference: 需求分析是搞清楚要解决什么问题的过程，用户故事是这个过程里用来表达结论的一种写法。
+minAction: 用约 30 分钟，把一条需求改写成用户故事，再把「以便」那半句删掉读一遍——读不通就说明目的还没想清。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -40,6 +51,12 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 一条故事通常写成「作为……我希望……以便……」，再配上验收标准和对话式澄清。故事要小到能在一段迭代内交付，价值要与业务目标挂钩。它不是替代 PRD，而是把 PRD 拆成可交付、可验证的小单元。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**用户故事 ≠ 产品需求文档。** 用户故事是讨论用的卡片，短且开放；PRD 是把讨论结果固化成范围、验收与边界的文档。
+
+**用户故事 ≠ 需求分析。** 需求分析是搞清楚要解决什么问题的过程，用户故事是这个过程里用来表达结论的一种写法。
 
 <h2 id="example">真实例子</h2>
 

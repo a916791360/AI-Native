@@ -9,6 +9,8 @@ summary: 记录产品目标、用户、功能、验收标准与范围的文档�
 domain: ai-pm-fundamentals
 difficulty: beginner
 ring: extended
+chain: 6
+chainRole: advanced
 status: verified
 priority: 1
 featured: false
@@ -28,6 +30,15 @@ sources:
     url: https://www.atlassian.com/agile/product-management/requirements
     publisher: Atlassian
     accessedAt: '2026-08-13'
+boundaries:
+  solves: 把「要做成什么、为谁做、做到什么算完成」写成一份大家都能引用的文档，让设计、开发与测试对同一件事有相同的理解。
+  notSolves: 它不保证需求是对的——文档写得再清楚，也可能是在精确地做一件不该做的事。
+  confusions:
+    - with: requirement-analysis
+      difference: 需求分析搞清楚「用户到底要解决什么」，产出的是判断；PRD 把分析结论落成可执行的契约，产出的是文档。
+    - with: user-story
+      difference: 用户故事是「作为某角色，我想要某功能，以便某目的」的一句话卡片，适合讨论；PRD 是围绕它展开的范围、验收与边界说明。
+minAction: 用约 40 分钟，把你手上正在做的一件事写成三段：为谁做、做成什么样算完成、明确不做什么。写完读一遍，看「不做什么」那行是不是空的。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -41,6 +52,12 @@ PRD 是记录「为什么做、为谁做、做什么、怎样算完成」的产�
 <h2 id="how-it-works">它如何工作</h2>
 
 一份可用的 PRD 通常包含：背景与目标、目标用户、用户问题、功能与范围（含不做什么）、验收标准、依赖与风险、成功指标。关键是把「用户问题」和「解决方案」分开写，并用可观察的验收标准代替形容词。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**产品需求文档 ≠ 需求分析。** 需求分析搞清楚「用户到底要解决什么」，产出的是判断；PRD 把分析结论落成可执行的契约，产出的是文档。
+
+**产品需求文档 ≠ 用户故事。** 用户故事是「作为某角色，我想要某功能，以便某目的」的一句话卡片，适合讨论；PRD 是围绕它展开的范围、验收与边界说明。
 
 <h2 id="example">真实例子</h2>
 

@@ -8,6 +8,8 @@ summary: 当主模型不可用、超时或不适合当前任务时接管请求�
 domain: ai-engineering-deployment-operations
 difficulty: intermediate
 ring: core
+chain: 5
+chainRole: advanced
 status: verified
 publishedAt: '2026-07-30'
 updatedAt: '2026-07-30'
@@ -28,6 +30,15 @@ sources:
     publisher: AWS
     publishedAt: '2026-06-30'
     accessedAt: '2026-07-30'
+boundaries:
+  solves: 主模型超时、限流或不可用时自动切到另一个模型把请求答完，避免整条链路直接失败。
+  notSolves: 它不保证换个模型结果一样——备用模型的格式遵循与知识范围可能不同，输出质量通常会掉一档。
+  confusions:
+    - with: model-routing
+      difference: 路由按请求特征主动选模型；备用模型是主路径失败后的兜底，触发条件是故障而不是任务类型。
+    - with: rollback
+      difference: 回滚把系统退回上一个已知可用的版本；备用模型是在同一版本内换一个模型继续服务，不涉及版本变更。
+minAction: 用约 30 分钟，人为把主模型的密钥改错，观察你的应用是直接报错还是有兜底路径，并把报错时用户实际看到什么记下来。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -41,6 +52,12 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 团队先定义哪些错误可重试、重试次数和总截止时间，再为每类任务指定契约兼容且通过评测的备用路径。连续失败越过阈值时，熔断器暂停主路径并转向备用模型；响应要标记实际模型和降级状态，监控错误率、延迟与质量。主服务恢复后，通过健康探测和小流量试探逐步切回，而不是瞬间把全部请求压回去。[S1][S2]
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**备用模型 ≠ 模型路由。** 路由按请求特征主动选模型；备用模型是主路径失败后的兜底，触发条件是故障而不是任务类型。
+
+**备用模型 ≠ 回滚。** 回滚把系统退回上一个已知可用的版本；备用模型是在同一版本内换一个模型继续服务，不涉及版本变更。
 
 <h2 id="example">真实例子</h2>
 

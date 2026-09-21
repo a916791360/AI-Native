@@ -9,6 +9,8 @@ summary: 用最小成本验证核心假设的最小可用产品版本，目标�
 domain: ai-pm-fundamentals
 difficulty: beginner
 ring: extended
+chain: 6
+chainRole: advanced
 status: verified
 priority: 1
 featured: false
@@ -28,6 +30,15 @@ sources:
     url: https://theleanstartup.com/
     publisher: Eric Ries
     accessedAt: '2026-08-13'
+boundaries:
+  solves: 用最小投入验证最关键的假设，把「我觉得用户会要」变成有证据的判断。
+  notSolves: 它不等于砍功能的半成品——没有明确待验假设的「简化版」只是做得少，学不到东西。
+  confusions:
+    - with: problem-solution-fit
+      difference: 问题方案匹配判断方向对不对，MVP 用最小成本去验证这个判断，前者是想后者是做。
+    - with: roadmap
+      difference: MVP 针对单个假设的一次验证，路线图是多件事的排序；MVP 的结论常常反过来改路线图。
+minAction: 用约 30 分钟，写下这个 MVP 要验证的那一句假设，再写下「如果结果与预期相反，我们会改什么」——答不出来说明这次不是在做验证。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -41,6 +52,12 @@ MVP 是用最小成本验证一个核心假设的最小可用版本。它不是�
 <h2 id="how-it-works">它如何工作</h2>
 
 先写出最关键的假设（通常是「某类用户会为了某个结果而持续使用」），再确定验证这个假设所需的最小功能，然后交付给真实用户并观察行为，最后依据证据决定坚持、调整或放弃。每一步都以「学到什么」为产出。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**最小可行产品 ≠ 问题方案匹配。** 问题方案匹配判断方向对不对，MVP 用最小成本去验证这个判断，前者是想后者是做。
+
+**最小可行产品 ≠ 产品路线图。** MVP 针对单个假设的一次验证，路线图是多件事的排序；MVP 的结论常常反过来改路线图。
 
 <h2 id="example">真实例子</h2>
 

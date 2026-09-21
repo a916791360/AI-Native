@@ -8,6 +8,8 @@ summary: 产品为一次 AI 交互分配的最大可接受等待时间，用于�
 domain: ai-product-ux
 difficulty: intermediate
 ring: core
+chain: 4
+chainRole: advanced
 status: verified
 publishedAt: '2026-07-30'
 updatedAt: '2026-07-30'
@@ -27,6 +29,15 @@ sources:
     url: https://docs.cloud.google.com/architecture/framework/perspectives/ai-ml/reliability
     publisher: Google Cloud
     accessedAt: '2026-07-30'
+boundaries:
+  solves: 给一次交互的总耗时定一个数，再把它分配到检索、模型、渲染各段，让「太慢」变成可定位的问题。
+  notSolves: 它不提升速度——预算是承诺与切分，超了要靠缓存、并行或换模型去解决。
+  confusions:
+    - with: perceived-latency
+      difference: 感知延迟是用户主观觉得等了多久；延迟预算是工程上的时间承诺。先给进度反馈能让感知延迟远低于实际耗时。
+    - with: latency
+      difference: 延迟是实测出来的耗时数字，预算是在这个数字之外预先定下的上限。
+minAction: 用约 30 分钟，给一个交互场景定总预算（例如 3 秒），再把检索、模型、渲染各段实测一次，看哪一段吃掉了大部分。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -40,6 +51,12 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 先从用户任务和服务目标定义 P95 等百分位目标，并区分首字延迟与完整完成时间。再为输入处理、检索、工具、模型、后处理和网络分配子预算，给各阶段设置截止时间并用分布式追踪测量。优化时优先减少不必要的顺序调用与输出、并行独立工作，并用流式呈现改善感知等待；总预算耗尽时取消、回退或转异步。[S1][S2]
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**延迟预算 ≠ 感知延迟。** 感知延迟是用户主观觉得等了多久；延迟预算是工程上的时间承诺。先给进度反馈能让感知延迟远低于实际耗时。
+
+**延迟预算 ≠ 延迟。** 延迟是实测出来的耗时数字，预算是在这个数字之外预先定下的上限。
 
 <h2 id="example">真实例子</h2>
 

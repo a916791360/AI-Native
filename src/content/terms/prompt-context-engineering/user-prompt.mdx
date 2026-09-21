@@ -30,6 +30,15 @@ sources:
     url: https://platform.claude.com/docs/en/api/messages/create
     publisher: Anthropic
     accessedAt: '2026-07-30'
+boundaries:
+  solves: 用户当次输入的那段话——它是最直接的意图来源，也是模型每一轮都要重新读的东西。
+  notSolves: 它不承载长期规则——把「永远用中文回答」写在这里，换一轮对话就失效，这类要求属于系统提示词。
+  confusions:
+    - with: prompt
+      difference: 提示词是模型收到的全部输入的总称（含系统提示、示例、资料）；用户提示词特指用户自己写的那部分。
+    - with: system-prompt
+      difference: 系统提示词由开发者写、优先级更高且用户看不见；用户提示词由使用者写、每次不同。两者冲突时怎么取舍由指令层级决定。
+minAction: 用约 20 分钟，把你产品里用户最常写的一句话收集 20 条，看它们与系统提示词有没有互相矛盾的表述。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -43,6 +52,12 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 应用把用户输入组织成包含角色和内容的消息，并与系统指令、对话历史、工具结果等一起提交。Anthropic Messages API 使用 `role` 与 `content` 表示用户和助手轮次；OpenAI Model Spec 则说明用户指令处于更高层规则之下。[S1][S2] 这些内容在推理时影响本次生成，正常情况下不会因为一次消息就更新模型参数。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**用户提示词 ≠ 提示词。** 提示词是模型收到的全部输入的总称（含系统提示、示例、资料）；用户提示词特指用户自己写的那部分。
+
+**用户提示词 ≠ 系统提示词。** 系统提示词由开发者写、优先级更高且用户看不见；用户提示词由使用者写、每次不同。两者冲突时怎么取舍由指令层级决定。
 
 <h2 id="example">真实例子</h2>
 

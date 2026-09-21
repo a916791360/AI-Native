@@ -8,6 +8,8 @@ summary: 在满足质量与可靠性要求的前提下降低模型调用、计�
 domain: ai-engineering-deployment-operations
 difficulty: intermediate
 ring: core
+chain: 5
+chainRole: advanced
 status: verified
 publishedAt: '2026-07-30'
 updatedAt: '2026-07-30'
@@ -34,6 +36,15 @@ sources:
     url: https://docs.cloud.google.com/architecture/framework/perspectives/ai-ml/cost-optimization
     publisher: Google Cloud
     accessedAt: '2026-07-30'
+boundaries:
+  solves: 在效果可接受的前提下把每条请求的开销降下来——常用手段是模型分级、缓存、批处理与精简上下文。
+  notSolves: 它不提高效果，也不替你决定「哪些降级可以接受」；省下来的钱通常要用效果或延迟来换。
+  confusions:
+    - with: model-routing
+      difference: 模型路由是「这条请求该给哪个模型」的分派机制；成本优化是目标，路由只是达成它的手段之一，缓存与批处理同样算。
+    - with: semantic-cache
+      difference: 语义缓存复用相似问题的旧答案，直接减少调用次数；成本优化还包括换更小的模型、压缩输入等与缓存无关的做法。
+minAction: 用约 40 分钟，统计你最近一周的调用，把请求按「答错也不要紧」和「必须准」分成两堆，估算把前一堆换成小模型能省下多少。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -47,6 +58,12 @@ AI 功能的成本会随流量、上下文长度、输出长度、失败重试�
 <h2 id="how-it-works">它如何工作</h2>
 
 先按任务记录输入输出令牌、请求与重试、工具和人工处理，并连接任务成功率、延迟和严重失败。再从取消无效调用、缩短不必要输入输出、缓存重复内容、合并或批处理请求开始；对适合的任务评测更小模型、级联或路由。每次只改变可归因的一组因素，用同一评测集复测质量底线，并在生产中监控单位成功成本。[S1][S2][S3]
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**成本优化 ≠ 模型路由。** 模型路由是「这条请求该给哪个模型」的分派机制；成本优化是目标，路由只是达成它的手段之一，缓存与批处理同样算。
+
+**成本优化 ≠ 语义缓存。** 语义缓存复用相似问题的旧答案，直接减少调用次数；成本优化还包括换更小的模型、压缩输入等与缓存无关的做法。
 
 <h2 id="example">真实例子</h2>
 

@@ -8,6 +8,8 @@ summary: 在真实或受控线上流量中观察系统效果的评估，需要�
 domain: evaluation-observability-quality
 difficulty: intermediate
 ring: core
+chain: 7
+chainRole: advanced
 status: verified
 publishedAt: '2026-07-31'
 updatedAt: '2026-07-31'
@@ -33,6 +35,15 @@ sources:
     url: https://www.microsoft.com/en-us/research/publication/safe-velocity-a-practical-guide-to-software-deployment-at-scale-using-controlled-rollout/
     publisher: Microsoft Research
     accessedAt: '2026-07-31'
+boundaries:
+  solves: 用灰度或 A/B 把改动放到真实用户里比，看的是真实任务下的效果指标，而不是离线题目的分数。
+  notSolves: 它不解释原因，也不适合验小改动——样本要够、周期要够、分流要干净，否则结论不可信。
+  confusions:
+    - with: offline-evaluation
+      difference: 在线看真实用户行为，离线看固定题；前者的代价是慢且可能影响用户，后者的代价是可能与现实脱节。
+    - with: ab-testing
+      difference: A/B 测试是分流与统计推断的方法；在线评估是「在线上做评估」这件事，可以不依赖随机分流（例如灰度对比历史同期）。
+minAction: 用约 30 分钟，选一个准备上线的改动，写出你打算看的那个在线指标、观察天数，以及什么结果算赢。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -46,6 +57,12 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 上线前先通过离线 Gate，并声明假设、分流单位、目标人群、主要指标、质量与安全护栏、样本与停止条件。随机实验需要持续记录分流单位、曝光、版本与结果，比较对照和处理差异；非实验监测则要明确只能识别变化，不能自动建立因果。团队从小比例流量开始，持续检查严重错误、延迟和投诉，满足条件后逐步放量，触发护栏时立即停止或回滚。[S1][S2][S3]
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**在线评估 ≠ 离线评估。** 在线看真实用户行为，离线看固定题；前者的代价是慢且可能影响用户，后者的代价是可能与现实脱节。
+
+**在线评估 ≠ A/B 测试。** A/B 测试是分流与统计推断的方法；在线评估是「在线上做评估」这件事，可以不依赖随机分流（例如灰度对比历史同期）。
 
 <h2 id="example">真实例子</h2>
 

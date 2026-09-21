@@ -8,6 +8,8 @@ summary: 在预先定义的成功标准下正确完成任务的次数占总尝�
 domain: ai-product-ux
 difficulty: intermediate
 ring: core
+chain: 4
+chainRole: advanced
 status: verified
 publishedAt: '2026-07-30'
 updatedAt: '2026-07-30'
@@ -28,6 +30,15 @@ sources:
     publisher: Anthropic
     publishedAt: '2026-01-09'
     accessedAt: '2026-07-30'
+boundaries:
+  solves: 用一个可数的指标回答「用户到底把事办成了没有」，比满意度评分更接近产品是否真的有用。
+  notSolves: 它不解释为什么失败——成功率掉了要靠日志与会话回放定位，指标本身不给原因。
+  confusions:
+    - with: north-star-metric
+      difference: 北极星指标是全局目标，通常自上而下定义；任务成功率是具体任务上的完成比例，常作为它的支撑指标。
+    - with: evaluation
+      difference: AI 评估看模型输出质量（对不对、有没有依据）；任务成功率看用户侧的结果（有没有把事办完），两者可以一个高一个低。
+minAction: 用约 30 分钟，为你产品里最常做的那件事定义「做成了」的判定条件，再抽 20 次真实会话逐条手工判定一次。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -41,6 +52,12 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 先定义任务输入、必须达到的最终结果和无效试验处理规则，再选择代码检查、人工量规或经过校准的模型评分器。每次完整尝试是一项试验；对存在随机性的系统，应在同一任务上运行多次并保存配置。汇总时同时报告成功数、有效试验总数、置信区间或波动，以及按失败类型和重要子群拆分的结果。OpenAI 强调代表性样本与持续评测，Anthropic 则把任务、试验和评分器作为 Agent 评测的基本组成。[S1][S2]
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**任务成功率 ≠ 北极星指标。** 北极星指标是全局目标，通常自上而下定义；任务成功率是具体任务上的完成比例，常作为它的支撑指标。
+
+**任务成功率 ≠ AI 评估。** AI 评估看模型输出质量（对不对、有没有依据）；任务成功率看用户侧的结果（有没有把事办完），两者可以一个高一个低。
 
 <h2 id="example">真实例子</h2>
 

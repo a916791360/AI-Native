@@ -8,6 +8,8 @@ summary: 系统、开发者、用户与工具信息之间的指令优先顺序�
 domain: prompt-context-engineering
 difficulty: intermediate
 ring: core
+chain: 2
+chainRole: advanced
 status: verified
 publishedAt: '2026-07-30'
 updatedAt: '2026-07-30'
@@ -29,6 +31,15 @@ sources:
     publisher: OpenAI
     publishedAt: '2025-09-12'
     accessedAt: '2026-07-30'
+boundaries:
+  solves: 明确当系统提示、用户输入与检索到的资料互相冲突时谁优先，让模型有一致的取舍依据。
+  notSolves: 它不提供强制力——模型对层级的遵守是概率性的，真正的硬约束要靠权限与代码校验。
+  confusions:
+    - with: system-prompt
+      difference: 系统提示词是层级里最高那一层的内容载体；指令层级规定的是「哪层压哪层」，它解释了系统提示词为什么该被优先遵守。
+    - with: prompt-injection
+      difference: 提示词注入是攻击者试图把内容伪装成高优先级指令；指令层级是防御时讲的规则，把「资料不是指令」这件事说清楚。
+minAction: 用约 30 分钟，构造一次冲突：在检索到的文档里写上「忽略之前的指令」，看模型是照做还是守住系统提示词。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -42,6 +53,12 @@ AI 应用同时接收平台规则、应用要求、用户任务和网页或工�
 <h2 id="how-it-works">它如何工作</h2>
 
 模型协议先标记不同来源，再判断低权限要求是否与高权限规则一致：一致时继续完成任务，冲突时忽略冲突部分或拒绝无法安全完成的请求。OpenAI 的指令层级研究使用训练数据教授这种条件式服从；Model Spec 则描述平台、开发者与用户等层级及“不受信任数据没有指令权限”的原则。[S1][S2]
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**指令层级 ≠ 系统提示词。** 系统提示词是层级里最高那一层的内容载体；指令层级规定的是「哪层压哪层」，它解释了系统提示词为什么该被优先遵守。
+
+**指令层级 ≠ 提示词注入。** 提示词注入是攻击者试图把内容伪装成高优先级指令；指令层级是防御时讲的规则，把「资料不是指令」这件事说清楚。
 
 <h2 id="example">真实例子</h2>
 

@@ -8,6 +8,8 @@ summary: 让用户能够发起、调整、暂停、撤销或拒绝 AI 行为的�
 domain: ai-product-ux
 difficulty: beginner
 ring: core
+chain: 4
+chainRole: advanced
 status: verified
 publishedAt: '2026-07-31'
 updatedAt: '2026-07-31'
@@ -27,6 +29,15 @@ sources:
     url: https://www.microsoft.com/en-us/research/publication/guidelines-for-human-ai-interaction/
     publisher: Microsoft Research
     accessedAt: '2026-07-30'
+boundaries:
+  solves: 让用户能改、能停、能撤销系统的动作，从而敢把更多事交给它——控制权是信任的前提，不是信任的结果。
+  notSolves: 它不等于功能多——给一堆开关却看不出效果，用户仍然不敢用。
+  confusions:
+    - with: undo-action
+      difference: 撤销操作是控制权里最具体的一种（把已发生的动作收回来）；控制权还包括事前改参数、事中打断、事后追溯。
+    - with: user-trust
+      difference: 用户信任是结果，控制权是达成它的手段之一；系统的自主性越高，控制权对信任的影响越大。
+minAction: 用约 30 分钟，列出你的产品里系统会自动做的三件事，检查每件事用户能否在事后叫停或改回去，不能的那件就是隐患。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -40,6 +51,12 @@ AI 输出具有概率性，也可能误解用户情境。如果用户只能接�
 <h2 id="how-it-works">它如何工作</h2>
 
 先找出 AI 会改变内容、偏好、数据或外部状态的节点，再按影响和可撤销性决定控制强度。界面要说明当前状态、操作范围和生效时间，支持编辑、忽略、退出、重置或回到手动路径；收集反馈时还要说明它会用于本次调整、个人偏好还是模型改进。高风险与不可逆动作需要更明确的确认、权限和恢复方案。[S1][S2]
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**用户控制权 ≠ 撤销操作。** 撤销操作是控制权里最具体的一种（把已发生的动作收回来）；控制权还包括事前改参数、事中打断、事后追溯。
+
+**用户控制权 ≠ 用户信任。** 用户信任是结果，控制权是达成它的手段之一；系统的自主性越高，控制权对信任的影响越大。
 
 <h2 id="example">真实例子</h2>
 

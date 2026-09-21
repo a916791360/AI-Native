@@ -8,6 +8,8 @@ summary: 将输入判断为一个或多个离散类别的预测任务，例如�
 domain: machine-learning-deep-learning
 difficulty: beginner
 ring: core
+chain: 1
+chainRole: advanced
 status: verified
 publishedAt: '2026-07-29'
 updatedAt: '2026-07-29'
@@ -27,6 +29,15 @@ sources:
     url: https://www.deeplearningbook.org/contents/ml.html
     publisher: MIT Press
     accessedAt: '2026-07-29'
+boundaries:
+  solves: 把输入判到几个预先定好的类别里——是否垃圾邮件、属于哪类工单，答案空间是封闭的。
+  notSolves: 它不生成新内容，也处理不了「都不属于」——类别没覆盖到的情况，分类器仍会硬塞进某一类。
+  confusions:
+    - with: regression
+      difference: 分类的输出是类别，回归的输出是连续数值。预测房价用回归，判断会不会涨价用分类。
+    - with: clustering
+      difference: 分类的类别是人事先定好的，聚类是让算法自己找分组；前者需要标注数据，后者不需要。
+minAction: 用约 30 分钟，在你的分类场景里挑 20 条历史样本，看有多少条其实属于「都不属于」，评估要不要加一个「其他」类。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -40,6 +51,12 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 模型根据输入特征产生每个类别的分数或概率，再通过选择规则给出标签。二分类常用阈值把概率转成正类或负类；提高阈值通常会减少正类预测，同时改变误报和漏报的数量。[S1] 多分类可以选择分数最高的类别，多标签则可为每个类别分别判断。最终仍要把预测与真实标签对照，并按任务选择准确率、精确率、召回率等指标。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**分类任务 ≠ 回归任务。** 分类的输出是类别，回归的输出是连续数值。预测房价用回归，判断会不会涨价用分类。
+
+**分类任务 ≠ 聚类。** 分类的类别是人事先定好的，聚类是让算法自己找分组；前者需要标注数据，后者不需要。
 
 <h2 id="example">真实例子</h2>
 

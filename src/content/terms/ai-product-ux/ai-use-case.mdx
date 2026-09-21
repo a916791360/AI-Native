@@ -8,6 +8,8 @@ summary: 将具体用户任务、可用数据和 AI 能力组合成可评估价�
 domain: ai-product-ux
 difficulty: beginner
 ring: core
+chain: 4
+chainRole: advanced
 status: verified
 publishedAt: '2026-07-30'
 updatedAt: '2026-07-30'
@@ -28,6 +30,15 @@ sources:
     publisher: NIST
     publishedAt: '2023-01-26'
     accessedAt: '2026-07-30'
+boundaries:
+  solves: 帮你筛出「模型能力刚好覆盖、错了代价可承受」的具体事情，作为动手前的第一道关。
+  notSolves: 它不评估你的团队做不做得出来，也不管数据够不够——场景成立不等于项目可做。
+  confusions:
+    - with: problem-solution-fit
+      difference: 问题方案匹配问「这个方案是否真的解决那个问题」；应用场景问「这件事适不适合交给模型」，后者的位置更靠前。
+    - with: ai-product
+      difference: 场景是候选清单里的一行，产品是从中选中并真正落地的那一个。
+minAction: 用约 30 分钟，列出你工作中 10 件重复的事，逐条标「错了要不要紧」与「有没有标准答案」，看筛完还剩几条。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -41,6 +52,12 @@ AI 应用场景是一个可以被验证的产品假设：某类用户在特定�
 <h2 id="how-it-works">它如何工作</h2>
 
 先写明用户、任务和发生任务的条件，再记录当前做法及其成本。随后说明 AI 具体负责识别、生成、预测还是排序，需要哪些合法可用的数据，以及人员保留什么决定权。最后预先定义成功指标、不可接受的失败和退出条件，并与一个不使用 AI 的可行基线比较。NIST AI RMF 还要求在接近部署情境的条件下测量表现和限制。[S1][S2]
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**AI 应用场景 ≠ 问题方案匹配。** 问题方案匹配问「这个方案是否真的解决那个问题」；应用场景问「这件事适不适合交给模型」，后者的位置更靠前。
+
+**AI 应用场景 ≠ AI 产品。** 场景是候选清单里的一行，产品是从中选中并真正落地的那一个。
 
 <h2 id="example">真实例子</h2>
 

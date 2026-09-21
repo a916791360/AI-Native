@@ -8,6 +8,8 @@ summary: 用于让模型学习参数、模式或行为的数据集合，其范�
 domain: machine-learning-deep-learning
 difficulty: beginner
 ring: core
+chain: 1
+chainRole: advanced
 status: verified
 publishedAt: '2026-07-29'
 updatedAt: '2026-07-29'
@@ -27,6 +29,15 @@ sources:
     url: https://www.nist.gov/document/artificial-intelligence-key-consideration-and-effective-implementation-strategies
     publisher: National Institute of Standards and Technology
     accessedAt: '2026-07-29'
+boundaries:
+  solves: 模型从中学规律的那批样本——它的规模、质量与覆盖决定了模型能学会什么、在哪里容易失手。
+  notSolves: 它不决定模型的推理方式，也不保证覆盖真实场景——训练数据里没有的情况，模型通常表现最差且不自知。
+  confusions:
+    - with: eval-set
+      difference: 训练数据用来学，评测集用来验；两者共用会让分数虚高，必须严格分开。
+    - with: feature-engineering
+      difference: 特征工程是人手工挑选与构造输入字段，训练数据是喂进去的样本集合本身，前者是后者的加工手段之一。
+minAction: 用约 30 分钟，翻一遍你训练数据的来源，写下它「采集自什么场景、漏掉了什么场景」，后半句就是模型最容易出错的区域。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -40,6 +51,12 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 团队先根据使用场景确定样本单位、特征、标签和覆盖范围，再采集、清洗、去重并记录来源。训练集用于调整参数，验证集帮助选择配置，测试集用于估计未见数据上的表现。过程中需要检查缺失值、错误标签、噪声、重复、类别不平衡和时间变化，并让数据版本能够追溯。[S1]
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**训练数据 ≠ 评测集。** 训练数据用来学，评测集用来验；两者共用会让分数虚高，必须严格分开。
+
+**训练数据 ≠ 特征工程。** 特征工程是人手工挑选与构造输入字段，训练数据是喂进去的样本集合本身，前者是后者的加工手段之一。
 
 <h2 id="example">真实例子</h2>
 

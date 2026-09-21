@@ -8,6 +8,8 @@ summary: 验证解决方案是否真正缓解目标用户的重要问题，是�
 domain: ai-product-ux
 difficulty: beginner
 ring: core
+chain: 4
+chainRole: advanced
 status: verified
 publishedAt: '2026-07-30'
 updatedAt: '2026-07-30'
@@ -28,6 +30,15 @@ sources:
     publisher: NIST
     publishedAt: '2023-01-26'
     accessedAt: '2026-07-30'
+boundaries:
+  solves: 检验「用 AI 解决这件事」是否真的对上问题本身，而不是让技术选择反过来定义问题。
+  notSolves: 它不评估方案好不好实现，也不预测效果——匹配只回答方向对不对，实现难度是下一关。
+  confusions:
+    - with: ai-use-case
+      difference: 应用场景问「这类事适不适合 AI」；问题方案匹配问「这个具体方案是否真的解决那个具体问题」，聚焦到一组对应关系上。
+    - with: mvp
+      difference: MVP 是验证假设的最小投入方式；问题方案匹配在验证之前，先确认这个假设值不值得验。
+minAction: 用约 30 分钟，写下你的方案，再写「用户现在靠什么凑合」。如果两者差别只是快一点，说明问题还没找准。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -41,6 +52,12 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 先通过访谈、观察和现有行为证据确认谁在何时遇到什么困难，以及当前替代方案为何不足。然后把方案写成可证伪假设，预先定义任务结果、采用信号、成本和不可接受失败。用最低成本原型让代表性用户完成真实任务，并与当前流程或非 AI 基线比较；证据不支持假设时，修改问题定义、换方案或停止。Google PAIR 和 NIST 都要求把用户需要、使用情境、收益和限制放在方案决定之前。[S1][S2]
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**问题方案匹配 ≠ AI 应用场景。** 应用场景问「这类事适不适合 AI」；问题方案匹配问「这个具体方案是否真的解决那个具体问题」，聚焦到一组对应关系上。
+
+**问题方案匹配 ≠ 最小可行产品。** MVP 是验证假设的最小投入方式；问题方案匹配在验证之前，先确认这个假设值不值得验。
 
 <h2 id="example">真实例子</h2>
 

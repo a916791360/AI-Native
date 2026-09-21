@@ -8,6 +8,8 @@ summary: 当前对话中的历史消息、状态和约束集合，决定模型�
 domain: prompt-context-engineering
 difficulty: beginner
 ring: core
+chain: 2
+chainRole: advanced
 status: verified
 publishedAt: '2026-07-30'
 updatedAt: '2026-07-30'
@@ -27,6 +29,15 @@ sources:
     url: https://platform.claude.com/docs/en/build-with-claude/context-windows
     publisher: Anthropic
     accessedAt: '2026-07-30'
+boundaries:
+  solves: 让模型知道「我们刚才说到哪」——指代、省略与约定都靠它承接，否则每轮都像在跟新人说话。
+  notSolves: 它不等于记忆——对话一旦超出窗口或开了新会话，上下文就没了，跨会话留存要靠外部存储。
+  confusions:
+    - with: short-term-memory
+      difference: 短期记忆是以对话为单位保留的状态，通常实现为上下文或会话存储；对话上下文更强调「这一轮要带上哪些文本」。
+    - with: context-window
+      difference: 上下文窗口是容量上限，对话上下文是填进去的内容，前者决定后者能有多长。
+minAction: 用约 20 分钟，在一段对话里故意用「它」「那个方案」指代前文，看模型什么时候接得住、什么时候开始瞎猜。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -40,6 +51,12 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 许多消息 API 接收按角色排列的消息列表。应用保存先前轮次，在新请求中选择需要的历史并连同当前消息发送；模型输出随后可能成为下一轮输入。[S1][S2] 随着轮次增加，历史会持续占用上下文窗口，应用因此需要截断、摘要、检索旧消息或把确定状态迁移到结构化存储。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**对话上下文 ≠ 短期记忆。** 短期记忆是以对话为单位保留的状态，通常实现为上下文或会话存储；对话上下文更强调「这一轮要带上哪些文本」。
+
+**对话上下文 ≠ 上下文窗口。** 上下文窗口是容量上限，对话上下文是填进去的内容，前者决定后者能有多长。
 
 <h2 id="example">真实例子</h2>
 

@@ -785,3 +785,23 @@
 - 实测（无头浏览器量出来的，不是看出来的）：顶栏 5 项在 1440 / 1280 / 1180 / 1100 / 1024px 五个视口下**零横向溢出**，导航宽 302px（≤1100px 为 286px），导航与搜索框间距在 1024px 视口仍余 305px；900px 及以下导航收进「菜单」按钮。首页 04 段在 1440px 为两列（581px × 2）、960px 及以下单列，条目零裁切。
 - 验收结果：`astro check` 124 个文件 0 错误 / 0 警告 / 0 提示；构建 476 页；`pnpm run ci` 全绿（EXIT=0）；E2E **115 项通过 / 7 项按设备条件跳过 / 0 失败**（较上轮 +6，即新增 3 个用例 × chromium 与 mobile-chromium 两套设备：首页四入口、顶栏当前位置标记、链路页出口）；`check:performance` **未放宽任何一项**（首页首屏 JavaScript 2.3 KiB、首页 CSS 25.3 KiB——较上轮 +1.2 KiB，即新段落样式；Pagefind 索引 2256.9 KiB、图谱 JavaScript 438.1 KiB、最大图片 118.5 KiB）；内容门禁合计 374 条 / 0 fail，与改动前一致（本轮不动内容）。
 - 保留边界：未改动词条、关系、案例、路线与题库；未重生成 `src/generated/`；未部署。
+
+## 2026-09-21：I6-02 批次 3 收口整个 B 档，并定下产品方法层词条的链路映射规则
+
+- 状态：已执行。按《迭代开发说明书》I6-02 原文（B 档不重写正文，只补 `boundaries.confusions` 最小版本并挂进链路作为拓展阅读）执行，范围是 B 档最后剩下的 **54 条受保护词条**；同时收掉批次 2 的一处遗漏（见下）。批次 2 处理的是「由计划表生成的 79 条」，本批次处理「字段必须写进各自 `.mdx` 的 54 条」，两批合起来 B 档的 chain / boundaries / minAction 三项全部归零。
+- 先核范围，再动手：B 档缺 chain 的 44 条**全部包含**在缺 boundaries 的 54 条里（无漏项）；这 54 条经 `pnpm explain:authorship` 判定**全部**属于深度内容批次，字段写各自的 `.mdx`——写进覆盖层对这些词条完全无效。
+- 顺带收掉批次 2 的遗漏：批次 2 只写了 `boundaries`，没写 `minAction`，门禁「上手动作」因此停在 132 条。这 78 条（79 减去手工补过 minAction 的 `retrieval`）**全部是可生成词条**，字段写覆盖层，一个文件即可收口，因此本轮一并补齐，而不是留到下一轮。
+- **本轮唯一的判断题：`ai-pm-fundamentals` 的 21 条挂哪一站。** 这批词条（产品需求文档、最小可行产品、干系人管理、路线图……）是**产品方法层**的概念，而链路 8 站全是**技术能力层**——第 1–8 站回答的是「把 AI 用起来要理解哪八件事」，这批回答的是「产品经理怎么把这些能力变成产品」。硬贴会造成第二坐标轴失真。
+  - 采用的规则**不是**「它属于哪一站的技术栈」，而是**「这条方法主要服务链路上的哪一站」**，并统一按拓展阅读语义挂 `advanced`：
+    - **第 6 站（给流程 · 怎么把做法沉淀下来）**：把要做的事写成可复用的规范、把协作组织起来——`prd`、`user-story`、`requirement-analysis`、`roadmap`、`mvp`、`project-management`、`stakeholder-management`、`tech-collaboration`、`acceptance-criteria`。
+    - **第 7 站（给判断 · 怎么知道它行不行）**：判断做什么、做得对不对、值不值——`prioritization`、`ab-testing`、`product-analytics`、`product-lifecycle`、`go-to-market`、`business-model`、`competitive-analysis`、`user-research`、`user-interview`，以及三条角色词条（`ai-product-manager`、`ai-pm-competency`、`ai-pm-career-path`——它们定义的是「谁来做这些判断、要具备什么才能做判断」）。
+  - 依据是 `src/data/domains.yml` 里这个领域自己的定位：「从需求发现、方案文档到路线、指标与上线」——一条产品工作流，语义上正对应「沉淀做法」与「判断好坏」两站。
+  - **这是一个实用规则，不是分类学断言。** 若将来出现专门的产品方法轴，这两批应当整体迁移，而不是逐条重判。其余 33 条按领域直接归位（`ai-product-ux` 12 条→第 4 站、`data-retrieval-rag` 13 条→第 3 站、`evaluation` 与 `prompt-evaluation`→第 7 站、`safety` 15 条→第 8 站等），与同域已挂链路的词条保持一致。
+- 写入方式：54 条走脚本注入各自的 `.mdx`（`chain`/`chainRole` 插在 `ring` 之后、`status` 之前；`boundaries`/`minAction` 插在 `sources` 段之后、frontmatter 收尾之前；正文在 `how-it-works` 与 `example` 之间插入 `confusions` 段）。**正文第 4 段与 frontmatter 的 `confusions` 同文**——说明书要求「最小版本」，而单一事实源落在 frontmatter，可以避免同一段差别写两遍、两处不一致。
+- 注入前先校验、不靠事后发现：脚本在写入前拦住四类错误——`confusions.with` 指向不存在的词条 id、`with` 指向自己、`difference` 过短、以及「已有 chain 的词条被重复赋值」（会覆盖既有取位）。本次 54 条的 `with` 全部指向真实词条 id，其中 10 条沿用已有 chain、44 条新分配。
+- 验收结果（改动前后对比，数据来自 `reports/content-quality.json`）：
+  - 门禁 2 · 边界声明 **98 → 0**；门禁 3 · 上手动作 **132 → 0**；门禁 5 · 段落结构 **54 → 0**；门禁 1 · 模板复用 **78 → 78（未变）**；门禁 4 · 配额与近义 12 → 12；合计 **374 → 90**，fail 始终为 0。
+  - 门禁 1 保持不变是本轮最值得记录的一项——它说明新写的 54 条边界声明**没有引入任何复用句**（54 条 × 2–3 组「甲 ≠ 乙」若措辞雷同，会立刻在这条上显形）。
+  - B 档三项归零：缺 chain 0 / 缺 boundaries 0 / 缺 minAction 0；剩余缺口全部集中在 C 档（缺 chain 149 / 缺 boundaries 152 / 缺 minAction 152，门禁对其豁免）。
+  - 一处被门禁抓住的疏漏：`ai-use-case` 的 minAction 漏写时长，被判「缺少可验证的完成标志」——门禁 3 的判据不只是「有没有」，还包括「能不能观察」，已补齐。
+- 保留边界：未重写任何词条的既有正文段落，只插入第 4 段；未改动 `publishedAt` / `updatedAt` / `verifiedAt`（本轮属补字段，不是内容修订）；未处理 C 档（属 I6-03 与后续批次）；未部署。

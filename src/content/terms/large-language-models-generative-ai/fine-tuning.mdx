@@ -8,6 +8,8 @@ summary: 在已有模型基础上用特定数据继续训练，以适配领域�
 domain: large-language-models-generative-ai
 difficulty: intermediate
 ring: core
+chain: 1
+chainRole: advanced
 status: verified
 publishedAt: '2026-07-30'
 updatedAt: '2026-07-30'
@@ -29,6 +31,15 @@ sources:
     publisher: Stanford CRFM
     publishedAt: '2021-08-16'
     accessedAt: '2026-07-30'
+boundaries:
+  solves: 用你自己的数据继续训练，让模型在特定任务上稳定地按你的要求输出，尤其是格式与口吻这类提示词难锁住的部分。
+  notSolves: 它不适合灌知识——把事实训进去既贵又难更新，新知识更该走检索；微调改的是行为，不是资料库。
+  confusions:
+    - with: retrieval-augmented-generation
+      difference: 微调改「怎么做」，检索改「知道什么」。要它掌握公司内部信息该用检索，要它稳定按某种格式答题才考虑微调。
+    - with: instruction-tuning
+      difference: 指令微调是模型厂商用通用指令数据做的对齐训练，让模型学会听指令；微调是你在此基础上用自己数据做的二次训练。
+minAction: 用约 30 分钟，先别训练：把你希望模型稳定做到的那件事写成 10 条期望输入输出，检查提示词加示例能否达到，达不到的部分才是微调的候选。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -42,6 +53,12 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 团队先选择基础模型和任务数据，定义输入、目标输出、损失函数及评估集，再从预训练参数出发继续优化。训练误差沿模型反向传播，优化器据此更新全部或部分可训练参数。BERT 的做法是在预训练模型上增加较小任务输出层，再联合微调模型参数。[S1] 实际项目还要记录数据版本、超参数、模型产物和独立评估结果。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**微调 ≠ 检索增强生成。** 微调改「怎么做」，检索改「知道什么」。要它掌握公司内部信息该用检索，要它稳定按某种格式答题才考虑微调。
+
+**微调 ≠ 指令微调。** 指令微调是模型厂商用通用指令数据做的对齐训练，让模型学会听指令；微调是你在此基础上用自己数据做的二次训练。
 
 <h2 id="example">真实例子</h2>
 

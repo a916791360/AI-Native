@@ -8,6 +8,8 @@ summary: 在界面中明确呈现模型的不确定性、证据缺口或需要�
 domain: ai-product-ux
 difficulty: intermediate
 ring: core
+chain: 4
+chainRole: advanced
 status: verified
 publishedAt: '2026-07-31'
 updatedAt: '2026-07-31'
@@ -27,6 +29,15 @@ sources:
     url: https://www.microsoft.com/en-us/research/publication/guidelines-for-human-ai-interaction/
     publisher: Microsoft Research
     accessedAt: '2026-07-30'
+boundaries:
+  solves: 把模型的不确定用界面语言说出来——措辞、区间、来源链接、置信提示——让用户知道哪里可以信、哪里要核。
+  notSolves: 它不改变模型实际的不确定程度，呈现得再清楚也不会让错误答案变对。
+  confusions:
+    - with: confidence-calibration
+      difference: 校准管信号准不准，呈现管信号怎么画给用户；顺序上要先校准再呈现，否则只是把错信号画得更醒目。
+    - with: explanation-interface
+      difference: 解释界面回答「它为什么这么说」（依据与推理）；不确定性呈现回答「它有多确定」，两者常同时出现在一条回答上。
+minAction: 用约 30 分钟，挑 5 条你产品的真实回答，各写一句「哪部分可以信、哪部分要核」，看这些句子能不能直接变成界面元素。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -40,6 +51,12 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 先明确用户正在作出的决定和错误后果，再识别会改变决定的证据缺口、适用条件和替代解释。低风险场景可以提示缺失字段或提供多个候选；高风险场景应说明理由、限制和复核路径。文字、区间、分档或视觉标记都要用目标用户测试，确认他们理解含义并采取了合适动作，而不是只测试是否看见提示。[S1][S2]
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**不确定性呈现 ≠ 置信度校准。** 校准管信号准不准，呈现管信号怎么画给用户；顺序上要先校准再呈现，否则只是把错信号画得更醒目。
+
+**不确定性呈现 ≠ 解释界面。** 解释界面回答「它为什么这么说」（依据与推理）；不确定性呈现回答「它有多确定」，两者常同时出现在一条回答上。
 
 <h2 id="example">真实例子</h2>
 

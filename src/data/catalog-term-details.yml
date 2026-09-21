@@ -33,6 +33,14 @@
 # B 档不做全文重写，只补「与最易混的那一条差在哪」，并把它挂进链路作为拓展阅读——
 # 因此 chainRole 统一为 advanced（站点骨架词条才是 intro / core）。
 # 剩下 54 条 B 档属受保护词条，字段写在各自的 .mdx 里。
+#
+# ---- I6-02 批次 3（2026-09-21）--------------------------------------------
+# 收口整个 B 档，两部分：
+#   1. 那 54 条受保护词条补齐 chain / chainRole / boundaries，并给正文插入第 4 段
+#      「必须澄清的误会」——字段写在各自 .mdx，不经过这个文件。
+#   2. 本文件里批次 2 漏掉 minAction 的 78 条补上上手动作。批次 2 只写了 boundaries，
+#      门禁「上手动作」因此仍报 132 条；补完之后 B 档的 chain / boundaries / minAction
+#      三项全部为 0，剩余缺口全部集中在 C 档（152 条，门禁豁免）。
 
 # ---- 第 1 站 · 地基 · 模型是什么 ------------------------------------------
 next-token-prediction:
@@ -49,6 +57,7 @@ natural-language-processing:
         difference: 自然语言处理是任务与研究领域的统称，大语言模型只是当前实现它的其中一种具体模型。
       - with: artificial-intelligence
         difference: 自然语言处理只管语言，人工智能还包括视觉、决策与机器人等其它能力方向。
+  minAction: 用约 20 分钟，把你现在用自然语言处理做的那件事列出来，判断它属于理解、生成还是转换三类里的哪一类。
 lora:
   chain: 1
   chainRole: advanced
@@ -60,6 +69,7 @@ lora:
         difference: 全量微调更新所有权重，低秩适配冻结原权重只训练一小块低秩矩阵，显存与存储成本低一个量级。
       - with: parameter-efficient-fine-tuning
         difference: 参数高效微调是一类方法的总称，低秩适配是其中被采用最多的一种具体实现。
+  minAction: 用约 40 分钟，查清你的目标任务需要多少训练显存，对比全量微调与低秩适配的差距，判断单卡是否可行。
 multimodal-ai:
   chain: 1
   chainRole: advanced
@@ -71,6 +81,7 @@ multimodal-ai:
         difference: 大语言模型只吃文本符号，多模态模型把图像与声音也编码进同一个向量空间。
       - with: computer-vision
         difference: 计算机视觉是只处理图像的单模态领域，多模态强调图像与语言在同一个模型里互相指认。
+  minAction: 用约 30 分钟，拿一张同时含文字与图表的截图，问一个需要跨两者推理的问题，看它能否两边都用上。
 computer-vision:
   chain: 1
   chainRole: advanced
@@ -82,6 +93,7 @@ computer-vision:
         difference: 计算机视觉在读图，图像生成在画图，方向相反且评测指标完全不通用。
       - with: multimodal-ai
         difference: 计算机视觉只处理视觉输入，多模态人工智能要求视觉与语言能够互相解释。
+  minAction: 用约 30 分钟，拿 20 张业务里的真实图片让模型分类，重点看光线差、遮挡重的那些错在哪里。
 image-generation:
   chain: 1
   chainRole: advanced
@@ -93,6 +105,7 @@ image-generation:
         difference: 图像生成只需单帧语义自洽，视频生成还要保证帧与帧之间的时序连贯。
       - with: computer-vision
         difference: 图像生成从文字出发造图，计算机视觉从图像出发产出判断，两者的输入输出正好对调。
+  minAction: 用约 30 分钟，用同一段描述生成四次，看结果一致性；如果每次差很多，说明描述里缺了关键约束。
 video-generation:
   chain: 1
   chainRole: advanced
@@ -104,6 +117,7 @@ video-generation:
         difference: 视频生成的难点在时间维度的一致性，图像生成只需单帧成立，成本与失败率都低得多。
       - with: multimodal-ai
         difference: 多模态是模型的输入输出能力，视频生成是具体产物形态，前者是能力后者是作品。
+  minAction: 用约 30 分钟，用一段描述生成 5 秒视频，重点看人物手指与背景文字，这两处最容易出现形变。
 
 # ---- 第 2 站 · 沟通 · 怎么把需求说清楚 ------------------------------------
 # prompt / system-prompt / few-shot-prompting / context-engineering 这四条属深度内容批次，
@@ -122,6 +136,7 @@ grounding:
         difference: 事实依据约束是写提示词时的手段，依据一致性是事后衡量它有没有守住这条约束的指标。
       - with: retrieval-augmented-generation
         difference: 检索增强生成解决材料怎么拿进来，事实依据约束解决拿进来之后怎么保证它只用这些材料。
+  minAction: 用约 30 分钟，给模型一份材料后问一个材料里没有答案的问题，看它是明确说不知道，还是顺着编一个。
 prompt-constraint:
   chain: 2
   chainRole: advanced
@@ -133,6 +148,7 @@ prompt-constraint:
         difference: 提示约束靠自然语言提要求，结构化输出靠接口层强校验格式，后者才是硬约束。
       - with: system-prompt
         difference: 系统提示词设定长期角色与边界，提示约束通常只针对某一次任务的具体限制。
+  minAction: 用约 30 分钟，把「不要做什么」写成三条明确禁止项加两条格式要求，观察输出需要返工的次数有没有下降。
 
 # ---- 第 3 站 · 给知识 · 怎么让它知道你家的资料 ------------------------------
 knowledge-base:
@@ -146,6 +162,7 @@ knowledge-base:
         difference: 知识库是资料本身，检索增强生成是使用这批资料的方法，前者是资产后者是用法。
       - with: vector-database
         difference: 知识库面向内容维护者，向量数据库面向工程存储，前者是业务概念后者是技术组件。
+  minAction: 用约 30 分钟，随机抽 10 份知识库文档看更新时间分布——如果大量文档长期没动，说明它正在腐化。
 hybrid-search:
   chain: 3
   chainRole: advanced
@@ -157,6 +174,7 @@ hybrid-search:
         difference: 混合检索包含关键词检索这一路，另一路是语义检索，融合后才取长补短。
       - with: reranking
         difference: 混合检索解决召回得全不全，重排解决排序得准不准，先混合再重排是常见组合。
+  minAction: 用约 30 分钟，准备 5 个专有名词查询与 5 个同义改写查询，分别看纯语义检索与混合检索的命中差别。
 query-rewriting:
   chain: 3
   chainRole: advanced
@@ -168,6 +186,7 @@ query-rewriting:
         difference: 查询改写发生在检索之前且作用于问题本身，检索作用于资料集合。
       - with: context-retrieval
         difference: 查询改写改的是问句，上下文检索调整的是搜索范围，一个动输入一个动集合。
+  minAction: 用约 30 分钟，收集 10 条用户的原话提问，手工改写成检索式，比较改写前后的召回差异。
 document-parsing:
   chain: 3
   chainRole: advanced
@@ -179,6 +198,7 @@ document-parsing:
         difference: 文档解析把文件读成文本，文档切片把文本切成适合检索的片段，顺序有先后。
       - with: data-ingestion
         difference: 数据接入负责把文件取进来，文档解析负责把它读懂，前者管搬运后者管理解。
+  minAction: 用约 30 分钟，拿一份带表格与脚注的 PDF，看解析结果里表格是否还成表、脚注有没有被混进正文。
 # retrieval 不在本文件里 —— 它属计划表 batch A，见文件头的「三分法」说明。
 # batch A 不在 PUBLISHED_CATALOG_BATCHES 里，永远不参与生成，因此覆盖层对它无效，
 # chain / chainRole / boundaries 写在 src/content/terms/data-retrieval-rag/retrieval.mdx。
@@ -194,6 +214,7 @@ context-retrieval:
         difference: 检索面向外部资料库，上下文检索面向本次会话的历史，数据源与时效性都不同。
       - with: conversation-context
         difference: 会话上下文把历史直接放进窗口，上下文检索从历史里挑出相关部分，前者受窗口长度限制。
+  minAction: 用约 30 分钟，在一段十轮以上的对话里，问一个第 2 轮提过的细节，看系统是记起来了还是要求你重述。
 data-ingestion:
   chain: 3
   chainRole: advanced
@@ -205,6 +226,7 @@ data-ingestion:
         difference: 数据接入解决从哪来与怎么搬，文档解析解决搬进来之后怎么读成文本。
       - with: indexing-pipeline
         difference: 数据接入是索引管线的前半段，索引管线还包含切片、嵌入与写入索引。
+  minAction: 用约 30 分钟，列出知识库的资料来自哪几个地方、各自多久更新一次，找出那个全靠手工同步的来源。
 indexing-pipeline:
   chain: 3
   chainRole: advanced
@@ -216,6 +238,7 @@ indexing-pipeline:
         difference: 文档切片是索引管线里的一个步骤，索引管线还包含解析、嵌入、写库与增量更新。
       - with: data-ingestion
         difference: 数据接入只负责把资料搬进来，索引管线负责把它变成能检索的形态并保持更新。
+  minAction: 用约 30 分钟，往知识库加一份新文档，记录它从上传到可被检索到花了多久、中间需要几个人动手。
 keyword-search:
   chain: 3
   chainRole: advanced
@@ -227,6 +250,7 @@ keyword-search:
         difference: 关键词检索匹配字面，语义检索匹配向量距离，后者能找到没提这个词但意思一样的段落。
       - with: hybrid-search
         difference: 混合检索把关键词与语义两路结果融合，单一的关键词检索只是其中一路。
+  minAction: 用约 20 分钟，用一个不存在的产品型号去搜，看关键词检索是否老老实实返回空，而不是给一堆相近结果。
 semantic-search:
   chain: 3
   chainRole: advanced
@@ -238,6 +262,7 @@ semantic-search:
         difference: 语义检索强调意思相近，相似度检索只描述用距离度量这件事，不保证度量的是语义。
       - with: keyword-search
         difference: 语义检索能命中同义改写，关键词检索只能命中字面出现，两者的失败模式刚好互补。
+  minAction: 用约 20 分钟，用「怎么让模型少胡说」去搜，看能否召回讲幻觉与事实依据约束的那批词条。
 similarity-search:
   chain: 3
   chainRole: advanced
@@ -249,6 +274,7 @@ similarity-search:
         difference: 相似度检索是算法层面的做法，语义检索是产品层面的目标，后者可以换用不同度量。
       - with: top-k
         difference: 相似度检索负责排序与计算，Top-K 负责决定截取前几条，两者是排序与取数的分工。
+  minAction: 用约 30 分钟，取一个查询向量看返回的 Top 5 相似度分布——如果前五名分数几乎一样，说明阈值很难定。
 top-k:
   chain: 3
   chainRole: advanced
@@ -260,6 +286,7 @@ top-k:
         difference: Top-K 决定先取多少条，重排决定取回来之后怎么重新排序，通常先取再排。
       - with: similarity-search
         difference: Top-K 是一个数量参数，相似度检索是一整套计算过程，参数作用在检索之上。
+  minAction: 用约 30 分钟，把 Top-K 从 3 调到 10，观察回答是变完整了还是被无关片段带偏，找出你场景的拐点。
 metadata-filtering:
   chain: 3
   chainRole: advanced
@@ -271,6 +298,7 @@ metadata-filtering:
         difference: 元数据过滤在检索之前先划范围，检索在范围内按相关性排序，前者是硬条件后者是软排序。
       - with: query-rewriting
         difference: 查询改写改的是问题本身，元数据过滤改的是搜索范围，一个动输入一个动集合。
+  minAction: 用约 30 分钟，用两个权限不同的账号问同一个问题，确认低权限账号拿不到高权限资料，而不是只靠模型自律。
 citation-generation:
   chain: 3
   chainRole: advanced
@@ -282,6 +310,7 @@ citation-generation:
         difference: 引用生成产出可核对的出处，依据一致性判断结论有没有被材料支持，前者是形式后者是实质。
       - with: hallucination
         difference: 引用生成对抗的是说得没根据，幻觉指的是说得是假的，有引用并不等于没有幻觉。
+  minAction: 用约 30 分钟，让系统回答 10 个问题，逐条点开它给的引用，统计有多少条真的支持了那句话。
 
 # ---- 第 4 站 · 给手脚 · 怎么让它做事 --------------------------------------
 autonomous-agent:
@@ -295,6 +324,7 @@ autonomous-agent:
         difference: AI Agent 指能使用工具的智能体，自主智能体强调决策自主程度，后者是前者的一种激进形态。
       - with: human-in-the-loop
         difference: 自主智能体尽量减少人的介入，人在回路要求关键节点必须有人确认，两者是相反的取舍。
+  minAction: 用约 30 分钟，给 Agent 一个模糊目标（比如「把这批反馈整理一下」），只记录它自己决定的第一步，看与你预期的差距。
 agent-sandbox:
   chain: 4
   chainRole: advanced
@@ -306,6 +336,7 @@ agent-sandbox:
         difference: 代码执行是能力，沙箱是承载这份能力的隔离容器，前者回答能做什么后者回答在哪做。
       - with: tool-use
         difference: 工具调用是 Agent 使用外部能力的方式，沙箱是这些能力被允许活动的地盘。
+  minAction: 用约 30 分钟，让 Agent 在沙箱里跑一段会写文件的代码，检查它能否写到容器之外；写不出去才算隔离真的生效。
 browser-use:
   chain: 4
   chainRole: advanced
@@ -317,6 +348,7 @@ browser-use:
         difference: 浏览器操作只限于网页之内，计算机操作作用于整个桌面，包括本地软件与文件管理器。
       - with: api-call
         difference: 接口调用稳定且结构化，浏览器操作靠识别界面元素，后者是接口缺失时的兜底手段。
+  minAction: 用约 40 分钟，挑一个没有接口的内部页面，让 Agent 完成一次只读的取数，记下它在哪些控件上卡壳。
 code-execution:
   chain: 4
   chainRole: advanced
@@ -328,6 +360,7 @@ code-execution:
         difference: 代码执行说明能跑，沙箱说明跑在隔离环境里，生产环境两者必须配套。
       - with: tool-use
         difference: 工具调用调的是预先定义好的能力，代码执行是现场生成程序，灵活但更不可控。
+  minAction: 用约 20 分钟，问模型一道需要精确计算的问题（如两个八位数的乘积），对比「直接回答」与「写代码再跑」的结果差多少。
 computer-use:
   chain: 4
   chainRole: advanced
@@ -339,6 +372,7 @@ computer-use:
         difference: 计算机操作覆盖整个桌面，浏览器操作只覆盖网页，后者的识别与回放更容易稳定。
       - with: autonomous-agent
         difference: 自主智能体描述的是决策自主程度，计算机操作描述的是作用在哪一层界面。
+  minAction: 用约 30 分钟，在你全程监视下让 Agent 操作一次桌面软件，只做只读动作，记下它认错的图标或按钮。
 short-term-memory:
   chain: 4
   chainRole: advanced
@@ -350,6 +384,7 @@ short-term-memory:
         difference: 短期记忆只在本次会话内有效，长期记忆跨会话保留，前者管进度后者管积累。
       - with: context-window
         difference: 上下文窗口是模型能一次读入的容量上限，短期记忆是这份容量里被有意维护的那部分状态。
+  minAction: 用约 30 分钟，让 Agent 执行一个需要连续调用三次工具的任务，观察它第二次调用时是否还记得第一次拿到的结果。
 long-term-memory:
   chain: 4
   chainRole: advanced
@@ -361,6 +396,7 @@ long-term-memory:
         difference: 长期记忆跨会话持久化，短期记忆随会话销毁，前者还需要写入与淘汰策略。
       - with: retrieval-augmented-generation
         difference: 长期记忆存的是交互沉淀且会自我增长，检索的资料库多为静态的既有文档。
+  minAction: 用约 30 分钟，在两段不同时间的对话里问同一件偏好（比如「我一般要什么格式」），看第二段是否记得。
 ai-adoption:
   chain: 4
   chainRole: advanced
@@ -372,6 +408,7 @@ ai-adoption:
         difference: AI 采用是组织层面的长期过程，AI 产品引导是首次使用时的界面设计，时间尺度差很多。
       - with: human-ai-collaboration
         difference: 人机协作是任务分工方式，AI 采用是接受度与习惯问题，前者可用即可后者需要改变行为。
+  minAction: 用约 30 分钟，问三个同事「上周哪件工作真的用上了 AI」，记录他们提到的障碍，而不是他们说的好处。
 ai-onboarding:
   chain: 4
   chainRole: advanced
@@ -383,6 +420,7 @@ ai-onboarding:
         difference: 产品引导发生在第一次使用之前，解释界面发生在每次输出之后，一个管预期一个管复核。
       - with: progressive-disclosure
         difference: 渐进披露是按需展开复杂能力的手法，产品引导是首次使用的路径设计，后者会用上前者。
+  minAction: 用约 30 分钟，写出产品第一次打开时该让用户知道的三个局限，检查它们现在有没有出现在首屏。
 autopilot-pattern:
   chain: 4
   chainRole: advanced
@@ -394,6 +432,7 @@ autopilot-pattern:
         difference: 自动驾驶模式由 AI 主导人验收，副驾驶模式由人主导 AI 辅助，差别在谁持有最终决定权。
       - with: human-oversight
         difference: 自动驾驶模式是一种产品形态，人工监督是配套的兜底机制，前者越激进后者越不能省。
+  minAction: 用约 30 分钟，找出产品里最适合全自动的一件事，写下如果它连续做错三次，用户靠什么发现。
 copilot-pattern:
   chain: 4
   chainRole: advanced
@@ -405,6 +444,7 @@ copilot-pattern:
         difference: 副驾驶模式由人做决定 AI 出力，自动驾驶模式由 AI 做决定人验收，风险与效率同时差一个量级。
       - with: user-control
         difference: 副驾驶模式是交互形态，用户控制权是它要保障的性质，前者是实现后者是目的。
+  minAction: 用约 30 分钟，把一处「AI 直接给结果」改成「先给建议、由用户确认」，观察用户是否会动手修改它的建议。
 error-recovery:
   chain: 4
   chainRole: advanced
@@ -416,6 +456,7 @@ error-recovery:
         difference: 撤销操作只针对刚刚那一步，错误恢复还包含纠正、重试与转人工等更大范围的处理。
       - with: fallback-experience
         difference: 降级体验是在能力不可用时换一条路，错误恢复是在已经出错之后收拾现场，触发时机不同。
+  minAction: 用约 30 分钟，人为制造一次模型失败，数一数界面给了用户几条路；只有「重试」一条说明恢复设计还不够。
 explanation-interface:
   chain: 4
   chainRole: advanced
@@ -427,6 +468,7 @@ explanation-interface:
         difference: 解释界面是产品层的呈现方式，可解释人工智能是模型层的能力，前者依赖后者但不止于后者。
       - with: uncertainty-display
         difference: 不确定性呈现是解释界面的一个组成元素，解释界面还包括引用、推理步骤与来源。
+  minAction: 用约 30 分钟，挑一条回答，把「依据来自哪里、可信到什么程度」两句话补进界面，再请同事读一遍看能否判断该不该信。
 fallback-experience:
   chain: 4
   chainRole: advanced
@@ -438,6 +480,7 @@ fallback-experience:
         difference: 备用模型是服务端的调度策略，降级体验是用户看到的结果，前者是原因后者是表现。
       - with: error-recovery
         difference: 降级体验是在失败之前主动换路，错误恢复是在失败之后收拾，前者是预案后者是补救。
+  minAction: 用约 20 分钟，把模型接口改成超时，观察用户看到的是明确的降级提示，还是一段空白或报错码。
 feedback-loop:
   chain: 4
   chainRole: advanced
@@ -449,6 +492,7 @@ feedback-loop:
         difference: 反馈闭环收的是用户行为与主观评价，在线评估用的是线上指标与灰度实验，前者更宽后者更硬。
       - with: human-evaluation
         difference: 反馈闭环是持续机制，人工评估是阶段性动作，前者往往要靠后者来校准口径。
+  minAction: 用约 40 分钟，追踪一条用户反馈从「点踩」到「改了提示词」的全过程，数一数中间需要多少人手工搬运。
 perceived-latency:
   chain: 4
   chainRole: advanced
@@ -460,6 +504,7 @@ perceived-latency:
         difference: 延迟是测量出来的耗时，感知延迟是用户的体感，两者经常不一致但只有前者能进监控。
       - with: streaming-response
         difference: 流式响应是降低感知延迟的具体手段，感知延迟是需要被优化的目标。
+  minAction: 用约 20 分钟，在一个等待约 5 秒的请求里加上进度提示，比较加之前与之后同一批用户的主观评价。
 progressive-disclosure:
   chain: 4
   chainRole: advanced
@@ -471,6 +516,7 @@ progressive-disclosure:
         difference: 渐进披露是贯穿全流程的信息组织原则，产品引导只覆盖第一次使用的路径。
       - with: explanation-interface
         difference: 解释界面决定给出多少依据，渐进披露决定什么时候给，一个管内容一个管节奏。
+  minAction: 用约 30 分钟，把界面上所有可调参数数一遍，按「首次必看 / 需要时再看」分成两组，看第一组能删到剩几个。
 undo-action:
   chain: 4
   chainRole: advanced
@@ -482,6 +528,7 @@ undo-action:
         difference: 撤销操作是具体的安全网，用户控制权是更宽的设计原则，前者是后者最容易落地的一种。
       - with: error-recovery
         difference: 撤销操作是在出错之前就准备好的退路，错误恢复是出错之后才开始的一系列补救动作。
+  minAction: 用约 30 分钟，检查产品里 AI 做过的动作能否逐条撤销；找不到撤销入口的那个动作，用户其实不敢放心用。
 user-trust:
   chain: 4
   chainRole: advanced
@@ -493,6 +540,7 @@ user-trust:
         difference: 用户控制权是可设计的机制，用户信任是机制带来的结果，前者是手段后者是产出。
       - with: confidence-calibration
         difference: 置信度校准影响模型表现出的把握程度，用户信任是长期形成的整体态度，前者是输入后者是结果。
+  minAction: 用约 30 分钟，找一位停用了产品的用户问「哪一次让你不再信它」，比发满意度问卷有用得多。
 
 # ---- 第 5 站 · 给接口 · 怎么标准化地接系统 ----------------------------------
 # api-call 曾是这里的条目，但它属手写清单（I6-02 批次 1 重写为决策页），
@@ -509,6 +557,7 @@ inference-server:
         difference: 模型服务是能力与流程的统称，推理服务器是承载它的具体软件组件。
       - with: model-api
         difference: 模型 API 是对外暴露的调用契约，推理服务器是契约背后的执行体。
+  minAction: 用约 30 分钟，查你的推理服务在并发 10 时的首字延迟与单卡显存占用，记下压测前后这两个数字的变化。
 rate-limiting:
   chain: 5
   chainRole: advanced
@@ -520,6 +569,7 @@ rate-limiting:
         difference: 限流是保住服务等级目标的手段，服务等级目标是限流要服务的那个承诺。
       - with: cost-optimization
         difference: 限流控的是流量规模，成本优化控的是单次调用的花费，两者目标不同但都会影响账单。
+  minAction: 用约 20 分钟，给接口设一个每分钟上限后并发打过去，确认超限时返回的是明确的错误码而不是让请求排队等待。
 ai-application:
   chain: 5
   chainRole: advanced
@@ -531,6 +581,7 @@ ai-application:
         difference: 模型服务是把模型跑起来对外提供接口，AI 应用是在接口之上做出完整产品。
       - with: langchain
         difference: LangChain 是搭建 AI 应用的一种工具库，AI 应用是最终交付给用户的东西。
+  minAction: 用约 30 分钟，把你的一个原型按「模型在哪一步、数据从哪来、用户在哪一步介入」画成一张图，找不到位置的那一环就是缺口。
 canary-release:
   chain: 5
   chainRole: advanced
@@ -542,6 +593,7 @@ canary-release:
         difference: 金丝雀发布负责小步放量，回滚负责放量后出事怎么退回去，两者是发布流程的上下游。
       - with: continuous-delivery
         difference: 持续交付是让发布随时可做的能力，金丝雀发布是发布时采用的放量策略。
+  minAction: 用约 30 分钟，为一次即将上线的改动写清放量节奏与每一步的观察指标、回退条件，缺回退条件就不要开始放量。
 continuous-delivery:
   chain: 5
   chainRole: advanced
@@ -553,6 +605,7 @@ continuous-delivery:
         difference: 持续交付让发布变容易，回滚让撤销变容易，两者共同构成敢频繁发布的前提。
       - with: canary-release
         difference: 持续交付是工程能力与流程，金丝雀发布是其中一种放量手段，前者包含后者。
+  minAction: 用约 30 分钟，数一数你的项目从改完代码到上线要经过几个人、几步手工操作，把最耗时的那一步写下来。
 latency-optimization:
   chain: 5
   chainRole: advanced
@@ -564,6 +617,7 @@ latency-optimization:
         difference: 延迟是要测量出来的指标，延迟优化是降低它的动作，前者是尺子后者是手术。
       - with: cost-optimization
         difference: 延迟优化让响应更快，成本优化让每次调用更便宜，两者常互相冲突需要一起权衡。
+  minAction: 用约 40 分钟，实测一次请求在检索、模型、网络各段分别花了多少毫秒，先优化占比最大的那一段。
 prompt-cache:
   chain: 5
   chainRole: advanced
@@ -575,6 +629,7 @@ prompt-cache:
         difference: 提示词缓存要求前缀逐字相同，语义缓存允许问法不同只要意思接近，后者命中率高但有误命中风险。
       - with: cost-optimization
         difference: 提示词缓存是达成成本优化的手段之一，成本优化还包括选型、批处理与蒸馏等其它路径。
+  minAction: 用约 30 分钟，把系统提示词固定在请求最前面再跑一批请求，对比命中缓存前后的延迟与账单金额。
 rollback:
   chain: 5
   chainRole: advanced
@@ -586,6 +641,7 @@ rollback:
         difference: 回滚发生在事后且需要触发条件，金丝雀发布发生在事前用于控制影响面。
       - with: continuous-delivery
         difference: 回滚是持续交付敢高频发布的前提之一，前者是保险后者是节奏。
+  minAction: 用约 30 分钟，做一次真实的回滚演练：先发布一版再退回去，记录全程耗时与谁有权限执行。
 semantic-cache:
   chain: 5
   chainRole: advanced
@@ -597,6 +653,7 @@ semantic-cache:
         difference: 语义缓存按意思命中因此更有效，但要设相似度阈值防误命中，实现与风险都比精确缓存高。
       - with: embedding
         difference: 语义缓存靠嵌入向量做判断，嵌入是它的实现依赖而不是它的同义词。
+  minAction: 用约 30 分钟，收集 20 条用户实际提问，统计有多少条在换一种说法后仍应命中同一答案，这就是缓存命中率的天花板。
 service-level-objective:
   chain: 5
   chainRole: advanced
@@ -608,6 +665,7 @@ service-level-objective:
         difference: 服务等级目标把延迟等指标包成对外承诺，延迟本身只是被纳入其中的一个数值。
       - with: observability
         difference: 服务等级目标定义什么叫达标，可观测性提供判断达标的证据，前者是标准后者是手段。
+  minAction: 用约 30 分钟，为你的服务写一条可测量的目标（如「99% 的请求在 3 秒内返回」），再去日志里算出当前实际值。
 streaming-response:
   chain: 5
   chainRole: advanced
@@ -619,6 +677,7 @@ streaming-response:
         difference: 流式响应是降低感知延迟的手段，感知延迟是它要改善的目标，前者是做法后者是效果。
       - with: latency
         difference: 流式响应优化的是首字时间，总延迟可能完全没变，两个指标要分开看。
+  minAction: 用约 20 分钟，把同一个请求分别用流式与一次性返回各跑一次，记录用户看到第一个字的时间差。
 
 # ---- 第 6 站 · 给流程 · 怎么把做法沉淀下来 ----------------------------------
 # prompt-template / prompt-chaining 属深度内容批次；agentic-workflow / workflow-automation
@@ -634,6 +693,7 @@ state-management:
         difference: 状态管理记录流程进度与中间结果，Agent 记忆保存跨轮次的事实与经验。
       - with: short-term-memory
         difference: 短期记忆是模型能看到的上下文，状态管理是流程框架自己维护的结构化进度。
+  minAction: 用约 30 分钟，构造一次中途失败的任务，看恢复时它是接着往下做，还是把已经做过的又做了一遍。
 multi-agent-system:
   chain: 6
   chainRole: advanced
@@ -645,6 +705,7 @@ multi-agent-system:
         difference: 多智能体系统是架构选择，Agent 编排是让它跑起来的调度逻辑，前者决定有多少角色后者决定怎么配合。
       - with: ai-agent
         difference: AI Agent 通常指单个能调用工具的执行体，多智能体系统由多个这样的执行体组成。
+  minAction: 用约 40 分钟，把一件可以并行的事拆给两个角色（一个写、一个查），与单 Agent 一次做完的结果比较差异在哪。
 agent-orchestration:
   chain: 6
   chainRole: advanced
@@ -656,6 +717,7 @@ agent-orchestration:
         difference: Agent 编排是调度逻辑，多智能体系统是采用多个 Agent 的整体架构，前者是方法后者是形态。
       - with: agentic-workflow
         difference: Agent 编排面向运行时的动态调度，智能体工作流是事先固化下来的步骤，前者灵活后者稳定。
+  minAction: 用约 40 分钟，给一个需要三步的任务画出「哪一步交给谁、结果怎么往下传」，然后指出链条上最可能卡住的那一环。
 
 # ---- 第 7 站 · 给判断 · 怎么知道它行不行 ------------------------------------
 benchmark:
@@ -669,6 +731,7 @@ benchmark:
         difference: 基准测试多为公开通用题库用于横向比较，评测集是面向自身业务的私有用例。
       - with: golden-dataset
         difference: 黄金数据集强调答案经人工确认并用于回归，基准测试主要看排名与分数。
+  minAction: 用约 30 分钟，挑一个公开基准，先看它到底测什么能力，再判断你的场景是否真的需要这个能力。
 human-evaluation:
   chain: 7
   chainRole: advanced
@@ -680,6 +743,7 @@ human-evaluation:
         difference: 人工评估是标准来源，大模型裁判是它的规模化替代品，后者的口径要靠前者校准。
       - with: online-evaluation
         difference: 人工评估在离线抽样上进行，在线评估用真实流量的指标说话，前者更细后者更真。
+  minAction: 用约 30 分钟，先写清这次人工评估的约定：评什么、几个人评、不一致时怎么裁决，写完再动手。
 retrieval-recall:
   chain: 7
   chainRole: advanced
@@ -691,6 +755,7 @@ retrieval-recall:
         difference: 召回率看有没有漏，精确率看有没有混进无关内容，两者必须一起看才有意义。
       - with: top-k
         difference: 检索召回率是被评估的结果指标，Top-K 是影响它的参数，调大 k 通常提高召回率但降低精确率。
+  minAction: 用约 30 分钟，为一个问题手工找出「应该被召回的全部片段」，与实际召回的比较，缺的那些就是短板。
 evaluation-rubric:
   chain: 7
   chainRole: advanced
@@ -702,6 +767,7 @@ evaluation-rubric:
         difference: 评估量规定义怎么打分，评测集定义拿什么题来打，标准与题库是两件事。
       - with: llm-as-judge
         difference: 评估量规要么给人用要么写进裁判提示词，大模型裁判是按量规执行的打分者。
+  minAction: 用约 40 分钟，为你的一项输出写三条打分维度、各定三档描述，然后请同事独立打一遍，看两人分数差多少。
 faithfulness:
   chain: 7
   chainRole: advanced
@@ -713,6 +779,7 @@ faithfulness:
         difference: 忠实度要求回答不超出材料，依据一致性允许结合常识但要求关键结论有材料支撑，宽严不同。
       - with: hallucination
         difference: 幻觉是现象，忠实度是把这一现象量化之后的指标，前者定性后者定量。
+  minAction: 用约 30 分钟，抽 10 条带检索的回答，逐句判断「这句话在材料里有没有依据」，算出有依据句子的比例。
 golden-dataset:
   chain: 7
   chainRole: advanced
@@ -724,6 +791,7 @@ golden-dataset:
         difference: 黄金数据集强调答案已被人确认，评测集只是用例集合，未必都有标准答案。
       - with: benchmark
         difference: 黄金数据集是自建私有的、面向自身业务，基准测试多是公开通用的，两者目标不同。
+  minAction: 用约 40 分钟，从历史工单里挑 20 条有明确正确答案的做成固定样本，作为下次改动的回归基线。
 latency:
   chain: 7
   chainRole: advanced
@@ -735,6 +803,7 @@ latency:
         difference: 延迟是客观耗时，感知延迟是用户的主观体感，优化后者往往比重构前者更划算。
       - with: service-level-objective
         difference: 延迟是原始测量值，服务等级目标是把这类值包装成对外承诺。
+  minAction: 用约 20 分钟，在日志里把请求耗时的 P50 与 P95 分开看，两者差距大说明有一部分用户一直在等。
 retrieval-precision:
   chain: 7
   chainRole: advanced
@@ -746,6 +815,7 @@ retrieval-precision:
         difference: 精确率看召回的准不准，召回率看该找的有没有找齐，两者通常此消彼长必须一起看。
       - with: top-k
         difference: 检索精确率是评估指标，Top-K 是影响它的参数，把 k 调小通常能提高精确率但降低召回率。
+  minAction: 用约 30 分钟，抽 10 次检索结果逐条判断召回的片段是否真相关，算出精确率并记下噪声都来自哪类文档。
 trace:
   chain: 7
   chainRole: advanced
@@ -757,6 +827,7 @@ trace:
         difference: 调用追踪是观测能力的其中一种手段，可观测性还包括指标、日志与告警的整体体系。
       - with: latency
         difference: 调用追踪记录每一步的耗时与入参，延迟只是它顺带暴露出来的一个维度。
+  minAction: 用约 30 分钟，制造一次失败请求，用追踪记录还原它经过了哪些步骤、从哪一步开始出错。
 
 # ---- 第 8 站 · 给安全 · 什么时候必须有人管 ----------------------------------
 # ai-guardrail / prompt-injection 属手写清单（I6-02 批次 1）；ai-risk-management /
@@ -772,6 +843,7 @@ red-teaming:
         difference: 红队测试是系统性的测试活动，越狱提示是它使用的具体攻击手段之一。
       - with: ai-risk-management
         difference: 红队测试用于发现风险，AI 风险管理负责把发现的风险纳入台账并跟踪处置。
+  minAction: 用约 40 分钟，拉一位不了解这个系统的同事当攻击方，给他半小时找漏洞，记录他最先尝试的是什么。
 jailbreak:
   chain: 8
   chainRole: advanced
@@ -783,6 +855,7 @@ jailbreak:
         difference: 越狱提示由使用者主动发起以绕过限制，提示词注入是把恶意指令藏在被处理的资料里。
       - with: red-teaming
         difference: 越狱提示是一种攻击手法，红队测试是有组织地使用这类手法找问题。
+  minAction: 用约 30 分钟，用角色扮演的方式试着绕过你自己的防护，把成功的那个说法记下来作为待修项。
 ai-governance:
   chain: 8
   chainRole: advanced
@@ -794,6 +867,7 @@ ai-governance:
         difference: AI 治理是组织层面的制度安排，AI 风险管理是针对具体风险项的识别与处置。
       - with: accountability
         difference: AI 治理覆盖制度、流程与评审，问责只解决其中出事谁负责这一环。
+  minAction: 用约 30 分钟，把公司里关于 AI 的现有规定找齐（可能散在邮件与口头约定里），列成一份清单看缺口。
 accountability:
   chain: 8
   chainRole: advanced
@@ -805,6 +879,7 @@ accountability:
         difference: 问责是治理体系里的责任分配环节，AI 治理还包括制度、流程与评审机制。
       - with: auditability
         difference: 问责解决谁来负责，可审计性解决凭什么判断，前者是制度后者是证据。
+  minAction: 用约 30 分钟，写下你的 AI 功能出错时「用户该找谁」；如果答案是一个团队名而不是岗位，就再往下追一层。
 auditability:
   chain: 8
   chainRole: advanced
@@ -816,6 +891,7 @@ auditability:
         difference: 可审计性面向内部与监管的记录完整性，透明度面向公众的知情程度，受众不同。
       - with: trace
         difference: 调用追踪是技术手段，可审计性是它对制度要求满足的程度。
+  minAction: 用约 30 分钟，检查一次历史输出能否还原出「用了哪个模型版本、什么提示词、谁改过」，缺哪项就补哪项记录。
 content-moderation:
   chain: 8
   chainRole: advanced
@@ -827,6 +903,7 @@ content-moderation:
         difference: 内容审核面向业务内容，安全过滤器面向模型输入输出，前者偏产品后者偏技术层。
       - with: ai-guardrail
         difference: 内容审核关注内容本身是否合规，AI 护栏还包括权限、频率与工具调用等行为约束。
+  minAction: 用约 30 分钟，构造 10 条擦边内容测试你的审核，重点看谐音、拼音与拆字这类变体能否被拦住。
 copyright:
   chain: 8
   chainRole: advanced
@@ -838,6 +915,7 @@ copyright:
         difference: 著作权保护表达形式与创作成果，隐私保护个人信息，两者受损方式与救济路径都不同。
       - with: data-protection
         difference: 数据保护关注个人数据能不能被处理，著作权关注内容能不能被使用，前者管数据后者管作品。
+  minAction: 用约 30 分钟，查一遍你训练或检索所用语料的来源与授权状态，把来源不明的那部分单独标出来。
 data-governance:
   chain: 8
   chainRole: advanced
@@ -849,6 +927,7 @@ data-governance:
         difference: 数据治理是内部管理框架，数据保护是对个人信息处理的法律要求，前者更宽后者更硬。
       - with: training-data
         difference: 数据治理覆盖全生命周期的规则，训练数据只是其中被用于训练的那一部分。
+  minAction: 用约 30 分钟，挑一份核心数据写出它从哪来、谁能访问、保留多久，写不出来的部分就是治理空白。
 data-protection:
   chain: 8
   chainRole: advanced
@@ -860,6 +939,7 @@ data-protection:
         difference: 隐私是权益本身，数据保护是保护这份权益的法律与技术措施。
       - with: data-governance
         difference: 数据保护有明确的法律义务与罚则，数据治理多是内部规范，约束力不同。
+  minAction: 用约 30 分钟，检查日志里是否落了手机号或身份证号这类字段，落了就要脱敏或停止记录。
 explainable-ai:
   chain: 8
   chainRole: advanced
@@ -871,6 +951,7 @@ explainable-ai:
         difference: 可解释人工智能是模型侧的能力，解释界面是把它呈现到用户眼前的界面设计。
       - with: transparency
         difference: 可解释人工智能解释单个判断是怎么来的，透明度说明系统整体的运作方式与限制。
+  minAction: 用约 30 分钟，挑一次被系统拒绝的用户请求，检查界面有没有说明理由与申诉路径。
 informed-consent:
   chain: 8
   chainRole: advanced
@@ -882,6 +963,7 @@ informed-consent:
         difference: 知情同意是取得授权的程序，隐私是被保护的对象，前者是手段后者是目的。
       - with: data-protection
         difference: 知情同意是数据保护的其中一项要求，后者还包括最小化、留存期限与安全措施。
+  minAction: 用约 30 分钟，读一遍你产品隐私条款里关于 AI 的部分，看普通用户能否在三分钟内读懂。
 privacy:
   chain: 8
   chainRole: advanced
@@ -893,6 +975,7 @@ privacy:
         difference: 隐私是权益，数据保护是落实这份权益的合规动作，前者是名后者是实。
       - with: transparency
         difference: 隐私关心信息被不被收集，透明度关心有没有告诉用户，公开说明并不等于获得授权。
+  minAction: 用约 30 分钟，检查提示词里是否带上了不必要的用户身份信息，能不传的就不传。
 responsible-ai:
   chain: 8
   chainRole: advanced
@@ -904,6 +987,7 @@ responsible-ai:
         difference: 负责任人工智能偏价值准则与工程实践，AI 治理偏组织制度与决策流程。
       - with: ai-safety
         difference: AI 安全聚焦系统不造成伤害，负责任人工智能还要覆盖公平、隐私与问责等更宽的价值维度。
+  minAction: 用约 30 分钟，把团队实际遵守的 AI 准则写成五条，再对照公开的原则清单，看缺了哪一类。
 safety-filter:
   chain: 8
   chainRole: advanced
@@ -915,6 +999,7 @@ safety-filter:
         difference: 安全过滤器是具体的技术组件，AI 护栏是包括策略、过滤器与人工介入的整体机制。
       - with: content-moderation
         difference: 安全过滤器聚焦模型交互层的风险，内容审核覆盖更广的业务与社区内容治理。
+  minAction: 用约 30 分钟，收集 10 条被过滤器误拦的正常请求，检查规则是不是过紧，以及误拦时用户看到什么。
 transparency:
   chain: 8
   chainRole: advanced
@@ -926,3 +1011,4 @@ transparency:
         difference: 透明度说明系统的整体运作与局限，可解释人工智能解释某一次具体判断的形成过程。
       - with: auditability
         difference: 透明度面向外部公开说明，可审计性面向内部与监管留下可核查的记录。
+  minAction: 用约 30 分钟，检查用户能否在界面上找到「它不擅长什么」的说明，找不到就补一句。

@@ -8,6 +8,8 @@ summary: 通过访谈、问卷、观察等方法理解用户目标、情境与�
 domain: ai-pm-fundamentals
 difficulty: beginner
 ring: extended
+chain: 7
+chainRole: advanced
 status: verified
 priority: 1
 featured: false
@@ -27,6 +29,15 @@ sources:
     url: https://pair.withgoogle.com/
     publisher: Google PAIR
     accessedAt: '2026-08-13'
+boundaries:
+  solves: 用访谈、观察与数据收集用户真实处境的素材，为后续判断提供不靠猜的原料。
+  notSolves: 它不产出结论——素材本身不会告诉你该做什么，判断仍要靠分析与取舍。
+  confusions:
+    - with: user-interview
+      difference: 用户访谈是用户研究里最常用的一种方法，用户研究还包括观察、日记与行为数据分析等手段。
+    - with: requirement-analysis
+      difference: 用户研究采集素材，需求分析对素材下判断，前者是取后者是断。
+minAction: 用约 40 分钟，挑 5 个真实用户，只问「上一次遇到这个问题是什么时候、当时你怎么处理的」，不要问「你想要什么功能」。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -40,6 +51,12 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 先明确要回答的问题，再选择方法：探索性问题用访谈和观察，规模问题用问卷和日志，可用性问题用测试。收集后用主题归纳而非罗列原话，最后把发现写进用户、目标、障碍和验证方式的结论里。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**用户研究 ≠ 用户访谈。** 用户访谈是用户研究里最常用的一种方法，用户研究还包括观察、日记与行为数据分析等手段。
+
+**用户研究 ≠ 需求分析。** 用户研究采集素材，需求分析对素材下判断，前者是取后者是断。
 
 <h2 id="example">真实例子</h2>
 

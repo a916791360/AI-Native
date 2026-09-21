@@ -8,6 +8,8 @@ summary: 在保留任务关键信息的同时压缩或摘要上下文，以降�
 domain: prompt-context-engineering
 difficulty: advanced
 ring: core
+chain: 2
+chainRole: advanced
 status: verified
 publishedAt: '2026-07-30'
 updatedAt: '2026-07-30'
@@ -28,6 +30,15 @@ sources:
     url: https://platform.claude.com/docs/en/build-with-claude/context-editing
     publisher: Anthropic
     accessedAt: '2026-07-30'
+boundaries:
+  solves: 在上下文装不下时，把历史与资料压成更短但仍保留要点的形式，让长对话能继续、长文档能进得去。
+  notSolves: 它必然丢信息——压掉恰好关键的那句时模型不会报错，只会基于残缺信息给出看起来合理的答案。
+  confusions:
+    - with: long-context
+      difference: 长上下文是模型一次能装多少的容量；压缩是容量不够时的应对手段。容量变大也取消不了压缩，因为成本与注意力都会退化。
+    - with: conversation-context
+      difference: 对话上下文是待压缩的原料，压缩是对它做的处理动作。
+minAction: 用约 30 分钟，取一段真实长对话，分别用摘要压缩和「只留最后 N 轮」各跑一次，比较哪个丢了关键约束。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -41,6 +52,12 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 摘要式压缩提取目标、决定、约束、进度和未完成事项，再用摘要替换部分历史；选择性编辑会清除已经失效的工具结果等内容；LLMLingua 一类方法则按预算评估信息重要性并删除部分 Token。[S1][S2] 无论使用哪种方式，应用都应保存原始记录、标记压缩发生的时间，并在关键节点检查状态是否完整。
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**上下文压缩 ≠ 长上下文。** 长上下文是模型一次能装多少的容量；压缩是容量不够时的应对手段。容量变大也取消不了压缩，因为成本与注意力都会退化。
+
+**上下文压缩 ≠ 对话上下文。** 对话上下文是待压缩的原料，压缩是对它做的处理动作。
 
 <h2 id="example">真实例子</h2>
 

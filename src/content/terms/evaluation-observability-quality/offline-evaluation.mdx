@@ -8,6 +8,8 @@ summary: 在上线前或离线数据上运行的可重复评估，适合快速�
 domain: evaluation-observability-quality
 difficulty: intermediate
 ring: core
+chain: 7
+chainRole: advanced
 status: verified
 publishedAt: '2026-07-31'
 updatedAt: '2026-07-31'
@@ -27,6 +29,15 @@ sources:
     url: https://developers.google.com/machine-learning/guides/rules-of-ml
     publisher: Google for Developers
     accessedAt: '2026-07-31'
+boundaries:
+  solves: 用固定评测集在改动前后跑同一组题，让「这次改动是不是变好了」有可复现的答案，且不影响线上用户。
+  notSolves: 它不告诉你线上会怎样——评测集一旦与真实流量分布偏离，涨的分数不代表用户感受变好。
+  confusions:
+    - with: online-evaluation
+      difference: 离线评估用历史与构造数据在发布前跑；在线评估用真实流量的实验结果说话，后者更真但更贵更慢。
+    - with: eval-set
+      difference: 评测集是离线评估用的那份题；离线评估还包括跑法、判分与人机一致性检查，评测集只是其中一个输入。
+minAction: 用约 40 分钟，从你历史的失败案例里挑 20 条做成固定题，跑一遍当前版本并记下分数，作为下次改动前的基线。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -40,6 +51,12 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 先定义成功标准和不能接受的失败，再建立包含典型、边界、对抗和历史生产案例的评测集，并把用于改进的样本与最终保留集分开。固定模型、提示词、工具、采样参数和评分器版本，按需要多次运行；使用代码检查、人工量规或经过人工校准的模型评分，并按重要任务与人群切片比较候选版本。新生产失败应进入后续评测集，但不能悄悄改写本次基线。[S1][S2]
+
+<h2 id="confusions">必须澄清的误会</h2>
+
+**离线评估 ≠ 在线评估。** 离线评估用历史与构造数据在发布前跑；在线评估用真实流量的实验结果说话，后者更真但更贵更慢。
+
+**离线评估 ≠ 评测集。** 评测集是离线评估用的那份题；离线评估还包括跑法、判分与人机一致性检查，评测集只是其中一个输入。
 
 <h2 id="example">真实例子</h2>
 
