@@ -1,4 +1,5 @@
 ---
+import { SECTIONS } from '@/config/sections';
 import {
   LEARNING_MODULES,
   LEARNING_QUESTIONS,
@@ -11,6 +12,11 @@ import { deriveSiteMetrics } from '@/lib/site/metrics';
 const project = await loadProjectContent();
 const metrics = deriveSiteMetrics(project);
 const orderedQuestionIds = LEARNING_QUESTIONS.map((question) => question.id);
+/**
+ * 「四个入口」只列顶栏那四个内容板块——支撑层（阅读路线、概念图谱）已经在上面
+ * 03 段作为「查」的工具出现过，再列一遍会让首页有两个平行的入口清单。
+ */
+const entrySections = SECTIONS.filter(({ surface }) => surface === 'primary');
 ---
 
 <main
@@ -162,6 +168,38 @@ const orderedQuestionIds = LEARNING_QUESTIONS.map((question) => question.id);
         {metrics.relationCount} 关系 ·
         <a href="/search/">搜索</a>
       </p>
+    </div>
+  </section>
+
+  {
+    /*
+    之前首页把访客介绍完之后，唯一的下一步动作是 hero 那个主按钮——而那一个按钮
+    直接把人送进认知链路第 1 站。于是读者全部落进链路页，首页在导航里又没有名字，
+    只能用「点左上角 logo 那个页面」来描述它。这一段把四个板块各自回答的问题摆出来，
+    让读者能按自己的问题选入口，而不是被一个按钮替他们决定。
+    文案取自 SECTIONS 的 question / purpose，首页不另写一套说法。
+  */
+  }
+  <section class="entries" aria-labelledby="entries-heading">
+    <div class="shell">
+      <header class="sec-head" data-reveal>
+        <p class="eyebrow">04/ Where to start</p>
+        <h2 id="entries-heading">四个入口，各自回答一个问题</h2>
+        <p>不知道从哪进的时候，挑那个正好是你在问的入口。</p>
+      </header>
+      <ol class="entry-list" data-entry-list>
+        {
+          entrySections.map((section, index) => (
+            <li data-reveal style={`--reveal-delay: ${index * 60}ms`}>
+              <p class="entry-question">「{section.question}」</p>
+              <h3>
+                <a href={section.href}>{section.navLabel}</a>
+              </h3>
+              <p class="entry-purpose">{section.purpose}</p>
+            </li>
+          ))
+        }
+      </ol>
     </div>
   </section>
 </main>
@@ -623,13 +661,69 @@ const orderedQuestionIds = LEARNING_QUESTIONS.map((question) => question.id);
     font-size: 0.84rem;
   }
 
+  /*
+   * 四个入口：每条以「读者的问题」打头，板块名是答案，purpose 是补充说明。
+   * 用问题打头而不是板块名打头，是因为读者此刻手里握着的是问题，不是板块名。
+   */
+  .entry-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .entry-list li {
+    border: 1px solid var(--color-line);
+    background: var(--color-panel);
+    padding: 1.5rem 1.5rem 1.3rem;
+    transition: border-color var(--transition-fast);
+  }
+
+  .entry-list li:hover {
+    border-color: var(--color-accent-strong);
+  }
+
+  .entry-question {
+    margin: 0;
+    color: var(--color-muted);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.02em;
+  }
+
+  .entry-list h3 {
+    margin: 0.55rem 0 0;
+    font-size: 1.22rem;
+    font-weight: var(--weight-display);
+  }
+
+  .entry-list h3 a {
+    color: var(--color-ink);
+    border-bottom: 2px solid color-mix(in oklch, var(--color-accent) 45%, transparent);
+    text-decoration: none;
+  }
+
+  .entry-list h3 a:hover {
+    color: var(--color-accent);
+    border-bottom-color: var(--color-accent);
+  }
+
+  .entry-purpose {
+    margin: 0.7rem 0 0;
+    color: var(--color-muted);
+    font-size: 0.88rem;
+  }
+
   @media (max-width: 960px) {
     .hero-grid {
       grid-template-columns: 1fr;
       gap: 2rem;
     }
 
-    .level-list {
+    .level-list,
+    .entry-list {
       grid-template-columns: 1fr;
     }
 

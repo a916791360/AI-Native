@@ -8,9 +8,16 @@ interface Props {
 }
 
 const { currentPath } = Astro.props;
-const activeHref = PRIMARY_NAVIGATION.filter(
-  ({ href }) => currentPath === href || currentPath.startsWith(href),
-).toSorted((left, right) => right.href.length - left.href.length)[0]?.href;
+/**
+ * `exact` 项（首页）只认精确相等：`'/'` 是所有路径的前缀，用 startsWith 判
+ * 会让每个页面都把「首页」标成当前页。其余板块仍按前缀匹配，这样
+ * `/learn/questions/q01-…` 也能把「开始学习」标亮。
+ */
+const matchesCurrent = ({ href, exact }: { href: string; exact: boolean }) =>
+  exact ? currentPath === href : currentPath === href || currentPath.startsWith(href);
+const activeHref = PRIMARY_NAVIGATION.filter(matchesCurrent).toSorted(
+  (left, right) => right.href.length - left.href.length,
+)[0]?.href;
 const isCurrent = (href: string) => href === activeHref;
 ---
 

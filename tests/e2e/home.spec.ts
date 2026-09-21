@@ -66,6 +66,12 @@ test('renders the content-catalog shell and a direct case-library entry', async 
   await expect(heroCtas.nth(2)).toHaveAttribute('href', '/search/');
   const header = page.getByRole('banner');
   await revealMobileHeaderPanel(page, isMobile, '菜单');
+  // 精确匹配是必需的：品牌字标那个链接的无障碍名是「AI-Native 首页」，
+  // 用子串匹配会同时命中它和导航里的「首页」。
+  await expect(header.getByRole('link', { name: '首页', exact: true })).toHaveAttribute(
+    'href',
+    '/',
+  );
   await expect(header.getByRole('link', { name: '认知链路' })).toHaveAttribute('href', '/map/');
   await expect(header.getByRole('link', { name: '开始学习' })).toHaveAttribute('href', '/learn/');
   await expect(header.getByRole('link', { name: '案例库' })).toHaveAttribute(
@@ -75,6 +81,27 @@ test('renders the content-catalog shell and a direct case-library entry', async 
   await expect(header.getByRole('link', { name: '知识库' })).toHaveAttribute('href', '/atlas/');
   await revealMobileHeaderPanel(page, isMobile, '搜索');
   await expect(header.getByRole('searchbox', { name: '搜索案例、问题或术语' })).toBeVisible();
+});
+
+test('lets the homepage reader pick an entrance by their own question', async ({ page }) => {
+  await page.goto('/');
+
+  // 首页此前把访客介绍完，下一步动作只有 hero 那一个按钮——而它直接把人送进链路第 1 站，
+  // 于是四个板块各回答什么问题从没在首页露过面，首页在导航里也没有名字。
+  // 这一段按「读者手里的问题」列入口，顺序、名字、问题文案都取自板块名册。
+  const entryLinks = page.locator('[data-entry-list] h3 a');
+  await expect(entryLinks).toHaveText(['认知链路', '开始学习', '案例库', '知识库']);
+  await expect(entryLinks.nth(0)).toHaveAttribute('href', '/map/');
+  await expect(entryLinks.nth(1)).toHaveAttribute('href', '/learn/');
+  await expect(entryLinks.nth(2)).toHaveAttribute('href', '/learn/cases/');
+  await expect(entryLinks.nth(3)).toHaveAttribute('href', '/atlas/');
+
+  const questions = page.locator('[data-entry-list] .entry-question');
+  await expect(questions).toHaveCount(4);
+  await expect(questions.nth(0)).toContainText('我不知道该先学什么');
+  await expect(questions.nth(1)).toContainText('我来练判断');
+  await expect(questions.nth(2)).toContainText('我要看一个完整场景');
+  await expect(questions.nth(3)).toContainText('我知道要找什么');
 });
 
 test('derives the homepage learning structure and knowledge scale from project data', async ({
@@ -156,8 +183,14 @@ test('keeps the primary learning navigation consistent on every core page', asyn
     await page.goto(url);
     await revealMobileHeaderPanel(page, isMobile, '菜单');
     const navigation = page.getByRole('navigation', { name: '主导航' });
-    // 顺序也是契约：认知链路必须排在首位——它回答的是其余三项都预设了的问题。
-    await expect(navigation.getByRole('link').nth(0)).toHaveAttribute('href', '/map/');
+    // 顺序也是契约，而且是两条而不是一条：
+    //  · 首页排在最前是站级约定——它回答的是「这个站是什么」；
+    //  · 内容板块里仍是认知链路排首位——它回答的是其余三项都预设了的问题
+    //    （「我不知道该先学什么」）。
+    // 两条都要钉住，否则首页会被当作一个板块插进队列里争第一，板块那句契约就废了。
+    await expect(navigation.getByRole('link').nth(0)).toHaveAttribute('href', '/');
+    await expect(navigation.getByRole('link', { name: '首页' })).toHaveAttribute('href', '/');
+    await expect(navigation.getByRole('link').nth(1)).toHaveAttribute('href', '/map/');
     await expect(navigation.getByRole('link', { name: '认知链路' })).toHaveAttribute(
       'href',
       '/map/',
@@ -174,9 +207,40 @@ test('keeps the primary learning navigation consistent on every core page', asyn
       'href',
       '/atlas/',
     );
-    await expect(navigation.getByRole('link')).toHaveCount(4);
+    await expect(navigation.getByRole('link')).toHaveCount(5);
     await expect(page.getByRole('navigation', { name: '知识工具' })).toHaveCount(0);
   }
+});
+
+test('marks the current page in the primary navigation, including the homepage', async ({
+  page,
+  isMobile,
+}) => {
+  // 首页进导航之前，在 `/` 时顶栏一项都不高亮：读者站在首页看不出自己在哪、
+  // 也看不出首页算不算一个正式入口。`/` 是所有路径的前缀，所以它必须走精确匹配。
+  await page.goto('/');
+  await revealMobileHeaderPanel(page, isMobile, '菜单');
+  const navigation = page.getByRole('navigation', { name: '主导航' });
+  await expect(navigation.getByRole('link', { name: '首页' })).toHaveAttribute(
+    'aria-current',
+    'page',
+  );
+  await expect(navigation.getByRole('link', { name: '认知链路' })).not.toHaveAttribute(
+    'aria-current',
+    'page',
+  );
+
+  // 反向也要成立：首页的精确匹配不能把别的页面也标成首页。
+  await page.goto('/map/');
+  await revealMobileHeaderPanel(page, isMobile, '菜单');
+  await expect(navigation.getByRole('link', { name: '认知链路' })).toHaveAttribute(
+    'aria-current',
+    'page',
+  );
+  await expect(navigation.getByRole('link', { name: '首页' })).not.toHaveAttribute(
+    'aria-current',
+    'page',
+  );
 });
 
 test('answers in place with immediate per-option feedback instead of jumping to a panel', async ({

@@ -285,6 +285,33 @@ const coveredTerms = terms.filter((term) => typeof term.chain === 'number').leng
         })
       }
     </div>
+
+    {
+      /*
+       * 链路页此前是死胡同：8 站读完，页面里没有任何通往判断题与案例的出口
+       * （全页 /learn 链接为 0）。读者刚补完词汇量就被放下——而这条链路的用途
+       * 正是「有了词汇量之后去做判断」，所以出口该由链路的终点自己给。
+       * 不复用顶栏导航：顶栏表达的是「随时可以去」，这里表达的是「读完 8 站该去哪」，
+       * 两句话的作用不同，混用会让出口变成又一次导航罗列。
+       */
+    }
+    <section class="chain-exit" aria-labelledby="chain-exit-title">
+      <div class="chain-exit-inner">
+        <p class="chain-exit-eyebrow">读完这条链路之后</p>
+        <h2 id="chain-exit-title">概念认全了，接下来练的是判断</h2>
+        <p class="chain-exit-lede">
+          8 站补的是词汇量——知道每一层在补什么。但取舍不会出现在词条里，
+          它出现在一道题、一个完整场景里。带着这些词把判断做一遍，链路才算走完。
+        </p>
+        <div class="chain-exit-links">
+          <a class="chain-exit-primary" href="/learn/">
+            开始做 {LEARNING_QUESTIONS.length} 道判断题 →
+          </a>
+          <a href="/learn/cases/">看一个完整案例</a>
+          <a href="/routes/">按顺序读完一组词条</a>
+        </div>
+      </div>
+    </section>
   </main>
 </BaseLayout>
 
@@ -931,5 +958,77 @@ const coveredTerms = terms.filter((term) => typeof term.chain === 'number').leng
       align-items: flex-start;
       gap: 0;
     }
+  }
+
+  /* ---- 读完之后：链路的终点出口 --------------------------------------- */
+
+  .chain-exit {
+    width: min(calc(100% - 2.5rem), var(--content-max));
+    margin: var(--space-5) auto 0;
+  }
+
+  .chain-exit-inner {
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-sm);
+    background: var(--color-panel);
+    padding: clamp(1.6rem, 3vw, 2.6rem);
+  }
+
+  .chain-exit-eyebrow {
+    margin: 0;
+    color: var(--color-muted);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+  }
+
+  .chain-exit h2 {
+    margin: var(--space-1) 0 0;
+    color: var(--color-ink);
+    font-size: clamp(1.3rem, 2.4vw, 1.6rem);
+    font-weight: var(--weight-display);
+  }
+
+  .chain-exit-lede {
+    max-width: 46rem;
+    margin: var(--space-1) 0 0;
+    color: var(--color-muted);
+    font-size: 0.92rem;
+    line-height: 1.7;
+  }
+
+  /* 出口用 wrap 而不是媒体查询：出口数量以后会变，断点写死就得跟着改。 */
+  .chain-exit-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2) var(--space-4);
+    margin-top: var(--space-3);
+  }
+
+  .chain-exit-links a {
+    color: var(--color-accent-strong);
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: var(--weight-display);
+    text-decoration: none;
+  }
+
+  .chain-exit-links a:hover {
+    color: var(--color-accent);
+  }
+
+  .chain-exit-links .chain-exit-primary {
+    min-height: 2.9rem;
+    display: inline-flex;
+    align-items: center;
+    padding: 0 var(--space-3);
+    background: var(--color-accent);
+    color: oklch(0.2 0.05 120);
+  }
+
+  .chain-exit-links .chain-exit-primary:hover {
+    color: oklch(0.2 0.05 120);
+    background: color-mix(in oklch, var(--color-accent) 85%, var(--color-ink));
   }
 </style>

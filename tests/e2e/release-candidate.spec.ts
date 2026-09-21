@@ -153,7 +153,7 @@ test('keeps global controls and route cards compact', async ({ page, isMobile })
     if (viewport.width <= 760) {
       await page.getByRole('button', { name: '菜单', exact: true }).click();
     }
-    await expect(navigation.getByRole('link')).toHaveCount(4);
+    await expect(navigation.getByRole('link')).toHaveCount(5);
     await expect(page.getByRole('navigation', { name: '知识工具' })).toHaveCount(0);
 
     if (viewport.width <= 760) {

@@ -137,3 +137,34 @@ test('points each reading route back at the stations it covers', async ({ page }
   const href = await chainLinks.first().getAttribute('href');
   expect(href).toMatch(/^\/map\/#station-[1-8]$/);
 });
+
+test('gives the reader a way out after the final station', async ({ page }) => {
+  await page.goto('/map/');
+
+  // 链路页曾经是死胡同：8 站读完，页内没有任何通往判断题与案例的出口
+  // （改动前全页 /learn 链接数为 0）。读者刚补完词汇量就被放下，
+  // 而这条链路的用途正是「有了词汇量之后去做判断」。
+  const exit = page.locator('.chain-exit');
+  await expect(exit).toBeVisible();
+  await expect(exit.getByRole('heading', { level: 2 })).toBeVisible();
+
+  await expect(exit.locator('.chain-exit-primary')).toHaveAttribute('href', '/learn/');
+  await expect(exit.getByRole('link', { name: '看一个完整案例' })).toHaveAttribute(
+    'href',
+    '/learn/cases/',
+  );
+  await expect(exit.getByRole('link', { name: '按顺序读完一组词条' })).toHaveAttribute(
+    'href',
+    '/routes/',
+  );
+
+  // 出口必须在最末一站之后。它表达的是「读完 8 站该去哪」，
+  // 一旦跑到中间去，就变成把还在读的人赶走。
+  const exitFollowsLastStation = await page.evaluate((stationCount) => {
+    const last = document.querySelector(`[data-station="${stationCount}"]`);
+    const exitNode = document.querySelector('.chain-exit');
+    if (!last || !exitNode) return false;
+    return Boolean(last.compareDocumentPosition(exitNode) & Node.DOCUMENT_POSITION_FOLLOWING);
+  }, stations.length);
+  expect(exitFollowsLastStation, '出口应排在第 8 站之后').toBe(true);
+});

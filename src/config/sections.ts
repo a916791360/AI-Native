@@ -27,20 +27,27 @@ export interface Section {
   surface: 'primary' | 'support';
   /** 一句话说清这个板块解决什么（给页头用） */
   purpose: string;
+  /**
+   * 读者带着什么问题来找这个板块——用读者的第一人称写，不要写成板块自述。
+   * 首页的「四个入口」直接把这个字段摆给读者看：这里写什么、首页就显示什么，
+   * 不存在「首页再翻译一遍」的第二处文案。
+   */
+  question: string;
 }
 
 export const SECTIONS: readonly Section[] = [
   {
     // 排在首位不是排版偏好：学习入口的答案是「我不知道该先学什么」，
-    // 而认知链路是唯一直接回答这个问题的板块。学习库回答「我来练判断」，
-    // 案例库回答「我要看一个完整场景」，知识库回答「我知道要找什么」——
-    // 三者都预设了读者已经知道自己要做什么。
+    // 而认知链路是唯一直接回答这个问题的板块——`question` 就是那句话本身。
+    // 学习库回答「我来练判断」，案例库回答「我要看一个完整场景」，
+    // 知识库回答「我知道要找什么」——三者都预设了读者已经知道自己要做什么。
     id: 'map',
     href: '/map/',
     navLabel: '认知链路',
     pageTitle: 'AI 认知链路',
     surface: 'primary',
     purpose: '模型缺什么、每一层补什么——8 站递进路径，从第 1 站开始读。',
+    question: '我不知道该先学什么',
   },
   {
     id: 'learn',
@@ -49,6 +56,7 @@ export const SECTIONS: readonly Section[] = [
     pageTitle: 'AI 产品判断学习库',
     surface: 'primary',
     purpose: '90 道判断题分三层递进，每层把六个阶段完整走一遍。',
+    question: '我来练判断',
   },
   {
     id: 'cases',
@@ -57,6 +65,7 @@ export const SECTIONS: readonly Section[] = [
     pageTitle: 'AI 产品案例库',
     surface: 'primary',
     purpose: '在完整业务场景里连续查看证据、方案选择、风险与上线条件。',
+    question: '我要看一个完整场景',
   },
   {
     id: 'knowledge',
@@ -65,6 +74,7 @@ export const SECTIONS: readonly Section[] = [
     pageTitle: '知识库',
     surface: 'primary',
     purpose: '按领域查找已收录的中文 AI 词条，再沿概念关系继续阅读。',
+    question: '我知道要找什么',
   },
   {
     id: 'routes',
@@ -73,6 +83,7 @@ export const SECTIONS: readonly Section[] = [
     pageTitle: '阅读路线',
     surface: 'support',
     purpose: '认知链路的展开阅读清单：按顺序读完一组词条，适合有明确目标时按需查阅。',
+    question: '我想按顺序读完一组词条',
   },
   {
     id: 'graph',
@@ -81,6 +92,7 @@ export const SECTIONS: readonly Section[] = [
     pageTitle: '概念图谱',
     surface: 'support',
     purpose: '查看词条之间的真实关系，适合在已知两个概念时确认它们如何相连。',
+    question: '我想确认两个概念怎么相连',
   },
 ] as const;
 
@@ -90,10 +102,30 @@ export const sectionById = (id: SectionId): Section => {
   return section;
 };
 
-/** 顶栏：认知链路 + 学习主线三项 */
-export const PRIMARY_NAVIGATION = SECTIONS.filter(({ surface }) => surface === 'primary').map(
-  ({ href, navLabel }) => ({ href, label: navLabel }),
-);
+/**
+ * 顶栏：首页 + 认知链路 + 学习主线三项。
+ *
+ * 首页排在最前是站级约定，**不参与「板块顺序」那条契约**——本文件里
+ * 「认知链路排在首位」说的是**内容板块**：链路回答的是其余板块都预设了的问题
+ * （「我不知道该先学什么」）。首页回答的是更前面那个问题（「这个站是什么」），
+ * 所以它排在板块之前，而不是插在板块队列里争第一。
+ *
+ * 首页进导航这件事本身是补一次缺口：此前它只在左上角 logo 上有入口，
+ * 于是读者只能用位置描述它（「点左上角 logo 还有的那个页面」）——
+ * 一个只能用位置指认、在导航里看不见的页面，等于在信息架构里不存在。
+ *
+ * `exact` 是必需的，不是保险：`'/'` 是每个路径的前缀，用 `startsWith` 判当前页会让
+ * **所有**页面都把「首页」标成所在页。反过来，旧逻辑在 `/` 时匹配不到任何一项、
+ * 顶栏零高亮——两个方向都要靠这个标记对齐。
+ */
+export const PRIMARY_NAVIGATION = [
+  { href: '/', label: '首页', exact: true },
+  ...SECTIONS.filter(({ surface }) => surface === 'primary').map(({ href, navLabel }) => ({
+    href,
+    label: navLabel,
+    exact: false,
+  })),
+];
 
 /** 页脚支撑层：阅读路线、概念图谱。搜索与「内容方法」由页脚自己补。 */
 export const SUPPORT_NAVIGATION = SECTIONS.filter(({ surface }) => surface === 'support').map(
