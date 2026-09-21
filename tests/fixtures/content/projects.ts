@@ -152,6 +152,7 @@ export function makeValidProject(): ProjectContent {
     semanticRelations: [makeRelation()],
     terms: [makeTerm('alpha-term', '甲术语'), makeTerm('beta-term', '乙术语')],
     relations: [makeRelation()],
+    catalogRelations: [],
     routes: [makeRoute()],
   };
 }

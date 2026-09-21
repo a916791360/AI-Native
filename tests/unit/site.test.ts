@@ -33,7 +33,7 @@ describe('site metadata', () => {
       verifiedTermCount: 327,
       routeCount: 5,
       publishedRouteCount: 5,
-      relationCount: 339,
+      relationCount: 123,
       latestVerifiedAt: '2026-09-19',
     });
   });

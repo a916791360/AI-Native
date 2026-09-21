@@ -4,6 +4,8 @@ import { getCollection } from 'astro:content';
 
 import Breadcrumbs from '@/components/layout/Breadcrumbs.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import { resolveTermChainPosition } from '@/lib/content/chain';
+import { loadProjectContent } from '@/lib/content/io';
 import {
   LEARNING_QUESTIONS,
   PM_ACTIONS,
@@ -13,20 +15,58 @@ import {
 } from '@/data/learning';
 
 export const getStaticPaths = (async () => {
-  const terms = await getCollection('terms');
+  const [terms, project] = await Promise.all([getCollection('terms'), loadProjectContent()]);
   const termSummaries: Record<string, string> = Object.fromEntries(
     terms.map((term) => [term.data.id, term.data.summary]),
   );
+  const chainByTermId = Object.fromEntries(
+    terms.flatMap((term) => {
+      const position = resolveTermChainPosition(term.data, project.chain);
+      return position
+        ? [
+            [
+              term.data.id,
+              {
+                order: position.order,
+                nameZh: position.station.nameZh,
+              },
+            ] as const,
+          ]
+        : [];
+    }),
+  );
+  const termIdsByQuestionId = Object.fromEntries(
+    LEARNING_QUESTIONS.map((question) => [
+      question.id,
+      question.references.map((reference) => reference.id),
+    ]),
+  );
   return LEARNING_QUESTIONS.map((question) => ({
     params: { id: question.id },
-    props: { question, termSummaries },
+    props: {
+      question,
+      termSummaries,
+      chainByTermId,
+      referencedTermIds: termIdsByQuestionId[question.id] ?? [],
+    },
   }));
 }) satisfies GetStaticPaths;
 
-const { question, termSummaries } = Astro.props as {
+const { question, termSummaries, chainByTermId, referencedTermIds } = Astro.props as {
   question: LearningQuestion;
   termSummaries: Record<string, string>;
+  chainByTermId: Record<string, { order: number; nameZh: string }>;
+  referencedTermIds: string[];
 };
+
+const referencedStations = Array.from(
+  new Map(
+    referencedTermIds.flatMap((termId) => {
+      const station = chainByTermId[termId];
+      return station ? [[station.order, station] as const] : [];
+    }),
+  ).values(),
+).sort((left, right) => left.order - right.order);
 
 const context = getLearningQuestionContext(question.id)!;
 const {
@@ -111,6 +151,21 @@ const breadcrumbTrail = [
           <span data-progress-answered>已答 0 / {total}</span>
           <span data-progress-missed>错 0</span>
         </p>
+        {
+          referencedStations.length > 0 && (
+            <p class="question-chain" aria-label="本题认知链路定位">
+              <span>认知链路</span>
+              {referencedStations.map((station, index) => (
+                <span class="question-chain-station">
+                  {index > 0 && <i aria-hidden="true">·</i>}
+                  <a href={`/map/#station-${station.order}`}>
+                    第 {station.order} 站 · {station.nameZh}
+                  </a>
+                </span>
+              ))}
+            </p>
+          )
+        }
       </div>
     </section>
 
@@ -200,12 +255,13 @@ const breadcrumbTrail = [
           </ol>
         </div>
         <nav class="refs" aria-label="相关知识库条目">
-          <p class="meta-label">按需深挖</p>
+          <p class="meta-label">按需深挖 · 读完再回题</p>
           {
             question.references.map((reference) => (
               <a href={`/terms/${reference.id}/`}>
                 <strong>{reference.label}</strong>
                 <span>{termSummaries[reference.id]}</span>
+                <small>读全文 →</small>
               </a>
             ))
           }
@@ -803,6 +859,32 @@ const breadcrumbTrail = [
   }
 
   /* 底部导航：不对称两栏，主次分明；去掉高盒子和空角落。 */
+  .question-chain {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem 0.55rem;
+    margin: 0.65rem 0 0;
+    color: var(--color-quiet);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+  }
+
+  .question-chain > span {
+    color: var(--color-accent-strong);
+  }
+
+  .question-chain a {
+    color: inherit;
+    text-decoration-color: var(--color-line);
+    text-underline-offset: 0.2em;
+  }
+
+  .question-chain a:hover {
+    color: var(--color-accent-strong);
+    text-decoration-color: currentColor;
+  }
+
   .question-nav {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);

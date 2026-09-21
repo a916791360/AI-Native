@@ -8,7 +8,11 @@ import {
   getQuestionsForModule,
   getQuestionsForTier,
 } from '@/data/learning';
+import { loadCaseStudies } from '@/lib/cases/io';
+import { GOLDEN_CASE_ID } from '@/lib/cases/presentation';
 
+const cases = await loadCaseStudies();
+const goldenCase = cases.find(({ data }) => data.id === GOLDEN_CASE_ID)?.data;
 const total = LEARNING_QUESTIONS.length;
 const order = LEARNING_QUESTIONS.map((question) => question.id);
 const firstQuestionId = LEARNING_QUESTIONS[0]!.id;
@@ -129,19 +133,19 @@ const rows = LEARNING_MODULES.map((module) => ({
       <h2 id="next-heading">下一步</h2>
       <p>判断题练的是判断力；把判断放进连续情境，才形成可交付的产品能力。</p>
       <div class="next-grid">
-        <a href="/learn/cases/">
-          <span>案例库</span>
-          <strong>连续案例</strong>
-          <small>同一个业务对象，连续六次评审</small>
+        <a class="next-primary" href="/map/" data-next-map>
+          <span>回到主路径</span>
+          <strong>继续认知链路</strong>
+          <small>从模型、知识到治理，补齐下一站的理解</small>
         </a>
-        <a href="/learn/cases/user-feedback-analysis/">
-          <span>黄金项目</span>
-          <strong>完整项目</strong>
-          <small>每日用户反馈分析与产品改进</small>
+        <a href="/learn/cases/" data-next-library>
+          <span>下一步 · 进入实践</span>
+          <strong>进入连续案例</strong>
+          <small>{goldenCase?.title ?? '案例库'} · 把判断放进真实业务约束</small>
         </a>
-        <a href="/atlas/">
-          <span>知识库</span>
-          <strong>查漏补缺</strong>
+        <a href="/atlas/" data-next-knowledge>
+          <span>按需查阅</span>
+          <strong>去知识库补漏</strong>
           <small>按领域查阅词条，补齐判断依据</small>
         </a>
       </div>
@@ -428,22 +432,37 @@ const rows = LEARNING_MODULES.map((module) => ({
 
   .next-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: var(--space-3);
   }
 
   .next-grid a {
     display: grid;
+    min-width: 0;
     gap: 0.25rem;
     border: 1px solid var(--color-line);
     border-radius: var(--radius-md);
     padding: var(--space-3);
     text-decoration: none;
+    transition:
+      transform var(--transition-fast),
+      border-color var(--transition-fast),
+      background var(--transition-fast);
   }
 
   .next-grid a:hover {
+    transform: translateY(-2px);
     border-color: var(--color-control-border);
     background: var(--color-panel);
+  }
+
+  .next-grid .next-primary {
+    border-color: var(--color-accent);
+    background: var(--color-accent-wash);
+  }
+
+  .next-grid .next-primary:hover {
+    border-color: var(--color-accent-strong);
   }
 
   .next-grid span {
@@ -461,5 +480,21 @@ const rows = LEARNING_MODULES.map((module) => ({
     color: var(--color-quiet);
     font-size: var(--text-xs);
     line-height: 1.7;
+  }
+
+  @media (max-width: 58rem) {
+    .next-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 36rem) {
+    .complete-page {
+      width: min(100% - 1.5rem, 72rem);
+    }
+
+    .next-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
   }
 </style>

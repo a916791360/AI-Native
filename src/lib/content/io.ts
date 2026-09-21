@@ -29,8 +29,10 @@ export interface ProjectContent {
   chain: ChainStation[];
   /** 手工维护的语义关系；不含 catalog-relations.yml 的批量邻接边。 */
   semanticRelations: Relation[];
-  /** 完整关系集合，供图谱与关系区块使用。 */
+  /** 只包含 relations.yml 的真实语义关系，供图谱与关系区块使用。 */
   relations: Relation[];
+  /** catalog-relations.yml 仅用于同域兜底，不再伪装成图谱语义边。 */
+  catalogRelations: Relation[];
   terms: ContentDocument<Term>[];
   routes: ContentDocument<Route>[];
 }
@@ -136,7 +138,8 @@ export async function loadProjectContent(root = process.cwd()): Promise<ProjectC
     domains,
     chain,
     semanticRelations: relations,
-    relations: [...relations, ...catalogRelations],
+    relations,
+    catalogRelations,
     terms,
     routes,
   };

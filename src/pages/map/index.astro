@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 
 import PageIntro from '@/components/layout/PageIntro.astro';
 import { sectionById } from '@/config/sections';
+import { buildConceptGuide } from '@/data/concept-guide';
 import { LEARNING_QUESTIONS } from '@/data/learning';
 import {
   CHAIN_ROLE_LABELS,
@@ -36,6 +37,13 @@ const terms = entries.map(({ data }) => data);
 const termsById = new Map(terms.map((term) => [term.id, term]));
 const domainNameById = new Map(domains.map((domain) => [domain.id, domain.shortNameZh]));
 const termsByStation = groupTermsByStation(terms);
+const conceptGuide = buildConceptGuide(terms);
+const conceptGuideByLayer = [...new Set(conceptGuide.map((concept) => concept.layer))].map(
+  (layer) => ({
+    layer,
+    entries: conceptGuide.filter((concept) => concept.layer === layer),
+  }),
+);
 
 /** 每条阅读路线能提供哪些词条，以及这些词条落在哪几站。 */
 const routesWithTerms = routes
@@ -70,59 +78,12 @@ const stationTermCount = (order: number) => (termsByStation.get(order) ?? []).le
 const coveredTerms = terms.filter((term) => typeof term.chain === 'number').length;
 
 /**
- * 「五个概念各在哪一层」总图（《迭代开发说明书》I3-07）。
+ * 高频概念导航由 src/data/concept-guide.ts 维护。
  *
- * 为什么要有它：MCP / Skill / Agent / LangChain / RAG 分散在 13 个领域里的两个，
- * 彼此之间没有链接，站点上没有任何一处回答「这五个词是什么关系」。
- * 而对读者来说，这张表的价值大于其中任意五篇词条——它要传达的是一个信息架构事实：
- * 它们不是五个并列名词，而是同一条链上五个不同的层次。
- *
- * 维护约束（I3-07 验收）：`confusion` 一列必须与对应词条页「必须澄清的误会」一节一一对应，
- * 表述不能冲突——改一处必须改两处。`station` 必须是这条概念所在的链路站点号，
- * 用来把这张静态表接回下面那条递进链路。
+ * 这里刻意不再写死「五个概念」：截图中的 MCP / Skill / Agent / LangChain / RAG
+ * 只是帮助读者理解架构的代表。真正的入口还应覆盖普通人在新闻、产品介绍、实际使用
+ * 与安全讨论中反复遇到的词。词条是否存在由 buildConceptGuide 过滤，避免页面出现死链。
  */
-const LAYER_CONCEPTS = [
-  {
-    termId: 'model-context-protocol',
-    name: 'MCP',
-    layer: '接口层',
-    role: '怎么标准化地把模型接到外部工具和数据',
-    confusion: '它和 Function Calling 是什么关系？',
-    station: 5,
-  },
-  {
-    termId: 'agent-skills',
-    name: 'Skill',
-    layer: '流程层',
-    role: '怎么把「这件事该怎么做」沉淀成可复用的 SOP',
-    confusion: '它和 Prompt、和 MCP 又是什么关系？',
-    station: 6,
-  },
-  {
-    termId: 'ai-agent',
-    name: 'Agent',
-    layer: '控制层',
-    role: '模型自己规划、行动、观察、再规划的循环',
-    confusion: '它和 Workflow 到底差在哪？',
-    station: 4,
-  },
-  {
-    termId: 'langchain',
-    name: 'LangChain',
-    layer: '实现层',
-    role: '用代码把上面这些编排起来的框架',
-    confusion: '它和 MCP 是不是竞品？',
-    station: 6,
-  },
-  {
-    termId: 'retrieval-augmented-generation',
-    name: 'RAG',
-    layer: '知识层',
-    role: '回答之前先查你自己的资料',
-    confusion: '它和微调该选哪个？',
-    station: 3,
-  },
-] as const;
 ---
 
 <BaseLayout
@@ -155,34 +116,59 @@ const LAYER_CONCEPTS = [
 
     <section class="layer-guide" id="layers" aria-labelledby="layer-guide-title">
       <header class="layer-guide-head">
-        <p class="meta-label">Five concepts · five layers</p>
-        <h2 id="layer-guide-title">五个概念各在哪一层</h2>
+        <p class="meta-label">Everyday AI concepts · {conceptGuide.length} entries</p>
+        <h2 id="layer-guide-title">新闻里反复出现的 AI 词，分别在解决什么问题？</h2>
         <p class="layer-guide-note">
-          它们不是五个并列的名词，而是同一条链上五个不同的层次：谁管「接上」、谁管「怎么做」、
-          谁管「谁决定下一步」、谁管「用代码实现」、谁管「知识从哪来」。把这五格放齐，
-          再看下面的每一站，就不会把它们混成一类东西。
+          截图里的五个词只是架构示例，不是概念边界。这里扩展成一张面向普通人的高频入口： 从「AI
+          到底是什么」到「它能不能替我做事」，把新闻、产品宣传和日常使用里最常见的词放回
+          它们各自的层次。先看这一栏建立地图，再按下面 8 站继续深入。
         </p>
       </header>
-      <ul class="layer-list">
+      <div class="guide-legend" aria-label="概念出现语境">
+        <span><i class="exposure-news" aria-hidden="true"></i>新闻常见</span>
+        <span><i class="exposure-product" aria-hidden="true"></i>产品常见</span>
+        <span><i class="exposure-use" aria-hidden="true"></i>使用必遇</span>
+        <span><i class="exposure-work" aria-hidden="true"></i>工作常见</span>
+      </div>
+      <div class="layer-groups">
         {
-          LAYER_CONCEPTS.map((concept) => (
-            <li class="layer-row">
-              <div class="layer-name">
-                <a href={`/terms/${concept.termId}/`}>{concept.name}</a>
-                <span class="layer-tag">{concept.layer}</span>
-              </div>
-              <p class="layer-role">{concept.role}</p>
-              <p class="layer-confusion">
-                <span class="layer-confusion-label">常见困惑</span>
-                {concept.confusion}
-              </p>
-              <a class="layer-station" href={`#station-${concept.station}`}>
-                第 {concept.station} 站
-              </a>
-            </li>
+          conceptGuideByLayer.map(({ layer, entries }) => (
+            <section class="layer-group" aria-labelledby={`layer-${layer}`}>
+              <header class="layer-group-head">
+                <h3 id={`layer-${layer}`}>{layer}</h3>
+                <span>{entries.length} 个入口</span>
+              </header>
+              <ul class="layer-list">
+                {entries.map((concept) => (
+                  <li class="layer-row" data-exposure={concept.exposure}>
+                    <div class="layer-name">
+                      <a href={`/terms/${concept.term.id}/`}>{concept.term.nameZh}</a>
+                      <span class="layer-tag">{concept.term.nameEn}</span>
+                    </div>
+                    <p class="layer-role">{concept.role}</p>
+                    <p class="layer-confusion">
+                      <span class="layer-confusion-label">常见困惑</span>
+                      {concept.confusion}
+                    </p>
+                    <div class="layer-meta">
+                      <span class={`exposure exposure-${concept.exposure}`}>
+                        {concept.exposure}
+                      </span>
+                      {concept.station ? (
+                        <a class="layer-station" href={`#station-${concept.station}`}>
+                          第 {concept.station} 站
+                        </a>
+                      ) : (
+                        <span class="layer-station layer-station-muted">待放入主链路</span>
+                      )}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </section>
           ))
         }
-      </ul>
+      </div>
     </section>
 
     <div class="chain-stations">
@@ -438,6 +424,7 @@ const LAYER_CONCEPTS = [
   }
 
   .layer-guide-head h2 {
+    max-width: 50rem;
     margin: var(--space-0) 0 var(--space-1);
     color: var(--color-ink);
     font-family: var(--font-display);
@@ -453,20 +440,91 @@ const LAYER_CONCEPTS = [
     line-height: 1.75;
   }
 
-  .layer-list {
-    margin: 0;
-    padding: 0;
+  .guide-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-4);
+    margin: var(--space-3) 0 var(--space-2);
+    color: var(--color-muted);
+    font-size: var(--text-xs);
+  }
+
+  .guide-legend span,
+  .exposure {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .guide-legend i {
+    width: 0.45rem;
+    height: 0.45rem;
+    display: inline-block;
+    border-radius: 50%;
+    background: var(--color-quiet);
+  }
+
+  .exposure-news {
+    background: var(--color-accent) !important;
+  }
+  .exposure-product {
+    background: var(--color-prerequisite) !important;
+  }
+  .exposure-use {
+    background: var(--color-comparison) !important;
+  }
+  .exposure-work {
+    background: var(--color-component) !important;
+  }
+
+  .layer-groups {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .layer-group {
     border: 1px solid var(--color-line);
     border-radius: var(--radius-sm);
     background: var(--color-panel);
-    list-style: none;
     overflow: hidden;
+  }
+
+  .layer-group-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-2);
+    border-bottom: 1px solid var(--color-line);
+    padding: var(--space-2) var(--space-3);
+  }
+
+  .layer-group-head h3 {
+    margin: 0;
+    color: var(--color-ink);
+    font-family: var(--font-display);
+    font-size: var(--text-base);
+    font-weight: var(--weight-display);
+  }
+
+  .layer-group-head span {
+    color: var(--color-quiet);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+  }
+
+  .layer-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
   }
 
   .layer-row {
     display: grid;
-    /* 概念 + 层 / 一句话定位 / 常见困惑 / 站号。窄屏折叠成单列。 */
-    grid-template-columns: minmax(8.5rem, 0.8fr) minmax(0, 1.5fr) minmax(0, 1.5fr) auto;
+    /* 概念 + 一句话定位 + 常见困惑 + 出现语境/站号。窄屏折叠成单列。 */
+    grid-template-columns: minmax(9rem, 0.8fr) minmax(0, 1.35fr) minmax(0, 1.45fr) minmax(
+        8rem,
+        auto
+      );
     gap: var(--space-2);
     align-items: baseline;
     padding: var(--space-2) var(--space-3);
@@ -477,6 +535,7 @@ const LAYER_CONCEPTS = [
   }
 
   .layer-name {
+    min-width: 0;
     display: flex;
     flex-wrap: wrap;
     align-items: baseline;
@@ -496,30 +555,67 @@ const LAYER_CONCEPTS = [
   }
 
   .layer-tag {
+    max-width: 100%;
+    overflow-wrap: anywhere;
     padding: 0.1rem 0.4rem;
     border: 1px solid var(--color-line-soft);
     border-radius: var(--radius-sm);
     color: var(--color-muted);
     font-size: var(--text-xs);
-    white-space: nowrap;
+  }
+
+  .layer-role,
+  .layer-confusion {
+    min-width: 0;
+    margin: 0;
+    line-height: 1.6;
   }
 
   .layer-role {
-    margin: 0;
     color: var(--color-ink);
-    line-height: 1.6;
   }
-
   .layer-confusion {
-    margin: 0;
     color: var(--color-muted);
-    line-height: 1.6;
   }
 
   .layer-confusion-label {
     display: block;
     color: var(--color-quiet);
     font-size: var(--text-xs);
+  }
+
+  .layer-meta {
+    display: grid;
+    justify-items: start;
+    gap: var(--space-1);
+  }
+
+  .exposure {
+    color: var(--color-muted);
+    font-size: var(--text-xs);
+    white-space: nowrap;
+  }
+
+  .exposure::before {
+    width: 0.45rem;
+    height: 0.45rem;
+    content: '';
+    display: inline-block;
+    border-radius: 50%;
+    background: var(--color-quiet);
+  }
+
+  .exposure-新闻常见::before {
+    background: var(--color-accent);
+  }
+  .exposure-产品常见::before {
+    background: var(--color-prerequisite);
+  }
+  .exposure-使用必遇::before {
+    background: var(--color-comparison);
+  }
+  .exposure-工作常见::before {
+    background: var(--color-component);
   }
 
   .layer-station {
@@ -530,10 +626,32 @@ const LAYER_CONCEPTS = [
     white-space: nowrap;
   }
 
+  .layer-station-muted {
+    color: var(--color-quiet);
+  }
+
   @media (max-width: 60rem) {
     .layer-row {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr);
+      gap: var(--space-1) var(--space-2);
+    }
+
+    .layer-meta {
+      grid-column: 2;
+      grid-row: 1;
+      justify-self: end;
+    }
+  }
+
+  @media (max-width: 38rem) {
+    .layer-row {
       grid-template-columns: minmax(0, 1fr);
-      gap: var(--space-1);
+    }
+
+    .layer-meta {
+      grid-column: auto;
+      grid-row: auto;
+      justify-self: start;
     }
   }
 

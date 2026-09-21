@@ -220,6 +220,20 @@ test('answers in place with immediate per-option feedback instead of jumping to 
   await expect(recommended).toHaveAttribute('aria-pressed', 'false');
 });
 
+test('returns a question to its cognitive chain station and knowledge references', async ({
+  page,
+}) => {
+  await page.goto('/learn/questions/q05-context-overflow-retrieval/');
+
+  const chain = page.locator('[aria-label="本题认知链路定位"]');
+  await expect(chain).toBeVisible();
+  await expect(chain.getByRole('link').first()).toHaveAttribute('href', '/map/#station-1');
+  await expect(chain.getByRole('link')).toHaveCount(2);
+  const references = page.getByRole('navigation', { name: '相关知识库条目' });
+  await expect(references).toBeVisible();
+  await expect(references.locator('a small').first()).toHaveText('读全文 →');
+});
+
 test('supports keyboard answering and keeps the continuation link explicit', async ({ page }) => {
   await page.goto('/learn/questions/q01-rules-or-ai/');
 
@@ -812,6 +826,7 @@ test('keeps key pages within the viewport without horizontal overflow', async ({
   for (const url of [
     '/',
     '/learn/',
+    '/learn/complete/',
     '/learn/questions/',
     '/learn/questions/q61-accuracy-or-explain/',
     '/learn/cases/user-feedback-analysis/',
@@ -938,6 +953,9 @@ test('records three-tier graduation and points to the case library', async ({ pa
   await expect(page.locator('[data-cell-done="true"]')).toHaveCount(18);
   await expect(page.locator('[data-complete-next]')).toHaveAttribute('href', '/learn/cases/');
   await expect(page.locator('[data-complete-next]')).toContainText('进入连续案例');
+  await expect(page.locator('[data-next-map]')).toHaveAttribute('href', '/map/');
+  await expect(page.locator('[data-next-library]')).toHaveAttribute('href', '/learn/cases/');
+  await expect(page.locator('[data-next-knowledge]')).toHaveAttribute('href', '/atlas/');
 });
 
 test('renders the designed 404 state', async ({ page }) => {

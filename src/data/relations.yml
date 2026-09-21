@@ -153,3 +153,585 @@
   target: retrieval-augmented-generation
   type: comparison
   explanation: 长上下文提高单次可容纳的篇幅，RAG 决定该把哪些证据放进去；容量变大不替代「选对证据」这件事。
+
+- id: generative-ai-precedes-multimodal-ai
+  source: generative-ai
+  target: multimodal-ai
+  type: prerequisite
+  explanation: 先理解生成式 AI 的共同机制，再看多模态系统如何把文字、图像、音频和视频放进同一任务。
+
+- id: generative-ai-precedes-image-generation
+  source: generative-ai
+  target: image-generation
+  type: prerequisite
+  explanation: 图像生成是生成式 AI 在视觉内容上的具体任务，先理解生成概念才能判断产品能力边界。
+
+- id: generative-ai-precedes-video-generation
+  source: generative-ai
+  target: video-generation
+  type: prerequisite
+  explanation: 视频生成沿用生成式 AI 的内容合成思路，但还需要处理画面连续性和时间维度。
+
+- id: large-language-model-precedes-prompt
+  source: large-language-model
+  target: prompt
+  type: prerequisite
+  explanation: 明白模型是在当前上下文中预测输出，才能理解提示词为什么会改变结果而不是直接改模型。
+
+- id: large-language-model-precedes-context-engineering
+  source: large-language-model
+  target: context-engineering
+  type: prerequisite
+  explanation: 上下文工程建立在模型依赖输入信息的事实之上，先理解模型工作方式再谈信息组织。
+
+- id: context-window-precedes-long-context
+  source: context-window
+  target: long-context
+  type: prerequisite
+  explanation: 长上下文是上下文窗口能力的扩展，先知道窗口限制，才不会把容量数字误读成可靠性保证。
+
+- id: prompt-precedes-structured-output
+  source: prompt
+  target: structured-output
+  type: prerequisite
+  explanation: 结构化输出仍然需要通过提示和约束表达目标格式，先掌握提示词再理解格式控制。
+
+- id: context-engineering-precedes-rag
+  source: context-engineering
+  target: retrieval-augmented-generation
+  type: prerequisite
+  explanation: RAG 的关键不只是召回资料，还要把问题、证据和约束组织成模型能使用的上下文。
+
+- id: document-parsing-component-of-rag
+  source: document-parsing
+  target: retrieval-augmented-generation
+  type: component
+  explanation: 文档解析把 PDF、表格和网页等原始材料转换为可处理内容，是知识接入的前置组成部分。
+
+- id: knowledge-base-component-of-rag
+  source: knowledge-base
+  target: retrieval-augmented-generation
+  type: component
+  explanation: 知识库提供可被检索的外部资料，但它本身不负责生成答案或判断答案是否正确。
+
+- id: embedding-component-of-rag
+  source: embedding
+  target: retrieval-augmented-generation
+  type: component
+  explanation: 嵌入把问题和资料转换成可比较的向量，帮助 RAG 通过语义相似度寻找候选证据。
+
+- id: hybrid-search-component-of-retrieval
+  source: hybrid-search
+  target: retrieval
+  type: component
+  explanation: 混合检索把关键词匹配与语义相似度结合，适合同时保留专有名词精确性和语义召回能力。
+
+- id: query-rewriting-component-of-retrieval
+  source: query-rewriting
+  target: retrieval
+  type: component
+  explanation: 查询改写先把用户的口语问题整理成更适合搜索的形式，再交给检索系统扩大命中机会。
+
+- id: retrieval-recall-precedes-groundedness
+  source: retrieval-recall
+  target: groundedness
+  type: prerequisite
+  explanation: 如果相关证据根本没有被召回，回答就不可能稳定地建立在正确资料之上。
+
+- id: retrieval-augmented-generation-precedes-groundedness
+  source: retrieval-augmented-generation
+  target: groundedness
+  type: prerequisite
+  explanation: 先理解 RAG 如何把外部证据放进生成上下文，才能判断回答是否真的依据了这些证据。
+
+- id: retrieval-augmented-generation-precedes-evaluation
+  source: retrieval-augmented-generation
+  target: evaluation
+  type: prerequisite
+  explanation: 只有先明确系统的检索与生成链路，才知道应该用哪些样本评估答案质量和证据一致性。
+
+- id: knowledge-base-compared-with-fine-tuning
+  source: fine-tuning
+  target: knowledge-base
+  type: comparison
+  explanation: 微调把规律写进模型参数，知识库把资料保留在外部并按需检索；更新成本和可追溯性不同。
+
+- id: long-context-compared-with-fine-tuning
+  source: fine-tuning
+  target: long-context
+  type: comparison
+  explanation: 微调改变模型参数，长上下文改变一次输入能放多少内容；两者都不能自动保证答案准确。
+
+- id: computer-vision-compared-with-image-generation
+  source: computer-vision
+  target: image-generation
+  type: comparison
+  explanation: 计算机视觉主要从图像中识别和理解信息，图像生成则根据条件合成新的视觉内容。
+
+- id: image-generation-compared-with-video-generation
+  source: image-generation
+  target: video-generation
+  type: comparison
+  explanation: 图像生成输出单张或独立画面，视频生成还要维持跨帧的动作、人物和镜头连续性。
+
+- id: multimodal-ai-applied-to-image-generation
+  source: multimodal-ai
+  target: image-generation
+  type: application
+  explanation: 多模态系统可以把文字、参考图和视觉理解结合起来，形成更丰富的图像生成输入。
+
+- id: multimodal-ai-applied-to-video-generation
+  source: multimodal-ai
+  target: video-generation
+  type: application
+  explanation: 视频生成通常需要同时处理文字、图像与时间连续性，多模态能力为这些输入提供统一接口。
+
+- id: large-language-model-compared-with-multimodal-ai
+  source: large-language-model
+  target: multimodal-ai
+  type: comparison
+  explanation: 大语言模型强调语言建模，多模态人工智能强调处理多种信息类型；一个系统可以同时具备两者。
+
+- id: temperature-applied-to-generative-ai
+  source: temperature
+  target: generative-ai
+  type: application
+  explanation: 温度参数改变采样结果的随机程度，常用于控制生成式 AI 输出的稳定性与多样性。
+
+- id: hallucination-compared-with-fine-tuning
+  source: fine-tuning
+  target: hallucination
+  type: comparison
+  explanation: 微调可能改善特定任务的行为，但它不是事实核验机制，不能把幻觉风险从根本上消除。
+
+- id: ai-agent-precedes-tool-use
+  source: ai-agent
+  target: tool-use
+  type: prerequisite
+  explanation: 先理解 Agent 需要围绕目标循环行动，再看工具调用如何让模型获得读取和执行外部动作的能力。
+
+- id: tool-use-component-of-ai-agent
+  source: tool-use
+  target: ai-agent
+  type: component
+  explanation: 工具调用是 Agent 与外部世界互动的关键组件，但单独的工具调用还不等于完整 Agent。
+
+- id: agent-planning-component-of-ai-agent
+  source: agent-planning
+  target: ai-agent
+  type: component
+  explanation: Agent 规划负责把目标拆成后续步骤，是 Agent 从一次回答变成连续行动的重要组成部分。
+
+- id: task-decomposition-component-of-agent-planning
+  source: task-decomposition
+  target: agent-planning
+  type: component
+  explanation: 任务拆解把复杂目标分成可执行的小步骤，为后续的 Agent 规划和检查提供结构。
+
+- id: agent-memory-component-of-ai-agent
+  source: agent-memory
+  target: ai-agent
+  type: component
+  explanation: Agent 记忆保存任务所需的历史和状态，让系统能够跨步骤工作，但不等于模型永久记住一切。
+
+- id: self-correction-applied-to-ai-agent
+  source: self-correction
+  target: ai-agent
+  type: application
+  explanation: 自我纠错让 Agent 根据中间结果发现问题并调整步骤，但仍需要明确停止条件和人工监督。
+
+- id: human-in-the-loop-applied-to-ai-agent
+  source: human-in-the-loop
+  target: ai-agent
+  type: application
+  explanation: 人在回路为高风险动作保留确认、干预和停止位置，是 Agent 进入真实业务的重要控制方式。
+
+- id: autonomous-agent-compared-with-ai-agent
+  source: ai-agent
+  target: autonomous-agent
+  type: comparison
+  explanation: AI Agent 是更宽泛的系统形态，自主智能体强调在较少人工干预下持续规划和执行。
+
+- id: agent-planning-compared-with-workflow
+  source: agent-planning
+  target: workflow-automation
+  type: comparison
+  explanation: Agent 规划可以根据状态动态调整步骤，工作流自动化通常沿预先定义且可检查的路径执行。
+
+- id: function-calling-component-of-tool-use
+  source: function-calling
+  target: tool-use
+  type: component
+  explanation: 函数调用提供结构化的工具请求格式，是应用实现工具调用的一种常见机制而不是全部能力。
+
+- id: api-call-component-of-tool-use
+  source: api-call
+  target: tool-use
+  type: component
+  explanation: API 调用让模型或应用访问外部服务，是工具调用连接现实系统的常见执行方式。
+
+- id: function-calling-compared-with-model-context-protocol
+  source: function-calling
+  target: model-context-protocol
+  type: comparison
+  explanation: 函数调用描述模型如何按结构提出一次函数请求，MCP 描述客户端与外部工具服务如何标准化连接。
+
+- id: model-api-precedes-model-serving
+  source: model-api
+  target: model-serving
+  type: prerequisite
+  explanation: 先理解模型 API 如何暴露能力，再理解模型服务如何承担部署、并发和运行时管理。
+
+- id: model-routing-applied-to-model-serving
+  source: model-routing
+  target: model-serving
+  type: application
+  explanation: 模型路由可以根据任务、成本、延迟或可用性选择不同模型，是服务层的调度能力。
+
+- id: rate-limiting-component-of-model-serving
+  source: rate-limiting
+  target: model-serving
+  type: component
+  explanation: 限流保护模型服务免于被突发请求压垮，也是控制成本和保障多用户公平性的运行机制。
+
+- id: model-context-protocol-applied-to-tool-use
+  source: model-context-protocol
+  target: tool-use
+  type: application
+  explanation: MCP 为工具和数据提供标准化接入方式，工具调用仍由客户端与模型应用共同完成执行。
+
+- id: agent-skills-precedes-workflow-automation
+  source: agent-skills
+  target: workflow-automation
+  type: prerequisite
+  explanation: 把做法写清楚并沉淀下来，才能进一步判断哪些步骤适合由规则和工具稳定自动执行。
+
+- id: agentic-workflow-component-of-workflow-automation
+  source: agentic-workflow
+  target: workflow-automation
+  type: component
+  explanation: Agent 工作流把模型的动态判断嵌入自动化流程，但仍需要明确边界、状态和失败处理。
+
+- id: prompt-template-component-of-agent-skills
+  source: prompt-template
+  target: agent-skills
+  type: component
+  explanation: 提示词模板可以成为技能文件夹中的一个步骤，但完整 Skill 还需要触发条件、资料和输出约定。
+
+- id: prompt-versioning-applied-to-agent-skills
+  source: prompt-versioning
+  target: agent-skills
+  type: application
+  explanation: 提示词版本管理帮助追踪技能中的指令变化，便于回溯改动与比较输出质量。
+
+- id: prompt-chaining-component-of-agentic-workflow
+  source: prompt-chaining
+  target: agentic-workflow
+  type: component
+  explanation: 提示链把一个任务拆成多个有顺序的模型步骤，是 Agent 工作流中常见的固定编排方式。
+
+- id: multi-agent-system-compared-with-workflow-automation
+  source: multi-agent-system
+  target: workflow-automation
+  type: comparison
+  explanation: 多智能体系统让多个角色协作完成任务，工作流自动化强调步骤和规则编排，二者可以组合使用。
+
+- id: langchain-compared-with-agentic-workflow
+  source: agentic-workflow
+  target: langchain
+  type: application
+  explanation: LangChain 可以承载 Agent 工作流的提示、工具和状态编排，但工作流本身不依赖某一个框架。
+
+- id: evaluation-precedes-observability
+  source: evaluation
+  target: observability
+  type: prerequisite
+  explanation: 先定义想判断的质量指标，再设计日志、追踪和运行指标，观测才不会变成无目的的数据堆积。
+
+- id: benchmark-component-of-evaluation
+  source: benchmark
+  target: evaluation
+  type: component
+  explanation: 基准测试提供可重复的比较集合，是评估模型或应用效果时的一类固定测试工具。
+
+- id: eval-set-component-of-evaluation
+  source: eval-set
+  target: evaluation
+  type: component
+  explanation: 评测集把真实任务整理成可反复运行的样本，是判断改动是否有效的基础材料。
+
+- id: human-evaluation-component-of-evaluation
+  source: human-evaluation
+  target: evaluation
+  type: component
+  explanation: 人工评估补充自动指标难以覆盖的质量维度，例如表达清楚、符合语境和是否真正解决问题。
+
+- id: llm-as-judge-compared-with-human-evaluation
+  source: human-evaluation
+  target: llm-as-judge
+  type: comparison
+  explanation: 人工评估依靠人的判断，大模型裁判用模型按标准打分；后者效率更高但仍需校准和抽查。
+
+- id: groundedness-component-of-evaluation
+  source: groundedness
+  target: evaluation
+  type: component
+  explanation: 依据一致性检查答案是否被提供的证据支持，是知识问答和 RAG 应用的重要质量维度。
+
+- id: observability-applied-to-ai-agent
+  source: observability
+  target: ai-agent
+  type: application
+  explanation: 可观测性记录 Agent 的步骤、工具调用和失败原因，帮助定位一次行动链到底在哪一环出错。
+
+- id: retrieval-recall-applied-to-evaluation
+  source: retrieval-recall
+  target: evaluation
+  type: application
+  explanation: 检索召回率把知识库是否找到正确资料变成可测指标，能区分检索问题与生成问题。
+
+- id: ai-agent-compared-with-large-language-model
+  source: ai-agent
+  target: large-language-model
+  type: comparison
+  explanation: 大语言模型主要生成内容，Agent 在模型之外增加规划、工具、状态和执行闭环。
+
+- id: prompt-injection-precedes-ai-safety
+  source: prompt-injection
+  target: ai-safety
+  type: prerequisite
+  explanation: 先理解输入如何试图覆盖系统指令，才能看清 AI 应用为什么需要权限、隔离和人工干预。
+
+- id: ai-guardrail-component-of-ai-safety
+  source: ai-guardrail
+  target: ai-safety
+  type: component
+  explanation: AI 护栏通过规则、分类器或流程限制高风险输入输出，是安全体系中的一层而非全部安全。
+
+- id: human-oversight-component-of-ai-safety
+  source: human-oversight
+  target: ai-safety
+  type: component
+  explanation: 人工监督为高风险决策保留复核和停止权，避免系统把不可逆后果完全交给模型。
+
+- id: ai-governance-applied-to-ai-safety
+  source: ai-governance
+  target: ai-safety
+  type: application
+  explanation: AI 治理把责任、权限、流程和审计要求落到组织中，让安全不只停留在模型技术层。
+
+- id: jailbreak-compared-with-prompt-injection
+  source: jailbreak
+  target: prompt-injection
+  type: comparison
+  explanation: 越狱提示通常针对模型安全限制，提示词注入更强调不可信内容对应用指令和工具边界的操纵。
+
+- id: red-teaming-applied-to-ai-safety
+  source: red-teaming
+  target: ai-safety
+  type: application
+  explanation: 红队测试主动寻找越权、误导和滥用路径，用攻击视角检验安全措施在真实场景中的有效性。
+
+- id: privacy-applied-to-ai-safety
+  source: privacy
+  target: ai-safety
+  type: application
+  explanation: 隐私要求限制个人信息的收集、使用和泄露，是 AI 系统安全边界中不能忽略的组织责任。
+
+- id: human-in-the-loop-compared-with-human-oversight
+  source: human-in-the-loop
+  target: human-oversight
+  type: comparison
+  explanation: 人在回路强调具体工作流中的介入节点，人工监督强调持续监控、复核和停止系统的治理安排。
+
+- id: ai-safety-compared-with-ai-governance
+  source: ai-governance
+  target: ai-safety
+  type: comparison
+  explanation: AI 安全关注系统可能造成的伤害与失控，AI 治理进一步规定组织如何负责、记录、审计和问责。
+
+- id: system-prompt-component-of-prompt
+  source: system-prompt
+  target: prompt
+  type: component
+  explanation: 系统提示词是提示的一种，用来规定模型在当前应用中应遵守的角色、规则和边界。
+
+- id: few-shot-prompting-component-of-prompt
+  source: few-shot-prompting
+  target: prompt
+  type: component
+  explanation: 少样本提示通过提供示例来约束输出方式，是提示词表达任务要求的一种具体方法。
+
+- id: user-prompt-component-of-prompt
+  source: user-prompt
+  target: prompt
+  type: component
+  explanation: 用户提示词承载当前问题和任务目标，是模型每次交互中最直接的一段输入。
+
+- id: prompt-debugging-applied-to-prompt
+  source: prompt-debugging
+  target: prompt
+  type: application
+  explanation: 提示词调试通过比较输入、输出和失败原因，帮助定位任务描述中缺少的上下文或约束。
+
+- id: structured-output-applied-to-prompt
+  source: structured-output
+  target: prompt
+  type: application
+  explanation: 结构化输出把提示词中的格式要求落实为字段、类型和可检查的结果形状。
+
+- id: context-engineering-applied-to-prompt
+  source: context-engineering
+  target: prompt
+  type: application
+  explanation: 上下文工程把提示词放进更完整的信息组织过程，决定哪些资料、历史和工具结果应该一起提供。
+
+- id: short-term-memory-component-of-agent-memory
+  source: short-term-memory
+  target: agent-memory
+  type: component
+  explanation: 短期记忆保存当前任务和会话中的临时信息，是 Agent 记忆的一种运行时组成部分。
+
+- id: long-term-memory-component-of-agent-memory
+  source: long-term-memory
+  target: agent-memory
+  type: component
+  explanation: 长期记忆保存跨会话仍可能有用的信息，但必须有更新、删除和权限边界。
+
+- id: state-management-component-of-ai-agent
+  source: state-management
+  target: ai-agent
+  type: component
+  explanation: 状态管理记录任务进度、工具结果和人工决定，让 Agent 能在多步动作之间保持上下文。
+
+- id: agent-orchestration-component-of-ai-agent
+  source: agent-orchestration
+  target: ai-agent
+  type: component
+  explanation: Agent 编排负责组织模型、工具、状态和步骤之间的协作，是构建完整 Agent 的运行时部分。
+
+- id: browser-use-applied-to-ai-agent
+  source: browser-use
+  target: ai-agent
+  type: application
+  explanation: 浏览器使用让 Agent 能读取网页并执行点击、填写和导航等动作，但权限与可撤回性必须先设计。
+
+- id: computer-use-applied-to-ai-agent
+  source: computer-use
+  target: ai-agent
+  type: application
+  explanation: 计算机使用把 Agent 的行动范围扩展到桌面界面，带来更高的执行能力和更大的误操作风险。
+
+- id: code-execution-applied-to-tool-use
+  source: code-execution
+  target: tool-use
+  type: application
+  explanation: 代码执行是工具调用的一种高权限形式，能处理数据和自动化任务，但需要隔离运行环境。
+
+- id: agent-memory-applied-to-agent-planning
+  source: agent-memory
+  target: agent-planning
+  type: application
+  explanation: Agent 规划可以利用已保存的任务状态和历史结果决定下一步，但记忆错误也会把错误带入后续行动。
+
+- id: natural-language-processing-precedes-large-language-model
+  source: natural-language-processing
+  target: large-language-model
+  type: prerequisite
+  explanation: 自然语言处理提供语言任务的整体背景，有助于理解大语言模型为何能覆盖多种文本工作。
+
+- id: model-serving-applied-to-large-language-model
+  source: model-serving
+  target: large-language-model
+  type: application
+  explanation: 模型服务把训练完成的大语言模型以可调用方式部署出来，承担并发、延迟和资源管理。
+
+- id: inference-server-component-of-model-serving
+  source: inference-server
+  target: model-serving
+  type: component
+  explanation: 推理服务器负责加载模型并响应请求，是模型服务将参数转成在线能力的运行组件。
+
+- id: fallback-model-applied-to-model-routing
+  source: fallback-model
+  target: model-routing
+  type: application
+  explanation: 备用模型让路由在主模型不可用、超时或成本不合适时仍能提供降级后的服务。
+
+- id: semantic-search-component-of-retrieval
+  source: semantic-search
+  target: retrieval
+  type: component
+  explanation: 语义搜索按含义而不是只按字面匹配资料，是检索系统理解自然语言问题的一种方式。
+
+- id: keyword-search-component-of-retrieval
+  source: keyword-search
+  target: retrieval
+  type: component
+  explanation: 关键词搜索按词面和索引命中资料，适合保留专有名词、编号和精确短语。
+
+- id: context-retrieval-component-of-retrieval
+  source: context-retrieval
+  target: retrieval
+  type: component
+  explanation: 上下文检索从候选资料中挑选最终交给模型参考的内容，是检索到生成之间的关键环节。
+
+- id: similarity-search-component-of-retrieval
+  source: similarity-search
+  target: retrieval
+  type: component
+  explanation: 相似度搜索按表示之间的距离寻找近邻，是嵌入检索和向量数据库常用的查询方式。
+
+- id: top-k-applied-to-retrieval
+  source: top-k
+  target: retrieval
+  type: application
+  explanation: Top-k 决定检索阶段保留多少候选结果，会影响召回范围、上下文长度和后续排序成本。
+
+- id: citation-generation-applied-to-groundedness
+  source: citation-generation
+  target: groundedness
+  type: application
+  explanation: 引用生成把答案与证据来源显式连起来，帮助检查回答是否真的建立在提供的资料上。
+
+- id: confidence-calibration-applied-to-evaluation
+  source: confidence-calibration
+  target: evaluation
+  type: application
+  explanation: 置信度校准检查系统的自信程度是否与真实正确率相匹配，是评估可依赖性的一个维度。
+
+- id: task-success-rate-component-of-evaluation
+  source: task-success-rate
+  target: evaluation
+  type: component
+  explanation: 任务成功率直接判断用户目标是否完成，比只看语言流畅度更接近实际产品价值。
+
+- id: safety-filter-component-of-ai-guardrail
+  source: safety-filter
+  target: ai-guardrail
+  type: component
+  explanation: 安全过滤器通过识别高风险输入或输出执行一部分护栏策略，但不能单独覆盖所有攻击路径。
+
+- id: data-governance-applied-to-privacy
+  source: data-governance
+  target: privacy
+  type: application
+  explanation: 数据治理把数据的收集、访问、保留和删除规则落实下来，是保护隐私的组织基础。
+
+- id: responsible-ai-applied-to-ai-governance
+  source: responsible-ai
+  target: ai-governance
+  type: application
+  explanation: 负责任 AI 将公平、透明、问责和风险管理等原则转成组织的治理要求与工作流程。
+
+- id: content-moderation-applied-to-ai-safety
+  source: content-moderation
+  target: ai-safety
+  type: application
+  explanation: 内容审核降低有害输出进入用户场景的风险，但安全还需要权限、监督、测试和应急机制。
+
+- id: copyright-applied-to-ai-safety
+  source: copyright
+  target: ai-safety
+  type: application
+  explanation: 版权问题提醒系统在训练、生成和分发内容时处理权利边界，是 AI 安全与治理的一部分。

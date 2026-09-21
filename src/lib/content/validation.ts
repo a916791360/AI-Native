@@ -504,91 +504,103 @@ function detectCycles(
 
 function validateRelations(project: ProjectContent, diagnostics: ContentDiagnostic[]): void {
   const termIds = new Set(project.terms.map(({ data }) => data.id));
-  const relationIds = new Map<string, number>();
-  const tuples = new Map<string, number>();
   const connected = new Set<string>();
 
-  project.relations.forEach((relation, index) => {
-    const previousId = relationIds.get(relation.id);
-    if (previousId !== undefined) {
-      addDiagnostic(
-        diagnostics,
-        'RELATION_DUPLICATE_ID',
-        'src/data/relations.yml',
-        `${index}.id`,
-        `duplicates item ${previousId}`,
-      );
-    }
-    relationIds.set(relation.id, index);
+  // relations.yml 是人工维护的语义图，必须检查自身的 ID / 三元组唯一性；
+  // catalog-relations.yml 是生成的同域兜底边，只参与「词条是否已连接」判断。
+  // 两层允许表达同一条边：兜底边不能因为后来补了一条真实语义边而触发重复报错。
+  const validateSet = (relations: Relation[], filePath: string, checkDuplicates: boolean): void => {
+    const relationIds = new Map<string, number>();
+    const tuples = new Map<string, number>();
 
-    const tuple = `${relation.source}|${relation.target}|${relation.type}`;
-    const previousTuple = tuples.get(tuple);
-    if (previousTuple !== undefined) {
-      addDiagnostic(
-        diagnostics,
-        'RELATION_DUPLICATE_TUPLE',
-        'src/data/relations.yml',
-        `${index}`,
-        `duplicates source, target and type from item ${previousTuple}`,
-      );
-    }
-    tuples.set(tuple, index);
+    relations.forEach((relation, index) => {
+      if (checkDuplicates) {
+        const previousId = relationIds.get(relation.id);
+        if (previousId !== undefined) {
+          addDiagnostic(
+            diagnostics,
+            'RELATION_DUPLICATE_ID',
+            filePath,
+            `${index}.id`,
+            `duplicates item ${previousId}`,
+          );
+        }
+        relationIds.set(relation.id, index);
 
-    if (!termIds.has(relation.source)) {
-      addDiagnostic(
-        diagnostics,
-        'RELATION_ENDPOINT_UNKNOWN',
-        'src/data/relations.yml',
-        `${index}.source`,
-        `unknown term ${relation.source}`,
-      );
-    }
-    if (!termIds.has(relation.target)) {
-      addDiagnostic(
-        diagnostics,
-        'RELATION_ENDPOINT_UNKNOWN',
-        'src/data/relations.yml',
-        `${index}.target`,
-        `unknown term ${relation.target}`,
-      );
-    }
-    if (relation.source === relation.target) {
-      addDiagnostic(
-        diagnostics,
-        'RELATION_SELF',
-        'src/data/relations.yml',
-        `${index}.target`,
-        'self-links are forbidden',
-      );
-    }
-    if (
-      relation.type === 'comparison' &&
-      relation.source.localeCompare(relation.target, 'en') >= 0
-    ) {
-      addDiagnostic(
-        diagnostics,
-        'COMPARISON_ORDER',
-        'src/data/relations.yml',
-        `${index}.source`,
-        'comparison endpoints must be stored in ascending ID order',
-      );
-    }
+        const tuple = `${relation.source}|${relation.target}|${relation.type}`;
+        const previousTuple = tuples.get(tuple);
+        if (previousTuple !== undefined) {
+          addDiagnostic(
+            diagnostics,
+            'RELATION_DUPLICATE_TUPLE',
+            filePath,
+            `${index}`,
+            `duplicates source, target and type from item ${previousTuple}`,
+          );
+        }
+        tuples.set(tuple, index);
+      }
 
-    const explanationLength = [...relation.explanation].length;
-    if (explanationLength < 20 || explanationLength > 120) {
-      addDiagnostic(
-        diagnostics,
-        'RELATION_EXPLANATION_LENGTH',
-        'src/data/relations.yml',
-        `${index}.explanation`,
-        `must contain 20-120 characters; received ${explanationLength}`,
-      );
-    }
+      if (!termIds.has(relation.source)) {
+        addDiagnostic(
+          diagnostics,
+          'RELATION_ENDPOINT_UNKNOWN',
+          filePath,
+          `${index}.source`,
+          `unknown term ${relation.source}`,
+        );
+      }
+      if (!termIds.has(relation.target)) {
+        addDiagnostic(
+          diagnostics,
+          'RELATION_ENDPOINT_UNKNOWN',
+          filePath,
+          `${index}.target`,
+          `unknown term ${relation.target}`,
+        );
+      }
+      if (relation.source === relation.target) {
+        addDiagnostic(
+          diagnostics,
+          'RELATION_SELF',
+          filePath,
+          `${index}.target`,
+          'self-links are forbidden',
+        );
+      }
+      if (
+        relation.type === 'comparison' &&
+        relation.source.localeCompare(relation.target, 'en') >= 0
+      ) {
+        addDiagnostic(
+          diagnostics,
+          'COMPARISON_ORDER',
+          filePath,
+          `${index}.source`,
+          'comparison endpoints must be stored in ascending ID order',
+        );
+      }
 
-    connected.add(relation.source);
-    connected.add(relation.target);
-  });
+      const explanationLength = [...relation.explanation].length;
+      if (explanationLength < 20 || explanationLength > 120) {
+        addDiagnostic(
+          diagnostics,
+          'RELATION_EXPLANATION_LENGTH',
+          filePath,
+          `${index}.explanation`,
+          `must contain 20-120 characters; received ${explanationLength}`,
+        );
+      }
 
+      connected.add(relation.source);
+      connected.add(relation.target);
+    });
+  };
+
+  validateSet(project.relations, 'src/data/relations.yml', true);
+  validateSet(project.catalogRelations, 'src/data/catalog-relations.yml', false);
+
+  // 兜底边不代表人工确认过的学习依赖，不参与语义图的环检测。
   detectCycles(project.relations, 'prerequisite', diagnostics);
   detectCycles(project.relations, 'component', diagnostics);
 
