@@ -15,6 +15,7 @@ const domains = parseYaml(
   readFileSync(new URL('../../src/data/domains.yml', import.meta.url), 'utf8'),
 ) as { id: string; ring: 'core' | 'extended' }[];
 const coreDomainIds = new Set(domains.filter(({ ring }) => ring === 'core').map(({ id }) => id));
+const domainIds = new Set(domains.map(({ id }) => id));
 const PUBLIC_TERM_COUNT = String(registry.terms.length);
 const PUBLIC_CORE_TERM_COUNT = String(
   registry.terms.filter(({ domain }) => coreDomainIds.has(domain)).length,
@@ -1001,7 +1002,24 @@ test('exposes the navigation on narrow screens', async ({ page, isMobile }) => {
   const primaryNavigation = page.getByRole('navigation', { name: '主导航' });
   await expect(primaryNavigation.getByRole('link', { name: '案例库' })).toBeVisible();
   await primaryNavigation.getByRole('link', { name: '知识库' }).click();
-  await expect(page).toHaveURL(/\/atlas\/$/);
+
+  // 窄屏（≤620px）下 `/atlas/` 会把「当前领域」写进 URL：`src/scripts/atlas-index.ts` 的
+  // `update()` 在 `matchMedia('(max-width: 620px)')` 命中时执行 `nextParams.set('domain', …)`，
+  // 目的是让窄屏视图（一次只显示一个领域）可以被分享和刷新还原。这是 v0.6.0 起的**刻意行为**。
+  //
+  // 所以这里断言**路径**，不把 URL 钉成「不带查询串」。钉死会得到一条靠采样时机的测试：
+  // 断言抢在脚本 `replaceState` 之前跑就绿、之后跑就红。实测本地 `--repeat-each=12` 会
+  // 8 红 4 绿，CI 上 3 次尝试全红——一条三分之二概率失败的测试比没有测试更糟，
+  // 因为它会训练人忽略红色。
+  await expect(page).toHaveURL(/\/atlas\/(\?.*)?$/);
+  const atlasDomain = new URL(page.url()).searchParams.get('domain');
+  // 放宽查询串不等于放弃校验：写进 URL 的领域必须真实存在，否则这条用例只是「页面能打开」。
+  if (atlasDomain !== null) {
+    expect(
+      domainIds.has(atlasDomain),
+      `URL 里的 domain 参数 ${atlasDomain} 不是真实存在的领域 id`,
+    ).toBe(true);
+  }
 });
 
 test('unlocks each tier only after the previous tier is fully answered', async ({ page }) => {

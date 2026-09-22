@@ -198,11 +198,19 @@ test('completes search, filtering and graph selection with a keyboard', async ({
   await expect(page).toHaveURL(/\/terms\/retrieval-augmented-generation\/$/);
 
   await page.goto('/atlas/');
+  const visibleAtlasCount = page.locator('[data-atlas-visible]');
   const ringFilter = page.getByLabel('领域范围');
   await tabTo(page, ringFilter);
   await expect(ringFilter).toBeFocused();
+  // 起点是全量口径（服务端渲染与脚本首跑都是 177，取值时机不影响）。
+  const beforeRing = (await visibleAtlasCount.textContent())?.trim() ?? '';
   await ringFilter.selectOption('core');
-  await expect(page.locator('[data-atlas-visible]')).not.toHaveText('325');
+  await expect(ringFilter).toHaveValue('core');
+  // 判据是「条数真的变了」，不是「条数不等于某个历史数字」。
+  // 后者（原先写的 `not.toHaveText('325')`）在总量收敛到 177 之后**永远不可能失败**——
+  // 一条永远不会红的断言不提供保护，只提供「这里测过了」的错觉。
+  // 本用例 `test.skip(isMobile)` 只在桌面跑，而桌面下 ring 从 all 切到 core 必然改变条数。
+  await expect(visibleAtlasCount).not.toHaveText(beforeRing);
 
   await page.goto('/graph/');
   const graph = page.locator('[data-graph-explorer][data-graph-mode="full"]');
