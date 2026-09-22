@@ -7,7 +7,7 @@ import { searchCasesForTerms } from '../fixtures/search/queries';
 
 const registry = JSON.parse(
   readFileSync(new URL('../../src/generated/term-registry.json', import.meta.url), 'utf8'),
-) as { terms: { id: string; domain: string; status: string }[] };
+) as { terms: { id: string; domain: string; difficulty: string; status: string }[] };
 const graphData = JSON.parse(
   readFileSync(new URL('../../src/generated/graph.json', import.meta.url), 'utf8'),
 ) as { nodes: unknown[]; edges: unknown[] };
@@ -21,6 +21,31 @@ const PUBLIC_CORE_TERM_COUNT = String(
 );
 const PUBLIC_RELATION_COUNT = String(graphData.edges.length);
 const PUBLIC_SEARCH_CASES = searchCasesForTerms(registry.terms.map(({ id }) => id));
+
+/**
+ * 三重筛选夹具：领域 × 难度 × 状态。
+ *
+ * 期望条数在这里**算出来**而不是写死——I6-03 把 150 条词条降级为「不再单独成页」后，
+ * 这个组合的命中数从 5 掉到 2，写死的 5 会红。但问题不在「测试太严」，而在
+ * 它本想验的事被写成了快照：这条用例要证的是**三种筛选能不能同时生效**，
+ * 不是「这个组合今天有几条」。所以数字改为推导。
+ *
+ * 同时补一条夹具本身的断言（见下），因为推导出来的期望值有个退化风险：
+ * 组合被稀释到 0 条时，`0 == 0` 会让整条用例空转通过。
+ */
+const FILTER_SAMPLE = {
+  domain: 'data-retrieval-rag',
+  difficulty: 'advanced',
+  status: 'verified',
+} as const;
+const FILTER_SAMPLE_IDS = registry.terms
+  .filter(
+    (term) =>
+      term.domain === FILTER_SAMPLE.domain &&
+      term.difficulty === FILTER_SAMPLE.difficulty &&
+      term.status === FILTER_SAMPLE.status,
+  )
+  .map(({ id }) => id);
 const PLAYWRIGHT_BASE_URL = `http://127.0.0.1:${process.env.PLAYWRIGHT_PORT ?? '4321'}`;
 
 async function revealMobileHeaderPanel(page: Page, isMobile: boolean, panel: '菜单' | '搜索') {
@@ -544,17 +569,30 @@ test('passes the fixed production search relevance gate', async ({ page, isMobil
 });
 
 test('combines domain, difficulty and status filters', async ({ page, isMobile }) => {
+  // 夹具自检：组合只剩 0 或 1 条时，「三种筛选同时生效」就无从验证了
+  // （0 条时页面显示「显示 0 / 0 个词条」，断言照样通过）。
+  expect(FILTER_SAMPLE_IDS.length).toBeGreaterThan(1);
+
   await page.goto('/search/');
   await revealMobileSearchFilters(page, isMobile);
 
-  await page.locator('[data-search-filter="domain"]').selectOption('data-retrieval-rag');
-  await page.locator('[data-search-filter="difficulty"]').selectOption('advanced');
-  await page.locator('[data-search-filter="status"]').selectOption('verified');
+  await page.locator('[data-search-filter="domain"]').selectOption(FILTER_SAMPLE.domain);
+  await page.locator('[data-search-filter="difficulty"]').selectOption(FILTER_SAMPLE.difficulty);
+  await page.locator('[data-search-filter="status"]').selectOption(FILTER_SAMPLE.status);
 
+  const expectedCount = String(FILTER_SAMPLE_IDS.length);
   const results = page.locator('[data-search-results] li');
-  await expect(page.locator('[data-search-status]')).toHaveText('显示 5 / 5 个词条');
-  await expect(results).toHaveCount(5);
+  await expect(page.locator('[data-search-status]')).toHaveText(
+    `显示 ${expectedCount} / ${expectedCount} 个词条`,
+  );
+  await expect(results).toHaveCount(FILTER_SAMPLE_IDS.length);
+  // 排序独立于筛选：`reranking`（priority 1）应当仍排在 `indexing-pipeline`（priority 2）之前。
   await expect(results.first()).toHaveAttribute('data-result-id', 'reranking');
+  // 逐条比对而不是只看条数——只数条数的话，混进一条别的领域或难度的词条也能过。
+  const actualIds = await results.evaluateAll((nodes) =>
+    nodes.map((node) => node.getAttribute('data-result-id')),
+  );
+  expect([...actualIds].sort()).toEqual([...FILTER_SAMPLE_IDS].sort());
 });
 
 test('keeps metadata search available when the body index cannot load', async ({ page }) => {

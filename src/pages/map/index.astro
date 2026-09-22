@@ -12,6 +12,7 @@ import {
   type ChainRole,
 } from '@/lib/content/chain';
 import { loadProjectContent } from '@/lib/content/io';
+import { isSelectableTerm } from '@/lib/content/visibility';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 
 /**
@@ -33,8 +34,11 @@ const [{ chain, routes, domains }, entries] = await Promise.all([
 ]);
 
 const stations = buildStationViews(chain);
-const terms = entries.map(({ data }) => data);
-const termsById = new Map(terms.map((term) => [term.id, term]));
+const allTerms = entries.map(({ data }) => data);
+// 站点内列出的词条只取「可独立选择的入口」：已废弃词条即便带 chain 也不再上链路图，
+// 否则 /map/ 会给出一个点进去就提示「已并入别处」的入口。
+const terms = allTerms.filter(isSelectableTerm);
+const termsById = new Map(allTerms.map((term) => [term.id, term]));
 const domainNameById = new Map(domains.map((domain) => [domain.id, domain.shortNameZh]));
 const termsByStation = groupTermsByStation(terms);
 const conceptGuide = buildConceptGuide(terms);

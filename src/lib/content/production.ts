@@ -7,6 +7,7 @@ import { parse as parseYaml } from 'yaml';
 import type { ProjectContent } from './io';
 import { parseFrontmatter } from './io';
 import { stableIdSchema } from './schema';
+import { isDeprecatedTerm } from './visibility';
 
 const dateSchema = z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'must use YYYY-MM-DD');
 const productionStatusSchema = z.enum(['planned', 'research', 'draft', 'verified']);
@@ -207,7 +208,16 @@ export function validateContentProduction(
       }
       const productionStatus = waveStatusByTerm.get(id) ?? batch.status;
       const expectedTermStatus = productionStatus === 'research' ? 'catalogued' : productionStatus;
-      if (productionStatus !== 'planned' && term.status !== expectedTermStatus) {
+      // I6-03：deprecated 是词条的合法终态，且与生产进度是两件事——
+      // 生产计划记的是「这条词条的内容做到哪一步了」，废弃说的是「它还要不要
+      // 作为一个独立入口」。一条内容做完的深度词条完全可以被判为不再单独成页，
+      // 所以这里不再比对。若日后有人把研究的半成品标成 deprecated 来绕过校验，
+      // 那是另一个问题（应由 checklist 而不是这条规则拦）。
+      if (
+        !isDeprecatedTerm(term) &&
+        productionStatus !== 'planned' &&
+        term.status !== expectedTermStatus
+      ) {
         diagnostics.push({
           code: 'PRODUCTION_TERM_STATUS',
           filePath: `src/content/terms/${term.domain}/${id}.mdx`,

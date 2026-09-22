@@ -7,6 +7,7 @@ import {
   diffSectionStructure,
   type SectionStructureDiff,
 } from '../../src/lib/content/term-sections';
+import { isDeprecatedTerm, isDraftTerm, isSelectableTerm } from '../../src/lib/content/visibility';
 
 /**
  * 内容质量分析：把「内容质量」从主观话题变成一组可以打印出来的数字。
@@ -79,6 +80,8 @@ export interface TermRecord {
   chainRole?: string;
   hasBoundaries: boolean;
   minAction?: string;
+  /** frontmatter 的 status，用于把已废弃 / 草稿词条排除在「入口」口径之外（I6-03）。 */
+  status: string;
   /** 正文 h2 序列与决策页模板 v2 的差集（门禁 5 用）。 */
   sectionDiff: SectionStructureDiff;
 }
@@ -116,6 +119,7 @@ export async function loadTerms(root = process.cwd()): Promise<TermRecord[]> {
       chainRole: typeof frontmatter.chainRole === 'string' ? frontmatter.chainRole : undefined,
       hasBoundaries: Boolean(frontmatter.boundaries),
       minAction: typeof frontmatter.minAction === 'string' ? frontmatter.minAction : undefined,
+      status: typeof frontmatter.status === 'string' ? frontmatter.status : 'verified',
       sectionDiff: diffSectionStructure(body),
     });
   }
@@ -154,6 +158,10 @@ export interface SynonymCluster {
 
 export interface MetricSet {
   totalTerms: number;
+  /** 已废弃词条数：不在 totalTerms 之内，也不参与任何一项指标（I6-03）。 */
+  deprecatedTerms: number;
+  /** 草稿词条数：同上，整页不对外。 */
+  draftTerms: number;
   /** 1. 含 ≥1 句复用句的词条占比 */
   templateReuseRate: number;
   templateReuseTerms: number;
@@ -386,7 +394,21 @@ export async function analyzeContentQuality(
   root = process.cwd(),
   providedTerms?: TermRecord[],
 ): Promise<ContentQualityReport> {
-  const terms = providedTerms ?? (await loadTerms(root));
+  const allTerms = providedTerms ?? (await loadTerms(root));
+  /**
+   * I6-03 口径变更：已废弃词条不再是「入口」，所以它不参与任何一项入口质量指标。
+   *
+   * 为什么必须排除，而不是「反正它还在文件里」：这些指标的全部意义是
+   * 「读者要面对多少条内容、其中多少是模板句」。一条已从目录、搜索、图谱里
+   * 隐去的词条，读者不会遇到它——把它算进去，指标就与读者体验脱钩了。
+   * 副作用是好的一面：近义碎片簇数会真的下降，而不是「标了废弃但报表照旧」。
+   *
+   * 草稿同理（它整页不对外）。两者的条数单独报出来，避免「数字变小了」被误读成
+   * 「内容被删了」——文件都还在，只是不再是入口。
+   */
+  const deprecatedTerms = allTerms.filter(isDeprecatedTerm);
+  const draftTerms = allTerms.filter(isDraftTerm);
+  const terms = allTerms.filter(isSelectableTerm);
   const termIds = new Set(terms.map((term) => term.id));
 
   // ---- 1. 模板复用 --------------------------------------------------------
@@ -487,6 +509,8 @@ export async function analyzeContentQuality(
 
   const metrics: MetricSet = {
     totalTerms: terms.length,
+    deprecatedTerms: deprecatedTerms.length,
+    draftTerms: draftTerms.length,
 
     templateReuseRate: terms.length === 0 ? 0 : termsWithReuse.size / terms.length,
     templateReuseTerms: termsWithReuse.size,

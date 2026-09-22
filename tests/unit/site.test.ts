@@ -29,8 +29,10 @@ describe('site metadata', () => {
 
     expect(metrics).toMatchObject({
       domainCount: 13,
-      termCount: 327,
-      verifiedTermCount: 327,
+      // I6-03 起 termCount 的口径是「可独立选择的入口」，不含 150 条已废弃词条。
+      termCount: 177,
+      deprecatedTermCount: 150,
+      verifiedTermCount: 177,
       routeCount: 5,
       publishedRouteCount: 5,
       relationCount: 127,

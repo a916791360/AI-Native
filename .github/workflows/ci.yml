@@ -17,6 +17,11 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
+        with:
+          # fetch-depth: 0 是为了让 `pnpm check:release-notes` 能读到 tag。
+          # 默认的浅克隆不带 tag，该门禁会降级为「提示未校验」——版本表漏行
+          # 这类缺陷只有靠 tag 比对才能发现，所以这里必须把历史取全。
+          fetch-depth: 0
 
       - name: Install pnpm
         uses: pnpm/action-setup@v6

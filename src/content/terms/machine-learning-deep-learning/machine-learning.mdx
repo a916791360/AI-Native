@@ -8,6 +8,8 @@ summary: 让系统从数据和反馈中学习模式并改进任务表现的方�
 domain: machine-learning-deep-learning
 difficulty: beginner
 ring: core
+chain: 1
+chainRole: advanced
 status: verified
 priority: 1
 featured: true
@@ -27,6 +29,13 @@ sources:
     url: https://developers.google.com/machine-learning/crash-course
     publisher: Google for Developers
     accessedAt: '2026-07-29'
+boundaries:
+  solves: 说清「从数据里学规律」这条路线的基本做法——用数据拟合一个函数，再用没见过的数据检验它是不是真的学到了。
+  notSolves: 不保证学到的东西可解释或公平，也不包括那些不靠数据学习、靠人工写规则的智能做法。
+  confusions:
+    - with: artificial-intelligence
+      difference: 机器学习是实现人工智能的一条路线，人工智能还包括符号推理、专家系统等不依赖数据学习的做法。
+minAction: 用约 30 分钟，找一份公开的小数据集跑一次最简单的分类，把训练集与测试集的表现差记下来——这个差就是「过拟合」的第一手观察。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -40,6 +49,16 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 先把业务目标转成可测任务，再准备输入和目标数据。训练算法根据预测误差调整模型参数；验证集帮助选择配置，独立测试集估计模型面对未见样本时的表现。部署后还要监测数据变化和实际错误。
+
+<h2 id="confusions">必须澄清的误会</h2>
+<p>
+  <strong>机器学习 ≠ 人工智能。</strong>
+  机器学习只是实现人工智能的一条路线。人工智能还包括符号推理、专家系统等不依赖数据学习的做法——它们在上世纪就已经能解数学题，只是换个场景就失效。
+</p>
+<p>
+  <strong>机器学习 ≠ 深度学习。</strong>
+  深度学习是机器学习里用多层神经网络的一支；决策树、支持向量机、聚类同样属于机器学习，而且在小数据上往往更合适。
+</p>
 
 <h2 id="example">真实例子</h2>
 

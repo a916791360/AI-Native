@@ -118,7 +118,20 @@ describe('stage 9 content production', () => {
     researchPlan.batches[1]!.waves![0]!.status = 'research';
     const diagnostics = validateContentProduction(researchPlan, packets, project);
 
-    expect(diagnostics.filter(({ code }) => code === 'PRODUCTION_TERM_STATUS')).toHaveLength(5);
+    // I6-03：deprecated 是词条的合法终态，与生产进度是两件事，因此不再比对
+    // （一条内容做完的深度词条完全可以被判为不再单独成页）。
+    // 期望值从数据算出来，而不是写死 5——写死的话，下一次有人废弃这条 wave 里的
+    // 词条就会得到一个「测试失败」而不是「口径已变」的信号。
+    const wave = researchPlan.batches[1]!.waves![0]!;
+    const deprecated = new Set(
+      project.terms.filter(({ data }) => data.status === 'deprecated').map(({ data }) => data.id),
+    );
+    const expected = wave.terms.filter((id) => !deprecated.has(id)).length;
+    expect(expected).toBeGreaterThan(0);
+
+    expect(diagnostics.filter(({ code }) => code === 'PRODUCTION_TERM_STATUS')).toHaveLength(
+      expected,
+    );
     expect(diagnostics.filter(({ code }) => code === 'PRODUCTION_PACKET_STATUS')).toHaveLength(5);
   });
 });

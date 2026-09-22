@@ -1,10 +1,15 @@
 import type { ProjectContent } from '../../src/lib/content/io';
 import type { Relation, Term } from '../../src/lib/content/schema';
 import { normalizeLookupKey } from '../../src/lib/content/validation';
+import { isSelectableTerm } from '../../src/lib/content/visibility';
 import { computeGraphPositions } from '../../src/lib/graph/model';
 
+/**
+ * 注册表与图谱都只认「可独立选择的词条」：草稿整页不对外，
+ * 已废弃词条 URL 还能打开但不再作为入口（见 lib/content/visibility.ts）。
+ */
 function isPublicTerm(term: Term): boolean {
-  return term.status !== 'draft';
+  return isSelectableTerm(term);
 }
 
 function byId<T extends { id: string }>(left: T, right: T): number {

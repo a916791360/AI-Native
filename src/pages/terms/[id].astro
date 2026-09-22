@@ -13,6 +13,7 @@ import { CHAIN_ROLE_LABELS, resolveTermChainPosition, type ChainRole } from '@/l
 import { loadProjectContent } from '@/lib/content/io';
 import { getLearningRecommendations } from '@/lib/content/recommendations';
 import { TERM_SECTIONS, extractSectionIds } from '@/lib/content/term-sections';
+import { isDeprecatedTerm, isSelectableTerm } from '@/lib/content/visibility';
 import { LEARNING_QUESTIONS, getLearningQuestionContext } from '@/data/learning';
 import { selectLocalGraph, type GraphData } from '@/lib/graph/model';
 import { buildContentIssueUrl } from '@/lib/site/github';
@@ -32,6 +33,25 @@ export const getStaticPaths = (async () => {
     const routeTerms = route?.data.chapters.flatMap((chapter) => chapter.terms) ?? [];
     const routeIndex = routeTerms.findIndex((step) => step.id === entry.data.id);
     const chainPosition = resolveTermChainPosition(entry.data, chain);
+    // 已废弃词条搬到本页的「相关名词」——由 replacedBy 反查得来，不另立数据文件。
+    // 用 frontmatter 反查而不是新加一份清单，是因为清单会漂移：改了一处忘了改另一处，
+    // 宿主页就会出现一条指向不存在词条的名字（构建不报错，只有读者会撞上）。
+    const absorbedTerms = entries
+      .filter(
+        ({ data }) =>
+          isDeprecatedTerm(data) && data.replacedBy === entry.data.id && data.id !== entry.data.id,
+      )
+      .map(({ data }) => ({
+        id: data.id,
+        nameZh: data.nameZh,
+        nameEn: data.nameEn,
+        summary: data.summary,
+        reason: data.deprecationReason ?? '已合并到本词条。',
+      }))
+      .sort((left, right) => left.nameZh.localeCompare(right.nameZh, 'zh-CN'));
+    const replacement = entry.data.replacedBy
+      ? entries.find(({ data }) => data.id === entry.data.replacedBy)?.data
+      : undefined;
     const learningRecommendations = getLearningRecommendations(
       entry.data,
       entries.map(({ data }) => data),
@@ -86,6 +106,10 @@ export const getStaticPaths = (async () => {
         relatedQuestions,
         relatedCases,
         learningRecommendations,
+        absorbedTerms,
+        replacement: replacement
+          ? { id: replacement.id, nameZh: replacement.nameZh, summary: replacement.summary }
+          : undefined,
         termMap,
         // 只透传渲染需要的字段：站点对象本身带 coreTerms 等与这一行无关的内容。
         chainPosition: chainPosition
@@ -125,6 +149,8 @@ const {
   relatedQuestions,
   relatedCases,
   learningRecommendations,
+  absorbedTerms,
+  replacement,
   termMap,
   routeNav,
   chainPosition,
@@ -164,9 +190,10 @@ const statusNotice = {
   catalogued: '这个词条已进入目录与关系系统，但深度正文尚未完成来源核验。',
   draft: '这个词条已有正文草稿，内容仍在编辑，暂不能视为已核验结论。',
   'needs-review': '这个词条因来源或时效变化需要重新复核，请谨慎引用。',
-  deprecated: term.deprecationReason ?? '这个词条已停止维护，请优先阅读替代词条。',
+  deprecated: term.deprecationReason ?? '这个词条已停止单独维护，请优先阅读替代词条。',
   verified: '',
 }[term.status];
+const selectable = isSelectableTerm(term);
 const hasDeepContent = term.status !== 'catalogued';
 const localGraph = selectLocalGraph(generatedGraph as GraphData, term.id);
 // 知识库 → 领域 → 词条名。领域用 shortNameZh：完整领域名（如「智能体与工具调用自动化」）
@@ -182,10 +209,9 @@ const breadcrumbTrail = [
   title={term.nameZh}
   description={term.summary}
   structuredDataType="TechArticle"
-  indexable={term.status !== 'draft'}
-  searchMetadata={term.status === 'draft'
-    ? undefined
-    : {
+  indexable={selectable}
+  searchMetadata={selectable
+    ? {
         id: term.id,
         nameEn: term.nameEn,
         lookup: [
@@ -198,13 +224,14 @@ const breadcrumbTrail = [
         domainNameZh: domain?.nameZh ?? term.domain,
         difficulty: term.difficulty,
         status: term.status,
-      }}
+      }
+    : undefined}
 >
   <main
     id="main-content"
     class="term-page"
-    data-pagefind-body={term.status !== 'draft' ? true : undefined}
-    data-pagefind-ignore={term.status === 'draft' ? true : undefined}
+    data-pagefind-body={selectable ? true : undefined}
+    data-pagefind-ignore={selectable ? undefined : true}
   >
     <div class="term-breadcrumbs">
       <Breadcrumbs trail={breadcrumbTrail} />
@@ -222,7 +249,7 @@ const breadcrumbTrail = [
         <StatusTag status={term.status} />
         <p>{term.summary}</p>
         <div class="term-actions">
-          {term.status !== 'draft' && <a href={`/graph/?focus=${term.id}`}>在概念图谱中查看</a>}
+          {selectable && <a href={`/graph/?focus=${term.id}`}>在概念图谱中查看</a>}
           <a href={correctionUrl}>提交修订建议</a>
         </div>
       </div>
@@ -280,8 +307,11 @@ const breadcrumbTrail = [
       statusNotice && (
         <aside class={`status-notice notice-${term.status}`} aria-label="内容状态提示">
           <StatusTag status={term.status} />
-          <p>{statusNotice}</p>
-          {term.replacedBy && <a href={`/terms/${term.replacedBy}/`}>阅读替代词条</a>}
+          <p>
+            {replacement && <strong>{`已并入《${replacement.nameZh}》。`}</strong>}
+            {statusNotice}
+          </p>
+          {replacement && <a href={`/terms/${replacement.id}/`}>去读 {replacement.nameZh}</a>}
         </aside>
       )
     }
@@ -404,42 +434,81 @@ const breadcrumbTrail = [
           )
         }
 
-        <section id="relations" class="relations-section">
-          <p class="section-number">Relations</p>
-          <h2>概念关系</h2>
-          <GraphExplorer
-            graph={localGraph.graph}
-            mode="local"
-            focusId={term.id}
-            hiddenNodeCount={localGraph.hiddenNodeCount}
-          />
-          {
-            relationGroups.map(
-              (group) =>
-                group.items.length > 0 && (
-                  <div class="relation-group">
-                    <h3>{group.label}</h3>
-                    <div class="relation-list">
-                      {group.items.map((relation) => {
-                        const relatedId =
-                          relation.source === term.id ? relation.target : relation.source;
-                        const related = termMap[relatedId];
-                        return (
-                          <a
-                            class={`relation-row type-${group.type}`}
-                            href={`/terms/${relatedId}/`}
-                          >
-                            <strong>{related?.nameZh ?? relatedId}</strong>
-                            <p>{relation.explanation}</p>
-                          </a>
-                        );
-                      })}
+        {
+          /*
+           * 概念关系只在可独立选择的词条上出现。已废弃词条的节点已经从图谱里隐去，
+           * 照常渲染会得到一张空图 + 一段没有边的「关系」区——看起来像页面坏了。
+           * 它的去向由上面的状态提示承担。
+           */
+          selectable && (
+            <section id="relations" class="relations-section">
+              <p class="section-number">Relations</p>
+              <h2>概念关系</h2>
+              <GraphExplorer
+                graph={localGraph.graph}
+                mode="local"
+                focusId={term.id}
+                hiddenNodeCount={localGraph.hiddenNodeCount}
+              />
+              {relationGroups.map(
+                (group) =>
+                  group.items.length > 0 && (
+                    <div class="relation-group">
+                      <h3>{group.label}</h3>
+                      <div class="relation-list">
+                        {group.items.map((relation) => {
+                          const relatedId =
+                            relation.source === term.id ? relation.target : relation.source;
+                          const related = termMap[relatedId];
+                          return (
+                            <a
+                              class={`relation-row type-${group.type}`}
+                              href={`/terms/${relatedId}/`}
+                            >
+                              <strong>{related?.nameZh ?? relatedId}</strong>
+                              <p>{relation.explanation}</p>
+                            </a>
+                          );
+                        })}
+                      </div>
                     </div>
-                  </div>
-                ),
-            )
-          }
-        </section>
+                  ),
+              )}
+            </section>
+          )
+        }
+
+        {
+          /*
+           * 「相关名词」——I6-03 的降级落点。
+           *
+           * 一批词条因为与同域词条重叠或本身是填充条目而不再单独成页，但它们的内容
+           * 没有被丢掉：读者在宿主页这里能看到「这些名字属于这一块」，点进去还读得到
+           * 原正文（旧 URL 不 404）。如果只是把它们从目录里删掉、不给这条通道，
+           * 那些名字就真的消失了——降级和删除的区别全在这一个区块上。
+           */
+          absorbedTerms.length > 0 && (
+            <section class="absorbed-terms" aria-labelledby="absorbed-heading">
+              <p class="section-number">Related names</p>
+              <h2 id="absorbed-heading">相关名词</h2>
+              <p class="absorbed-intro">
+                下面这些名字与「{term.nameZh}」讲的是同一块知识，内容已并入本页，
+                不再单独作为入口出现。保留链接是为了让旧地址仍然能打开。
+              </p>
+              <ul class="absorbed-list">
+                {absorbedTerms.map((item) => (
+                  <li>
+                    <a href={`/terms/${item.id}/`}>
+                      <strong>{item.nameZh}</strong>
+                      <span class="absorbed-en">{item.nameEn}</span>
+                    </a>
+                    <p>{item.reason}</p>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )
+        }
 
         {
           term.sources.length > 0 && (
@@ -698,10 +767,58 @@ const breadcrumbTrail = [
   .catalogued-copy,
   .relations-section,
   .source-register,
-  .linked-resources {
+  .linked-resources,
+  .absorbed-terms {
     border-bottom: 1px solid var(--color-line);
     padding: var(--space-7) max(var(--page-gutter), calc((100% - var(--reading-max)) / 2));
     scroll-margin-top: 1rem;
+  }
+  /* 「相关名词」：视觉上比正文轻一档——它是一条通道，不是内容主体。
+     用数字徽标（+N）而不是大标题，避免与「概念关系」抢同一层级的注意力。 */
+  .absorbed-intro {
+    max-width: var(--reading-max);
+    margin: var(--space-3) 0 0;
+    color: var(--color-muted);
+  }
+  .absorbed-list {
+    max-width: var(--reading-max);
+    margin: var(--space-4) 0 0;
+    border-top: 1px solid var(--color-line);
+    padding: 0;
+    list-style: none;
+  }
+  .absorbed-list li {
+    display: grid;
+    gap: var(--space-1);
+    border-bottom: 1px solid var(--color-line-soft);
+    padding: var(--space-3) 0;
+  }
+  .absorbed-list a {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-2);
+    text-decoration: none;
+  }
+  .absorbed-list a strong {
+    font-size: var(--text-lead);
+    font-weight: var(--weight-display);
+  }
+  .absorbed-list a:hover strong,
+  .absorbed-list a:focus-visible strong {
+    color: var(--color-accent-strong);
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+  }
+  .absorbed-en {
+    color: var(--color-quiet);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+  }
+  .absorbed-list li > p {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: var(--text-sm);
   }
   .section-number {
     margin: 0;

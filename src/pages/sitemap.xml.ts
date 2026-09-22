@@ -4,6 +4,7 @@ import { absoluteSiteUrl, SITE } from '@/config/site';
 import { loadCaseStudies } from '@/lib/cases/io';
 import { caseHref, gateHref } from '@/lib/cases/presentation';
 import { loadProjectContent } from '@/lib/content/io';
+import { isSelectableTerm } from '@/lib/content/visibility';
 
 const STATIC_PATHS = [
   '/',
@@ -28,7 +29,7 @@ export const GET: APIRoute = async () => {
     ]),
     ...project.routes.map(({ data }) => `/routes/${data.id}/`),
     ...project.terms
-      .filter(({ data }) => data.status !== 'draft')
+      .filter(({ data }) => isSelectableTerm(data))
       .map(({ data }) => `/terms/${data.id}/`),
   ];
   const urls = SITE.publicOrigin

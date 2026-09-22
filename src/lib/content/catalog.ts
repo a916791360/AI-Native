@@ -87,7 +87,23 @@ export type CatalogSummaries = z.infer<typeof catalogSummariesSchema>;
  */
 export const catalogTermDetailsSchema = z.record(
   stableIdSchema,
-  termSchema.pick({ chain: true, chainRole: true, boundaries: true, minAction: true }).strict(),
+  termSchema
+    .pick({
+      chain: true,
+      chainRole: true,
+      boundaries: true,
+      minAction: true,
+      // I6-03：目录词条的「不再单独成页」也必须走覆盖层——它是计划表产不出的字段，
+      // 写进 .mdx 会被下一次 sync-catalog 静默抹回 status: verified。
+      status: true,
+      deprecationReason: true,
+      replacedBy: true,
+    })
+    // .partial() 不能省：termSchema 里 status 是必填，pick 出来后仍然必填，
+    // 于是覆盖层里每一条没写 status 的老条目都会校验失败。
+    // 覆盖层的语义是「只写要覆盖的那几个字段」，所以每个字段都必须是可选的。
+    .partial()
+    .strict(),
 );
 export type CatalogTermDetails = z.infer<typeof catalogTermDetailsSchema>;
 

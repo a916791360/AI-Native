@@ -4,6 +4,7 @@ import path from 'node:path';
 import { parse as parseYaml } from 'yaml';
 
 import { TERM_SECTION_IDS } from '../src/lib/content/term-sections';
+import { isSelectableTerm } from '../src/lib/content/visibility';
 import {
   analyzeContentQuality,
   loadTerms,
@@ -163,6 +164,16 @@ const clip = (text: string, max = 54): string =>
 const terms = await loadTerms(root);
 const report = await analyzeContentQuality(root, terms);
 
+/**
+ * 档位之外的第二层过滤：已废弃与草稿词条不参与任何一道门禁。
+ *
+ * 为什么不只靠档位（C 档已被 severityFor 判为 skip）：门禁 1b 是**成对**判定的，
+ * 一对里只要有一条是 A/B 档就会被判为违规。若把已废弃词条留在语料里，
+ * 一条 B 档词条会因为「和一条已经离开的邻居用了同一句模板句」而变红——
+ * 约束一条不再存在的入口，是纯粹的假阳性。所以语料层就把它排除。
+ */
+const gradedTerms = terms.filter(isSelectableTerm);
+
 // ---- 门禁 1 · 模板复用 ----------------------------------------------------
 
 const reuseSamples = new Map<string, string[]>();
@@ -189,7 +200,7 @@ for (const [id, samples] of [...reuseSamples].sort(
 
 // 1b 两两相似度：用倒排索引只比较可能达标的词条对
 const sentenceSets = new Map<string, Set<string>>();
-for (const term of terms) {
+for (const term of gradedTerms) {
   sentenceSets.set(term.id, new Set(splitSentences(term.body).map(normalizeSentence)));
 }
 const inverted = new Map<string, string[]>();
@@ -242,7 +253,7 @@ for (const pair of similarPairs) {
 // 兜底：导航项从同一份定义生成，所以正文一旦跑偏，锚点就会指向不存在的段落。
 // 以前这两处是各写一遍、无人校验的，死锚点只能靠读者点下去才发现。
 
-for (const term of terms) {
+for (const term of gradedTerms) {
   const severity = severityFor(scopeOf(term.id), 'structure');
   if (severity === 'skip') continue;
   const { missing, unexpected, outOfOrder } = term.sectionDiff;
@@ -264,7 +275,7 @@ for (const term of terms) {
 
 // ---- 门禁 2 · 边界声明 ----------------------------------------------------
 
-for (const term of terms) {
+for (const term of gradedTerms) {
   const severity = severityFor(scopeOf(term.id), 'boundary');
   if (severity === 'skip') continue;
   if (typeof term.chain !== 'number') {
@@ -287,7 +298,7 @@ const tryItBlock = (body: string): string => {
   return match ? match[0].replace(/<[^>]+>/gu, ' ') : '';
 };
 
-for (const term of terms) {
+for (const term of gradedTerms) {
   const severity = severityFor(scopeOf(term.id), 'action');
   if (severity === 'skip') continue;
 
@@ -324,7 +335,7 @@ for (const term of terms) {
 // ---- 门禁 4 · 配额与近义（永远只告警）--------------------------------------
 
 const domainCounts = new Map<string, number>();
-for (const term of terms) {
+for (const term of gradedTerms) {
   domainCounts.set(term.domain, (domainCounts.get(term.domain) ?? 0) + 1);
 }
 const distinctCounts = new Set(domainCounts.values());
@@ -379,7 +390,12 @@ if (TERM_FILTER) {
 // ---------------------------------------------------------------------------
 
 const failTotal = issues.filter((issue) => issue.severity === 'fail').length;
-const scope = TERM_FILTER ? `词条 ${TERM_FILTER}` : `词条 ${terms.length} 条`;
+const scope = TERM_FILTER
+  ? `词条 ${TERM_FILTER}`
+  : `词条 ${gradedTerms.length} 条可独立选择` +
+    (report.metrics.deprecatedTerms > 0
+      ? `（另 ${report.metrics.deprecatedTerms} 条已废弃，不参与门禁）`
+      : '');
 const mode = STRICT ? '严格模式（任何违规即失败）' : 'CI 模式（A 档违规即失败）';
 
 console.log(`内容质量门禁（${mode}）`);

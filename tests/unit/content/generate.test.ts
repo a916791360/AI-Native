@@ -49,14 +49,20 @@ describe('generated content artifacts', () => {
     );
   });
 
-  it('removes review and deprecated terms from recommendations', () => {
+  it('keeps needs-review terms but drops deprecated ones from the entry set', () => {
     const project = cloneProject();
     project.terms[0]!.data.featured = true;
     project.terms[0]!.data.status = 'needs-review';
     project.terms[1]!.data.featured = true;
     project.terms[1]!.data.status = 'deprecated';
     project.terms[1]!.data.deprecationReason = '这个测试术语已经过时，需要保留历史链接但不再推荐。';
+    project.terms[1]!.data.replacedBy = 'alpha-term';
 
-    expect(buildTermRegistry(project).terms.map((term) => term.featured)).toEqual([false, false]);
+    const registry = buildTermRegistry(project);
+
+    // needs-review 仍然是一个入口（只是提示读者谨慎引用），但 featured 被强制关掉；
+    // deprecated 则连入口都不是——不是「不推荐」，而是「不在这一层里」（I6-03）。
+    expect(registry.terms.map((term) => term.id)).toEqual(['alpha-term']);
+    expect(registry.terms[0]!.featured).toBe(false);
   });
 });

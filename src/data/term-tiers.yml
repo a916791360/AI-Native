@@ -7,7 +7,13 @@
 # 人工终判请把 reviewed 改成 true，此后本脚本不再改动该条的 tier ——
 # 机器负责把 325 条压到需要人工看的规模，不负责替人拍板。
 #
-# 当前分布：A 42 / B 133 / C 152（共 327 条）。
+# 当前分布：A 42 / B 135 / C 150（共 327 条）。
+#
+# I6-03（2026-09-21）后 C 档的含义变了：150 条 C 档已全部标 status: deprecated，
+# 不再作为独立入口出现。这里保留它的档位而不是删掉整段，是因为档位表还是
+# 「哪些词条必须合规」的依据——一条词条若日后被恢复成独立入口，要先把它
+# 从 C 提到 B 并补齐 B 档该有的内容，而不是直接改 status。
+# 两个例外：compute / machine-learning 是领域根锚点，已上调为 B（见各自 note）。
 version: 1
 terms:
   - id: ab-testing
@@ -320,9 +326,10 @@ terms:
       - questions:1
     reviewed: false
   - id: compute
-    tier: C
+    tier: B
     signals: []
-    reviewed: false
+    reviewed: true
+    note: compute-chips-industry 的领域根锚点（src/lib/content/catalog-generation.ts 的 DOMAIN_ANCHORS）。该领域 25 条全部被判为 C，若连根锚点也降级，整个领域在目录里就没有落点了。按第十三节「结构角色」强信号上调为 B，并补齐 chain / boundaries / minAction（写在 catalog-term-details.yml）。
   - id: computer-use
     tier: B
     signals:
@@ -912,9 +919,10 @@ terms:
     signals: []
     reviewed: false
   - id: machine-learning
-    tier: C
+    tier: B
     signals: []
-    reviewed: false
+    reviewed: true
+    note: machine-learning-deep-learning 的领域根锚点（DOMAIN_ANCHORS）。理由同 compute：该领域 25 条里 23 条被判为 C，根锚点必须留住，否则领域没有落点。已补齐 chain / boundaries / minAction。
   - id: memory-bandwidth
     tier: C
     signals: []

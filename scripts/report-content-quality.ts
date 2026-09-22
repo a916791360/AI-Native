@@ -25,7 +25,13 @@ const clip = (text: string, max = 46): string =>
 console.log('内容质量报告（只读）');
 console.log('='.repeat(74));
 
-console.log(`\n【规模】词条 ${metrics.totalTerms} 条，正文句子 ${metrics.sentenceCount} 句`);
+console.log(
+  `\n【规模】可独立选择的词条 ${metrics.totalTerms} 条，正文句子 ${metrics.sentenceCount} 句` +
+    (metrics.deprecatedTerms > 0
+      ? `\n    （另有 ${metrics.deprecatedTerms} 条已废弃：文件都在、旧 URL 可访问，` +
+        `但不再出现在目录 / 搜索 / 图谱里，因此不计入下面任何一项）`
+      : ''),
+);
 
 console.log(
   `\n【1 · 模板复用率】${pct(metrics.templateReuseRate)}` +

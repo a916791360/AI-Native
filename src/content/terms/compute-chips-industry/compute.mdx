@@ -8,6 +8,8 @@ summary: 完成模型训练或推理所需计算资源与处理能力的总称�
 domain: compute-chips-industry
 difficulty: beginner
 ring: core
+chain: 1
+chainRole: advanced
 status: verified
 priority: 1
 featured: true
@@ -27,6 +29,13 @@ sources:
     url: https://hai.stanford.edu/ai-index/2026-ai-index-report/economy
     publisher: Stanford Institute for Human-Centered AI
     accessedAt: '2026-07-29'
+boundaries:
+  solves: 说清一次训练或推理要消耗多少计算资源、这些资源被什么卡住（芯片、内存带宽、能耗），从而解释成本与延迟是从哪来的。
+  notSolves: 不解释模型为什么有效，也不决定能力上限——参数量相同的两个模型，算力不同可以给出完全不同质量的输出。
+  confusions:
+    - with: model-serving
+      difference: 算力是可用计算资源的总量，模型服务是把这些资源按请求调度出去、并决定延迟与吞吐的运行层。
+minAction: 用约 20 分钟，查清你在用的那个模型接口是按 token 还是按算力时长计费，再按团队一个月的真实调用量估一次成本。
 ---
 
 <h2 id="what-it-is">它是什么</h2>
@@ -40,6 +49,16 @@ sources:
 <h2 id="how-it-works">它如何工作</h2>
 
 神经网络的大量工作可以表示为矩阵运算。GPU、TPU 等加速器用许多计算单元并行执行这些运算；高带宽内存提供参数和中间结果，多芯片互连传递分片数据，编译器与框架把模型操作映射到硬件。[S1]
+
+<h2 id="confusions">必须澄清的误会</h2>
+<p>
+  <strong>算力 ≠ 参数规模。</strong>
+  参数多不等于需要更多算力就能得到更好的结果——算力决定的是「跑得多快、多贵」，参数量决定的是「模型的容量」，两者是不同维度的账。
+</p>
+<p>
+  <strong>算力 ≠ 模型服务。</strong>
+  算力是可用资源的总量，模型服务是把这些资源按请求调度出去、并决定延迟与吞吐的运行层。同一个算力池，调度方式不同，成本能差一个数量级。
+</p>
 
 <h2 id="example">真实例子</h2>
 

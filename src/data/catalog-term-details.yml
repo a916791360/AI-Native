@@ -44,6 +44,9 @@
 
 # ---- 第 1 站 · 地基 · 模型是什么 ------------------------------------------
 next-token-prediction:
+  status: deprecated
+  replacedBy: token
+  deprecationReason: '与同域词条「Token」讲的是同一块知识，不再单独作为入口；内容已并入该词条，本页只作旧链接的落点。'
   chain: 1
   chainRole: advanced
 natural-language-processing:
@@ -123,6 +126,9 @@ video-generation:
 # prompt / system-prompt / few-shot-prompting / context-engineering 这四条属深度内容批次，
 # 字段写在各自的 .mdx 里（I6-02 批次 1 补的 boundaries / minAction 也在那里）。
 zero-shot-prompting:
+  status: deprecated
+  replacedBy: prompt
+  deprecationReason: '与同域词条「提示词」讲的是同一块知识，不再单独作为入口；内容已并入该词条，本页只作旧链接的落点。'
   chain: 2
   chainRole: advanced
 grounding:
@@ -1012,3 +1018,541 @@ transparency:
       - with: auditability
         difference: 透明度面向外部公开说明，可审计性面向内部与监管留下可核查的记录。
   minAction: 用约 30 分钟，检查用户能否在界面上找到「它不擅长什么」的说明，找不到就补一句。
+
+# ---- I6-03 / 领域根锚点（2026-09-21）---------------------------------------
+# compute-chips-industry 与 machine-learning-deep-learning 两个领域的全部词条都被
+# 判为 C 档，连领域根锚点（compute / machine-learning）也是 C。若照 C 档一律降级，
+# 这两个领域的目录区块会变成空的——读者点进领域却没有任何落点，比多留一个入口更糟。
+#
+# 处置：把两个根锚点按第十三节的「结构角色」强信号上调为 B 档（term-tiers.yml 里
+# reviewed: true），并补齐 B 档该有的内容（chain / chainRole / boundaries / minAction）。
+#
+# 注意：这两条**不在这里写**。它们是深度内容批次（content-production.yml）的词条，
+# 生成器不碰它们，字段写在各自的 .mdx frontmatter 里——
+#   · src/content/terms/compute-chips-industry/compute.mdx
+#   · src/content/terms/machine-learning-deep-learning/machine-learning.mdx
+# 2026-09-21 实测踩过：先写在这里，generate:data 通过、validate:data 全绿，
+# 而两个 .mdx 一个字都没变（门禁随即报「缺少 boundaries」才发现）。
+# 判定入口：pnpm explain:authorship compute machine-learning
+# ---- I6-03 / 批次 1（2026-09-21）------------------------------------------
+# C 档合并降级：不再单独成页。这里只写「不再是入口」这件事——
+# status / deprecationReason / replacedBy，正文与 summary 原样保留。
+# 诊断报告要求的是「不再单独成页」，不是删内容；文件保留也让外部链接不至于 404。
+#
+# replacedBy 指向同域的一个 A/B 档词条。宿主词条页会据此自动生成「相关名词」区块，
+# 因此不另立一份清单——两份清单一定会漂移，而漂移的症状是宿主页出现一个
+# 指向不存在词条的名字（构建不报错，只有读者会撞上）。
+#
+# 另 20 条 C 档属受保护词条，同样字段写在各自 .mdx 的 frontmatter 里。
+automation-trigger:
+  status: deprecated
+  replacedBy: workflow-automation
+  deprecationReason: '与同域词条「工作流自动化」讲的是同一块知识，不再单独作为入口；内容已并入该词条，本页只作旧链接的落点。'
+retry-policy:
+  status: deprecated
+  replacedBy: ai-agent
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「AI Agent」这一层；内容已并入该词条，本页只作旧链接的落点。'
+autoscaling:
+  status: deprecated
+  replacedBy: ai-application
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「AI 应用」这一层；内容已并入该词条，本页只作旧链接的落点。'
+containerization:
+  status: deprecated
+  replacedBy: ai-application
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「AI 应用」这一层；内容已并入该词条，本页只作旧链接的落点。'
+experiment-tracking:
+  status: deprecated
+  replacedBy: ai-application
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「AI 应用」这一层；内容已并入该词条，本页只作旧链接的落点。'
+gpu-serving:
+  status: deprecated
+  replacedBy: inference-server
+  deprecationReason: '与同域词条「推理服务器」讲的是同一块知识，不再单独作为入口；内容已并入该词条，本页只作旧链接的落点。'
+load-balancing:
+  status: deprecated
+  replacedBy: ai-application
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「AI 应用」这一层；内容已并入该词条，本页只作旧链接的落点。'
+model-deployment:
+  status: deprecated
+  replacedBy: model-api
+  deprecationReason: '与同域词条「模型 API」讲的是同一块知识，不再单独作为入口；内容已并入该词条，本页只作旧链接的落点。'
+model-registry:
+  status: deprecated
+  replacedBy: model-api
+  deprecationReason: '与同域词条「模型 API」讲的是同一块知识，不再单独作为入口；内容已并入该词条，本页只作旧链接的落点。'
+request-batching:
+  status: deprecated
+  replacedBy: ai-application
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「AI 应用」这一层；内容已并入该词条，本页只作旧链接的落点。'
+response-caching:
+  status: deprecated
+  replacedBy: prompt-cache
+  deprecationReason: '与同域词条「提示词缓存」讲的是同一块知识，不再单独作为入口；内容已并入该词条，本页只作旧链接的落点。'
+ai-effect:
+  status: deprecated
+  replacedBy: artificial-intelligence
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「人工智能」这一层；内容已并入该词条，本页只作旧链接的落点。'
+ai-winter:
+  status: deprecated
+  replacedBy: artificial-intelligence
+  deprecationReason: '与同域词条「人工智能」讲的是同一块知识，不再单独作为入口；内容已并入该词条，本页只作旧链接的落点。'
+artificial-general-intelligence:
+  status: deprecated
+  replacedBy: artificial-intelligence
+  deprecationReason: '与同域词条「人工智能」讲的是同一块知识，不再单独作为入口；内容已并入该词条，本页只作旧链接的落点。'
+cognitive-computing:
+  status: deprecated
+  replacedBy: artificial-intelligence
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「人工智能」这一层；内容已并入该词条，本页只作旧链接的落点。'
+computer-vision-field:
+  status: deprecated
+  replacedBy: artificial-intelligence
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「人工智能」这一层；内容已并入该词条，本页只作旧链接的落点。'
+connectionism:
+  status: deprecated
+  replacedBy: artificial-intelligence
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「人工智能」这一层；内容已并入该词条，本页只作旧链接的落点。'
+dartmouth-workshop:
+  status: deprecated
+  replacedBy: artificial-intelligence
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「人工智能」这一层；内容已并入该词条，本页只作旧链接的落点。'
+deep-learning-boom:
+  status: deprecated
+  replacedBy: artificial-intelligence
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「人工智能」这一层；内容已并入该词条，本页只作旧链接的落点。'
+expert-system:
+  status: deprecated
+  replacedBy: artificial-intelligence
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「人工智能」这一层；内容已并入该词条，本页只作旧链接的落点。'
+foundation-model-era:
+  status: deprecated
+  replacedBy: artificial-intelligence
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「人工智能」这一层；内容已并入该词条，本页只作旧链接的落点。'
+heuristic:
+  status: deprecated
+  replacedBy: artificial-intelligence
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「人工智能」这一层；内容已并入该词条，本页只作旧链接的落点。'
+knowledge-representation:
+  status: deprecated
+  replacedBy: artificial-intelligence
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「人工智能」这一层；内容已并入该词条，本页只作旧链接的落点。'
+machine-intelligence:
+  status: deprecated
+  replacedBy: artificial-intelligence
+  deprecationReason: '与同域词条「人工智能」讲的是同一块知识，不再单独作为入口；内容已并入该词条，本页只作旧链接的落点。'
+narrow-ai:
+  status: deprecated
+  replacedBy: artificial-intelligence
+  deprecationReason: '与同域词条「人工智能」讲的是同一块知识，不再单独作为入口；内容已并入该词条，本页只作旧链接的落点。'
+perception:
+  status: deprecated
+  replacedBy: artificial-intelligence
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「人工智能」这一层；内容已并入该词条，本页只作旧链接的落点。'
+perceptron-history:
+  status: deprecated
+  replacedBy: artificial-intelligence
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「人工智能」这一层；内容已并入该词条，本页只作旧链接的落点。'
+reasoning-system:
+  status: deprecated
+  replacedBy: artificial-intelligence
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「人工智能」这一层；内容已并入该词条，本页只作旧链接的落点。'
+robotics:
+  status: deprecated
+  replacedBy: artificial-intelligence
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「人工智能」这一层；内容已并入该词条，本页只作旧链接的落点。'
+search-algorithm:
+  status: deprecated
+  replacedBy: artificial-intelligence
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「人工智能」这一层；内容已并入该词条，本页只作旧链接的落点。'
+speech-technology:
+  status: deprecated
+  replacedBy: artificial-intelligence
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「人工智能」这一层；内容已并入该词条，本页只作旧链接的落点。'
+symbolic-ai:
+  status: deprecated
+  replacedBy: artificial-intelligence
+  deprecationReason: '与同域词条「人工智能」讲的是同一块知识，不再单独作为入口；内容已并入该词条，本页只作旧链接的落点。'
+turing-test:
+  status: deprecated
+  replacedBy: artificial-intelligence
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「人工智能」这一层；内容已并入该词条，本页只作旧链接的落点。'
+conversational-ui:
+  status: deprecated
+  replacedBy: ai-product
+  deprecationReason: '与同域词条「AI 产品」讲的是同一块知识，不再单独作为入口；内容已并入该词条，本页只作旧链接的落点。'
+generative-ui:
+  status: deprecated
+  replacedBy: ai-product
+  deprecationReason: '与同域词条「AI 产品」讲的是同一块知识，不再单独作为入口；内容已并入该词条，本页只作旧链接的落点。'
+prompt-interface:
+  status: deprecated
+  replacedBy: ai-product
+  deprecationReason: '与同域词条「AI 产品」讲的是同一块知识，不再单独作为入口；内容已并入该词条，本页只作旧链接的落点。'
+advanced-packaging:
+  status: deprecated
+  replacedBy: compute
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「算力」这一层；内容已并入该词条，本页只作旧链接的落点。'
+ai-accelerator:
+  status: deprecated
+  replacedBy: compute
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「算力」这一层；内容已并入该词条，本页只作旧链接的落点。'
+chip-fabrication:
+  status: deprecated
+  replacedBy: compute
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「算力」这一层；内容已并入该词条，本页只作旧链接的落点。'
+chip-interconnect:
+  status: deprecated
+  replacedBy: compute
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「算力」这一层；内容已并入该词条，本页只作旧链接的落点。'
+cloud-computing:
+  status: deprecated
+  replacedBy: compute
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「算力」这一层；内容已并入该词条，本页只作旧链接的落点。'
+cpu:
+  status: deprecated
+  replacedBy: compute
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「算力」这一层；内容已并入该词条，本页只作旧链接的落点。'
+cuda:
+  status: deprecated
+  replacedBy: compute
+  deprecationReason: '与同域词条「算力」讲的是同一块知识，不再单独作为入口；内容已并入该词条，本页只作旧链接的落点。'
+data-center:
+  status: deprecated
+  replacedBy: compute
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「算力」这一层；内容已并入该词条，本页只作旧链接的落点。'
+distributed-training:
+  status: deprecated
+  replacedBy: compute
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「算力」这一层；内容已并入该词条，本页只作旧链接的落点。'
+edge-ai:
+  status: deprecated
+  replacedBy: compute
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「算力」这一层；内容已并入该词条，本页只作旧链接的落点。'
+energy-efficiency:
+  status: deprecated
+  replacedBy: compute
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「算力」这一层；内容已并入该词条，本页只作旧链接的落点。'
+flops:
+  status: deprecated
+  replacedBy: compute
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「算力」这一层；内容已并入该词条，本页只作旧链接的落点。'
+foundry:
+  status: deprecated
+  replacedBy: compute
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「算力」这一层；内容已并入该词条，本页只作旧链接的落点。'
+gpu:
+  status: deprecated
+  replacedBy: compute
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「算力」这一层；内容已并入该词条，本页只作旧链接的落点。'
+high-bandwidth-memory:
+  status: deprecated
+  replacedBy: compute
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「算力」这一层；内容已并入该词条，本页只作旧链接的落点。'
+inference-compute:
+  status: deprecated
+  replacedBy: compute
+  deprecationReason: '与同域词条「算力」讲的是同一块知识，不再单独作为入口；内容已并入该词条，本页只作旧链接的落点。'
+memory-bandwidth:
+  status: deprecated
+  replacedBy: compute
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「算力」这一层；内容已并入该词条，本页只作旧链接的落点。'
+npu:
+  status: deprecated
+  replacedBy: compute
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「算力」这一层；内容已并入该词条，本页只作旧链接的落点。'
+on-device-ai:
+  status: deprecated
+  replacedBy: compute
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「算力」这一层；内容已并入该词条，本页只作旧链接的落点。'
+parameter-count:
+  status: deprecated
+  replacedBy: compute
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「算力」这一层；内容已并入该词条，本页只作旧链接的落点。'
+semiconductor:
+  status: deprecated
+  replacedBy: compute
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「算力」这一层；内容已并入该词条，本页只作旧链接的落点。'
+tensor-parallelism:
+  status: deprecated
+  replacedBy: compute
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「算力」这一层；内容已并入该词条，本页只作旧链接的落点。'
+tpu:
+  status: deprecated
+  replacedBy: compute
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「算力」这一层；内容已并入该词条，本页只作旧链接的落点。'
+training-compute:
+  status: deprecated
+  replacedBy: compute
+  deprecationReason: '与同域词条「算力」讲的是同一块知识，不再单独作为入口；内容已并入该词条，本页只作旧链接的落点。'
+approximate-nearest-neighbor:
+  status: deprecated
+  replacedBy: similarity-search
+  deprecationReason: '与同域词条「相似度检索」讲的是同一块知识，不再单独作为入口；内容已并入该词条，本页只作旧链接的落点。'
+dense-vector:
+  status: deprecated
+  replacedBy: vector-database
+  deprecationReason: '与同域词条「向量数据库」讲的是同一块知识，不再单独作为入口；内容已并入该词条，本页只作旧链接的落点。'
+query-expansion:
+  status: deprecated
+  replacedBy: query-rewriting
+  deprecationReason: '与同域词条「查询改写」讲的是同一块知识，不再单独作为入口；内容已并入该词条，本页只作旧链接的落点。'
+retrieval-query:
+  status: deprecated
+  replacedBy: retrieval
+  deprecationReason: '与同域词条「检索」讲的是同一块知识，不再单独作为入口；内容已并入该词条，本页只作旧链接的落点。'
+sparse-vector:
+  status: deprecated
+  replacedBy: vector-database
+  deprecationReason: '与同域词条「向量数据库」讲的是同一块知识，不再单独作为入口；内容已并入该词条，本页只作旧链接的落点。'
+vector-index:
+  status: deprecated
+  replacedBy: vector-database
+  deprecationReason: '与同域词条「向量数据库」讲的是同一块知识，不再单独作为入口；内容已并入该词条，本页只作旧链接的落点。'
+answer-correctness:
+  status: deprecated
+  replacedBy: evaluation
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「AI 评估」这一层；内容已并入该词条，本页只作旧链接的落点。'
+automatic-evaluation:
+  status: deprecated
+  replacedBy: eval-set
+  deprecationReason: '与同域词条「评测集」讲的是同一块知识，不再单独作为入口；内容已并入该词条，本页只作旧链接的落点。'
+bias-evaluation:
+  status: deprecated
+  replacedBy: eval-set
+  deprecationReason: '与同域词条「评测集」讲的是同一块知识，不再单独作为入口；内容已并入该词条，本页只作旧链接的落点。'
+factuality:
+  status: deprecated
+  replacedBy: evaluation
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「AI 评估」这一层；内容已并入该词条，本页只作旧链接的落点。'
+pairwise-comparison:
+  status: deprecated
+  replacedBy: evaluation
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「AI 评估」这一层；内容已并入该词条，本页只作旧链接的落点。'
+relevance:
+  status: deprecated
+  replacedBy: evaluation
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「AI 评估」这一层；内容已并入该词条，本页只作旧链接的落点。'
+throughput:
+  status: deprecated
+  replacedBy: evaluation
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「AI 评估」这一层；内容已并入该词条，本页只作旧链接的落点。'
+toxicity-evaluation:
+  status: deprecated
+  replacedBy: eval-set
+  deprecationReason: '与同域词条「评测集」讲的是同一块知识，不再单独作为入口；内容已并入该词条，本页只作旧链接的落点。'
+decoding:
+  status: deprecated
+  replacedBy: large-language-model
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「大语言模型」这一层；内容已并入该词条，本页只作旧链接的落点。'
+distillation:
+  status: deprecated
+  replacedBy: large-language-model
+  deprecationReason: '与同域词条「大语言模型」讲的是同一块知识，不再单独作为入口；内容已并入该词条，本页只作旧链接的落点。'
+mixture-of-experts:
+  status: deprecated
+  replacedBy: large-language-model
+  deprecationReason: '与同域词条「大语言模型」讲的是同一块知识，不再单独作为入口；内容已并入该词条，本页只作旧链接的落点。'
+open-weight-model:
+  status: deprecated
+  replacedBy: large-language-model
+  deprecationReason: '与同域词条「大语言模型」讲的是同一块知识，不再单独作为入口；内容已并入该词条，本页只作旧链接的落点。'
+parameter-efficient-fine-tuning:
+  status: deprecated
+  replacedBy: fine-tuning
+  deprecationReason: '与同域词条「微调」讲的是同一块知识，不再单独作为入口；内容已并入该词条，本页只作旧链接的落点。'
+quantization:
+  status: deprecated
+  replacedBy: large-language-model
+  deprecationReason: '与同域词条「大语言模型」讲的是同一块知识，不再单独作为入口；内容已并入该词条，本页只作旧链接的落点。'
+sampling:
+  status: deprecated
+  replacedBy: large-language-model
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「大语言模型」这一层；内容已并入该词条，本页只作旧链接的落点。'
+top-p:
+  status: deprecated
+  replacedBy: large-language-model
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「大语言模型」这一层；内容已并入该词条，本页只作旧链接的落点。'
+backpropagation:
+  status: deprecated
+  replacedBy: machine-learning
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「机器学习」这一层；内容已并入该词条，本页只作旧链接的落点。'
+batch-size:
+  status: deprecated
+  replacedBy: machine-learning
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「机器学习」这一层；内容已并入该词条，本页只作旧链接的落点。'
+clustering:
+  status: deprecated
+  replacedBy: machine-learning
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「机器学习」这一层；内容已并入该词条，本页只作旧链接的落点。'
+epoch:
+  status: deprecated
+  replacedBy: training-data
+  deprecationReason: '与同域词条「训练数据」讲的是同一块知识，不再单独作为入口；内容已并入该词条，本页只作旧链接的落点。'
+feature-engineering:
+  status: deprecated
+  replacedBy: machine-learning
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「机器学习」这一层；内容已并入该词条，本页只作旧链接的落点。'
+hyperparameter:
+  status: deprecated
+  replacedBy: machine-learning
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「机器学习」这一层；内容已并入该词条，本页只作旧链接的落点。'
+learning-rate:
+  status: deprecated
+  replacedBy: machine-learning
+  deprecationReason: '与同域词条「机器学习」讲的是同一块知识，不再单独作为入口；内容已并入该词条，本页只作旧链接的落点。'
+loss-function:
+  status: deprecated
+  replacedBy: machine-learning
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「机器学习」这一层；内容已并入该词条，本页只作旧链接的落点。'
+model-parameter:
+  status: deprecated
+  replacedBy: machine-learning
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「机器学习」这一层；内容已并入该词条，本页只作旧链接的落点。'
+optimizer:
+  status: deprecated
+  replacedBy: machine-learning
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「机器学习」这一层；内容已并入该词条，本页只作旧链接的落点。'
+reinforcement-learning:
+  status: deprecated
+  replacedBy: machine-learning
+  deprecationReason: '与同域词条「机器学习」讲的是同一块知识，不再单独作为入口；内容已并入该词条，本页只作旧链接的落点。'
+train-validation-test-split:
+  status: deprecated
+  replacedBy: training-data
+  deprecationReason: '与同域词条「训练数据」讲的是同一块知识，不再单独作为入口；内容已并入该词条，本页只作旧链接的落点。'
+transfer-learning:
+  status: deprecated
+  replacedBy: machine-learning
+  deprecationReason: '与同域词条「机器学习」讲的是同一块知识，不再单独作为入口；内容已并入该词条，本页只作旧链接的落点。'
+underfitting:
+  status: deprecated
+  replacedBy: machine-learning
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「机器学习」这一层；内容已并入该词条，本页只作旧链接的落点。'
+audio-understanding:
+  status: deprecated
+  replacedBy: multimodal-ai
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「多模态人工智能」这一层；内容已并入该词条，本页只作旧链接的落点。'
+cross-modal-retrieval:
+  status: deprecated
+  replacedBy: multimodal-ai
+  deprecationReason: '与同域词条「多模态人工智能」讲的是同一块知识，不再单独作为入口；内容已并入该词条，本页只作旧链接的落点。'
+diffusion-model:
+  status: deprecated
+  replacedBy: image-generation
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「图像生成」这一层；内容已并入该词条，本页只作旧链接的落点。'
+document-understanding:
+  status: deprecated
+  replacedBy: multimodal-ai
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「多模态人工智能」这一层；内容已并入该词条，本页只作旧链接的落点。'
+image-captioning:
+  status: deprecated
+  replacedBy: image-generation
+  deprecationReason: '与同域词条「图像生成」讲的是同一块知识，不再单独作为入口；内容已并入该词条，本页只作旧链接的落点。'
+image-to-image:
+  status: deprecated
+  replacedBy: image-generation
+  deprecationReason: '与同域词条「图像生成」讲的是同一块知识，不再单独作为入口；内容已并入该词条，本页只作旧链接的落点。'
+image-understanding:
+  status: deprecated
+  replacedBy: computer-vision
+  deprecationReason: '与同域词条「计算机视觉」讲的是同一块知识，不再单独作为入口；内容已并入该词条，本页只作旧链接的落点。'
+lip-sync:
+  status: deprecated
+  replacedBy: multimodal-ai
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「多模态人工智能」这一层；内容已并入该词条，本页只作旧链接的落点。'
+modality:
+  status: deprecated
+  replacedBy: multimodal-ai
+  deprecationReason: '与同域词条「多模态人工智能」讲的是同一块知识，不再单独作为入口；内容已并入该词条，本页只作旧链接的落点。'
+multimodal-embedding:
+  status: deprecated
+  replacedBy: multimodal-ai
+  deprecationReason: '与同域词条「多模态人工智能」讲的是同一块知识，不再单独作为入口；内容已并入该词条，本页只作旧链接的落点。'
+multimodal-fusion:
+  status: deprecated
+  replacedBy: multimodal-ai
+  deprecationReason: '与同域词条「多模态人工智能」讲的是同一块知识，不再单独作为入口；内容已并入该词条，本页只作旧链接的落点。'
+native-multimodal-model:
+  status: deprecated
+  replacedBy: multimodal-ai
+  deprecationReason: '与同域词条「多模态人工智能」讲的是同一块知识，不再单独作为入口；内容已并入该词条，本页只作旧链接的落点。'
+optical-character-recognition:
+  status: deprecated
+  replacedBy: computer-vision
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「计算机视觉」这一层；内容已并入该词条，本页只作旧链接的落点。'
+speech-recognition:
+  status: deprecated
+  replacedBy: multimodal-ai
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「多模态人工智能」这一层；内容已并入该词条，本页只作旧链接的落点。'
+speech-synthesis:
+  status: deprecated
+  replacedBy: multimodal-ai
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「多模态人工智能」这一层；内容已并入该词条，本页只作旧链接的落点。'
+text-to-image:
+  status: deprecated
+  replacedBy: image-generation
+  deprecationReason: '与同域词条「图像生成」讲的是同一块知识，不再单独作为入口；内容已并入该词条，本页只作旧链接的落点。'
+text-to-speech:
+  status: deprecated
+  replacedBy: multimodal-ai
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「多模态人工智能」这一层；内容已并入该词条，本页只作旧链接的落点。'
+video-understanding:
+  status: deprecated
+  replacedBy: computer-vision
+  deprecationReason: '与同域词条「计算机视觉」讲的是同一块知识，不再单独作为入口；内容已并入该词条，本页只作旧链接的落点。'
+vision-language-model:
+  status: deprecated
+  replacedBy: computer-vision
+  deprecationReason: '与同域词条「计算机视觉」讲的是同一块知识，不再单独作为入口；内容已并入该词条，本页只作旧链接的落点。'
+visual-question-answering:
+  status: deprecated
+  replacedBy: computer-vision
+  deprecationReason: '与同域词条「计算机视觉」讲的是同一块知识，不再单独作为入口；内容已并入该词条，本页只作旧链接的落点。'
+voice-cloning:
+  status: deprecated
+  replacedBy: multimodal-ai
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「多模态人工智能」这一层；内容已并入该词条，本页只作旧链接的落点。'
+chain-of-thought:
+  status: deprecated
+  replacedBy: prompt
+  deprecationReason: '与同域词条「提示词」讲的是同一块知识，不再单独作为入口；内容已并入该词条，本页只作旧链接的落点。'
+context-relevance:
+  status: deprecated
+  replacedBy: context-engineering
+  deprecationReason: '与同域词条「上下文工程」讲的是同一块知识，不再单独作为入口；内容已并入该词条，本页只作旧链接的落点。'
+in-context-learning:
+  status: deprecated
+  replacedBy: context-engineering
+  deprecationReason: '与同域词条「上下文工程」讲的是同一块知识，不再单独作为入口；内容已并入该词条，本页只作旧链接的落点。'
+negative-prompt:
+  status: deprecated
+  replacedBy: prompt
+  deprecationReason: '与同域词条「提示词」讲的是同一块知识，不再单独作为入口；内容已并入该词条，本页只作旧链接的落点。'
+retrieval-context:
+  status: deprecated
+  replacedBy: context-engineering
+  deprecationReason: '与同域词条「上下文工程」讲的是同一块知识，不再单独作为入口；内容已并入该词条，本页只作旧链接的落点。'
+role-prompting:
+  status: deprecated
+  replacedBy: prompt
+  deprecationReason: '与同域词条「提示词」讲的是同一块知识，不再单独作为入口；内容已并入该词条，本页只作旧链接的落点。'
+adversarial-testing:
+  status: deprecated
+  replacedBy: red-teaming
+  deprecationReason: '与同域词条「红队测试」讲的是同一块知识，不再单独作为入口；内容已并入该词条，本页只作旧链接的落点。'
+algorithmic-bias:
+  status: deprecated
+  replacedBy: ai-safety
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「AI 安全」这一层；内容已并入该词条，本页只作旧链接的落点。'
+data-poisoning:
+  status: deprecated
+  replacedBy: data-governance
+  deprecationReason: '与同域词条「数据治理」讲的是同一块知识，不再单独作为入口；内容已并入该词条，本页只作旧链接的落点。'
+fairness:
+  status: deprecated
+  replacedBy: ai-safety
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「AI 安全」这一层；内容已并入该词条，本页只作旧链接的落点。'
+model-theft:
+  status: deprecated
+  replacedBy: ai-safety
+  deprecationReason: '同域内缺少可支撑独立入口的区分度，读者真正要的是「AI 安全」这一层；内容已并入该词条，本页只作旧链接的落点。'

@@ -4,11 +4,12 @@ import SearchExperience from '@/components/search/SearchExperience.astro';
 import StatusTag from '@/components/ui/StatusTag.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { loadProjectContent } from '@/lib/content/io';
+import { isSelectableTerm } from '@/lib/content/visibility';
 import { deriveSiteMetrics } from '@/lib/site/metrics';
 
 const project = await loadProjectContent();
 const { domains, terms } = project;
-const publicTerms = terms.filter(({ data }) => data.status !== 'draft');
+const publicTerms = terms.filter(({ data }) => isSelectableTerm(data));
 const metrics = deriveSiteMetrics(project);
 const termsByDomain = new Map(
   domains.map((domain) => [

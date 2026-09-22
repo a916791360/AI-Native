@@ -1,4 +1,5 @@
 import type { ChainStation, Relation, Term } from './schema';
+import { isSelectableTerm } from './visibility';
 
 export const RECOMMENDATION_SOURCE_LABELS = {
   chain: '沿认知链路',
@@ -66,6 +67,9 @@ export function getLearningRecommendations(
   chain: readonly ChainStation[],
 ): LearningRecommendations | undefined {
   const termMap = new Map(terms.map((term) => [term.id, term]));
+  // 推荐位只推「可独立选择的入口」——把读者推去一个已废弃词条，
+  // 等于让他点开后又得原路退回。见 lib/content/visibility.ts。
+  const recommended = terms.filter(isSelectableTerm);
   const nextStation =
     typeof current.chain === 'number'
       ? [...chain]
@@ -75,7 +79,7 @@ export function getLearningRecommendations(
 
   if (nextStation) {
     const coreTermIds = new Set(nextStation.coreTerms);
-    const nextTerms = terms
+    const nextTerms = recommended
       .filter((term) => term.chain === nextStation.order)
       .sort((left, right) => {
         const coreRank = Number(coreTermIds.has(right.id)) - Number(coreTermIds.has(left.id));
@@ -98,7 +102,9 @@ export function getLearningRecommendations(
     .map((relation) => {
       const relatedId = relation.source === current.id ? relation.target : relation.source;
       const relatedTerm = termMap.get(relatedId);
-      return relatedTerm ? { term: relatedTerm, relation } : undefined;
+      return relatedTerm && isSelectableTerm(relatedTerm)
+        ? { term: relatedTerm, relation }
+        : undefined;
     })
     .filter((item): item is { term: Term; relation: Relation } => Boolean(item))
     .sort(
@@ -117,7 +123,7 @@ export function getLearningRecommendations(
     };
   }
 
-  const domainTerms = terms
+  const domainTerms = recommended
     .filter((term) => term.id !== current.id && term.domain === current.domain)
     .sort(sortTerms)
     .slice(0, 3);

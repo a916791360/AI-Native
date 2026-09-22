@@ -2,6 +2,7 @@ import path from 'node:path';
 
 import type { ContentDocument, ProjectContent } from './io';
 import type { Relation, Route, Term } from './schema';
+import { isDeprecatedTerm } from './visibility';
 
 const REQUIRED_SECTIONS = [
   'what-it-is',
@@ -213,7 +214,7 @@ function validateTermStatus(
     });
   }
 
-  if (term.status === 'deprecated' && !term.deprecationReason) {
+  if (isDeprecatedTerm(term) && !term.deprecationReason) {
     addDiagnostic(
       diagnostics,
       'DEPRECATED_REASON',
