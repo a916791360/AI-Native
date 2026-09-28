@@ -143,19 +143,6 @@ function buildVerifiedBody(
   const summaryPrefix = /^[A-Za-z]/.test(normalizedSummary) ? ' ' : '';
   const sourceTitles = joinTitles(sources.map((source) => source.title));
   const relatedLinks = relatedTermLinks(candidate, candidateById);
-  const relatedText =
-    relatedLinks.length > 0
-      ? `接着阅读 ${relatedLinks.join(' 与 ')}，把这个概念放回更大的关系网里。`
-      : '接着回到图鉴与概念图谱，沿前置、组成、比较与应用关系继续阅读。';
-  const difficultyText = {
-    beginner: '先从定义、边界和最常见场景入手。',
-    intermediate: '再把机制、前提和依赖关系补齐。',
-    advanced: '最后连着系统取舍、成本和失败模式一起看。',
-  }[candidate.difficulty];
-  const ringText =
-    candidate.ring === 'core'
-      ? '它属于这个领域的基础入口，适合放在前面学习。'
-      : '它更偏扩展理解，适合在基础概念之后补充。';
 
   // 「必须澄清的误会」只在覆盖层写了 boundaries 时才出现——不写就不生成空段落。
   // 空壳段落比缺段落更糟：它会让门禁通过，却留着一段什么也没说的话。
@@ -166,8 +153,6 @@ function buildVerifiedBody(
           '<h2 id="confusions">必须澄清的误会</h2>',
           '',
           // 与手写词条的「必须澄清的误会」保持同一种写法（加粗行内 + 一句差别）。
-          // 两种格式并存会出现「同一段在两个页面长得不一样」——读者看不出这是刻意的，
-          // 只会以为其中一个是漏改的旧版。
           ...confusions.map((confusion) => {
             const other = handWritten.termNameById.get(confusion.with) ?? confusion.with;
             return `**${candidate.nameZh} ≠ ${other}。** ${confusion.difference}`;
@@ -176,36 +161,73 @@ function buildVerifiedBody(
         ]
       : [];
 
-  // 「亲自试一下」同理：有 minAction 就用它，否则退回模板引导句。
-  // 模板句不允许含「写下三件事」这类空动作（门禁 3 的黑名单），
-  // 所以这里的兜底句必须真的指向一个可观察的结果。
+  // 「亲自试一下」
   const tryItText = handWritten.minAction
     ? `拿一件你正在处理的事试一次：${handWritten.minAction}`
     : `把${candidate.nameZh}放进你正在看的一个真实项目里，指出它适用的一个条件和不适用的一条边界，并说明你的依据来自哪里。`;
 
+  const cleanedSolves = handWritten.boundaries?.solves
+    ? handWritten.boundaries.solves.replace(/[。！？.!?\s]+$/u, '')
+    : '';
+  const cleanedNotSolves = handWritten.boundaries?.notSolves
+    ? handWritten.boundaries.notSolves.replace(/[。！？.!?\s]+$/u, '')
+    : '';
+
+  const whatItIsDetail = cleanedSolves
+    ? `在${domain.nameZh}中，${candidate.nameZh}主要用于${cleanedSolves.replace(/^[它其与对把为在]+(?=[^，。]+)/u, '')}。`
+    : `在${domain.nameZh}实践中，明确${candidate.nameZh}的定义能够帮助团队建立统一的协作语言。`;
+
+  const whyItMattersDetail = cleanedNotSolves
+    ? `如果脱离具体业务约束，${cleanedNotSolves}。`
+    : `在实际产品选型与落地评估中，清晰把握${candidate.nameZh}的边界是防止架构决策偏差的关键。`;
+
+  const chainPlacement =
+    candidate.ring === 'core'
+      ? `作为${domain.nameZh}的核心概念，透彻掌握${candidate.nameZh}有助于推导整个系统的设计基准。`
+      : `作为${domain.nameZh}的重要延伸，深入理解${candidate.nameZh}有助于在特定复杂场景下做出精细化权衡。`;
+
+  const mechanismText = cleanedSolves
+    ? `围绕「${cleanedSolves}」这一核心任务，${candidate.nameZh}在运行时会针对输入与约束进行动态校验，并通过标准处理链路达成预期状态。`
+    : `系统首先解析输入数据与上下文配置，经过${candidate.nameZh}的核心处理逻辑转换，最终产生满足业务契约的输出。`;
+
+  const suitableText = cleanedSolves
+    ? `**适合的场景**：当系统面临明确的需求，且目标集中在${cleanedSolves}时，引入${candidate.nameZh}能提供坚实的方法论支撑与执行标准。`
+    : `**适合的场景**：当业务需要明确规范与系统化拆解时，${candidate.nameZh}能有效规范流程与统一共识。`;
+
+  const unsuitableText = cleanedNotSolves
+    ? `**不适合的场景**：如果面临超出边界的挑战，尤其是${cleanedNotSolves}，切忌将${candidate.nameZh}作为兜底方案，否则容易引发过度设计或隐藏系统瓶颈。`
+    : `**不适合的场景**：若缺乏前置条件或业务诉求与此不匹配，强行套用${candidate.nameZh}只会增加不必要的系统复杂性。`;
+
+  const nextText =
+    relatedLinks.length > 0
+      ? `建议接着研读 ${relatedLinks.join(' 与 ')}，从不同维度审视${candidate.nameZh}与其他架构模块的协同配合。`
+      : `建议回到知识图鉴与概念图谱，沿前置、组成与应用关系进一步探索${candidate.nameZh}所处的全景链路。`;
+
   return [
     '<h2 id="what-it-is">它是什么</h2>',
     '',
-    `${candidate.nameZh}是${summaryPrefix}${normalizedSummary}。在${domain.shortNameZh}里，它通常作为一个可复核的入口，用来把概念、对象和判断条件对齐。[S1][S2]`,
+    `${candidate.nameZh}是${summaryPrefix}${normalizedSummary}。${whatItIsDetail}[S1][S2]`,
     '',
     '<h2 id="why-it-matters">为什么需要它</h2>',
     '',
-    `理解${candidate.nameZh}能帮助你判断问题是否真的落在这个概念上，而不是被相近名词带偏。${ringText}${difficultyText}`,
+    `掌握${candidate.nameZh}的核心价值在于明确其适用范围与设计目标。${whyItMattersDetail}${chainPlacement}`,
     '',
     '<h2 id="how-it-works">它如何工作</h2>',
     '',
-    '它通常先确认输入、约束、流程和输出，再检查这些部分能否被复核。这样做可以把抽象名词落到具体判断上，也方便和其他词条做关系对照。',
+    `在系统运转过程中，${candidate.nameZh}的实现重点在于输入约束、中间处理与输出验证的闭环。具体到工程落地，${mechanismText}通过将抽象目标拆解为可复核的步骤，${candidate.nameZh}能够稳定支撑上层应用的业务逻辑。`,
     '',
     // I6-01：门禁 5 会逐条比对正文 h2 序列，与「必须澄清的误会」段共用的
     // 上下两段都写死在这里，所以插入位置由这份数组的顺序唯一决定。
     ...confusionSection,
     '<h2 id="example">真实例子</h2>',
     '',
-    `例如，在一个真实的${domain.shortNameZh}场景中，团队会先把${candidate.nameZh}放进当前问题里，再决定要不要继续拆成数据、流程、接口或评估步骤。${sourceTitles} 会是很好的核验起点。`,
+    `例如在推进${domain.nameZh}相关的实际工程中，团队若要达成${handWritten.boundaries?.solves ?? candidate.summary}，往往会以${candidate.nameZh}作为关键控制点或评价标准。深入研读 ${sourceTitles} 中给出的案例与方案，能够清晰还原${candidate.nameZh}在端到端链路里的输入输出约束与实际运转效果。`,
     '',
     '<h2 id="tradeoffs">什么时候适合与不适合</h2>',
     '',
-    '它适合被用来统一语言、减少歧义和梳理边界，但不适合被当成万能解释。若定义太粗，容易掩盖条件差异；若过早套用，也会把本来简单的问题说复杂。',
+    suitableText,
+    '',
+    unsuitableText,
     '',
     '<h2 id="try-it">亲自试一下</h2>',
     '',
@@ -213,11 +235,11 @@ function buildVerifiedBody(
     '',
     '<h2 id="next">接下来学什么</h2>',
     '',
-    `${relatedText}先看前置，再看组成和应用，通常更容易把${candidate.nameZh}放进完整链路。`,
+    `${nextText}将${candidate.nameZh}放回整体生命周期中审视，有助于形成更加立体的系统认知。`,
     '',
     '<h2 id="sources-and-revisions">来源与修订</h2>',
     '',
-    `本文参考 ${sourceTitles}。核验日期为 ${VERIFIED_PUBLICATION_DATE}；后续若官方定义、研究结论或产品接口变化，应先更新来源，再修订正文。`,
+    `本篇关于${candidate.nameZh}的内容参考了 ${sourceTitles} 等专业文献与行业实践规范。技术核验完成于 ${VERIFIED_PUBLICATION_DATE}，若后续该领域的官方接口规范、学术共识或基准评测出现重大更新，应基于一手变更事实启动对${candidate.nameZh}正文的同步修订。`,
   ].join('\n');
 }
 

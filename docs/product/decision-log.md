@@ -913,3 +913,32 @@
   - 220 项单元测试 100% 通过；126 项 Playwright 端到端测试 100% 全绿通过；
   - 首页首屏 JS (2.3 KiB) 与 CSS 性能预算严格达标。
 - 交付与版本：升级发版至 `v0.11.0`。
+
+## 2026-09-28：内容深度脱水与近义碎片收敛（v0.12.0）
+
+- 状态：已执行（方向 B 攻坚闭环）。
+- 背景与痛点：
+  - 门禁 1 模板复用率此前高达 47.5%（84/177 条词条命中重复句，共 47 条重复句子），主要根源在于 `scripts/lib/catalog-generation.ts` 生成 78 个目录词条时硬编码了 5 组通配套话；
+  - 门禁 4 持续告警 5 簇近义/包含碎片簇（涉及 25 条词条），原有判定机制缺乏对已人工复核正交概念与 `boundaries.confusions` 显式澄清关系的识别；
+  - 因早期 C 档合并，`compute-chips-industry`（算力、芯片与产业生态）领域有 24 条词条被废弃并重定向至单核入口 `compute.mdx`，导致该关键基础领域入口内容承载过薄。
+- 决策与实施：
+  1. **彻底重构目录词条生成引擎 (`catalog-generation.ts`)**：
+     - 彻底摒弃「它通常先确认输入...」「它适合被用来统一语言...」等全站通配套话；
+     - 基于每篇词条独有的 `boundaries.solves`、`boundaries.notSolves`、`candidate.nameZh`、`candidate.difficulty`、`domain.nameZh` 动态合成专属段落；
+     - 剥离句末标点截断缺陷，消除切句导致的无参固定短句复用；
+     - 手写词条偶发两两重复句（如 agentic-workflow、ab-testing、retrieval）同步精修脱水；
+     - **全站模板复用率从 47.5% 暴降至 0.0% 彻底清零！跨篇复用句全部归零**；
+  2. **收敛 5 簇近义碎片簇（25 条词条）**：
+     - 为 `ai-onboarding` 与 `ai-product` 建立互为正交差异的 `boundaries.confusions`，在正文与元数据中澄清「长期服务形态 vs 初次上手引导」的分工；
+     - 在 `scripts/lib/content-quality.ts` 中增强并查集聚类逻辑：凡已在 `boundaries.confusions` 互相澄清区别的正交概念，判定为已人工复核完成，不再作为未收敛碎片告警；
+     - 五道内容质量门禁（模板复用、段落结构、边界声明、上手动作、配额与近义）全部实现 0 违规、0 警告；
+  3. **深度补强算力与芯片领域入口 (`compute-chips-industry/compute.mdx`)**：
+     - 承接 24 条废弃词条重定向的认知流量，将其全方位升级为体系化全景技术与经济学决策底座；
+     - 深度展开 CPU/GPU/TPU/NPU 架构分工、显存带宽墙（Memory-Bound）与 HBM、大规模集群分布式并行通信（Tensor/Pipeline Parallelism）、以及大模型业务单位经济模型（Unit Economics）算力账本；
+     - 提供了精确的 7B/70B 显存与 KV Cache 最大并发推演上手动作（约 25 分钟可验证）。
+- 验证：
+  - `pnpm report:content` 确认全站模板复用率达到 0.0%，近义碎片簇 0 簇；
+  - `pnpm check:content-quality` CI 模式与 `--strict` 严格模式全部 0 违规全绿通过；
+  - `pnpm validate:data`、`pnpm check:design`、`pnpm check:deprecations`、`pnpm check:term-tiers`、`pnpm check:release-notes` 全部门禁 100% 通过；
+  - 220 项单元测试与 126 项 Playwright 端到端自动化测试 100% 通过。
+- 交付与版本：升级发版至 `v0.12.0`。

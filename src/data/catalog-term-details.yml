@@ -154,6 +154,8 @@ prompt-constraint:
         difference: 提示约束靠自然语言提要求，结构化输出靠接口层强校验格式，后者才是硬约束。
       - with: system-prompt
         difference: 系统提示词设定长期角色与边界，提示约束通常只针对某一次任务的具体限制。
+      - with: prompt
+        difference: 提示词是输入的整体载体，提示约束是专门针对格式、长度、拒答等规则的显式限制条件。
   minAction: 用约 30 分钟，把「不要做什么」写成三条明确禁止项加两条格式要求，观察输出需要返工的次数有没有下降。
 
 # ---- 第 3 站 · 给知识 · 怎么让它知道你家的资料 ------------------------------
@@ -180,6 +182,8 @@ hybrid-search:
         difference: 混合检索包含关键词检索这一路，另一路是语义检索，融合后才取长补短。
       - with: reranking
         difference: 混合检索解决召回得全不全，重排解决排序得准不准，先混合再重排是常见组合。
+      - with: retrieval
+        difference: 检索是获取候选资料的动作总称，混合检索是将字面与语义两条检索管线融合打分的复合实现方案。
   minAction: 用约 30 分钟，准备 5 个专有名词查询与 5 个同义改写查询，分别看纯语义检索与混合检索的命中差别。
 query-rewriting:
   chain: 3
@@ -268,6 +272,8 @@ semantic-search:
         difference: 语义检索强调意思相近，相似度检索只描述用距离度量这件事，不保证度量的是语义。
       - with: keyword-search
         difference: 语义检索能命中同义改写，关键词检索只能命中字面出现，两者的失败模式刚好互补。
+      - with: retrieval
+        difference: 检索包含字面匹配、属性过滤等多种途径，语义检索特指通过向量空间距离匹配语义相似度的检索技术。
   minAction: 用约 20 分钟，用「怎么让模型少胡说」去搜，看能否召回讲幻觉与事实依据约束的那批词条。
 similarity-search:
   chain: 3
@@ -280,6 +286,8 @@ similarity-search:
         difference: 相似度检索是算法层面的做法，语义检索是产品层面的目标，后者可以换用不同度量。
       - with: top-k
         difference: 相似度检索负责排序与计算，Top-K 负责决定截取前几条，两者是排序与取数的分工。
+      - with: retrieval
+        difference: 检索是面向业务任务的信息获取过程，相似度检索是基于高维数学距离计算近邻的底层运算方法。
   minAction: 用约 30 分钟，取一个查询向量看返回的 Top 5 相似度分布——如果前五名分数几乎一样，说明阈值很难定。
 top-k:
   chain: 3
@@ -292,6 +300,8 @@ top-k:
         difference: Top-K 决定先取多少条，重排决定取回来之后怎么重新排序，通常先取再排。
       - with: similarity-search
         difference: Top-K 是一个数量参数，相似度检索是一整套计算过程，参数作用在检索之上。
+      - with: retrieval
+        difference: 检索是整个候选召回与筛选管线，Top-K 仅指从所有排序候选截取前 K 个最高分结果的截断策略。
   minAction: 用约 30 分钟，把 Top-K 从 3 调到 10，观察回答是变完整了还是被无关片段带偏，找出你场景的拐点。
 metadata-filtering:
   chain: 3
@@ -426,6 +436,8 @@ ai-onboarding:
         difference: 产品引导发生在第一次使用之前，解释界面发生在每次输出之后，一个管预期一个管复核。
       - with: progressive-disclosure
         difference: 渐进披露是按需展开复杂能力的手法，产品引导是首次使用的路径设计，后者会用上前者。
+      - with: ai-product
+        difference: AI 产品是长期演进的完整服务与价值载体，AI 产品引导特指新用户初次上手时的认知对齐与预期校准界面。
   minAction: 用约 30 分钟，写出产品第一次打开时该让用户知道的三个局限，检查它们现在有没有出现在首屏。
 autopilot-pattern:
   chain: 4

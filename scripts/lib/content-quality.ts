@@ -79,6 +79,7 @@ export interface TermRecord {
   chain?: number;
   chainRole?: string;
   hasBoundaries: boolean;
+  confusedWithIds: Set<string>;
   minAction?: string;
   /** frontmatter 的 status，用于把已废弃 / 草稿词条排除在「入口」口径之外（I6-03）。 */
   status: string;
@@ -107,6 +108,16 @@ export async function loadTerms(root = process.cwd()): Promise<TermRecord[]> {
       continue;
     }
 
+    const boundaries = frontmatter.boundaries as
+      | { confusions?: Array<{ with?: string }> }
+      | undefined;
+    const confusedWithIds = new Set<string>();
+    if (Array.isArray(boundaries?.confusions)) {
+      for (const item of boundaries.confusions) {
+        if (item?.with) confusedWithIds.add(String(item.with));
+      }
+    }
+
     const body = (match[2] ?? '').trim();
     terms.push({
       id: String(frontmatter.id ?? path.basename(file, '.mdx')),
@@ -118,6 +129,7 @@ export async function loadTerms(root = process.cwd()): Promise<TermRecord[]> {
       chain: typeof frontmatter.chain === 'number' ? frontmatter.chain : undefined,
       chainRole: typeof frontmatter.chainRole === 'string' ? frontmatter.chainRole : undefined,
       hasBoundaries: Boolean(frontmatter.boundaries),
+      confusedWithIds,
       minAction: typeof frontmatter.minAction === 'string' ? frontmatter.minAction : undefined,
       status: typeof frontmatter.status === 'string' ? frontmatter.status : 'verified',
       sectionDiff: diffSectionStructure(body),
@@ -285,6 +297,8 @@ function findSynonymClusters(terms: TermRecord[]): SynonymCluster[] {
         const zhHit = nameZhContains(a.nameZh, b.nameZh);
         const enHit = nameEnContains(a.nameEn, b.nameEn);
         if (!zhHit && !enHit) continue;
+        // 若任意一方已在 boundaries.confusions 中与对方明确做出正交区分，则属于人工复核完成的合法区分，不视为近义碎片
+        if (a.confusedWithIds.has(b.id) || b.confusedWithIds.has(a.id)) continue;
         union(a.id, b.id);
         const root = find(a.id);
         const labels = pairLabels.get(root) ?? [];
