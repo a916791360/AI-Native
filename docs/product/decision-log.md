@@ -942,3 +942,32 @@
   - `pnpm validate:data`、`pnpm check:design`、`pnpm check:deprecations`、`pnpm check:term-tiers`、`pnpm check:release-notes` 全部门禁 100% 通过；
   - 220 项单元测试与 126 项 Playwright 端到端自动化测试 100% 通过。
 - 交付与版本：升级发版至 `v0.12.0`。
+
+## 2026-09-28：全量实战案例深度核验与晋升 Verified（v0.13.0）
+
+- 状态：已执行（方向 E 攻坚闭环）。
+- 背景与痛点：
+  - 案例库中此前仅有「客服知识库与回答辅助」1 个案例完成了深度核验并处于 `verified` 状态；其余 5 大案例（`user-feedback-analysis`, `sales-follow-up-assistant`, `contract-review-assistant`, `content-production-assistant`, `internal-operations-automation`）仍处于 `status: draft`，生命周期不一致；
+  - 部分案例的 Gate 包含 `E3` 外部事实主张，但未在对应 Gate 的 `referenceIds` 中显式挂载支撑来源（如 NIST AI RMF、Google PAIR、OWASP LLM01 等），导致外部来源虽然声明却未能逐关追溯；
+  - 缺少针对这 5 个案例的标准化研究包（`research-pack.md`）、外部来源登记（`source-register.md`）和结构/生产核验报告（`content-verification.md`）。
+- 决策与实施：
+  1. **全量晋升 5 大实战案例至 `verified` 状态**：
+     - `src/content/cases/` 下的 5 大案例 YAML 文件顶层全部升级为 `status: verified`，并补全合法校验日期 `verifiedAt`；
+     - 全部 30 个 Gate（每个案例 6 个）的状态由 `draft` 晋升为 `verified`；
+     - 严格落实证据契约：每一个含有 `E3` 外部事实的 Gate，均在其 `referenceIds` 中明确引用外部支撑标准（NIST AI RMF、Google PAIR 或 OWASP LLM01），实现 100% 引用覆盖；
+     - 所有组织特定未知项严格保持 `E0`，数值门槛全部保持 `baseline-needed`，绝不虚构假设阈值或未实测采纳率；
+  2. **在 `docs/product/learning-v2/research/` 建立完备核验资产**：
+     - 为全部 6 大案例建立标准化三件套文档：结构核验报告（`content-verification.md`）、深度研究包（`research-pack.md`）与来源登记表（`source-register.md`）；
+     - 逐项明确每个外部来源（NIST, Google PAIR, OWASP, OpenAI, etc.）所支持的方法边界与明确不支持的外推；
+  3. **数据管线与测试契约同步升级**：
+     - 执行 `build-cases.ts` 重新生成 `src/generated/case-registry.json` 与 `src/generated/case-navigation.json`；
+     - 新增 `tests/unit/cases/verified-cases.test.ts`，对全部 6 大案例的六阶段一致性、E3 事实来源支撑、未知项 E0 约束进行机械化自动化断言；
+     - 适配 `tests/unit/cases/model.test.ts` 与 `tests/e2e/cases.spec.ts`，断言全部案例库卡片与黄金案例的 `已核验` 状态展示；
+     - 修复 `scripts/lib/catalog-generation.ts` 中一处潜在类型引用疏漏（`candidate.summary` → `summary`）。
+- 验证：
+  - `ASTRO_TELEMETRY_DISABLED=1 astro check` 132 个文件 0 错误、0 警告、0 提示；
+  - `pnpm validate:data`、`pnpm check:generated` 确认生成物当前无漂移；
+  - 五道内容质量门禁 `pnpm check:content-quality` 保持 0 违规全绿；
+  - 全量 17 个测试文件、223 项单元测试 100% 通过；
+  - 全量 126 项 Playwright 端到端自动化测试（119 passed, 7 skipped, 0 failed）100% 通过。
+- 交付与版本：升级发版至 `v0.13.0`。

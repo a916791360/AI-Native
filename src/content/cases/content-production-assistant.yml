@@ -36,14 +36,15 @@ constraints:
     kind: recommendation
     evidence: E3
     statement: 外部素材与来源内容作为不可信数据处理，不能取得系统指令、工具或发布权限。
-status: draft
+status: verified
 updatedAt: 2026-08-13
+verifiedAt: 2026-08-13
 
 gates:
   - id: decide-ai-boundary
     order: 1
     stageId: model-boundaries
-    status: draft
+    status: verified
     title: 判断 AI 边界
     question: 内容生产需要生成式初稿，还是模板与人工改写已经足够？
     decision: 用模板与人工核验承担事实和品牌责任，只在初稿与改写步骤引入受限生成，发布始终由编辑确认。
@@ -120,7 +121,7 @@ gates:
   - id: establish-value-and-data
     order: 2
     stageId: opportunity-judgment
-    status: draft
+    status: verified
     title: 建立价值与数据条件
     question: 怎样证明解决的是「生产瓶颈」，而不是「写得更快」？
     decision: 先记录生产时间、事实错误和返工基线，再定义有来源且经编辑确认的发布结果。
@@ -170,6 +171,7 @@ gates:
     failureModeIds:
       - cp-fm-fabricated-fact
     referenceIds:
+      - source-nist-ai-rmf
       - term-problem-solution-fit
       - term-north-star-metric
       - term-stakeholder-management
@@ -180,7 +182,7 @@ gates:
   - id: select-workflow
     order: 3
     stageId: solution-choice
-    status: draft
+    status: verified
     title: 拆解选题、初稿、审核与发布工作流
     question: 如何区分选题、生成、事实核验、品牌审核与发布？
     decision: 把选题、素材、初稿、事实核验、品牌审核与发布拆成可观察步骤，发布责任始终在编辑。
@@ -231,6 +233,7 @@ gates:
       - cp-fm-unsupported-claim
       - cp-fm-prompt-injection
     referenceIds:
+      - source-owasp-prompt-injection
       - term-prompt-injection
       - term-human-ai-collaboration
       - term-system-prompt
@@ -241,7 +244,7 @@ gates:
   - id: design-control-and-recovery
     order: 4
     stageId: product-experience
-    status: draft
+    status: verified
     title: 设计编辑控制与失败恢复
     question: 编辑怎样看见来源、识别事实错误、修改并最终发布？
     decision: 展示事实来源与品牌规范、允许修改与驳回，发布前强制编辑确认，敏感内容由主管复核。
@@ -293,6 +296,8 @@ gates:
       - cp-fm-review-overload
       - cp-fm-brand-tone-drift
     referenceIds:
+      - source-nist-ai-rmf
+      - source-google-pair
       - term-human-escalation
       - term-user-control
       - term-content-moderation
@@ -303,7 +308,7 @@ gates:
   - id: define-evaluation-and-cost
     order: 5
     stageId: quality-constraints
-    status: draft
+    status: verified
     title: 定义评测、成本与上线护栏
     question: 怎样评测事实性、品牌一致性、原创性与发布质量？
     decision: 用版本化固定集和风险切片分步评测，用「有依据且经编辑确认的发布」计算单位成功成本。
@@ -355,6 +360,7 @@ gates:
       - cp-fm-version-regression
       - cp-fm-model-timeout
     referenceIds:
+      - source-nist-ai-rmf
       - term-offline-evaluation
       - term-observability
       - term-faithfulness
@@ -364,7 +370,7 @@ gates:
   - id: govern-launch-and-iteration
     order: 6
     stageId: capstone
-    status: draft
+    status: verified
     title: 治理发布与持续更新
     question: 什么时候能扩大自动化，质量回退时如何停止？
     decision: 按影子初稿、辅助初稿、受限自动初稿逐级推进，自动发布不进入首版。
@@ -415,6 +421,8 @@ gates:
       - cp-fm-auto-publish-breach
       - cp-fm-version-regression
     referenceIds:
+      - source-nist-ai-rmf
+      - source-google-pair
       - term-canary-release
       - term-rollback
       - term-go-to-market

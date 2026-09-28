@@ -35,14 +35,15 @@ constraints:
     kind: recommendation
     evidence: E3
     statement: 合同文本作为不可信数据处理，不能取得系统指令、工具或审批权限。
-status: draft
+status: verified
 updatedAt: 2026-08-13
+verifiedAt: 2026-08-13
 
 gates:
   - id: decide-ai-boundary
     order: 1
     stageId: model-boundaries
-    status: draft
+    status: verified
     title: 判断 AI 边界
     question: 合同审核需要生成式「通过」结论，还是证据获取与差异标注？
     decision: 用确定性模板比对定位差异，只在归纳与风险提示步骤引入受限生成，审批结论始终由人作出。
@@ -119,7 +120,7 @@ gates:
   - id: establish-value-and-data
     order: 2
     stageId: opportunity-judgment
-    status: draft
+    status: verified
     title: 建立价值与数据条件
     question: 怎样证明解决的是「漏报非标准条款」，而不是「审得更快」？
     decision: 先记录漏报、误报和错误成本基线，再定义有来源且经法务确认的审核结果。
@@ -169,6 +170,7 @@ gates:
     failureModeIds:
       - cr-fm-missed-non-standard
     referenceIds:
+      - source-nist-ai-rmf
       - term-problem-solution-fit
       - term-north-star-metric
       - term-acceptance-criteria
@@ -178,7 +180,7 @@ gates:
   - id: select-workflow
     order: 3
     stageId: solution-choice
-    status: draft
+    status: verified
     title: 拆解条款识别、对比与升级工作流
     question: 如何区分标准条款、非标准条款和审批责任？
     decision: 把合同解析、条款比对、差异标注、风险提示与人工审批拆成可观察步骤，审批责任始终在有权人。
@@ -229,6 +231,7 @@ gates:
       - cr-fm-fabricated-citation
       - cr-fm-prompt-injection
     referenceIds:
+      - source-owasp-prompt-injection
       - term-prompt-injection
       - term-human-ai-collaboration
       - term-long-context
@@ -240,7 +243,7 @@ gates:
   - id: design-control-and-recovery
     order: 4
     stageId: product-experience
-    status: draft
+    status: verified
     title: 设计法务控制与失败恢复
     question: 法务怎样看见原文、识别漏报、修改并最终确认？
     decision: 展示条款原文与比对差异、允许修改与驳回，审批前强制法务确认，高风险条款由有权人复核。
@@ -292,6 +295,8 @@ gates:
       - cr-fm-review-overload
       - cr-fm-false-escalation
     referenceIds:
+      - source-nist-ai-rmf
+      - source-google-pair
       - term-human-escalation
       - term-user-control
       - term-hallucination
@@ -302,7 +307,7 @@ gates:
   - id: define-evaluation-and-cost
     order: 5
     stageId: quality-constraints
-    status: draft
+    status: verified
     title: 定义评测、成本与上线护栏
     question: 怎样评测漏报、误报与条款对比质量？
     decision: 用版本化固定集和风险切片分步评测，用「有依据且经法务确认的审核」计算单位成功成本。
@@ -353,6 +358,7 @@ gates:
       - cr-fm-version-regression
       - cr-fm-model-timeout
     referenceIds:
+      - source-nist-ai-rmf
       - term-offline-evaluation
       - term-observability
       - term-golden-dataset
@@ -362,7 +368,7 @@ gates:
   - id: govern-launch-and-iteration
     order: 6
     stageId: capstone
-    status: draft
+    status: verified
     title: 治理发布与持续更新
     question: 什么时候能扩大自动化，漏报或质量回退时如何停止？
     decision: 按影子标注、辅助标注、受限自动标注逐级推进，自动「通过」不进入首版。
@@ -413,6 +419,8 @@ gates:
       - cr-fm-auto-approve-breach
       - cr-fm-version-regression
     referenceIds:
+      - source-nist-ai-rmf
+      - source-google-pair
       - term-canary-release
       - term-rollback
       - term-ai-governance

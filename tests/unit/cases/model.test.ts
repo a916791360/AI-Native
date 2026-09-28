@@ -33,7 +33,7 @@ describe('stage 12B case content model', () => {
       id: 'user-feedback-analysis',
       gateCount: 6,
       artifactCount: 6,
-      status: 'draft',
+      status: 'verified',
     });
     const goldenNavigation = navigation.cases.find(
       ({ caseId }) => caseId === 'user-feedback-analysis',
@@ -110,7 +110,8 @@ describe('stage 12B case content model', () => {
     const { cases, project } = await loadFixture();
     const invalid = structuredClone(cases);
     const goldenCase = invalid.find(({ data }) => data.id === 'user-feedback-analysis')!.data;
-    goldenCase.status = 'verified';
+    goldenCase.verifiedAt = undefined;
+    goldenCase.gates[0]!.status = 'draft';
 
     expect(validateCaseStudies(invalid, project).map(({ code }) => code)).toEqual(
       expect.arrayContaining(['CASE_STATUS_INCONSISTENT', 'CASE_VERIFIED_DATE_REQUIRED']),

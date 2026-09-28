@@ -30,7 +30,7 @@ test('offers a first-class case library from the learning workspace', async ({
   const entries = page.locator('.case-catalog-card');
   await expect(entries).toHaveCount(6);
   await expect(entries.first()).toContainText('已核验');
-  await expect(entries.first()).toContainText('客服知识库与回答辅助');
+  await expect(entries.filter({ hasText: '客服知识库与回答辅助' })).toContainText('已核验');
   await expect(page.getByRole('link', { name: '客服知识库与回答辅助' })).toHaveAttribute(
     'href',
     supportCaseUrl,
@@ -48,7 +48,7 @@ test('presents one clear start and a six-gate project archive', async ({ page })
     firstGateUrl,
   );
   const caseSummary = page.getByRole('complementary');
-  await expect(caseSummary.getByText('内容草稿', { exact: true })).toBeVisible();
+  await expect(caseSummary.getByText('已核验', { exact: true })).toBeVisible();
   await expect(caseSummary).toContainText('阈值待真实基线');
   await expect(page.locator('.case-directory > ol > li')).toHaveCount(6);
   await expect(page.locator('.case-archive > ol > li')).toHaveCount(6);

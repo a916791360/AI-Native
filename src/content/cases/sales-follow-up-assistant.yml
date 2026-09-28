@@ -35,14 +35,15 @@ constraints:
     kind: recommendation
     evidence: E3
     statement: 外发权限和承诺边界必须由确定性系统与销售授权共同执行，客户内容作为不可信数据处理。
-status: draft
+status: verified
 updatedAt: 2026-08-13
+verifiedAt: 2026-08-13
 
 gates:
   - id: decide-ai-boundary
     order: 1
     stageId: model-boundaries
-    status: draft
+    status: verified
     title: 判断 AI 边界
     question: 这个场景需要生成式草稿，还是信息汇总与模板已经足够？
     decision: 先治理客户信息和跟进记录，只在上下文汇总与建议草稿步骤引入受限生成，外发动作保持人工。
@@ -121,7 +122,7 @@ gates:
   - id: establish-value-and-data
     order: 2
     stageId: opportunity-judgment
-    status: draft
+    status: verified
     title: 建立价值与数据条件
     question: 怎样证明解决的是「漏跟进与信息不全」，而不是「让邮件更像人」？
     decision: 先记录漏跟进、误发送和错误承诺的基线，再定义有来源且经销售采纳的任务结果。
@@ -172,6 +173,7 @@ gates:
     failureModeIds:
       - sf-fm-missed-opportunity
     referenceIds:
+      - source-nist-ai-rmf
       - term-problem-solution-fit
       - term-north-star-metric
       - term-acceptance-criteria
@@ -182,7 +184,7 @@ gates:
   - id: select-workflow
     order: 3
     stageId: solution-choice
-    status: draft
+    status: verified
     title: 拆解信息、草稿与外发工作流
     question: 如何区分信息处理、建议、决策和外部行动？
     decision: 把客户上下文、建议草稿、销售决策与外发动作拆成可观察步骤，为每层单独授权。
@@ -233,6 +235,7 @@ gates:
       - sf-fm-stale-context
       - sf-fm-prompt-injection
     referenceIds:
+      - source-owasp-prompt-injection
       - term-prompt-injection
       - term-human-ai-collaboration
       - term-prompt-template
@@ -243,7 +246,7 @@ gates:
   - id: design-control-and-recovery
     order: 4
     stageId: product-experience
-    status: draft
+    status: verified
     title: 设计销售控制与失败恢复
     question: 销售怎样看见来源、识别错误承诺、修改并最终发送？
     decision: 展示客户字段与依据、允许修改与驳回，外发前强制销售确认，高风险跟进由主管复核。
@@ -295,6 +298,8 @@ gates:
       - sf-fm-review-overload
       - sf-fm-tone-mismatch
     referenceIds:
+      - source-nist-ai-rmf
+      - source-google-pair
       - term-human-escalation
       - term-user-control
       - term-data-protection
@@ -304,7 +309,7 @@ gates:
   - id: define-evaluation-and-cost
     order: 5
     stageId: quality-constraints
-    status: draft
+    status: verified
     title: 定义评测、成本与上线护栏
     question: 怎样评测上下文召回、草稿相关性、语气合规与误发送？
     decision: 用版本化固定集和风险切片分步评测，用「有依据且被采纳的跟进」计算单位成功成本。
@@ -356,6 +361,7 @@ gates:
       - sf-fm-version-regression
       - sf-fm-model-timeout
     referenceIds:
+      - source-nist-ai-rmf
       - term-offline-evaluation
       - term-observability
       - term-cost-optimization
@@ -365,7 +371,7 @@ gates:
   - id: govern-launch-and-iteration
     order: 6
     stageId: capstone
-    status: draft
+    status: verified
     title: 治理发布与持续更新
     question: 什么时候能扩大自动化，误发或质量回退时如何停止？
     decision: 按影子草稿、辅助草稿、受限自动草稿逐级推进，自动发送不进入首版。
@@ -416,6 +422,8 @@ gates:
       - sf-fm-auto-send-breach
       - sf-fm-version-regression
     referenceIds:
+      - source-nist-ai-rmf
+      - source-google-pair
       - term-canary-release
       - term-rollback
       - term-trace

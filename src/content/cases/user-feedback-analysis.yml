@@ -35,14 +35,15 @@ constraints:
     kind: recommendation
     evidence: E3
     statement: 重要主题、疑似问题和行动草稿必须能够回到原始反馈证据和处理步骤。
-status: draft
+status: verified
 updatedAt: 2026-08-03
+verifiedAt: 2026-08-03
 
 gates:
   - id: decide-ai-boundary
     order: 1
     stageId: model-boundaries
-    status: draft
+    status: verified
     title: 判断 AI 边界
     question: 哪些步骤真的需要概率语义能力？
     decision: 规则负责确定性任务，只在语义分类、近似重复和主题发现步骤引入受限模型。
@@ -114,7 +115,7 @@ gates:
   - id: establish-value-and-data
     order: 2
     stageId: opportunity-judgment
-    status: draft
+    status: verified
     title: 建立价值与数据条件
     question: 怎样证明这不是一个更漂亮的摘要 Demo？
     decision: 先记录现有处理、覆盖、返工、问题发现和行动链路，再定义可观察目标和数据许可。
@@ -188,7 +189,7 @@ gates:
   - id: select-workflow
     order: 3
     stageId: solution-choice
-    status: draft
+    status: verified
     title: 拆解并选择工作流
     question: 如何让每一步可评估、可替换、可停止？
     decision: 采用固定工作流和结构化中间结果，分别处理接入、校验、去重、分类、聚类、摘要与人工复核。
@@ -264,7 +265,7 @@ gates:
   - id: design-control-and-recovery
     order: 4
     stageId: product-experience
-    status: draft
+    status: verified
     title: 设计控制与恢复
     question: 失败出现时谁能看见、纠正、接管和恢复？
     decision: 低确定性、高影响、冲突和无证据结果进入人工队列，原文与每一步结果始终保留。
@@ -340,7 +341,7 @@ gates:
   - id: define-evaluation-and-cost
     order: 5
     stageId: quality-constraints
-    status: draft
+    status: verified
     title: 定义评测、成本与护栏
     question: 怎样证明质量、时效和成本同时可接受？
     decision: 建立任务级黄金集、错误切片、线上运行指标和单位成功任务成本，具体阈值等待真实基线。
@@ -420,7 +421,7 @@ gates:
   - id: govern-launch-and-iteration
     order: 6
     stageId: capstone
-    status: draft
+    status: verified
     title: 治理上线与持续迭代
     question: 什么时候扩大范围，什么时候停止或回滚？
     decision: 按影子运行、辅助草稿、有限使用和扩大范围四级推进，每一级独立评审并保留回滚路径。

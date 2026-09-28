@@ -1,11 +1,12 @@
 # 重点案例研究包：销售跟进助手
 
-- 状态：`research`（选题与范围 Gate 已完成，YAML 初稿与逐项来源核验尚未开始）
-- 阶段：阶段 14 重点案例扩展
+- 状态：`verified-for-content-model`
+- 阶段：阶段 14 重点案例核验与生产验收
 - 研究日期：2026-08-13
 - 案例类型：教学案例，不代表任何真实公司的已上线系统或经营结果
 - 来源登记：[`source-register.md`](./source-register.md)
-- 后续用途：案例 YAML 初稿、来源逐项核验、生产验收
+- 核验报告：[`content-verification.md`](./content-verification.md)
+- 后续用途：案例 YAML、来源逐项核验、生产验收与学习漫游
 
 ## 1. 研究结论
 

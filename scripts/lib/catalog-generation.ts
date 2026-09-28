@@ -221,7 +221,7 @@ function buildVerifiedBody(
     ...confusionSection,
     '<h2 id="example">真实例子</h2>',
     '',
-    `例如在推进${domain.nameZh}相关的实际工程中，团队若要达成${handWritten.boundaries?.solves ?? candidate.summary}，往往会以${candidate.nameZh}作为关键控制点或评价标准。深入研读 ${sourceTitles} 中给出的案例与方案，能够清晰还原${candidate.nameZh}在端到端链路里的输入输出约束与实际运转效果。`,
+    `例如在推进${domain.nameZh}相关的实际工程中，团队若要达成${handWritten.boundaries?.solves ?? (candidate as unknown as { summary?: string }).summary}，往往会以${candidate.nameZh}作为关键控制点或评价标准。深入研读 ${sourceTitles} 中给出的案例与方案，能够清晰还原${candidate.nameZh}在端到端链路里的输入输出约束与实际运转效果。`,
     '',
     '<h2 id="tradeoffs">什么时候适合与不适合</h2>',
     '',

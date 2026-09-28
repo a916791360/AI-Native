@@ -35,18 +35,23 @@ constraints:
     kind: recommendation
     evidence: E3
     statement: 输入数据作为不可信数据处理，不能取得系统指令、工具或执行权限。
-status: draft
+status: verified
 updatedAt: 2026-08-13
+verifiedAt: 2026-08-13
 
 gates:
   - id: decide-ai-boundary
     order: 1
     stageId: model-boundaries
-    status: draft
+    status: verified
     title: 判断 AI 边界
     question: 内部运营需要 Agent，还是规则与受限步骤已经足够？
     decision: 用规则承担确定性流程，只在需要语义判断的步骤引入受限模型，执行动作保持人工或确定性系统。
     facts:
+      - id: io-g1-automation-risk
+        kind: fact
+        evidence: E3
+        statement: 自主执行步骤存在不可预测性与动作漂移风险，自动化流程需按风险分级治理。
       - id: io-g1-automation-not-agent
         kind: recommendation
         evidence: E1
@@ -119,7 +124,7 @@ gates:
   - id: establish-value-and-data
     order: 2
     stageId: opportunity-judgment
-    status: draft
+    status: verified
     title: 建立价值与数据条件
     question: 怎样证明解决的是「重复劳动」，而不是「上了自动化」？
     decision: 先记录重复劳动、错误和返工基线，再定义有依据且经运营确认的自动化结果。
@@ -169,6 +174,7 @@ gates:
     failureModeIds:
       - io-fm-wrong-batch-action
     referenceIds:
+      - source-nist-ai-rmf
       - term-problem-solution-fit
       - term-north-star-metric
       - term-stakeholder-management
@@ -179,7 +185,7 @@ gates:
   - id: select-workflow
     order: 3
     stageId: solution-choice
-    status: draft
+    status: verified
     title: 拆解信息处理、草稿与执行工作流
     question: 如何区分信息处理、建议、决策和外部动作？
     decision: 把信息处理、语义草稿、运营决策与动作执行拆成可观察步骤，执行动作由确定性系统或运营确认。
@@ -230,6 +236,7 @@ gates:
       - io-fm-prompt-injection
       - io-fm-stale-rule
     referenceIds:
+      - source-owasp-prompt-injection
       - term-prompt-injection
       - term-human-ai-collaboration
       - term-function-calling
@@ -241,7 +248,7 @@ gates:
   - id: design-control-and-recovery
     order: 4
     stageId: product-experience
-    status: draft
+    status: verified
     title: 设计运营控制与失败恢复
     question: 运营怎样看见动作、预览影响、确认并撤销？
     decision: 展示动作与影响范围、允许预览与确认，批量动作支持同范围撤销，执行前强制运营确认。
@@ -293,6 +300,8 @@ gates:
       - io-fm-review-overload
       - io-fm-side-effect-unrecoverable
     referenceIds:
+      - source-nist-ai-rmf
+      - source-google-pair
       - term-human-escalation
       - term-user-control
       - term-agent-sandbox
@@ -303,7 +312,7 @@ gates:
   - id: define-evaluation-and-cost
     order: 5
     stageId: quality-constraints
-    status: draft
+    status: verified
     title: 定义评测、成本与上线护栏
     question: 怎样评测动作准确率、副作用与恢复能力？
     decision: 用版本化固定集和风险切片分步评测，用「有依据且经运营确认的任务」计算单位成功成本。
@@ -355,6 +364,7 @@ gates:
       - io-fm-version-regression
       - io-fm-model-timeout
     referenceIds:
+      - source-nist-ai-rmf
       - term-offline-evaluation
       - term-observability
       - term-task-success-rate
@@ -364,7 +374,7 @@ gates:
   - id: govern-launch-and-iteration
     order: 6
     stageId: capstone
-    status: draft
+    status: verified
     title: 治理发布与持续更新
     question: 什么时候能扩大自动化，错误或回退时如何停止？
     decision: 按影子草稿、辅助草稿、受限自动草稿逐级推进，自动执行不进入首版。
@@ -415,6 +425,8 @@ gates:
       - io-fm-unauthorized-action
       - io-fm-version-regression
     referenceIds:
+      - source-nist-ai-rmf
+      - source-google-pair
       - term-canary-release
       - term-rollback
       - term-continuous-delivery

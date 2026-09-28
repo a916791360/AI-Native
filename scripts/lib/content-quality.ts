@@ -109,8 +109,7 @@ export async function loadTerms(root = process.cwd()): Promise<TermRecord[]> {
     }
 
     const boundaries = frontmatter.boundaries as
-      | { confusions?: Array<{ with?: string }> }
-      | undefined;
+      { confusions?: Array<{ with?: string }> } | undefined;
     const confusedWithIds = new Set<string>();
     if (Array.isArray(boundaries?.confusions)) {
       for (const item of boundaries.confusions) {
