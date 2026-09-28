@@ -269,6 +269,10 @@ gates:
       - term-retrieval-precision
       - term-retrieval-recall
       - term-faithfulness
+      - term-document-chunking
+      - term-embedding
+      - term-reranking
+      - term-vector-database
 
   - id: design-control-and-recovery
     order: 4
@@ -352,6 +356,8 @@ gates:
       - term-human-escalation
       - term-prompt-injection
       - term-human-ai-collaboration
+      - term-ai-guardrail
+      - term-groundedness
 
   - id: define-evaluation-and-cost
     order: 5
@@ -438,6 +444,7 @@ gates:
       - term-evaluation
       - term-faithfulness
       - term-latency
+      - term-hallucination
 
   - id: govern-launch-and-iteration
     order: 6
@@ -520,6 +527,7 @@ gates:
       - term-rollback
       - term-observability
       - term-human-escalation
+      - term-service-level-objective
 
 artifacts:
   - id: kb-ai-applicability
@@ -792,6 +800,46 @@ references:
     label: 可观测性
     targetId: observability
     supports: 解释通过日志、指标和追踪定位运行与质量问题。
+  - id: term-document-chunking
+    kind: term
+    label: 文档切片
+    targetId: document-chunking
+    supports: 决定知识库切片窗口大小以保持上下文语义完整度。
+  - id: term-embedding
+    kind: term
+    label: 嵌入
+    targetId: embedding
+    supports: 将切片文档与用户提问转化为稠密向量以计算语义相似度。
+  - id: term-reranking
+    kind: term
+    label: 重排
+    targetId: reranking
+    supports: 对初筛召回的 Top-K 知识片段进行高精度重排序以剔除干扰。
+  - id: term-vector-database
+    kind: term
+    label: 向量数据库
+    targetId: vector-database
+    supports: 存储文档嵌入向量并提供毫秒级高并发最近邻检索支持。
+  - id: term-ai-guardrail
+    kind: term
+    label: AI 护栏
+    targetId: ai-guardrail
+    supports: 在对客生成回答前后设立输入脱敏与违规内容拦截护栏。
+  - id: term-groundedness
+    kind: term
+    label: 依据一致性
+    targetId: groundedness
+    supports: 严格检验回答中的主张是否完全由召回片段支撑，无额外虚构。
+  - id: term-hallucination
+    kind: term
+    label: 幻觉
+    targetId: hallucination
+    supports: 识别并拦截客服场景下编造不存在政策或优惠的严重事故。
+  - id: term-service-level-objective
+    kind: term
+    label: 服务等级目标
+    targetId: service-level-objective
+    supports: 为内部客服坐席辅助系统制定可用性与响应时延指标契约。
   - id: source-nist-genai-profile
     kind: source
     label: NIST AI 600-1 Generative AI Profile

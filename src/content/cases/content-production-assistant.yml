@@ -112,6 +112,10 @@ gates:
       - source-google-pair
       - term-ai-product
       - term-problem-solution-fit
+      - term-generative-ai
+      - term-large-language-model
+      - term-ai-use-case
+      - term-user-trust
 
   - id: establish-value-and-data
     order: 2
@@ -168,6 +172,10 @@ gates:
     referenceIds:
       - term-problem-solution-fit
       - term-north-star-metric
+      - term-stakeholder-management
+      - term-mvp
+      - term-product-analytics
+      - term-user-story
 
   - id: select-workflow
     order: 3
@@ -225,6 +233,10 @@ gates:
     referenceIds:
       - term-prompt-injection
       - term-human-ai-collaboration
+      - term-system-prompt
+      - term-temperature
+      - term-prompt-chaining
+      - term-streaming-response
 
   - id: design-control-and-recovery
     order: 4
@@ -283,6 +295,10 @@ gates:
     referenceIds:
       - term-human-escalation
       - term-user-control
+      - term-content-moderation
+      - term-copyright
+      - term-safety-filter
+      - term-undo-action
 
   - id: define-evaluation-and-cost
     order: 5
@@ -341,6 +357,9 @@ gates:
     referenceIds:
       - term-offline-evaluation
       - term-observability
+      - term-faithfulness
+      - term-evaluation-rubric
+      - term-perceived-latency
 
   - id: govern-launch-and-iteration
     order: 6
@@ -398,6 +417,8 @@ gates:
     referenceIds:
       - term-canary-release
       - term-rollback
+      - term-go-to-market
+      - term-product-lifecycle
 
 artifacts:
   - id: cp-ai-applicability
@@ -645,6 +666,101 @@ references:
     label: 干系人管理
     targetId: stakeholder-management
     supports: 解释识别编辑、品牌与法务等干系人并管理其预期。
+  - id: term-generative-ai
+    kind: term
+    label: 生成式 AI
+    targetId: generative-ai
+    supports: 理解生成式技术在文本创作中的模式重组机制与事实约束边界。
+  - id: term-large-language-model
+    kind: term
+    label: 大语言模型
+    targetId: large-language-model
+    supports: 明确大模型参数知识的不确定性，避免将其当做事实数据库依赖。
+  - id: term-ai-use-case
+    kind: term
+    label: AI 应用场景
+    targetId: ai-use-case
+    supports: 评估在内容生产中引入 AI 的具体任务、输入数据与商业回报。
+  - id: term-user-trust
+    kind: term
+    label: 用户信任
+    targetId: user-trust
+    supports: 通过稳定可靠的事实核验与透明来源标注，建立读者和编辑的长期信任。
+  - id: term-mvp
+    kind: term
+    label: 最小可行产品
+    targetId: mvp
+    supports: 以受限场景的初稿辅助工具切入，小步验证编辑工作流效能。
+  - id: term-product-analytics
+    kind: term
+    label: 产品数据分析
+    targetId: product-analytics
+    supports: 跟踪编辑采纳率、单篇耗时与修改幅度，量化工具赋能价值。
+  - id: term-user-story
+    kind: term
+    label: 用户故事
+    targetId: user-story
+    supports: 从内容编辑和创作者视角提炼核心操作流程与期望成果。
+  - id: term-system-prompt
+    kind: term
+    label: 系统提示词
+    targetId: system-prompt
+    supports: 设定品牌调性、专业写作规则与禁止事项的系统级指令框架。
+  - id: term-temperature
+    kind: term
+    label: 温度参数
+    targetId: temperature
+    supports: 调节生成多样性，在事实核验时设低温，在头脑风暴时适度提高。
+  - id: term-prompt-chaining
+    kind: term
+    label: 提示链
+    targetId: prompt-chaining
+    supports: 将选题、大纲、正文生成与事实核验串联为可监控的流水线步骤。
+  - id: term-streaming-response
+    kind: term
+    label: 流式响应
+    targetId: streaming-response
+    supports: 实时输出段落降低编辑等待延迟，并支持边读边审的沉浸体验。
+  - id: term-content-moderation
+    kind: term
+    label: 内容审核
+    targetId: content-moderation
+    supports: 针对违法不良信息与合规敏感点建立严格的多道机审与人审机制。
+  - id: term-copyright
+    kind: term
+    label: 著作权
+    targetId: copyright
+    supports: 防范外部素材引用和模型输出中可能涉及的侵权风险与版权边界。
+  - id: term-safety-filter
+    kind: term
+    label: 安全过滤器
+    targetId: safety-filter
+    supports: 在内容输出终端部署关键词与敏感语义拦截网，防范违规发布。
+  - id: term-undo-action
+    kind: term
+    label: 撤销操作
+    targetId: undo-action
+    supports: 提供一键回退与版本对比，降低自动化建议失误造成的返工成本。
+  - id: term-evaluation-rubric
+    kind: term
+    label: 评估量规
+    targetId: evaluation-rubric
+    supports: 制定清晰的品牌风格、原创度和事实准确性打分维度与标准。
+  - id: term-perceived-latency
+    kind: term
+    label: 感知延迟
+    targetId: perceived-latency
+    supports: 通过交互动效和逐词输出优化创作者对耗时较长生成的心理感受。
+  - id: term-go-to-market
+    kind: term
+    label: 上线与增长
+    targetId: go-to-market
+    supports: 规划辅助工具在内容部门的分批试用、培训赋能与推广策略。
+  - id: term-product-lifecycle
+    kind: term
+    label: 产品生命周期
+    targetId: product-lifecycle
+    supports: 根据工具从试点到成熟的不同生命周期阶段动态调整投入与考核标准。
   - id: source-nist-ai-rmf
     kind: source
     label: NIST AI Risk Management Framework

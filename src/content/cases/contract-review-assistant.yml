@@ -112,6 +112,9 @@ gates:
       - source-google-pair
       - term-ai-product
       - term-problem-solution-fit
+      - term-ai-risk-management
+      - term-human-oversight
+      - term-copilot-pattern
 
   - id: establish-value-and-data
     order: 2
@@ -168,6 +171,9 @@ gates:
     referenceIds:
       - term-problem-solution-fit
       - term-north-star-metric
+      - term-acceptance-criteria
+      - term-requirement-analysis
+      - term-stakeholder-management
 
   - id: select-workflow
     order: 3
@@ -225,6 +231,11 @@ gates:
     referenceIds:
       - term-prompt-injection
       - term-human-ai-collaboration
+      - term-long-context
+      - term-context-window
+      - term-document-parsing
+      - term-document-chunking
+      - term-grounding
 
   - id: design-control-and-recovery
     order: 4
@@ -283,6 +294,10 @@ gates:
     referenceIds:
       - term-human-escalation
       - term-user-control
+      - term-hallucination
+      - term-transparency
+      - term-explanation-interface
+      - term-red-teaming
 
   - id: define-evaluation-and-cost
     order: 5
@@ -340,6 +355,9 @@ gates:
     referenceIds:
       - term-offline-evaluation
       - term-observability
+      - term-golden-dataset
+      - term-eval-set
+      - term-human-evaluation
 
   - id: govern-launch-and-iteration
     order: 6
@@ -397,6 +415,9 @@ gates:
     referenceIds:
       - term-canary-release
       - term-rollback
+      - term-ai-governance
+      - term-responsible-ai
+      - term-accountability
 
 artifacts:
   - id: cr-ai-applicability
@@ -639,6 +660,107 @@ references:
     label: 干系人管理
     targetId: stakeholder-management
     supports: 解释识别法务、业务与工程等干系人并管理其预期。
+  - id: term-ai-risk-management
+    kind: term
+    label: AI 风险管理
+    targetId: ai-risk-management
+    supports: 持续识别、评估和监控合同审核中的高危风险，使控制与影响相匹配。
+  - id: term-human-oversight
+    kind: term
+    label: 人工监督
+    targetId: human-oversight
+    supports: 确保具备权限和专业背景的法务人员能够监督、干预并对审批结论负最终责任。
+  - id: term-copilot-pattern
+    kind: term
+    label: 副驾驶模式
+    targetId: copilot-pattern
+    supports: 明确由 AI 提供比对草稿与风险提示、法务保留最终定稿与确认权的协作模式。
+  - id: term-acceptance-criteria
+    kind: term
+    label: 验收标准
+    targetId: acceptance-criteria
+    supports: 用可验证的准确率、漏报率与证据回溯要求定义各阶段是否达到交付标准。
+  - id: term-requirement-analysis
+    kind: term
+    label: 需求分析
+    targetId: requirement-analysis
+    supports: 把模糊的“智能审合同”诉求拆解为标准条款识别、差异比对与分层审批具体要求。
+  - id: term-long-context
+    kind: term
+    label: 长上下文
+    targetId: long-context
+    supports: 理解处理百页合同时容量增加并不代表整篇条款都能被均匀有效索引和比对。
+  - id: term-context-window
+    kind: term
+    label: 上下文窗口
+    targetId: context-window
+    supports: 明确模型一次能参考的 Token 限制，避免一次性塞入全文导致关键条款被挤出。
+  - id: term-document-parsing
+    kind: term
+    label: 文档解析
+    targetId: document-parsing
+    supports: 从各类合同 PDF 和 Word 中提取段落、条款编号与表格，保障比对基准可靠。
+  - id: term-document-chunking
+    kind: term
+    label: 文档切片
+    targetId: document-chunking
+    supports: 按条款和权利义务结构切分知识单元，确保比对时能够精准检索上下文。
+  - id: term-grounding
+    kind: term
+    label: 事实依据约束
+    targetId: grounding
+    supports: 用合同原文和标准模板约束模型输出，确保每一条风险提示均有确凿原文引用。
+  - id: term-hallucination
+    kind: term
+    label: 幻觉
+    targetId: hallucination
+    supports: 警惕模型虚构法条依据或误判合同条款，通过原文对照与确定性比对进行抑制。
+  - id: term-transparency
+    kind: term
+    label: 透明度
+    targetId: transparency
+    supports: 向法务公开说明差异比对的原理、置信度以及系统可能遗漏的非标条款边界。
+  - id: term-explanation-interface
+    kind: term
+    label: 解释界面
+    targetId: explanation-interface
+    supports: 设计双栏对比和高亮标注界面，直观展示风险条款背后的判断理由与依据。
+  - id: term-red-teaming
+    kind: term
+    label: 红队测试
+    targetId: red-teaming
+    supports: 针对合同中可能存在的恶意指令或对抗性表述进行提示注入与越权绕过测试。
+  - id: term-golden-dataset
+    kind: term
+    label: 黄金数据集
+    targetId: golden-dataset
+    supports: 由资深法务专家标定的基准合同集，用于持续衡量比对精度与漏报率。
+  - id: term-eval-set
+    kind: term
+    label: 评测集
+    targetId: eval-set
+    supports: 覆盖各类模板与非标合同的评测样本集，验证迭代是否真正提升了审核质量。
+  - id: term-human-evaluation
+    kind: term
+    label: 人工评估
+    targetId: human-evaluation
+    supports: 组织专业法务对模型给出的风险提示可信度、有用性进行定性与定量打分。
+  - id: term-ai-governance
+    kind: term
+    label: AI 治理
+    targetId: ai-governance
+    supports: 建立合同智能审核的权限矩阵、审计日志与合规免责边界制度。
+  - id: term-responsible-ai
+    kind: term
+    label: 负责任人工智能
+    targetId: responsible-ai
+    supports: 坚守法律审核的安全性、可解释性与责任可溯原则，杜绝无监管自动签署。
+  - id: term-accountability
+    kind: term
+    label: 问责
+    targetId: accountability
+    supports: 明确合同审批责任始终由业务方和法务负责人承担，不可归咎于 AI 辅助工具。
+
   - id: source-nist-ai-rmf
     kind: source
     label: NIST AI Risk Management Framework

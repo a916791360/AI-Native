@@ -345,7 +345,7 @@ async function loadQuestionTermIds(root: string): Promise<Set<string>> {
   return ids;
 }
 
-/** 案例 → 词条的引用：当前 referenceIds 指向的是章节与来源，不是词条 id */
+/** 案例 → 词条的引用：解析各案例中关卡所引用的词条 ID */
 async function loadCaseReferencedIds(root: string): Promise<string[]> {
   const directory = path.join(root, 'src/content/cases');
   const files = await readdir(directory).catch(() => [] as string[]);
@@ -353,15 +353,35 @@ async function loadCaseReferencedIds(root: string): Promise<string[]> {
   for (const file of files) {
     if (!file.endsWith('.yml') && !file.endsWith('.yaml')) continue;
     const source = await readFile(path.join(directory, file), 'utf8').catch(() => '');
-    for (const block of source.matchAll(/referenceIds:\s*\[([^\]]*)\]/gu)) {
-      for (const item of (block[1] ?? '').split(',')) {
-        const value = item.trim().replace(/^['"]|['"]$/gu, '');
-        if (value) ids.push(value);
+    try {
+      const data = parseYaml(source) as {
+        references?: Array<{ id: string; kind: string; targetId?: string }>;
+        gates?: Array<{ referenceIds?: string[] }>;
+      };
+      if (!data) continue;
+      const termMap = new Map<string, string>();
+      for (const ref of data.references ?? []) {
+        if (ref.kind === 'term' && ref.targetId) {
+          termMap.set(ref.id, ref.targetId);
+        }
       }
-    }
-    for (const block of source.matchAll(/referenceIds:\s*\n((?:\s+-\s+.*\n)+)/gu)) {
-      for (const item of (block[1] ?? '').matchAll(/-\s+(\S+)/gu)) {
-        ids.push((item[1] ?? '').replace(/^['"]|['"]$/gu, ''));
+      for (const gate of data.gates ?? []) {
+        for (const refId of gate.referenceIds ?? []) {
+          const target = termMap.get(refId);
+          if (target) {
+            ids.push(target);
+          } else if (refId.startsWith('term-')) {
+            ids.push(refId.slice(5));
+          }
+        }
+      }
+    } catch {
+      for (const block of source.matchAll(/referenceIds:\s*\[([^\]]*)\]/gu)) {
+        for (const item of (block[1] ?? '').split(',')) {
+          const value = item.trim().replace(/^['"]|['"]$/gu, '');
+          if (value.startsWith('term-')) ids.push(value.slice(5));
+          else if (value) ids.push(value);
+        }
       }
     }
   }

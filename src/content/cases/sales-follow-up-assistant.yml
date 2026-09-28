@@ -114,6 +114,9 @@ gates:
       - source-google-pair
       - term-ai-product
       - term-problem-solution-fit
+      - term-copilot-pattern
+      - term-ai-capability-boundary
+      - term-ai-adoption
 
   - id: establish-value-and-data
     order: 2
@@ -171,6 +174,10 @@ gates:
     referenceIds:
       - term-problem-solution-fit
       - term-north-star-metric
+      - term-acceptance-criteria
+      - term-business-model
+      - term-user-research
+      - term-stakeholder-management
 
   - id: select-workflow
     order: 3
@@ -228,6 +235,10 @@ gates:
     referenceIds:
       - term-prompt-injection
       - term-human-ai-collaboration
+      - term-prompt-template
+      - term-few-shot-prompting
+      - term-context-engineering
+      - term-structured-output
 
   - id: design-control-and-recovery
     order: 4
@@ -286,6 +297,9 @@ gates:
     referenceIds:
       - term-human-escalation
       - term-user-control
+      - term-data-protection
+      - term-privacy
+      - term-auditability
 
   - id: define-evaluation-and-cost
     order: 5
@@ -344,6 +358,9 @@ gates:
     referenceIds:
       - term-offline-evaluation
       - term-observability
+      - term-cost-optimization
+      - term-latency-budget
+      - term-faithfulness
 
   - id: govern-launch-and-iteration
     order: 6
@@ -401,6 +418,9 @@ gates:
     referenceIds:
       - term-canary-release
       - term-rollback
+      - term-trace
+      - term-service-level-objective
+      - term-feedback-loop
 
 artifacts:
   - id: sf-ai-applicability
@@ -643,6 +663,101 @@ references:
     label: 干系人管理
     targetId: stakeholder-management
     supports: 解释识别销售、合规与工程等干系人并管理其预期。
+  - id: term-copilot-pattern
+    kind: term
+    label: 副驾驶模式
+    targetId: copilot-pattern
+    supports: 解释由模型起草建议、由人类最终确认外发的协作形态。
+  - id: term-ai-capability-boundary
+    kind: term
+    label: AI 能力边界
+    targetId: ai-capability-boundary
+    supports: 划分规则处理确定性信息与模型处理语义草稿的边界。
+  - id: term-ai-adoption
+    kind: term
+    label: AI 采用
+    targetId: ai-adoption
+    supports: 评估销售团队对草稿生成工具的真实采纳率与使用阻力。
+  - id: term-acceptance-criteria
+    kind: term
+    label: 验收标准
+    targetId: acceptance-criteria
+    supports: 明确合格跟进草稿的事实准确度与沟通要素规范。
+  - id: term-business-model
+    kind: term
+    label: 商业模式
+    targetId: business-model
+    supports: 分析销售提效如何传导至商机转化率与客单价。
+  - id: term-user-research
+    kind: term
+    label: 用户研究
+    targetId: user-research
+    supports: 调研一线销售在跟进记录与跨系统整理中的真实瓶颈。
+  - id: term-prompt-template
+    kind: term
+    label: 提示词模板
+    targetId: prompt-template
+    supports: 固化包含客户背景、诉求总结与行动建议的标准提示结构。
+  - id: term-few-shot-prompting
+    kind: term
+    label: 少样本提示
+    targetId: few-shot-prompting
+    supports: 在上下文中提供优秀销售跟进范例以对齐表达风格。
+  - id: term-context-engineering
+    kind: term
+    label: 上下文工程
+    targetId: context-engineering
+    supports: 动态拼接 CRM 档案、往来邮件与通话纪要作为输入。
+  - id: term-structured-output
+    kind: term
+    label: 结构化输出
+    targetId: structured-output
+    supports: 约束模型输出明确的跟进摘要、风险提示与外发草稿。
+  - id: term-data-protection
+    kind: term
+    label: 数据保护
+    targetId: data-protection
+    supports: 防范客户敏感通讯录与商业报价在模型交互中泄漏。
+  - id: term-privacy
+    kind: term
+    label: 隐私
+    targetId: privacy
+    supports: 遵守企业客户数据主权与员工隐私合规要求。
+  - id: term-auditability
+    kind: term
+    label: 可审计性
+    targetId: auditability
+    supports: 保留每封建议邮件的生成版本与销售修改留痕。
+  - id: term-cost-optimization
+    kind: term
+    label: 成本优化
+    targetId: cost-optimization
+    supports: 控制销售高频调用时的上下文开销与 Token 消耗。
+  - id: term-latency-budget
+    kind: term
+    label: 延迟预算
+    targetId: latency-budget
+    supports: 设定销售即时查看草稿的生成耗时容忍上限。
+  - id: term-faithfulness
+    kind: term
+    label: 忠实度
+    targetId: faithfulness
+    supports: 约束跟进建议严格源自历史事实，不虚构未承诺条款。
+  - id: term-trace
+    kind: term
+    label: 调用追踪
+    targetId: trace
+    supports: 采集输入、中间提示与模型输出的全链路追踪日志。
+  - id: term-service-level-objective
+    kind: term
+    label: 服务等级目标
+    targetId: service-level-objective
+    supports: 定义生成可用率与 P95 响应时延的服务水平指标。
+  - id: term-feedback-loop
+    kind: term
+    label: 反馈闭环
+    targetId: feedback-loop
+    supports: 将销售采纳与润色行为沉淀为持续优化提示词的数据飞轮。
   - id: source-nist-ai-rmf
     kind: source
     label: NIST AI Risk Management Framework

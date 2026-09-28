@@ -108,6 +108,7 @@ gates:
     referenceIds:
       - term-ai-capability-boundary
       - term-workflow-automation
+      - term-classification
       - source-openai-latency
 
   - id: establish-value-and-data
@@ -181,6 +182,8 @@ gates:
       - route-ai-product-scenario
       - source-nist-core
       - term-problem-solution-fit
+      - term-user-research
+      - term-product-analytics
 
   - id: select-workflow
     order: 3
@@ -253,6 +256,9 @@ gates:
       - term-task-decomposition
       - term-structured-output
       - term-workflow-automation
+      - term-prompt-template
+      - term-prompt-chaining
+      - term-few-shot-prompting
       - source-openai-evals
 
   - id: design-control-and-recovery
@@ -327,6 +333,8 @@ gates:
       - term-human-in-the-loop
       - term-human-escalation
       - term-error-recovery
+      - term-user-trust
+      - term-auditability
       - source-pair-failure
 
   - id: define-evaluation-and-cost
@@ -404,6 +412,8 @@ gates:
       - term-offline-evaluation
       - term-online-evaluation
       - term-cost-optimization
+      - term-eval-set
+      - term-llm-as-judge
       - source-openai-evals
       - source-google-metrics
 
@@ -480,6 +490,9 @@ gates:
       - term-observability
       - term-rollback
       - term-ai-risk-management
+      - term-canary-release
+      - term-feedback-loop
+      - term-trace
       - source-nist-core
       - source-pair-feedback
 
@@ -727,6 +740,71 @@ references:
     label: AI 风险管理
     targetId: ai-risk-management
     supports: 用于持续识别、测量、响应和复核部署风险。
+  - id: term-classification
+    kind: term
+    label: 分类任务
+    targetId: classification
+    supports: 将海量反馈自动归入功能缺陷、体验抱怨或新需求等离散类别。
+  - id: term-user-research
+    kind: term
+    label: 用户研究
+    targetId: user-research
+    supports: 从原始用户言论中提炼用户真实使用心智与未满足痛点。
+  - id: term-product-analytics
+    kind: term
+    label: 产品数据分析
+    targetId: product-analytics
+    supports: 将定性反馈聚合统计转化为定量问题分布与频次趋势。
+  - id: term-prompt-template
+    kind: term
+    label: 提示词模板
+    targetId: prompt-template
+    supports: 固化主题提取、情感倾向与高价值证据抽取的提示词结构。
+  - id: term-prompt-chaining
+    kind: term
+    label: 提示链
+    targetId: prompt-chaining
+    supports: 先提取原子问题点，再聚合归类生成问题集群的多步调用链。
+  - id: term-few-shot-prompting
+    kind: term
+    label: 少样本提示
+    targetId: few-shot-prompting
+    supports: 提供模糊与口语化中文表达的标准标注示例以提高分类稳定性。
+  - id: term-user-trust
+    kind: term
+    label: 用户信任
+    targetId: user-trust
+    supports: 避免输出失真导致的内部决策失误，维持团队对分析工具的信任。
+  - id: term-auditability
+    kind: term
+    label: 可审计性
+    targetId: auditability
+    supports: 保证生成的每一份简报都能逐句下钻溯源到真实的原始反馈工单。
+  - id: term-eval-set
+    kind: term
+    label: 评测集
+    targetId: eval-set
+    supports: 覆盖多意图混杂、网络缩写与长篇负面情绪反馈的基准验证集。
+  - id: term-llm-as-judge
+    kind: term
+    label: 大模型裁判
+    targetId: llm-as-judge
+    supports: 使用能力更强的大模型对候选摘要的主题提炼准确度进行自动打分。
+  - id: term-canary-release
+    kind: term
+    label: 金丝雀发布
+    targetId: canary-release
+    supports: 限制影响范围并逐步扩大版本或内部体验群的发布策略。
+  - id: term-feedback-loop
+    kind: term
+    label: 反馈闭环
+    targetId: feedback-loop
+    supports: 收集产品经理对自动生成 Issue 的采纳与驳回记录以优化模型。
+  - id: term-trace
+    kind: term
+    label: 调用追踪
+    targetId: trace
+    supports: 记录单批次反馈聚类全过程的执行时间、中间结构与 Token 消耗。
   - id: route-ai-product-scenario
     kind: route
     label: AI 产品与场景判断

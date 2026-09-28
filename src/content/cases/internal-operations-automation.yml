@@ -111,6 +111,10 @@ gates:
       - source-google-pair
       - term-ai-product
       - term-problem-solution-fit
+      - term-workflow-automation
+      - term-task-decomposition
+      - term-ai-agent
+      - term-agentic-workflow
 
   - id: establish-value-and-data
     order: 2
@@ -167,6 +171,10 @@ gates:
     referenceIds:
       - term-problem-solution-fit
       - term-north-star-metric
+      - term-stakeholder-management
+      - term-prioritization
+      - term-roadmap
+      - term-prd
 
   - id: select-workflow
     order: 3
@@ -224,6 +232,11 @@ gates:
     referenceIds:
       - term-prompt-injection
       - term-human-ai-collaboration
+      - term-function-calling
+      - term-api-call
+      - term-agent-planning
+      - term-state-management
+      - term-model-context-protocol
 
   - id: design-control-and-recovery
     order: 4
@@ -282,6 +295,10 @@ gates:
     referenceIds:
       - term-human-escalation
       - term-user-control
+      - term-agent-sandbox
+      - term-self-correction
+      - term-ai-guardrail
+      - term-fallback-experience
 
   - id: define-evaluation-and-cost
     order: 5
@@ -340,6 +357,9 @@ gates:
     referenceIds:
       - term-offline-evaluation
       - term-observability
+      - term-task-success-rate
+      - term-benchmark
+      - term-rate-limiting
 
   - id: govern-launch-and-iteration
     order: 6
@@ -397,6 +417,8 @@ gates:
     referenceIds:
       - term-canary-release
       - term-rollback
+      - term-continuous-delivery
+      - term-tech-collaboration
 
 artifacts:
   - id: io-ai-applicability
@@ -639,6 +661,111 @@ references:
     label: 干系人管理
     targetId: stakeholder-management
     supports: 解释识别运营、工程与合规等干系人并管理其预期。
+  - id: term-workflow-automation
+    kind: term
+    label: 工作流自动化
+    targetId: workflow-automation
+    supports: 用代码编排模型调用与规则校验，使内部多步操作路径明确、结果可追溯。
+  - id: term-task-decomposition
+    kind: term
+    label: 任务拆解
+    targetId: task-decomposition
+    supports: 将复杂的端到端业务处理拆解为数据解析、意图推断与动作执行等子任务。
+  - id: term-ai-agent
+    kind: term
+    label: AI Agent
+    targetId: ai-agent
+    supports: 理解具备自主规划与工具调用能力的智能体形态，重点防范未授权副作用。
+  - id: term-agentic-workflow
+    kind: term
+    label: Agent 工作流
+    targetId: agentic-workflow
+    supports: 在保留固定骨架和人工审查点的同时，将局部决策交给模型自主执行。
+  - id: term-prioritization
+    kind: term
+    label: 需求优先级
+    targetId: prioritization
+    supports: 评估各业务线手工操作的重复度与错漏风险，优先推进高收益场景。
+  - id: term-roadmap
+    kind: term
+    label: 产品路线图
+    targetId: roadmap
+    supports: 规划自动化系统从辅助生成、小范围试运行到全面推广的演进里程碑。
+  - id: term-prd
+    kind: term
+    label: 产品需求文档
+    targetId: prd
+    supports: 明确界定工具触发条件、数据字段标准、失败重试与人工干预业务规则。
+  - id: term-function-calling
+    kind: term
+    label: 函数调用
+    targetId: function-calling
+    supports: 约束大模型以结构化 JSON 格式发起工具调用，避免任意文本命令带来的执行风险。
+  - id: term-api-call
+    kind: term
+    label: API 调用
+    targetId: api-call
+    supports: 连接内部 ERP、CRM 与工单系统的标准接口，实现业务指令的安全下发。
+  - id: term-agent-planning
+    kind: term
+    label: Agent 规划
+    targetId: agent-planning
+    supports: 建立多步骤动态规划机制，并设定最大步数与强制停止条件防止陷入死循环。
+  - id: term-state-management
+    kind: term
+    label: 状态管理
+    targetId: state-management
+    supports: 维护长流程任务的上下文持久化与中间态，支持失败后的断点恢复与重试。
+  - id: term-model-context-protocol
+    kind: term
+    label: 模型上下文协议
+    targetId: model-context-protocol
+    supports: 通过统一的标准协议对接分散的企业内部工具与异构数据资产。
+  - id: term-agent-sandbox
+    kind: term
+    label: Agent 沙箱
+    targetId: agent-sandbox
+    supports: 将写操作与敏感系统隔离在受限沙箱中，防止错误指令对生产产生破坏性影响。
+  - id: term-self-correction
+    kind: term
+    label: 自我纠错
+    targetId: self-correction
+    supports: 依据 API 返回的错误码或参数校验反馈，引导模型自主修正调用参数。
+  - id: term-ai-guardrail
+    kind: term
+    label: AI 护栏
+    targetId: ai-guardrail
+    supports: 在动作执行前后施加参数范围、白名单与权限校验等多道硬性拦截卡点。
+  - id: term-fallback-experience
+    kind: term
+    label: 降级体验
+    targetId: fallback-experience
+    supports: 当模型超时或外部接口异常时平滑切换为传统规则分派或人工兜底队列。
+  - id: term-task-success-rate
+    kind: term
+    label: 任务成功率
+    targetId: task-success-rate
+    supports: 统计各流程免干预完整执行且无回退的比例，量化自动化系统的稳定性。
+  - id: term-benchmark
+    kind: term
+    label: 基准测试
+    targetId: benchmark
+    supports: 构建涵盖典型与边缘操作场景的测试用例集，持续评测流程吞吐与正确率。
+  - id: term-rate-limiting
+    kind: term
+    label: 限流
+    targetId: rate-limiting
+    supports: 控制批量动作并发与模型请求速率，保护内部系统容量并避免费用失控。
+  - id: term-continuous-delivery
+    kind: term
+    label: 持续交付
+    targetId: continuous-delivery
+    supports: 建立自动化规则与流程变更的自动化回归验证体系，保障无缝发布。
+  - id: term-tech-collaboration
+    kind: term
+    label: 与工程师协作
+    targetId: tech-collaboration
+    supports: 明确产品与产研团队在接口规范、错误码定义与容灾降级方案上的职责划分。
   - id: source-nist-ai-rmf
     kind: source
     label: NIST AI Risk Management Framework

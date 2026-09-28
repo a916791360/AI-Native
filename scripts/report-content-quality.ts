@@ -65,8 +65,7 @@ console.log(
 console.log(
   `\n【5 · 案例反链率】${pct(metrics.caseLinkRate)}` +
     `\n    ${metrics.caseLinkedTerms}/${metrics.totalTerms} 条词条被 ≥1 个案例引用` +
-    `\n    注：案例的 referenceIds 目前指向章节与来源（如 control-and-recovery），不是词条 id——` +
-    `\n    这一层引用在数据上尚不存在，需要先建立引用再谈覆盖率。`,
+    `\n    注：案例通过关卡 referenceIds 绑定关联词条并在词条页展示「出现在哪些案例里」的真实落地闭环。`,
 );
 
 console.log(

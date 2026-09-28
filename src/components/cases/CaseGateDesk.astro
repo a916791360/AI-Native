@@ -5,6 +5,7 @@ import {
   ASSESSMENT_LABELS,
   CLAIM_KIND_LABELS,
   EVIDENCE_LABELS,
+  REFERENCE_KIND_LABELS,
   referenceHref,
 } from '@/lib/cases/presentation';
 
@@ -217,7 +218,7 @@ const { caseStudy, gate, resources } = Astro.props;
                 target={reference.kind === 'source' ? '_blank' : undefined}
                 rel={reference.kind === 'source' ? 'noreferrer' : undefined}
               >
-                <span>{reference.kind}</span>
+                <span>{REFERENCE_KIND_LABELS[reference.kind]}</span>
                 <strong>{reference.label}</strong>
                 <p>{reference.supports}</p>
               </a>

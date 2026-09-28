@@ -36,6 +36,12 @@ export const CASE_STATUS_LABELS = {
   'needs-review': '待复核',
 } as const;
 
+export const REFERENCE_KIND_LABELS = {
+  term: '核心概念',
+  route: '阅读路线',
+  source: '权威文献',
+} as const;
+
 export const CASE_STAGE_LABELS = {
   'model-boundaries': '是否使用 AI',
   'opportunity-judgment': '业务价值与数据条件',
