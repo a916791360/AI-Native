@@ -2,7 +2,14 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { sectionById } from '@/config/sections';
 import { loadCaseStudies } from '@/lib/cases/io';
-import { CASE_STATUS_LABELS, caseHref, gateHref, GOLDEN_CASE_ID } from '@/lib/cases/presentation';
+import {
+  CASE_STAGE_LABELS,
+  CASE_STATUS_LABELS,
+  caseHref,
+  gateHref,
+  GOLDEN_CASE_ID,
+} from '@/lib/cases/presentation';
+import { CASE_STAGE_IDS } from '@/lib/cases/schema';
 import '@/styles/content-catalog.css';
 import '@/styles/case-study.css';
 import '@/styles/case-library.css';
@@ -29,6 +36,7 @@ const goldenCases = libraryCases.filter(({ data }) => data.id === GOLDEN_CASE_ID
       <aside class="catalog-sidebar">
         <nav aria-label="案例筛选">
           <a href="#case-list" aria-current="true">全部案例 {cases.length}</a>
+          <a href="#case-matrix">场景能力矩阵</a>
           <a href={verifiedCases[0] ? `#case-${verifiedCases[0].data.id}` : '#case-list'}>
             已核验 {verifiedCases.length}
           </a>
@@ -47,6 +55,78 @@ const goldenCases = libraryCases.filter(({ data }) => data.id === GOLDEN_CASE_ID
           <p>在完整业务场景里连续查看证据、方案选择、风险、材料变化与上线条件。</p>
         </header>
 
+        <!-- 场景 × 能力阶段全景决策矩阵 -->
+        <section
+          class="catalog-section matrix-section"
+          id="case-matrix"
+          aria-labelledby="case-matrix-heading"
+        >
+          <header>
+            <h2 id="case-matrix-heading">业务场景 × 阶段决策矩阵</h2>
+            <span>6 大场景 · 36 个 Gate 决策点</span>
+          </header>
+
+          <div class="matrix-table-wrap">
+            <table class="case-matrix-table" aria-label="案例与能力阶段矩阵">
+              <thead>
+                <tr>
+                  <th scope="col" class="case-col-header">实战业务案例</th>
+                  {
+                    CASE_STAGE_IDS.map((stageId, idx) => (
+                      <th scope="col">
+                        <div class="matrix-stage-head">
+                          <span>Gate 0{idx + 1}</span>
+                          <strong>{CASE_STAGE_LABELS[stageId]}</strong>
+                        </div>
+                      </th>
+                    ))
+                  }
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  libraryCases.map(({ data: caseStudy }) => (
+                    <tr>
+                      <th scope="row">
+                        <div class="case-row-head">
+                          <strong class="case-row-title">{caseStudy.title}</strong>
+                          <span class="case-row-meta">
+                            {CASE_STATUS_LABELS[caseStudy.status]} · {caseStudy.domain}
+                          </span>
+                        </div>
+                      </th>
+                      {CASE_STAGE_IDS.map((stageId) => {
+                        const gate = caseStudy.gates.find((g) => g.stageId === stageId);
+                        if (!gate) return <td>-</td>;
+                        const cellKey = `${caseStudy.id}:${gate.id}`;
+                        return (
+                          <td>
+                            <a
+                              href={gateHref(caseStudy.id, gate.id)}
+                              class="matrix-cell-link"
+                              data-matrix-cell={cellKey}
+                              title={`${caseStudy.title} · ${gate.title} (${gate.question})`}
+                            >
+                              <div class="matrix-gate-order">
+                                <span>G0{gate.order}</span>
+                                <span class="matrix-decided-tag" data-matrix-tag={cellKey} hidden>
+                                  ✓
+                                </span>
+                              </div>
+                              <span class="matrix-gate-title">{gate.title}</span>
+                            </a>
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  ))
+                }
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 案例卡片列表 -->
         <section class="catalog-section" aria-labelledby="case-list-heading">
           <header>
             <h2 id="case-list-heading">业务场景</h2>
@@ -125,3 +205,29 @@ const goldenCases = libraryCases.filter(({ data }) => data.id === GOLDEN_CASE_ID
     </div>
   </main>
 </BaseLayout>
+
+<script>
+  const DECISIONS_KEY = 'ai-native.case-decisions';
+
+  function syncMatrixDecisions() {
+    try {
+      const stored = JSON.parse(localStorage.getItem(DECISIONS_KEY) ?? '{}');
+      document.querySelectorAll<HTMLElement>('[data-matrix-cell]').forEach((cell) => {
+        const cellKey = cell.dataset.matrixCell;
+        const tag = cell.querySelector<HTMLElement>('[data-matrix-tag]');
+        if (cellKey && stored[cellKey]) {
+          cell.dataset.decided = 'true';
+          if (tag) tag.hidden = false;
+        } else {
+          delete cell.dataset.decided;
+          if (tag) tag.hidden = true;
+        }
+      });
+    } catch {
+      /* ignore */
+    }
+  }
+
+  syncMatrixDecisions();
+  window.addEventListener('storage', syncMatrixDecisions);
+</script>

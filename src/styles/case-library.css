@@ -138,6 +138,129 @@
   color: var(--color-black);
 }
 
+/* 场景与能力矩阵样式 */
+.matrix-section {
+  margin-bottom: var(--space-6);
+}
+
+.matrix-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  background: var(--color-panel);
+  -webkit-overflow-scrolling: touch;
+}
+
+.case-matrix-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 820px;
+  font-size: var(--text-xs);
+}
+
+.case-matrix-table th,
+.case-matrix-table td {
+  border: 1px solid var(--color-line-soft);
+  padding: var(--space-2) var(--space-3);
+  text-align: left;
+  vertical-align: top;
+}
+
+.case-matrix-table th {
+  background: var(--color-panel-raised);
+  color: var(--color-ink);
+  font-family: var(--font-mono);
+  font-weight: var(--weight-display);
+  white-space: nowrap;
+}
+
+.case-matrix-table th.case-col-header {
+  width: 22%;
+  min-width: 170px;
+}
+
+.matrix-stage-head {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.matrix-stage-head span {
+  color: var(--color-accent-strong);
+  font-size: 10px;
+}
+
+.case-row-head {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.case-row-head a {
+  color: var(--color-ink);
+  font-weight: var(--weight-display);
+  text-decoration: none;
+}
+
+.case-row-head a:hover {
+  color: var(--color-accent);
+}
+
+.case-row-meta {
+  color: var(--color-quiet);
+  font-size: 10px;
+}
+
+.matrix-cell-link {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  min-height: 4rem;
+  border-radius: var(--radius-sm);
+  padding: 0.35rem;
+  color: var(--color-muted);
+  text-decoration: none;
+  background: var(--color-panel-raised);
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.matrix-cell-link:hover {
+  background: var(--color-panel);
+  border-color: var(--color-accent);
+  color: var(--color-ink);
+}
+
+.matrix-gate-order {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--color-quiet);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.matrix-gate-title {
+  margin-top: 0.2rem;
+  line-height: 1.35;
+  text-wrap: pretty;
+}
+
+.matrix-decided-tag {
+  color: var(--color-accent-strong);
+  font-weight: var(--weight-display);
+}
+
+.matrix-cell-link[data-decided='true'] {
+  border-color: var(--color-accent);
+  background: var(--color-accent-wash);
+}
+
+.matrix-cell-link[data-decided='true'] .matrix-gate-order {
+  color: var(--color-accent-strong);
+}
+
 @media (max-width: 520px) {
   .case-card-preview ol {
     grid-template-columns: 1fr;

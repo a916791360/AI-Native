@@ -133,3 +133,47 @@ test('passes accessibility checks on the case overview and evidence desk', async
     expect(blocking, `${url} has blocking accessibility violations`).toEqual([]);
   }
 });
+
+test('supports interactive PM decision making, condition checks and debrief panel', async ({
+  page,
+}) => {
+  await page.goto(firstGateUrl);
+
+  // 1. 验证条件核验 checkbox
+  const firstCheckbox = page.locator('[data-case-options] input[type="checkbox"]').first();
+  await expect(firstCheckbox).toBeVisible();
+  await firstCheckbox.check();
+  await expect(firstCheckbox).toBeChecked();
+
+  // 2. 验证采纳决策与复盘面板
+  const debrief = page.locator('[data-decision-debrief]');
+  await expect(debrief).toBeHidden();
+
+  const adoptBtn = page.locator('[data-adopt-decision]').first();
+  await adoptBtn.click();
+
+  await expect(adoptBtn).toContainText('当前已采纳此方案');
+  await expect(debrief).toBeVisible();
+  await expect(debrief).toContainText('你的方案与团队基准对比');
+  await expect(debrief).toContainText('重选决策路径');
+});
+
+test('displays competency radar in learning center and scenario matrix in case library', async ({
+  page,
+}) => {
+  // 1. 学习中心首页能力雷达
+  await page.goto('/learn/');
+  const radar = page.locator('[data-competency-dashboard]');
+  await expect(radar).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'AI PM 实战能力雷达' })).toBeVisible();
+  await expect(radar.locator('[data-radar-polygon]')).toBeVisible();
+  await expect(radar.locator('[data-rec-link]')).toBeVisible();
+
+  // 2. 案例库全景矩阵
+  await page.goto(caseLibraryUrl);
+  const matrix = page.locator('#case-matrix');
+  await expect(matrix).toBeVisible();
+  await expect(page.getByRole('heading', { name: '业务场景 × 阶段决策矩阵' })).toBeVisible();
+  await expect(matrix.locator('.case-matrix-table')).toBeVisible();
+  await expect(matrix.locator('[data-matrix-cell]').first()).toBeVisible();
+});

@@ -6,6 +6,7 @@ import {
   getQuestionsForModule,
   getQuestionsForTier,
 } from '@/data/learning';
+import CompetencyRadar from './CompetencyRadar.astro';
 // 目录骨架（.catalog-*）的事实源。这层样式原先由已删除的 ContentScopeNav 顺带引入，
 // 去掉内容分类条后必须由使用方自己声明。
 import '@/styles/content-catalog.css';
@@ -65,6 +66,8 @@ import '@/styles/content-catalog.css';
           >
         </p>
       </header>
+
+      <CompetencyRadar />
 
       {
         LEARNING_TIERS.map((tier, tierIndex) => {

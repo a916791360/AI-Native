@@ -64,25 +64,37 @@ const { caseStudy, gate, resources } = Astro.props;
     </section>
   </div>
 
-  <section class="decision-options" aria-labelledby="options-heading" data-case-options>
+  <section
+    class="decision-options"
+    aria-labelledby="options-heading"
+    data-case-options
+    data-case-id={caseStudy.id}
+    data-gate-id={gate.id}
+    data-stage-id={gate.stageId}
+    data-recommended-decision={gate.decision}
+  >
     <header>
       <div>
         <p class="eyebrow">Compare paths</p>
         <h3 id="options-heading">比较三条决策路径</h3>
       </div>
-      <p>展开任一路径查看价值、成立条件、风险和材料变化；选择只在本页生效。</p>
+      <p>展开任一路径查看价值、成立条件、风险和材料变化；可作为 PM 采纳决策并留存印记。</p>
     </header>
     <div class="option-grid">
       {
         gate.options.map((option, index) => (
           <details
             data-assessment={option.assessment}
+            data-option-id={option.id}
             data-option-label={option.label}
             open={option.assessment === 'recommended'}
           >
             <summary>
               <span>{String.fromCharCode(65 + index)}</span>
               <strong>{option.label}</strong>
+              <span class="decision-user-tag" data-user-tag hidden>
+                你的选择
+              </span>
               <i>
                 <>
                   <span class="when-closed">展开取舍</span>
@@ -91,14 +103,27 @@ const { caseStudy, gate, resources } = Astro.props;
               </i>
             </summary>
             <div class="option-feedback">
-              <p class="assessment-label">{ASSESSMENT_LABELS[option.assessment]}</p>
+              <div class="option-meta-bar">
+                <span class="assessment-label">{ASSESSMENT_LABELS[option.assessment]}</span>
+                <span class="decision-selected-badge" data-decision-badge hidden>
+                  ✓ 已采纳为当前决策
+                </span>
+              </div>
               <p class="rationale">{option.rationale}</p>
               <div class="tradeoff-grid">
                 <section>
                   <h4>成立条件</h4>
-                  <ul>
-                    {option.conditions.map((condition) => (
-                      <li>{condition}</li>
+                  <ul class="conditions-checklist">
+                    {option.conditions.map((condition, condIdx) => (
+                      <li>
+                        <label class="condition-check-item">
+                          <input
+                            type="checkbox"
+                            data-cond-check={`${caseStudy.id}:${gate.id}:${option.id}:${condIdx}`}
+                          />
+                          <span>{condition}</span>
+                        </label>
+                      </li>
                     ))}
                   </ul>
                 </section>
@@ -123,10 +148,46 @@ const { caseStudy, gate, resources } = Astro.props;
                 <span>本关材料变化</span>
                 <p>{option.artifactDelta}</p>
               </div>
+              <div class="option-decision-action">
+                <button
+                  type="button"
+                  class="adopt-decision-btn"
+                  data-adopt-decision
+                  data-option-id={option.id}
+                  data-option-label={option.label}
+                  data-option-assessment={option.assessment}
+                >
+                  <span class="btn-icon">✓</span>
+                  <span>作为 PM 采纳此决策路径</span>
+                </button>
+              </div>
             </div>
           </details>
         ))
       }
+    </div>
+    <div class="case-decision-debrief" data-decision-debrief hidden>
+      <div class="debrief-head">
+        <span class="debrief-kicker">PM 决策复盘</span>
+        <h4>你的方案与团队基准对比</h4>
+      </div>
+      <div class="debrief-content">
+        <div class="debrief-item">
+          <span class="debrief-label">你的选择</span>
+          <strong data-debrief-user-choice>-</strong>
+          <span class="debrief-tag" data-debrief-user-tag>-</span>
+        </div>
+        <div class="debrief-vs">VS</div>
+        <div class="debrief-item">
+          <span class="debrief-label">团队基准推荐</span>
+          <strong>{gate.decision}</strong>
+          <span class="debrief-tag tag-recommended">推荐基准</span>
+        </div>
+      </div>
+      <p class="debrief-analysis" data-debrief-analysis></p>
+      <div class="debrief-actions">
+        <button type="button" class="debrief-reset-btn" data-reset-decision> 重选决策路径 </button>
+      </div>
     </div>
     <p class="screen-reader-only" aria-live="polite" data-option-announcement>默认展开推荐路径</p>
   </section>
@@ -231,10 +292,25 @@ const { caseStudy, gate, resources } = Astro.props;
 </section>
 
 <script>
-  const optionGroups = document.querySelectorAll('[data-case-options]');
+  const DECISIONS_KEY = 'ai-native.case-decisions';
+  const CHECKS_KEY = 'ai-native.condition-checks';
+
+  const optionGroups = document.querySelectorAll<HTMLElement>('[data-case-options]');
   for (const group of optionGroups) {
-    const options = [...group.querySelectorAll('details')];
+    const caseId = group.dataset.caseId ?? '';
+    const gateId = group.dataset.gateId ?? '';
+    const stageId = group.dataset.stageId ?? '';
+    const gateKey = `${caseId}:${gateId}`;
+
+    const options = [...group.querySelectorAll<HTMLDetailsElement>('details')];
     const announcement = group.querySelector<HTMLElement>('[data-option-announcement]');
+    const debriefEl = group.querySelector<HTMLElement>('[data-decision-debrief]');
+    const debriefUserChoiceEl = group.querySelector<HTMLElement>('[data-debrief-user-choice]');
+    const debriefUserTagEl = group.querySelector<HTMLElement>('[data-debrief-user-tag]');
+    const debriefAnalysisEl = group.querySelector<HTMLElement>('[data-debrief-analysis]');
+    const resetBtn = group.querySelector<HTMLButtonElement>('[data-reset-decision]');
+
+    // 1. 保留原本的 details 互斥展开逻辑
     for (const option of options) {
       option.addEventListener('toggle', () => {
         if (!option.open) return;
@@ -244,5 +320,370 @@ const { caseStudy, gate, resources } = Astro.props;
         if (announcement) announcement.textContent = `已展开：${option.dataset.optionLabel ?? ''}`;
       });
     }
+
+    // 2. 本地决策存储读取与渲染
+    interface GateDecisionRecord {
+      caseId: string;
+      gateId: string;
+      stageId: string;
+      optionId: string;
+      optionLabel: string;
+      assessment: string;
+      timestamp: number;
+    }
+
+    const readDecisions = (): Record<string, GateDecisionRecord> => {
+      try {
+        return JSON.parse(localStorage.getItem(DECISIONS_KEY) ?? '{}');
+      } catch {
+        return {};
+      }
+    };
+
+    const saveDecision = (optionId: string, optionLabel: string, assessment: string) => {
+      const all = readDecisions();
+      all[gateKey] = {
+        caseId,
+        gateId,
+        stageId,
+        optionId,
+        optionLabel,
+        assessment,
+        timestamp: Date.now(),
+      };
+      try {
+        localStorage.setItem(DECISIONS_KEY, JSON.stringify(all));
+        window.dispatchEvent(new Event('storage'));
+      } catch {
+        /* storage full/unavailable */
+      }
+      renderDecisionState(all[gateKey]);
+    };
+
+    const clearDecision = () => {
+      const all = readDecisions();
+      delete all[gateKey];
+      try {
+        localStorage.setItem(DECISIONS_KEY, JSON.stringify(all));
+        window.dispatchEvent(new Event('storage'));
+      } catch {
+        /* ignore */
+      }
+      renderDecisionState(undefined);
+    };
+
+    const renderDecisionState = (currentDecision?: {
+      optionId: string;
+      optionLabel: string;
+      assessment: string;
+    }) => {
+      options.forEach((opt) => {
+        const isSelected = currentDecision && opt.dataset.optionId === currentDecision.optionId;
+        const userTag = opt.querySelector<HTMLElement>('[data-user-tag]');
+        const badge = opt.querySelector<HTMLElement>('[data-decision-badge]');
+        const btn = opt.querySelector<HTMLButtonElement>('[data-adopt-decision]');
+
+        if (userTag) userTag.hidden = !isSelected;
+        if (badge) badge.hidden = !isSelected;
+        if (btn) {
+          btn.dataset.selected = String(isSelected);
+          btn.textContent = isSelected ? '✓ 当前已采纳此方案' : '作为 PM 采纳此决策路径';
+        }
+        if (isSelected) {
+          opt.dataset.userChosen = 'true';
+        } else {
+          delete opt.dataset.userChosen;
+        }
+      });
+
+      if (
+        currentDecision &&
+        debriefEl &&
+        debriefUserChoiceEl &&
+        debriefUserTagEl &&
+        debriefAnalysisEl
+      ) {
+        debriefEl.hidden = false;
+        debriefUserChoiceEl.textContent = currentDecision.optionLabel;
+
+        let tagText = '推荐基准';
+        let analysisText =
+          '你的选择与团队推荐基准完全一致。方案稳健、风险受控且具备明确的验收材料。';
+        if (currentDecision.assessment === 'conditional') {
+          tagText = '有条件成立';
+          analysisText =
+            '你选择了折中/特化路径。请务必确认上方「成立条件」已全部满足，并密切监控质量指标。';
+        } else if (currentDecision.assessment === 'risky') {
+          tagText = '高风险方案';
+          analysisText =
+            '注意：该路径存在较高隐性技术债或人工不可承受成本。请严格对照下方「失败与恢复」责任清单。';
+        }
+
+        debriefUserTagEl.textContent = tagText;
+        debriefUserTagEl.className = `debrief-tag tag-${currentDecision.assessment}`;
+        debriefAnalysisEl.textContent = analysisText;
+      } else if (debriefEl) {
+        debriefEl.hidden = true;
+      }
+    };
+
+    // 绑定采纳按钮
+    group.querySelectorAll<HTMLButtonElement>('[data-adopt-decision]').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const optionId = btn.dataset.optionId ?? '';
+        const optionLabel = btn.dataset.optionLabel ?? '';
+        const assessment = btn.dataset.optionAssessment ?? '';
+        saveDecision(optionId, optionLabel, assessment);
+      });
+    });
+
+    // 绑定重置按钮
+    resetBtn?.addEventListener('click', () => {
+      clearDecision();
+    });
+
+    // 3. 成立条件勾选持久化
+    const readChecks = (): Record<string, boolean> => {
+      try {
+        return JSON.parse(localStorage.getItem(CHECKS_KEY) ?? '{}');
+      } catch {
+        return {};
+      }
+    };
+
+    const checks = readChecks();
+    group.querySelectorAll<HTMLInputElement>('[data-cond-check]').forEach((input) => {
+      const checkKey = input.dataset.condCheck;
+      if (checkKey && checks[checkKey]) {
+        input.checked = true;
+      }
+      input.addEventListener('change', () => {
+        if (!checkKey) return;
+        const currentChecks = readChecks();
+        if (input.checked) currentChecks[checkKey] = true;
+        else delete currentChecks[checkKey];
+        try {
+          localStorage.setItem(CHECKS_KEY, JSON.stringify(currentChecks));
+        } catch {
+          /* ignore */
+        }
+      });
+    });
+
+    // 初始化渲染当前关卡决策
+    const initialDecisions = readDecisions();
+    renderDecisionState(initialDecisions[gateKey]);
   }
 </script>
+
+<style>
+  .decision-user-tag {
+    border: 1px solid var(--color-accent);
+    border-radius: var(--radius-pill);
+    background: var(--color-accent-wash);
+    padding: 0.1rem 0.5rem;
+    color: var(--color-accent-strong);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-style: normal;
+    margin-left: var(--space-2);
+  }
+
+  .option-meta-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-2);
+  }
+
+  .decision-selected-badge {
+    color: var(--color-accent-strong);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-display);
+  }
+
+  .conditions-checklist {
+    margin: var(--space-2) 0 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .condition-check-item {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: var(--space-2);
+    align-items: start;
+    cursor: pointer;
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+    line-height: 1.5;
+  }
+
+  .condition-check-item input[type='checkbox'] {
+    margin-top: 0.2rem;
+    accent-color: var(--color-accent);
+    cursor: pointer;
+  }
+
+  .option-decision-action {
+    margin-top: var(--space-4);
+    padding-top: var(--space-3);
+    border-top: 1px dashed var(--color-line);
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .adopt-decision-btn {
+    border: 1px solid var(--color-control-border);
+    border-radius: var(--radius-sm);
+    background: var(--color-panel-raised);
+    color: var(--color-ink);
+    padding: 0.4rem 0.9rem;
+    font-size: var(--text-sm);
+    font-weight: var(--weight-display);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .adopt-decision-btn:hover {
+    border-color: var(--color-accent);
+    background: var(--color-panel);
+  }
+
+  .adopt-decision-btn[data-selected='true'] {
+    border-color: var(--color-accent);
+    background: var(--color-accent);
+    color: var(--color-black);
+  }
+
+  .case-decision-debrief {
+    margin: var(--space-5) var(--page-gutter) 0;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    background: var(--color-panel-raised);
+    padding: var(--space-4);
+  }
+
+  .debrief-head {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-3);
+    margin-bottom: var(--space-3);
+  }
+
+  .debrief-kicker {
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .debrief-head h4 {
+    margin: 0;
+    font-size: var(--text-base);
+    font-weight: var(--weight-display);
+    color: var(--color-ink);
+  }
+
+  .debrief-content {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    gap: var(--space-3);
+    align-items: center;
+    border-top: 1px solid var(--color-line-soft);
+    border-bottom: 1px solid var(--color-line-soft);
+    padding-block: var(--space-3);
+  }
+
+  .debrief-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .debrief-label {
+    color: var(--color-quiet);
+    font-size: var(--text-xs);
+    font-family: var(--font-mono);
+  }
+
+  .debrief-item strong {
+    font-size: var(--text-sm);
+    color: var(--color-ink);
+  }
+
+  .debrief-vs {
+    color: var(--color-quiet);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    padding-inline: var(--space-2);
+  }
+
+  .debrief-tag {
+    align-self: flex-start;
+    margin-top: 0.2rem;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    padding: 0.1rem 0.4rem;
+    border-radius: var(--radius-sm);
+  }
+
+  .tag-recommended {
+    background: var(--color-accent-wash);
+    color: var(--color-accent-strong);
+    border: 1px solid var(--color-accent);
+  }
+
+  .tag-conditional {
+    background: color-mix(in oklch, var(--color-component) 15%, transparent);
+    color: var(--color-component);
+    border: 1px solid var(--color-component);
+  }
+
+  .tag-risky {
+    background: color-mix(in oklch, var(--color-comparison) 15%, transparent);
+    color: var(--color-comparison);
+    border: 1px solid var(--color-comparison);
+  }
+
+  .debrief-analysis {
+    margin: var(--space-3) 0 0;
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+    line-height: 1.6;
+  }
+
+  .debrief-actions {
+    margin-top: var(--space-3);
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .debrief-reset-btn {
+    border: 0;
+    background: none;
+    color: var(--color-quiet);
+    font-size: var(--text-xs);
+    cursor: pointer;
+    text-decoration: underline;
+  }
+
+  .debrief-reset-btn:hover {
+    color: var(--color-ink);
+  }
+
+  @media (max-width: 640px) {
+    .debrief-content {
+      grid-template-columns: 1fr;
+    }
+    .debrief-vs {
+      text-align: center;
+      padding-block: var(--space-1);
+    }
+  }
+</style>

@@ -1,0 +1,808 @@
+---
+import { COMPETENCY_DIMENSIONS, evaluateCompetency } from '@/lib/learning/competency';
+import '@/styles/content-catalog.css';
+
+// SSR 初始数据（0 进度基线）
+const initialProfile = evaluateCompetency();
+
+// 辅助计算雷达图多边形顶点坐标 (中心点 180, 180, 半径 115)
+const CENTER_X = 180;
+const CENTER_Y = 180;
+const RADIUS = 115;
+const ANGLES = [-90, -30, 30, 90, 150, 210]; // 6 个方向（度）
+
+function polarToCartesian(
+  centerX: number,
+  centerY: number,
+  radius: number,
+  angleInDegrees: number,
+) {
+  const angleInRadians = ((angleInDegrees - 90) * Math.PI) / 180.0;
+  return {
+    x: Math.round((centerX + radius * Math.cos(angleInRadians)) * 10) / 10,
+    y: Math.round((centerY + radius * Math.sin(angleInRadians)) * 10) / 10,
+  };
+}
+
+// 刻度同心六边形（20%, 40%, 60%, 80%, 100%）
+const GRID_LEVELS = [0.2, 0.4, 0.6, 0.8, 1.0];
+const gridPolygons = GRID_LEVELS.map((level) => {
+  const points = ANGLES.map((angle) => {
+    const pt = polarToCartesian(CENTER_X, CENTER_Y, RADIUS * level, angle);
+    return `${pt.x},${pt.y}`;
+  }).join(' ');
+  return { level: Math.round(level * 100), points };
+});
+
+// 各轴端点
+const axisLines = ANGLES.map((angle, index) => {
+  const pt = polarToCartesian(CENTER_X, CENTER_Y, RADIUS, angle);
+  const labelPt = polarToCartesian(CENTER_X, CENTER_Y, RADIUS + 24, angle);
+  return {
+    index,
+    x2: pt.x,
+    y2: pt.y,
+    lx: labelPt.x,
+    ly: labelPt.y,
+    dim: COMPETENCY_DIMENSIONS[index]!,
+  };
+});
+
+// SSR 初始雷达顶点（默认基线 12% 占位）
+const defaultBaselinePoints = ANGLES.map((angle) => {
+  const pt = polarToCartesian(CENTER_X, CENTER_Y, RADIUS * 0.12, angle);
+  return `${pt.x},${pt.y}`;
+}).join(' ');
+---
+
+<section
+  class="competency-dashboard"
+  aria-labelledby="radar-dashboard-heading"
+  data-competency-dashboard
+>
+  <header class="dashboard-header">
+    <div class="header-main">
+      <div class="header-eyebrow">
+        <span class="eyebrow-tag">PM 认知能力系统</span>
+        <span class="rank-badge" data-rank-badge>{initialProfile.rank.badge}</span>
+      </div>
+      <h2 id="radar-dashboard-heading">AI PM 实战能力雷达</h2>
+      <p class="dashboard-desc">
+        将 90 道情境判断题与 6 大业务案例映射为 6 项核心 PM
+        能力。本地答题与方案决策会自动沉淀为你的战力雷达与薄弱项诊断。
+      </p>
+    </div>
+
+    <div class="header-score-card">
+      <div class="score-meta">
+        <span class="score-label">能力评级与段位</span>
+        <strong class="score-rank-title" data-rank-title>{initialProfile.rank.title}</strong>
+      </div>
+      <div class="score-number-wrap">
+        <span class="score-value" data-overall-score>{initialProfile.overallScore}</span>
+        <span class="score-unit">/ 100 综合分</span>
+      </div>
+      <p class="score-desc" data-rank-desc>{initialProfile.rank.description}</p>
+    </div>
+  </header>
+
+  <div class="dashboard-visual-grid">
+    <!-- 左侧：纯矢量 SVG 六维能力雷达 -->
+    <div class="radar-stage">
+      <div class="radar-wrapper">
+        <svg viewBox="0 0 360 360" class="radar-svg" role="img" aria-label="AI PM 六维能力雷达图">
+          <!-- 刻度背景同心多边形 -->
+          <g class="radar-grid-group">
+            {
+              gridPolygons.map(({ points, level }) => (
+                <polygon points={points} class="radar-grid-ring" data-level={level} />
+              ))
+            }
+          </g>
+
+          <!-- 放射轴线 -->
+          <g class="radar-axes-group">
+            {
+              axisLines.map((axis) => (
+                <line
+                  x1={CENTER_X}
+                  y1={CENTER_Y}
+                  x2={axis.x2}
+                  y2={axis.y2}
+                  class="radar-axis-line"
+                />
+              ))
+            }
+          </g>
+
+          <!-- 动态能力多边形 (SSR 渲染初始基线，客户端读取本地数据平滑重绘) -->
+          <polygon points={defaultBaselinePoints} class="radar-data-polygon" data-radar-polygon
+          ></polygon>
+
+          <!-- 各维度数据顶点圆点 -->
+          <g class="radar-points-group">
+            {
+              ANGLES.map((angle, idx) => {
+                const pt = polarToCartesian(CENTER_X, CENTER_Y, RADIUS * 0.12, angle);
+                return (
+                  <circle
+                    cx={pt.x}
+                    cy={pt.y}
+                    r="4"
+                    class="radar-point-dot"
+                    data-point-index={idx}
+                  />
+                );
+              })
+            }
+          </g>
+
+          <!-- 轴端维度名称标签 -->
+          <g class="radar-labels-group">
+            {
+              axisLines.map((axis) => {
+                // 根据坐标调整 text-anchor
+                let anchor: 'middle' | 'start' | 'end' = 'middle';
+                if (axis.lx > CENTER_X + 15) anchor = 'start';
+                else if (axis.lx < CENTER_X - 15) anchor = 'end';
+
+                return (
+                  <text
+                    x={axis.lx}
+                    y={axis.ly}
+                    text-anchor={anchor}
+                    dominant-baseline="central"
+                    class="radar-axis-label"
+                    data-axis-dim={axis.dim.id}
+                  >
+                    {axis.dim.shortTitle}
+                  </text>
+                );
+              })
+            }
+          </g>
+        </svg>
+
+        <div class="radar-hint">
+          <span>点击轴标签可快速定位阶段练习</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 右侧：下一步攻坚建议与实战统计 -->
+    <div class="attack-vector-card">
+      <div class="vector-badge">
+        <span class="pulse-dot" aria-hidden="true"></span>
+        <span>当前推荐攻坚步骤 (Next Attack Vector)</span>
+      </div>
+
+      <h3 class="vector-title" data-rec-title>{initialProfile.recommendation.title}</h3>
+      <p class="vector-reason" data-rec-reason>{initialProfile.recommendation.reason}</p>
+
+      <div class="vector-action-row">
+        <a href={initialProfile.recommendation.href} class="vector-primary-btn" data-rec-link>
+          <span data-rec-action-text>{initialProfile.recommendation.actionText}</span>
+        </a>
+      </div>
+
+      <div class="practice-stats-grid">
+        <div class="stat-cell">
+          <span class="stat-num" data-stat-answered>0</span>
+          <span class="stat-label">道题已作答</span>
+        </div>
+        <div class="stat-cell">
+          <span class="stat-num" data-stat-accuracy>0%</span>
+          <span class="stat-label">首答准确率</span>
+        </div>
+        <div class="stat-cell">
+          <span class="stat-num" data-stat-cases>0</span>
+          <span class="stat-label">关案例决策</span>
+        </div>
+      </div>
+
+      <div class="decision-bridge-note">
+        <p>
+          💡 <strong>学习闭环提醒</strong>：完成判断题建立概念边界后，前往对应业务案例在真实 Gate
+          中检验工程与商业取舍。
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 下方：6 大能力维度进度细分卡片 -->
+  <div class="dimension-cards-grid">
+    {
+      initialProfile.dimensions.map((dim) => (
+        <article class="dim-card" data-dim-card={dim.id}>
+          <div class="dim-card-head">
+            <span class="dim-index">阶段 {dim.index}</span>
+            <span class="dim-score-badge" data-dim-score-badge={dim.id}>
+              {dim.score}% 熟练度
+            </span>
+          </div>
+
+          <h3 class="dim-title">
+            <a href={`#module-T1-${dim.index}`} data-jump-stage={dim.id}>
+              {dim.title}
+            </a>
+          </h3>
+          <p class="dim-summary">{dim.summary}</p>
+
+          <div class="dim-progress-track">
+            <div
+              class="dim-progress-fill"
+              data-dim-bar={dim.id}
+              style={`width: ${Math.max(4, dim.score)}%`}
+            />
+          </div>
+
+          <div class="dim-meta-foot">
+            <span class="dim-count-label" data-dim-answered={dim.id}>
+              已答 {dim.answeredCount} / {dim.totalQuestions} 题
+            </span>
+            <a href={dim.readingHref} class="dim-reading-link">
+              阅读对应体系 →
+            </a>
+          </div>
+        </article>
+      ))
+    }
+  </div>
+</section>
+
+<script>
+  import { evaluateCompetency, COMPETENCY_DIMENSIONS } from '@/lib/learning/competency';
+
+  const PROGRESS_KEY = 'ai-native.progress';
+  const DECISIONS_KEY = 'ai-native.case-decisions';
+
+  const CENTER_X = 180;
+  const CENTER_Y = 180;
+  const RADIUS = 115;
+  const ANGLES = [-90, -30, 30, 90, 150, 210];
+
+  function polarToCartesian(
+    centerX: number,
+    centerY: number,
+    radius: number,
+    angleInDegrees: number,
+  ) {
+    const angleInRadians = ((angleInDegrees - 90) * Math.PI) / 180.0;
+    return {
+      x: Math.round((centerX + radius * Math.cos(angleInRadians)) * 10) / 10,
+      y: Math.round((centerY + radius * Math.sin(angleInRadians)) * 10) / 10,
+    };
+  }
+
+  function readStoredData() {
+    let answered: string[] = [];
+    let missed: string[] = [];
+    let caseDecisions: Record<string, { optionId?: string; stageId?: string }> = {};
+
+    try {
+      const storedProgress = JSON.parse(localStorage.getItem(PROGRESS_KEY) ?? '{}');
+      if (Array.isArray(storedProgress.answered)) answered = storedProgress.answered;
+      if (Array.isArray(storedProgress.missed)) missed = storedProgress.missed;
+    } catch {
+      /* ignore */
+    }
+
+    try {
+      const storedDecisions = JSON.parse(localStorage.getItem(DECISIONS_KEY) ?? '{}');
+      if (storedDecisions && typeof storedDecisions === 'object') {
+        caseDecisions = storedDecisions;
+      }
+    } catch {
+      /* ignore */
+    }
+
+    return { answered, missed, caseDecisions };
+  }
+
+  function updateDashboard() {
+    const { answered, missed, caseDecisions } = readStoredData();
+    const profile = evaluateCompetency({ answered, missed, caseDecisions });
+
+    // 更新段位与总分
+    const badgeEl = document.querySelector<HTMLElement>('[data-rank-badge]');
+    if (badgeEl) badgeEl.textContent = profile.rank.badge;
+
+    const rankTitleEl = document.querySelector<HTMLElement>('[data-rank-title]');
+    if (rankTitleEl) rankTitleEl.textContent = profile.rank.title;
+
+    const scoreEl = document.querySelector<HTMLElement>('[data-overall-score]');
+    if (scoreEl) scoreEl.textContent = String(profile.overallScore);
+
+    const rankDescEl = document.querySelector<HTMLElement>('[data-rank-desc]');
+    if (rankDescEl) rankDescEl.textContent = profile.rank.description;
+
+    // 更新攻坚建议
+    const recTitleEl = document.querySelector<HTMLElement>('[data-rec-title]');
+    if (recTitleEl) recTitleEl.textContent = profile.recommendation.title;
+
+    const recReasonEl = document.querySelector<HTMLElement>('[data-rec-reason]');
+    if (recReasonEl) recReasonEl.textContent = profile.recommendation.reason;
+
+    const recActionTextEl = document.querySelector<HTMLElement>('[data-rec-action-text]');
+    if (recActionTextEl) recActionTextEl.textContent = profile.recommendation.actionText;
+
+    const recLinkEl = document.querySelector<HTMLAnchorElement>('[data-rec-link]');
+    if (recLinkEl) recLinkEl.href = profile.recommendation.href;
+
+    // 更新统计数据
+    const statAnsweredEl = document.querySelector<HTMLElement>('[data-stat-answered]');
+    if (statAnsweredEl) statAnsweredEl.textContent = String(profile.totalAnswered);
+
+    const statAccuracyEl = document.querySelector<HTMLElement>('[data-stat-accuracy]');
+    if (statAccuracyEl) {
+      const acc =
+        profile.totalAnswered > 0
+          ? Math.round(
+              ((profile.totalAnswered - profile.totalMissed) / profile.totalAnswered) * 100,
+            )
+          : 0;
+      statAccuracyEl.textContent = `${acc}%`;
+    }
+
+    const statCasesEl = document.querySelector<HTMLElement>('[data-stat-cases]');
+    if (statCasesEl) statCasesEl.textContent = String(profile.totalCaseDecisions);
+
+    // 重新计算雷达图多边形坐标
+    // 最低保证 10% 可视轮廓，最高 100%
+    const points = profile.dimensions.map((dim, idx) => {
+      const angle = ANGLES[idx] ?? -90;
+      const normalizedRatio = Math.max(0.1, dim.score / 100);
+      const pt = polarToCartesian(CENTER_X, CENTER_Y, RADIUS * normalizedRatio, angle);
+
+      // 更新对应顶点小圆圈坐标
+      const dotEl = document.querySelector<SVGCircleElement>(`[data-point-index="${idx}"]`);
+      if (dotEl) {
+        dotEl.setAttribute('cx', String(pt.x));
+        dotEl.setAttribute('cy', String(pt.y));
+      }
+
+      return `${pt.x},${pt.y}`;
+    });
+
+    const polygonEl = document.querySelector<SVGPolygonElement>('[data-radar-polygon]');
+    if (polygonEl) {
+      polygonEl.setAttribute('points', points.join(' '));
+    }
+
+    // 更新每个维度卡片
+    profile.dimensions.forEach((dim) => {
+      const badge = document.querySelector<HTMLElement>(`[data-dim-score-badge="${dim.id}"]`);
+      if (badge) badge.textContent = `${dim.score}% 熟练度`;
+
+      const bar = document.querySelector<HTMLElement>(`[data-dim-bar="${dim.id}"]`);
+      if (bar) bar.style.width = `${Math.max(4, dim.score)}%`;
+
+      const answeredLabel = document.querySelector<HTMLElement>(`[data-dim-answered="${dim.id}"]`);
+      if (answeredLabel) {
+        answeredLabel.textContent = `已答 ${dim.answeredCount} / ${dim.totalQuestions} 题 · 案例 ${dim.caseDecisionsCount}/6`;
+      }
+    });
+  }
+
+  // 初始化与监听
+  updateDashboard();
+  window.addEventListener('storage', updateDashboard);
+
+  // 点击轴标签跳转对应阶段
+  document.querySelectorAll<SVGTextElement>('[data-axis-dim]').forEach((el) => {
+    el.addEventListener('click', () => {
+      const dimId = el.dataset.axisDim;
+      const dim = COMPETENCY_DIMENSIONS.find((d) => d.id === dimId);
+      if (dim) {
+        const targetId = `module-T1-${dim.index}`;
+        const targetEl = document.getElementById(targetId);
+        if (targetEl) {
+          targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+    });
+  });
+</script>
+
+<style>
+  .competency-dashboard {
+    margin-bottom: var(--space-6);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-lg);
+    background: var(--color-panel);
+    padding: var(--space-5);
+  }
+
+  .dashboard-header {
+    display: grid;
+    grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+    gap: var(--space-5);
+    align-items: start;
+    border-bottom: 1px solid var(--color-line-soft);
+    padding-bottom: var(--space-4);
+  }
+
+  .header-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-bottom: var(--space-1);
+  }
+
+  .eyebrow-tag {
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .rank-badge {
+    border: 1px solid var(--color-accent);
+    border-radius: var(--radius-pill);
+    background: var(--color-accent-wash);
+    padding: 0.15rem 0.6rem;
+    color: var(--color-accent-strong);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-display);
+    letter-spacing: 0.05em;
+  }
+
+  .dashboard-header h2 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 2.5vw, 1.85rem);
+    font-weight: var(--weight-display);
+    letter-spacing: var(--tracking-display);
+    color: var(--color-ink);
+  }
+
+  .dashboard-desc {
+    margin: var(--space-2) 0 0;
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    max-width: var(--reading-max);
+  }
+
+  .header-score-card {
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    background: var(--color-panel-raised);
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .score-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-1);
+  }
+
+  .score-label {
+    color: var(--color-quiet);
+    font-size: var(--text-xs);
+    font-family: var(--font-mono);
+  }
+
+  .score-rank-title {
+    color: var(--color-accent-strong);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-display);
+  }
+
+  .score-number-wrap {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-2);
+  }
+
+  .score-value {
+    color: var(--color-ink);
+    font-family: var(--font-display);
+    font-size: 2.2rem;
+    font-weight: var(--weight-display);
+    line-height: 1;
+  }
+
+  .score-unit {
+    color: var(--color-quiet);
+    font-size: var(--text-xs);
+    font-family: var(--font-mono);
+  }
+
+  .score-desc {
+    margin: var(--space-2) 0 0;
+    color: var(--color-muted);
+    font-size: var(--text-xs);
+    line-height: 1.5;
+  }
+
+  /* 主视觉区 */
+  .dashboard-visual-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+    gap: var(--space-5);
+    align-items: center;
+    padding-block: var(--space-4);
+    border-bottom: 1px solid var(--color-line-soft);
+  }
+
+  .radar-stage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .radar-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 340px;
+    aspect-ratio: 1 / 1;
+  }
+
+  .radar-svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  .radar-grid-ring {
+    fill: none;
+    stroke: var(--color-line);
+    stroke-dasharray: 2 2;
+    stroke-width: 1;
+  }
+
+  .radar-axis-line {
+    stroke: var(--color-line-soft);
+    stroke-width: 1;
+  }
+
+  .radar-data-polygon {
+    fill: color-mix(in oklch, var(--color-accent) 20%, transparent);
+    stroke: var(--color-accent);
+    stroke-width: 2;
+    stroke-linejoin: round;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .radar-point-dot {
+    fill: var(--color-black);
+    stroke: var(--color-accent-strong);
+    stroke-width: 2.5;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .radar-axis-label {
+    fill: var(--color-muted);
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: var(--weight-display);
+    cursor: pointer;
+    transition: fill 0.2s ease;
+  }
+
+  .radar-axis-label:hover {
+    fill: var(--color-accent-strong);
+  }
+
+  .radar-hint {
+    text-align: center;
+    margin-top: var(--space-1);
+    color: var(--color-quiet);
+    font-size: var(--text-xs);
+  }
+
+  /* 攻坚卡片 */
+  .attack-vector-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    background: var(--color-panel-raised);
+    padding: var(--space-4);
+  }
+
+  .vector-badge {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--color-accent-strong);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.06em;
+  }
+
+  .pulse-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: var(--radius-pill);
+    background: var(--color-accent);
+    box-shadow: 0 0 8px var(--color-accent);
+  }
+
+  .vector-title {
+    margin: var(--space-2) 0 var(--space-1);
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: var(--weight-display);
+    color: var(--color-ink);
+  }
+
+  .vector-reason {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+    line-height: 1.6;
+  }
+
+  .vector-action-row {
+    margin-top: var(--space-3);
+  }
+
+  .vector-primary-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    border-radius: var(--radius-sm);
+    background: var(--color-accent);
+    color: var(--color-black);
+    padding: 0.5rem 1.1rem;
+    font-size: var(--text-sm);
+    font-weight: var(--weight-display);
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .vector-primary-btn:hover {
+    opacity: 0.92;
+  }
+
+  .practice-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-2);
+    margin-top: var(--space-4);
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--color-line-soft);
+  }
+
+  .stat-cell {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .stat-num {
+    color: var(--color-ink);
+    font-family: var(--font-mono);
+    font-size: var(--text-base);
+    font-weight: var(--weight-display);
+  }
+
+  .stat-label {
+    color: var(--color-quiet);
+    font-size: var(--text-xs);
+  }
+
+  .decision-bridge-note {
+    margin-top: var(--space-3);
+    background: var(--color-panel);
+    border-radius: var(--radius-sm);
+    padding: var(--space-2) var(--space-3);
+    border-left: 2px solid var(--color-accent);
+  }
+
+  .decision-bridge-note p {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: var(--text-xs);
+    line-height: 1.5;
+  }
+
+  /* 维度卡片网格 */
+  .dimension-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: var(--space-3);
+    margin-top: var(--space-4);
+  }
+
+  .dim-card {
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    background: var(--color-panel-raised);
+    padding: var(--space-3) var(--space-4);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .dim-card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-1);
+  }
+
+  .dim-index {
+    color: var(--color-quiet);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+  }
+
+  .dim-score-badge {
+    color: var(--color-accent-strong);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-display);
+  }
+
+  .dim-title {
+    margin: 0;
+    font-size: var(--text-base);
+    font-weight: var(--weight-display);
+  }
+
+  .dim-title a {
+    color: var(--color-ink);
+    text-decoration: none;
+  }
+
+  .dim-title a:hover {
+    color: var(--color-accent);
+  }
+
+  .dim-summary {
+    margin: var(--space-1) 0 var(--space-3);
+    color: var(--color-muted);
+    font-size: var(--text-xs);
+    line-height: 1.5;
+  }
+
+  .dim-progress-track {
+    width: 100%;
+    height: 4px;
+    border-radius: var(--radius-pill);
+    background: var(--color-line-soft);
+    overflow: hidden;
+    margin-bottom: var(--space-2);
+  }
+
+  .dim-progress-fill {
+    height: 100%;
+    background: var(--color-accent);
+    border-radius: var(--radius-pill);
+    transition: width 0.4s ease;
+  }
+
+  .dim-meta-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: var(--text-xs);
+    color: var(--color-quiet);
+    border-top: 1px solid var(--color-line-soft);
+    padding-top: var(--space-2);
+  }
+
+  .dim-reading-link {
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+
+  .dim-reading-link:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 840px) {
+    .dashboard-header {
+      grid-template-columns: 1fr;
+    }
+    .dashboard-visual-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
