@@ -16,13 +16,24 @@
    顶部案例库标题与指标条 (Hero Section)
    ========================================================================== */
 .case-library-hero {
+  min-height: auto;
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  gap: var(--space-5);
-  margin-bottom: var(--space-5);
-  padding-bottom: var(--space-5);
+  gap: var(--space-6);
+  margin-bottom: var(--space-6);
+  padding: var(--space-5) 0 var(--space-6);
   border-bottom: 1px solid var(--color-line);
+}
+
+.case-library-hero > div {
+  border-right: none;
+  padding: 0;
+}
+
+.hero-content {
+  flex: 1;
+  min-width: 0;
 }
 
 .case-header-eyebrow {
@@ -57,11 +68,13 @@
   display: flex;
   gap: var(--space-3);
   flex-shrink: 0;
+  align-items: stretch;
 }
 
 .stat-pill {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 0.2rem;
   border: 1px solid var(--color-line);
   border-radius: var(--radius-md);
