@@ -1,3 +1,7 @@
+.case-study-stage {
+  padding-bottom: 5.5rem;
+}
+
 .case-shell {
   border-bottom: 1px solid var(--color-line);
 }

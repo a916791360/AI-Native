@@ -112,6 +112,32 @@ const continuationTitle = nextTier
       : '回到学习中心';
 
 const pmAction = PM_ACTIONS[question.id];
+
+const moduleIndexNumber = Number(module.index);
+const gateIdList = [
+  'decide-ai-boundary',
+  'formulate-problem',
+  'design-workflow',
+  'define-human-loop',
+  'establish-guardrails',
+  'evaluate-readiness',
+];
+const gateTitleList = [
+  '判断 AI 边界',
+  '场景与机会判断',
+  '架构与方案选型',
+  '人机协作与控制体验',
+  '安全护栏与质量评测',
+  '上线准备度与立项评审',
+];
+const relatedCaseGate = {
+  caseId: 'customer-support-knowledge-base',
+  caseTitle: '智能客服知识库与回答辅助',
+  gateOrder: moduleIndexNumber,
+  gateId: gateIdList[moduleIndexNumber - 1] || 'decide-ai-boundary',
+  gateTitle: gateTitleList[moduleIndexNumber - 1] || '业务推演',
+};
+
 // 学习库 → 某层 → 某阶段 → 某题。中间两层都指向 /learn/ 的锚点，
 // 点击时侧栏与主区会自动展开对应层（LearningCatalog 里的 openFor）。
 const breadcrumbTrail = [
@@ -158,7 +184,17 @@ const breadcrumbTrail = [
             <i>/ {total}</i>
           </span>
           <span data-progress-answered>已答 0 / {total}</span>
-          <span data-progress-missed>错 0</span>
+          <a
+            href="/learn/mistakes/"
+            class="progress-mistake-pill"
+            data-progress-mistakes
+            title="查看待攻坚错题"
+            hidden
+          >
+            <span class="mistake-dot" aria-hidden="true"></span>
+            <span>错题</span>
+            <strong data-progress-missed>0</strong>
+          </a>
         </p>
         {
           referencedStations.length > 0 && (
@@ -247,6 +283,39 @@ const breadcrumbTrail = [
             })
           }
         </ol>
+
+        <div class="mistake-notify-card" data-mistake-pill hidden>
+          <div class="mistake-notify-left">
+            <span class="mistake-notify-icon" aria-hidden="true">
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+            </span>
+            <div class="mistake-notify-copy">
+              <strong>已自动收录至错题攻坚本</strong>
+              <p>
+                该选项在实际业务中存在盲区或隐性风险。已为你自动归集，随时可前往攻坚专区专项消灭。
+              </p>
+            </div>
+          </div>
+          <a href="/learn/mistakes/" class="mistake-notify-btn">
+            <span>前往错题攻坚</span>
+            <span class="mistake-count-chip" data-mistake-count-chip>1</span>
+            <span aria-hidden="true">→</span>
+          </a>
+        </div>
+
         <p class="screen-reader-only" aria-live="polite" data-announce></p>
       </section>
 
@@ -299,6 +368,46 @@ const breadcrumbTrail = [
         )
       }
 
+      <section class="question-case-portal" aria-labelledby="case-portal-heading" data-reveal>
+        <div class="case-portal-header">
+          <div class="case-portal-tag-group">
+            <span class="case-portal-badge">工业实战落地</span>
+            <span class="case-portal-stage"
+              >Gate 0{relatedCaseGate.gateOrder} · {relatedCaseGate.gateTitle}</span
+            >
+          </div>
+          <span class="case-portal-icon" aria-hidden="true">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"></path>
+              <path d="M6 6h10"></path>
+              <path d="M6 10h10"></path>
+            </svg>
+          </span>
+        </div>
+        <div class="case-portal-content">
+          <h3 id="case-portal-heading">想在真实业务场景中看本题的落地推演？</h3>
+          <p>
+            在《<strong>{relatedCaseGate.caseTitle}</strong
+            >》案例中，完整推演该阶段的事实依据、盲区核验、方案三选一与决策影响天平。
+          </p>
+        </div>
+        <a
+          href={`/learn/cases/${relatedCaseGate.caseId}/${relatedCaseGate.gateId}/`}
+          class="case-portal-btn"
+        >
+          <span>进入实战案例 Gate 0{relatedCaseGate.gateOrder} →</span>
+        </a>
+      </section>
+
       <nav class="question-nav" aria-label="题目导航">
         {
           previous ? (
@@ -342,6 +451,9 @@ const breadcrumbTrail = [
     const items = [...page.querySelectorAll<HTMLElement>('[data-option-item]')];
     const answeredLabel = page.querySelector<HTMLElement>('[data-progress-answered]');
     const missedLabel = page.querySelector<HTMLElement>('[data-progress-missed]');
+    const progressMistakes = page.querySelector<HTMLElement>('[data-progress-mistakes]');
+    const mistakePill = page.querySelector<HTMLElement>('[data-mistake-pill]');
+    const mistakeCountChip = page.querySelector<HTMLElement>('[data-mistake-count-chip]');
     const announce = page.querySelector<HTMLElement>('[data-announce]');
     const principle = page.querySelector<HTMLDetailsElement>('[data-principle]');
 
@@ -374,7 +486,16 @@ const breadcrumbTrail = [
         answeredLabel.textContent = `已答 ${progress.answered.length} / ${total}`;
       }
       if (missedLabel) {
-        missedLabel.textContent = `错 ${progress.missed.length}`;
+        missedLabel.textContent = `${progress.missed.length}`;
+      }
+      if (progressMistakes) {
+        progressMistakes.hidden = progress.missed.length === 0;
+      }
+      if (mistakeCountChip) {
+        mistakeCountChip.textContent = `${progress.missed.length}`;
+      }
+      if (mistakePill) {
+        mistakePill.hidden = !progress.missed.includes(questionId);
       }
     };
 
@@ -923,6 +1044,210 @@ const breadcrumbTrail = [
     font-size: var(--text-base);
     line-height: 1.75;
     text-wrap: pretty;
+  }
+
+  /* 顶部进度条错题本直通徽章 */
+  .progress-mistake-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.15rem 0.55rem;
+    border-radius: var(--radius-pill);
+    background: color-mix(in oklch, var(--color-danger, #d9383a) 10%, transparent);
+    border: 1px solid color-mix(in oklch, var(--color-danger, #d9383a) 30%, transparent);
+    color: var(--color-danger, #d9383a);
+    font-size: var(--text-xs);
+    font-family: var(--font-mono);
+    text-decoration: none;
+    transition:
+      background-color var(--duration-quick),
+      border-color var(--duration-quick),
+      transform var(--duration-quick);
+  }
+  .progress-mistake-pill:hover {
+    background: color-mix(in oklch, var(--color-danger, #d9383a) 20%, transparent);
+    border-color: var(--color-danger, #d9383a);
+  }
+  .progress-mistake-pill:active {
+    transform: scale(0.96);
+  }
+  .progress-mistake-pill[hidden] {
+    display: none !important;
+  }
+  .mistake-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+    flex-shrink: 0;
+  }
+
+  /* 答题后即时错题攻坚通知卡 */
+  .mistake-notify-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    margin-top: var(--space-4);
+    padding: var(--space-4) var(--space-5);
+    border-radius: var(--radius-md);
+    background: color-mix(in oklch, var(--color-danger, #d9383a) 4%, var(--color-panel));
+    border: 1px solid color-mix(in oklch, var(--color-danger, #d9383a) 28%, var(--color-line));
+    box-shadow: var(--shadow-card);
+    animation: fadeInSlide 200ms ease-out;
+  }
+  .mistake-notify-card[hidden] {
+    display: none !important;
+  }
+  @keyframes fadeInSlide {
+    from {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .mistake-notify-left {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+  .mistake-notify-icon {
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background: color-mix(in oklch, var(--color-danger, #d9383a) 12%, transparent);
+    color: var(--color-danger, #d9383a);
+    flex-shrink: 0;
+  }
+  .mistake-notify-copy strong {
+    display: block;
+    color: var(--color-ink);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-display);
+  }
+  .mistake-notify-copy p {
+    margin: 0.15rem 0 0;
+    color: var(--color-muted);
+    font-size: var(--text-xs);
+    line-height: 1.5;
+  }
+  .mistake-notify-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.85rem;
+    border-radius: var(--radius-pill);
+    background: var(--color-danger, #d9383a);
+    color: #ffffff;
+    font-size: var(--text-xs);
+    font-weight: var(--weight-display);
+    text-decoration: none;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition:
+      filter var(--duration-quick),
+      transform var(--duration-quick);
+  }
+  .mistake-notify-btn:hover {
+    filter: brightness(1.08);
+  }
+  .mistake-notify-btn:active {
+    transform: scale(0.97);
+  }
+  .mistake-count-chip {
+    padding: 0.05rem 0.35rem;
+    border-radius: var(--radius-pill);
+    background: rgba(255, 255, 255, 0.25);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: var(--weight-display);
+  }
+
+  /* 工业级实战案例直通车卡片 */
+  .question-case-portal {
+    margin-top: var(--space-7);
+    padding: var(--space-5) var(--space-6);
+    border-radius: var(--radius-md);
+    background: var(--color-panel-raised);
+    border: 1px solid var(--color-line);
+    border-left: 3px solid var(--color-accent);
+    box-shadow: var(--shadow-card);
+    display: grid;
+    gap: var(--space-3);
+  }
+  .case-portal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+  }
+  .case-portal-tag-group {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+  .case-portal-badge {
+    padding: 0.15rem 0.5rem;
+    border-radius: var(--radius-pill);
+    background: color-mix(in oklch, var(--color-accent) 12%, transparent);
+    color: var(--color-accent);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-display);
+  }
+  .case-portal-stage {
+    color: var(--color-quiet);
+    font-size: var(--text-xs);
+    font-family: var(--font-mono);
+  }
+  .case-portal-icon {
+    color: var(--color-quiet);
+  }
+  .case-portal-content h3 {
+    margin: 0;
+    color: var(--color-ink);
+    font-size: var(--text-md);
+    font-weight: var(--weight-display);
+  }
+  .case-portal-content p {
+    margin: 0.35rem 0 0;
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+    line-height: 1.65;
+  }
+  .case-portal-content strong {
+    color: var(--color-ink);
+    font-weight: var(--weight-display);
+  }
+  .case-portal-btn {
+    align-self: start;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.45rem 1rem;
+    border-radius: var(--radius-pill);
+    background: var(--color-panel);
+    border: 1px solid var(--color-line);
+    color: var(--color-accent);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-display);
+    text-decoration: none;
+    transition:
+      background-color var(--duration-quick),
+      border-color var(--duration-quick),
+      transform var(--duration-quick);
+  }
+  .case-portal-btn:hover {
+    background: var(--color-panel-raised);
+    border-color: var(--color-accent);
+    transform: translateY(-1px);
+  }
+  .case-portal-btn:active {
+    transform: scale(0.98);
   }
 
   /* 底部导航：不对称两栏，主次分明；去掉高盒子和空角落。 */

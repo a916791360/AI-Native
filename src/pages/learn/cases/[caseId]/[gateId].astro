@@ -3,6 +3,7 @@ import type { GetStaticPaths } from 'astro';
 
 import CaseGateDesk from '@/components/cases/CaseGateDesk.astro';
 import CasePrdExporter from '@/components/cases/CasePrdExporter.astro';
+import CaseProgressHud from '@/components/cases/CaseProgressHud.astro';
 import CaseStageDirectory from '@/components/cases/CaseStageDirectory.astro';
 import Breadcrumbs from '@/components/layout/Breadcrumbs.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
@@ -160,6 +161,7 @@ const breadcrumbTrail = [
 
     <CaseStageDirectory caseStudy={caseStudy} currentGateId={gate.id} />
   </main>
+  <CaseProgressHud caseStudy={caseStudy} currentGateId={gate.id} />
   <CasePrdExporter caseStudy={caseStudy} />
   <TermPopover />
 </BaseLayout>

@@ -836,7 +836,7 @@ export const FACEOFF_PAIRS: readonly FaceoffPair[] = [
     title: '慢思考深度推理架构 vs 极速端到端大模型 (Extended Reasoning vs Fast Frontier Streamer)',
     tagline: '百步隐式回溯验证 vs 毫秒级极速流式吞吐',
     summary:
-      '当前大模型选型的核心战略分水岭。一边是测试时计算（Test-Time Compute）驱动的深度慢思考模型（如 Claude Opus 5.5 Thinking Mode、GPT-6 Astra、Kimi K3），另一边是面向极速响应的高并发流式旗舰模型（如 Claude Sonnet 5.5、Gemini 3.8 Flash、DeepSeek V4.1 Flash）。',
+      '当前大模型选型的核心战略分水岭。一边是测试时计算（Test-Time Compute）驱动的深度慢思考模型（如 OpenAI o1 / o3-mini、DeepSeek-R1、Claude 3.7 Sonnet 思考模式），另一边是面向极速响应的高并发流式旗舰模型（如 Claude 3.5 Sonnet、Gemini 2.0 Flash、DeepSeek-V3、GPT-4o）。',
     left: {
       termId: 'chain-of-thought',
       nameZh: '慢思考深度推理模型 (Extended Reasoning)',
@@ -847,7 +847,7 @@ export const FACEOFF_PAIRS: readonly FaceoffPair[] = [
       analogy:
         '深思熟虑的首席系统架构师：面对复杂难题绝不脱口而出，在演算纸上推导验证几十遍确认无误后才给出方案。',
       bestFor: [
-        '复杂代码漏洞挖掘与跨文件大型系统重构（如 Claude Opus 5.5、GPT-6 Astra）',
+        '复杂代码漏洞挖掘与跨文件大型系统重构（如 OpenAI o1、DeepSeek-R1、Claude 3.7 Sonnet）',
         '多步数理推导、形式化运筹规划与长链条根因诊断分析',
         '对逻辑跳步与推理幻觉零容忍的关键业务决策',
       ],
@@ -866,7 +866,7 @@ export const FACEOFF_PAIRS: readonly FaceoffPair[] = [
       analogy:
         '反应敏捷的同声传译与急诊调度员：听到指令立刻流式作答，每秒能并发支持数千路实时交互。',
       bestFor: [
-        '在线编辑器代码补全、打字交互伴侣（如 Claude Sonnet 5.5、Gemini 3.8 Flash、DeepSeek V4.1 Flash）',
+        '在线编辑器代码补全、打字交互伴侣（如 Claude 3.5 Sonnet、Gemini 2.0 Flash、DeepSeek-V3）',
         '日调用量千万级的高并发工单分拣与企业流式日志处理管线',
         '对 500ms 端到端延迟 SLA 有严格要求的在线用户系统',
       ],
@@ -938,7 +938,7 @@ export const FACEOFF_PAIRS: readonly FaceoffPair[] = [
         constraint: '离线分析任务，处理时间在 30 秒内均可接受，但逻辑推导必须绝对严密自洽。',
         correctSide: 'left',
         explanation:
-          '应选慢思考深度推理架构（如 Claude Opus 5.5 / GPT-6 Astra）。多层穿透属于高阶推理深水区，常规流式模型在长链条下容易产生直觉假象，慢思考模型内部多步自检能最大程度杜绝逻辑漏洞。',
+          '应选慢思考深度推理架构（如 OpenAI o1 / DeepSeek-R1 / Claude 3.7 Sonnet）。多层穿透属于高阶推理深水区，常规流式模型在长链条下容易产生直觉假象，慢思考模型内部多步自检能最大程度杜绝逻辑漏洞。',
       },
       {
         id: 'quiz-reasoning-2',
@@ -947,7 +947,7 @@ export const FACEOFF_PAIRS: readonly FaceoffPair[] = [
         constraint: '端到端延迟必须严格卡在 300ms 以内，每日请求量超过 5000 万次。',
         correctSide: 'right',
         explanation:
-          '必须选极速端到端大模型（如 Claude Sonnet 5.5 / Gemini 3.8 Flash / DeepSeek V4.1 Flash）。该场景核心瓶颈在首字延迟和高并发 TPS，慢思考模型的几十秒思考时间会彻底破坏用户打字节奏，且成本不可承受。',
+          '必须选极速端到端大模型（如 Claude 3.5 Sonnet / Gemini 2.0 Flash / DeepSeek-V3）。该场景核心瓶颈在首字延迟和高并发 TPS，慢思考模型的几十秒思考时间会彻底破坏用户打字节奏，且成本不可承受。',
       },
     ],
   },
@@ -956,7 +956,7 @@ export const FACEOFF_PAIRS: readonly FaceoffPair[] = [
     title: '原生超长上下文直推 vs 分层分块混合检索增强 (Native Long-Context vs Chunked Hybrid RAG)',
     tagline: '全量注意力原地直读 vs 外部向量分块切片召回',
     summary:
-      '面对百万至千万 Token 的大规模资料，是直接利用当代长窗口模型（如 Gemini 3.8 Flash 千万级窗口、Qwen3.8 Max）的原生注意力原地直读，还是搭建分块切片、Embedding 向量检索与重排的 RAG 工业架构？',
+      '面对数十万至百万 Token 的大规模资料，是直接利用当代长窗口模型（如 Gemini 2.0 Flash 原生 100 万窗口、Qwen 2.5 Max、Kimi k1.5）的原生注意力原地直读，还是搭建分块切片、Embedding 向量检索与重排的 RAG 工业架构？',
     left: {
       termId: 'long-context',
       nameZh: '原生超长上下文直推 (Native Long-Context)',
@@ -967,7 +967,7 @@ export const FACEOFF_PAIRS: readonly FaceoffPair[] = [
       analogy:
         '过目不忘的速读天才：直接将一整箱几百页的原始案卷全部读进临时记忆，前后反复交叉对照。',
       bestFor: [
-        '单一项目完整代码库因果依赖追踪与跨模块重构（如 Gemini 3.8 Flash、Qwen3.8 Max）',
+        '单一项目完整代码库因果依赖追踪与跨模块重构（如 Gemini 2.0 Flash、Qwen 2.5 Max）',
         '几百页招股书、司法文书多章节交叉矛盾审查与全局趋势综合分析',
         '切片会导致表格断裂、语义割裂的复杂长篇非结构化报告',
       ],
@@ -987,7 +987,7 @@ export const FACEOFF_PAIRS: readonly FaceoffPair[] = [
       analogy:
         '专业的图书管理员：面对浩如烟海的百万藏书，根据关键词精准抽取 3 本最关键参考书呈递给你。',
       bestFor: [
-        'TB 级超大规模、且每天高频增删变动的企业文档库与客服知识中心（如 GLM-5.3、Claude Sonnet 5.5 + RAG）',
+        'TB 级超大规模、且每天高频增删变动的企业文档库与客服知识中心（如 DeepSeek-V3、Claude 3.5 Sonnet + RAG）',
         '具备严格组织架构部门权限隔离与多租户敏感数据物理隔离场景',
         '日请求数万次、必须将单次查询 Token 消耗控制在数千以内的系统',
       ],
@@ -1068,7 +1068,7 @@ export const FACEOFF_PAIRS: readonly FaceoffPair[] = [
         constraint: '调用频次低（每天仅几次），但必须跨章节前后因果比对，切片会导致表格断裂。',
         correctSide: 'left',
         explanation:
-          '果断选用原生超长上下文直推（如 Gemini 3.8 Flash / Qwen3.8 Max）。跨章节的细微矛盾审查是切片 RAG 的典型死穴，全量上下文原地计算能保持所有表格和附注的全局关联，分析价值极高。',
+          '果断选用原生超长上下文直推（如 Gemini 2.0 Flash / Qwen 2.5 Max）。跨章节的细微矛盾审查是切片 RAG 的典型死穴，全量上下文原地计算能保持所有表格和附注的全局关联，分析价值极高。',
       },
     ],
   },

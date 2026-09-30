@@ -1,0 +1,338 @@
+---
+import type { CaseStudy } from '@/lib/cases/schema';
+import { gateHref } from '@/lib/cases/presentation';
+
+interface Props {
+  caseStudy: CaseStudy;
+  currentGateId: string;
+}
+
+const { caseStudy, currentGateId } = Astro.props;
+const currentGate = caseStudy.gates.find((g) => g.id === currentGateId);
+const currentGateIndex = currentGate ? currentGate.order : 1;
+---
+
+<aside
+  class="case-progress-hud"
+  data-case-hud
+  data-case-id={caseStudy.id}
+  data-current-gate={currentGateId}
+  aria-label="案例六关决策全局看板"
+>
+  <div class="hud-inner">
+    <!-- 左侧：阶段进度提示 -->
+    <div class="hud-meta">
+      <span class="hud-kicker">决策看板</span>
+      <strong class="hud-stage-title">Gate 0{currentGateIndex} / 06</strong>
+    </div>
+
+    <!-- 中间：6 个关卡穿梭步进条 -->
+    <nav class="hud-stepper" aria-label="六阶段快捷穿梭">
+      <ol class="hud-steps-list">
+        {
+          caseStudy.gates.map((g) => {
+            const isCurrent = g.id === currentGateId;
+            const isPast = g.order < currentGateIndex;
+            return (
+              <li
+                class="hud-step-item"
+                data-hud-step={g.id}
+                data-gate-order={g.order}
+                data-is-current={isCurrent ? 'true' : undefined}
+                data-is-past={isPast ? 'true' : undefined}
+              >
+                <a
+                  href={gateHref(caseStudy.id, g.id)}
+                  class={`hud-step-pill ${isCurrent ? 'is-active' : ''}`}
+                  title={`Gate 0${g.order}: ${g.title}`}
+                  aria-current={isCurrent ? 'step' : undefined}
+                >
+                  <span class="step-num">0{g.order}</span>
+                  <span class="step-label">{g.title}</span>
+                  <span class="step-choice-chip" data-hud-choice={g.id} hidden>
+                    ✓
+                  </span>
+                </a>
+              </li>
+            );
+          })
+        }
+      </ol>
+    </nav>
+
+    <!-- 右侧：PRD 导出快捷按钮与统计 -->
+    <div class="hud-actions">
+      <div class="hud-tally">
+        <span class="tally-label">已定</span>
+        <strong data-hud-decided-count>0</strong>
+        <span class="tally-total">/ 6</span>
+      </div>
+      <button
+        type="button"
+        class="hud-prd-trigger"
+        data-open-prd-modal
+        title="预览或导出当前已沉淀的立项 PRD"
+      >
+        <span class="btn-icon" aria-hidden="true">📑</span>
+        <span class="btn-text">立项 PRD</span>
+      </button>
+    </div>
+  </div>
+</aside>
+
+<script>
+  const DECISIONS_KEY = 'ai-native.case-decisions';
+  const hud = document.querySelector<HTMLElement>('[data-case-hud]');
+
+  if (hud) {
+    const caseId = hud.dataset.caseId;
+    const decidedCountEl = hud.querySelector<HTMLElement>('[data-hud-decided-count]');
+    const choiceChips = hud.querySelectorAll<HTMLElement>('[data-hud-choice]');
+
+    const updateHud = () => {
+      let decisions: Record<string, { optionId: string; optionLabel: string }> = {};
+      try {
+        decisions = JSON.parse(localStorage.getItem(DECISIONS_KEY) || '{}');
+      } catch {
+        decisions = {};
+      }
+
+      let count = 0;
+      choiceChips.forEach((chip) => {
+        const gateId = chip.dataset.hudChoice;
+        const gateKey = `${caseId}:${gateId}`;
+        const decision = decisions[gateKey];
+        if (decision) {
+          count++;
+          chip.hidden = false;
+        } else {
+          chip.hidden = true;
+        }
+      });
+
+      if (decidedCountEl) {
+        decidedCountEl.textContent = String(count);
+      }
+    };
+
+    updateHud();
+    window.addEventListener('storage', updateHud);
+  }
+</script>
+
+<style>
+  .case-progress-hud {
+    position: fixed;
+    bottom: var(--space-4);
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(calc(100% - 2rem), var(--content-standard, 68rem));
+    z-index: 60;
+    pointer-events: none;
+    animation: hudSlideUp 240ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @keyframes hudSlideUp {
+    from {
+      opacity: 0;
+      transform: translate(-50%, 12px);
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+  }
+
+  .hud-inner {
+    pointer-events: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding: 0.45rem 0.85rem;
+    border-radius: var(--radius-pill);
+    background: color-mix(in oklch, var(--color-panel) 92%, transparent);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--color-line);
+    box-shadow: var(--shadow-floating, 0 12px 32px -4px rgba(0, 0, 0, 0.12));
+    box-sizing: border-box;
+  }
+
+  .hud-meta {
+    display: flex;
+    flex-direction: column;
+    padding-left: 0.35rem;
+    flex-shrink: 0;
+  }
+
+  .hud-kicker {
+    color: var(--color-quiet);
+    font-size: 0.6875rem;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .hud-stage-title {
+    color: var(--color-ink);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-display);
+    white-space: nowrap;
+  }
+
+  .hud-stepper {
+    display: flex;
+    align-items: center;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding: 0 0.25rem;
+  }
+  .hud-stepper::-webkit-scrollbar {
+    display: none;
+  }
+
+  .hud-steps-list {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .hud-step-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.3rem 0.65rem;
+    border-radius: var(--radius-pill);
+    background: var(--color-panel-raised);
+    border: 1px solid var(--color-line-soft);
+    color: var(--color-muted);
+    font-size: var(--text-xs);
+    text-decoration: none;
+    white-space: nowrap;
+    transition:
+      background-color var(--duration-quick),
+      border-color var(--duration-quick),
+      color var(--duration-quick),
+      transform var(--duration-quick);
+  }
+
+  .hud-step-pill:hover {
+    background: var(--color-panel);
+    border-color: var(--color-accent);
+    color: var(--color-ink);
+    transform: translateY(-1px);
+  }
+
+  .hud-step-pill:active {
+    transform: scale(0.96);
+  }
+
+  .hud-step-pill.is-active {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: #ffffff;
+    box-shadow: 0 2px 8px color-mix(in oklch, var(--color-accent) 35%, transparent);
+  }
+
+  .step-num {
+    font-family: var(--font-mono);
+    font-weight: var(--weight-display);
+  }
+
+  .step-label {
+    max-width: 6.5rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .step-choice-chip {
+    display: inline-grid;
+    place-items: center;
+    width: 0.95rem;
+    height: 0.95rem;
+    border-radius: 50%;
+    background: color-mix(in oklch, var(--color-accent) 20%, transparent);
+    color: var(--color-accent);
+    font-size: 0.625rem;
+    font-weight: var(--weight-display);
+    line-height: 1;
+  }
+
+  .hud-step-pill.is-active .step-choice-chip {
+    background: rgba(255, 255, 255, 0.3);
+    color: #ffffff;
+  }
+
+  .hud-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    flex-shrink: 0;
+  }
+
+  .hud-tally {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.2rem;
+    color: var(--color-quiet);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+  }
+
+  .hud-tally strong {
+    color: var(--color-accent);
+    font-weight: var(--weight-display);
+  }
+
+  .hud-prd-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.4rem 0.85rem;
+    border-radius: var(--radius-pill);
+    background: var(--color-ink);
+    color: #ffffff;
+    border: 0;
+    font-size: var(--text-xs);
+    font-weight: var(--weight-display);
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    transition:
+      filter var(--duration-quick),
+      transform var(--duration-quick);
+  }
+
+  .hud-prd-trigger:hover {
+    filter: brightness(1.15);
+  }
+
+  .hud-prd-trigger:active {
+    transform: scale(0.96);
+  }
+
+  .hud-prd-trigger:focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+  }
+
+  @media (max-width: 860px) {
+    .case-progress-hud {
+      bottom: var(--space-2);
+      width: calc(100% - 1rem);
+    }
+    .hud-meta {
+      display: none;
+    }
+    .step-label {
+      display: none;
+    }
+    .hud-inner {
+      padding: 0.4rem 0.6rem;
+    }
+  }
+</style>
