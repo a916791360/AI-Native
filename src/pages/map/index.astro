@@ -23,9 +23,12 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
  * 案例库＝我要看一个完整场景，知识库＝我知道要找什么。
  *
  * 8 站不是 8 个并列的主题，而是一条递进关系：语言模型缺什么，每一层补什么。
- * 所以页面刻意不做成大图 hero + 卡片网格——那会把递进读成并列，
- * 正是这个站原本 325 个平级入口的老毛病。这里用的是「索引优先」结构：
- * 一条站点横条（兼导航）+ 8 个编号区块，每块给出目标、概念、判断、动作、展开清单。
+ * 遵循 Hallmark 体系改造：
+ * - 顶部增加认知递进全景管线（Spine Roadmap），直观建立 8 站心智模型，消除大段文字压迫感；
+ * - 站点横条升级为高质感吸顶 Stepper，站号、站名、概念计数呼吸清晰；
+ * - 高频日常词索引升级为结构化卡片与分类过滤 Pills，支持一键折叠/展开；
+ * - 8 站概念列表升级为响应式 Concept Card Grid，按角色（核心/前置）视觉分层，字重大对比，拒绝灰暗单列刷屏；
+ * - 右侧实战练习、行动指引与延伸路线升格为高交互面板。
  */
 const section = sectionById('map');
 const [{ chain, routes, domains }, entries] = await Promise.all([
@@ -35,8 +38,7 @@ const [{ chain, routes, domains }, entries] = await Promise.all([
 
 const stations = buildStationViews(chain);
 const allTerms = entries.map(({ data }) => data);
-// 站点内列出的词条只取「可独立选择的入口」：已废弃词条即便带 chain 也不再上链路图，
-// 否则 /map/ 会给出一个点进去就提示「已并入别处」的入口。
+// 站点内列出的词条只取「可独立选择的入口」：已废弃词条即便带 chain 也不再上链路图
 const terms = allTerms.filter(isSelectableTerm);
 const termsById = new Map(allTerms.map((term) => [term.id, term]));
 const domainNameById = new Map(domains.map((domain) => [domain.id, domain.shortNameZh]));
@@ -80,14 +82,6 @@ for (const station of stations) {
 
 const stationTermCount = (order: number) => (termsByStation.get(order) ?? []).length;
 const coveredTerms = terms.filter((term) => typeof term.chain === 'number').length;
-
-/**
- * 高频概念导航由 src/data/concept-guide.ts 维护。
- *
- * 这里刻意不再写死「五个概念」：截图中的 MCP / Skill / Agent / LangChain / RAG
- * 只是帮助读者理解架构的代表。真正的入口还应覆盖普通人在新闻、产品介绍、实际使用
- * 与安全讨论中反复遇到的词。词条是否存在由 buildConceptGuide 过滤，避免页面出现死链。
- */
 ---
 
 <BaseLayout
@@ -96,21 +90,47 @@ const coveredTerms = terms.filter((term) => typeof term.chain === 'number').leng
   structuredDataType="CollectionPage"
 >
   <main id="main-content" class="map-page">
-    <PageIntro
-      eyebrow={`Cognitive chain · ${stations.length} stations · ${coveredTerms}/${terms.length} terms placed`}
-      title={section.pageTitle}
-      description="这 8 站回答同一个问题：语言模型缺什么，每一层补什么。它们是递进关系，不是并列清单——所以按顺序读，跳读会失去意义。"
-    />
+    <div class="map-hero">
+      <PageIntro
+        eyebrow={`Cognitive chain · ${stations.length} stations · ${coveredTerms}/${terms.length} terms placed`}
+        title={section.pageTitle}
+        description="这 8 站回答同一个问题：语言模型缺什么，每一层补什么。它们是严格的工程递进关系，按顺序阅读建立系统认知。"
+      />
 
+      <!-- 8 站递进全景导览：一目了然看清架构脉络 -->
+      <div class="spine-roadmap" aria-label="8 站认知递进全景">
+        <div class="spine-roadmap-head">
+          <span class="spine-roadmap-tag">SPINE</span>
+          <span class="spine-roadmap-title">8 阶认知演化管线</span>
+        </div>
+        <div class="spine-steps-container">
+          {
+            stations.map((station, idx) => (
+              <div class="spine-step-wrapper">
+                <a href={`#station-${station.order}`} class="spine-step-chip">
+                  <span class="spine-step-num">{String(station.order).padStart(2, '0')}</span>
+                  <span class="spine-step-name">{station.nameZh.split(' · ')[0]}</span>
+                </a>
+                {idx < stations.length - 1 && <span class="spine-step-arrow" aria-hidden="true">→</span>}
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- 吸顶 Stepper 导航轨 -->
     <nav class="chain-rail" aria-label="链路站点导航">
       <ol>
         {
           stations.map((station) => (
             <li>
               <a href={`#station-${station.order}`} data-chain-rail={station.order}>
-                <span class="rail-index">{String(station.order).padStart(2, '0')}</span>
+                <div class="rail-top-row">
+                  <span class="rail-index">{String(station.order).padStart(2, '0')}</span>
+                  <span class="rail-count">{stationTermCount(station.order)} 个概念</span>
+                </div>
                 <span class="rail-name">{station.nameZh}</span>
-                <span class="rail-count">{stationTermCount(station.order)} 个概念</span>
               </a>
             </li>
           ))
@@ -118,63 +138,100 @@ const coveredTerms = terms.filter((term) => typeof term.chain === 'number').leng
       </ol>
     </nav>
 
+    <!-- 高频日常概念速查索引（可折叠、卡片化、带分层过滤） -->
     <section class="layer-guide" id="layers" aria-labelledby="layer-guide-title">
       <header class="layer-guide-head">
-        <p class="meta-label">Everyday AI concepts · {conceptGuide.length} entries</p>
-        <h2 id="layer-guide-title">新闻里反复出现的 AI 词，分别在解决什么问题？</h2>
-        <p class="layer-guide-note">
-          截图里的五个词只是架构示例，不是概念边界。这里扩展成一张面向普通人的高频入口： 从「AI
-          到底是什么」到「它能不能替我做事」，把新闻、产品宣传和日常使用里最常见的词放回
-          它们各自的层次。先看这一栏建立地图，再按下面 8 站继续深入。
-        </p>
+        <div class="layer-guide-head-left">
+          <p class="meta-label">Everyday AI concepts · {conceptGuide.length} entries</p>
+          <h2 id="layer-guide-title">高频词快速定位：日常反复出现的 AI 词，分别在解决什么问题？</h2>
+          <p class="layer-guide-note">
+            将日常新闻、产品宣传和工作交流中最常见的 22 个核心词放回系统层次。先看这里建立全局定位，再顺着下方 8 站深入认知。
+          </p>
+        </div>
+        <button
+          type="button"
+          class="layer-toggle-btn"
+          id="layer-toggle-btn"
+          aria-expanded="true"
+          aria-controls="layer-content-body"
+        >
+          <span class="toggle-text">收起速查表</span>
+          <span class="toggle-arrow" aria-hidden="true">↑</span>
+        </button>
       </header>
-      <div class="guide-legend" aria-label="概念出现语境">
-        <span><i class="exposure-news" aria-hidden="true"></i>新闻常见</span>
-        <span><i class="exposure-product" aria-hidden="true"></i>产品常见</span>
-        <span><i class="exposure-use" aria-hidden="true"></i>使用必遇</span>
-        <span><i class="exposure-work" aria-hidden="true"></i>工作常见</span>
-      </div>
-      <div class="layer-groups">
-        {
-          conceptGuideByLayer.map(({ layer, entries }) => (
-            <section class="layer-group" aria-labelledby={`layer-${layer}`}>
-              <header class="layer-group-head">
-                <h3 id={`layer-${layer}`}>{layer}</h3>
-                <span>{entries.length} 个入口</span>
-              </header>
-              <ul class="layer-list">
-                {entries.map((concept) => (
-                  <li class="layer-row" data-exposure={concept.exposure}>
-                    <div class="layer-name">
-                      <a href={`/terms/${concept.term.id}/`}>{concept.term.nameZh}</a>
-                      <span class="layer-tag">{concept.term.nameEn}</span>
-                    </div>
-                    <p class="layer-role">{concept.role}</p>
-                    <p class="layer-confusion">
-                      <span class="layer-confusion-label">常见困惑</span>
-                      {concept.confusion}
-                    </p>
-                    <div class="layer-meta">
-                      <span class={`exposure exposure-${concept.exposure}`}>
-                        {concept.exposure}
-                      </span>
-                      {concept.station ? (
-                        <a class="layer-station" href={`#station-${concept.station}`}>
-                          第 {concept.station} 站
-                        </a>
-                      ) : (
-                        <span class="layer-station layer-station-muted">待放入主链路</span>
-                      )}
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </section>
-          ))
-        }
+
+      <div id="layer-content-body" class="layer-content-body">
+        <div class="layer-toolbar">
+          <div class="guide-legend" aria-label="概念出现语境">
+            <span><i class="exposure-news" aria-hidden="true"></i>新闻常见</span>
+            <span><i class="exposure-product" aria-hidden="true"></i>产品常见</span>
+            <span><i class="exposure-use" aria-hidden="true"></i>使用必遇</span>
+            <span><i class="exposure-work" aria-hidden="true"></i>工作常见</span>
+          </div>
+
+          <div class="layer-filter-bar" role="tablist" aria-label="分层快速过滤">
+            <button type="button" class="layer-filter-pill active" data-layer-filter="all">
+              全部 ({conceptGuide.length})
+            </button>
+            {
+              conceptGuideByLayer.map(({ layer, entries }) => (
+                <button type="button" class="layer-filter-pill" data-layer-filter={layer}>
+                  {layer} ({entries.length})
+                </button>
+              ))
+            }
+          </div>
+        </div>
+
+        <div class="layer-groups">
+          {
+            conceptGuideByLayer.map(({ layer, entries }) => (
+              <section class="layer-group" data-group-layer={layer} aria-labelledby={`layer-${layer}`}>
+                <header class="layer-group-head">
+                  <h3 id={`layer-${layer}`}>{layer}</h3>
+                  <span class="layer-group-count">{entries.length} 个入口</span>
+                </header>
+                <ul class="layer-list">
+                  {entries.map((concept) => (
+                    <li class="layer-row" data-exposure={concept.exposure}>
+                      <div class="layer-card-top">
+                        <div class="layer-name">
+                          <a href={`/terms/${concept.term.id}/`}>{concept.term.nameZh}</a>
+                          <span class="layer-tag">{concept.term.nameEn}</span>
+                        </div>
+                        <div class="layer-meta">
+                          <span class={`exposure exposure-${concept.exposure}`}>
+                            {concept.exposure}
+                          </span>
+                          {concept.station ? (
+                            <a
+                              class="layer-station"
+                              href={`#station-${concept.station}`}
+                              title={`跳转到第 ${concept.station} 站`}
+                            >
+                              第 {concept.station} 站 →
+                            </a>
+                          ) : (
+                            <span class="layer-station layer-station-muted">待放入主链路</span>
+                          )}
+                        </div>
+                      </div>
+                      <p class="layer-role">{concept.role}</p>
+                      <div class="layer-confusion">
+                        <span class="layer-confusion-label">常见困惑</span>
+                        <p class="layer-confusion-text">{concept.confusion}</p>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            ))
+          }
+        </div>
       </div>
     </section>
 
+    <!-- 8 站认知主结构 -->
     <div class="chain-stations">
       {
         stations.map((station) => {
@@ -191,34 +248,59 @@ const coveredTerms = terms.filter((term) => typeof term.chain === 'number').leng
               data-station={station.order}
             >
               <header class="station-head">
-                <p class="meta-label">
-                  Station {String(station.order).padStart(2, '0')} / {stations.length}
-                </p>
-                <h2>{station.nameZh}</h2>
-                <p class="station-question" data-pagefind-meta={`station-${station.order}`}>
-                  {station.question}
-                </p>
-                <p class="station-goal">{station.goal}</p>
+                <div class="station-head-badge">
+                  <span class="station-badge-num">{String(station.order).padStart(2, '0')}</span>
+                  <span class="station-badge-total">/ 08</span>
+                </div>
+                <div class="station-head-content">
+                  <div class="station-head-top">
+                    <span class="station-step-label">STATION {String(station.order).padStart(2, '0')}</span>
+                    <span class="station-meta-pill">{stationTerms.length} 核心概念</span>
+                    <span class="station-meta-pill">{questions.length} 道判断练习</span>
+                    <span class="station-meta-pill">{stationRoutes.length} 条展开路线</span>
+                  </div>
+                  <h2>{station.nameZh}</h2>
+                  <div class="station-question-box">
+                    <span class="question-prefix">核心拷问</span>
+                    <p class="station-question" data-pagefind-meta={`station-${station.order}`}>
+                      {station.question}
+                    </p>
+                  </div>
+                  <p class="station-goal">{station.goal}</p>
+                </div>
               </header>
 
               <div class="station-grid">
                 <section class="station-block station-terms" aria-label="本站概念">
-                  <h3>本站概念</h3>
+                  <div class="block-header">
+                    <div class="block-title-group">
+                      <h3>本站概念</h3>
+                      <span class="block-counter">{stationTerms.length} 个概念</span>
+                    </div>
+                    <div class="role-filter-hint" aria-hidden="true">
+                      <span class="hint-dot core-dot"></span>核心概念
+                      <span class="hint-dot intro-dot"></span>前置概念
+                    </div>
+                  </div>
                   {stationTerms.length > 0 ? (
-                    <ul>
+                    <ul class="terms-card-grid">
                       {stationTerms.map((term) => (
                         <li data-role={term.chainRole ?? 'unplaced'}>
-                          <a class="term-link" href={`/terms/${term.id}/`}>
-                            {term.nameZh}
-                          </a>
-                          {term.chainRole && (
-                            <span class="role-tag">
-                              {CHAIN_ROLE_LABELS[term.chainRole as ChainRole]}
-                            </span>
-                          )}
-                          <span class="term-domain">
-                            {domainNameById.get(term.domain) ?? term.domain}
-                          </span>
+                          <div class="term-card-header">
+                            <a class="term-link" href={`/terms/${term.id}/`}>
+                              {term.nameZh}
+                            </a>
+                            <div class="term-badges">
+                              {term.chainRole && (
+                                <span class="role-tag">
+                                  {CHAIN_ROLE_LABELS[term.chainRole as ChainRole]}
+                                </span>
+                              )}
+                              <span class="term-domain">
+                                {domainNameById.get(term.domain) ?? term.domain}
+                              </span>
+                            </div>
+                          </div>
                           <p>{term.summary}</p>
                         </li>
                       ))}
@@ -230,18 +312,29 @@ const coveredTerms = terms.filter((term) => typeof term.chain === 'number').leng
 
                 <div class="station-side">
                   <section class="station-block station-action" aria-label="上手动作">
-                    <h3>上手动作</h3>
-                    <p>{station.action}</p>
+                    <div class="block-header">
+                      <h3>上手动作</h3>
+                      <span class="block-icon" aria-hidden="true">⚡</span>
+                    </div>
+                    <div class="action-card-content">
+                      <p>{station.action}</p>
+                    </div>
                   </section>
 
                   <section class="station-block station-questions" aria-label="对应判断题">
-                    <h3>对应判断题</h3>
+                    <div class="block-header">
+                      <h3>对应判断题</h3>
+                      <span class="block-counter">{questions.length} 题</span>
+                    </div>
                     {questions.length > 0 ? (
                       <ul>
                         {questions.map((question) => (
                           <li>
-                            <a href={`/learn/questions/${question.id}/`}>{question.shortTitle}</a>
-                            <small>{question.index}</small>
+                            <a href={`/learn/questions/${question.id}/`}>
+                              <span class="question-index-tag">{question.index}</span>
+                              <span class="question-title-text">{question.shortTitle}</span>
+                              <span class="question-arrow" aria-hidden="true">→</span>
+                            </a>
                           </li>
                         ))}
                       </ul>
@@ -251,13 +344,19 @@ const coveredTerms = terms.filter((term) => typeof term.chain === 'number').leng
                   </section>
 
                   <section class="station-block station-routes" aria-label="展开阅读清单">
-                    <h3>展开阅读清单</h3>
+                    <div class="block-header">
+                      <h3>展开阅读清单</h3>
+                      <span class="block-counter">{stationRoutes.length} 条</span>
+                    </div>
                     {stationRoutes.length > 0 ? (
                       <ul>
                         {stationRoutes.map(({ route, stationTally }) => (
                           <li>
-                            <a href={`/routes/${route.id}/`}>{route.nameZh}</a>
-                            <small>{stationTally.get(station.order)} 个词条在本站</small>
+                            <a href={`/routes/${route.id}/`}>
+                              <span class="route-icon" aria-hidden="true">📖</span>
+                              <span class="route-title-text">{route.nameZh}</span>
+                              <small>{stationTally.get(station.order)} 词条</small>
+                            </a>
                           </li>
                         ))}
                       </ul>
@@ -290,33 +389,25 @@ const coveredTerms = terms.filter((term) => typeof term.chain === 'number').leng
       }
     </div>
 
-    {
-      /*
-       * 链路页此前是死胡同：8 站读完，页面里没有任何通往判断题与案例的出口
-       * （全页 /learn 链接为 0）。读者刚补完词汇量就被放下——而这条链路的用途
-       * 正是「有了词汇量之后去做判断」，所以出口该由链路的终点自己给。
-       * 不复用顶栏导航：顶栏表达的是「随时可以去」，这里表达的是「读完 8 站该去哪」，
-       * 两句话的作用不同，混用会让出口变成又一次导航罗列。
-       */
-    }
+    <!-- 链路终点出口 -->
     <section class="chain-exit" aria-labelledby="chain-exit-title">
       <div class="chain-exit-inner">
-        <p class="chain-exit-eyebrow">读完这条链路之后</p>
+        <span class="chain-exit-eyebrow">MILESTONE · 8 站认知链路完成</span>
         <h2 id="chain-exit-title">概念认全了，接下来练的是判断</h2>
         <p class="chain-exit-lede">
-          8 站补的是词汇量——知道每一层在补什么。但取舍不会出现在词条里，
-          它出现在一道题、一个完整场景里。带着这些词把判断做一遍，链路才算走完。
+          8 站补齐了系统认知：知道语言模型每一层在补什么。但在工程与业务中，真正的难点在于「取舍与决策」。带着这 {coveredTerms} 个概念，前往判断题库和案例库进行实战演练，链路才算真正闭环。
         </p>
         <div class="chain-exit-links">
           <a class="chain-exit-primary" href="/learn/">
             开始做 {LEARNING_QUESTIONS.length} 道判断题 →
           </a>
-          <a href="/learn/cases/">看一个完整案例</a>
-          <a href="/routes/">按顺序读完一组词条</a>
+          <a class="chain-exit-secondary" href="/learn/cases/">看一个完整案例</a>
+          <a class="chain-exit-secondary" href="/routes/">按顺序读完一组词条</a>
         </div>
       </div>
     </section>
 
+    <!-- 返回顶部浮钮 -->
     <button type="button" class="back-to-top" data-back-to-top aria-label="返回顶部" hidden>
       <svg
         width="16"
@@ -337,8 +428,7 @@ const coveredTerms = terms.filter((term) => typeof term.chain === 'number').leng
 </BaseLayout>
 
 <script>
-  // 站点横条高亮当前站。用 IntersectionObserver 而不是 scroll 事件：
-  // 后者要每帧读 getBoundingClientRect，而这个页面有 8 个高区块。
+  // 1. 站点横条高亮当前站。用 IntersectionObserver
   const links = [...document.querySelectorAll<HTMLAnchorElement>('[data-chain-rail]')];
   const sections = links
     .map((link) => document.getElementById(link.hash.slice(1)))
@@ -356,7 +446,6 @@ const coveredTerms = terms.filter((term) => typeof term.chain === 'number').leng
       }
     };
 
-    // 维护「当前可见的站」集合，每次从全集里挑最靠前的一个。
     const visible = new Set<string>();
 
     const observer = new IntersectionObserver(
@@ -370,13 +459,11 @@ const coveredTerms = terms.filter((term) => typeof term.chain === 'number').leng
         const topmost = [...visible].sort((left, right) => Number(left) - Number(right))[0];
         if (topmost) setActive(topmost);
       },
-      // 上边距留出 sticky 顶栏 + 吸顶站点条总高度（约 150px），下边距吃掉大半个视口
       { rootMargin: '-150px 0px -50% 0px', threshold: 0 },
     );
 
     for (const section of sections) observer.observe(section);
 
-    // 点击指示条立即高亮并平滑定位
     for (const link of links) {
       link.addEventListener('click', () => {
         const order = link.dataset.chainRail;
@@ -385,7 +472,42 @@ const coveredTerms = terms.filter((term) => typeof term.chain === 'number').leng
     }
   }
 
-  // 返回顶部快捷交互
+  // 2. 高频词速查表折叠/展开交互
+  const toggleBtn = document.getElementById('layer-toggle-btn');
+  const layerContent = document.getElementById('layer-content-body');
+  if (toggleBtn && layerContent) {
+    toggleBtn.addEventListener('click', () => {
+      const isExpanded = toggleBtn.getAttribute('aria-expanded') === 'true';
+      toggleBtn.setAttribute('aria-expanded', String(!isExpanded));
+      layerContent.hidden = isExpanded;
+      const text = toggleBtn.querySelector('.toggle-text');
+      const arrow = toggleBtn.querySelector('.toggle-arrow');
+      if (text) text.textContent = isExpanded ? '展开速查表' : '收起速查表';
+      if (arrow) arrow.textContent = isExpanded ? '↓' : '↑';
+    });
+  }
+
+  // 3. 高频词分层快速过滤
+  const filterPills = document.querySelectorAll<HTMLButtonElement>('[data-layer-filter]');
+  const layerGroups = document.querySelectorAll<HTMLElement>('.layer-group');
+  if (filterPills.length > 0 && layerGroups.length > 0) {
+    for (const pill of filterPills) {
+      pill.addEventListener('click', () => {
+        const filter = pill.dataset.layerFilter;
+        for (const p of filterPills) p.classList.toggle('active', p === pill);
+        for (const group of layerGroups) {
+          const groupLayer = group.dataset.groupLayer;
+          if (filter === 'all' || groupLayer === filter) {
+            group.removeAttribute('hidden');
+          } else {
+            group.setAttribute('hidden', '');
+          }
+        }
+      });
+    }
+  }
+
+  // 4. 返回顶部快捷交互
   const backToTop = document.querySelector<HTMLButtonElement>('[data-back-to-top]');
   if (backToTop) {
     window.addEventListener(
@@ -407,29 +529,195 @@ const coveredTerms = terms.filter((term) => typeof term.chain === 'number').leng
 </script>
 
 <style>
+  /* ==========================================================================
+     Hallmark Cognitive Chain (AI 认知链路) Page Styles
+     遵循 Daylight Clean 规范与 400 / 800 字重立场
+     ========================================================================== */
+
   .map-page {
-    padding-bottom: var(--space-7);
+    width: min(calc(100% - 3rem), 1240px);
+    margin: var(--space-4) auto var(--space-7);
+    min-width: 0;
+    box-sizing: border-box;
   }
 
-  /* ---- 站点横条：索引，同时也是导航（吸顶交互） ------------------------ */
+  /* 保证子元素 100% 齐平 */
+  .map-hero,
+  .chain-rail,
+  .layer-guide,
+  .chain-stations,
+  .chain-exit {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin-inline: 0;
+  }
+
+  /* ---- 1. Hero 区域与递进全景导览 ------------------------------------ */
+
+  .map-hero {
+    margin-bottom: var(--space-5);
+  }
+
+  :global(.map-page .page-intro) {
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    background: var(--color-panel);
+    padding: clamp(1.5rem, 3.2vw, 2.5rem);
+    box-shadow: var(--shadow-card);
+    margin-bottom: var(--space-3);
+  }
+
+  :global(.map-page .page-intro .eyebrow) {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.2rem 0.65rem;
+    border-radius: var(--radius-pill);
+    background: var(--color-accent-wash);
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-display);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    margin-bottom: var(--space-2);
+  }
+
+  :global(.map-page .page-intro h1) {
+    color: var(--color-ink);
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 3.2vw, 2.5rem);
+    font-weight: var(--weight-display);
+    letter-spacing: var(--tracking-display);
+    line-height: 1.15;
+    margin: 0 0 var(--space-2);
+  }
+
+  :global(.map-page .page-intro .page-intro-copy) {
+    color: var(--color-muted);
+    font-size: var(--text-base);
+    line-height: 1.65;
+    max-width: 52rem;
+    margin: 0;
+  }
+
+  /* 8 站认知递进管线全景条 */
+  .spine-roadmap {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-2) var(--space-3);
+    background: var(--color-panel);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-card);
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .spine-roadmap::-webkit-scrollbar {
+    display: none;
+  }
+
+  .spine-roadmap-head {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding-right: var(--space-2);
+    border-right: 1px solid var(--color-line-soft);
+    flex-shrink: 0;
+  }
+
+  .spine-roadmap-tag {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    font-weight: var(--weight-display);
+    color: #ffffff;
+    background: var(--color-accent);
+    padding: 0.1rem 0.35rem;
+    border-radius: var(--radius-pill);
+    letter-spacing: 0.05em;
+  }
+
+  .spine-roadmap-title {
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: var(--weight-display);
+    color: var(--color-ink);
+    white-space: nowrap;
+  }
+
+  .spine-steps-container {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    flex: 1;
+    min-width: max-content;
+  }
+
+  .spine-step-wrapper {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .spine-step-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.2rem 0.55rem;
+    border-radius: var(--radius-pill);
+    background: var(--color-panel-raised);
+    border: 1px solid var(--color-line-soft);
+    text-decoration: none;
+    transition: background-color var(--duration-quick), border-color var(--duration-quick), transform var(--duration-quick);
+  }
+
+  .spine-step-chip:hover {
+    background: var(--color-accent-wash);
+    border-color: var(--color-accent);
+    transform: translateY(-1px);
+  }
+
+  .spine-step-num {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: var(--weight-display);
+    color: var(--color-accent);
+  }
+
+  .spine-step-name {
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: var(--weight-display);
+    color: var(--color-ink);
+    white-space: nowrap;
+  }
+
+  .spine-step-arrow {
+    font-size: 0.6875rem;
+    color: var(--color-quiet);
+    opacity: 0.6;
+  }
+
+  /* ---- 2. 吸顶 Stepper 导航轨 ----------------------------------------- */
 
   .chain-rail {
     position: sticky;
-    top: var(--header-height, 4rem);
+    top: calc(var(--header-height, 4rem) + 0.5rem);
     z-index: 15;
-    width: min(calc(100% - 2.5rem), var(--content-max));
-    margin: 0 auto var(--space-5);
+    margin-bottom: var(--space-5);
     border: 1px solid var(--color-line);
-    border-radius: var(--radius-sm);
-    background: color-mix(in oklch, var(--color-panel) 94%, transparent);
-    backdrop-filter: blur(14px) saturate(1.4);
+    border-radius: var(--radius-md);
+    background: color-mix(in oklch, var(--color-panel) 92%, transparent);
+    backdrop-filter: blur(16px) saturate(1.4);
     box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06);
     overflow: hidden;
   }
 
   .chain-rail ol {
     display: grid;
-    /* 8 列 → 4 列 → 2 列。宽屏下整条并排吸顶；移动端支持单行横向平滑滑动 */
     grid-template-columns: repeat(8, minmax(0, 1fr));
     margin: 0;
     padding: 0;
@@ -441,79 +729,112 @@ const coveredTerms = terms.filter((term) => typeof term.chain === 'number').leng
   }
 
   .chain-rail a {
-    min-height: 5.25rem;
+    min-height: 4.5rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: var(--space-0);
-    padding: var(--space-2);
+    gap: 0.25rem;
+    padding: var(--space-2) 0.65rem;
     text-decoration: none;
-    touch-action: manipulation;
     border-bottom: 2px solid transparent;
-    transition:
-      background-color var(--duration-quick) var(--ease-smooth-out),
-      border-color var(--duration-quick) var(--ease-smooth-out),
-      transform var(--duration-quick) var(--ease-smooth-out);
+    box-sizing: border-box;
+    transition: background-color var(--duration-quick), border-color var(--duration-quick);
   }
 
   .chain-rail a:hover {
     background: var(--color-panel-raised);
   }
 
-  .chain-rail a:active {
-    transform: scale(0.98);
-  }
-
   .chain-rail a[aria-current='true'] {
-    background: var(--color-panel-raised);
+    background: var(--color-accent-wash);
     border-bottom-color: var(--color-accent);
   }
 
-  .chain-rail a[aria-current='true'] .rail-index {
-    color: var(--color-accent);
-  }
-
-  .chain-rail a[aria-current='true'] .rail-name {
-    color: var(--color-ink);
+  .rail-top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.2rem;
   }
 
   .rail-index {
-    color: var(--color-prerequisite);
     font-family: var(--font-mono);
-    font-size: var(--text-xs);
+    font-size: 0.6875rem;
+    font-weight: var(--weight-display);
+    color: var(--color-quiet);
+    padding: 0.05rem 0.3rem;
+    background: var(--color-panel-raised);
+    border-radius: var(--radius-pill);
+    line-height: 1;
+  }
+
+  .chain-rail a[aria-current='true'] .rail-index {
+    background: var(--color-accent);
+    color: #ffffff;
+  }
+
+  .rail-count {
+    color: var(--color-quiet);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    white-space: nowrap;
     line-height: 1;
   }
 
   .rail-name {
     color: var(--color-muted);
     font-family: var(--font-display);
-    font-size: 0.875rem;
+    font-size: 0.8125rem;
     font-weight: var(--weight-display);
-    line-height: 1.35;
+    line-height: 1.3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
   }
 
-  .rail-count {
-    color: var(--color-quiet);
-    font-size: var(--text-xs);
-    font-variant-numeric: tabular-nums;
-    line-height: 1.4;
+  .chain-rail a[aria-current='true'] .rail-name {
+    color: var(--color-accent-strong);
   }
 
-  /* ---- 五层总图：第 3–6 站的引导区 ------------------------------------ */
+  /* ---- 3. 高频词日常概念速查索引 -------------------------------------- */
 
   .layer-guide {
     scroll-margin-top: calc(var(--header-height, 4rem) + 5.75rem);
-    width: min(calc(100% - 2.5rem), var(--content-max));
-    margin: 0 auto var(--space-5);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    background: var(--color-panel);
+    padding: var(--space-4);
+    box-shadow: var(--shadow-card);
+    margin-bottom: var(--space-5);
   }
 
   .layer-guide-head {
-    margin-bottom: var(--space-3);
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-3);
+  }
+
+  .layer-guide-head-left {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .meta-label {
+    margin: 0 0 var(--space-1);
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-display);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
   }
 
   .layer-guide-head h2 {
-    max-width: 50rem;
-    margin: var(--space-0) 0 var(--space-1);
+    max-width: 48rem;
+    margin: 0 0 var(--space-1);
     color: var(--color-ink);
     font-family: var(--font-display);
     font-size: var(--text-lg);
@@ -525,14 +846,57 @@ const coveredTerms = terms.filter((term) => typeof term.chain === 'number').leng
     max-width: var(--reading-max);
     margin: 0;
     color: var(--color-muted);
-    line-height: 1.75;
+    font-size: var(--text-sm);
+    line-height: 1.65;
+  }
+
+  .layer-toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--color-line);
+    background: var(--color-panel-raised);
+    color: var(--color-ink);
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-display);
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background-color var(--duration-quick), border-color var(--duration-quick);
+  }
+
+  .layer-toggle-btn:hover {
+    background: var(--color-panel);
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+
+  .layer-content-body {
+    margin-top: var(--space-3);
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--color-line-soft);
+  }
+
+  .layer-content-body[hidden] {
+    display: none !important;
+  }
+
+  .layer-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-3);
+    margin-bottom: var(--space-4);
   }
 
   .guide-legend {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-2) var(--space-4);
-    margin: var(--space-3) 0 var(--space-2);
+    align-items: center;
+    gap: var(--space-2) var(--space-3);
     color: var(--color-muted);
     font-size: var(--text-xs);
   }
@@ -549,77 +913,116 @@ const coveredTerms = terms.filter((term) => typeof term.chain === 'number').leng
     height: 0.45rem;
     display: inline-block;
     border-radius: 50%;
-    background: var(--color-quiet);
   }
 
-  .exposure-news {
-    background: var(--color-accent) !important;
+  .exposure-news { background: var(--color-accent) !important; }
+  .exposure-product { background: var(--color-prerequisite) !important; }
+  .exposure-use { background: var(--color-comparison) !important; }
+  .exposure-work { background: var(--color-component) !important; }
+
+  .layer-filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem;
   }
-  .exposure-product {
-    background: var(--color-prerequisite) !important;
+
+  .layer-filter-pill {
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--color-line-soft);
+    background: var(--color-panel-raised);
+    color: var(--color-muted);
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-display);
+    cursor: pointer;
+    transition: background-color var(--duration-quick), border-color var(--duration-quick), color var(--duration-quick);
   }
-  .exposure-use {
-    background: var(--color-comparison) !important;
+
+  .layer-filter-pill:hover {
+    background: var(--color-panel);
+    border-color: var(--color-accent);
+    color: var(--color-accent);
   }
-  .exposure-work {
-    background: var(--color-component) !important;
+
+  .layer-filter-pill.active {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: #ffffff;
   }
 
   .layer-groups {
     display: grid;
-    gap: var(--space-3);
+    gap: var(--space-4);
+  }
+
+  .layer-group[hidden] {
+    display: none !important;
   }
 
   .layer-group {
-    border: 1px solid var(--color-line);
+    border: 1px solid var(--color-line-soft);
     border-radius: var(--radius-sm);
-    background: var(--color-panel);
+    background: var(--color-panel-raised);
     overflow: hidden;
   }
 
   .layer-group-head {
     display: flex;
-    align-items: baseline;
+    align-items: center;
     justify-content: space-between;
-    gap: var(--space-2);
-    border-bottom: 1px solid var(--color-line);
     padding: var(--space-2) var(--space-3);
+    background: color-mix(in oklch, var(--color-panel) 60%, var(--color-panel-raised));
+    border-bottom: 1px solid var(--color-line-soft);
   }
 
   .layer-group-head h3 {
     margin: 0;
     color: var(--color-ink);
     font-family: var(--font-display);
-    font-size: var(--text-base);
+    font-size: 0.9375rem;
     font-weight: var(--weight-display);
   }
 
-  .layer-group-head span {
+  .layer-group-count {
     color: var(--color-quiet);
     font-family: var(--font-mono);
     font-size: var(--text-xs);
   }
 
   .layer-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-3);
+    padding: var(--space-3);
     margin: 0;
-    padding: 0;
     list-style: none;
   }
 
   .layer-row {
-    display: grid;
-    /* 概念 + 一句话定位 + 常见困惑 + 出现语境/站号。窄屏折叠成单列。 */
-    grid-template-columns: minmax(9rem, 0.8fr) minmax(0, 1.35fr) minmax(0, 1.45fr) minmax(
-        8rem,
-        auto
-      );
+    display: flex;
+    flex-direction: column;
     gap: var(--space-2);
-    align-items: baseline;
-    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--color-line-soft);
+    border-radius: var(--radius-sm);
+    background: var(--color-panel);
+    padding: var(--space-3);
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);
+    transition: transform var(--duration-quick), border-color var(--duration-quick), box-shadow var(--duration-quick);
   }
 
-  .layer-row + .layer-row {
-    border-top: 1px solid var(--color-line-soft);
+  .layer-row:hover {
+    border-color: var(--color-accent);
+    box-shadow: var(--shadow-card);
+    transform: translateY(-1px);
+  }
+
+  .layer-card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-2);
   }
 
   .layer-name {
@@ -627,13 +1030,13 @@ const coveredTerms = terms.filter((term) => typeof term.chain === 'number').leng
     display: flex;
     flex-wrap: wrap;
     align-items: baseline;
-    gap: var(--space-1);
+    gap: 0.35rem;
   }
 
   .layer-name a {
     color: var(--color-ink);
     font-family: var(--font-display);
-    font-size: var(--text-base);
+    font-size: 1rem;
     font-weight: var(--weight-display);
     text-decoration: none;
   }
@@ -645,42 +1048,25 @@ const coveredTerms = terms.filter((term) => typeof term.chain === 'number').leng
   .layer-tag {
     max-width: 100%;
     overflow-wrap: anywhere;
-    padding: 0.1rem 0.4rem;
+    padding: 0.05rem 0.4rem;
     border: 1px solid var(--color-line-soft);
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-pill);
+    background: var(--color-panel-raised);
     color: var(--color-muted);
-    font-size: var(--text-xs);
-  }
-
-  .layer-role,
-  .layer-confusion {
-    min-width: 0;
-    margin: 0;
-    line-height: 1.6;
-  }
-
-  .layer-role {
-    color: var(--color-ink);
-  }
-  .layer-confusion {
-    color: var(--color-muted);
-  }
-
-  .layer-confusion-label {
-    display: block;
-    color: var(--color-quiet);
-    font-size: var(--text-xs);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
   }
 
   .layer-meta {
-    display: grid;
-    justify-items: start;
-    gap: var(--space-1);
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    flex-shrink: 0;
   }
 
   .exposure {
     color: var(--color-muted);
-    font-size: var(--text-xs);
+    font-size: 0.6875rem;
     white-space: nowrap;
   }
 
@@ -693,158 +1079,308 @@ const coveredTerms = terms.filter((term) => typeof term.chain === 'number').leng
     background: var(--color-quiet);
   }
 
-  .exposure-新闻常见::before {
-    background: var(--color-accent);
-  }
-  .exposure-产品常见::before {
-    background: var(--color-prerequisite);
-  }
-  .exposure-使用必遇::before {
-    background: var(--color-comparison);
-  }
-  .exposure-工作常见::before {
-    background: var(--color-component);
-  }
+  .exposure-新闻常见::before { background: var(--color-accent); }
+  .exposure-产品常见::before { background: var(--color-prerequisite); }
+  .exposure-使用必遇::before { background: var(--color-comparison); }
+  .exposure-工作常见::before { background: var(--color-component); }
 
   .layer-station {
-    color: var(--color-prerequisite);
+    display: inline-flex;
+    align-items: center;
+    padding: 0.1rem 0.45rem;
+    border-radius: var(--radius-pill);
+    background: var(--color-accent-wash);
+    color: var(--color-accent-strong);
     font-family: var(--font-mono);
-    font-size: var(--text-xs);
+    font-size: 0.6875rem;
+    font-weight: var(--weight-display);
     text-decoration: none;
     white-space: nowrap;
+    transition: background-color var(--duration-quick);
+  }
+
+  .layer-station:hover {
+    background: var(--color-accent);
+    color: #ffffff;
   }
 
   .layer-station-muted {
     color: var(--color-quiet);
+    font-size: 0.6875rem;
   }
 
-  @media (max-width: 60rem) {
-    .layer-row {
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr);
-      gap: var(--space-1) var(--space-2);
-    }
-
-    .layer-meta {
-      grid-column: 2;
-      grid-row: 1;
-      justify-self: end;
-    }
+  .layer-role {
+    margin: 0;
+    color: var(--color-ink);
+    font-size: var(--text-sm);
+    line-height: 1.55;
   }
 
-  @media (max-width: 38rem) {
-    .layer-row {
-      grid-template-columns: minmax(0, 1fr);
-    }
-
-    .layer-meta {
-      grid-column: auto;
-      grid-row: auto;
-      justify-self: start;
-    }
+  .layer-confusion {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    background: var(--color-panel-raised);
+    border-radius: var(--radius-sm);
+    padding: var(--space-2);
+    border: 1px solid var(--color-line-soft);
   }
 
-  /* ---- 站区块 -------------------------------------------------------- */
+  .layer-confusion-label {
+    color: var(--color-quiet);
+    font-family: var(--font-display);
+    font-size: 0.6875rem;
+    font-weight: var(--weight-display);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+  }
+
+  .layer-confusion-text {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: 0.8125rem;
+    line-height: 1.5;
+  }
+
+  /* ---- 4. 8 站认知主结构 --------------------------------------------- */
 
   .chain-stations {
-    width: min(calc(100% - 2.5rem), var(--content-max));
-    display: grid;
-    gap: var(--space-4);
-    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
   }
 
   .chain-station {
     border: 1px solid var(--color-line);
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-md);
     background: var(--color-panel);
+    box-shadow: var(--shadow-card);
     overflow: hidden;
     scroll-margin-top: calc(var(--header-height, 4rem) + 5.75rem);
   }
 
   .station-head {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-4);
     border-bottom: 1px solid var(--color-line);
-    padding: var(--space-3) var(--space-3) var(--space-3);
+    padding: clamp(1.25rem, 2.5vw, 1.75rem);
+    background: linear-gradient(180deg, var(--color-panel-raised) 0%, var(--color-panel) 100%);
+  }
+
+  .station-head-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 3.75rem;
+    height: 3.75rem;
+    border-radius: var(--radius-md);
+    background: var(--color-accent-wash);
+    border: 1px solid color-mix(in oklch, var(--color-accent) 25%, transparent);
+    flex-shrink: 0;
+  }
+
+  .station-badge-num {
+    font-family: var(--font-mono);
+    font-size: 1.35rem;
+    font-weight: var(--weight-display);
+    color: var(--color-accent-strong);
+    line-height: 1;
+  }
+
+  .station-badge-total {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    color: var(--color-quiet);
+    margin-top: 0.15rem;
+  }
+
+  .station-head-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .station-head-top {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-2);
+    margin-bottom: var(--space-1);
+  }
+
+  .station-step-label {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: var(--weight-display);
+    color: var(--color-accent);
+    letter-spacing: var(--tracking-label);
+  }
+
+  .station-meta-pill {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--color-quiet);
+    background: var(--color-panel);
+    border: 1px solid var(--color-line);
+    padding: 0.1rem 0.45rem;
+    border-radius: var(--radius-pill);
   }
 
   .station-head h2 {
-    margin: var(--space-1) 0 var(--space-2);
+    margin: 0 0 var(--space-2);
     font-family: var(--font-display);
-    font-size: 1.5rem;
+    font-size: clamp(1.25rem, 2.2vw, 1.5rem);
     font-weight: var(--weight-display);
-    line-height: 1.3;
+    color: var(--color-ink);
+    line-height: 1.25;
+  }
+
+  .station-question-box {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+    background: var(--color-panel);
+    border: 1px solid var(--color-line-soft);
+    border-left: 3px solid var(--color-accent);
+    border-radius: var(--radius-sm);
+    margin-bottom: var(--space-2);
+  }
+
+  .question-prefix {
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-display);
+    color: var(--color-accent-strong);
+    white-space: nowrap;
+    flex-shrink: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
   }
 
   .station-question {
-    max-width: 44rem;
     margin: 0;
-    color: var(--color-accent-strong);
+    color: var(--color-ink);
     font-family: var(--font-display);
-    font-size: var(--text-lead);
+    font-size: var(--text-sm);
     font-weight: var(--weight-body);
-    line-height: 1.55;
+    line-height: 1.6;
   }
 
   .station-goal {
-    max-width: 48rem;
-    margin: var(--space-2) 0 0;
+    margin: 0;
     color: var(--color-muted);
     font-size: var(--text-sm);
-    line-height: 1.7;
+    line-height: 1.6;
   }
 
+  /* 2-Column 布局：左侧概念卡片阵列 + 右侧实战动作与扩展 */
   .station-grid {
     display: grid;
-    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1.55fr) minmax(17rem, 1fr);
+    align-items: start;
   }
 
-  .station-side {
-    border-left: 1px solid var(--color-line);
+  .station-terms {
+    padding: var(--space-4);
   }
 
-  .station-block {
-    padding: var(--space-3);
+  .block-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-3);
   }
 
-  .station-block + .station-block {
-    border-top: 1px solid var(--color-line-soft);
+  .block-title-group {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-2);
   }
 
   .station-block h3 {
-    margin: 0 0 var(--space-2);
-    color: var(--color-quiet);
-    font-family: var(--font-mono);
-    font-size: 0.78rem;
-    font-weight: var(--weight-body);
-    letter-spacing: 0.14em;
+    margin: 0;
+    color: var(--color-ink);
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    font-weight: var(--weight-display);
+    letter-spacing: var(--tracking-label);
     text-transform: uppercase;
   }
 
-  .station-terms ul,
-  .station-questions ul,
-  .station-routes ul {
+  .block-counter {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-quiet);
+  }
+
+  .role-filter-hint {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-xs);
+    color: var(--color-quiet);
+  }
+
+  .hint-dot {
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .core-dot { background: var(--color-accent); }
+  .intro-dot { background: var(--color-prerequisite); }
+
+  /* 概念卡片网格：彻底摆脱单列文字瀑布 */
+  .terms-card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(15.5rem, 1fr));
+    gap: var(--space-2);
     margin: 0;
     padding: 0;
     list-style: none;
   }
 
-  .station-terms li {
-    position: relative;
-    border-bottom: 1px solid var(--color-line-soft);
-    padding: var(--space-2) 0;
+  .terms-card-grid li {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--color-line-soft);
+    border-radius: var(--radius-sm);
+    background: var(--color-canvas);
+    transition: transform var(--duration-quick), border-color var(--duration-quick), background-color var(--duration-quick);
   }
 
-  .station-terms li:first-child {
-    padding-top: 0;
+  .terms-card-grid li:hover {
+    background: var(--color-panel);
+    border-color: var(--color-accent);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
   }
 
-  .station-terms li:last-child {
-    border-bottom: 0;
-    padding-bottom: 0;
+  .terms-card-grid li[data-role='core'] {
+    border-left: 3px solid var(--color-accent);
+  }
+
+  .terms-card-grid li[data-role='intro'] {
+    border-left: 3px solid var(--color-prerequisite);
+  }
+
+  .term-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.25rem;
   }
 
   .term-link {
     color: var(--color-ink);
     font-family: var(--font-display);
-    font-size: 1.0625rem;
+    font-size: 0.9375rem;
     font-weight: var(--weight-display);
     text-decoration: none;
   }
@@ -853,84 +1389,164 @@ const coveredTerms = terms.filter((term) => typeof term.chain === 'number').leng
     color: var(--color-accent);
   }
 
-  .role-tag {
-    display: inline-block;
-    margin-left: var(--space-1);
-    border: 1px solid var(--color-line);
-    border-radius: var(--radius-pill);
-    padding: 0.05rem 0.5rem;
-    color: var(--color-quiet);
-    font-size: var(--text-xs);
-    line-height: 1.5;
-    vertical-align: 0.1em;
+  .term-badges {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
   }
 
-  .station-terms li[data-role='core'] .role-tag {
-    border-color: color-mix(in oklch, var(--color-prerequisite) 45%, var(--color-line));
+  .role-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.05rem 0.35rem;
+    border-radius: var(--radius-pill);
+    font-size: 0.6875rem;
+    font-weight: var(--weight-body);
+    line-height: 1.4;
+    background: var(--color-panel-raised);
+    color: var(--color-quiet);
+  }
+
+  li[data-role='core'] .role-tag {
+    background: var(--color-accent-wash);
+    color: var(--color-accent-strong);
+    font-weight: var(--weight-display);
+  }
+
+  li[data-role='intro'] .role-tag {
+    background: color-mix(in oklch, var(--color-prerequisite) 12%, transparent);
     color: var(--color-prerequisite);
   }
 
-  .station-terms li[data-role='intro'] .role-tag {
-    border-color: color-mix(in oklch, var(--color-accent) 45%, var(--color-line));
+  .term-domain {
+    font-size: 0.6875rem;
+    color: var(--color-quiet);
+  }
+
+  .terms-card-grid p {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .terms-card-grid li:hover p {
+    -webkit-line-clamp: unset;
+  }
+
+  /* 右侧边栏：动作与扩展 */
+  .station-side {
+    border-left: 1px solid var(--color-line);
+    background: var(--color-panel-raised);
+    height: 100%;
+    box-sizing: border-box;
+  }
+
+  .station-block {
+    padding: var(--space-4);
+  }
+
+  .station-side .station-block + .station-block {
+    border-top: 1px solid var(--color-line);
+  }
+
+  .block-icon {
+    font-size: 0.875rem;
     color: var(--color-accent);
   }
 
-  .term-domain {
-    margin-left: var(--space-1);
-    color: var(--color-quiet);
-    font-size: var(--text-xs);
+  .action-card-content {
+    background: var(--color-panel);
+    border: 1px solid var(--color-line);
+    border-left: 3px solid var(--color-prerequisite);
+    border-radius: var(--radius-sm);
+    padding: var(--space-3);
   }
 
-  .station-terms p {
-    margin: var(--space-1) 0 0;
-    color: var(--color-muted);
-    font-size: var(--text-sm);
+  .action-card-content p {
+    margin: 0;
+    color: var(--color-ink);
+    font-size: 0.875rem;
     line-height: 1.6;
   }
 
-  .station-action p {
+  .station-questions ul,
+  .station-routes ul {
     margin: 0;
-    color: var(--color-ink);
-    font-size: var(--text-sm);
-    line-height: 1.7;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
   }
 
   .station-questions li,
   .station-routes li {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    align-items: baseline;
-    gap: var(--space-2);
-    border-bottom: 1px solid var(--color-line-soft);
-    padding: var(--space-1) 0;
-  }
-
-  .station-questions li:last-child,
-  .station-routes li:last-child {
-    border-bottom: 0;
-    padding-bottom: 0;
+    margin: 0;
   }
 
   .station-questions a,
   .station-routes a {
-    min-height: 2rem;
-    display: inline-flex;
+    display: flex;
     align-items: center;
-    color: var(--color-ink);
-    font-size: var(--text-sm);
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+    background: var(--color-panel);
+    border: 1px solid var(--color-line-soft);
+    border-radius: var(--radius-sm);
     text-decoration: none;
+    transition: border-color var(--duration-quick), background-color var(--duration-quick);
   }
 
   .station-questions a:hover,
   .station-routes a:hover {
-    color: var(--color-accent);
+    border-color: var(--color-accent);
+    background: var(--color-panel-raised);
   }
 
-  .station-questions small,
-  .station-routes small {
-    color: var(--color-quiet);
-    font-size: var(--text-xs);
+  .question-index-tag {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: var(--weight-display);
+    color: var(--color-accent);
+    background: var(--color-accent-wash);
+    padding: 0.1rem 0.35rem;
+    border-radius: var(--radius-pill);
+    flex-shrink: 0;
+  }
+
+  .question-title-text,
+  .route-title-text {
+    flex: 1;
+    min-width: 0;
+    font-size: 0.8125rem;
+    color: var(--color-ink);
+    font-weight: var(--weight-body);
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .question-arrow {
+    font-size: 0.75rem;
+    color: var(--color-quiet);
+    flex-shrink: 0;
+  }
+
+  .route-icon {
+    font-size: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  .station-routes small {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--color-quiet);
+    flex-shrink: 0;
   }
 
   .empty-note {
@@ -939,35 +1555,180 @@ const coveredTerms = terms.filter((term) => typeof term.chain === 'number').leng
     font-size: var(--text-sm);
   }
 
+  /* 站点前后导航栏 */
   .station-nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: var(--space-2);
+    gap: var(--space-3);
     border-top: 1px solid var(--color-line);
-    padding: var(--space-2) var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    background: var(--color-panel-raised);
   }
 
   .station-nav a {
-    min-height: 2.75rem;
     display: inline-flex;
     align-items: center;
-    color: var(--color-prerequisite);
+    gap: var(--space-1);
+    padding: 0.35rem 0.85rem;
+    border-radius: var(--radius-pill);
+    background: var(--color-panel);
+    border: 1px solid var(--color-line);
+    color: var(--color-ink);
+    font-family: var(--font-display);
     font-size: var(--text-sm);
+    font-weight: var(--weight-display);
     text-decoration: none;
+    transition: background-color var(--duration-quick), border-color var(--duration-quick), transform var(--duration-quick);
   }
 
   .station-nav a:hover {
-    color: var(--color-accent);
+    background: var(--color-accent);
+    color: #ffffff;
+    border-color: var(--color-accent);
+    transform: translateY(-1px);
   }
 
   .station-edge {
-    min-height: 2.75rem;
     display: inline-flex;
     align-items: center;
     color: var(--color-quiet);
     font-size: var(--text-sm);
+    font-family: var(--font-mono);
   }
+
+  /* ---- 5. 链路终点出口 ----------------------------------------------- */
+
+  .chain-exit {
+    margin-top: var(--space-6);
+  }
+
+  .chain-exit-inner {
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    background: var(--color-panel);
+    box-shadow: var(--shadow-card);
+    padding: clamp(2rem, 4vw, 3.5rem);
+    text-align: center;
+    max-width: 54rem;
+    margin: 0 auto;
+    box-sizing: border-box;
+  }
+
+  .chain-exit-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.2rem 0.65rem;
+    border-radius: var(--radius-pill);
+    background: var(--color-accent-wash);
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-display);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    margin-bottom: var(--space-2);
+  }
+
+  .chain-exit h2 {
+    margin: 0 0 var(--space-2);
+    color: var(--color-ink);
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 2.5vw, 1.85rem);
+    font-weight: var(--weight-display);
+    line-height: 1.25;
+  }
+
+  .chain-exit-lede {
+    max-width: 42rem;
+    margin: 0 auto var(--space-4);
+    color: var(--color-muted);
+    font-size: var(--text-base);
+    line-height: 1.7;
+  }
+
+  .chain-exit-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-3);
+  }
+
+  .chain-exit-links a {
+    min-height: 2.75rem;
+    display: inline-flex;
+    align-items: center;
+    padding: 0 var(--space-4);
+    border-radius: var(--radius-pill);
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    font-weight: var(--weight-display);
+    text-decoration: none;
+    border: 1px solid var(--color-line);
+    background: var(--color-panel-raised);
+    color: var(--color-ink);
+    transition: transform var(--duration-quick), background-color var(--duration-quick), border-color var(--duration-quick);
+  }
+
+  .chain-exit-links a:hover {
+    background: var(--color-panel);
+    border-color: var(--color-accent);
+    transform: translateY(-1px);
+  }
+
+  .chain-exit-links .chain-exit-primary {
+    background: var(--color-accent);
+    color: #ffffff;
+    border-color: var(--color-accent);
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
+  }
+
+  .chain-exit-links .chain-exit-primary:hover {
+    background: var(--color-accent-strong);
+    color: #ffffff;
+    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.35);
+  }
+
+  /* ---- 6. 返回顶部浮钮 ------------------------------------------------ */
+
+  .back-to-top {
+    position: fixed;
+    right: clamp(1rem, 3vw, 2.5rem);
+    bottom: clamp(1.25rem, 3.5vw, 2.5rem);
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    padding: 0 0.85rem;
+    height: 2.5rem;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--color-line);
+    background: color-mix(in oklch, var(--color-panel) 90%, transparent);
+    color: var(--color-ink);
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-display);
+    backdrop-filter: blur(12px) saturate(1.3);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    touch-action: manipulation;
+    transition: transform var(--duration-quick), background-color var(--duration-quick);
+  }
+
+  .back-to-top:hover {
+    transform: translateY(-2px);
+    background: var(--color-panel-raised);
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+
+  .back-to-top[hidden] {
+    display: none !important;
+  }
+
+  /* ---- 7. 响应式布局优化 --------------------------------------------- */
 
   @media (max-width: 1120px) {
     .chain-rail {
@@ -988,11 +1749,7 @@ const coveredTerms = terms.filter((term) => typeof term.chain === 'number').leng
 
     .chain-rail li {
       flex: 0 0 auto;
-      min-width: 7.75rem;
-    }
-
-    .chain-rail li + li {
-      border-left: 1px solid var(--color-line-soft);
+      min-width: 8.5rem;
     }
 
     .station-grid {
@@ -1003,134 +1760,30 @@ const coveredTerms = terms.filter((term) => typeof term.chain === 'number').leng
       border-top: 1px solid var(--color-line);
       border-left: 0;
     }
+
+    .layer-list {
+      grid-template-columns: 1fr;
+    }
   }
 
-  @media (max-width: 620px) {
-    .chain-rail a {
-      min-height: 4.25rem;
-      padding: var(--space-1) var(--space-2);
+  @media (max-width: 640px) {
+    .station-head {
+      flex-direction: column;
+      gap: var(--space-2);
     }
 
-    .station-head h2 {
-      font-size: 1.25rem;
+    .terms-card-grid {
+      grid-template-columns: 1fr;
     }
 
     .station-nav {
       flex-direction: column;
-      align-items: flex-start;
-      gap: 0;
+      align-items: stretch;
+      gap: var(--space-2);
     }
-  }
 
-  /* ---- 读完之后：链路的终点出口 --------------------------------------- */
-
-  .chain-exit {
-    width: min(calc(100% - 2.5rem), var(--content-max));
-    margin: var(--space-5) auto 0;
-  }
-
-  .chain-exit-inner {
-    border: 1px solid var(--color-line);
-    border-radius: var(--radius-sm);
-    background: var(--color-panel);
-    padding: clamp(1.6rem, 3vw, 2.6rem);
-  }
-
-  .chain-exit-eyebrow {
-    margin: 0;
-    color: var(--color-muted);
-    font-family: var(--font-mono);
-    font-size: 0.78rem;
-    letter-spacing: 0.06em;
-  }
-
-  .chain-exit h2 {
-    margin: var(--space-1) 0 0;
-    color: var(--color-ink);
-    font-size: clamp(1.3rem, 2.4vw, 1.6rem);
-    font-weight: var(--weight-display);
-  }
-
-  .chain-exit-lede {
-    max-width: 46rem;
-    margin: var(--space-1) 0 0;
-    color: var(--color-muted);
-    font-size: 0.92rem;
-    line-height: 1.7;
-  }
-
-  /* 出口用 wrap 而不是媒体查询：出口数量以后会变，断点写死就得跟着改。 */
-  .chain-exit-links {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: var(--space-2) var(--space-4);
-    margin-top: var(--space-3);
-  }
-
-  .chain-exit-links a {
-    color: var(--color-accent-strong);
-    font-family: var(--font-mono);
-    font-size: 0.85rem;
-    font-weight: var(--weight-display);
-    text-decoration: none;
-  }
-
-  .chain-exit-links a:hover {
-    color: var(--color-accent);
-  }
-
-  .chain-exit-links .chain-exit-primary {
-    min-height: 2.9rem;
-    display: inline-flex;
-    align-items: center;
-    padding: 0 var(--space-3);
-    background: var(--color-accent);
-    color: #ffffff;
-  }
-
-  .chain-exit-links .chain-exit-primary:hover {
-    color: #ffffff;
-    background: color-mix(in oklch, var(--color-accent) 85%, var(--color-ink));
-  }
-
-  /* ---- 返回顶部悬浮按钮 ---------------------------------------------- */
-
-  .back-to-top {
-    position: fixed;
-    right: clamp(1rem, 3vw, 2.5rem);
-    bottom: clamp(1.25rem, 3.5vw, 2.5rem);
-    z-index: 50;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 2.75rem;
-    height: 2.75rem;
-    border-radius: 9999px;
-    border: 1px solid var(--color-line);
-    background: color-mix(in oklch, var(--color-panel) 88%, transparent);
-    color: var(--color-ink);
-    backdrop-filter: blur(12px) saturate(1.3);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
-    cursor: pointer;
-    touch-action: manipulation;
-    transition:
-      transform var(--duration-quick) var(--ease-smooth-out),
-      background-color var(--duration-quick) var(--ease-smooth-out),
-      box-shadow var(--duration-quick) var(--ease-smooth-out);
-  }
-
-  .back-to-top:hover {
-    transform: translateY(-2px);
-    background: var(--color-panel-raised);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
-  }
-
-  .back-to-top:active {
-    transform: translateY(0) scale(0.95);
-  }
-
-  .back-to-top[hidden] {
-    display: none;
+    .station-nav a {
+      justify-content: center;
+    }
   }
 </style>
