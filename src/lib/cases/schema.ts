@@ -137,6 +137,7 @@ export const caseStudySchema = z
 
 export type CaseStudy = z.infer<typeof caseStudySchema>;
 export type CaseGate = z.infer<typeof gateSchema>;
+export type CaseOption = z.infer<typeof optionSchema>;
 export type CaseArtifact = z.infer<typeof artifactSchema>;
 export type CaseMetric = z.infer<typeof metricSchema>;
 export type CaseFailureMode = z.infer<typeof failureModeSchema>;

@@ -990,3 +990,26 @@
   - `pnpm check:performance` 验证通过：首屏 JS 2.3 KiB、CSS 38.0 KiB、图谱 JS 438.1 KiB、最大图片 118.5 KiB，全部符合预算；
   - 18 个测试文件、225 项单元测试 100% 通过；
   - 全量 125 项 Playwright 端到端测试（7 项跳过，0 失败）全绿通过。
+
+## 2026-09-30：Phase 2 (M2) 决策深度与复盘增强（决策天平、评审会反诘、错题攻坚专区）
+
+- 状态：已执行。
+- 背景与目标：
+  - 依据 PRD《用户使用体验与实战价值提升方案》路线演进矩阵，启动并完成 Phase 2 (M2) 里程碑；
+  - 重点解决实战推演中选型代价感知模糊、题库反馈单一缺乏真实评审对抗、以及做错题后缺乏闭环消灭专区的体验断点。
+- 决策与实施：
+  1. **F-04 决策影响天平（Impact Meter）落地**：
+     - 在 `src/lib/cases/impact.ts` 实现选型代价换算引擎，基于选项属性与业务情境动态推演 4 维量化指标：开发交付周期、推理运行成本、确定性/准确度、人工兜底介入率；
+     - 在 `CaseGateDesk.astro` 与 `case-study.css` 中为 Gate 各方案卡片装配实时影响天平仪表盘与代价警示卡片，直观展现不同技术路径的真实工程与商业权衡。
+  2. **F-03 评审会反诘质询视角（Devil's Advocate）落地**：
+     - 在 `src/lib/learning/devils-advocate.ts` 实现反诘质询视角引擎，为题目选项模拟技术架构师、业务负责人、风险合规专家三大干系人的真实质询（质询要点与防守关键）；
+     - 在 `/learn/questions/[id]` 答题就地反馈中嵌入反诘质询卡片，强化用户对方案短板与落地边界的深刻理解。
+  3. **F-06 错题攻坚重练专区（Mistake Hub）闭环**：
+     - 新建专注攻坚页面 `src/pages/learn/mistakes/index.astro`（`/learn/mistakes/`），无缝对接 `localStorage` 本地进度中自动归集的 `missed` 集合；
+     - 攻坚重练时执行选项位置随机打散，彻底消除位置机械记忆；重新选对推荐方案后即时销项，数字动态递减；答错强化反诘质询；
+     - 在学习中心 `/learn/` 顶部状态栏与 `/learn/complete/` 结业全景页分别接入错题攻坚快捷直达入口与警告卡片。
+  4. **设计系统契约与自动化测试覆盖**：
+     - 严格遵守 Daylight Clean 晨光纯白高质感风格与设计令牌约束，字重严格限定为 400 与 800（`--weight-body`, `--weight-display`），0 中间字重；
+     - 补齐单元测试 `tests/unit/cases/impact.test.ts`、`tests/unit/learning/devils-advocate.test.ts` 与 E2E 自动化测试 `tests/e2e/cases.spec.ts`。
+- 验证：
+  - `pnpm run ci` 全量通过（17 项检查全绿：包含 ESLint、Astro Check、数据契约校验、题库规范、5 项内容质量门禁、设计令牌核验、性能预算核验、20 个测试套件/230 项单元测试与 131 项 E2E 测试）。

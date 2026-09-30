@@ -8,6 +8,7 @@ import {
   REFERENCE_KIND_LABELS,
   referenceHref,
 } from '@/lib/cases/presentation';
+import { getOptionImpact } from '@/lib/cases/impact';
 
 interface Props {
   caseStudy: CaseStudy;
@@ -82,88 +83,145 @@ const { caseStudy, gate, resources } = Astro.props;
     </header>
     <div class="option-grid">
       {
-        gate.options.map((option, index) => (
-          <details
-            data-assessment={option.assessment}
-            data-option-id={option.id}
-            data-option-label={option.label}
-            open={option.assessment === 'recommended'}
-          >
-            <summary>
-              <span>{String.fromCharCode(65 + index)}</span>
-              <strong>{option.label}</strong>
-              <span class="decision-user-tag" data-user-tag hidden>
-                你的选择
-              </span>
-              <i>
-                <>
-                  <span class="when-closed">展开取舍</span>
-                  <span class="when-open">收起取舍</span>
-                </>
-              </i>
-            </summary>
-            <div class="option-feedback">
-              <div class="option-meta-bar">
-                <span class="assessment-label">{ASSESSMENT_LABELS[option.assessment]}</span>
-                <span class="decision-selected-badge" data-decision-badge hidden>
-                  ✓ 已采纳为当前决策
+        gate.options.map((option, index) => {
+          const impact = getOptionImpact(option, gate);
+          return (
+            <details
+              data-assessment={option.assessment}
+              data-option-id={option.id}
+              data-option-label={option.label}
+              open={option.assessment === 'recommended'}
+            >
+              <summary>
+                <span>{String.fromCharCode(65 + index)}</span>
+                <strong>{option.label}</strong>
+                <span class="decision-user-tag" data-user-tag hidden>
+                  你的选择
                 </span>
+                <i>
+                  <>
+                    <span class="when-closed">展开取舍</span>
+                    <span class="when-open">收起取舍</span>
+                  </>
+                </i>
+              </summary>
+              <div class="option-feedback">
+                <div class="option-meta-bar">
+                  <span class="assessment-label">{ASSESSMENT_LABELS[option.assessment]}</span>
+                  <span class="decision-selected-badge" data-decision-badge hidden>
+                    ✓ 已采纳为当前决策
+                  </span>
+                </div>
+                <p class="rationale">{option.rationale}</p>
+                <div class="tradeoff-grid">
+                  <section>
+                    <h4>成立条件</h4>
+                    <ul class="conditions-checklist">
+                      {option.conditions.map((condition, condIdx) => (
+                        <li>
+                          <label class="condition-check-item">
+                            <input
+                              type="checkbox"
+                              data-cond-check={`${caseStudy.id}:${gate.id}:${option.id}:${condIdx}`}
+                            />
+                            <span>{condition}</span>
+                          </label>
+                        </li>
+                      ))}
+                    </ul>
+                  </section>
+                  <section>
+                    <h4>主要风险</h4>
+                    <ul>
+                      {option.risks.map((risk) => (
+                        <li>{risk}</li>
+                      ))}
+                    </ul>
+                  </section>
+                  <section>
+                    <h4>后续影响</h4>
+                    <ul>
+                      {option.consequences.map((consequence) => (
+                        <li>{consequence}</li>
+                      ))}
+                    </ul>
+                  </section>
+                </div>
+                <div class="impact-meter-panel" data-impact-meter>
+                  <div class="impact-meter-header">
+                    <span class="meter-title">⚡ 决策影响天平 (Impact Meter)</span>
+                    <span class="meter-subtitle">工程复杂度与业务代价联动预估</span>
+                  </div>
+                  <div class="impact-gauges">
+                    <div class="gauge-item">
+                      <div class="gauge-label-row">
+                        <span>开发周期</span>
+                        <strong>{impact.cycleLabel}</strong>
+                      </div>
+                      <div class="gauge-track">
+                        <div class="gauge-fill gauge-cycle" style={`width: ${impact.cycle}%;`} />
+                      </div>
+                    </div>
+                    <div class="gauge-item">
+                      <div class="gauge-label-row">
+                        <span>推理成本</span>
+                        <strong>{impact.costLabel}</strong>
+                      </div>
+                      <div class="gauge-track">
+                        <div class="gauge-fill gauge-cost" style={`width: ${impact.cost}%;`} />
+                      </div>
+                    </div>
+                    <div class="gauge-item">
+                      <div class="gauge-label-row">
+                        <span>确定准确度</span>
+                        <strong>{impact.accuracyLabel}</strong>
+                      </div>
+                      <div class="gauge-track">
+                        <div
+                          class="gauge-fill gauge-accuracy"
+                          style={`width: ${impact.accuracy}%;`}
+                        />
+                      </div>
+                    </div>
+                    <div class="gauge-item">
+                      <div class="gauge-label-row">
+                        <span>人工兜底率</span>
+                        <strong>{impact.humanBurdenLabel}</strong>
+                      </div>
+                      <div class="gauge-track">
+                        <div
+                          class="gauge-fill gauge-burden"
+                          style={`width: ${impact.humanBurden}%;`}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="impact-warning-card">
+                    <span class="warning-badge">代价警示</span>
+                    <p>{impact.warning}</p>
+                  </div>
+                </div>
+                <div class="option-artifact-delta">
+                  <span>本关材料变化</span>
+                  <p>{option.artifactDelta}</p>
+                </div>
+                <div class="option-decision-action">
+                  <button
+                    type="button"
+                    class="adopt-decision-btn"
+                    data-adopt-decision
+                    data-option-id={option.id}
+                    data-option-label={option.label}
+                    data-option-assessment={option.assessment}
+                  >
+                    <span class="btn-icon">✓</span>
+                    <span>作为 PM 采纳此决策路径</span>
+                  </button>
+                </div>
               </div>
-              <p class="rationale">{option.rationale}</p>
-              <div class="tradeoff-grid">
-                <section>
-                  <h4>成立条件</h4>
-                  <ul class="conditions-checklist">
-                    {option.conditions.map((condition, condIdx) => (
-                      <li>
-                        <label class="condition-check-item">
-                          <input
-                            type="checkbox"
-                            data-cond-check={`${caseStudy.id}:${gate.id}:${option.id}:${condIdx}`}
-                          />
-                          <span>{condition}</span>
-                        </label>
-                      </li>
-                    ))}
-                  </ul>
-                </section>
-                <section>
-                  <h4>主要风险</h4>
-                  <ul>
-                    {option.risks.map((risk) => (
-                      <li>{risk}</li>
-                    ))}
-                  </ul>
-                </section>
-                <section>
-                  <h4>后续影响</h4>
-                  <ul>
-                    {option.consequences.map((consequence) => (
-                      <li>{consequence}</li>
-                    ))}
-                  </ul>
-                </section>
-              </div>
-              <div class="option-artifact-delta">
-                <span>本关材料变化</span>
-                <p>{option.artifactDelta}</p>
-              </div>
-              <div class="option-decision-action">
-                <button
-                  type="button"
-                  class="adopt-decision-btn"
-                  data-adopt-decision
-                  data-option-id={option.id}
-                  data-option-label={option.label}
-                  data-option-assessment={option.assessment}
-                >
-                  <span class="btn-icon">✓</span>
-                  <span>作为 PM 采纳此决策路径</span>
-                </button>
-              </div>
-            </div>
-          </details>
-        ))
+            </details>
+          );
+        })
       }
     </div>
     <div class="case-decision-debrief" data-decision-debrief hidden>

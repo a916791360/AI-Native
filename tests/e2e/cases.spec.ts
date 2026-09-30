@@ -213,3 +213,91 @@ test('assembles and exports AI product PRD modal from case overview and gate 06'
   await capstoneExport.locator('[data-open-prd-modal]').click();
   await expect(dialog).toBeVisible();
 });
+
+test('displays impact meter with 4-dimensional tradeoffs on case gate options', async ({
+  page,
+}) => {
+  await page.goto(firstGateUrl);
+  const impactMeter = page.locator('.impact-meter-panel').first();
+  await expect(impactMeter).toBeVisible();
+  await expect(impactMeter).toContainText('决策影响天平');
+  await expect(impactMeter).toContainText('开发周期');
+  await expect(impactMeter).toContainText('推理成本');
+  await expect(impactMeter).toContainText('准确度');
+  await expect(impactMeter).toContainText('人工兜底率');
+
+  const warning = page.locator('.impact-warning-card').first();
+  await expect(warning).toBeVisible();
+
+  // 切换选项时天平保持并可更新
+  const secondOption = page.locator('[data-option-item]').nth(1);
+  if (await secondOption.count()) {
+    await secondOption.click();
+    await expect(warning).toBeVisible();
+  }
+});
+
+test('presents devils advocate confrontation on question option feedback', async ({ page }) => {
+  await page.goto('/learn/questions/q01-rules-or-ai/');
+
+  // 点击第一个选项
+  const firstOption = page.locator('[data-option]').first();
+  await firstOption.click();
+
+  const advocateCard = page.locator('[data-devils-advocate]').first();
+  await expect(advocateCard).toBeVisible();
+  await expect(advocateCard).toContainText('评审反诘');
+  await expect(advocateCard.locator('.advocate-challenge')).toBeVisible();
+  await expect(advocateCard.locator('.advocate-defense')).toBeVisible();
+});
+
+test('supports dedicated mistake hub workflow and syncs with learning center and complete page', async ({
+  page,
+}) => {
+  // 注入包含错题的初始进度
+  await page.addInitScript(() => {
+    localStorage.setItem(
+      'ai-native.progress',
+      JSON.stringify({
+        answered: ['q01-rules-or-ai'],
+        missed: ['q01-rules-or-ai'],
+        choices: { 'q01-rules-or-ai': 2 },
+      }),
+    );
+  });
+
+  // 1. 学习中心展示错题入口
+  await page.goto('/learn/');
+  const mistakesEntry = page.locator('[data-catalog-mistakes]');
+  await expect(mistakesEntry).toBeVisible();
+  await expect(mistakesEntry).toContainText('1');
+
+  // 2. 结业页展示错题警告与快捷跳转
+  await page.goto('/learn/complete/');
+  const completeAlert = page.locator('[data-complete-mistakes]');
+  await expect(completeAlert).toBeVisible();
+  await expect(completeAlert).toContainText('1');
+
+  // 3. 进入错题专区重练
+  await page.goto('/learn/mistakes/');
+  const arena = page.locator('[data-arena-view]');
+  await expect(arena).toBeVisible();
+  await expect(page.locator('[data-active-count]')).toHaveText('1');
+
+  // 找到 recommended 选项点击并成功销项
+  const recommendedBtn = page.locator('.option-item[data-assessment="recommended"] button');
+  await recommendedBtn.click();
+
+  const feedback = page.locator('[data-feedback-section]');
+  await expect(feedback).toBeVisible();
+  await expect(feedback).toContainText('已从错题本消灭');
+  await expect(page.locator('[data-active-count]')).toHaveText('0');
+
+  // 点击下一步，进入空状态
+  const nextBtn = page.locator('[data-next-question]');
+  await nextBtn.click();
+
+  const emptyView = page.locator('[data-empty-view]');
+  await expect(emptyView).toBeVisible();
+  await expect(emptyView).toContainText('暂无待攻坚的错题');
+});

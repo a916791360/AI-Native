@@ -64,6 +64,9 @@ import '@/styles/content-catalog.css';
           <a data-progress-next href={`/learn/questions/${LEARNING_QUESTIONS[0]!.id}/`}
             >继续下一题 →</a
           >
+          <a class="catalog-mistakes-link" data-catalog-mistakes href="/learn/mistakes/" hidden
+            >错题攻坚（<span data-mistakes-count>0</span> 题待消灭）→</a
+          >
         </p>
       </header>
 
@@ -158,9 +161,11 @@ import '@/styles/content-catalog.css';
   const tierNavs = [...document.querySelectorAll<HTMLElement>('[data-tier-nav]')];
 
   let answered: string[] = [];
+  let missed: string[] = [];
   try {
-    const stored = JSON.parse(localStorage.getItem(PROGRESS_KEY) ?? '{"answered":[]}');
+    const stored = JSON.parse(localStorage.getItem(PROGRESS_KEY) ?? '{"answered":[],"missed":[]}');
     if (Array.isArray(stored.answered)) answered = stored.answered;
+    if (Array.isArray(stored.missed)) missed = stored.missed;
   } catch {
     /* localStorage unavailable */
   }
@@ -252,7 +257,14 @@ import '@/styles/content-catalog.css';
     syncSidebar();
   }
 
-  if (answered.length > 0) {
+  const mistakesLink = document.querySelector<HTMLAnchorElement>('[data-catalog-mistakes]');
+  const mistakesCountEl = document.querySelector<HTMLElement>('[data-mistakes-count]');
+  if (mistakesLink && mistakesCountEl && missed.length > 0) {
+    mistakesCountEl.textContent = String(missed.length);
+    mistakesLink.hidden = false;
+  }
+
+  if (answered.length > 0 || missed.length > 0) {
     cards.forEach((card) => {
       if (answeredSet.has(card.dataset.questionId ?? '')) {
         card.dataset.answered = 'true';

@@ -67,6 +67,12 @@ const rows = LEARNING_MODULES.map((module) => ({
       <a class="status-action" href={`/learn/questions/${firstQuestionId}/`} data-complete-next>
         从第 01 题开始 →
       </a>
+      <div class="complete-mistakes-alert" data-complete-mistakes hidden>
+        <p class="mistakes-note">
+          发现还有 <strong data-complete-missed-count>0</strong> 道题目此前未选到推荐方案。建议在进入连续案例前消灭存量错题。
+        </p>
+        <a class="mistakes-action" href="/learn/mistakes/">前往错题攻坚专区 →</a>
+      </div>
     </section>
 
     <section class="complete-tiers" aria-labelledby="tiers-heading">
@@ -166,11 +172,22 @@ const rows = LEARNING_MODULES.map((module) => ({
     const cells = [...page.querySelectorAll<HTMLElement>('[data-cell-ids]')];
 
     let answered = new Set<string>();
+    let missedCount = 0;
     try {
-      const stored = JSON.parse(localStorage.getItem(PROGRESS_KEY) ?? '{"answered":[]}');
+      const stored = JSON.parse(
+        localStorage.getItem(PROGRESS_KEY) ?? '{"answered":[],"missed":[]}',
+      );
       if (Array.isArray(stored.answered)) answered = new Set(stored.answered);
+      if (Array.isArray(stored.missed)) missedCount = stored.missed.length;
     } catch {
       /* localStorage unavailable; progress is optional */
+    }
+
+    const mistakesBox = page.querySelector<HTMLElement>('[data-complete-mistakes]');
+    const missedCountEl = page.querySelector<HTMLElement>('[data-complete-missed-count]');
+    if (mistakesBox && missedCountEl && missedCount > 0) {
+      missedCountEl.textContent = String(missedCount);
+      mistakesBox.hidden = false;
     }
 
     const readIds = (element: HTMLElement, attribute: string): string[] => {
@@ -279,6 +296,47 @@ const rows = LEARNING_MODULES.map((module) => ({
     padding: 0.6rem 1.2rem;
     font-size: var(--text-sm);
     text-decoration: none;
+  }
+
+  .complete-mistakes-alert {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    margin-top: var(--space-2);
+    padding: var(--space-3);
+    border: 1px dashed var(--color-error);
+    border-radius: var(--radius-sm);
+    background: color-mix(in oklch, var(--color-error) 6%, var(--color-panel));
+  }
+
+  .mistakes-note {
+    margin: 0;
+    color: var(--color-ink);
+    font-size: var(--text-sm);
+    line-height: 1.6;
+  }
+
+  .mistakes-note strong {
+    color: var(--color-error);
+    font-family: var(--font-mono);
+  }
+
+  .mistakes-action {
+    flex-shrink: 0;
+    border: 1px solid var(--color-error);
+    border-radius: var(--radius-pill);
+    color: var(--color-error);
+    padding: 0.35rem 0.85rem;
+    font-size: var(--text-xs);
+    font-weight: var(--weight-display);
+    text-decoration: none;
+    background: var(--color-panel);
+    transition: background-color var(--duration-quick);
+  }
+
+  .mistakes-action:hover {
+    background: color-mix(in oklch, var(--color-error) 12%, transparent);
   }
 
   .complete-tiers,
