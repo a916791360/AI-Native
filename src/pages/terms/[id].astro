@@ -3,11 +3,14 @@ import { getCollection, render } from 'astro:content';
 import type { GetStaticPaths } from 'astro';
 
 import Breadcrumbs from '@/components/layout/Breadcrumbs.astro';
+import GraphExplorer from '@/components/knowledge/GraphExplorer.astro';
 import StatusTag from '@/components/ui/StatusTag.astro';
+import generatedGraph from '@/generated/graph.json';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { CASE_STAGE_LABELS, caseHref, gateHref } from '@/lib/cases/presentation';
 import { loadCaseStudies } from '@/lib/cases/io';
 import { CHAIN_ROLE_LABELS, resolveTermChainPosition, type ChainRole } from '@/lib/content/chain';
+import { selectLocalGraph, type GraphData } from '@/lib/graph/model';
 import { loadProjectContent } from '@/lib/content/io';
 import { getLearningRecommendations } from '@/lib/content/recommendations';
 import { TERM_SECTIONS, extractSectionIds } from '@/lib/content/term-sections';
@@ -212,6 +215,7 @@ const statusNotice = {
 }[term.status];
 const selectable = isSelectableTerm(term);
 const hasDeepContent = term.status !== 'catalogued';
+const localGraph = selectLocalGraph(generatedGraph as GraphData, term.id);
 // 知识库 → 领域 → 词条名。领域用 shortNameZh：完整领域名（如「智能体与工具调用自动化」）
 // 在 320px 下会把面包屑挤断，而中间层本来就只是「往上一级」的落点。
 const breadcrumbTrail = [
@@ -612,40 +616,55 @@ const breadcrumbTrail = [
                   </div>
                 </div>
               ) : (
-                <div class="relation-groups-container">
-                  {relationGroups.map(
-                    (group) =>
-                      group.items.length > 0 && (
-                        <div class="relation-group">
-                          <div class="relation-group-title">
-                            <span class={`relation-group-badge type-${group.type}`}>
-                              {group.label} ({group.items.length})
-                            </span>
+                <>
+                  <div class="relation-groups-container">
+                    {relationGroups.map(
+                      (group) =>
+                        group.items.length > 0 && (
+                          <div class="relation-group">
+                            <div class="relation-group-title">
+                              <span class={`relation-group-badge type-${group.type}`}>
+                                {group.label} ({group.items.length})
+                              </span>
+                            </div>
+                            <div class="relation-cards-grid">
+                              {group.items.map((relation) => {
+                                const relatedId =
+                                  relation.source === term.id ? relation.target : relation.source;
+                                const related = termMap[relatedId];
+                                return (
+                                  <a
+                                    class={`relation-card type-${group.type}`}
+                                    href={`/terms/${relatedId}/`}
+                                  >
+                                    <strong>{related?.nameZh ?? relatedId}</strong>
+                                    <p class="relation-card-desc">{relation.explanation}</p>
+                                    <span class="relation-card-arrow">
+                                      <span>前往词条</span>
+                                      <span>→</span>
+                                    </span>
+                                  </a>
+                                );
+                              })}
+                            </div>
                           </div>
-                          <div class="relation-cards-grid">
-                            {group.items.map((relation) => {
-                              const relatedId =
-                                relation.source === term.id ? relation.target : relation.source;
-                              const related = termMap[relatedId];
-                              return (
-                                <a
-                                  class={`relation-card type-${group.type}`}
-                                  href={`/terms/${relatedId}/`}
-                                >
-                                  <strong>{related?.nameZh ?? relatedId}</strong>
-                                  <p class="relation-card-desc">{relation.explanation}</p>
-                                  <span class="relation-card-arrow">
-                                    <span>前往词条</span>
-                                    <span>→</span>
-                                  </span>
-                                </a>
-                              );
-                            })}
-                          </div>
-                        </div>
-                      ),
-                  )}
-                </div>
+                        ),
+                    )}
+                  </div>
+
+                  <div class="term-graph-wrapper">
+                    <div class="term-graph-subheading">
+                      <h4>拓扑图谱网络 · 一度关联场</h4>
+                      <span class="term-graph-hint">可拖拽节点、滚轮缩放、点击节点探索</span>
+                    </div>
+                    <GraphExplorer
+                      graph={localGraph.graph}
+                      mode="local"
+                      focusId={term.id}
+                      hiddenNodeCount={localGraph.hiddenNodeCount}
+                    />
+                  </div>
+                </>
               )}
             </section>
           )
