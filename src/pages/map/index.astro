@@ -111,7 +111,11 @@ const coveredTerms = terms.filter((term) => typeof term.chain === 'number').leng
                   <span class="spine-step-num">{String(station.order).padStart(2, '0')}</span>
                   <span class="spine-step-name">{station.nameZh.split(' · ')[0]}</span>
                 </a>
-                {idx < stations.length - 1 && <span class="spine-step-arrow" aria-hidden="true">→</span>}
+                {idx < stations.length - 1 && (
+                  <span class="spine-step-arrow" aria-hidden="true">
+                    →
+                  </span>
+                )}
               </div>
             ))
           }
@@ -145,7 +149,8 @@ const coveredTerms = terms.filter((term) => typeof term.chain === 'number').leng
           <p class="meta-label">Everyday AI concepts · {conceptGuide.length} entries</p>
           <h2 id="layer-guide-title">高频词快速定位：日常反复出现的 AI 词，分别在解决什么问题？</h2>
           <p class="layer-guide-note">
-            将日常新闻、产品宣传和工作交流中最常见的 22 个核心词放回系统层次。先看这里建立全局定位，再顺着下方 8 站深入认知。
+            将日常新闻、产品宣传和工作交流中最常见的 22
+            个核心词放回系统层次。先看这里建立全局定位，再顺着下方 8 站深入认知。
           </p>
         </div>
         <button
@@ -186,7 +191,11 @@ const coveredTerms = terms.filter((term) => typeof term.chain === 'number').leng
         <div class="layer-groups">
           {
             conceptGuideByLayer.map(({ layer, entries }) => (
-              <section class="layer-group" data-group-layer={layer} aria-labelledby={`layer-${layer}`}>
+              <section
+                class="layer-group"
+                data-group-layer={layer}
+                aria-labelledby={`layer-${layer}`}
+              >
                 <header class="layer-group-head">
                   <h3 id={`layer-${layer}`}>{layer}</h3>
                   <span class="layer-group-count">{entries.length} 个入口</span>
@@ -254,7 +263,9 @@ const coveredTerms = terms.filter((term) => typeof term.chain === 'number').leng
                 </div>
                 <div class="station-head-content">
                   <div class="station-head-top">
-                    <span class="station-step-label">STATION {String(station.order).padStart(2, '0')}</span>
+                    <span class="station-step-label">
+                      STATION {String(station.order).padStart(2, '0')}
+                    </span>
                     <span class="station-meta-pill">{stationTerms.length} 核心概念</span>
                     <span class="station-meta-pill">{questions.length} 道判断练习</span>
                     <span class="station-meta-pill">{stationRoutes.length} 条展开路线</span>
@@ -278,8 +289,10 @@ const coveredTerms = terms.filter((term) => typeof term.chain === 'number').leng
                       <span class="block-counter">{stationTerms.length} 个概念</span>
                     </div>
                     <div class="role-filter-hint" aria-hidden="true">
-                      <span class="hint-dot core-dot"></span>核心概念
-                      <span class="hint-dot intro-dot"></span>前置概念
+                      <span class="hint-dot core-dot" />
+                      核心概念
+                      <span class="hint-dot intro-dot" />
+                      前置概念
                     </div>
                   </div>
                   {stationTerms.length > 0 ? (
@@ -314,7 +327,9 @@ const coveredTerms = terms.filter((term) => typeof term.chain === 'number').leng
                   <section class="station-block station-action" aria-label="上手动作">
                     <div class="block-header">
                       <h3>上手动作</h3>
-                      <span class="block-icon" aria-hidden="true">⚡</span>
+                      <span class="block-icon" aria-hidden="true">
+                        ⚡
+                      </span>
                     </div>
                     <div class="action-card-content">
                       <p>{station.action}</p>
@@ -333,7 +348,9 @@ const coveredTerms = terms.filter((term) => typeof term.chain === 'number').leng
                             <a href={`/learn/questions/${question.id}/`}>
                               <span class="question-index-tag">{question.index}</span>
                               <span class="question-title-text">{question.shortTitle}</span>
-                              <span class="question-arrow" aria-hidden="true">→</span>
+                              <span class="question-arrow" aria-hidden="true">
+                                →
+                              </span>
                             </a>
                           </li>
                         ))}
@@ -353,7 +370,9 @@ const coveredTerms = terms.filter((term) => typeof term.chain === 'number').leng
                         {stationRoutes.map(({ route, stationTally }) => (
                           <li>
                             <a href={`/routes/${route.id}/`}>
-                              <span class="route-icon" aria-hidden="true">📖</span>
+                              <span class="route-icon" aria-hidden="true">
+                                📖
+                              </span>
                               <span class="route-title-text">{route.nameZh}</span>
                               <small>{stationTally.get(station.order)} 词条</small>
                             </a>
@@ -395,7 +414,9 @@ const coveredTerms = terms.filter((term) => typeof term.chain === 'number').leng
         <span class="chain-exit-eyebrow">MILESTONE · 8 站认知链路完成</span>
         <h2 id="chain-exit-title">概念认全了，接下来练的是判断</h2>
         <p class="chain-exit-lede">
-          8 站补齐了系统认知：知道语言模型每一层在补什么。但在工程与业务中，真正的难点在于「取舍与决策」。带着这 {coveredTerms} 个概念，前往判断题库和案例库进行实战演练，链路才算真正闭环。
+          8
+          站补齐了系统认知：知道语言模型每一层在补什么。但在工程与业务中，真正的难点在于「取舍与决策」。带着这
+          {coveredTerms} 个概念，前往判断题库和案例库进行实战演练，链路才算真正闭环。
         </p>
         <div class="chain-exit-links">
           <a class="chain-exit-primary" href="/learn/">
@@ -671,7 +692,10 @@ const coveredTerms = terms.filter((term) => typeof term.chain === 'number').leng
     background: var(--color-panel-raised);
     border: 1px solid var(--color-line-soft);
     text-decoration: none;
-    transition: background-color var(--duration-quick), border-color var(--duration-quick), transform var(--duration-quick);
+    transition:
+      background-color var(--duration-quick),
+      border-color var(--duration-quick),
+      transform var(--duration-quick);
   }
 
   .spine-step-chip:hover {
@@ -738,7 +762,9 @@ const coveredTerms = terms.filter((term) => typeof term.chain === 'number').leng
     text-decoration: none;
     border-bottom: 2px solid transparent;
     box-sizing: border-box;
-    transition: background-color var(--duration-quick), border-color var(--duration-quick);
+    transition:
+      background-color var(--duration-quick),
+      border-color var(--duration-quick);
   }
 
   .chain-rail a:hover {
@@ -864,7 +890,9 @@ const coveredTerms = terms.filter((term) => typeof term.chain === 'number').leng
     font-weight: var(--weight-display);
     cursor: pointer;
     flex-shrink: 0;
-    transition: background-color var(--duration-quick), border-color var(--duration-quick);
+    transition:
+      background-color var(--duration-quick),
+      border-color var(--duration-quick);
   }
 
   .layer-toggle-btn:hover {
@@ -915,10 +943,18 @@ const coveredTerms = terms.filter((term) => typeof term.chain === 'number').leng
     border-radius: 50%;
   }
 
-  .exposure-news { background: var(--color-accent) !important; }
-  .exposure-product { background: var(--color-prerequisite) !important; }
-  .exposure-use { background: var(--color-comparison) !important; }
-  .exposure-work { background: var(--color-component) !important; }
+  .exposure-news {
+    background: var(--color-accent) !important;
+  }
+  .exposure-product {
+    background: var(--color-prerequisite) !important;
+  }
+  .exposure-use {
+    background: var(--color-comparison) !important;
+  }
+  .exposure-work {
+    background: var(--color-component) !important;
+  }
 
   .layer-filter-bar {
     display: flex;
@@ -937,7 +973,10 @@ const coveredTerms = terms.filter((term) => typeof term.chain === 'number').leng
     font-size: var(--text-xs);
     font-weight: var(--weight-display);
     cursor: pointer;
-    transition: background-color var(--duration-quick), border-color var(--duration-quick), color var(--duration-quick);
+    transition:
+      background-color var(--duration-quick),
+      border-color var(--duration-quick),
+      color var(--duration-quick);
   }
 
   .layer-filter-pill:hover {
@@ -1009,7 +1048,10 @@ const coveredTerms = terms.filter((term) => typeof term.chain === 'number').leng
     background: var(--color-panel);
     padding: var(--space-3);
     box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);
-    transition: transform var(--duration-quick), border-color var(--duration-quick), box-shadow var(--duration-quick);
+    transition:
+      transform var(--duration-quick),
+      border-color var(--duration-quick),
+      box-shadow var(--duration-quick);
   }
 
   .layer-row:hover {
@@ -1079,10 +1121,18 @@ const coveredTerms = terms.filter((term) => typeof term.chain === 'number').leng
     background: var(--color-quiet);
   }
 
-  .exposure-新闻常见::before { background: var(--color-accent); }
-  .exposure-产品常见::before { background: var(--color-prerequisite); }
-  .exposure-使用必遇::before { background: var(--color-comparison); }
-  .exposure-工作常见::before { background: var(--color-component); }
+  .exposure-新闻常见::before {
+    background: var(--color-accent);
+  }
+  .exposure-产品常见::before {
+    background: var(--color-prerequisite);
+  }
+  .exposure-使用必遇::before {
+    background: var(--color-comparison);
+  }
+  .exposure-工作常见::before {
+    background: var(--color-component);
+  }
 
   .layer-station {
     display: inline-flex;
@@ -1330,8 +1380,12 @@ const coveredTerms = terms.filter((term) => typeof term.chain === 'number').leng
     display: inline-block;
   }
 
-  .core-dot { background: var(--color-accent); }
-  .intro-dot { background: var(--color-prerequisite); }
+  .core-dot {
+    background: var(--color-accent);
+  }
+  .intro-dot {
+    background: var(--color-prerequisite);
+  }
 
   /* 概念卡片网格：彻底摆脱单列文字瀑布 */
   .terms-card-grid {
@@ -1351,7 +1405,10 @@ const coveredTerms = terms.filter((term) => typeof term.chain === 'number').leng
     border: 1px solid var(--color-line-soft);
     border-radius: var(--radius-sm);
     background: var(--color-canvas);
-    transition: transform var(--duration-quick), border-color var(--duration-quick), background-color var(--duration-quick);
+    transition:
+      transform var(--duration-quick),
+      border-color var(--duration-quick),
+      background-color var(--duration-quick);
   }
 
   .terms-card-grid li:hover {
@@ -1499,7 +1556,9 @@ const coveredTerms = terms.filter((term) => typeof term.chain === 'number').leng
     border: 1px solid var(--color-line-soft);
     border-radius: var(--radius-sm);
     text-decoration: none;
-    transition: border-color var(--duration-quick), background-color var(--duration-quick);
+    transition:
+      border-color var(--duration-quick),
+      background-color var(--duration-quick);
   }
 
   .station-questions a:hover,
@@ -1579,7 +1638,10 @@ const coveredTerms = terms.filter((term) => typeof term.chain === 'number').leng
     font-size: var(--text-sm);
     font-weight: var(--weight-display);
     text-decoration: none;
-    transition: background-color var(--duration-quick), border-color var(--duration-quick), transform var(--duration-quick);
+    transition:
+      background-color var(--duration-quick),
+      border-color var(--duration-quick),
+      transform var(--duration-quick);
   }
 
   .station-nav a:hover {
@@ -1668,7 +1730,10 @@ const coveredTerms = terms.filter((term) => typeof term.chain === 'number').leng
     border: 1px solid var(--color-line);
     background: var(--color-panel-raised);
     color: var(--color-ink);
-    transition: transform var(--duration-quick), background-color var(--duration-quick), border-color var(--duration-quick);
+    transition:
+      transform var(--duration-quick),
+      background-color var(--duration-quick),
+      border-color var(--duration-quick);
   }
 
   .chain-exit-links a:hover {
@@ -1714,7 +1779,9 @@ const coveredTerms = terms.filter((term) => typeof term.chain === 'number').leng
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     touch-action: manipulation;
-    transition: transform var(--duration-quick), background-color var(--duration-quick);
+    transition:
+      transform var(--duration-quick),
+      background-color var(--duration-quick);
   }
 
   .back-to-top:hover {
