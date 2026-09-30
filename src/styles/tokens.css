@@ -74,8 +74,11 @@
   --control-size-sm: 1.75rem;
 
   /* Concentric radii */
+  --radius-xs: 0.25rem;
   --radius-sm: 0.5rem;
   --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.25rem;
   --radius-pill: 999px;
 
   /* Multi-layer elevation shadows */

@@ -126,7 +126,7 @@
 .catalog-painpoints {
   margin: var(--space-4) 0 var(--space-4);
   border: 1px solid var(--color-line);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-lg);
   background: var(--color-panel);
   padding: var(--space-3) var(--space-4);
 }
@@ -279,7 +279,7 @@
   min-width: 0;
   min-height: 19rem;
   border: 1px solid var(--color-line);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-lg);
   background: var(--color-panel);
   box-shadow: var(--shadow-card);
   overflow: hidden;

@@ -40,7 +40,7 @@ body .search-experience.search-experience {
   width: min(calc(100% - 2.5rem), var(--content-max));
   margin: 0 auto var(--space-5);
   border: 1px solid var(--color-line);
-  border-radius: 0.5rem;
+  border-radius: var(--radius-lg);
   background: var(--color-panel);
   overflow: hidden;
 }
@@ -83,7 +83,7 @@ body .routes-page.routes-page .route-entry {
   display: flex;
   flex-direction: column;
   border: 1px solid var(--color-line);
-  border-radius: 0.5rem;
+  border-radius: var(--radius-lg);
   background: var(--color-panel);
   overflow: hidden;
 }
@@ -145,7 +145,7 @@ body .route-detail-page .route-hero.route-hero {
   grid-template-columns: minmax(0, 1fr) minmax(19rem, 0.42fr);
   margin-top: var(--space-4);
   border: 1px solid var(--color-line);
-  border-radius: 0.5rem;
+  border-radius: var(--radius-lg);
   background: var(--color-panel);
   overflow: hidden;
 }
@@ -185,7 +185,7 @@ body .route-detail-page.route-detail-page .route-body.route-body > aside {
 
 body .route-detail-page .route-chapters {
   border: 1px solid var(--color-line);
-  border-radius: 0.5rem;
+  border-radius: var(--radius-lg);
   background: var(--color-panel);
   overflow: hidden;
 }
@@ -214,7 +214,7 @@ body .graph-page .relation-groups.relation-groups {
 
 body .graph-page .graph-explorer.graph-explorer {
   border: 1px solid var(--color-line);
-  border-radius: 0.5rem;
+  border-radius: var(--radius-lg);
   background: var(--color-panel);
   overflow: hidden;
 }
@@ -230,7 +230,7 @@ body .graph-page .relation-groups {
 body .graph-page .relation-group.relation-group {
   display: block;
   border: 1px solid var(--color-line);
-  border-radius: 0.5rem;
+  border-radius: var(--radius-lg);
   background: var(--color-panel);
   overflow: hidden;
 }
@@ -260,7 +260,7 @@ body .methodology-page .method-section.method-section {
   grid-template-columns: 14rem minmax(0, 1fr);
   margin: 0 auto var(--space-3);
   border: 1px solid var(--color-line);
-  border-radius: 0.5rem;
+  border-radius: var(--radius-lg);
   background: var(--color-panel);
   overflow: hidden;
 }
@@ -311,7 +311,7 @@ body .case-shell .gate-artifact-trail.gate-artifact-trail,
 body .case-shell .case-navigation.case-navigation {
   margin-bottom: var(--space-3);
   border: 1px solid var(--color-line);
-  border-radius: 0.5rem;
+  border-radius: var(--radius-lg);
   background: var(--color-panel);
   overflow: hidden;
 }
@@ -427,7 +427,7 @@ body .not-found.not-found {
   grid-template-columns: 10rem minmax(0, 1fr);
   margin: var(--space-4) auto var(--space-6);
   border: 1px solid var(--color-line);
-  border-radius: 0.5rem;
+  border-radius: var(--radius-lg);
   background: var(--color-panel);
   overflow: hidden;
 }
