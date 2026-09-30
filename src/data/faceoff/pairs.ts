@@ -831,6 +831,247 @@ export const FACEOFF_PAIRS: readonly FaceoffPair[] = [
       },
     ],
   },
+  {
+    id: 'deep-reasoning-vs-fast-frontier',
+    title: '慢思考深度推理架构 vs 极速端到端大模型 (Extended Reasoning vs Fast Frontier Streamer)',
+    tagline: '百步隐式回溯验证 vs 毫秒级极速流式吞吐',
+    summary:
+      '当前大模型选型的核心战略分水岭。一边是测试时计算（Test-Time Compute）驱动的深度慢思考模型（如 Claude Opus 5.5 Thinking Mode、GPT-6 Astra、Kimi K3），另一边是面向极速响应的高并发流式旗舰模型（如 Claude Sonnet 5.5、Gemini 3.8 Flash、DeepSeek V4.1 Flash）。',
+    left: {
+      termId: 'chain-of-thought',
+      nameZh: '慢思考深度推理模型 (Extended Reasoning)',
+      nameEn: 'Test-Time Extended Reasoning Architecture',
+      category: '前沿推理架构',
+      essence:
+        '在向用户输出首字前，模型在内部动态展开长思维链，多分支推演假设、自我纠错并隐式验证逻辑链条。',
+      analogy:
+        '深思熟虑的首席系统架构师：面对复杂难题绝不脱口而出，在演算纸上推导验证几十遍确认无误后才给出方案。',
+      bestFor: [
+        '复杂代码漏洞挖掘与跨文件大型系统重构（如 Claude Opus 5.5、GPT-6 Astra）',
+        '多步数理推导、形式化运筹规划与长链条根因诊断分析',
+        '对逻辑跳步与推理幻觉零容忍的关键业务决策',
+      ],
+      fatalFlaws: [
+        '首字响应时间 (TTFT) 极长（通常 5-30 秒），用户端必须设计专门的思考等待体验',
+        '思考过程消耗大量不可见 Token，单次调用算力成本与并发开销显著升高',
+      ],
+      costStructure: '高算力单价，Token 消耗量大，单位并发吞吐受限。',
+    },
+    right: {
+      termId: 'model-capability',
+      nameZh: '极速端到端大模型 (Fast Frontier Streamer)',
+      nameEn: 'Ultra-Low Latency Frontier Streaming Model',
+      category: '高吞吐通用模型',
+      essence: '单次前向推理极快完成，毫秒级流式返回 Token，具备极高的并发服务吞吐与性价比。',
+      analogy:
+        '反应敏捷的同声传译与急诊调度员：听到指令立刻流式作答，每秒能并发支持数千路实时交互。',
+      bestFor: [
+        '在线编辑器代码补全、打字交互伴侣（如 Claude Sonnet 5.5、Gemini 3.8 Flash、DeepSeek V4.1 Flash）',
+        '日调用量千万级的高并发工单分拣与企业流式日志处理管线',
+        '对 500ms 端到端延迟 SLA 有严格要求的在线用户系统',
+      ],
+      fatalFlaws: [
+        '面对 10 步以上的嵌套因果推导时容易先入为主，产生直觉上合逻辑但推导错误的假象',
+        '缺乏内生自我回溯纠错机制，中间一旦假设偏离便会一错到底',
+      ],
+      costStructure: '单位 Token 成本极低，极佳的每秒吞吐量与成本效益比。',
+    },
+    metrics: [
+      {
+        label: '首字响应延迟 (TTFT)',
+        leftValue: 88,
+        leftText: '慢 (5-20 秒长思考)',
+        rightValue: 12,
+        rightText: '极快 (< 400ms 流式)',
+        directionLabel: '数值越低越快',
+      },
+      {
+        label: '长链条复杂逻辑推演保真度',
+        leftValue: 98,
+        leftText: '极高 (自带回溯自验)',
+        rightValue: 60,
+        rightText: '中等 (易产生直觉幻觉)',
+        directionLabel: '数值越高越强',
+      },
+      {
+        label: '单次推理 Token 算力成本',
+        leftValue: 85,
+        leftText: '昂贵 (隐式消耗大量 Token)',
+        rightValue: 20,
+        rightText: '经济 (严格按字计费)',
+        directionLabel: '数值越低越省',
+      },
+      {
+        label: '高并发每秒事务量 (TPS)',
+        leftValue: 25,
+        leftText: '受限 (依赖长时间 GPU 占用)',
+        rightValue: 95,
+        rightText: '充裕 (高并发流式弹性)',
+        directionLabel: '数值越高越好',
+      },
+      {
+        label: '逻辑幻觉主动拦截率',
+        leftValue: 96,
+        leftText: '极高 (多分支自检纠正)',
+        rightValue: 55,
+        rightText: '一般 (单向输出难以反悔)',
+        directionLabel: '数值越高越稳',
+      },
+    ],
+    decisionRules: {
+      chooseLeftWhen: [
+        '任务失败会导致严重资损或法律风险（如核心金融审计、复杂密码协议验证）',
+        '问题需要拆解为 10 步以上严密因果逻辑，且单步错误会导致全盘失效',
+        '业务属于离线异步执行或后台批量规划，用户可以接受数十秒的等待',
+      ],
+      chooseRightWhen: [
+        '属于在线即时交互界面（如代码实时自动补全、实时对话），端到端必须在秒级内给到反馈',
+        '每日调用量达到数百万甚至千万次，必须严格控制单次 API 调用成本',
+        '任务以文本理解、信息抽取、模板总结与常规格式转换为主，推理深度要求可控',
+      ],
+    },
+    quiz: [
+      {
+        id: 'quiz-reasoning-1',
+        scenario:
+          '金融反洗钱系统中的多层离岸空壳公司资金穿透分析，需要推演 15 级关联交易链路并排查隐蔽对冲协议，错判一个节点将导致合规审计全盘推翻。',
+        constraint: '离线分析任务，处理时间在 30 秒内均可接受，但逻辑推导必须绝对严密自洽。',
+        correctSide: 'left',
+        explanation:
+          '应选慢思考深度推理架构（如 Claude Opus 5.5 / GPT-6 Astra）。多层穿透属于高阶推理深水区，常规流式模型在长链条下容易产生直觉假象，慢思考模型内部多步自检能最大程度杜绝逻辑漏洞。',
+      },
+      {
+        id: 'quiz-reasoning-2',
+        scenario:
+          '开发者在线 IDE 中的实时代码续写补全功能，用户在键盘上每敲击 2-3 个字符就需要毫秒级展示候选行。',
+        constraint: '端到端延迟必须严格卡在 300ms 以内，每日请求量超过 5000 万次。',
+        correctSide: 'right',
+        explanation:
+          '必须选极速端到端大模型（如 Claude Sonnet 5.5 / Gemini 3.8 Flash / DeepSeek V4.1 Flash）。该场景核心瓶颈在首字延迟和高并发 TPS，慢思考模型的几十秒思考时间会彻底破坏用户打字节奏，且成本不可承受。',
+      },
+    ],
+  },
+  {
+    id: 'native-long-context-vs-chunked-rag',
+    title: '原生超长上下文直推 vs 分层分块混合检索增强 (Native Long-Context vs Chunked Hybrid RAG)',
+    tagline: '全量注意力原地直读 vs 外部向量分块切片召回',
+    summary:
+      '面对百万至千万 Token 的大规模资料，是直接利用当代长窗口模型（如 Gemini 3.8 Flash 千万级窗口、Qwen3.8 Max）的原生注意力原地直读，还是搭建分块切片、Embedding 向量检索与重排的 RAG 工业架构？',
+    left: {
+      termId: 'long-context',
+      nameZh: '原生超长上下文直推 (Native Long-Context)',
+      nameEn: 'Native In-Context Attention Processing',
+      category: '模型原生上下文架构',
+      essence:
+        '直接将数十万至数百万 Token 的全量原始文档塞入模型上下文，由自注意力机制进行全局原地交叉计算。',
+      analogy:
+        '过目不忘的速读天才：直接将一整箱几百页的原始案卷全部读进临时记忆，前后反复交叉对照。',
+      bestFor: [
+        '单一项目完整代码库因果依赖追踪与跨模块重构（如 Gemini 3.8 Flash、Qwen3.8 Max）',
+        '几百页招股书、司法文书多章节交叉矛盾审查与全局趋势综合分析',
+        '切片会导致表格断裂、语义割裂的复杂长篇非结构化报告',
+      ],
+      fatalFlaws: [
+        '每次调用都会全量重复上传长文本，高频调用下 Token 账单呈线性累积增长',
+        '当无关噪音频段极大时，注意力仍可能发生轻微漂移（干草垛寻针挑战）',
+      ],
+      costStructure: '零工程基建门槛，但单次 API 调用 Token 费用与输入显存占用高。',
+    },
+    right: {
+      termId: 'retrieval-augmented-generation',
+      nameZh: '分层分块混合检索增强 (Chunked Hybrid RAG)',
+      nameEn: 'Hierarchical Chunked Hybrid RAG',
+      category: '工程化检索体系',
+      essence:
+        '先对企业知识库执行结构化切片与向量化入库，运行时仅检索召回最相关的 Top-K 片段喂给大模型。',
+      analogy:
+        '专业的图书管理员：面对浩如烟海的百万藏书，根据关键词精准抽取 3 本最关键参考书呈递给你。',
+      bestFor: [
+        'TB 级超大规模、且每天高频增删变动的企业文档库与客服知识中心（如 GLM-5.3、Claude Sonnet 5.5 + RAG）',
+        '具备严格组织架构部门权限隔离与多租户敏感数据物理隔离场景',
+        '日请求数万次、必须将单次查询 Token 消耗控制在数千以内的系统',
+      ],
+      fatalFlaws: [
+        '切片容易丢失跨章节因果上下文，无法有效回答“总结整本财报中核心经营策略变迁”等宏观宏览问题',
+        '需要维护向量数据库、切片解析管道、重排器 (Reranker) 等复杂工程设施',
+      ],
+      costStructure: '需要前期工程投入搭建向量与分块索引，但后续单次查询 Token 极低且成本恒定。',
+    },
+    metrics: [
+      {
+        label: '单次查询输入 Token 成本',
+        leftValue: 92,
+        leftText: '昂贵 (全量百万 Token 计费)',
+        rightValue: 18,
+        rightText: '极低 (仅切片数千 Token)',
+        directionLabel: '数值越低越省',
+      },
+      {
+        label: '跨章节全局归纳与因果挖掘',
+        leftValue: 96,
+        leftText: '极强 (全局自注意力原地互关)',
+        rightValue: 40,
+        rightText: '受限 (切片只见树木不见森林)',
+        directionLabel: '数值越高越好',
+      },
+      {
+        label: '知识库动态更新与增删时效',
+        leftValue: 10,
+        leftText: '需每次重传全量原始数据',
+        rightValue: 95,
+        rightText: '仅增量切片重建局部索引',
+        directionLabel: '数值越高越敏捷',
+      },
+      {
+        label: '工程落地与基建复杂度',
+        leftValue: 15,
+        leftText: '极轻 (直接 API 喂入 Prompt)',
+        rightValue: 85,
+        rightText: '较高 (需搭建向量库与重排管线)',
+        directionLabel: '数值越低越轻量',
+      },
+      {
+        label: '细粒度文档权限与多租户隔离',
+        leftValue: 20,
+        leftText: '弱 (全量上下文难以分权过滤)',
+        rightValue: 96,
+        rightText: '强 (检索层原生支持行级权限)',
+        directionLabel: '数值越高越合规',
+      },
+    ],
+    decisionRules: {
+      chooseLeftWhen: [
+        '需要对单份复杂材料做深度综合研判（如 300 页招股书跨章节财务口径校验）',
+        '团队缺少专职检索工程人力，需要在数小时内快速跑通全量资料理解的原型',
+        '调用频次较低（每天几次到几十次），单次产出商业价值远高于 API 账单',
+      ],
+      chooseRightWhen: [
+        '企业知识体量达到数十 GB 或 TB 级，绝大部分内容单次问答根本无需加载',
+        '知识内容每日高频变动，需要即时增删改同步生效',
+        '生产系统每天有几十万次问答请求，必须把单次输入严格压制在 2k-4k Token 以内',
+      ],
+    },
+    quiz: [
+      {
+        id: 'quiz-context-1',
+        scenario:
+          '某大型跨国集团搭建面向全员 5 万名员工的日常行政与差旅政策助手，汇总了近万篇制度规章，员工每天高频提问报销标准。',
+        constraint: '每日数万次提问，不同国家员工仅能查看本地区适用的福利政策。',
+        correctSide: 'right',
+        explanation:
+          '必须选用分层分块混合检索增强（Hybrid RAG）。万篇制度全塞入长上下文不仅成本天文数字且无法做行级权限过滤；RAG 可以在索引层根据员工区域快速过滤并仅注入 2 篇相关条款，成本极低。',
+      },
+      {
+        id: 'quiz-context-2',
+        scenario:
+          '精品投行分析师对某拟并购标的公司的 300 页招股说明书与过去 3 年所有审计附注做深度尽职调查，需审查全书所有表格中的毛利率计算口径是否存在跨年份自相矛盾。',
+        constraint: '调用频次低（每天仅几次），但必须跨章节前后因果比对，切片会导致表格断裂。',
+        correctSide: 'left',
+        explanation:
+          '果断选用原生超长上下文直推（如 Gemini 3.8 Flash / Qwen3.8 Max）。跨章节的细微矛盾审查是切片 RAG 的典型死穴，全量上下文原地计算能保持所有表格和附注的全局关联，分析价值极高。',
+      },
+    ],
+  },
 ] as const;
 
 export function getFaceoffPair(id: string): FaceoffPair | undefined {

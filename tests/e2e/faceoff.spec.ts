@@ -12,9 +12,9 @@ test.describe('Phase 3 (M3) UX Features', () => {
       page.getByRole('heading', { level: 1, name: '易混概念同屏 PK 对决台' }),
     ).toBeVisible();
 
-    // 2. Tab selector with 10 pairs
+    // 2. Tab selector with 12 pairs
     const tabs = page.locator('.switcher-item');
-    await expect(tabs).toHaveCount(10);
+    await expect(tabs).toHaveCount(12);
     await expect(tabs.first()).toHaveAttribute('aria-selected', 'true');
 
     // 3. Default pair (RAG vs FT) display

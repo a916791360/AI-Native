@@ -26,8 +26,7 @@ const { caseStudy, gateId } = Astro.props as { caseStudy: CaseStudy; gateId: str
 const context = getGateContext(caseStudy, gateId)!;
 const { gate, previous, next, resources, accumulatedArtifacts } = context;
 const formedArtifactIds = new Set(accumulatedArtifacts.map(({ id }) => id));
-// 案例库 → 案例 → 关卡。「案例位置」条已经报了 Gate 03/06 与返回项目档案，
-// 但它没有可点回案例库的路径——面包屑补的正是这一段上行。
+
 const breadcrumbTrail = [
   { label: '案例库', href: '/learn/cases/' },
   { label: caseStudy.title, href: caseHref(caseStudy.id) },
@@ -41,11 +40,15 @@ const breadcrumbTrail = [
       <Breadcrumbs trail={breadcrumbTrail} />
     </div>
 
+    <!-- 顶部案例位置与关卡速览工具条 (保留 region 案例位置 与 Gate 01 / 06 契约) -->
     <section class="case-location" aria-label="案例位置">
       <div class="location-case-info">
-        <span class="location-label">连续案例</span>
-        <strong class="location-case-title">{caseStudy.title}</strong>
+        <span class="location-badge">实战案例</span>
+        <a href={caseHref(caseStudy.id)} class="location-case-title" title="查看项目档案">
+          {caseStudy.title}
+        </a>
       </div>
+
       <div class="location-stage-stepper">
         <span class="location-gate-text">Gate {String(gate.order).padStart(2, '0')} / 06</span>
         <ol class="gate-mini-dots" aria-label="关卡进度导航">
@@ -59,8 +62,9 @@ const breadcrumbTrail = [
             ))
           }
         </ol>
-        <small class="location-note">项目阶段 · 不记录完成状态</small>
+        <span class="location-stage-name">{CASE_STAGE_LABELS[gate.stageId]}</span>
       </div>
+
       <div class="location-actions">
         <button type="button" class="location-prd-preview-btn" data-open-prd-modal>
           <span>📑 预览 PRD</span>
@@ -69,15 +73,12 @@ const breadcrumbTrail = [
       </div>
     </section>
 
+    <!-- 关卡宏观标题与决策挑战 (Hallmark 现代大方标题区) -->
     <header class="gate-heading">
-      <div class="gate-number">
-        <p class="meta-label">Gate</p>
-        <strong>{String(gate.order).padStart(2, '0')}</strong>
-      </div>
-      <div class="gate-title">
+      <div class="gate-heading-inner">
         <div class="gate-stage-tag-row">
           <span class="gate-stage-pill">{CASE_STAGE_LABELS[gate.stageId]}</span>
-          <span class="gate-order-tag">Stage 0{gate.order} of 06</span>
+          <span class="gate-order-tag">Gate 0{gate.order} of 06 · 决策推演</span>
         </div>
         <h1>{gate.title}</h1>
         <div class="gate-challenge-box">
@@ -87,10 +88,11 @@ const breadcrumbTrail = [
       </div>
     </header>
 
+    <!-- 6 阶段材料演进流水线 -->
     <div class="gate-artifact-trail" aria-label="材料演进">
       <div class="trail-label">
         <span class="trail-kicker">项目材料逐步形成</span>
-        <small>各关卡决策对应 PRD 章节</small>
+        <small>各关决策沉淀为 PRD 章节</small>
       </div>
       <ol class="trail-pipeline">
         {
@@ -107,6 +109,7 @@ const breadcrumbTrail = [
       </ol>
     </div>
 
+    <!-- 决策工作台 (包含 Brief、证据对撞、三路径选择、天平与复盘) -->
     <CaseGateDesk caseStudy={caseStudy} gate={gate} resources={resources} />
 
     {
@@ -128,7 +131,7 @@ const breadcrumbTrail = [
           </button>
         </section>
       ) : (
-        <div class="archive-export-banner" style="margin: var(--space-4) var(--page-gutter) 0;">
+        <div class="archive-export-banner">
           <p>
             <strong>PRD 随阶段生成中：</strong>当前处于 Gate 0{gate.order}
             。你可以随时预览或导出当前已沉淀的立项 PRD（未做选择的关卡自动按推荐基准填充）。
@@ -140,6 +143,7 @@ const breadcrumbTrail = [
       )
     }
 
+    <!-- 关卡底部快速跳转 -->
     <nav class="case-navigation" aria-label="案例关卡导航">
       <a href={previous ? gateHref(caseStudy.id, previous.id) : caseHref(caseStudy.id)}>
         <span>{previous ? `上一关 · Gate ${String(previous.order).padStart(2, '0')}` : '返回'}</span

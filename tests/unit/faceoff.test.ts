@@ -3,8 +3,8 @@ import { FACEOFF_PAIRS, getFaceoffPair } from '../../src/data/faceoff';
 import { loadProjectContent } from '../../src/lib/content/io';
 
 describe('Concept Faceoff Dataset', () => {
-  it('curates exactly 10 high-frequency confusion pairs', () => {
-    expect(FACEOFF_PAIRS).toHaveLength(10);
+  it('curates exactly 12 high-frequency confusion pairs', () => {
+    expect(FACEOFF_PAIRS).toHaveLength(12);
   });
 
   it('links every side of all pairs to an existing public verified term', async () => {

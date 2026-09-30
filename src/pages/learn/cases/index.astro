@@ -31,227 +31,238 @@ const goldenCases = libraryCases.filter(({ data }) => data.id === GOLDEN_CASE_ID
   description={section.purpose}
   structuredDataType="CollectionPage"
 >
-  <main id="main-content" class="content-catalog case-catalog">
-    <div class="catalog-layout">
-      <aside class="catalog-sidebar">
-        <nav aria-label="案例筛选">
-          <a href="#case-list" aria-current="true">全部案例 {cases.length}</a>
-          <a href="#case-matrix">场景能力矩阵</a>
-          <a href={verifiedCases[0] ? `#case-${verifiedCases[0].data.id}` : '#case-list'}>
-            已核验 {verifiedCases.length}
-          </a>
-          <a href={draftCases[0] ? `#case-${draftCases[0].data.id}` : '#case-list'}>
-            内容草稿 {draftCases.length}
-          </a>
-          <a href={goldenCases[0] ? `#case-${goldenCases[0].data.id}` : '#case-list'}>
-            完整项目 {goldenCases.length}
-          </a>
-        </nav>
-      </aside>
+  <main id="main-content" class="case-library-stage">
+    <!-- 顶部宏大 Hero -->
+    <header class="case-library-hero">
+      <div class="hero-content">
+        <span class="case-header-eyebrow">Enterprise AI PM Sandbox · 6-Stage Lifecycle</span>
+        <h1>AI 产品案例库</h1>
+        <p class="hero-lead">
+          在端到端真实业务场景中连续推演证据、方案选型、成立条件核验、容灾恢复与立项 PRD 输出。
+        </p>
+      </div>
 
-      <div class="catalog-main">
-        <header class="catalog-title case-library-header">
-          <div class="case-header-main">
-            <span class="case-header-eyebrow">Enterprise AI PM Sandbox</span>
-            <h1>AI 产品案例库</h1>
-            <p>
-              在端到端真实业务场景中连续推演证据、方案选型、成立条件核验、容灾恢复与立项 PRD 输出。
-            </p>
-          </div>
-          <div class="case-header-stats" aria-label="案例库核心指标">
-            <div class="stat-pill">
-              <span class="stat-num">{cases.length}</span>
-              <span class="stat-desc">连续实战业务场景</span>
-            </div>
-            <div class="stat-pill">
-              <span class="stat-num">{cases.length * 6}</span>
-              <span class="stat-desc">Gate 决策推演关卡</span>
-            </div>
-            <div class="stat-pill">
-              <span class="stat-num">100%</span>
-              <span class="stat-desc">真实基线与 PRD 产出</span>
-            </div>
-          </div>
-        </header>
+      <!-- 核心指标统计卡片 -->
+      <div class="case-header-stats" aria-label="案例库核心指标">
+        <div class="stat-pill">
+          <span class="stat-num">{cases.length}</span>
+          <span class="stat-desc">连续实战业务场景</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-num">{cases.length * 6}</span>
+          <span class="stat-desc">Gate 决策推演关卡</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-num">100%</span>
+          <span class="stat-desc">真实基线与 PRD 产出</span>
+        </div>
+      </div>
+    </header>
 
-        <!-- 案例卡片列表 (优先呈现场景入口) -->
-        <section class="catalog-section" id="case-list" aria-labelledby="case-list-heading">
-          <header class="section-meta-header">
-            <div>
-              <h2 id="case-list-heading">实战业务场景</h2>
-              <p class="section-subtitle">
-                每个场景覆盖从冷启动到治理上线的完整 6 个阶段，支持随时组装导出立项 PRD
-              </p>
-            </div>
-            <span class="section-count-badge">{cases.length} 个业务案例</span>
-          </header>
-
-          <div class="case-card-grid">
-            {
-              libraryCases.map(({ data: caseStudy }, cardIndex) => {
-                const firstGate = caseStudy.gates[0]!;
-                const isGolden = caseStudy.id === GOLDEN_CASE_ID;
-                return (
-                  <article
-                    id={`case-${caseStudy.id}`}
-                    class="case-catalog-card"
-                    data-level={isGolden ? 'capstone' : caseStudy.level}
-                    data-reveal
-                    style={`--reveal-delay: ${cardIndex * 70}ms`}
-                  >
-                    <div class="case-card-top-bar">
-                      <div class="case-badge-group">
-                        <span class="case-status-badge" data-status={caseStudy.status}>
-                          <span class="status-dot" />
-                          {CASE_STATUS_LABELS[caseStudy.status]}
-                        </span>
-                        <span class="case-level-badge" data-golden={isGolden ? 'true' : undefined}>
-                          {isGolden ? '标杆完整项目' : '实战连续案例'}
-                        </span>
-                      </div>
-                      <span class="case-domain-badge">{caseStudy.domain}</span>
-                    </div>
-
-                    <div class="case-card-heading">
-                      <h2>
-                        <a href={caseHref(caseStudy.id)}>{caseStudy.title}</a>
-                      </h2>
-                      <span class="case-gates-badge">{caseStudy.gates.length} GATES</span>
-                    </div>
-
-                    <p class="case-card-objective">{caseStudy.objective}</p>
-
-                    <div class="case-card-preview">
-                      <div class="case-pipeline-label">
-                        <span>推演路径 (01 → 06)</span>
-                        <small>6 阶段渐进式深入</small>
-                      </div>
-                      <ol class="case-pipeline-list" aria-label="案例 Gate 流程">
-                        {caseStudy.gates.map((gate, index) => (
-                          <li class="case-pipeline-item">
-                            <span class="pipeline-step">{String(index + 1).padStart(2, '0')}</span>
-                            <span class="pipeline-title">{gate.title}</span>
-                          </li>
-                        ))}
-                      </ol>
-
-                      <dl class="case-meta-metrics">
-                        <div>
-                          <dt>评估指标</dt>
-                          <dd>{caseStudy.metrics.length} 项</dd>
-                        </div>
-                        <div>
-                          <dt>故障应急</dt>
-                          <dd>{caseStudy.failureModes.length} 模式</dd>
-                        </div>
-                        <div>
-                          <dt>交付成果</dt>
-                          <dd>立项 PRD</dd>
-                        </div>
-                      </dl>
-                    </div>
-
-                    <div class="case-card-actions">
-                      <a href={gateHref(caseStudy.id, firstGate.id)} class="btn-start-case">
-                        <span>进入 Gate 01 决策</span>
-                        <span class="btn-arrow">→</span>
-                      </a>
-                      <a href={caseHref(caseStudy.id)} class="btn-view-archive">
-                        项目档案
-                      </a>
-                    </div>
-                  </article>
-                );
-              })
-            }
-          </div>
-        </section>
-
-        <!-- 场景 × 能力阶段全景决策矩阵 -->
-        <section
-          class="catalog-section matrix-section"
-          id="case-matrix"
-          aria-labelledby="case-matrix-heading"
+    <!-- 水平视图与筛选切换导航 (替代侧边栏，页面全宽通透呼吸) -->
+    <nav class="case-perspective-nav" aria-label="案例筛选">
+      <div class="perspective-track">
+        <a href="#case-list" class="perspective-chip active" aria-current="true">
+          全部案例 {cases.length}
+        </a>
+        <a href="#case-matrix" class="perspective-chip">场景能力矩阵</a>
+        <a
+          href={verifiedCases[0] ? `#case-${verifiedCases[0].data.id}` : '#case-list'}
+          class="perspective-chip"
         >
-          <header class="section-meta-header">
-            <div>
-              <h2 id="case-matrix-heading">业务场景 × 阶段决策矩阵</h2>
-              <p class="section-subtitle">
-                36 个 Gate 决策点全景导航；在关卡中完成 PM 方案采纳后，矩阵将自动点亮你的决策足迹
-              </p>
-            </div>
-            <span class="section-count-badge">6 大场景 · 36 个 Gate 决策点</span>
-          </header>
+          已核验 {verifiedCases.length}
+        </a>
+        <a
+          href={draftCases[0] ? `#case-${draftCases[0].data.id}` : '#case-list'}
+          class="perspective-chip"
+        >
+          内容草稿 {draftCases.length}
+        </a>
+        <a
+          href={goldenCases[0] ? `#case-${goldenCases[0].data.id}` : '#case-list'}
+          class="perspective-chip"
+        >
+          完整项目 {goldenCases.length}
+        </a>
+      </div>
+    </nav>
 
-          <div class="matrix-table-wrap">
-            <table class="case-matrix-table" aria-label="案例与能力阶段矩阵">
-              <thead>
-                <tr>
-                  <th scope="col" class="case-col-header">
-                    <div class="col-head-content">
-                      <span class="col-head-label">SCENARIOS</span>
-                      <strong>实战业务案例</strong>
+    <!-- 案例卡片列表 (双列宽屏大卡片，结构通透、信息分层明确) -->
+    <section class="case-catalog-section" id="case-list" aria-labelledby="case-list-heading">
+      <header class="section-meta-header">
+        <div>
+          <h2 id="case-list-heading">实战业务场景</h2>
+          <p class="section-subtitle">
+            每个场景覆盖从冷启动到治理上线的完整 6 个阶段，支持随时组装导出立项 PRD
+          </p>
+        </div>
+        <span class="section-count-badge">{cases.length} 个业务案例</span>
+      </header>
+
+      <div class="case-card-grid">
+        {
+          libraryCases.map(({ data: caseStudy }, cardIndex) => {
+            const firstGate = caseStudy.gates[0]!;
+            const isGolden = caseStudy.id === GOLDEN_CASE_ID;
+            return (
+              <article
+                id={`case-${caseStudy.id}`}
+                class="case-catalog-card"
+                data-level={isGolden ? 'capstone' : caseStudy.level}
+                data-reveal
+                style={`--reveal-delay: ${cardIndex * 70}ms`}
+              >
+                <div class="case-card-top-bar">
+                  <div class="case-badge-group">
+                    <span class="case-status-badge" data-status={caseStudy.status}>
+                      <span class="status-dot" />
+                      {CASE_STATUS_LABELS[caseStudy.status]}
+                    </span>
+                    <span class="case-level-badge" data-golden={isGolden ? 'true' : undefined}>
+                      {isGolden ? '标杆完整项目' : '实战连续案例'}
+                    </span>
+                  </div>
+                  <span class="case-domain-badge">{caseStudy.domain}</span>
+                </div>
+
+                <div class="case-card-heading">
+                  <h2>
+                    <a href={caseHref(caseStudy.id)}>{caseStudy.title}</a>
+                  </h2>
+                  <span class="case-gates-badge">{caseStudy.gates.length} GATES</span>
+                </div>
+
+                <p class="case-card-objective">{caseStudy.objective}</p>
+
+                <div class="case-card-preview">
+                  <div class="case-pipeline-label">
+                    <span class="pipeline-kicker">推演路径 (01 → 06)</span>
+                    <span class="pipeline-sub">6 阶段渐进式深入</span>
+                  </div>
+                  <ol class="case-pipeline-list" aria-label="案例 Gate 流程">
+                    {caseStudy.gates.map((gate, index) => (
+                      <li class="case-pipeline-item">
+                        <span class="pipeline-step">{String(index + 1).padStart(2, '0')}</span>
+                        <span class="pipeline-title">{gate.title}</span>
+                      </li>
+                    ))}
+                  </ol>
+
+                  <dl class="case-meta-metrics">
+                    <div class="meta-item">
+                      <dt>评估指标</dt>
+                      <dd>{caseStudy.metrics.length} 项</dd>
+                    </div>
+                    <div class="meta-item">
+                      <dt>故障应急</dt>
+                      <dd>{caseStudy.failureModes.length} 模式</dd>
+                    </div>
+                    <div class="meta-item">
+                      <dt>交付成果</dt>
+                      <dd class="metric-highlight">立项 PRD</dd>
+                    </div>
+                  </dl>
+                </div>
+
+                <div class="case-card-actions">
+                  <a href={gateHref(caseStudy.id, firstGate.id)} class="btn-start-case">
+                    <span>进入 Gate 01 决策</span>
+                    <span class="btn-arrow">→</span>
+                  </a>
+                  <a href={caseHref(caseStudy.id)} class="btn-view-archive">
+                    项目档案
+                  </a>
+                </div>
+              </article>
+            );
+          })
+        }
+      </div>
+    </section>
+
+    <!-- 场景 × 能力阶段全景决策矩阵 -->
+    <section
+      class="case-catalog-section matrix-section"
+      id="case-matrix"
+      aria-labelledby="case-matrix-heading"
+    >
+      <header class="section-meta-header">
+        <div>
+          <h2 id="case-matrix-heading">业务场景 × 阶段决策矩阵</h2>
+          <p class="section-subtitle">
+            36 个 Gate 决策点全景导航；在关卡中完成 PM 方案采纳后，矩阵将自动点亮你的决策足迹
+          </p>
+        </div>
+        <span class="section-count-badge">6 大场景 · 36 个 Gate 决策点</span>
+      </header>
+
+      <div class="matrix-table-wrap">
+        <table class="case-matrix-table" aria-label="案例与能力阶段矩阵">
+          <thead>
+            <tr>
+              <th scope="col" class="case-col-header">
+                <div class="col-head-content">
+                  <span class="col-head-label">SCENARIOS</span>
+                  <strong>实战业务案例</strong>
+                </div>
+              </th>
+              {
+                CASE_STAGE_IDS.map((stageId, idx) => (
+                  <th scope="col">
+                    <div class="matrix-stage-head">
+                      <span class="stage-tag">Gate 0{idx + 1}</span>
+                      <strong class="stage-name">{CASE_STAGE_LABELS[stageId]}</strong>
                     </div>
                   </th>
-                  {
-                    CASE_STAGE_IDS.map((stageId, idx) => (
-                      <th scope="col">
-                        <div class="matrix-stage-head">
-                          <span class="stage-tag">Gate 0{idx + 1}</span>
-                          <strong class="stage-name">{CASE_STAGE_LABELS[stageId]}</strong>
-                        </div>
-                      </th>
-                    ))
-                  }
-                </tr>
-              </thead>
-              <tbody>
-                {
-                  libraryCases.map(({ data: caseStudy }) => (
-                    <tr>
-                      <th scope="row">
-                        <div class="case-row-head">
-                          <strong class="case-row-title">{caseStudy.title}</strong>
-                          <div class="case-row-meta">
-                            <span class="row-status-pill" data-status={caseStudy.status}>
-                              {CASE_STATUS_LABELS[caseStudy.status]}
+                ))
+              }
+            </tr>
+          </thead>
+          <tbody>
+            {
+              libraryCases.map(({ data: caseStudy }) => (
+                <tr>
+                  <th scope="row">
+                    <div class="case-row-head">
+                      <strong class="case-row-title">{caseStudy.title}</strong>
+                      <div class="case-row-meta">
+                        <span class="row-status-pill" data-status={caseStudy.status}>
+                          {CASE_STATUS_LABELS[caseStudy.status]}
+                        </span>
+                        <span class="row-domain-tag">{caseStudy.domain}</span>
+                      </div>
+                    </div>
+                  </th>
+                  {CASE_STAGE_IDS.map((stageId) => {
+                    const gate = caseStudy.gates.find((g) => g.stageId === stageId);
+                    if (!gate) return <td>-</td>;
+                    const cellKey = `${caseStudy.id}:${gate.id}`;
+                    return (
+                      <td>
+                        <a
+                          href={gateHref(caseStudy.id, gate.id)}
+                          class="matrix-cell-link"
+                          data-matrix-cell={cellKey}
+                          title={`${caseStudy.title} · ${gate.title} (${gate.question})`}
+                        >
+                          <div class="matrix-gate-order">
+                            <span>G0{gate.order}</span>
+                            <span class="matrix-decided-tag" data-matrix-tag={cellKey} hidden>
+                              ✓ 已采纳
                             </span>
-                            <span class="row-domain-tag">{caseStudy.domain}</span>
                           </div>
-                        </div>
-                      </th>
-                      {CASE_STAGE_IDS.map((stageId) => {
-                        const gate = caseStudy.gates.find((g) => g.stageId === stageId);
-                        if (!gate) return <td>-</td>;
-                        const cellKey = `${caseStudy.id}:${gate.id}`;
-                        return (
-                          <td>
-                            <a
-                              href={gateHref(caseStudy.id, gate.id)}
-                              class="matrix-cell-link"
-                              data-matrix-cell={cellKey}
-                              title={`${caseStudy.title} · ${gate.title} (${gate.question})`}
-                            >
-                              <div class="matrix-gate-order">
-                                <span>G0{gate.order}</span>
-                                <span class="matrix-decided-tag" data-matrix-tag={cellKey} hidden>
-                                  ✓ 已采纳
-                                </span>
-                              </div>
-                              <span class="matrix-gate-title">{gate.title}</span>
-                            </a>
-                          </td>
-                        );
-                      })}
-                    </tr>
-                  ))
-                }
-              </tbody>
-            </table>
-          </div>
-        </section>
+                          <span class="matrix-gate-title">{gate.title}</span>
+                        </a>
+                      </td>
+                    );
+                  })}
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
       </div>
-    </div>
+    </section>
   </main>
 </BaseLayout>
 
