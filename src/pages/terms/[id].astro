@@ -19,6 +19,7 @@ import { selectLocalGraph, type GraphData } from '@/lib/graph/model';
 import { buildContentIssueUrl } from '@/lib/site/github';
 import ConceptArchitectureFlow from '@/components/content/ConceptArchitectureFlow.astro';
 import { FACEOFF_PAIRS } from '@/data/faceoff';
+import '@/styles/term-page.css';
 
 export const getStaticPaths = (async () => {
   const [entries, { relations, semanticRelations, domains, routes, chain }, cases] =
@@ -257,70 +258,68 @@ const breadcrumbTrail = [
     </div>
 
     <header class="term-hero">
-      <div class="term-title">
-        <p class="eyebrow">{domain?.nameZh ?? term.domain} · {difficultyLabels[term.difficulty]}</p>
-        <h1 data-pagefind-meta="title" data-pagefind-weight="10">{term.nameZh}</h1>
-        <p class="term-en">
-          {term.nameEn}{term.abbreviations.length ? ` · ${term.abbreviations.join(' / ')}` : ''}
-        </p>
-      </div>
-      <div class="term-summary">
-        <StatusTag status={term.status} />
-        <p>{term.summary}</p>
-        <div class="term-actions">
-          {selectable && <a href={`/graph/?focus=${term.id}`}>在概念图谱中查看</a>}
-          <a href={correctionUrl}>提交修订建议</a>
+      <div class="term-hero-header">
+        <div class="term-hero-titles">
+          <div class="term-tag-strip">
+            <span class="term-domain-pill">{domain?.nameZh ?? term.domain}</span>
+            <span class="term-difficulty-pill">{difficultyLabels[term.difficulty]}</span>
+            <StatusTag status={term.status} />
+            {term.verifiedAt && <span class="term-verified-date">核验于 {term.verifiedAt}</span>}
+          </div>
+          <h1 data-pagefind-meta="title" data-pagefind-weight="10">{term.nameZh}</h1>
+          <p class="term-en">
+            {term.nameEn}{term.abbreviations.length ? ` · ${term.abbreviations.join(' / ')}` : ''}
+            {term.aliases.length > 0 && ` (别名：${term.aliases.map((a) => a.value).join('、')})`}
+          </p>
         </div>
-      </div>
-    </header>
-
-    <section class="term-meta" aria-label="词条元数据">
-      <dl>
-        <div><dt>领域</dt><dd>{domain?.shortNameZh ?? term.domain}</dd></div>
-        <div><dt>难度</dt><dd>{difficultyLabels[term.difficulty]}</dd></div>
-        <div>
-          <dt>别名</dt><dd>{term.aliases.map((alias) => alias.value).join('、') || '无'}</dd>
-        </div>
-        <div><dt>最近核验</dt><dd>{term.verifiedAt ?? '待核验'}</dd></div>
-      </dl>
-    </section>
-
-    {
-      /*
-       * 链路定位行。它不是第二套导航，而是一次定位：让读者在任何一条孤立词条上
-       * 都看得到自己在整条理解路径里的位置，从而产生「上一站是什么 / 下一站是什么」
-       * 的连续感。这正是 291 条无路线归属词条最缺的东西。
-       * 与页脚的「阅读路线前后篇」刻意用不同措辞（站 vs 篇）：两者可能同时出现，
-       * 读者需要一眼分清「沿链路走」和「沿某条路线走」是两条不同的路径。
-       */
-      chainPosition && (
-        <p class="term-chain" data-chain-station={chainPosition.order}>
-          <span class="chain-label">认知链路</span>
-          <a class="chain-station-link" href={`/map/#station-${chainPosition.order}`}>
-            第 {chainPosition.order} 站 · {chainPosition.stationName}
+        <div class="term-hero-actions">
+          {
+            selectable && (
+              <a href={`/graph/?focus=${term.id}`} class="term-action-pill">
+                <span>🕸️</span> 全局图谱定位
+              </a>
+            )
+          }
+          <a href={correctionUrl} class="term-action-pill">
+            <span>✍️</span> 提交修订建议
           </a>
-          {chainPosition.role && (
-            <span class="chain-role">{CHAIN_ROLE_LABELS[chainPosition.role as ChainRole]}</span>
-          )}
-          <span class="chain-neighbors">
-            {chainPosition.previous ? (
-              <a href={`/map/#station-${chainPosition.previous.order}`}>
-                ← 上一站 {chainPosition.previous.nameZh}
-              </a>
-            ) : (
-              <span class="chain-edge">这是链路起点</span>
+        </div>
+      </div>
+
+      <div class="term-lead-callout">
+        <p>{term.summary}</p>
+      </div>
+
+      {
+        chainPosition && (
+          <div class="term-chain" data-chain-station={chainPosition.order}>
+            <span class="chain-label">认知链路</span>
+            <a class="chain-station-link" href={`/map/#station-${chainPosition.order}`}>
+              第 {chainPosition.order} 站 · {chainPosition.stationName}
+            </a>
+            {chainPosition.role && (
+              <span class="chain-role">{CHAIN_ROLE_LABELS[chainPosition.role as ChainRole]}</span>
             )}
-            {chainPosition.next ? (
-              <a href={`/map/#station-${chainPosition.next.order}`}>
-                下一站 {chainPosition.next.nameZh} →
-              </a>
-            ) : (
-              <span class="chain-edge">这是链路终点</span>
-            )}
-          </span>
-        </p>
-      )
-    }
+            <div class="chain-neighbors">
+              {chainPosition.previous ? (
+                <a href={`/map/#station-${chainPosition.previous.order}`}>
+                  ← 上一站 {chainPosition.previous.nameZh}
+                </a>
+              ) : (
+                <span class="chain-edge">这是链路起点</span>
+              )}
+              {chainPosition.next ? (
+                <a href={`/map/#station-${chainPosition.next.order}`}>
+                  下一站 {chainPosition.next.nameZh} →
+                </a>
+              ) : (
+                <span class="chain-edge">这是链路终点</span>
+              )}
+            </div>
+          </div>
+        )
+      }
+    </header>
 
     {
       statusNotice && (
@@ -335,19 +334,139 @@ const breadcrumbTrail = [
       )
     }
 
+    <!-- 顶部吸顶 Tab 导航 (Sticky Section Tabs) -->
+    <nav class="term-sticky-tabs" aria-label="词条章节导航" data-term-sticky-tabs>
+      <div class="term-tabs-track">
+        {
+          hasDeepContent ? (
+            sectionLinks.map(([id, label]) => (
+              <a href={`#${id}`} class="term-tab-link" data-tab-target={id}>
+                {label}
+              </a>
+            ))
+          ) : (
+            <a href="#overview" class="term-tab-link" data-tab-target="overview">
+              内容概览
+            </a>
+          )
+        }
+        {
+          selectable && (
+            <a href="#relations" class="term-tab-link" data-tab-target="relations">
+              概念关系
+              {relations.length > 0 && <span class="term-tab-badge">{relations.length}</span>}
+            </a>
+          )
+        }
+        {
+          relatedFaceoff && (
+            <a href="#faceoff" class="term-tab-link" data-tab-target="faceoff">
+              概念对决
+            </a>
+          )
+        }
+        {
+          relatedQuestions.length > 0 && (
+            <a
+              href="#linked-questions-heading"
+              class="term-tab-link"
+              data-tab-target="linked-questions-heading"
+            >
+              关联题目
+              <span class="term-tab-badge">{relatedQuestions.length}</span>
+            </a>
+          )
+        }
+        {
+          relatedCases.length > 0 && (
+            <a
+              href="#linked-cases-heading"
+              class="term-tab-link"
+              data-tab-target="linked-cases-heading"
+            >
+              实战案例
+              <span class="term-tab-badge">{relatedCases.length}</span>
+            </a>
+          )
+        }
+        {
+          learningRecommendations && (
+            <a
+              href="#learning-recommendations-heading"
+              class="term-tab-link"
+              data-tab-target="learning-recommendations-heading"
+            >
+              学习导航
+            </a>
+          )
+        }
+        {
+          absorbedTerms.length > 0 && (
+            <a href="#absorbed-heading" class="term-tab-link" data-tab-target="absorbed-heading">
+              相关名词
+              <span class="term-tab-badge">{absorbedTerms.length}</span>
+            </a>
+          )
+        }
+        {
+          term.sources.length > 0 && (
+            <a href="#source-register" class="term-tab-link" data-tab-target="source-register">
+              核验来源
+            </a>
+          )
+        }
+      </div>
+    </nav>
+
     <div class="term-layout">
       <details class="term-index" data-term-index open>
         <summary>本页目录</summary>
-        <p class="meta-label">本页结构</p>
+        <div class="term-index-header">快速跳转</div>
         <nav aria-label="词条页目录">
           {
             hasDeepContent ? (
-              sectionLinks.map(([id, label]) => <a href={`#${id}`}>{label}</a>)
+              sectionLinks.map(([id, label]) => (
+                <a href={`#${id}`} data-index-target={id}>
+                  {label}
+                </a>
+              ))
             ) : (
               <>
-                <a href="#overview">内容概览</a>
-                <a href="#relations">概念关系</a>
+                <a href="#overview" data-index-target="overview">
+                  内容概览
+                </a>
+                <a href="#relations" data-index-target="relations">
+                  概念关系
+                </a>
               </>
+            )
+          }
+          {
+            selectable && (
+              <a href="#relations" data-index-target="relations">
+                概念关系
+              </a>
+            )
+          }
+          {
+            relatedQuestions.length > 0 && (
+              <a href="#linked-questions-heading" data-index-target="linked-questions-heading">
+                关联题目
+              </a>
+            )
+          }
+          {
+            relatedCases.length > 0 && (
+              <a href="#linked-cases-heading" data-index-target="linked-cases-heading">
+                实战案例
+              </a>
+            )
+          }
+          {
+            term.sources.length > 0 && (
+              <a href="#source-register" data-index-target="source-register">
+                核验来源
+              </a>
             )
           }
         </nav>
@@ -375,7 +494,7 @@ const breadcrumbTrail = [
 
         {
           relatedFaceoff && (
-            <aside class="term-faceoff-card" aria-label="相关概念对决">
+            <aside id="faceoff" class="term-faceoff-card" aria-label="相关概念对决">
               <span class="faceoff-mini-badge">⚖️ 易混概念对决</span>
               <div class="faceoff-mini-content">
                 <h3>{relatedFaceoff.title}</h3>
@@ -471,58 +590,99 @@ const breadcrumbTrail = [
         }
 
         {
-          /*
-           * 概念关系只在可独立选择的词条上出现。已废弃词条的节点已经从图谱里隐去，
-           * 照常渲染会得到一张空图 + 一段没有边的「关系」区——看起来像页面坏了。
-           * 它的去向由上面的状态提示承担。
-           */
           selectable && (
             <section id="relations" class="relations-section">
-              <p class="section-number">Relations</p>
-              <h2>概念关系</h2>
-              <GraphExplorer
-                graph={localGraph.graph}
-                mode="local"
-                focusId={term.id}
-                hiddenNodeCount={localGraph.hiddenNodeCount}
-              />
-              {relationGroups.map(
-                (group) =>
-                  group.items.length > 0 && (
-                    <div class="relation-group">
-                      <h3>{group.label}</h3>
-                      <div class="relation-list">
-                        {group.items.map((relation) => {
-                          const relatedId =
-                            relation.source === term.id ? relation.target : relation.source;
-                          const related = termMap[relatedId];
-                          return (
-                            <a
-                              class={`relation-row type-${group.type}`}
-                              href={`/terms/${relatedId}/`}
-                            >
-                              <strong>{related?.nameZh ?? relatedId}</strong>
-                              <p>{relation.explanation}</p>
-                            </a>
-                          );
-                        })}
-                      </div>
+              <p class="section-number">Relation topology</p>
+              <div class="relations-header-bar">
+                <div>
+                  <h2>概念关系</h2>
+                  <p class="relations-header-desc">
+                    本词条在知识拓扑中的连接关系。涵盖前置依赖、组成要素、对比差异与应用场景。
+                  </p>
+                </div>
+              </div>
+
+              {relations.length === 0 ? (
+                /* 当 relations.length === 0 时呈现「独立基准概念」卡片，彻底避免孤立黑球问题！ */
+                <div class="baseline-relation-card">
+                  <div class="baseline-header">
+                    <span class="baseline-badge">🌱 独立基准概念</span>
+                    <h3 class="baseline-title">基础定义单元 · 暂无直接强依赖关系</h3>
+                  </div>
+                  <p class="baseline-text">
+                    「{term.nameZh}
+                    」在当前知识体系中作为底层基准概念建立，不直接依赖其它前置概念，亦未设定强约束关联。读者可直接阅读正文理解其内涵，或前往全网概念图谱探索整体领域架构。
+                  </p>
+                  <div class="baseline-actions">
+                    <a href={`/graph/?focus=${term.id}`} class="baseline-btn-primary">
+                      在全局概念图谱中查看 ({term.nameZh}) →
+                    </a>
+                    <a href={`/atlas/#${term.domain}`} class="baseline-btn-secondary">
+                      查看所属《{domain?.nameZh ?? term.domain}》领域全部词条
+                    </a>
+                    <a href={correctionUrl} class="baseline-btn-secondary">
+                      补充关联建议
+                    </a>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  {/* 结构化拓扑卡片视图 */}
+                  <div class="relation-groups-container">
+                    {relationGroups.map(
+                      (group) =>
+                        group.items.length > 0 && (
+                          <div class="relation-group">
+                            <div class="relation-group-title">
+                              <span class={`relation-group-badge type-${group.type}`}>
+                                {group.label} ({group.items.length})
+                              </span>
+                            </div>
+                            <div class="relation-cards-grid">
+                              {group.items.map((relation) => {
+                                const relatedId =
+                                  relation.source === term.id ? relation.target : relation.source;
+                                const related = termMap[relatedId];
+                                return (
+                                  <a
+                                    class={`relation-card type-${group.type}`}
+                                    href={`/terms/${relatedId}/`}
+                                  >
+                                    <strong>{related?.nameZh ?? relatedId}</strong>
+                                    <p class="relation-card-desc">{relation.explanation}</p>
+                                    <span class="relation-card-arrow">
+                                      <span>前往词条</span>
+                                      <span>→</span>
+                                    </span>
+                                  </a>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        ),
+                    )}
+                  </div>
+
+                  {/* 交互图谱视图 */}
+                  <div class="term-graph-wrapper">
+                    <div class="term-graph-subheading">
+                      <h4>概念拓扑图谱 · 一度关联网络</h4>
+                      <span class="term-graph-hint">可拖拽节点、滚轮缩放、点击节点查看详情</span>
                     </div>
-                  ),
+                    <GraphExplorer
+                      graph={localGraph.graph}
+                      mode="local"
+                      focusId={term.id}
+                      hiddenNodeCount={localGraph.hiddenNodeCount}
+                    />
+                  </div>
+                </>
               )}
             </section>
           )
         }
 
         {
-          /*
-           * 「相关名词」——I6-03 的降级落点。
-           *
-           * 一批词条因为与同域词条重叠或本身是填充条目而不再单独成页，但它们的内容
-           * 没有被丢掉：读者在宿主页这里能看到「这些名字属于这一块」，点进去还读得到
-           * 原正文（旧 URL 不 404）。如果只是把它们从目录里删掉、不给这条通道，
-           * 那些名字就真的消失了——降级和删除的区别全在这一个区块上。
-           */
           absorbedTerms.length > 0 && (
             <section class="absorbed-terms" aria-labelledby="absorbed-heading">
               <p class="section-number">Related names</p>
@@ -574,9 +734,9 @@ const breadcrumbTrail = [
       routeNav && (
         <nav class="route-navigation" aria-label="阅读路线前后篇">
           <div class="route-position">
-            <span>所属路线</span>
+            <span class="route-position-kicker">所属路线</span>
             <a href={`/routes/${routeNav.id}/`}>{routeNav.name}</a>
-            <strong>
+            <strong class="route-index">
               {String(routeNav.index).padStart(2, '0')} / {routeNav.total}
             </strong>
           </div>
@@ -584,7 +744,7 @@ const breadcrumbTrail = [
             {routeNav.previous ? (
               <a href={`/terms/${routeNav.previous}/`} rel="prev">
                 <span>上一篇</span>
-                {termMap[routeNav.previous]?.nameZh}
+                <span>{termMap[routeNav.previous]?.nameZh}</span>
               </a>
             ) : (
               <span class="route-edge">这是路线起点</span>
@@ -592,7 +752,7 @@ const breadcrumbTrail = [
             {routeNav.next ? (
               <a href={`/terms/${routeNav.next}/`} rel="next">
                 <span>下一篇</span>
-                {termMap[routeNav.next]?.nameZh}
+                <span>{termMap[routeNav.next]?.nameZh}</span>
               </a>
             ) : (
               <span class="route-edge">路线已完成</span>
@@ -605,672 +765,54 @@ const breadcrumbTrail = [
 </BaseLayout>
 
 <script>
+  // 移动端折叠目录
   const termIndex = document.querySelector<HTMLDetailsElement>('[data-term-index]');
   if (termIndex) {
-    const compactIndex = window.matchMedia('(max-width: 760px)');
+    const compactIndex = window.matchMedia('(max-width: 1024px)');
     const syncIndex = () => (termIndex.open = !compactIndex.matches);
     compactIndex.addEventListener('change', syncIndex);
     syncIndex();
   }
+
+  // 顶部吸顶 Tab 滚动监听与高亮 (Scrollspy)
+  const tabLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('.term-tab-link'));
+  if (tabLinks.length > 0) {
+    const sectionIds = tabLinks
+      .map((link) => link.getAttribute('data-tab-target'))
+      .filter(Boolean) as string[];
+    const sections = sectionIds
+      .map((id) => document.getElementById(id))
+      .filter(Boolean) as HTMLElement[];
+
+    const updateActiveTab = () => {
+      const scrollPos = window.scrollY + 140; // 考虑 sticky tabs 偏移
+      let currentActiveId = '';
+
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const section = sections[i];
+        if (section && section.offsetTop <= scrollPos) {
+          currentActiveId = section.id;
+          break;
+        }
+      }
+
+      if (!currentActiveId && sections[0]) {
+        currentActiveId = sections[0].id;
+      }
+
+      for (const link of tabLinks) {
+        const target = link.getAttribute('data-tab-target');
+        const isActive = target === currentActiveId;
+        link.classList.toggle('active', isActive);
+        if (isActive) {
+          link.setAttribute('aria-current', 'true');
+        } else {
+          link.removeAttribute('aria-current');
+        }
+      }
+    };
+
+    window.addEventListener('scroll', updateActiveTab, { passive: true });
+    updateActiveTab();
+  }
 </script>
-
-<style>
-  .term-hero {
-    min-height: 31rem;
-    display: grid;
-    grid-template-columns: minmax(24rem, 1fr) minmax(22rem, 0.46fr);
-    border-bottom: 1px solid var(--color-line);
-  }
-  .term-hero > div {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: var(--space-7) var(--page-gutter);
-  }
-  .term-title {
-    border-right: 1px solid var(--color-line);
-  }
-  .term-title h1 {
-    max-width: 9em;
-    margin: var(--space-3) 0 0;
-    font-family: var(--font-display);
-    font-size: 6rem;
-    font-weight: var(--weight-body);
-    line-height: 0.98;
-  }
-  .term-en {
-    margin: var(--space-3) 0 0;
-    color: var(--color-muted);
-    font-family: var(--font-mono);
-    font-size: var(--text-sm);
-  }
-  .term-summary {
-    align-items: flex-start;
-  }
-  .term-summary > p {
-    margin: var(--space-4) 0;
-    color: var(--color-muted);
-    font-family: var(--font-display);
-    font-size: 1.35rem;
-    line-height: 1.65;
-  }
-  .term-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-3);
-  }
-  .term-actions a {
-    color: var(--color-prerequisite);
-    font-size: var(--text-sm);
-  }
-  .term-meta {
-    border-bottom: 1px solid var(--color-line);
-    padding-inline: var(--page-gutter);
-  }
-  .term-meta dl {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    margin: 0;
-  }
-  .term-meta dl > div {
-    min-width: 0;
-    border-right: 1px solid var(--color-line-soft);
-    padding: var(--space-3);
-  }
-  .term-meta dl > div:first-child {
-    padding-left: 0;
-  }
-  .term-meta dl > div:last-child {
-    border-right: 0;
-  }
-  .term-meta dt {
-    color: var(--color-quiet);
-    font-family: var(--font-mono);
-    font-size: var(--text-xs);
-  }
-  .term-meta dd {
-    margin: var(--space-1) 0 0;
-    overflow-wrap: anywhere;
-  }
-  /* 链路定位行。用 mono 字体与顶栏/页脚的导航保持同一套「系统标签」语汇，
-     同时避开页脚「阅读路线前后篇」的 serif 观感——两者可能同页出现。 */
-  .term-chain {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: var(--space-1) var(--space-3);
-    margin-top: 0;
-    border-bottom: 1px solid var(--color-line);
-    /* 与 .term-meta 同档内边距：两块的文字左沿才会对齐（实测不加时为 20px vs 68px）。 */
-    padding: var(--space-2) var(--page-gutter);
-    font-size: var(--text-sm);
-  }
-  .chain-label {
-    color: var(--color-quiet);
-    font-family: var(--font-mono);
-    font-size: var(--text-xs);
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-  }
-  .chain-station-link {
-    color: var(--color-accent);
-    font-family: var(--font-mono);
-    font-size: var(--text-sm);
-    font-weight: var(--weight-display);
-    text-decoration: none;
-  }
-  .chain-station-link:hover {
-    text-decoration: underline;
-  }
-  .chain-role {
-    border: 1px solid var(--color-line);
-    border-radius: var(--radius-pill);
-    padding: 0.05rem 0.5rem;
-    color: var(--color-quiet);
-    font-size: var(--text-xs);
-  }
-  .chain-neighbors {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-1) var(--space-3);
-    margin-left: auto;
-  }
-  .chain-neighbors a {
-    color: var(--color-muted);
-    font-size: var(--text-xs);
-    text-decoration: none;
-  }
-  .chain-neighbors a:hover {
-    color: var(--color-accent);
-  }
-  .chain-edge {
-    color: var(--color-quiet);
-    font-size: var(--text-xs);
-  }
-  @media (max-width: 720px) {
-    .chain-neighbors {
-      margin-left: 0;
-    }
-  }
-  .status-notice {
-    display: flex;
-    gap: var(--space-3);
-    align-items: center;
-    border-bottom: 1px solid var(--color-line);
-    padding: var(--space-3) var(--page-gutter);
-  }
-  .status-notice p {
-    flex: 1;
-    margin: 0;
-    color: var(--color-muted);
-  }
-  .status-notice a {
-    color: var(--color-comparison);
-  }
-  .term-layout {
-    display: grid;
-    grid-template-columns: minmax(14rem, 0.25fr) minmax(0, 1fr);
-  }
-  .term-index {
-    position: sticky;
-    top: var(--header-height);
-    max-height: calc(100vh - var(--header-height));
-    overflow-y: auto;
-    scrollbar-width: thin;
-    height: max-content;
-    border-right: 1px solid var(--color-line);
-    padding: var(--space-5) var(--page-gutter);
-  }
-  .term-index > summary {
-    display: none;
-  }
-  .term-index nav {
-    display: grid;
-    margin-top: var(--space-3);
-  }
-  .term-index a {
-    min-height: 2.75rem;
-    display: flex;
-    align-items: center;
-    border-bottom: 1px solid var(--color-line-soft);
-    color: var(--color-muted);
-    font-size: var(--text-sm);
-    text-decoration: none;
-  }
-  .term-index a:hover {
-    color: var(--color-ink);
-  }
-  .term-article {
-    min-width: 0;
-  }
-  .catalogued-copy,
-  .relations-section,
-  .source-register,
-  .linked-resources,
-  .absorbed-terms {
-    border-bottom: 1px solid var(--color-line);
-    padding: var(--space-7) max(var(--page-gutter), calc((100% - var(--reading-max)) / 2));
-    scroll-margin-top: calc(var(--header-height) + 1.25rem);
-  }
-  /* 「相关名词」：视觉上比正文轻一档——它是一条通道，不是内容主体。
-     用数字徽标（+N）而不是大标题，避免与「概念关系」抢同一层级的注意力。 */
-  .absorbed-intro {
-    max-width: var(--reading-max);
-    margin: var(--space-3) 0 0;
-    color: var(--color-muted);
-  }
-  .absorbed-list {
-    max-width: var(--reading-max);
-    margin: var(--space-4) 0 0;
-    border-top: 1px solid var(--color-line);
-    padding: 0;
-    list-style: none;
-  }
-  .absorbed-list li {
-    display: grid;
-    gap: var(--space-1);
-    border-bottom: 1px solid var(--color-line-soft);
-    padding: var(--space-3) 0;
-  }
-  .absorbed-list a {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: var(--space-2);
-    text-decoration: none;
-  }
-  .absorbed-list a strong {
-    font-size: var(--text-lead);
-    font-weight: var(--weight-display);
-  }
-  .absorbed-list a:hover strong,
-  .absorbed-list a:focus-visible strong {
-    color: var(--color-accent-strong);
-    text-decoration: underline;
-    text-underline-offset: 0.25em;
-  }
-  .absorbed-en {
-    color: var(--color-quiet);
-    font-family: var(--font-mono);
-    font-size: var(--text-xs);
-  }
-  .absorbed-list li > p {
-    margin: 0;
-    color: var(--color-muted);
-    font-size: var(--text-sm);
-  }
-  .section-number {
-    margin: 0;
-    color: var(--color-component);
-    font-family: var(--font-mono);
-    font-size: var(--text-xs);
-    text-transform: uppercase;
-  }
-  .linked-resources-intro {
-    max-width: var(--reading-max);
-    margin: 0;
-    color: var(--color-muted);
-  }
-  .linked-resource-list {
-    margin-top: var(--space-4);
-    border-top: 1px solid var(--color-line);
-  }
-  .linked-resource-row {
-    display: grid;
-    gap: var(--space-1);
-    border-bottom: 1px solid var(--color-line-soft);
-    padding: var(--space-3) 0;
-    text-decoration: none;
-  }
-  .linked-resource-row:hover strong,
-  .linked-resource-row:focus-visible strong {
-    color: var(--color-accent-strong);
-    text-decoration: underline;
-    text-underline-offset: 0.25em;
-  }
-  .linked-resource-kicker {
-    color: var(--color-quiet);
-    font-family: var(--font-mono);
-    font-size: var(--text-xs);
-  }
-  .linked-resource-row strong {
-    font-size: var(--text-lead);
-    font-weight: var(--weight-display);
-  }
-  .linked-resource-row > span:last-child {
-    color: var(--color-muted);
-    font-size: var(--text-sm);
-  }
-  .linked-resource-secondary {
-    color: var(--color-quiet);
-  }
-  .linked-resource-footer {
-    margin: var(--space-3) 0 0;
-    font-size: var(--text-sm);
-  }
-  .learning-recommendations {
-    background: var(--color-panel-raised);
-  }
-  .learning-recommendations .linked-resources-intro strong {
-    color: var(--color-prerequisite);
-  }
-  .term-article h2 {
-    margin: var(--space-3) 0 var(--space-4);
-    font-family: var(--font-display);
-    font-size: 3rem;
-    font-weight: var(--weight-body);
-    line-height: 1.1;
-  }
-  .lead {
-    color: var(--color-ink);
-    font-family: var(--font-display);
-    font-size: 1.35rem;
-  }
-  .relation-group + .relation-group {
-    margin-top: var(--space-5);
-  }
-  .relation-group h3 {
-    color: var(--color-muted);
-    font-family: var(--font-mono);
-    font-size: var(--text-xs);
-    font-weight: var(--weight-body);
-  }
-  .relation-list {
-    border-top: 1px solid var(--color-line);
-  }
-  .relation-row {
-    display: grid;
-    grid-template-columns: minmax(9rem, 0.35fr) minmax(16rem, 1fr);
-    gap: var(--space-3);
-    align-items: start;
-    border-bottom: 1px solid var(--color-line-soft);
-    padding: var(--space-3) 0;
-    text-decoration: none;
-  }
-  .relation-row:hover strong {
-    text-decoration: underline;
-    text-underline-offset: 0.35rem;
-  }
-  .relation-row strong {
-    font-family: var(--font-display);
-    font-size: 1.15rem;
-    font-weight: var(--weight-body);
-  }
-  .relation-row p {
-    margin: 0;
-    color: var(--color-muted);
-    font-size: var(--text-sm);
-  }
-  .type-prerequisite strong {
-    color: var(--color-prerequisite);
-  }
-  .type-component strong {
-    color: var(--color-component);
-  }
-  .type-comparison strong {
-    color: var(--color-comparison);
-  }
-  .type-application strong {
-    color: var(--color-application);
-  }
-  .source-register ol {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-  .source-register li {
-    display: grid;
-    gap: var(--space-1);
-    border-top: 1px solid var(--color-line-soft);
-    padding: var(--space-3) 0;
-  }
-  .source-register li span,
-  .revision-line {
-    color: var(--color-quiet);
-    font-family: var(--font-mono);
-    font-size: var(--text-xs);
-  }
-  .revision-line {
-    margin: var(--space-4) 0 0;
-  }
-  .route-navigation {
-    display: grid;
-    grid-template-columns: minmax(16rem, 0.35fr) 1fr;
-    border-bottom: 1px solid var(--color-line);
-  }
-  .route-position {
-    display: grid;
-    gap: var(--space-1);
-    border-right: 1px solid var(--color-line);
-    padding: var(--space-5) var(--page-gutter);
-  }
-  .route-position span,
-  .route-links a span {
-    color: var(--color-quiet);
-    font-family: var(--font-mono);
-    font-size: var(--text-xs);
-  }
-  .route-position strong {
-    color: var(--color-prerequisite);
-    font-family: var(--font-display);
-    font-size: 2rem;
-    font-weight: var(--weight-body);
-  }
-  .route-links {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-  .route-links a,
-  .route-edge {
-    min-height: 9rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: var(--space-1);
-    padding: var(--space-4) var(--page-gutter);
-  }
-  .route-links a + a,
-  .route-edge + a,
-  .route-links a + .route-edge {
-    border-left: 1px solid var(--color-line-soft);
-  }
-  .route-edge {
-    color: var(--color-quiet);
-  }
-
-  .term-content :global(h2) {
-    margin: 0;
-    border-bottom: 1px solid var(--color-line);
-    padding: var(--space-7) max(var(--page-gutter), calc((100% - var(--reading-max)) / 2))
-      var(--space-4);
-    font-family: var(--font-display);
-    font-size: 3rem;
-    font-weight: var(--weight-body);
-    line-height: 1.1;
-    scroll-margin-top: calc(var(--header-height) + 1.25rem);
-  }
-  .term-content :global(h2::before) {
-    display: block;
-    margin-bottom: var(--space-3);
-    color: var(--color-component);
-    font-family: var(--font-mono);
-    font-size: var(--text-xs);
-    text-transform: uppercase;
-  }
-  .term-content :global(#what-it-is::before) {
-    content: '01 / What it is';
-  }
-  .term-content :global(#why-it-matters::before) {
-    content: '02 / Why it matters';
-  }
-  .term-content :global(#how-it-works::before) {
-    content: '03 / How it works';
-  }
-  .term-content :global(#example::before) {
-    content: '04 / Example';
-  }
-  .term-content :global(#tradeoffs::before) {
-    content: '05 / Trade-offs';
-  }
-  .term-content :global(#try-it::before) {
-    content: '06 / Try it';
-  }
-  .term-content :global(#next::before) {
-    content: '07 / Next';
-  }
-  .term-content :global(#sources-and-revisions::before) {
-    content: '08 / Sources';
-  }
-  .term-content :global(h2 ~ p),
-  .term-content :global(h2 ~ ul),
-  .term-content :global(h2 ~ ol),
-  .term-content :global(h2 ~ blockquote),
-  .term-content :global(h2 ~ pre) {
-    max-width: var(--reading-max);
-    margin-inline: auto;
-  }
-  .term-content :global(h2 + p) {
-    margin-top: var(--space-4);
-  }
-  .term-content :global(p),
-  .term-content :global(li) {
-    color: var(--color-muted);
-  }
-  .term-content :global(strong) {
-    color: var(--color-ink);
-  }
-  .term-content :global(code) {
-    color: var(--color-prerequisite);
-    font-family: var(--font-mono);
-  }
-  .term-content :global(blockquote) {
-    border-left: 2px solid var(--color-prerequisite);
-    padding-left: var(--space-3);
-  }
-  .term-content :global(h2:not(:first-child)) {
-    margin-top: var(--space-6);
-  }
-  .term-content :global(:last-child) {
-    margin-bottom: var(--space-7);
-  }
-
-  @media (max-width: 760px) {
-    .term-hero,
-    .term-layout,
-    .route-navigation {
-      grid-template-columns: 1fr;
-    }
-    .term-title,
-    .term-index,
-    .route-position {
-      position: static;
-      border-right: 0;
-      border-bottom: 1px solid var(--color-line);
-    }
-    .term-index {
-      padding: 0 var(--page-gutter);
-    }
-    .term-index > summary {
-      min-height: var(--control-height-mobile);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      color: var(--color-ink);
-      cursor: pointer;
-      font-size: var(--text-sm);
-      font-weight: var(--weight-display);
-      list-style: none;
-    }
-    .term-index > summary::-webkit-details-marker {
-      display: none;
-    }
-    .term-index > summary::after {
-      content: '+';
-      color: var(--color-muted);
-      font-family: var(--font-mono);
-    }
-    .term-index[open] > summary::after {
-      content: '-';
-    }
-    .term-index[open] > nav {
-      margin: 0 0 var(--space-3);
-    }
-    .term-title h1 {
-      font-size: clamp(2.25rem, 6.5vw, 3.5rem);
-    }
-    .term-meta dl {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-    .term-meta dl > div:nth-child(2) {
-      border-right: 0;
-    }
-    .term-meta dl > div:nth-child(n + 3) {
-      border-top: 1px solid var(--color-line-soft);
-    }
-    .relation-row {
-      grid-template-columns: 1fr;
-    }
-    .linked-resources h2 {
-      font-size: 2.25rem;
-    }
-    .relation-row p {
-      font-size: 1rem;
-    }
-    .term-article h2,
-    .term-content :global(h2) {
-      font-size: 2.25rem;
-    }
-    .route-links {
-      grid-template-columns: 1fr;
-    }
-    .route-links a + a,
-    .route-edge + a,
-    .route-links a + .route-edge {
-      border-left: 0;
-      border-top: 1px solid var(--color-line-soft);
-    }
-  }
-
-  @media print {
-    .term-index,
-    .term-actions,
-    .route-navigation {
-      display: none;
-    }
-    .term-hero {
-      min-height: 0;
-      grid-template-columns: 1fr;
-    }
-    .term-title {
-      border-right: 0;
-    }
-    .term-layout {
-      display: block;
-    }
-  }
-
-  .term-faceoff-card {
-    margin: var(--space-5) 0;
-    padding: var(--space-4);
-    border: 1px dashed var(--color-accent);
-    border-radius: var(--radius-md);
-    background: var(--color-accent-wash);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: var(--space-3);
-  }
-
-  .faceoff-mini-badge {
-    border: 1px solid var(--color-accent);
-    border-radius: var(--radius-pill);
-    padding: 0.15rem 0.5rem;
-    color: var(--color-accent-strong);
-    font-family: var(--font-mono);
-    font-size: var(--text-xs);
-    font-weight: var(--weight-display);
-    white-space: nowrap;
-  }
-
-  .faceoff-mini-content h3 {
-    margin: 0;
-    font-size: var(--text-base);
-    font-weight: var(--weight-display);
-    color: var(--color-ink);
-  }
-
-  .faceoff-mini-content p {
-    margin: var(--space-1) 0 0;
-    color: var(--color-muted);
-    font-size: var(--text-xs);
-  }
-
-  .faceoff-mini-link {
-    flex-shrink: 0;
-    border: 1px solid var(--color-ink);
-    border-radius: var(--radius-pill);
-    background: var(--color-ink);
-    color: #ffffff;
-    padding: 0.45rem 1rem;
-    font-size: var(--text-xs);
-    font-weight: var(--weight-display);
-    text-decoration: none;
-    white-space: nowrap;
-    transition:
-      background-color var(--duration-quick),
-      border-color var(--duration-quick);
-  }
-
-  .faceoff-mini-link:hover {
-    background: var(--color-accent-strong);
-    border-color: var(--color-accent-strong);
-    color: #ffffff;
-  }
-
-  @media (max-width: 768px) {
-    .term-faceoff-card {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-  }
-</style>
