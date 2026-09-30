@@ -163,11 +163,23 @@
   box-shadow: var(--shadow-hover);
 }
 
+.learning-card:active,
+.case-catalog-card:active {
+  transform: translateY(-1px) scale(0.99);
+}
+
+.learning-card:focus-within,
+.case-catalog-card:focus-within {
+  border-color: var(--color-focus);
+  box-shadow: 0 0 0 2px color-mix(in oklch, var(--color-focus) 24%, transparent);
+}
+
 .learning-card > a {
   height: 100%;
   display: flex;
   flex-direction: column;
   padding: var(--space-4);
+  touch-action: manipulation;
   text-decoration: none;
 }
 

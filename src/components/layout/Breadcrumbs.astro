@@ -110,7 +110,7 @@ const structuredData =
   .breadcrumbs li + li::before {
     flex: 0 0 auto;
     margin-inline: 0.4rem;
-    color: var(--color-line);
+    color: var(--color-control-border);
     content: '/';
   }
 
@@ -118,17 +118,24 @@ const structuredData =
   .breadcrumbs span {
     min-width: 0;
     overflow: hidden;
-    display: block;
+    display: inline-flex;
+    align-items: center;
+    padding-block: var(--space-0);
     text-overflow: ellipsis;
     text-decoration: none;
   }
 
   .breadcrumbs a {
     color: var(--color-muted);
+    touch-action: manipulation;
   }
 
   .breadcrumbs a:hover {
     color: var(--color-accent-strong);
+  }
+
+  .breadcrumbs a:active {
+    color: var(--color-accent);
   }
 
   .breadcrumbs span {

@@ -20,6 +20,7 @@ html {
   font-synthesis: none;
   line-break: strict;
   scroll-behavior: smooth;
+  scroll-padding-top: var(--header-height);
   text-rendering: optimizeLegibility;
 }
 
@@ -101,7 +102,7 @@ svg {
 
 ::selection {
   background: var(--color-accent);
-  color: oklch(0.2 0.04 120);
+  color: #ffffff;
 }
 
 .skip-link {
@@ -110,11 +111,15 @@ svg {
   top: var(--space-2);
   left: var(--space-2);
   transform: translateY(-160%);
-  border: 1px solid var(--color-accent);
+  border: 1px solid var(--color-accent-strong);
   border-radius: var(--radius-pill);
   background: var(--color-accent);
-  color: oklch(0.2 0.04 120);
+  color: #ffffff;
   padding: var(--space-2) var(--space-3);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-display);
+  text-decoration: none;
+  box-shadow: var(--shadow-hover);
   transition: transform var(--transition-fast);
 }
 
@@ -205,10 +210,6 @@ svg {
 }
 
 @media (max-width: 720px) {
-  :root {
-    --header-height: auto;
-  }
-
   body {
     font-size: 1rem;
   }

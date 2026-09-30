@@ -26,22 +26,21 @@ system needs to grow.
 
 ## Theme
 
-`custom` — vibe「荧光网格终端 · 深空墨绿」。深色单主题（不加浅色变体：两套主题
-意味着每个 token 都要验一遍对比度，收益不抵成本）。
+`custom` — vibe「Better-Interface · 晨光纯白高质感门户（Daylight Clean Portal）」。明亮象牙白底（Canvas `#F8FAFC`）、纯白高层悬浮卡片（Panel `#FFFFFF`）、深板岩高对比墨水字（Ink `#0F172A` / Muted `#334155`）、皇家科技蓝（Royal Electric Blue `#2563EB`）强调色。
 
-- `--color-canvas` oklch(0.155 0.01 165)
-- `--color-panel` oklch(0.185 0.011 165)
-- `--color-panel-raised` oklch(0.215 0.013 165)
-- `--color-ink` oklch(0.93 0.018 152)
-- `--color-muted` oklch(0.76 0.024 160)
-- `--color-quiet` oklch(0.68 0.022 162)
-- `--color-line` oklch(0.31 0.02 162)
-- `--color-line-soft` oklch(0.245 0.016 162)
-- `--color-accent` oklch(0.88 0.21 121) ← 荧光青柠，主强调
-- `--color-accent-strong` oklch(0.8 0.13 176) ← 青绿，次强调
-- `--color-focus` oklch(0.8 0.13 176)
+- `--color-canvas`: `#f8fafc`
+- `--color-panel`: `#ffffff`
+- `--color-panel-raised`: `#f1f5f9`
+- `--color-ink`: `#0f172a`
+- `--color-muted`: `#334155`
+- `--color-quiet`: `#64748b`
+- `--color-line`: `#e2e8f0`
+- `--color-line-soft`: `#f1f5f9`
+- `--color-accent`: `#2563eb` ← 皇家科技蓝，主强调
+- `--color-accent-strong`: `#1d4ed8` ← 钴蓝，深色强调
+- `--color-focus`: `#2563eb`
 
-主强调只出现在：层徽标、当前进度、正确答案判定、主 CTA。**每屏不超过 5%。**
+主强调色与多层精细投影（`--shadow-card`, `--shadow-hover`, `--shadow-glow`）结合，提供清爽呼吸感与清晰的功能层级。
 
 ## Typography
 
@@ -69,15 +68,15 @@ system needs to grow.
 圆角只有三档：`--radius-sm` 8px（小件）/ `--radius-md` 10px（容器）/
 `--radius-pill`（交互控件与徽标）。禁止出现第四种圆角值。
 
-## Motion
+## Motion (Transitions.dev & Transitions-Polish)
 
-- Easings: `cubic-bezier(0.16, 1, 0.3, 1)` = `--ease-out-expo`；快交互
-  `cubic-bezier(0.2, 0, 0, 1)` = `--transition-fast`
-- Reveal pattern: **仅 transform 位移**（`translateY(16px)`），不做透明度淡入——
-  透明度淡入会让首屏外元素在过渡窗口里被无障碍扫描判为低对比度。
-- Reduced-motion fallback: 直接可见，无过渡。
-- **动效先减后加。** 目录页 90 张卡片的逐张入场已删除：45ms 步进意味着最后一张
-  要等 1.35s，且折叠层里的卡片拿不到布局盒，永远等不到触发。
+- Motion Token Scale:
+  - Durations: `--duration-stagger: 40ms`, `--duration-micro: 80ms`, `--duration-quick: 150ms`, `--duration-fast: 250ms`, `--duration-medium: 350ms`, `--duration-slow: 400ms`.
+  - Easings: `--ease-smooth-out: cubic-bezier(0.22, 1, 0.36, 1)`, `--ease-bounce-strong: cubic-bezier(0.34, 3.85, 0.64, 1)`.
+  - Scales: `--scale-large: 0.96` (press tactile feedback), `--scale-medium: 0.97`, `--scale-small: 0.98`.
+- Tactile feedback: buttons and active elements trigger `transform: scale(var(--scale-large, 0.96))` on `:active`.
+- Asymmetric open/close: open 250ms with `--ease-smooth-out`, close 150ms with `--ease-smooth-out`.
+- Reduced-motion fallback: `@media (prefers-reduced-motion: reduce)` resets transforms and transitions immediately.
 
 ## Microinteractions stance
 

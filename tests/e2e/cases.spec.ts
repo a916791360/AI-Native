@@ -6,7 +6,7 @@ const firstGateUrl = `${caseUrl}decide-ai-boundary/`;
 const caseLibraryUrl = '/learn/cases/';
 const supportCaseUrl = '/learn/cases/customer-support-knowledge-base/';
 const supportFirstGateUrl = `${supportCaseUrl}decide-ai-boundary/`;
-const PLAYWRIGHT_BASE_URL = `http://127.0.0.1:${process.env.PLAYWRIGHT_PORT ?? '4321'}`;
+const PLAYWRIGHT_BASE_URL = `http://127.0.0.1:${process.env.PLAYWRIGHT_PORT ?? '4329'}`;
 
 test('offers a first-class case library from the learning workspace', async ({
   page,

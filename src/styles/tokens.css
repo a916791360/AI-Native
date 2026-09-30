@@ -1,37 +1,37 @@
-/* Hallmark · genre: editorial · design-system: design.md · designed-as-app
- * 荧光网格终端：深空墨绿底、荧光青柠主强调、青绿次强调。
- * 层级由字重（400 → 800）、字距与等宽 outlier 承担，不引入第二个中文字面——
- * 中文字体动辄数 MB，加进来会直接压垮性能预算（见 src/data/performance-baseline.json）。
+/* Better-Interface · Daylight Clean · Design System
+ * 晨光纯白高质感：清亮象牙白底、纯白悬浮面板、深板岩灰高对比文本、皇家科技蓝强调。
+ * 遵循 transitions-dev 与 transitions-polish 动效引擎规范。
+ * 层级由字重（400 → 800）、空间留白与精细投影承担，无中间字重。
  */
 :root {
-  color-scheme: dark;
+  color-scheme: light;
 
-  /* 荧光网格终端：深空墨绿底、荧光青柠主强调、青绿次强调 */
-  --color-canvas: oklch(0.155 0.01 165);
-  --color-ink: oklch(0.93 0.018 152);
-  --color-muted: oklch(0.76 0.024 160);
-  --color-quiet: oklch(0.68 0.022 162);
-  --color-black: var(--color-canvas);
-  --color-panel: oklch(0.185 0.011 165);
-  --color-panel-raised: oklch(0.215 0.013 165);
-  --color-line: oklch(0.31 0.02 162);
-  --color-line-soft: oklch(0.245 0.016 162);
-  --color-control-border: oklch(0.44 0.025 162);
-  --color-grid: oklch(0.55 0.06 170 / 0.07);
+  /* Daylight Clean Colors (Better-Interface & Better-Colors) */
+  --color-canvas: #f8fafc;
+  --color-ink: #0f172a;
+  --color-muted: #334155;
+  --color-quiet: #475569;
+  --color-black: #f8fafc;
+  --color-panel: #ffffff;
+  --color-panel-raised: #f1f5f9;
+  --color-line: #e2e8f0;
+  --color-line-soft: #f1f5f9;
+  --color-control-border: #cbd5e1;
+  --color-grid: oklch(0.2 0.02 260 / 0.03);
 
-  --color-accent: oklch(0.88 0.21 121);
-  --color-accent-strong: oklch(0.8 0.13 176);
-  --color-accent-wash: oklch(0.88 0.21 121 / 0.12);
+  --color-accent: #2563eb; /* Royal Electric Blue */
+  --color-accent-strong: #1d4ed8;
+  --color-accent-wash: oklch(0.55 0.22 260 / 0.08);
 
-  /* 四类关系语义色（深色适配，保持区分度） */
-  --color-prerequisite: oklch(0.8 0.13 176);
-  --color-component: oklch(0.74 0.12 250);
-  --color-comparison: oklch(0.8 0.13 75);
-  --color-application: oklch(0.78 0.14 140);
-  --color-error: oklch(0.72 0.17 25);
-  --color-focus: oklch(0.8 0.13 176);
+  /* 四类关系语义色（明亮适配，保持清晰高对比，满足 WCAG 4.5:1） */
+  --color-prerequisite: #2563eb;
+  --color-component: #7c3aed;
+  --color-comparison: #b45309;
+  --color-application: #047857;
+  --color-error: #dc2626;
+  --color-focus: #2563eb;
 
-  /* display 与 body 共用同一中文字面是刻意的（见文件头）；--font-mono 是 outlier 语域。 */
+  /* Typography: 中文 PingFang + 系统字体，无中间字重（400 与 800） */
   --font-display:
     'PingFang SC', 'HarmonyOS Sans SC', 'Source Han Sans SC', 'Noto Sans SC', 'Microsoft YaHei',
     -apple-system, BlinkMacSystemFont, sans-serif;
@@ -40,13 +40,12 @@
     -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: 'SF Mono', 'JetBrains Mono', 'Cascadia Code', 'Menlo', 'Consolas', monospace;
 
-  /* 标题与正文至少差 300 字重，否则层级只能靠字号，标题立不起来。 */
   --weight-body: 400;
   --weight-display: 800;
   --tracking-display: -0.02em;
-  --tracking-label: 0.1em;
+  --tracking-label: 0.05em;
 
-  /* 1.25 主三度音阶，从 16px 正文起算 */
+  /* 1.25 主三度音阶 */
   --text-xs: 0.75rem;
   --text-sm: 0.875rem;
   --text-base: 1rem;
@@ -55,8 +54,9 @@
   --text-lg: 1.5rem;
   --text-xl: 1.875rem;
   --text-2xl: 2.25rem;
-  --text-display: clamp(2rem, 3.6vw, 3rem);
+  --text-display: clamp(2rem, 3.6vw, 2.85rem);
 
+  /* 4pt 命名间距刻度 */
   --space-0: 0.25rem;
   --space-1: 0.5rem;
   --space-2: 0.75rem;
@@ -73,20 +73,54 @@
   --control-height-mobile: 3rem;
   --control-size-sm: 1.75rem;
 
-  /* 圆角规则：容器 10px / 小件 8px / 交互控件与徽标全圆角 */
+  /* Concentric radii */
   --radius-sm: 0.5rem;
-  --radius-md: 0.625rem;
+  --radius-md: 0.75rem;
   --radius-pill: 999px;
 
-  --shadow-card: 0 1px 0 oklch(0.9 0.05 160 / 0.05);
-  --shadow-hover: 0 14px 36px oklch(0 0 0 / 0.55);
-  --shadow-glow: 0 0 22px oklch(0.88 0.21 121 / 0.28);
+  /* Multi-layer elevation shadows */
+  --shadow-card: 0 1px 3px rgba(15, 23, 42, 0.04), 0 4px 12px rgba(15, 23, 42, 0.04);
+  --shadow-hover: 0 4px 6px -1px rgba(15, 23, 42, 0.05), 0 12px 24px -4px rgba(15, 23, 42, 0.08);
+  --shadow-glow: 0 0 20px rgba(37, 99, 235, 0.2);
 
   --z-header: 20;
   --z-skip-link: 100;
-  --header-height: auto;
+  --header-height: 4rem;
 
-  --transition-fast: 170ms cubic-bezier(0.2, 0, 0, 1);
-  --transition-panel: 260ms cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  /* ==========================================================================
+     Transitions.dev & Transitions-Polish Motion Tokens
+     ========================================================================== */
+  --duration-stagger: 40ms;
+  --duration-micro: 80ms;
+  --duration-quick: 150ms;
+  --duration-fast: 250ms;
+  --duration-medium: 350ms;
+  --duration-slow: 400ms;
+  --duration-very-slow: 500ms;
+
+  --ease-smooth-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: ease-in-out;
+  --ease-out: ease-out;
+  --ease-linear: linear;
+  --ease-bounce: cubic-bezier(0.34, 1.36, 0.64, 1);
+  --ease-bounce-strong: cubic-bezier(0.34, 3.85, 0.64, 1);
+
+  --distance-micro: 4px;
+  --distance-small: 6px;
+  --distance-base: 8px;
+  --distance-medium: 12px;
+  --distance-large: 30px;
+
+  --scale-large: 0.96;
+  --scale-medium: 0.97;
+  --scale-small: 0.98;
+  --scale-tiny: 0.99;
+
+  --blur-small: 2px;
+  --blur-medium: 3px;
+  --blur-large: 8px;
+
+  --transition-fast: var(--duration-quick) var(--ease-smooth-out);
+  --transition-panel: var(--duration-fast) var(--ease-smooth-out);
+  --ease-out-expo: var(--ease-smooth-out);
 }

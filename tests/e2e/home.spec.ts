@@ -47,7 +47,7 @@ const FILTER_SAMPLE_IDS = registry.terms
       term.status === FILTER_SAMPLE.status,
   )
   .map(({ id }) => id);
-const PLAYWRIGHT_BASE_URL = `http://127.0.0.1:${process.env.PLAYWRIGHT_PORT ?? '4321'}`;
+const PLAYWRIGHT_BASE_URL = `http://127.0.0.1:${process.env.PLAYWRIGHT_PORT ?? '4329'}`;
 
 async function revealMobileHeaderPanel(page: Page, isMobile: boolean, panel: '菜单' | '搜索') {
   if (isMobile) await page.getByRole('button', { name: panel, exact: true }).click();

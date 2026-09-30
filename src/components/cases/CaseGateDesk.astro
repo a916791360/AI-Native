@@ -546,7 +546,14 @@ const { caseStudy, gate, resources } = Astro.props;
     font-size: var(--text-sm);
     font-weight: var(--weight-display);
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition:
+      color var(--duration-quick) var(--ease-smooth-out),
+      background-color var(--duration-quick) var(--ease-smooth-out),
+      border-color var(--duration-quick) var(--ease-smooth-out);
+  }
+
+  .adopt-decision-btn:active {
+    transform: scale(var(--scale-large));
   }
 
   .adopt-decision-btn:hover {

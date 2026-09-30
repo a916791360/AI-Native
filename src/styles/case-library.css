@@ -223,7 +223,10 @@
   text-decoration: none;
   background: var(--color-panel-raised);
   border: 1px solid transparent;
-  transition: all 0.2s ease;
+  transition:
+    color var(--duration-quick) var(--ease-smooth-out),
+    background-color var(--duration-quick) var(--ease-smooth-out),
+    border-color var(--duration-quick) var(--ease-smooth-out);
 }
 
 .matrix-cell-link:hover {

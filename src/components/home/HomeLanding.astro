@@ -12,10 +12,6 @@ import { deriveSiteMetrics } from '@/lib/site/metrics';
 const project = await loadProjectContent();
 const metrics = deriveSiteMetrics(project);
 const orderedQuestionIds = LEARNING_QUESTIONS.map((question) => question.id);
-/**
- * 「四个入口」只列顶栏那四个内容板块——支撑层（阅读路线、概念图谱）已经在上面
- * 03 段作为「查」的工具出现过，再列一遍会让首页有两个平行的入口清单。
- */
 const entrySections = SECTIONS.filter(({ surface }) => surface === 'primary');
 ---
 
@@ -24,75 +20,120 @@ const entrySections = SECTIONS.filter(({ surface }) => surface === 'primary');
   class="home-landing"
   data-question-order={JSON.stringify(orderedQuestionIds)}
 >
+  <!-- Hero Section (Better-Interface & Hallmark Compliant Daylight Layout) -->
   <section class="hero" aria-labelledby="hero-heading">
-    <div class="hero-grid">
+    <div class="shell hero-grid">
       <div class="hero-copy">
-        <p class="eyebrow" data-reveal>落地型 AI 产品经理学习系统</p>
-        <h1 id="hero-heading" data-reveal style="--reveal-delay: 60ms">
+        <div class="hero-badge">
+          <span>AI-Native 实战判断系统 · 面向产品人</span>
+        </div>
+
+        <h1 id="hero-heading">
           从看懂 AI，到做出<span class="hl">可上线</span>的 AI 产品
         </h1>
-        <p class="hero-sub" data-reveal style="--reveal-delay: 120ms">
-          不是背名词，而是学会判断<b>「该不该用 AI、选什么方案、如何落地、何时上线」</b
-          >，并把它做成可评审的产品方案。
+
+        <p class="hero-sub">
+          不是背名词，而是学会判断<b>「该不该用 AI、选什么方案、如何落地、何时上线」</b>，并通过 90
+          道场景决策关卡与 6 大端到端案例，将其转化为可评审的产品方案。
         </p>
-        <div class="cta-row" data-reveal style="--reveal-delay: 180ms">
-          {
-            /*
-            主入口必须是「学习起点」而不是第一道题：零基础用户点进判断题时还没有任何词汇量，
-            题干里的场景与选项对他是噪声。题目退到次入口，由做得出判断的人自己选。
-            I2-03 已完成：主 CTA 指向 /map/ 第 1 站——认知链路是全站唯一直接回答
-            「我不知道该先学什么」的入口，其余板块都预设了读者已经知道自己要做什么。
-          */
-          }
+
+        <div class="cta-row">
           <a class="cta-primary" href="/map/#station-1">从链路第 1 站开始 →</a>
           <a class="cta-ghost" href="/learn/questions/q01-rules-or-ai/" data-hero-start>
             直接做第 01 题
           </a>
           <a class="cta-ghost" href="/search/">我只想搜一个名词</a>
         </div>
+
+        <div class="hero-metrics">
+          <div class="metric-pill">
+            <span class="m-val">{metrics.termCount}</span>
+            <span class="m-txt">深度核验词条</span>
+          </div>
+          <span class="metric-sep">/</span>
+          <div class="metric-pill">
+            <span class="m-val">90</span>
+            <span class="m-txt">场景决策关卡</span>
+          </div>
+          <span class="metric-sep">/</span>
+          <div class="metric-pill">
+            <span class="m-val">6</span>
+            <span class="m-txt">端到端案例</span>
+          </div>
+        </div>
       </div>
-      <figure class="specimen" data-reveal style="--reveal-delay: 140ms">
-        <figcaption class="specimen-label">判断三问 · 每一题都在回答</figcaption>
-        <ol class="specimen-questions">
-          {
-            LEARNING_TIERS.map((tier) => (
-              <li>
-                <span>{tier.code}</span>
-                <p>{tier.prompt}</p>
-              </li>
-            ))
-          }
-        </ol>
-      </figure>
+
+      <!-- Right Column: Decision Sandbox Widget (Authentic Clean Surface, No Fake Chrome) -->
+      <div class="hero-sandbox">
+        <div class="sandbox-card">
+          <div class="sandbox-header">
+            <span class="sandbox-title">决策沙盘 · 场景实战模拟</span>
+            <span class="live-tag">可交互试做</span>
+          </div>
+
+          <div class="sandbox-body">
+            <div class="scenario-badge">场景聚焦</div>
+            <p class="scenario-text">
+              <strong>每天面临 5,000 条客服反馈</strong
+              >，需实时进行情绪标签分类与紧急度打标，如何架构？
+            </p>
+
+            <form class="sandbox-form" onsubmit="return false;">
+              <label class="opt-label" for="home-opt-1">
+                <input type="radio" id="home-opt-1" name="home-q1" value="1" />
+                <span class="radio-circle"></span>
+                <span class="opt-text">方案 A：全部直接调用大模型，每条实时零样本推理</span>
+              </label>
+
+              <label class="opt-label is-recommended" for="home-opt-2">
+                <input type="radio" id="home-opt-2" name="home-q1" value="2" checked />
+                <span class="radio-circle"></span>
+                <div class="opt-content">
+                  <span class="opt-text">方案 B：高频规则词优先过滤 + 模糊边界模型精判</span>
+                  <span class="rec-tag">推荐最佳实践</span>
+                </div>
+              </label>
+
+              <label class="opt-label" for="home-opt-3">
+                <input type="radio" id="home-opt-3" name="home-q1" value="3" />
+                <span class="radio-circle"></span>
+                <span class="opt-text">方案 C：完全由人工客服手工逐条标记，不用任何算法</span>
+              </label>
+            </form>
+
+            <div class="sandbox-insight">
+              <div class="insight-head">
+                <span class="insight-badge">决策逻辑</span>
+                <strong>PM 决策逻辑解析</strong>
+              </div>
+              <p>
+                <strong>混合架构性价比最高：</strong>5,000 条/日的全量调用存在严重的延迟波动与 Token
+                成本累积。用规则前置过滤 60% 高确定性意图，仅将 40% 复杂长尾交由模型处理，能在降低
+                60%+ 成本的同时将平均响应缩短至 50ms。
+              </p>
+            </div>
+          </div>
+
+          <div class="sandbox-footer">
+            <span>选自 Level 1 概念识别关卡</span>
+            <a href="/learn/questions/q01-rules-or-ai/" class="enter-full">进入完整答题面板 →</a>
+          </div>
+        </div>
+      </div>
     </div>
-    <dl class="hero-stats" data-reveal style="--reveal-delay: 220ms">
-      <div><dd>{LEARNING_QUESTIONS.length}</dd><dt>QUESTIONS</dt></div>
-      <div><dd>{LEARNING_TIERS.length}</dd><dt>TIERS</dt></div>
-      <div><dd>{LEARNING_MODULES.length}</dd><dt>STAGES</dt></div>
-    </dl>
   </section>
 
-  <div class="marquee" aria-hidden="true">
-    <div class="marquee-track">
-      {
-        [...LEARNING_QUESTIONS, ...LEARNING_QUESTIONS].map((question) => (
-          <span>
-            {question.shortTitle} <b>/</b>
-          </span>
-        ))
-      }
-    </div>
-  </div>
-
+  <!-- Section 01: Three-Tier Progression Ladder -->
   <section id="learning-structure" class="structure" aria-labelledby="structure-heading">
     <div class="shell">
-      <header class="sec-head" data-reveal>
-        <p class="eyebrow">01/ Learning path</p>
-        <h2 id="structure-heading">一条从「认得出」到「取舍得了」的路径</h2>
+      <header class="sec-head">
+        <span class="sec-kicker">01 · 进阶路径</span>
+        <h2 id="structure-heading">三层能力进阶梯级</h2>
         <p>
-          三层递进，每层把六个阶段完整走一遍：先认得出概念，再判断得了边界，最后做得了取舍。三层依次解锁，不需要在入口处做选择。
+          每层把六个阶段完整走一遍：先认得出概念，再判断得了边界，最后做得了取舍。三层依次解锁，循序渐进构建确定性的产品思考框架。
         </p>
       </header>
+
       <ol class="level-list" data-level-list>
         {
           LEARNING_TIERS.map((tier, tierIndex) => {
@@ -100,19 +141,27 @@ const entrySections = SECTIONS.filter(({ surface }) => surface === 'primary');
             const tierIds = tierQuestions.map((question) => question.id);
             return (
               <li
-                data-reveal
                 data-level={tier.id}
                 data-level-ids={JSON.stringify(tierIds)}
-                style={`--reveal-delay: ${tierIndex * 80}ms`}
+                data-unlocked={tierIndex === 0 ? 'true' : 'false'}
               >
-                <span class="level-tag">{tier.code}</span>
-                <div>
-                  <h3>{tier.title}</h3>
-                  <p>{tier.summary}</p>
-                  <p class="level-state" data-level-state>
+                <div class="tier-card-top">
+                  <span class="level-tag">{tier.code}</span>
+                  <span class="level-state" data-level-state>
                     {tierIndex === 0 ? `起点 · ${tierIds.length} 道题` : `完成上一层后开启`}
-                  </p>
-                  <a href="/learn/">
+                  </span>
+                </div>
+                <div class="tier-card-body">
+                  <h3>{tier.title}</h3>
+                  <p class="tier-summary">{tier.summary}</p>
+                  <div class="tier-prompt">
+                    <strong>核心考查：</strong>
+                    {tier.prompt}
+                  </div>
+                </div>
+                <div class="tier-card-foot">
+                  <span class="tier-count">{tierIds.length} 道决策题</span>
+                  <a href="/learn/" class="tier-link">
                     {tierIndex === 0 ? `进入 ${tierIds.length} 题 →` : `进入 ${tier.title} →`}
                   </a>
                 </div>
@@ -121,7 +170,8 @@ const entrySections = SECTIONS.filter(({ surface }) => surface === 'primary');
           })
         }
       </ol>
-      <p class="level-foot" data-reveal>
+
+      <p class="level-foot">
         判断题之后还有案例库与完整项目：
         <a href="/learn/cases/">连续案例</a> ·
         <a href="/learn/cases/user-feedback-analysis/">黄金项目</a>
@@ -129,20 +179,29 @@ const entrySections = SECTIONS.filter(({ surface }) => surface === 'primary');
     </div>
   </section>
 
+  <!-- Section 02: Six Practical Stages -->
   <section class="outcomes" aria-labelledby="outcomes-heading">
     <div class="shell">
-      <header class="sec-head" data-reveal>
-        <p class="eyebrow">02/ Six stages</p>
+      <header class="sec-head">
+        <span class="sec-kicker">02 · 方法体系</span>
         <h2 id="outcomes-heading">六个阶段，练成一套判断方法</h2>
+        <p>涵盖从场景识别、方案取舍到上线监控的端到端决策链条：</p>
       </header>
+
       <ol class="outcome-list">
         {
-          LEARNING_MODULES.map((module, position) => (
-            <li data-reveal style={`--reveal-delay: ${position * 60}ms`}>
-              <span class="outcome-index">{module.index}</span>
-              <div>
+          LEARNING_MODULES.map((module) => (
+            <li class="outcome-card">
+              <div class="outcome-top">
+                <span class="outcome-index">阶段 0{module.index}</span>
                 <h3>{module.title}</h3>
+              </div>
+              <div class="outcome-row">
+                <span class="outcome-label">核心判断</span>
                 <p class="outcome-decision">{module.decision}</p>
+              </div>
+              <div class="outcome-row outcome-result-row">
+                <span class="outcome-label">交付标准</span>
                 <p class="outcome-result">{module.outcome}</p>
               </div>
             </li>
@@ -152,48 +211,52 @@ const entrySections = SECTIONS.filter(({ surface }) => surface === 'primary');
     </div>
   </section>
 
+  <!-- Section 03: Knowledge Base Support -->
   <section class="support" aria-labelledby="support-heading">
     <div class="shell">
-      <header class="sec-head" data-reveal>
-        <p class="eyebrow">03/ Knowledge base</p>
+      <header class="sec-head">
+        <span class="sec-kicker">03 · 知识支撑</span>
         <h2 id="support-heading">学习中的知识支持</h2>
         <p>这些是「查」而不是「学」——按需查阅，不必按顺序读。</p>
       </header>
-      <p class="structure-support" data-reveal>
-        <span class="prompt">$</span> 支撑层：<a href="/atlas/">知识库</a>
-        {metrics.termCount} 词条 ·
-        <a href="/routes/">阅读路线</a>
-        {metrics.publishedRouteCount} 条 ·
-        <a href="/graph/">概念图谱</a>
-        {metrics.relationCount} 关系 ·
-        <a href="/search/">搜索</a>
-      </p>
+
+      <div class="support-card">
+        <p class="structure-support">
+          <span class="support-tag">支撑层工具</span>
+          <a href="/atlas/">知识库</a>
+          <span class="count-pill">{metrics.termCount} 词条</span> ·
+          <a href="/routes/">阅读路线</a>
+          <span class="count-pill">{metrics.publishedRouteCount} 条</span> ·
+          <a href="/graph/">概念图谱</a>
+          <span class="count-pill">{metrics.relationCount} 关系</span> ·
+          <a href="/search/">搜索</a>
+        </p>
+      </div>
     </div>
   </section>
 
-  {
-    /*
-    之前首页把访客介绍完之后，唯一的下一步动作是 hero 那个主按钮——而那一个按钮
-    直接把人送进认知链路第 1 站。于是读者全部落进链路页，首页在导航里又没有名字，
-    只能用「点左上角 logo 那个页面」来描述它。这一段把四个板块各自回答的问题摆出来，
-    让读者能按自己的问题选入口，而不是被一个按钮替他们决定。
-    文案取自 SECTIONS 的 question / purpose，首页不另写一套说法。
-  */
-  }
+  <!-- Section 04: Four Gateways -->
   <section class="entries" aria-labelledby="entries-heading">
     <div class="shell">
-      <header class="sec-head" data-reveal>
-        <p class="eyebrow">04/ Where to start</p>
+      <header class="sec-head">
+        <span class="sec-kicker">04 · 入口导览</span>
         <h2 id="entries-heading">四个入口，各自回答一个问题</h2>
         <p>不知道从哪进的时候，挑那个正好是你在问的入口。</p>
       </header>
+
       <ol class="entry-list" data-entry-list>
         {
-          entrySections.map((section, index) => (
-            <li data-reveal style={`--reveal-delay: ${index * 60}ms`}>
-              <p class="entry-question">「{section.question}」</p>
+          entrySections.map((section, idx) => (
+            <li class="entry-card">
+              <div class="entry-card-top">
+                <span class="entry-num">0{idx + 1}</span>
+                <p class="entry-question">「{section.question}」</p>
+              </div>
               <h3>
                 <a href={section.href}>{section.navLabel}</a>
+                <span class="entry-arrow" aria-hidden="true">
+                  →
+                </span>
               </h3>
               <p class="entry-purpose">{section.purpose}</p>
             </li>
@@ -202,541 +265,913 @@ const entrySections = SECTIONS.filter(({ surface }) => surface === 'primary');
       </ol>
     </div>
   </section>
+
+  <!-- Bottom Daylight CTA Banner (Solid Surface, High Contrast) -->
+  <section class="home-bottom-cta">
+    <div class="shell">
+      <div class="bottom-cta-card">
+        <h2>从今天开始，构建可被评审的 AI 产品方案</h2>
+        <p>
+          无需一次学完所有内容，从第 1 站认知链路或第 1 道实战题起步，建立确定性的产品工程直觉。
+        </p>
+        <div class="bottom-cta-btns">
+          <a href="/map/#station-1" class="cta-primary">从链路第 1 站开始 →</a>
+          <a href="/learn/cases/" class="cta-secondary">查看 6 大企业级实战案例</a>
+        </div>
+      </div>
+    </div>
+  </section>
 </main>
 
 <style>
   .home-landing {
     min-width: 0;
     padding-bottom: var(--space-7);
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
   }
 
   .shell {
-    width: min(1180px, calc(100% - 3rem));
+    width: min(1200px, calc(100% - 3rem));
     margin-inline: auto;
   }
 
+  /* ==========================================================================
+     Hero Section: Daylight Two-Column Clean Grid (Anti-AI-Slop Solid Surface)
+     ========================================================================== */
   .hero {
     position: relative;
     border-bottom: 1px solid var(--color-line);
-    overflow: clip;
+    padding-block: clamp(3rem, 5.5vw, 4.5rem) clamp(2.5rem, 4.5vw, 3.8rem);
+    background-color: var(--color-canvas);
   }
 
   .hero-grid {
-    width: min(1180px, calc(100% - 3rem));
     display: grid;
-    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
-    gap: clamp(2rem, 4vw, 3.5rem);
-    align-items: start;
-    margin-inline: auto;
-    padding-block: clamp(3rem, 6vw, 4.5rem) clamp(2.5rem, 4vw, 3.5rem);
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
   }
 
   .hero-copy {
-    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
   }
 
-  .eyebrow {
-    font-family: var(--font-mono);
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    align-self: flex-start;
+    padding: 5px 12px;
+    background: var(--color-panel);
+    border: 1px solid color-mix(in oklch, var(--color-accent) 25%, var(--color-line));
+    border-radius: var(--radius-pill);
     font-size: var(--text-xs);
-    letter-spacing: var(--tracking-label);
-    text-transform: uppercase;
-    color: var(--color-accent-strong);
-  }
-
-  .eyebrow::before {
-    content: '> ';
+    font-weight: var(--weight-display);
     color: var(--color-accent);
+    letter-spacing: var(--tracking-label);
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
   }
 
   .hero h1 {
-    margin: 1.1rem 0 0;
-    font-size: clamp(2.2rem, 3.6vw, 3rem);
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 3.2vw, 2.75rem);
     font-weight: var(--weight-display);
-    line-height: 1.16;
-    letter-spacing: -0.01em;
-    text-wrap: balance;
+    line-height: 1.18;
+    letter-spacing: var(--tracking-display);
+    color: var(--color-ink);
   }
 
   .hero h1 .hl {
     color: var(--color-accent);
-    text-shadow: 0 0 26px color-mix(in oklch, var(--color-accent) 50%, transparent);
+    font-weight: var(--weight-display);
   }
 
   .hero-sub {
-    max-width: 34rem;
-    margin: 1.3rem 0 0;
+    max-width: 36rem;
+    margin: 0;
     color: var(--color-muted);
     font-size: var(--text-lead);
-    line-height: 1.75;
+    line-height: 1.68;
   }
 
   .hero-sub b {
-    color: var(--color-accent-strong);
+    color: var(--color-ink);
     font-weight: var(--weight-display);
   }
 
   .cta-row {
     display: flex;
-    flex-wrap: wrap;
+    align-items: center;
     gap: var(--space-2);
-    margin-top: 2.2rem;
+    margin-top: var(--space-1);
+    flex-wrap: wrap;
   }
 
   .cta-primary {
-    position: relative;
     display: inline-flex;
     align-items: center;
-    min-height: 3rem;
+    min-height: 2.85rem;
     background: var(--color-accent);
-    color: oklch(0.2 0.05 120);
-    font-family: var(--font-mono);
-    font-size: 0.92rem;
+    color: #ffffff;
+    font-size: var(--text-sm);
     font-weight: var(--weight-display);
-    padding: 0 1.7rem;
+    padding: 0 1.5rem;
+    border-radius: var(--radius-md);
     text-decoration: none;
-    white-space: nowrap;
-    clip-path: polygon(
-      0 0,
-      calc(100% - 12px) 0,
-      100% 12px,
-      100% 100%,
-      12px 100%,
-      0 calc(100% - 12px)
-    );
+    box-shadow: 0 4px 14px color-mix(in oklch, var(--color-accent) 28%, transparent);
     transition:
-      transform var(--transition-fast),
-      box-shadow var(--transition-fast);
+      transform var(--duration-quick) var(--ease-smooth-out),
+      box-shadow var(--duration-quick) var(--ease-smooth-out),
+      background-color var(--duration-quick) var(--ease-smooth-out);
   }
 
   .cta-primary:hover {
-    transform: translate(-2px, -2px);
-    box-shadow: 6px 6px 0 color-mix(in oklch, var(--color-accent-strong) 55%, transparent);
+    transform: translateY(-1px);
+    background: var(--color-accent-strong);
+    box-shadow: 0 6px 18px color-mix(in oklch, var(--color-accent) 36%, transparent);
+  }
+
+  .cta-primary:active {
+    transform: scale(var(--scale-large));
   }
 
   .cta-ghost {
     display: inline-flex;
     align-items: center;
-    min-height: 3rem;
+    min-height: 2.85rem;
+    background: var(--color-panel);
     border: 1px solid var(--color-line);
     color: var(--color-ink);
-    font-family: var(--font-mono);
-    font-size: 0.9rem;
-    padding: 0 1.5rem;
+    font-size: var(--text-sm);
+    font-weight: var(--weight-display);
+    padding: 0 1.25rem;
+    border-radius: var(--radius-md);
     text-decoration: none;
-    white-space: nowrap;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+    transition:
+      transform var(--duration-quick) var(--ease-smooth-out),
+      border-color var(--duration-quick) var(--ease-smooth-out),
+      background-color var(--duration-quick) var(--ease-smooth-out);
   }
 
   .cta-ghost:hover {
-    border-color: var(--color-accent-strong);
+    background: var(--color-panel-raised);
+    border-color: var(--color-control-border);
     color: var(--color-accent-strong);
   }
 
-  /* 判断三问：用上下细线做「排版框」，不重绘窗口边框。
-     hero 讲方法（每一题都在回答什么），不讲某一道题的答案。 */
-  .specimen {
-    margin: 0;
-    border-top: 1px solid var(--color-line);
-    border-bottom: 1px solid var(--color-line);
-    padding: var(--space-4) 0;
+  .cta-ghost:active {
+    transform: scale(var(--scale-large));
   }
 
-  .specimen-label {
-    margin: 0 0 var(--space-3);
-    color: var(--color-quiet);
-    font-family: var(--font-mono);
-    font-size: var(--text-xs);
-    letter-spacing: var(--tracking-label);
-  }
-
-  .specimen-questions {
-    display: grid;
-    gap: var(--space-3);
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .specimen-questions li {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    gap: var(--space-3);
-    align-items: baseline;
-  }
-
-  .specimen-questions span {
-    color: var(--color-accent);
-    font-family: var(--font-mono);
-    font-size: var(--text-xs);
-    letter-spacing: var(--tracking-label);
-  }
-
-  .specimen-questions p {
-    margin: 0;
+  .cta-secondary {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.85rem;
+    background: var(--color-panel);
+    border: 1px solid var(--color-line);
     color: var(--color-ink);
-    font-size: var(--text-lead);
-    line-height: 1.55;
-    text-wrap: pretty;
+    font-size: var(--text-sm);
+    font-weight: var(--weight-display);
+    padding: 0 1.5rem;
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+    transition:
+      transform var(--duration-quick) var(--ease-smooth-out),
+      border-color var(--duration-quick) var(--ease-smooth-out),
+      background-color var(--duration-quick) var(--ease-smooth-out);
   }
 
-  .structure-support .prompt {
-    color: var(--color-accent);
+  .cta-secondary:hover {
+    background: var(--color-panel-raised);
+    border-color: var(--color-control-border);
   }
 
-  /* 数据条 */
-  .hero-stats {
-    width: min(1180px, calc(100% - 3rem));
-    display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    margin: 0 auto;
+  .cta-secondary:active {
+    transform: scale(var(--scale-large));
+  }
+
+  .hero-metrics {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-top: var(--space-2);
+    padding-top: var(--space-3);
     border-top: 1px solid var(--color-line);
   }
 
-  .hero-stats div {
-    padding: 1.1rem 1.2rem;
-    border-right: 1px solid var(--color-line);
+  .metric-pill {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-1);
   }
 
-  .hero-stats div:last-child {
-    border-right: 0;
-  }
-
-  .hero-stats dd {
-    margin: 0;
+  .m-val {
     font-family: var(--font-mono);
-    font-size: 1.55rem;
+    font-size: var(--text-lg);
+    font-weight: var(--weight-display);
+    font-variant-numeric: tabular-nums;
+    color: var(--color-accent);
+  }
+
+  .m-txt {
+    font-size: var(--text-xs);
+    color: var(--color-quiet);
+  }
+
+  .metric-sep {
+    color: var(--color-line);
+    font-size: var(--text-xs);
+  }
+
+  /* ==========================================================================
+     Daylight Decision Sandbox Card (Right Column - Authentic Surface)
+     ========================================================================== */
+  .hero-sandbox {
+    min-width: 0;
+  }
+
+  .sandbox-card {
+    background: var(--color-panel);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+    transition:
+      box-shadow var(--duration-fast) var(--ease-smooth-out),
+      border-color var(--duration-fast) var(--ease-smooth-out);
+  }
+
+  .sandbox-card:hover {
+    border-color: var(--color-control-border);
+    box-shadow: var(--shadow-hover);
+  }
+
+  .sandbox-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-3) var(--space-4);
+    background: var(--color-panel-raised);
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .sandbox-title {
+    font-size: var(--text-xs);
+    font-weight: var(--weight-display);
+    color: var(--color-ink);
+    letter-spacing: var(--tracking-label);
+  }
+
+  .live-tag {
+    font-size: 11px;
+    font-weight: var(--weight-display);
+    background: color-mix(in oklch, var(--color-application) 10%, white);
+    color: var(--color-application);
+    padding: 2px 8px;
+    border-radius: var(--radius-pill);
+    border: 1px solid color-mix(in oklch, var(--color-application) 25%, var(--color-line));
+  }
+
+  .sandbox-body {
+    padding: var(--space-4);
+  }
+
+  .scenario-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: var(--weight-display);
+    background: var(--color-panel-raised);
+    color: var(--color-quiet);
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
+    margin-bottom: var(--space-2);
+  }
+
+  .scenario-text {
+    font-size: var(--text-sm);
+    color: var(--color-ink);
+    line-height: 1.55;
+    margin-bottom: var(--space-3);
+  }
+
+  .sandbox-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .opt-label {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-2) var(--space-3);
+    background: var(--color-canvas);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    touch-action: manipulation;
+    transition:
+      background-color var(--duration-quick) var(--ease-smooth-out),
+      border-color var(--duration-quick) var(--ease-smooth-out),
+      transform var(--duration-quick) var(--ease-smooth-out);
+  }
+
+  .opt-label:hover {
+    background: var(--color-panel);
+    border-color: var(--color-control-border);
+  }
+
+  .opt-label:active {
+    transform: scale(0.99);
+  }
+
+  .opt-label:has(input[type='radio']:focus-visible) {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 2px;
+  }
+
+  .opt-label input[type='radio'] {
+    position: absolute;
+    opacity: 0;
+  }
+
+  .radio-circle {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 2px solid var(--color-control-border);
+    display: inline-block;
+    flex-shrink: 0;
+    transition:
+      border-color var(--duration-quick) var(--ease-smooth-out),
+      background-color var(--duration-quick) var(--ease-smooth-out);
+  }
+
+  .opt-label input[type='radio']:checked + .radio-circle {
+    border-color: var(--color-accent);
+    background: var(--color-accent);
+    box-shadow: inset 0 0 0 3px #ffffff;
+  }
+
+  .opt-label.is-recommended {
+    background: color-mix(in oklch, var(--color-accent) 6%, white);
+    border-color: color-mix(in oklch, var(--color-accent) 30%, var(--color-line));
+  }
+
+  .opt-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .opt-text {
+    font-size: var(--text-sm);
+    color: var(--color-ink);
+  }
+
+  .rec-tag {
+    font-size: 11px;
     font-weight: var(--weight-display);
     color: var(--color-accent);
   }
 
-  .hero-stats dt {
-    margin-top: 0.15rem;
+  .sandbox-insight {
+    margin-top: var(--space-3);
+    background: var(--color-panel-raised);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-sm);
+    padding: var(--space-3);
+  }
+
+  .insight-head {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-bottom: var(--space-1);
+  }
+
+  .insight-badge {
     font-family: var(--font-mono);
-    font-size: 0.74rem;
-    letter-spacing: 0.14em;
+    font-size: 10px;
+    font-weight: var(--weight-display);
+    background: color-mix(in oklch, var(--color-accent) 12%, white);
+    color: var(--color-accent-strong);
+    padding: 1px 6px;
+    border-radius: var(--radius-sm);
+    border: 1px solid color-mix(in oklch, var(--color-accent) 25%, var(--color-line));
+  }
+
+  .insight-head strong {
+    font-size: var(--text-xs);
+    color: var(--color-ink);
+  }
+
+  .sandbox-insight p {
+    font-size: var(--text-xs);
+    color: var(--color-muted);
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  .sandbox-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--color-panel-raised);
+    border-top: 1px solid var(--color-line);
+    padding: var(--space-2) var(--space-4);
+    font-size: var(--text-xs);
     color: var(--color-quiet);
   }
 
-  /* 跑马灯（全页仅此一条） */
-  .marquee {
-    overflow: hidden;
-    border-bottom: 1px solid var(--color-line);
-    background: var(--color-panel);
+  .enter-full {
+    color: var(--color-accent);
+    text-decoration: none;
+    font-weight: var(--weight-display);
+    transition: color var(--duration-quick) var(--ease-smooth-out);
   }
 
-  .marquee-track {
-    display: flex;
-    width: max-content;
-  }
-
-  .marquee span {
-    padding: 0.55rem 0;
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
+  .enter-full:hover {
     color: var(--color-accent-strong);
-    white-space: nowrap;
+    text-decoration: underline;
   }
 
-  .marquee span::after {
-    content: '';
-    margin-inline: 1.2rem;
-    color: var(--color-accent);
-  }
-
-  .marquee b {
-    color: var(--color-accent);
-  }
-
-  @media (prefers-reduced-motion: no-preference) {
-    .marquee-track {
-      animation: marquee-scroll 40s linear infinite;
-    }
-  }
-
-  @keyframes marquee-scroll {
-    from {
-      transform: translateX(0);
-    }
-    to {
-      transform: translateX(-50%);
-    }
-  }
-
-  /* 通用区块 */
+  /* ==========================================================================
+     Section Headers (Consistent Better-Interface Hierarchy)
+     ========================================================================== */
   .structure,
   .outcomes,
-  .support {
-    padding-block: 4.2rem;
+  .support,
+  .entries,
+  .home-bottom-cta {
+    padding-block: clamp(3rem, 5vw, 4.5rem);
     border-bottom: 1px solid var(--color-line);
   }
 
   .sec-head {
-    display: flex;
-    align-items: baseline;
-    gap: 1.5rem;
-    margin-bottom: 2.4rem;
+    max-width: 44rem;
+    margin-bottom: var(--space-4);
   }
 
-  .sec-head .eyebrow {
-    flex: 0 0 auto;
-    white-space: nowrap;
+  .sec-kicker {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-display);
+    letter-spacing: var(--tracking-label);
+    color: var(--color-accent);
+    display: block;
+    margin-bottom: var(--space-1);
   }
 
   .sec-head h2 {
-    margin: 0;
-    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    margin: 0 0 var(--space-1);
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
     font-weight: var(--weight-display);
-    letter-spacing: -0.01em;
+    color: var(--color-ink);
+    letter-spacing: var(--tracking-display);
   }
 
   .sec-head p {
-    max-width: 30rem;
     margin: 0;
-    color: var(--color-muted);
-    font-size: 0.92rem;
+    font-size: var(--text-sm);
+    color: var(--color-quiet);
+    line-height: 1.6;
   }
 
+  /* ==========================================================================
+     Curriculum / 01: Three-Tier Progression Ladder
+     ========================================================================== */
   .level-list {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 1.1rem;
+    gap: var(--space-4);
     margin: 0;
     padding: 0;
     list-style: none;
   }
 
   .level-list li {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    gap: var(--space-3);
-    border: 1px solid var(--color-line);
     background: var(--color-panel);
-    padding: 1.7rem 1.6rem;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+    box-shadow: var(--shadow-card);
+    display: flex;
+    flex-direction: column;
     transition:
-      transform var(--transition-fast),
-      border-color var(--transition-fast),
-      box-shadow var(--transition-fast);
+      transform var(--duration-quick) var(--ease-smooth-out),
+      box-shadow var(--duration-quick) var(--ease-smooth-out),
+      border-color var(--duration-quick) var(--ease-smooth-out);
   }
 
   .level-list li:hover {
-    transform: translate(-3px, -3px);
-    border-color: var(--color-accent);
-    box-shadow: 8px 8px 0 color-mix(in oklch, var(--color-accent) 14%, transparent);
-  }
-
-  .level-tag {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 2.5rem;
-    height: 2.5rem;
-    border: 1px solid var(--color-line);
-    background: var(--color-accent-wash);
-    color: var(--color-accent);
-    font-family: var(--font-mono);
-    font-size: 0.85rem;
-    font-weight: var(--weight-display);
-  }
-
-  .level-list h3 {
-    margin: 0;
-    font-size: 1.18rem;
-    font-weight: var(--weight-display);
-  }
-
-  .level-list p {
-    margin: 0.5rem 0 1rem;
-    color: var(--color-muted);
-    font-size: 0.88rem;
-  }
-
-  .level-list .level-state {
-    margin: 0 0 1rem;
-    font-family: var(--font-mono);
-    font-size: 0.76rem;
-    letter-spacing: 0.04em;
-    color: var(--color-muted);
-  }
-
-  /* 未解锁的层用虚线边框弱化；答完上一层后由脚本切到 data-unlocked='true' */
-  .level-list li[data-unlocked='false'] {
-    border-style: dashed;
-  }
-
-  .level-list li[data-unlocked='false'] h3,
-  .level-list li[data-unlocked='false'] p {
-    color: color-mix(in oklch, var(--color-muted) 82%, transparent);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--color-control-border);
   }
 
   .level-list li[data-unlocked='true'] {
-    border-style: solid;
-    border-color: color-mix(in oklch, var(--color-accent) 45%, var(--color-line));
+    border-color: color-mix(in oklch, var(--color-accent) 40%, var(--color-line));
+  }
+
+  .level-list li[data-unlocked='false'] {
+    border-style: dashed;
+    background: color-mix(in oklch, var(--color-canvas) 85%, white);
+  }
+
+  .level-list li[data-unlocked='false'] h3,
+  .level-list li[data-unlocked='false'] .tier-summary {
+    color: var(--color-quiet);
+  }
+
+  .tier-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-3);
+  }
+
+  .level-tag {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-display);
+    background: color-mix(in oklch, var(--color-accent) 8%, white);
+    color: var(--color-accent);
+    padding: 3px 9px;
+    border-radius: var(--radius-pill);
+    border: 1px solid color-mix(in oklch, var(--color-accent) 20%, var(--color-line));
+  }
+
+  .level-state {
+    font-size: var(--text-xs);
+    font-family: var(--font-mono);
+    color: var(--color-quiet);
   }
 
   .level-list li[data-unlocked='true'] .level-state {
     color: var(--color-accent);
+    font-weight: var(--weight-display);
+  }
+
+  .tier-card-body {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .tier-card-body h3 {
+    margin: 0 0 var(--space-2);
+    font-size: var(--text-md);
+    font-weight: var(--weight-display);
+    color: var(--color-ink);
+  }
+
+  .tier-summary {
+    font-size: var(--text-sm);
+    color: var(--color-muted);
+    line-height: 1.55;
+    margin: 0 0 var(--space-3);
+    flex-grow: 1;
+  }
+
+  .tier-prompt {
+    background: var(--color-canvas);
+    border-radius: var(--radius-sm);
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--text-xs);
+    color: var(--color-quiet);
+    line-height: 1.5;
+    margin-bottom: var(--space-3);
+    border: 1px solid var(--color-line-soft);
+  }
+
+  .tier-card-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--color-line-soft);
+    padding-top: var(--space-3);
+    font-size: var(--text-xs);
+  }
+
+  .tier-count {
+    color: var(--color-quiet);
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .tier-link {
+    color: var(--color-accent);
+    text-decoration: none;
+    font-weight: var(--weight-display);
+    transition:
+      color var(--duration-quick) var(--ease-smooth-out),
+      transform var(--duration-quick) var(--ease-smooth-out);
+  }
+
+  .tier-link:hover {
+    color: var(--color-accent-strong);
+    text-decoration: underline;
+  }
+
+  .tier-link:active {
+    transform: scale(var(--scale-large));
   }
 
   .level-foot {
-    margin: 1.5rem 0 0;
-    color: var(--color-muted);
-    font-size: 0.86rem;
+    margin: var(--space-4) 0 0;
+    color: var(--color-quiet);
+    font-size: var(--text-sm);
   }
 
   .level-foot a {
     color: var(--color-accent-strong);
     text-decoration: none;
-    border-bottom: 1px solid color-mix(in oklch, var(--color-accent) 35%, transparent);
+    font-weight: var(--weight-display);
   }
 
   .level-foot a:hover {
-    color: var(--color-accent);
+    text-decoration: underline;
   }
 
-  .level-list a,
-  .structure-support a {
-    color: var(--color-accent-strong);
-    font-family: var(--font-mono);
-    font-size: 0.85rem;
-    font-weight: var(--weight-display);
-    text-decoration: none;
-  }
-
-  .level-list a:hover,
-  .structure-support a:hover {
-    color: var(--color-accent);
-  }
-
-  .structure-support {
-    margin: 1.6rem 0 0;
-    color: var(--color-muted);
-    font-family: var(--font-mono);
-    font-size: 0.85rem;
-  }
-
+  /* ==========================================================================
+     Methodology / 02: Six Stages
+     ========================================================================== */
   .outcome-list {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1.1rem;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: var(--space-4);
     margin: 0;
     padding: 0;
     list-style: none;
   }
 
-  .outcome-list li {
-    display: grid;
-    grid-template-columns: 3.2rem minmax(0, 1fr);
-    gap: 1rem;
-    border: 1px solid var(--color-line);
+  .outcome-card {
     background: var(--color-panel);
-    padding: 1.3rem 1.2rem;
-    transition: border-color var(--transition-fast);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+    box-shadow: var(--shadow-card);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    transition:
+      transform var(--duration-quick) var(--ease-smooth-out),
+      border-color var(--duration-quick) var(--ease-smooth-out);
   }
 
-  .outcome-list li:hover {
-    border-color: var(--color-accent-strong);
+  .outcome-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--color-control-border);
+  }
+
+  .outcome-top {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-2);
   }
 
   .outcome-index {
     font-family: var(--font-mono);
-    font-size: 1.15rem;
+    font-size: var(--text-xs);
     font-weight: var(--weight-display);
     color: var(--color-accent);
   }
 
-  .outcome-list h3 {
+  .outcome-top h3 {
     margin: 0;
-    font-size: 1.02rem;
+    font-size: var(--text-base);
     font-weight: var(--weight-display);
+    color: var(--color-ink);
   }
 
-  .outcome-decision {
-    margin: 0.3rem 0 0;
-    font-size: 0.88rem;
-    font-weight: var(--weight-display);
+  .outcome-row {
+    background: var(--color-canvas);
+    border-radius: var(--radius-sm);
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--text-xs);
+    line-height: 1.5;
+    border: 1px solid var(--color-line-soft);
   }
 
+  .outcome-label {
+    font-weight: var(--weight-display);
+    color: var(--color-quiet);
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .outcome-decision,
   .outcome-result {
-    margin: 0.15rem 0 0;
-    color: var(--color-muted);
-    font-size: 0.84rem;
+    margin: 0;
+    color: var(--color-ink);
   }
 
-  /*
-   * 四个入口：每条以「读者的问题」打头，板块名是答案，purpose 是补充说明。
-   * 用问题打头而不是板块名打头，是因为读者此刻手里握着的是问题，不是板块名。
-   */
+  /* ==========================================================================
+     Knowledge Base / 03: Support
+     ========================================================================== */
+  .support-card {
+    background: var(--color-panel);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+    box-shadow: var(--shadow-card);
+  }
+
+  .structure-support {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+    line-height: 1.7;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .support-tag {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-display);
+    background: color-mix(in oklch, var(--color-accent) 8%, white);
+    color: var(--color-accent);
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
+  }
+
+  .structure-support a {
+    color: var(--color-accent-strong);
+    font-weight: var(--weight-display);
+    text-decoration: none;
+    transition: color var(--duration-quick) var(--ease-smooth-out);
+  }
+
+  .structure-support a:hover {
+    color: var(--color-accent);
+    text-decoration: underline;
+  }
+
+  .count-pill {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-variant-numeric: tabular-nums;
+    color: var(--color-quiet);
+  }
+
+  /* ==========================================================================
+     Where to Start / 04: Four Gateways
+     ========================================================================== */
   .entry-list {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1.1rem;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--space-4);
     margin: 0;
     padding: 0;
     list-style: none;
   }
 
-  .entry-list li {
-    border: 1px solid var(--color-line);
+  .entry-card {
     background: var(--color-panel);
-    padding: 1.5rem 1.5rem 1.3rem;
-    transition: border-color var(--transition-fast);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+    box-shadow: var(--shadow-card);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    transition:
+      transform var(--duration-quick) var(--ease-smooth-out),
+      border-color var(--duration-quick) var(--ease-smooth-out),
+      box-shadow var(--duration-quick) var(--ease-smooth-out);
   }
 
-  .entry-list li:hover {
-    border-color: var(--color-accent-strong);
+  .entry-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--color-accent);
+    box-shadow: var(--shadow-hover);
+  }
+
+  .entry-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--space-2);
+  }
+
+  .entry-num {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-accent);
+    font-weight: var(--weight-display);
   }
 
   .entry-question {
     margin: 0;
-    color: var(--color-muted);
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    letter-spacing: 0.02em;
+    font-size: var(--text-xs);
+    color: var(--color-quiet);
+    flex-grow: 1;
+    text-align: right;
   }
 
-  .entry-list h3 {
-    margin: 0.55rem 0 0;
-    font-size: 1.22rem;
+  .entry-card h3 {
+    margin: 0;
+    font-size: var(--text-base);
     font-weight: var(--weight-display);
   }
 
-  .entry-list h3 a {
+  .entry-card h3 a {
     color: var(--color-ink);
-    border-bottom: 2px solid color-mix(in oklch, var(--color-accent) 45%, transparent);
     text-decoration: none;
+    transition: color var(--duration-quick) var(--ease-smooth-out);
   }
 
-  .entry-list h3 a:hover {
+  .entry-card:hover h3 a {
     color: var(--color-accent);
-    border-bottom-color: var(--color-accent);
+  }
+
+  .entry-arrow {
+    display: inline-block;
+    margin-left: var(--space-0);
+    color: var(--color-accent);
+    transition: transform var(--duration-quick) var(--ease-smooth-out);
+  }
+
+  .entry-card:hover .entry-arrow {
+    transform: translateX(3px);
   }
 
   .entry-purpose {
-    margin: 0.7rem 0 0;
+    margin: 0;
+    font-size: var(--text-xs);
     color: var(--color-muted);
-    font-size: 0.88rem;
+    line-height: 1.55;
   }
 
+  /* ==========================================================================
+     Bottom Callout CTA Card (Solid Clean Surface, Anti-AI Slop)
+     ========================================================================== */
+  .home-bottom-cta {
+    border-bottom: 0;
+  }
+
+  .bottom-cta-card {
+    background: var(--color-panel);
+    border: 1px solid color-mix(in oklch, var(--color-accent) 25%, var(--color-line));
+    border-radius: var(--radius-md);
+    padding: clamp(2.5rem, 5vw, 3.8rem) var(--space-4);
+    box-shadow: var(--shadow-card);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .bottom-cta-card h2 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: var(--weight-display);
+    color: var(--color-ink);
+  }
+
+  .bottom-cta-card p {
+    margin: 0;
+    max-width: 38rem;
+    font-size: var(--text-sm);
+    color: var(--color-muted);
+    line-height: 1.65;
+  }
+
+  .bottom-cta-btns {
+    display: flex;
+    gap: var(--space-3);
+    margin-top: var(--space-2);
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  /* Responsive Breakpoints */
   @media (max-width: 960px) {
     .hero-grid {
       grid-template-columns: 1fr;
-      gap: 2rem;
+      gap: var(--space-5);
     }
 
-    .level-list,
-    .entry-list {
+    .level-list {
       grid-template-columns: 1fr;
-    }
-
-    .sec-head {
-      flex-direction: column;
-      gap: 0.5rem;
     }
   }
 
   @media (max-width: 640px) {
-    .shell,
-    .hero-grid,
-    .hero-stats {
+    .shell {
       width: calc(100% - 2rem);
     }
 
@@ -746,20 +1181,40 @@ const entrySections = SECTIONS.filter(({ surface }) => surface === 'primary');
     }
 
     .cta-primary,
-    .cta-ghost {
+    .cta-ghost,
+    .cta-secondary {
       justify-content: center;
     }
 
-    .hero-stats {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .hero-stats div {
-      border-bottom: 1px solid var(--color-line);
+    .hero-metrics {
+      flex-wrap: wrap;
+      gap: var(--space-2);
     }
 
     .outcome-list {
       grid-template-columns: 1fr;
+    }
+
+    .entry-list {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Transitions-polish: prefers-reduced-motion accessibility guard */
+  @media (prefers-reduced-motion: reduce) {
+    .cta-primary,
+    .cta-ghost,
+    .cta-secondary,
+    .level-list li,
+    .outcome-card,
+    .entry-card,
+    .sandbox-card,
+    .opt-label,
+    .radio-circle,
+    .tier-link,
+    .enter-full {
+      transition: none !important;
+      transform: none !important;
     }
   }
 </style>
@@ -767,8 +1222,6 @@ const entrySections = SECTIONS.filter(({ surface }) => surface === 'primary');
 <script>
   const PROGRESS_KEY = 'ai-native.progress';
   const landing = document.querySelector<HTMLElement>('[data-question-order]');
-  // data-hero-start 现在是「直接做第 01 题」那条次入口——有进度时它就地变成续做入口。
-  // 主 CTA（从链路第 1 站开始）指向链路，不受进度影响，标签始终稳定。
   const startLink = document.querySelector<HTMLAnchorElement>('[data-hero-start]');
   const levelList = document.querySelector<HTMLElement>('[data-level-list]');
 
@@ -792,7 +1245,6 @@ const entrySections = SECTIONS.filter(({ surface }) => surface === 'primary');
   if (levelList) {
     const answeredSet = new Set(answered);
     const levels = [...levelList.querySelectorAll<HTMLElement>('[data-level-ids]')];
-    // 递进解锁：第一层始终可进入，之后每一层要求上一层全部答完。
     let previousComplete = true;
     let allComplete = levels.length > 0;
 

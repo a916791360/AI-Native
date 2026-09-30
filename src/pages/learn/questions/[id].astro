@@ -140,7 +140,14 @@ const breadcrumbTrail = [
           <strong>{tier.title}</strong>
           <span class="progress-module">阶段 {module.index} · {module.title}</span>
         </p>
-        <div class="progress-rail">
+        <div
+          class="progress-rail"
+          role="progressbar"
+          aria-valuenow={progressPercent}
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-label="当前层学习进度"
+        >
           <span style={`width: ${progressPercent}%`}></span>
         </div>
         <p class="progress-stats">
@@ -506,6 +513,7 @@ const breadcrumbTrail = [
     color: var(--color-quiet);
     font-family: var(--font-mono);
     font-size: var(--text-xs);
+    font-variant-numeric: tabular-nums;
     white-space: nowrap;
   }
   .progress-position {
@@ -648,9 +656,16 @@ const breadcrumbTrail = [
     background: none;
     padding: var(--space-3) var(--space-4);
     text-align: left;
+    touch-action: manipulation;
+    transition:
+      background-color var(--duration-quick) var(--ease-smooth-out),
+      transform var(--duration-quick) var(--ease-smooth-out);
   }
   [data-option-item] button:hover {
     background: var(--color-panel-raised);
+  }
+  [data-option-item] button:active:not(:disabled) {
+    transform: scale(0.99);
   }
   .option-key {
     display: grid;

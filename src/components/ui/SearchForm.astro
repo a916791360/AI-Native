@@ -57,6 +57,7 @@ const {
     background: transparent;
     color: var(--color-ink);
     cursor: pointer;
+    touch-action: manipulation;
     font-size: 0.8125rem;
     font-weight: var(--weight-display);
   }
@@ -89,6 +90,11 @@ const {
   }
 
   @media (max-width: 900px) {
+    input,
+    .compact input {
+      font-size: 1rem;
+    }
+
     input,
     button,
     .compact input,

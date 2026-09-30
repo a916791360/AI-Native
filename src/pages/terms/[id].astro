@@ -737,7 +737,10 @@ const breadcrumbTrail = [
   }
   .term-index {
     position: sticky;
-    top: 0;
+    top: var(--header-height);
+    max-height: calc(100vh - var(--header-height));
+    overflow-y: auto;
+    scrollbar-width: thin;
     height: max-content;
     border-right: 1px solid var(--color-line);
     padding: var(--space-5) var(--page-gutter);
@@ -771,7 +774,7 @@ const breadcrumbTrail = [
   .absorbed-terms {
     border-bottom: 1px solid var(--color-line);
     padding: var(--space-7) max(var(--page-gutter), calc((100% - var(--reading-max)) / 2));
-    scroll-margin-top: 1rem;
+    scroll-margin-top: calc(var(--header-height) + 1.25rem);
   }
   /* 「相关名词」：视觉上比正文轻一档——它是一条通道，不是内容主体。
      用数字徽标（+N）而不是大标题，避免与「概念关系」抢同一层级的注意力。 */
@@ -1008,7 +1011,7 @@ const breadcrumbTrail = [
     font-size: 3rem;
     font-weight: var(--weight-body);
     line-height: 1.1;
-    scroll-margin-top: 1rem;
+    scroll-margin-top: calc(var(--header-height) + 1.25rem);
   }
   .term-content :global(h2::before) {
     display: block;
@@ -1117,7 +1120,7 @@ const breadcrumbTrail = [
       margin: 0 0 var(--space-3);
     }
     .term-title h1 {
-      font-size: 3.5rem;
+      font-size: clamp(2.25rem, 6.5vw, 3.5rem);
     }
     .term-meta dl {
       grid-template-columns: repeat(2, minmax(0, 1fr));
