@@ -1,0 +1,891 @@
+---
+import Breadcrumbs from '@/components/layout/Breadcrumbs.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { FACEOFF_PAIRS } from '@/data/faceoff';
+
+const breadcrumbs = [{ label: '知识库', href: '/atlas/' }, { label: '概念对决' }];
+---
+
+<BaseLayout
+  title="易混概念同屏 PK 对决台 · 知识库"
+  description="针对高频易混淆的 10 组核心 AI 技术方案，提供左右分屏的定义对比、5 维量化指标对撞与实战选型决策树，彻底厘清技术选型边界。"
+>
+  <main id="main-content" class="faceoff-page" data-faceoff-page>
+    <div class="faceoff-breadcrumbs">
+      <Breadcrumbs trail={breadcrumbs} />
+    </div>
+
+    <header class="faceoff-head">
+      <p class="eyebrow">Concept Faceoff · 10 Pairs</p>
+      <h1>易混概念同屏 PK 对决台</h1>
+      <p class="head-lead">
+        分不清 RAG 还是微调？分不清 Function Calling 还是 MCP？ 这里精选工业级 10
+        组最高频混淆概念，提供左右分屏定义对比、5 维量化权衡与实战选型自测，不再被技术忽悠。
+      </p>
+    </header>
+
+    <!-- 10 组对决导航切换条 -->
+    <nav class="pair-switcher" aria-label="对决对选择" data-pair-switcher>
+      <div class="switcher-track" role="tablist" aria-label="对决对列表">
+        {
+          FACEOFF_PAIRS.map((pair, index) => (
+            <button
+              type="button"
+              role="tab"
+              id={`tab-${pair.id}`}
+              aria-controls={`pair-${pair.id}`}
+              class="switcher-item"
+              data-pair-trigger={pair.id}
+              aria-selected={index === 0 ? 'true' : 'false'}
+              tabindex={index === 0 ? 0 : -1}
+            >
+              <span class="switcher-index">{String(index + 1).padStart(2, '0')}</span>
+              <span class="switcher-label">{pair.title}</span>
+            </button>
+          ))
+        }
+      </div>
+    </nav>
+
+    <!-- 10 组对决面板容器 -->
+    <div class="faceoff-arena" data-faceoff-arena>
+      {
+        FACEOFF_PAIRS.map((pair, index) => (
+          <section
+            id={`pair-${pair.id}`}
+            role="tabpanel"
+            aria-labelledby={`tab-${pair.id}`}
+            class="faceoff-card"
+            data-pair-card={pair.id}
+            hidden={index !== 0}
+          >
+            <div class="card-intro">
+              <span class="pair-tag">PK 焦点</span>
+              <h2>{pair.title}</h2>
+              <p class="pair-tagline">{pair.tagline}</p>
+              <p class="pair-summary">{pair.summary}</p>
+            </div>
+
+            <div class="split-comparison">
+              <section class="comparison-column left-column">
+                <header class="col-head">
+                  <span class="side-badge">方案 A</span>
+                  <h3>{pair.left.nameZh}</h3>
+                  <small>{pair.left.nameEn}</small>
+                  <a href={`/terms/${pair.left.termId}/`} class="term-link">
+                    查看词条详情 →
+                  </a>
+                </header>
+
+                <div class="col-block">
+                  <p class="meta-label">本质一句话</p>
+                  <p class="essence-text">{pair.left.essence}</p>
+                </div>
+
+                <div class="col-block">
+                  <p class="meta-label">生活直觉比喻</p>
+                  <p class="analogy-text">{pair.left.analogy}</p>
+                </div>
+
+                <div class="col-block">
+                  <p class="meta-label">最佳适用场景</p>
+                  <ul class="col-list">
+                    {pair.left.bestFor.map((item) => (
+                      <li>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div class="col-block flaw-block">
+                  <p class="meta-label">致命短板与硬约束</p>
+                  <ul class="col-list flaw-list">
+                    {pair.left.fatalFlaws.map((item) => (
+                      <li>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div class="col-block cost-block">
+                  <p class="meta-label">成本结构特征</p>
+                  <p class="cost-text">{pair.left.costStructure}</p>
+                </div>
+              </section>
+
+              <div class="vs-divider" aria-hidden="true">
+                <span class="vs-badge">VS</span>
+              </div>
+
+              <section class="comparison-column right-column">
+                <header class="col-head">
+                  <span class="side-badge">方案 B</span>
+                  <h3>{pair.right.nameZh}</h3>
+                  <small>{pair.right.nameEn}</small>
+                  <a href={`/terms/${pair.right.termId}/`} class="term-link">
+                    查看词条详情 →
+                  </a>
+                </header>
+
+                <div class="col-block">
+                  <p class="meta-label">本质一句话</p>
+                  <p class="essence-text">{pair.right.essence}</p>
+                </div>
+
+                <div class="col-block">
+                  <p class="meta-label">生活直觉比喻</p>
+                  <p class="analogy-text">{pair.right.analogy}</p>
+                </div>
+
+                <div class="col-block">
+                  <p class="meta-label">最佳适用场景</p>
+                  <ul class="col-list">
+                    {pair.right.bestFor.map((item) => (
+                      <li>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div class="col-block flaw-block">
+                  <p class="meta-label">致命短板与硬约束</p>
+                  <ul class="col-list flaw-list">
+                    {pair.right.fatalFlaws.map((item) => (
+                      <li>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div class="col-block cost-block">
+                  <p class="meta-label">成本结构特征</p>
+                  <p class="cost-text">{pair.right.costStructure}</p>
+                </div>
+              </section>
+            </div>
+
+            <section class="metrics-panel">
+              <header class="metrics-head">
+                <p class="meta-label">量化权衡对比</p>
+                <h3>5 维工程与业务指标对撞</h3>
+              </header>
+
+              <div class="metrics-list">
+                {pair.metrics.map((metric) => (
+                  <div class="metric-row">
+                    <div class="metric-info">
+                      <strong>{metric.label}</strong>
+                      <span class="metric-direction">{metric.directionLabel}</span>
+                    </div>
+
+                    <div class="metric-bars">
+                      <div class="bar-side left-bar">
+                        <span class="bar-text">{metric.leftText}</span>
+                        <div class="bar-rail">
+                          <span class="bar-fill" style={`width: ${metric.leftValue}%`} />
+                        </div>
+                      </div>
+
+                      <div class="bar-side right-bar">
+                        <div class="bar-rail">
+                          <span class="bar-fill" style={`width: ${metric.rightValue}%`} />
+                        </div>
+                        <span class="bar-text">{metric.rightText}</span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            <section class="rules-panel">
+              <header class="rules-head">
+                <p class="meta-label">选型法则</p>
+                <h3>PM 极简决策树</h3>
+              </header>
+
+              <div class="rules-grid">
+                <div class="rule-box left-rule">
+                  <h4>何时果断选 A（{pair.left.nameZh}）？</h4>
+                  <ul>
+                    {pair.decisionRules.chooseLeftWhen.map((rule) => (
+                      <li>{rule}</li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div class="rule-box right-rule">
+                  <h4>何时果断选 B（{pair.right.nameZh}）？</h4>
+                  <ul>
+                    {pair.decisionRules.chooseRightWhen.map((rule) => (
+                      <li>{rule}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </section>
+
+            <section class="quiz-panel" data-quiz-panel>
+              <header class="quiz-head">
+                <span class="quiz-badge">实战自测</span>
+                <h3>选型判定器：遇到这个情境，你选 A 还是 B？</h3>
+              </header>
+
+              <div class="quiz-scenarios">
+                {pair.quiz.map((q, qIndex) => (
+                  <div class="quiz-card" data-quiz-card data-correct-side={q.correctSide}>
+                    <p class="scenario-meta">情境 {qIndex + 1}</p>
+                    <p class="scenario-desc">{q.scenario}</p>
+                    <p class="scenario-constraint">
+                      <strong>关键约束：</strong>
+                      {q.constraint}
+                    </p>
+
+                    <div class="quiz-actions">
+                      <button type="button" class="quiz-btn" data-quiz-choice="left">
+                        选 A：{pair.left.nameZh}
+                      </button>
+                      <button type="button" class="quiz-btn" data-quiz-choice="right">
+                        选 B：{pair.right.nameZh}
+                      </button>
+                    </div>
+
+                    <div class="quiz-feedback" data-quiz-feedback hidden>
+                      <p class="feedback-verdict" data-quiz-verdict />
+                      <p class="feedback-explanation">{q.explanation}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+          </section>
+        ))
+      }
+    </div>
+  </main>
+</BaseLayout>
+
+<script>
+  // 1. 对决对切换逻辑（支持 URL Hash，如 #rag-vs-fine-tuning）
+  const triggers = [...document.querySelectorAll<HTMLButtonElement>('[data-pair-trigger]')];
+  const cards = [...document.querySelectorAll<HTMLElement>('[data-pair-card]')];
+
+  const switchPair = (pairId: string) => {
+    triggers.forEach((trigger) => {
+      const active = trigger.dataset.pairTrigger === pairId;
+      trigger.setAttribute('aria-selected', String(active));
+      trigger.tabIndex = active ? 0 : -1;
+      if (active) trigger.focus();
+    });
+
+    cards.forEach((card) => {
+      card.hidden = card.dataset.pairCard !== pairId;
+    });
+
+    window.history.replaceState(null, '', `#${pairId}`);
+  };
+
+  triggers.forEach((trigger) => {
+    trigger.addEventListener('click', () => {
+      const id = trigger.dataset.pairTrigger;
+      if (id) switchPair(id);
+    });
+  });
+
+  // 读取初始 Hash
+  const hash = window.location.hash.replace(/^#/, '').replace(/^pair-/, '');
+  if (hash) {
+    const matched = triggers.find((t) => t.dataset.pairTrigger === hash);
+    if (matched) switchPair(hash);
+  }
+
+  // 2. 选型自测交互逻辑
+  const quizCards = [...document.querySelectorAll<HTMLElement>('[data-quiz-card]')];
+  quizCards.forEach((card) => {
+    const correct = card.dataset.correctSide;
+    const buttons = card.querySelectorAll<HTMLButtonElement>('[data-quiz-choice]');
+    const feedback = card.querySelector<HTMLElement>('[data-quiz-feedback]');
+    const verdict = card.querySelector<HTMLElement>('[data-quiz-verdict]');
+
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const choice = btn.dataset.quizChoice;
+        const isRight = choice === correct;
+
+        buttons.forEach((b) => {
+          b.disabled = true;
+          if (b.dataset.quizChoice === correct) {
+            b.classList.add('correct');
+          } else if (b === btn && !isRight) {
+            b.classList.add('wrong');
+          }
+        });
+
+        if (feedback && verdict) {
+          verdict.textContent = isRight
+            ? '✓ 判断准确！完全切中该场景核心约束。'
+            : '✕ 并非最优解。在真实约束下容易遭遇严重瓶颈。';
+          verdict.className = isRight ? 'feedback-verdict correct' : 'feedback-verdict wrong';
+          feedback.hidden = false;
+        }
+      });
+    });
+  });
+</script>
+
+<style>
+  .faceoff-page {
+    width: min(100%, var(--content-standard));
+    margin-inline: auto;
+    padding: var(--space-6) var(--page-gutter) var(--space-7);
+  }
+
+  .faceoff-breadcrumbs {
+    width: min(100%, var(--content-standard));
+    margin: var(--space-3) auto var(--space-4);
+  }
+
+  .faceoff-head {
+    max-width: var(--reading-max);
+    margin-bottom: var(--space-6);
+  }
+
+  .eyebrow {
+    color: var(--color-accent-strong);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin: 0;
+  }
+
+  .faceoff-head h1 {
+    margin: var(--space-2) 0 0;
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    font-weight: var(--weight-display);
+    line-height: 1.2;
+    letter-spacing: var(--tracking-display);
+    color: var(--color-ink);
+  }
+
+  .head-lead {
+    margin: var(--space-3) 0 0;
+    color: var(--color-muted);
+    font-size: var(--text-base);
+    line-height: 1.75;
+    text-wrap: pretty;
+  }
+
+  /* 对决切换导航 */
+  .pair-switcher {
+    margin-bottom: var(--space-6);
+    border-bottom: 1px solid var(--color-line);
+    padding-bottom: var(--space-3);
+  }
+
+  .switcher-track {
+    display: flex;
+    gap: var(--space-2);
+    overflow-x: auto;
+    padding-bottom: var(--space-2);
+    scrollbar-width: thin;
+  }
+
+  .switcher-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    flex-shrink: 0;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-pill);
+    background: var(--color-panel);
+    padding: 0.4rem 0.9rem;
+    color: var(--color-ink);
+    font-size: var(--text-xs);
+    cursor: pointer;
+    transition:
+      border-color var(--duration-quick),
+      background-color var(--duration-quick);
+  }
+
+  .switcher-item:hover {
+    border-color: var(--color-control-border);
+    background: var(--color-panel-raised);
+  }
+
+  .switcher-item[aria-selected='true'] {
+    border-color: var(--color-accent);
+    background: var(--color-accent-wash);
+    color: var(--color-accent-strong);
+    font-weight: var(--weight-display);
+  }
+
+  .switcher-index {
+    color: var(--color-quiet);
+    font-family: var(--font-mono);
+  }
+
+  .switcher-item[aria-selected='true'] .switcher-index {
+    color: var(--color-accent);
+  }
+
+  /* 对决卡片 */
+  .faceoff-card {
+    display: grid;
+    gap: var(--space-7);
+  }
+
+  .card-intro {
+    max-width: var(--reading-max);
+  }
+
+  .pair-tag {
+    display: inline-block;
+    border: 1px solid var(--color-accent);
+    border-radius: var(--radius-pill);
+    padding: 0.1rem 0.5rem;
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-display);
+    margin-bottom: var(--space-2);
+  }
+
+  .card-intro h2 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 3vw, 1.85rem);
+    font-weight: var(--weight-display);
+    color: var(--color-ink);
+  }
+
+  .pair-tagline {
+    margin: var(--space-1) 0 0;
+    color: var(--color-accent-strong);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-display);
+  }
+
+  .pair-summary {
+    margin: var(--space-2) 0 0;
+    color: var(--color-muted);
+    font-size: var(--text-base);
+    line-height: 1.7;
+  }
+
+  /* 分屏对比 */
+  .split-comparison {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    gap: var(--space-4);
+    align-items: stretch;
+  }
+
+  .comparison-column {
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    background: var(--color-panel);
+    padding: var(--space-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .left-column {
+    border-top: 3px solid var(--color-accent);
+  }
+
+  .right-column {
+    border-top: 3px solid color-mix(in oklch, var(--color-accent) 60%, var(--color-ink));
+  }
+
+  .col-head {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    border-bottom: 1px solid var(--color-line-soft);
+    padding-bottom: var(--space-3);
+  }
+
+  .side-badge {
+    align-self: flex-start;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-pill);
+    padding: 0.1rem 0.5rem;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-quiet);
+  }
+
+  .col-head h3 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: var(--weight-display);
+    color: var(--color-ink);
+  }
+
+  .col-head small {
+    color: var(--color-quiet);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+  }
+
+  .term-link {
+    margin-top: var(--space-2);
+    color: var(--color-accent-strong);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-display);
+    text-decoration: none;
+  }
+
+  .term-link:hover {
+    text-decoration: underline;
+  }
+
+  .meta-label {
+    color: var(--color-quiet);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.05em;
+    margin: 0 0 var(--space-1);
+  }
+
+  .essence-text {
+    margin: 0;
+    color: var(--color-ink);
+    font-size: var(--text-base);
+    line-height: 1.65;
+  }
+
+  .analogy-text {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    font-style: normal;
+  }
+
+  .col-list {
+    margin: 0;
+    padding-left: 1.15rem;
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+    line-height: 1.65;
+  }
+
+  .flaw-block {
+    background: color-mix(in oklch, var(--color-error) 4%, var(--color-panel-raised));
+    padding: var(--space-3);
+    border-radius: var(--radius-sm);
+    border-left: 2px solid var(--color-error);
+  }
+
+  .flaw-list {
+    margin: 0;
+    padding-left: 1.15rem;
+    color: var(--color-ink);
+    font-size: var(--text-sm);
+    line-height: 1.65;
+  }
+
+  .cost-block {
+    margin-top: auto;
+    border-top: 1px solid var(--color-line-soft);
+    padding-top: var(--space-3);
+  }
+
+  .cost-text {
+    margin: 0;
+    color: var(--color-quiet);
+    font-size: var(--text-xs);
+    line-height: 1.6;
+  }
+
+  /* VS 中间隔离 */
+  .vs-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .vs-badge {
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-pill);
+    background: var(--color-panel-raised);
+    color: var(--color-accent-strong);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-display);
+    box-shadow: var(--shadow-sm);
+  }
+
+  /* 5 维量化对比 */
+  .metrics-panel {
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    background: var(--color-panel);
+    padding: var(--space-5);
+  }
+
+  .metrics-head h3,
+  .rules-head h3,
+  .quiz-head h3 {
+    margin: 0 0 var(--space-4);
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: var(--weight-display);
+    color: var(--color-ink);
+  }
+
+  .metrics-list {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .metric-row {
+    display: grid;
+    grid-template-columns: minmax(10rem, 14rem) minmax(0, 1fr);
+    gap: var(--space-3);
+    align-items: center;
+    border-bottom: 1px solid var(--color-line-soft);
+    padding-bottom: var(--space-3);
+  }
+
+  .metric-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .metric-info strong {
+    display: block;
+    color: var(--color-ink);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-display);
+  }
+
+  .metric-direction {
+    color: var(--color-quiet);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+  }
+
+  .metric-bars {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--space-3);
+  }
+
+  .bar-side {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .bar-text {
+    color: var(--color-muted);
+    font-size: var(--text-xs);
+    font-family: var(--font-mono);
+  }
+
+  .left-bar .bar-text {
+    text-align: right;
+  }
+
+  .bar-rail {
+    height: 6px;
+    background: var(--color-line-soft);
+    border-radius: var(--radius-pill);
+    overflow: hidden;
+  }
+
+  .left-bar .bar-fill {
+    display: block;
+    margin-left: auto;
+    height: 100%;
+    background: var(--color-accent);
+    border-radius: var(--radius-pill);
+  }
+
+  .right-bar .bar-fill {
+    display: block;
+    height: 100%;
+    background: color-mix(in oklch, var(--color-accent) 60%, var(--color-ink));
+    border-radius: var(--radius-pill);
+  }
+
+  /* 选型法则规则 */
+  .rules-panel {
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    background: var(--color-panel);
+    padding: var(--space-5);
+  }
+
+  .rules-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--space-4);
+  }
+
+  .rule-box {
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-sm);
+    padding: var(--space-4);
+    background: var(--color-panel-raised);
+  }
+
+  .rule-box h4 {
+    margin: 0 0 var(--space-2);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-display);
+    color: var(--color-ink);
+  }
+
+  .rule-box ul {
+    margin: 0;
+    padding-left: 1.15rem;
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+    line-height: 1.65;
+  }
+
+  /* 实战自测判定器 */
+  .quiz-panel {
+    border: 1px dashed var(--color-accent);
+    border-radius: var(--radius-md);
+    background: var(--color-accent-wash);
+    padding: var(--space-5);
+  }
+
+  .quiz-badge {
+    display: inline-block;
+    border: 1px solid var(--color-accent);
+    border-radius: var(--radius-pill);
+    padding: 0.1rem 0.5rem;
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-display);
+    margin-bottom: var(--space-2);
+  }
+
+  .quiz-scenarios {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .quiz-card {
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-sm);
+    background: var(--color-panel);
+    padding: var(--space-4);
+  }
+
+  .scenario-meta {
+    color: var(--color-accent-strong);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-display);
+    margin: 0 0 var(--space-1);
+  }
+
+  .scenario-desc {
+    margin: 0 0 var(--space-2);
+    color: var(--color-ink);
+    font-size: var(--text-base);
+    line-height: 1.65;
+  }
+
+  .scenario-constraint {
+    margin: 0 0 var(--space-3);
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+  }
+
+  .scenario-constraint strong {
+    color: var(--color-ink);
+  }
+
+  .quiz-actions {
+    display: flex;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+  }
+
+  .quiz-btn {
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-pill);
+    background: var(--color-panel-raised);
+    color: var(--color-ink);
+    padding: 0.45rem 1.15rem;
+    font-size: var(--text-sm);
+    font-weight: var(--weight-display);
+    cursor: pointer;
+    transition:
+      border-color var(--duration-quick),
+      background-color var(--duration-quick);
+  }
+
+  .quiz-btn:hover:not(:disabled) {
+    border-color: var(--color-control-border);
+  }
+
+  .quiz-btn.correct {
+    border-color: var(--color-accent);
+    background: var(--color-accent-wash);
+    color: var(--color-accent-strong);
+  }
+
+  .quiz-btn.wrong {
+    border-color: var(--color-error);
+    background: color-mix(in oklch, var(--color-error) 10%, var(--color-panel));
+    color: var(--color-error);
+  }
+
+  .quiz-feedback {
+    margin-top: var(--space-3);
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--color-line-soft);
+  }
+
+  .feedback-verdict {
+    margin: 0 0 var(--space-1);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-display);
+  }
+
+  .feedback-verdict.correct {
+    color: var(--color-accent-strong);
+  }
+
+  .feedback-verdict.wrong {
+    color: var(--color-error);
+  }
+
+  .feedback-explanation {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+    line-height: 1.65;
+  }
+
+  @media (max-width: 860px) {
+    .split-comparison {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-3);
+    }
+    .vs-divider {
+      padding: var(--space-2) 0;
+    }
+    .metric-row {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .rules-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

@@ -1,0 +1,585 @@
+---
+interface ArchitectureStep {
+  index: string;
+  name: string;
+  role: string;
+  input: string;
+  process: string;
+  output: string;
+  failureMode: string;
+}
+
+interface ArchitectureFlowData {
+  title: string;
+  subtitle: string;
+  steps: ArchitectureStep[];
+}
+
+const ARCHITECTURE_FLOWS: Record<string, ArchitectureFlowData> = {
+  'retrieval-augmented-generation': {
+    title: 'RAG 端到端生产级数据流向图',
+    subtitle: '从用户提问、切片检索、混合重排到忠实度校验的完整数据闭环',
+    steps: [
+      {
+        index: '01',
+        name: '问题输入与改写',
+        role: 'Query Understanding & Rewriting',
+        input: '用户自然语言输入（可能包含多轮指代或模糊用语）',
+        process: '通过轻量模型进行多轮指代消解与查询扩展，补齐上下文关键字。',
+        output: '改写后的独立检索查询（Search Query）',
+        failureMode: '指代消解失误导致生成不相关检索词，从源头降低召回率。',
+      },
+      {
+        index: '02',
+        name: '稠密与稀疏检索',
+        role: 'Hybrid Retrieval (Dense + Sparse)',
+        input: '改写后的检索词',
+        process: '并行触发 Embedding 向量相似度检索与 BM25 关键词倒排索引。',
+        output: '两路各自召回的 Top-50 候选文档切片池',
+        failureMode: '切片过长导致语义稀释；切片过短导致断章取义。',
+      },
+      {
+        index: '03',
+        name: '精细重排与压缩',
+        role: 'Reranking & Context Compression',
+        input: '100 条多路候选切片池',
+        process: '交叉编码重排模型（Reranker）打分，按阈值截断并剔除冗余广告废话。',
+        output: '最相关的 Top-5 纯净知识片段',
+        failureMode: '重排模型延迟过高（>300ms），成为整条链路性能瓶颈。',
+      },
+      {
+        index: '04',
+        name: '动态 Prompt 拼装',
+        role: 'Context Assembly',
+        input: '系统指令 + 核心参考材料 + 用户原问题',
+        process: '按结构化模板（带有 XML 标签与引用标识）拼入模型上下文窗口。',
+        output: '具备事实约束的完整推理输入',
+        failureMode: '参考材料超出上下文预算，或长文本中间位置发生“Lost in the Middle”。',
+      },
+      {
+        index: '05',
+        name: '模型推理与引证',
+        role: 'LLM Reasoning & Citation',
+        input: '组装好的上下文 Prompt',
+        process: '大模型基于参考材料作答，并在陈述事实时强制标注引用角标 [1][2]。',
+        output: '带有清晰来源引注的回答草稿',
+        failureMode: '模型忽视参考材料，凭借预训练权重记忆产生幻觉。',
+      },
+      {
+        index: '06',
+        name: '护栏与忠实度核验',
+        role: 'Grounding & Faithfulness Guard',
+        input: '回答草稿 + 原始参考材料',
+        process: '快速核验回答中的每句断言是否能在参考材料中找到确凿依据。',
+        output: '核验通过的安全回答 / 触发拒答降级',
+        failureMode: '若无法验证事实，必须触发友好拒答并引导转人工。',
+      },
+    ],
+  },
+  'model-context-protocol': {
+    title: 'MCP 开放上下文协议跨端通信拓扑',
+    subtitle: '打破工具私有绑定：任何客户端即插即用任意数据源的通用连接架构',
+    steps: [
+      {
+        index: '01',
+        name: 'AI 宿主客户端',
+        role: 'MCP Host Environment',
+        input: '用户在 Claude Desktop / Cursor / 自研 Agent 发起的意图',
+        process: '宿主应用发起统一连接请求，调度内部 MCP Client 实例。',
+        output: '标准化客户端会话上下文',
+        failureMode: '客户端不支持特定传输层协议（Stdio / SSE）。',
+      },
+      {
+        index: '02',
+        name: '协议客户端代理',
+        role: 'MCP Client Proxy',
+        input: '宿主请求与服务发现配置',
+        process: '执行 JSON-RPC 2.0 协议打包、能力协商（Capabilities Negotiation）。',
+        output: '标准协议数据帧',
+        failureMode: '协议握手超时或版本不兼容（Protocol Version Mismatch）。',
+      },
+      {
+        index: '03',
+        name: '统一传输管道',
+        role: 'Transport Layer (Stdio / SSE)',
+        input: 'JSON-RPC 消息流',
+        process: '本地子进程通过标准输入输出（Stdio）通信；远程服务走 HTTP/SSE 流式传输。',
+        output: '无阻塞双向全双工流',
+        failureMode: '网络断连、子进程意外崩溃或权限不足。',
+      },
+      {
+        index: '04',
+        name: 'MCP 服务端',
+        role: 'MCP Server Core',
+        input: '协议请求（工具执行 / 资源读取 / 提示注入）',
+        process: '解析方法调用，校验参数合法性，路由到具体业务驱动。',
+        output: '标准化响应结果',
+        failureMode: '服务端未做异常捕获，导致连接被强行切断。',
+      },
+      {
+        index: '05',
+        name: '企业资产与物理接口',
+        role: 'Underlying Systems & Data',
+        input: '具体业务 API 参数',
+        process: '读写本地文件系统、查询企业 Postgres 数据库、调用内部生产系统。',
+        output: '真实业务数据与执行状态',
+        failureMode: '数据库慢查询超时、外网 API 鉴权失效。',
+      },
+    ],
+  },
+  'ai-agent': {
+    title: 'AI Agent 自主规划与执行闭环流',
+    subtitle: '从宏观目标设定、动态规划、沙箱执行到自我纠错的完整循环',
+    steps: [
+      {
+        index: '01',
+        name: '目标感知与初始化',
+        role: 'Perception & Goal Setup',
+        input: '用户的模糊高阶目标（如“分析竞品 Q3 财报并制作对比图”）',
+        process: '将目标分解为可衡量、可验证的终局成功状态。',
+        output: '明确的目标规范与上下文环境快照',
+        failureMode: '目标过于宽泛且未明确约束，导致 Agent 漫无目的发散。',
+      },
+      {
+        index: '02',
+        name: '意图拆解与子规划',
+        role: 'Task Planning & Decomposition',
+        input: '目标规范',
+        process: '利用 CoT / ReAct 范式，推演下一步最合理的最小行动单元。',
+        output: '候选工具执行计划（Tool Call Intent）',
+        failureMode: '任务过度拆解导致冗余调用，或步骤漏掉关键前置依赖。',
+      },
+      {
+        index: '03',
+        name: '沙箱与工具执行',
+        role: 'Execution in Sandbox',
+        input: '格式化的工具调用参数',
+        process: '在受限权限的沙箱中执行浏览器抓取、Python 数据计算或 API 触发。',
+        output: '真实环境观测结果（Observation）',
+        failureMode: '工具返回非预期的错误报文（如 500、网络超时、格式不匹配）。',
+      },
+      {
+        index: '04',
+        name: '状态记忆与反思',
+        role: 'State Reflection & Self-Correction',
+        input: '工具执行结果 + 原始目标',
+        process: '对比执行产物是否达成预期。若报错或结果偏离，动态调整后续策略。',
+        output: '修正后的新一轮执行计划 / 终局总结',
+        failureMode: '陷入“报错 → 重试 → 再次报错”的无限 死循环，未设置熔断计数器。',
+      },
+      {
+        index: '05',
+        name: '结果交付与人工干预',
+        role: 'Human-in-the-Loop & Delivery',
+        input: '最终任务产出',
+        process: '低风险直接交付；高危操作（如转账、删库）暂停并请求人类确认。',
+        output: '结构化产物交付用户',
+        failureMode: '高危操作未设权限拦截，产生严重越权破坏。',
+      },
+    ],
+  },
+  'ai-guardrail': {
+    title: '推理安全护栏流水线拓扑',
+    subtitle: '外置纵深防御体系：在输入、推理、工具执行与输出层设立的安全关卡',
+    steps: [
+      {
+        index: '01',
+        name: '输入层合规审计',
+        role: 'Input Sanitization & Injection Defense',
+        input: '来自前台的原始用户输入',
+        process: '运行敏感词规则、轻量分类模型，扫描注入攻击特征与越权指令。',
+        output: '判定合规的纯净输入 / 立即熔断阻断',
+        failureMode: '新型黑话或多语言绕过规则引擎，需结合小模型语义审查。',
+      },
+      {
+        index: '02',
+        name: '敏感信息掩码 (PII)',
+        role: 'Privacy Masking Engine',
+        input: '合规用户输入',
+        process: '自动识别身份证号、手机号、银行卡等个人隐私信息并转为代号 Token。',
+        output: '完成隐私脱敏的安全输入',
+        failureMode: '非标准格式的敏感数据漏识别，导致数据被上传给第三方模型。',
+      },
+      {
+        index: '03',
+        name: '受控模型推理',
+        role: 'Constrained Model Inference',
+        input: '脱敏后的安全上下文',
+        process: '基座大模型在严格系统设定约束下执行推理与函数规划。',
+        output: '模型原始输出流（Raw Tokens）',
+        failureMode: '基座模型因潜在诱导产生违规言论或逻辑幻觉。',
+      },
+      {
+        index: '04',
+        name: '输出层毒性与事实审查',
+        role: 'Output Safety & Grounding Check',
+        input: '模型原始输出流',
+        process: '检测涉政、色情、暴恐风险；核验是否虚构事实或产生逻辑矛盾。',
+        output: '审查合格的安全正文',
+        failureMode: '审查模型过度敏感产生误杀，把正常学术讨论当成危险违禁。',
+      },
+      {
+        index: '05',
+        name: '反向脱敏与安全交付',
+        role: 'De-masking & Safe Delivery',
+        input: '合格正文 + 原始隐私映射表',
+        process: '将前置脱敏的代号还原为真实业务实体，流式呈现给用户。',
+        output: '最终安全友好的交付文本',
+        failureMode: '映射还原逻辑发生错位，把代号原样暴露给用户。',
+      },
+    ],
+  },
+  'prompt-injection': {
+    title: '提示词注入对抗与权限隔离拓扑',
+    subtitle: '数据与指令分离架构：防范外部未知数据劫持大模型控制权',
+    steps: [
+      {
+        index: '01',
+        name: '外部非受信数据源',
+        role: 'Untrusted Data Ingestion',
+        input: '爬虫抓取的网页正文、求职者上传的简历 PDF、第三方邮件',
+        process: '外部数据进入系统前置预处理管道。',
+        output: '原始非受信文本流',
+        failureMode: '文本中隐藏了针对大模型的欺骗指令（如隐藏字白底白字）。',
+      },
+      {
+        index: '02',
+        name: '标签级物理隔离',
+        role: 'Delimiter Wrapping & Quoting',
+        input: '原始非受信文本',
+        process:
+          '强制使用严格配对的系统级 XML 标签（如 `<user_content>`）包裹，并对内部特殊字符转义。',
+        output: '被定界符封印的纯数据块',
+        failureMode: '外部数据中伪造了相同的闭合标签，导致定界符被意外提前逃逸。',
+      },
+      {
+        index: '03',
+        name: '指令层级强化 (Instruction Hierarchy)',
+        role: 'Hierarchy Enforcement',
+        input: '系统顶层规则 + 外部数据块',
+        process: '通过 Prompt 与训练机制强制声明：系统提示词优先级高于任何标签内部指令。',
+        output: '具备权限屏障的上下文',
+        failureMode: '模型因“迎合倾向（Sycophancy）”轻信了外部数据中的权威假身份。',
+      },
+      {
+        index: '04',
+        name: '最小特权工具执行',
+        role: 'Least-Privilege Execution Sandbox',
+        input: '模型解析出的工具调用请求',
+        process: '若当前意图由非受信数据触发，系统强制降级为只读权限，严禁写操作与转账。',
+        output: '安全受控的工具调用',
+        failureMode: '未对工具权限分级，导致注入指令成功触发了危险写操作。',
+      },
+      {
+        index: '05',
+        name: '外发数据防泄露网关',
+        role: 'Egress Filtering & Canary Auditing',
+        input: '准备向外发送的响应数据',
+        process: '校验内容中是否包含了预先植入的“金丝雀标记（Canary Tokens）”或系统提示词原句。',
+        output: '安全释放 / 拦截报警',
+        failureMode: '系统提示词被换着花样编码后悄悄泄露出去。',
+      },
+    ],
+  },
+};
+
+interface Props {
+  termId: string;
+}
+
+const { termId } = Astro.props;
+const flow = ARCHITECTURE_FLOWS[termId];
+---
+
+{
+  flow && (
+    <section class="concept-architecture-flow" data-architecture-flow>
+      <header class="flow-header">
+        <span class="flow-badge">⚡ 交互式架构数据流</span>
+        <h3 id="architecture-flow-heading">{flow.title}</h3>
+        <p class="flow-subtitle">{flow.subtitle}</p>
+      </header>
+
+      <nav class="flow-rail" role="tablist" aria-label="架构步骤选择">
+        {flow.steps.map((step, idx) => (
+          <div class="rail-node-wrapper">
+            <button
+              type="button"
+              role="tab"
+              id={`step-tab-${step.index}`}
+              aria-controls={`step-card-${step.index}`}
+              class={`flow-node-btn ${idx === 0 ? 'active' : ''}`}
+              data-step-btn={idx}
+              aria-selected={idx === 0 ? 'true' : 'false'}
+              tabindex={idx === 0 ? 0 : -1}
+            >
+              <span class="node-idx">{step.index}</span>
+              <span class="node-name">{step.name}</span>
+            </button>
+            {idx < flow.steps.length - 1 && (
+              <span class="node-arrow" aria-hidden="true">
+                →
+              </span>
+            )}
+          </div>
+        ))}
+      </nav>
+
+      <div class="step-detail-container" data-detail-container>
+        {flow.steps.map((step, idx) => (
+          <section
+            id={`step-card-${step.index}`}
+            role="tabpanel"
+            aria-labelledby={`step-tab-${step.index}`}
+            class="step-detail-card"
+            data-step-card={idx}
+            hidden={idx !== 0}
+          >
+            <div class="step-card-head">
+              <span class="step-chip">步骤 {step.index}</span>
+              <h4>{step.name}</h4>
+              <span class="step-role-label">{step.role}</span>
+            </div>
+
+            <div class="step-card-grid">
+              <div class="step-column">
+                <p class="meta-label">输入数据 (Input)</p>
+                <p class="step-desc">{step.input}</p>
+              </div>
+
+              <div class="step-column">
+                <p class="meta-label">核心处理机制 (Process)</p>
+                <p class="step-desc">{step.process}</p>
+              </div>
+
+              <div class="step-column">
+                <p class="meta-label">输出产物 (Output)</p>
+                <p class="step-desc">{step.output}</p>
+              </div>
+            </div>
+
+            <div class="step-failure-box">
+              <p class="meta-label">PM 关键警示：常见故障模式与降级对策 (Failure & Fallback)</p>
+              <p class="failure-desc">{step.failureMode}</p>
+            </div>
+          </section>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+<script>
+  const flowSections = document.querySelectorAll<HTMLElement>('[data-architecture-flow]');
+
+  flowSections.forEach((section) => {
+    const buttons = section.querySelectorAll<HTMLButtonElement>('[data-step-btn]');
+    const cards = section.querySelectorAll<HTMLElement>('[data-step-card]');
+
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const targetIdx = btn.dataset.stepBtn;
+
+        buttons.forEach((b) => {
+          const isActive = b.dataset.stepBtn === targetIdx;
+          b.classList.toggle('active', isActive);
+          b.setAttribute('aria-selected', String(isActive));
+          b.tabIndex = isActive ? 0 : -1;
+        });
+
+        cards.forEach((card) => {
+          card.hidden = card.dataset.stepCard !== targetIdx;
+        });
+      });
+    });
+  });
+</script>
+
+<style>
+  .concept-architecture-flow {
+    margin: var(--space-6) 0;
+    padding: var(--space-5);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    background: var(--color-panel);
+  }
+
+  .flow-header {
+    margin-bottom: var(--space-4);
+  }
+
+  .flow-badge {
+    display: inline-block;
+    border: 1px solid var(--color-accent);
+    border-radius: var(--radius-pill);
+    padding: 0.1rem 0.5rem;
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-display);
+    margin-bottom: var(--space-2);
+  }
+
+  .flow-header h3 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: var(--weight-display);
+    color: var(--color-ink);
+  }
+
+  .flow-subtitle {
+    margin: var(--space-1) 0 0;
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+  }
+
+  /* 流程导轨 */
+  .flow-rail {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    overflow-x: auto;
+    padding-bottom: var(--space-3);
+    margin-bottom: var(--space-4);
+    border-bottom: 1px solid var(--color-line-soft);
+    scrollbar-width: thin;
+  }
+
+  .rail-node-wrapper {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    flex-shrink: 0;
+  }
+
+  .flow-node-btn {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-pill);
+    background: var(--color-panel-raised);
+    padding: 0.35rem 0.75rem;
+    color: var(--color-ink);
+    font-size: var(--text-xs);
+    cursor: pointer;
+    transition:
+      border-color var(--duration-quick),
+      background-color var(--duration-quick);
+  }
+
+  .flow-node-btn:hover {
+    border-color: var(--color-control-border);
+  }
+
+  .flow-node-btn.active {
+    border-color: var(--color-accent);
+    background: var(--color-accent-wash);
+    color: var(--color-accent-strong);
+    font-weight: var(--weight-display);
+  }
+
+  .node-idx {
+    color: var(--color-quiet);
+    font-family: var(--font-mono);
+  }
+
+  .flow-node-btn.active .node-idx {
+    color: var(--color-accent);
+  }
+
+  .node-arrow {
+    color: var(--color-line);
+    font-size: var(--text-sm);
+  }
+
+  /* 步骤细节卡片 */
+  .step-detail-card {
+    display: grid;
+    gap: var(--space-4);
+    background: var(--color-panel-raised);
+    border: 1px solid var(--color-line-soft);
+    border-radius: var(--radius-sm);
+    padding: var(--space-4);
+  }
+
+  .step-card-head {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    border-bottom: 1px solid var(--color-line-soft);
+    padding-bottom: var(--space-2);
+  }
+
+  .step-chip {
+    border: 1px solid var(--color-accent);
+    border-radius: var(--radius-pill);
+    padding: 0.05rem 0.45rem;
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-display);
+  }
+
+  .step-card-head h4 {
+    margin: 0;
+    font-size: var(--text-base);
+    font-weight: var(--weight-display);
+    color: var(--color-ink);
+  }
+
+  .step-role-label {
+    margin-left: auto;
+    color: var(--color-quiet);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+  }
+
+  .step-card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-4);
+  }
+
+  .meta-label {
+    color: var(--color-quiet);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    margin: 0 0 var(--space-1);
+  }
+
+  .step-desc {
+    margin: 0;
+    color: var(--color-ink);
+    font-size: var(--text-sm);
+    line-height: 1.6;
+  }
+
+  .step-failure-box {
+    border-top: 1px dashed var(--color-line);
+    padding-top: var(--space-3);
+  }
+
+  .step-failure-box .meta-label {
+    color: #b91c1c;
+    font-weight: var(--weight-display);
+  }
+
+  .failure-desc {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+    line-height: 1.6;
+  }
+
+  @media (max-width: 768px) {
+    .step-card-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-3);
+    }
+    .step-card-head {
+      flex-wrap: wrap;
+    }
+  }
+</style>

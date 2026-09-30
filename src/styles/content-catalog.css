@@ -123,6 +123,122 @@
   text-decoration: none;
 }
 
+.catalog-painpoints {
+  margin: var(--space-4) 0 var(--space-4);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  background: var(--color-panel);
+  padding: var(--space-3) var(--space-4);
+}
+
+.painpoints-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.painpoints-badge {
+  border: 1px solid var(--color-accent);
+  border-radius: var(--radius-pill);
+  padding: 0.1rem 0.5rem;
+  color: var(--color-accent-strong);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-display);
+}
+
+.painpoints-header p {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: var(--text-xs);
+}
+
+.painpoints-active-label {
+  margin-left: auto;
+  color: var(--color-ink);
+  font-size: var(--text-xs);
+}
+
+.painpoints-active-label strong {
+  color: var(--color-accent-strong);
+  font-family: var(--font-mono);
+}
+
+.btn-reset-filter {
+  margin-left: var(--space-2);
+  border: none;
+  background: none;
+  color: var(--color-quiet);
+  font-size: var(--text-xs);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.btn-reset-filter:hover {
+  color: var(--color-accent-strong);
+}
+
+.painpoint-chips {
+  display: flex;
+  gap: var(--space-2);
+  overflow-x: auto;
+  padding-bottom: 0.25rem;
+  scrollbar-width: thin;
+}
+
+.painpoint-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-pill);
+  background: var(--color-panel-raised);
+  padding: 0.3rem 0.75rem;
+  color: var(--color-ink);
+  font-size: var(--text-xs);
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition:
+    border-color var(--duration-quick),
+    background-color var(--duration-quick);
+}
+
+.painpoint-chip:hover {
+  border-color: var(--color-control-border);
+}
+
+.painpoint-chip.active {
+  border-color: var(--color-accent);
+  background: var(--color-accent-wash);
+  color: var(--color-accent-strong);
+  font-weight: var(--weight-display);
+}
+
+.painpoint-chip small {
+  color: var(--color-quiet);
+  font-family: var(--font-mono);
+}
+
+.painpoint-chip.active small {
+  color: var(--color-accent);
+}
+
+.learning-card[data-painpoint-match='true'] {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 1px var(--color-accent);
+  background: var(--color-panel-raised);
+}
+
+.learning-card[data-painpoint-dim='true'] {
+  opacity: 0.35;
+  filter: grayscale(0.6);
+  transition: opacity var(--duration-quick);
+}
+
 .learning-card[data-answered='true'] {
   border-color: color-mix(in oklch, var(--color-prerequisite) 42%, var(--color-line));
 }

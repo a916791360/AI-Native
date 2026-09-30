@@ -2,6 +2,27 @@
 
 只记录会改变产品范围、架构、内容契约或交付边界的决定。实现细节由代码、测试和提交历史记录。
 
+## 2026-09-30：Phase 3 (M3) 直觉图解与对决体验交付
+
+- 状态：已完成，所有 17 项 CI 门禁及 137 项 E2E 测试全部通过。
+- 依据：`docs/product/prd-user-experience-and-value-elevation.md` Phase 3 (M3) 交付验收标准。
+- 核心功能交付：
+  1. **易混概念同屏 PK 对决台 (Concept Faceoff - F-07)**：
+     - 上线独立专属对决工坊页面 `/atlas/faceoff/`，涵盖 10 组工业级高频混淆技术方案（如 RAG vs 微调、Function Calling vs MCP、Zero-Shot vs Few-Shot、Prompt 注入 vs 越狱、单 Agent vs 多 Agent、温度 vs Top-P、Prompt Cache vs 上下文压缩、VLM vs OCR+LLM、向量搜索 vs 混合检索、对齐 vs 推理护栏）。
+     - 提供左右分屏定义对比、5 维量化指标对撞仪表条、PM 极简决策树（选 A vs 选 B 法则）以及交互式实战选型情境判定器（Scenario Quiz）。
+     - 支持 URL Hash 原生锚点（如 `#rag-vs-fine-tuning`）与完全符合 W3C ARIA Tablist 规范的无障碍键盘交互。
+  2. **核心词条交互式架构图解 (Concept Architecture Flows)**：
+     - 在 5 大核心词条详情页中上线纯 CSS + SVG + 原生 DOM 架构数据流组件 (`ConceptArchitectureFlow.astro`)，包含 RAG、MCP、AI Agent、AI 护栏与 Prompt 注入防护的端到端管道数据流。
+     - 支持点击步骤节点（如输入、处理、输出机制）即时展开深度面板，并特别附带「PM 故障模式与降级对策 (Failure Mode & Fallback)」警示。
+     - 详情页内嵌双向同屏 PK 入口卡片，直通对决台。
+  3. **痛点驱动题库场景速查 (Pain-point Driven Scenario Explorer)**：
+     - 在学习中心 `/learn/` 部署 6 大常见工程业务死穴靶向过滤器（幻觉、Token 成本、延迟吞吐、越狱注入、知识陈旧、人机兜底）。
+     - 一键高亮匹配卡片、虚化非相关题目并自动智能展开包含目标题目的层级折叠块。
+- 质量门禁保证：
+  - 100% 保持 Daylight Clean 设计系统令牌规范与字重 400/800 约束，无未经核准的字重。
+  - 首屏 JS/CSS 保持在轻量级预算范围内（首页首屏 JS 仅 2.3 KiB）。
+  - 新增 `tests/unit/faceoff.test.ts` (4 项单元测试全部通过) 与 `tests/e2e/faceoff.spec.ts` (6 项跨端端到端测试与无障碍对比度测试全部通过)。
+
 ## 2026-07-29：批准产品规格与实施计划
 
 - 状态：已批准

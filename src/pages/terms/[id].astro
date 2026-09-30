@@ -17,6 +17,8 @@ import { isDeprecatedTerm, isSelectableTerm } from '@/lib/content/visibility';
 import { LEARNING_QUESTIONS, getLearningQuestionContext } from '@/data/learning';
 import { selectLocalGraph, type GraphData } from '@/lib/graph/model';
 import { buildContentIssueUrl } from '@/lib/site/github';
+import ConceptArchitectureFlow from '@/components/content/ConceptArchitectureFlow.astro';
+import { FACEOFF_PAIRS } from '@/data/faceoff';
 
 export const getStaticPaths = (async () => {
   const [entries, { relations, semanticRelations, domains, routes, chain }, cases] =
@@ -95,6 +97,21 @@ export const getStaticPaths = (async () => {
       );
     });
 
+    const faceoffMatch = FACEOFF_PAIRS.find(
+      (pair) => pair.left.termId === entry.data.id || pair.right.termId === entry.data.id,
+    );
+    const relatedFaceoff = faceoffMatch
+      ? {
+          id: faceoffMatch.id,
+          title: faceoffMatch.title,
+          tagline: faceoffMatch.tagline,
+          otherTermName:
+            faceoffMatch.left.termId === entry.data.id
+              ? faceoffMatch.right.nameZh
+              : faceoffMatch.left.nameZh,
+        }
+      : undefined;
+
     return {
       params: { id: entry.data.id },
       props: {
@@ -107,6 +124,7 @@ export const getStaticPaths = (async () => {
         relatedCases,
         learningRecommendations,
         absorbedTerms,
+        relatedFaceoff,
         replacement: replacement
           ? { id: replacement.id, nameZh: replacement.nameZh, summary: replacement.summary }
           : undefined,
@@ -150,6 +168,7 @@ const {
   relatedCases,
   learningRecommendations,
   absorbedTerms,
+  relatedFaceoff,
   replacement,
   termMap,
   routeNav,
@@ -349,6 +368,23 @@ const breadcrumbTrail = [
                 名称、摘要、领域和关系已经通过结构校验。完整解释、真实例子、适用边界和来源证据会在深度内容阶段补充。
               </p>
             </section>
+          )
+        }
+
+        <ConceptArchitectureFlow termId={term.id} />
+
+        {
+          relatedFaceoff && (
+            <aside class="term-faceoff-card" aria-label="相关概念对决">
+              <span class="faceoff-mini-badge">⚖️ 易混概念对决</span>
+              <div class="faceoff-mini-content">
+                <h3>{relatedFaceoff.title}</h3>
+                <p>{relatedFaceoff.tagline}</p>
+              </div>
+              <a href={`/atlas/faceoff/#${relatedFaceoff.id}`} class="faceoff-mini-link">
+                查看与《{relatedFaceoff.otherTermName}》同屏对决 →
+              </a>
+            </aside>
           )
         }
 
@@ -1170,6 +1206,71 @@ const breadcrumbTrail = [
     }
     .term-layout {
       display: block;
+    }
+  }
+
+  .term-faceoff-card {
+    margin: var(--space-5) 0;
+    padding: var(--space-4);
+    border: 1px dashed var(--color-accent);
+    border-radius: var(--radius-md);
+    background: var(--color-accent-wash);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .faceoff-mini-badge {
+    border: 1px solid var(--color-accent);
+    border-radius: var(--radius-pill);
+    padding: 0.15rem 0.5rem;
+    color: var(--color-accent-strong);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-display);
+    white-space: nowrap;
+  }
+
+  .faceoff-mini-content h3 {
+    margin: 0;
+    font-size: var(--text-base);
+    font-weight: var(--weight-display);
+    color: var(--color-ink);
+  }
+
+  .faceoff-mini-content p {
+    margin: var(--space-1) 0 0;
+    color: var(--color-muted);
+    font-size: var(--text-xs);
+  }
+
+  .faceoff-mini-link {
+    flex-shrink: 0;
+    border: 1px solid var(--color-ink);
+    border-radius: var(--radius-pill);
+    background: var(--color-ink);
+    color: #ffffff;
+    padding: 0.45rem 1rem;
+    font-size: var(--text-xs);
+    font-weight: var(--weight-display);
+    text-decoration: none;
+    white-space: nowrap;
+    transition:
+      background-color var(--duration-quick),
+      border-color var(--duration-quick);
+  }
+
+  .faceoff-mini-link:hover {
+    background: var(--color-accent-strong);
+    border-color: var(--color-accent-strong);
+    color: #ffffff;
+  }
+
+  @media (max-width: 768px) {
+    .term-faceoff-card {
+      flex-direction: column;
+      align-items: flex-start;
     }
   }
 </style>

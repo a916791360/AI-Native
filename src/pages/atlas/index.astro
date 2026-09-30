@@ -35,6 +35,18 @@ const termsByDomain = new Map(
       description={`先按领域定位问题，再沿前置、组成、比较与应用关系继续阅读。当前 ${metrics.verifiedTermCount} 个代表词条均已核验。`}
     />
 
+    <section class="faceoff-portal-banner" aria-label="易混概念对决台入口">
+      <div class="portal-badge">⚡ 认知实战专区</div>
+      <div class="portal-content">
+        <h2>易混概念同屏 PK 对决台</h2>
+        <p>
+          分不清 RAG 还是微调？分不清 Function Calling 还是 MCP？10
+          组工业级高频混淆技术方案左右分屏对比、5 维量化权衡与场景选型自测。
+        </p>
+      </div>
+      <a href="/atlas/faceoff/" class="portal-action"> 进入 10 组概念对决台 → </a>
+    </section>
+
     <SearchExperience compact={true} emptyBehavior="index" indexTarget="#atlas-index" />
 
     <section class="atlas-controls" data-atlas-controls aria-label="图鉴目录控制">
@@ -341,6 +353,86 @@ const termsByDomain = new Map(
       -webkit-line-clamp: 2;
     }
     .term-row :global(.status-tag) {
+      justify-self: start;
+    }
+  }
+
+  .faceoff-portal-banner {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: var(--space-4);
+    align-items: center;
+    margin: var(--space-4) 0 var(--space-5);
+    padding: var(--space-4) var(--space-5);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    background: var(--color-panel);
+    transition: border-color var(--duration-quick);
+  }
+
+  .faceoff-portal-banner:hover {
+    border-color: var(--color-accent);
+  }
+
+  .portal-badge {
+    border: 1px solid var(--color-accent);
+    border-radius: var(--radius-pill);
+    padding: 0.2rem 0.6rem;
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-display);
+    white-space: nowrap;
+  }
+
+  .portal-content h2 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--text-base);
+    font-weight: var(--weight-display);
+    color: var(--color-ink);
+  }
+
+  .portal-content p {
+    margin: var(--space-1) 0 0;
+    color: var(--color-muted);
+    font-size: var(--text-xs);
+    line-height: 1.6;
+  }
+
+  .portal-action {
+    flex-shrink: 0;
+    border: 1px solid var(--color-ink);
+    border-radius: var(--radius-pill);
+    background: var(--color-ink);
+    color: #ffffff;
+    padding: 0.5rem 1.1rem;
+    font-size: var(--text-xs);
+    font-weight: var(--weight-display);
+    text-decoration: none;
+    white-space: nowrap;
+    transition:
+      transform var(--duration-quick),
+      background-color var(--duration-quick),
+      border-color var(--duration-quick);
+  }
+
+  .portal-action:hover {
+    background: var(--color-accent-strong);
+    border-color: var(--color-accent-strong);
+    color: #ffffff;
+  }
+
+  .portal-action:active {
+    transform: scale(0.98);
+  }
+
+  @media (max-width: 768px) {
+    .faceoff-portal-banner {
+      grid-template-columns: 1fr;
+      gap: var(--space-3);
+    }
+    .portal-action {
       justify-self: start;
     }
   }

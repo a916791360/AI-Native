@@ -10,6 +10,102 @@ import CompetencyRadar from './CompetencyRadar.astro';
 // 目录骨架（.catalog-*）的事实源。这层样式原先由已删除的 ContentScopeNav 顺带引入，
 // 去掉内容分类条后必须由使用方自己声明。
 import '@/styles/content-catalog.css';
+
+interface PainPointFilter {
+  id: string;
+  label: string;
+  matchedIds: string[];
+}
+
+const PAIN_POINT_DEFS = [
+  {
+    id: 'hallucination',
+    label: '幻觉与事实不准',
+    keywords: ['幻觉', '事实', '虚假', '检索', '准确', '召回', '溯源', 'grounding', 'rag', '精确'],
+  },
+  {
+    id: 'cost',
+    label: 'Token 成本与预算',
+    keywords: [
+      '成本',
+      '预算',
+      'token',
+      '计费',
+      '费用',
+      '长度',
+      '上下文',
+      '缓存',
+      '压缩',
+      '性价比',
+      '单价',
+    ],
+  },
+  {
+    id: 'latency',
+    label: '延迟与吞吐卡顿',
+    keywords: ['延迟', '响应', '吞吐', 'ttft', '并发', '首字', '耗时', '流式', '卡顿', '实时'],
+  },
+  {
+    id: 'security',
+    label: '越狱注入与安全合规',
+    keywords: [
+      '注入',
+      '越狱',
+      '安全',
+      '合规',
+      '防护',
+      '护栏',
+      '泄露',
+      '攻击',
+      '敏感',
+      '数据隔离',
+      '鉴权',
+    ],
+  },
+  {
+    id: 'staleness',
+    label: '知识陈旧与动态更新',
+    keywords: ['时效', '陈旧', '更新', '动态', '新知识', '过期', '冷启动', '热更新'],
+  },
+  {
+    id: 'human_loop',
+    label: '兜底降级与人机协同',
+    keywords: [
+      '兜底',
+      '降级',
+      '人机',
+      '人工',
+      '介入',
+      '拒答',
+      '置信度',
+      '审核',
+      '兜底策略',
+      '复核',
+    ],
+  },
+];
+
+const PAIN_POINTS: PainPointFilter[] = PAIN_POINT_DEFS.map((p) => {
+  const matchedIds = LEARNING_QUESTIONS.filter((q) => {
+    const text = (
+      q.shortTitle +
+      ' ' +
+      q.question +
+      ' ' +
+      q.scenario +
+      ' ' +
+      q.principle +
+      ' ' +
+      (q.facts || []).join(' ')
+    ).toLowerCase();
+    return p.keywords.some((k) => text.includes(k.toLowerCase()));
+  }).map((q) => q.id);
+  return {
+    id: p.id,
+    label: p.label,
+    matchedIds,
+  };
+});
 ---
 
 <main id="main-content" class="content-catalog">
@@ -69,6 +165,35 @@ import '@/styles/content-catalog.css';
           >
         </p>
       </header>
+
+      <section class="catalog-painpoints" aria-label="痛点场景速查">
+        <div class="painpoints-header">
+          <span class="painpoints-badge">痛点速查</span>
+          <p>遇到现实业务死穴？按常见产品痛点快速过滤靶向试题：</p>
+          <span class="painpoints-active-label" data-painpoint-status hidden>
+            已筛选：<strong data-active-painpoint-name></strong>（<span data-active-painpoint-count
+              >0</span
+            > 题）
+            <button type="button" class="btn-reset-filter" data-reset-painpoint>清除筛选</button>
+          </span>
+        </div>
+        <div class="painpoint-chips" role="toolbar" aria-label="痛点过滤选项">
+          {
+            PAIN_POINTS.map((item) => (
+              <button
+                type="button"
+                class="painpoint-chip"
+                data-painpoint-id={item.id}
+                data-painpoint-label={item.label}
+                data-matched-ids={JSON.stringify(item.matchedIds)}
+              >
+                <span>{item.label}</span>
+                <small>({item.matchedIds.length})</small>
+              </button>
+            ))
+          }
+        </div>
+      </section>
 
       <CompetencyRadar />
 
@@ -299,4 +424,80 @@ import '@/styles/content-catalog.css';
     document.getElementById(targetId)?.scrollIntoView({ block: 'start' });
     window.history.replaceState({}, '', `#${targetId}`);
   });
+
+  // 痛点场景速查交互
+  const painpointChips = [...document.querySelectorAll<HTMLButtonElement>('.painpoint-chip')];
+  const painpointStatus = document.querySelector<HTMLElement>('[data-painpoint-status]');
+  const activePainpointName = document.querySelector<HTMLElement>('[data-active-painpoint-name]');
+  const activePainpointCount = document.querySelector<HTMLElement>('[data-active-painpoint-count]');
+  const resetPainpointBtn = document.querySelector<HTMLButtonElement>('[data-reset-painpoint]');
+
+  let activePainpointId: string | null = null;
+
+  const clearPainpointFilter = () => {
+    activePainpointId = null;
+    painpointChips.forEach((btn) => btn.classList.remove('active'));
+    cards.forEach((card) => {
+      card.removeAttribute('data-painpoint-match');
+      card.removeAttribute('data-painpoint-dim');
+    });
+    if (painpointStatus) painpointStatus.hidden = true;
+  };
+
+  const applyPainpointFilter = (chip: HTMLButtonElement) => {
+    const id = chip.dataset.painpointId;
+    if (!id) return;
+
+    if (activePainpointId === id) {
+      clearPainpointFilter();
+      return;
+    }
+
+    activePainpointId = id;
+    painpointChips.forEach((btn) => {
+      btn.classList.toggle('active', btn === chip);
+    });
+
+    let matchedIds: string[] = [];
+    try {
+      matchedIds = JSON.parse(chip.dataset.matchedIds ?? '[]');
+    } catch {
+      matchedIds = [];
+    }
+
+    const matchedSet = new Set(matchedIds);
+
+    cards.forEach((card) => {
+      const qId = card.dataset.questionId ?? '';
+      const isMatch = matchedSet.has(qId);
+      if (isMatch) {
+        card.setAttribute('data-painpoint-match', 'true');
+        card.removeAttribute('data-painpoint-dim');
+      } else {
+        card.removeAttribute('data-painpoint-match');
+        card.setAttribute('data-painpoint-dim', 'true');
+      }
+    });
+
+    // 展开所有包含匹配题目的层
+    disclosures.forEach((details) => {
+      const ids = readTierIds(details);
+      const hasMatch = ids.some((qId) => matchedSet.has(qId));
+      if (hasMatch) {
+        details.open = true;
+      }
+    });
+
+    if (painpointStatus && activePainpointName && activePainpointCount) {
+      activePainpointName.textContent = chip.dataset.painpointLabel ?? '';
+      activePainpointCount.textContent = String(matchedIds.length);
+      painpointStatus.hidden = false;
+    }
+  };
+
+  painpointChips.forEach((chip) => {
+    chip.addEventListener('click', () => applyPainpointFilter(chip));
+  });
+
+  resetPainpointBtn?.addEventListener('click', clearPainpointFilter);
 </script>
