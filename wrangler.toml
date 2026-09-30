@@ -1,0 +1,6 @@
+name = "ai-native"
+pages_build_output_dir = "dist"
+compatibility_date = "2026-09-30"
+
+[vars]
+PUBLIC_SITE_URL = "https://np.aiready.vip"
