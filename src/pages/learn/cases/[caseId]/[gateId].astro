@@ -42,12 +42,31 @@ const breadcrumbTrail = [
     </div>
 
     <section class="case-location" aria-label="案例位置">
-      <div><span>连续案例</span><strong>{caseStudy.title}</strong></div>
-      <div>
-        <span>Gate {String(gate.order).padStart(2, '0')} / 06</span>
-        <small>项目阶段 · 不记录完成状态</small>
+      <div class="location-case-info">
+        <span class="location-label">连续案例</span>
+        <strong class="location-case-title">{caseStudy.title}</strong>
       </div>
-      <a href={caseHref(caseStudy.id)}>返回项目档案</a>
+      <div class="location-stage-stepper">
+        <span class="location-gate-text">Gate {String(gate.order).padStart(2, '0')} / 06</span>
+        <ol class="gate-mini-dots" aria-label="关卡进度导航">
+          {
+            caseStudy.gates.map((g) => (
+              <li class="gate-mini-dot" data-active={g.id === gate.id ? 'true' : undefined}>
+                <a href={gateHref(caseStudy.id, g.id)} title={`Gate 0${g.order} · ${g.title}`}>
+                  <span>G0{g.order}</span>
+                </a>
+              </li>
+            ))
+          }
+        </ol>
+        <small class="location-note">项目阶段 · 不记录完成状态</small>
+      </div>
+      <div class="location-actions">
+        <button type="button" class="location-prd-preview-btn" data-open-prd-modal>
+          <span>📑 预览 PRD</span>
+        </button>
+        <a href={caseHref(caseStudy.id)} class="location-back-link">返回项目档案</a>
+      </div>
     </section>
 
     <header class="gate-heading">
@@ -56,19 +75,32 @@ const breadcrumbTrail = [
         <strong>{String(gate.order).padStart(2, '0')}</strong>
       </div>
       <div class="gate-title">
-        <p class="meta-label">{CASE_STAGE_LABELS[gate.stageId]}</p>
+        <div class="gate-stage-tag-row">
+          <span class="gate-stage-pill">{CASE_STAGE_LABELS[gate.stageId]}</span>
+          <span class="gate-order-tag">Stage 0{gate.order} of 06</span>
+        </div>
         <h1>{gate.title}</h1>
-        <p>{gate.question}</p>
+        <div class="gate-challenge-box">
+          <span class="challenge-tag">PM 核心决策题</span>
+          <p>{gate.question}</p>
+        </div>
       </div>
     </header>
 
     <div class="gate-artifact-trail" aria-label="材料演进">
-      <span>项目材料逐步形成</span>
-      <ol>
+      <div class="trail-label">
+        <span class="trail-kicker">项目材料逐步形成</span>
+        <small>各关卡决策对应 PRD 章节</small>
+      </div>
+      <ol class="trail-pipeline">
         {
-          caseStudy.artifacts.map((artifact) => (
-            <li data-formed={formedArtifactIds.has(artifact.id) ? 'true' : undefined}>
-              {artifact.title}
+          caseStudy.artifacts.map((artifact, idx) => (
+            <li
+              class="trail-step"
+              data-formed={formedArtifactIds.has(artifact.id) ? 'true' : undefined}
+            >
+              <span class="trail-step-num">0{idx + 1}</span>
+              <span class="trail-step-title">{artifact.title}</span>
             </li>
           ))
         }

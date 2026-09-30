@@ -21,43 +21,58 @@ const { caseStudy, gate, resources } = Astro.props;
 
 <section class="evidence-desk" aria-labelledby="decision-heading" data-evidence-desk>
   <header class="desk-brief">
-    <p class="eyebrow">Decision brief</p>
+    <div class="brief-kicker-row">
+      <span class="eyebrow">Decision Brief</span>
+      <span class="brief-gate-tag">Gate 0{gate.order} 决策工作台</span>
+    </div>
     <h2 id="decision-heading">{gate.question}</h2>
-    <p>{caseStudy.businessContext}</p>
+    <div class="business-context-card">
+      <span class="context-label">业务场景背景与约束：</span>
+      <p>{caseStudy.businessContext}</p>
+    </div>
     <div class="recommended-decision">
-      <span>当前推荐决策</span>
-      <strong>{gate.decision}</strong>
+      <span class="rec-label">团队推荐基准</span>
+      <strong class="rec-value">{gate.decision}</strong>
+      <small class="rec-note">默认基线路径，可根据实际约束探索并采纳其他方案</small>
     </div>
   </header>
 
   <div class="desk-evidence">
-    <section aria-labelledby="facts-heading">
-      <p class="meta-label" id="facts-heading">当前已知</p>
-      <ul>
+    <section class="evidence-col facts-section" aria-labelledby="facts-heading">
+      <div class="evidence-header">
+        <span class="evidence-icon">📋</span>
+        <p class="meta-label" id="facts-heading">当前已知事实与数据</p>
+      </div>
+      <ul class="evidence-list">
         {
           gate.facts.map((claim) => (
-            <li>
-              <span>
-                {CLAIM_KIND_LABELS[claim.kind]} · {claim.evidence}
-              </span>
-              <p>{claim.statement}</p>
-              <small>{EVIDENCE_LABELS[claim.evidence]}</small>
+            <li class="evidence-card fact-card">
+              <div class="claim-tag-row">
+                <span class="claim-kind-pill">{CLAIM_KIND_LABELS[claim.kind]}</span>
+                <span class="claim-evidence-tag">{claim.evidence}</span>
+              </div>
+              <p class="claim-statement">{claim.statement}</p>
+              <small class="evidence-proof-label">{EVIDENCE_LABELS[claim.evidence]}</small>
             </li>
           ))
         }
       </ul>
     </section>
-    <section class="unknowns" aria-labelledby="unknowns-heading">
-      <p class="meta-label" id="unknowns-heading">不能假装已知</p>
-      <ul>
+    <section class="evidence-col unknowns unknowns-section" aria-labelledby="unknowns-heading">
+      <div class="evidence-header">
+        <span class="evidence-icon">⚠️</span>
+        <p class="meta-label" id="unknowns-heading">不能假装已知 (盲区与待核验假设)</p>
+      </div>
+      <ul class="evidence-list">
         {
           gate.unknowns.map((claim) => (
-            <li>
-              <span>
-                {CLAIM_KIND_LABELS[claim.kind]} · {claim.evidence}
-              </span>
-              <p>{claim.statement}</p>
-              <small>{EVIDENCE_LABELS[claim.evidence]}</small>
+            <li class="evidence-card unknown-card">
+              <div class="claim-tag-row">
+                <span class="claim-kind-pill unknown-kind">{CLAIM_KIND_LABELS[claim.kind]}</span>
+                <span class="claim-evidence-tag unknown-evidence">{claim.evidence}</span>
+              </div>
+              <p class="claim-statement">{claim.statement}</p>
+              <small class="evidence-proof-label">{EVIDENCE_LABELS[claim.evidence]}</small>
             </li>
           ))
         }
@@ -74,12 +89,19 @@ const { caseStudy, gate, resources } = Astro.props;
     data-stage-id={gate.stageId}
     data-recommended-decision={gate.decision}
   >
-    <header>
+    <header class="options-meta-header">
       <div>
-        <p class="eyebrow">Compare paths</p>
+        <p class="eyebrow">Compare Paths</p>
         <h3 id="options-heading">比较三条决策路径</h3>
+        <p class="options-subtitle">
+          展开任一路径查看立项依据、成立条件、主要风险与决策影响天平；可作为 PM 采纳方案并留存印记。
+        </p>
       </div>
-      <p>展开任一路径查看价值、成立条件、风险和材料变化；可作为 PM 采纳决策并留存印记。</p>
+      <div class="options-legend">
+        <span class="legend-chip chip-rec">推荐路径</span>
+        <span class="legend-chip chip-cond">有条件成立</span>
+        <span class="legend-chip chip-risk">高风险方案</span>
+      </div>
     </header>
     <div class="option-grid">
       {
@@ -93,17 +115,22 @@ const { caseStudy, gate, resources } = Astro.props;
               open={option.assessment === 'recommended'}
             >
               <summary>
-                <span>{String.fromCharCode(65 + index)}</span>
-                <strong>{option.label}</strong>
-                <span class="decision-user-tag" data-user-tag hidden>
-                  你的选择
-                </span>
-                <i>
-                  <>
-                    <span class="when-closed">展开取舍</span>
-                    <span class="when-open">收起取舍</span>
-                  </>
-                </i>
+                <div class="summary-left">
+                  <span class="option-letter">{String.fromCharCode(65 + index)}</span>
+                  <strong class="option-label-text">{option.label}</strong>
+                </div>
+                <div class="summary-right">
+                  <span class="summary-assessment-pill" data-assessment={option.assessment}>
+                    {ASSESSMENT_LABELS[option.assessment]}
+                  </span>
+                  <span class="decision-user-tag" data-user-tag hidden>
+                    你的选择
+                  </span>
+                  <i class="toggle-icon">
+                    <span class="when-closed">展开取舍 ↓</span>
+                    <span class="when-open">收起取舍 ↑</span>
+                  </i>
+                </div>
               </summary>
               <div class="option-feedback">
                 <div class="option-meta-bar">
@@ -112,10 +139,16 @@ const { caseStudy, gate, resources } = Astro.props;
                     ✓ 已采纳为当前决策
                   </span>
                 </div>
-                <p class="rationale">{option.rationale}</p>
+                <div class="rationale-card">
+                  <span class="rationale-kicker">PM 方案立项理由</span>
+                  <p class="rationale">{option.rationale}</p>
+                </div>
                 <div class="tradeoff-grid">
-                  <section>
-                    <h4>成立条件</h4>
+                  <section class="tradeoff-column conditions-column">
+                    <div class="tradeoff-head">
+                      <span class="tradeoff-icon">⚖️</span>
+                      <h4>成立条件</h4>
+                    </div>
                     <ul class="conditions-checklist">
                       {option.conditions.map((condition, condIdx) => (
                         <li>
@@ -130,17 +163,23 @@ const { caseStudy, gate, resources } = Astro.props;
                       ))}
                     </ul>
                   </section>
-                  <section>
-                    <h4>主要风险</h4>
-                    <ul>
+                  <section class="tradeoff-column risks-column">
+                    <div class="tradeoff-head">
+                      <span class="tradeoff-icon">⚠️</span>
+                      <h4>主要风险</h4>
+                    </div>
+                    <ul class="tradeoff-bullets">
                       {option.risks.map((risk) => (
                         <li>{risk}</li>
                       ))}
                     </ul>
                   </section>
-                  <section>
-                    <h4>后续影响</h4>
-                    <ul>
+                  <section class="tradeoff-column consequences-column">
+                    <div class="tradeoff-head">
+                      <span class="tradeoff-icon">🔄</span>
+                      <h4>后续影响</h4>
+                    </div>
+                    <ul class="tradeoff-bullets">
                       {option.consequences.map((consequence) => (
                         <li>{consequence}</li>
                       ))}
@@ -202,7 +241,7 @@ const { caseStudy, gate, resources } = Astro.props;
                   </div>
                 </div>
                 <div class="option-artifact-delta">
-                  <span>本关材料变化</span>
+                  <span class="delta-badge">本关材料变化</span>
                   <p>{option.artifactDelta}</p>
                 </div>
                 <div class="option-decision-action">
@@ -705,15 +744,15 @@ const { caseStudy, gate, resources } = Astro.props;
   }
 
   .tag-conditional {
-    background: color-mix(in oklch, var(--color-component) 15%, transparent);
-    color: var(--color-component);
-    border: 1px solid var(--color-component);
+    background: #f5f3ff;
+    color: #581c87;
+    border: 1px solid #ddd6fe;
   }
 
   .tag-risky {
-    background: color-mix(in oklch, var(--color-comparison) 15%, transparent);
-    color: var(--color-comparison);
-    border: 1px solid var(--color-comparison);
+    background: #fffbeb;
+    color: #78350f;
+    border: 1px solid #fde68a;
   }
 
   .debrief-analysis {

@@ -1,145 +1,436 @@
+/* Hallmark · Case Library Styling · Daylight Clean Design System
+ * 严格遵循无中间字重规范：仅使用 var(--weight-body) [400] 与 var(--weight-display) [800]。
+ * 规范间距、优雅层级、防 AI Slop、清晰易读。
+ */
+
+/* 顶部案例库标题与指标条 */
+.case-library-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--color-line);
+}
+
+.case-header-eyebrow {
+  display: inline-block;
+  color: var(--color-accent-strong);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  font-weight: var(--weight-display);
+}
+
+.case-header-main h1 {
+  margin: var(--space-1) 0 var(--space-2);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-display);
+  letter-spacing: var(--tracking-display);
+  color: var(--color-ink);
+  line-height: 1.2;
+}
+
+.case-header-main p {
+  max-width: 52rem;
+  margin: 0;
+  color: var(--color-muted);
+  font-size: var(--text-base);
+  line-height: 1.65;
+}
+
+.case-header-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+.stat-pill {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-pill);
+  background: var(--color-panel);
+  padding: 0.35rem 0.85rem;
+  box-shadow: var(--shadow-card);
+}
+
+.stat-num {
+  color: var(--color-accent);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-display);
+}
+
+.stat-desc {
+  color: var(--color-muted);
+  font-size: var(--text-xs);
+}
+
+/* 章节头部 (分类标题与说明) */
+.section-meta-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+  padding-bottom: var(--space-2);
+}
+
+.section-meta-header h2 {
+  margin: 0;
+  font-size: var(--text-md);
+  font-weight: var(--weight-display);
+  color: var(--color-ink);
+  letter-spacing: var(--tracking-display);
+}
+
+.section-subtitle {
+  margin: var(--space-1) 0 0;
+  color: var(--color-quiet);
+  font-size: var(--text-xs);
+  line-height: 1.5;
+}
+
+.section-count-badge {
+  flex-shrink: 0;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-pill);
+  background: var(--color-panel-raised);
+  padding: 0.2rem 0.65rem;
+  color: var(--color-quiet);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+}
+
+/* ==========================================================================
+   案例卡片 (Case Catalog Card)
+   ========================================================================== */
 .case-catalog-card {
   display: flex;
   flex-direction: column;
   scroll-margin-top: 5.5rem;
-  padding: var(--space-3);
+  padding: var(--space-4);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  background: var(--color-panel);
+  box-shadow: var(--shadow-card);
+  transition:
+    transform var(--transition-fast),
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
 }
 
-.case-card-status {
+.case-catalog-card:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in oklch, var(--color-accent) 40%, var(--color-line));
+  box-shadow: var(--shadow-hover);
+}
+
+/* 黄金标杆项目轻量强调 */
+.case-catalog-card[data-level='capstone'] {
+  border-color: color-mix(in oklch, var(--color-accent) 32%, var(--color-line));
+  background: linear-gradient(
+    180deg,
+    color-mix(in oklch, var(--color-accent-wash) 40%, var(--color-panel)) 0%,
+    var(--color-panel) 35%
+  );
+}
+
+/* 卡片顶栏徽章 */
+.case-card-top-bar {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
   gap: var(--space-2);
-  margin-bottom: var(--space-1);
+  margin-bottom: var(--space-2);
+}
+
+.case-badge-group {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.case-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: var(--radius-pill);
+  padding: 0.15rem 0.55rem;
+  font-size: var(--text-xs);
+  font-weight: var(--weight-display);
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.case-status-badge[data-status='verified'] {
+  background: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+}
+
+.case-status-badge[data-status='draft'],
+.case-status-badge[data-status='needs-review'] {
+  background: #fffbeb;
+  color: #78350f;
+  border: 1px solid #fde68a;
+}
+
+.case-level-badge {
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-pill);
+  background: var(--color-panel-raised);
+  padding: 0.15rem 0.5rem;
   color: var(--color-quiet);
   font-size: var(--text-xs);
-  font-weight: var(--weight-body);
 }
 
-.case-card-status span + span::before {
-  margin-right: var(--space-2);
-  color: var(--color-line);
-  content: '·';
+.case-level-badge[data-golden='true'] {
+  border-color: color-mix(in oklch, var(--color-accent) 35%, var(--color-line));
+  background: var(--color-accent-wash);
+  color: var(--color-accent-strong);
+  font-weight: var(--weight-display);
 }
 
-.case-card-status [data-status='verified'] {
-  color: var(--color-application);
+.case-domain-badge {
+  color: var(--color-quiet);
+  font-size: var(--text-xs);
+  font-family: var(--font-mono);
 }
 
-.case-card-status [data-status='draft'],
-.case-card-status [data-status='needs-review'] {
-  color: var(--color-comparison);
+/* 卡片标题区 */
+.case-card-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin-top: var(--space-1);
+}
+
+.case-card-heading h2 {
+  margin: 0;
+  font-size: var(--text-md);
+  font-weight: var(--weight-display);
+  line-height: 1.35;
+  letter-spacing: var(--tracking-display);
 }
 
 .case-card-heading h2 a {
+  color: var(--color-ink);
   text-decoration: none;
+  transition: color var(--transition-fast);
 }
 
 .case-card-heading h2 a:hover {
-  color: var(--color-prerequisite);
+  color: var(--color-accent);
 }
 
-.case-card-preview ol {
+.case-gates-badge {
+  flex-shrink: 0;
+  color: var(--color-accent-strong);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-display);
+  background: var(--color-accent-wash);
+  padding: 0.1rem 0.45rem;
+  border-radius: var(--radius-sm);
+}
+
+/* 案例目标简述 */
+.case-card-objective {
+  margin: var(--space-2) 0 var(--space-3);
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  min-height: 3.2rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* 案例推演关卡流水线预览 */
+.case-card-preview {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  border-top: 1px solid var(--color-line-soft);
+  padding-top: var(--space-2);
+}
+
+.case-pipeline-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: var(--space-2);
+  font-size: var(--text-xs);
+}
+
+.case-pipeline-label span {
+  color: var(--color-ink);
+  font-weight: var(--weight-display);
+}
+
+.case-pipeline-label small {
+  color: var(--color-quiet);
+  font-family: var(--font-mono);
+}
+
+.case-pipeline-list {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.35rem;
-  margin: 0;
+  margin: 0 0 var(--space-3);
   padding: 0;
   list-style: none;
 }
 
-.case-card-preview li {
+.case-pipeline-item {
   min-width: 0;
   display: flex;
-  gap: 0.45rem;
   align-items: center;
+  gap: 0.45rem;
   border: 1px solid var(--color-line);
   border-radius: var(--radius-sm);
-  padding: 0.4rem 0.5rem;
-  background: var(--color-panel);
+  padding: 0.35rem 0.5rem;
+  background: var(--color-panel-raised);
   color: var(--color-muted);
   font-size: var(--text-xs);
-  line-height: 1.45;
+  line-height: 1.4;
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast);
 }
 
-.case-card-preview li span {
-  color: var(--color-prerequisite);
+.case-pipeline-item:hover {
+  background: var(--color-panel);
+  border-color: var(--color-accent);
+}
+
+.pipeline-step {
+  color: var(--color-accent);
   font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  font-weight: var(--weight-body);
+  font-size: 11px;
+  font-weight: var(--weight-display);
 }
 
-.case-card-preview dl {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  margin: auto 0 0;
-  border-top: 1px solid var(--color-line);
-  padding-top: var(--space-2);
-}
-
-.case-card-preview dl > div {
-  min-width: 0;
-  border-right: 1px solid var(--color-line-soft);
-  padding-inline: var(--space-1);
-}
-
-.case-card-preview dl > div:first-child {
-  padding-left: 0;
-}
-
-.case-card-preview dl > div:last-child {
-  border-right: 0;
-}
-
-.case-card-preview dt {
-  color: var(--color-quiet);
-  font-size: var(--text-xs);
-}
-
-.case-card-preview dd {
-  margin: 0.15rem 0 0;
+.pipeline-title {
   overflow: hidden;
-  color: var(--color-ink);
-  font-size: var(--text-xs);
-  font-weight: var(--weight-body);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.case-card-actions {
-  display: flex;
+/* 案例核心元数据度量 */
+.case-meta-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: auto 0 0;
+  border-top: 1px solid var(--color-line-soft);
+  padding-top: var(--space-2);
   gap: var(--space-2);
-  margin-top: var(--space-2);
 }
 
-.case-card-actions a {
+.case-meta-metrics > div {
+  min-width: 0;
+  border-right: 1px solid var(--color-line-soft);
+  padding-right: var(--space-1);
+}
+
+.case-meta-metrics > div:last-child {
+  border-right: 0;
+  padding-right: 0;
+}
+
+.case-meta-metrics dt {
+  color: var(--color-quiet);
+  font-size: var(--text-xs);
+  margin-bottom: 0.15rem;
+}
+
+.case-meta-metrics dd {
+  margin: 0;
+  color: var(--color-ink);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-display);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 按钮操作区 */
+.case-card-actions {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+  padding-top: var(--space-2);
+  border-top: 1px dashed var(--color-line);
+}
+
+.btn-start-case,
+.btn-view-archive {
   min-height: var(--control-height);
   display: inline-flex;
   align-items: center;
-  border: 1px solid var(--color-line);
+  justify-content: center;
+  gap: 0.35rem;
   border-radius: var(--radius-sm);
-  padding-inline: var(--space-2);
-  color: var(--color-muted);
+  padding: 0 var(--space-3);
   font-size: var(--text-xs);
-  font-weight: var(--weight-display);
   text-decoration: none;
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    color var(--transition-fast);
 }
 
-.case-card-actions a:first-child {
-  border-color: var(--color-accent);
+.btn-start-case {
+  border: 1px solid var(--color-accent);
   background: var(--color-accent);
   color: var(--color-black);
+  font-weight: var(--weight-display);
 }
 
-.case-card-actions a:hover {
+.btn-start-case:hover {
+  background: var(--color-accent-strong);
   border-color: var(--color-accent-strong);
-  color: var(--color-accent-strong);
 }
 
-.case-card-actions a:first-child:hover {
-  color: var(--color-black);
+.btn-start-case .btn-arrow {
+  transition: transform var(--transition-fast);
 }
 
-/* 场景与能力矩阵样式 */
+.btn-start-case:hover .btn-arrow {
+  transform: translateX(3px);
+}
+
+.btn-view-archive {
+  border: 1px solid var(--color-line);
+  background: var(--color-panel-raised);
+  color: var(--color-muted);
+  font-weight: var(--weight-display);
+}
+
+.btn-view-archive:hover {
+  border-color: var(--color-control-border);
+  color: var(--color-ink);
+  background: var(--color-panel);
+}
+
+/* ==========================================================================
+   场景 × 能力阶段全景决策矩阵 (#case-matrix)
+   ========================================================================== */
 .matrix-section {
+  margin-top: var(--space-6);
   margin-bottom: var(--space-6);
 }
 
@@ -148,145 +439,192 @@
   border: 1px solid var(--color-line);
   border-radius: var(--radius-md);
   background: var(--color-panel);
+  box-shadow: var(--shadow-card);
   -webkit-overflow-scrolling: touch;
 }
 
 .case-matrix-table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 820px;
+  min-width: 860px;
   font-size: var(--text-xs);
 }
 
 .case-matrix-table th,
 .case-matrix-table td {
   border: 1px solid var(--color-line-soft);
-  padding: var(--space-2) var(--space-3);
+  padding: var(--space-2);
   text-align: left;
   vertical-align: top;
 }
 
-.case-matrix-table th {
+.case-matrix-table thead th {
   background: var(--color-panel-raised);
   color: var(--color-ink);
-  font-family: var(--font-mono);
-  font-weight: var(--weight-display);
-  white-space: nowrap;
+  padding: var(--space-3) var(--space-2);
 }
 
 .case-matrix-table th.case-col-header {
   width: 22%;
-  min-width: 170px;
+  min-width: 180px;
 }
 
-.matrix-stage-head {
+.col-head-content {
   display: flex;
   flex-direction: column;
   gap: 0.15rem;
 }
 
-.matrix-stage-head span {
-  color: var(--color-accent-strong);
+.col-head-label {
+  color: var(--color-quiet);
+  font-family: var(--font-mono);
   font-size: 10px;
+  letter-spacing: var(--tracking-label);
 }
 
-.case-row-head {
+.col-head-content strong {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-display);
+}
+
+.matrix-stage-head {
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
 }
 
-.case-row-head a {
-  color: var(--color-ink);
+.stage-tag {
+  color: var(--color-accent-strong);
+  font-family: var(--font-mono);
+  font-size: 10px;
   font-weight: var(--weight-display);
-  text-decoration: none;
 }
 
-.case-row-head a:hover {
-  color: var(--color-accent);
+.stage-name {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-display);
+  color: var(--color-ink);
+}
+
+/* 矩阵首列：案例标题与领域 */
+.case-row-head {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.25rem 0;
+}
+
+.case-row-title {
+  color: var(--color-ink);
+  font-weight: var(--weight-display);
+  line-height: 1.35;
 }
 
 .case-row-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.row-status-pill {
+  font-size: 10px;
+  border-radius: var(--radius-sm);
+  padding: 0 0.35rem;
+}
+
+.row-status-pill[data-status='verified'] {
+  background: #ecfdf5;
+  color: #065f46;
+}
+
+.row-status-pill[data-status='draft'],
+.row-status-pill[data-status='needs-review'] {
+  background: #fffbeb;
+  color: #78350f;
+}
+
+.row-domain-tag {
   color: var(--color-quiet);
   font-size: 10px;
 }
 
+/* 矩阵各单元格 Gate 决策卡 */
 .matrix-cell-link {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
-  min-height: 4rem;
+  min-height: 4.25rem;
   border-radius: var(--radius-sm);
-  padding: 0.35rem;
+  padding: 0.4rem 0.5rem;
   color: var(--color-muted);
   text-decoration: none;
   background: var(--color-panel-raised);
   border: 1px solid transparent;
   transition:
-    color var(--duration-quick) var(--ease-smooth-out),
-    background-color var(--duration-quick) var(--ease-smooth-out),
-    border-color var(--duration-quick) var(--ease-smooth-out);
+    transform var(--transition-fast),
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
 }
 
 .matrix-cell-link:hover {
+  transform: translateY(-2px);
   background: var(--color-panel);
   border-color: var(--color-accent);
+  box-shadow: var(--shadow-card);
   color: var(--color-ink);
 }
 
 .matrix-gate-order {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  color: var(--color-quiet);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--color-quiet);
 }
 
 .matrix-gate-title {
-  margin-top: 0.2rem;
+  margin-top: 0.25rem;
   line-height: 1.35;
+  color: var(--color-ink);
+  font-size: var(--text-xs);
   text-wrap: pretty;
 }
 
 .matrix-decided-tag {
-  color: var(--color-accent-strong);
+  color: var(--color-application);
   font-weight: var(--weight-display);
+  font-size: 10px;
 }
 
+/* 已在 localStorage 采纳决策的单元格高亮 */
 .matrix-cell-link[data-decided='true'] {
-  border-color: var(--color-accent);
-  background: var(--color-accent-wash);
+  border-color: color-mix(in oklch, var(--color-application) 40%, var(--color-line));
+  background: color-mix(in oklch, var(--color-application) 8%, var(--color-panel));
 }
 
 .matrix-cell-link[data-decided='true'] .matrix-gate-order {
-  color: var(--color-accent-strong);
+  color: var(--color-application);
 }
 
-@media (max-width: 520px) {
-  .case-card-preview ol {
+/* 响应式适配 */
+@media (max-width: 680px) {
+  .case-card-preview .case-pipeline-list {
     grid-template-columns: 1fr;
   }
 
-  .case-card-preview li:nth-child(n + 4) {
+  .case-card-preview .case-pipeline-item:nth-child(n + 4) {
     display: none;
   }
 
-  .case-card-preview ol::after {
-    padding: var(--space-1) 0;
-    color: var(--color-quiet);
-    font-size: var(--text-xs);
-    content: '共 6 个 Gate，进入项目查看完整路径';
-  }
-
   .case-card-actions {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
   }
 
-  .case-card-actions a {
+  .btn-start-case,
+  .btn-view-archive {
     min-height: var(--control-height-mobile);
-    justify-content: center;
   }
 }
