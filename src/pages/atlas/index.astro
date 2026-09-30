@@ -129,7 +129,7 @@ const termsByDomain = new Map(
           domains.map((domain) => {
             const count = termsByDomain.get(domain.id)?.length ?? 0;
             return (
-              <a href={`#${domain.id}`} class="domain-nav-item">
+              <a href={`#${domain.id}`} class="domain-nav-item" title={domain.nameZh}>
                 <span class="domain-nav-order">{String(domain.order).padStart(2, '0')}</span>
                 <span class="domain-nav-text">{domain.shortNameZh}</span>
                 <span class="domain-nav-badge">{count}</span>

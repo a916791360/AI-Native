@@ -56,116 +56,7 @@ body .search-experience .search-result {
   padding: var(--space-3);
 }
 
-/* Atlas */
-
-body .atlas-page .atlas-controls.atlas-controls,
-body .atlas-page .atlas-layout.atlas-layout {
-  width: min(calc(100% - 2.5rem), var(--content-max));
-  margin-inline: auto;
-}
-
-body .atlas-page .atlas-controls.atlas-controls {
-  grid-template-columns: repeat(2, minmax(12rem, 18rem)) 1fr;
-  margin-bottom: var(--space-3);
-  border: 1px solid var(--color-line);
-  border-radius: 0.5rem;
-  background: var(--color-panel);
-  padding-inline: var(--space-3);
-  overflow: hidden;
-}
-
-body .atlas-page .atlas-controls label {
-  min-height: 3.5rem;
-}
-
-body .atlas-page .atlas-controls select {
-  background: var(--color-panel);
-}
-
-body .atlas-page .atlas-layout.atlas-layout {
-  grid-template-columns: 9rem minmax(0, 1fr);
-  gap: var(--space-4);
-  padding-bottom: var(--space-6);
-}
-
-body .atlas-page .domain-nav.domain-nav {
-  top: 4.5rem;
-  gap: 0.15rem;
-  border: 0;
-}
-
-body .atlas-page .domain-nav a {
-  min-height: 2.5rem;
-  grid-template-columns: 1.7rem 1fr;
-  border: 0;
-  border-radius: 0.35rem;
-  padding: 0 var(--space-2);
-}
-
-body .atlas-page .domain-nav a:hover {
-  background: var(--color-panel-raised);
-}
-
-body .atlas-page .domain-section.domain-section {
-  display: block;
-  margin-bottom: var(--space-4);
-  border: 0;
-  scroll-margin-top: 5rem;
-}
-
-body .atlas-page .domain-section.domain-section[hidden] {
-  display: none;
-}
-
-body .atlas-page .domain-section > header {
-  border: 0;
-  padding: 0 0 var(--space-2);
-}
-
-body .atlas-page .domain-section h2 {
-  margin: 0;
-  font-size: 1.25rem;
-  font-weight: var(--weight-display);
-}
-
-body .atlas-page .domain-section header > p:last-child {
-  max-width: 48rem;
-  margin-top: 0.25rem;
-}
-
-body .atlas-page .term-list.term-list {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--space-3);
-}
-
-body .atlas-page .term-row.term-row {
-  min-height: 11rem;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--space-2);
-  border: 1px solid var(--color-line);
-  border-radius: 0.5rem;
-  background: var(--color-panel);
-  padding: 1.25rem;
-}
-
-body .atlas-page .term-row strong {
-  font-size: 1.1rem;
-  font-weight: var(--weight-display);
-}
-
-body .atlas-page .term-row .term-summary {
-  flex: 1;
-}
-
-body .atlas-page .empty-domain {
-  min-height: 8rem;
-  border: 1px solid var(--color-line);
-  border-radius: 0.5rem;
-  padding: var(--space-3);
-}
+/* Atlas styling moved to src/styles/atlas.css */
 
 /* Term detail styling moved to src/styles/term-page.css */
 
@@ -551,10 +442,6 @@ body .not-found h1 {
 }
 
 @media (max-width: 1120px) {
-  body .atlas-page .term-list.term-list {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
   body .routes-page .route-register.route-register,
   body .graph-page .relation-groups {
     grid-template-columns: 1fr;
@@ -572,8 +459,6 @@ body .not-found h1 {
   }
 
   body .search-experience.search-experience,
-  body .atlas-page .atlas-controls.atlas-controls,
-  body .atlas-page .atlas-layout.atlas-layout,
   body .routes-page .route-register.route-register,
   body .route-detail-page .route-hero,
   body .route-detail-page .route-body,
@@ -587,8 +472,6 @@ body .not-found h1 {
 
   body .search-experience .search-query,
   body .search-experience .search-result,
-  body .atlas-page .atlas-controls.atlas-controls,
-  body .atlas-page .atlas-layout.atlas-layout,
   body .route-detail-page .route-hero.route-hero,
   body .route-detail-page .route-body.route-body,
   body .graph-page .relation-group article,
@@ -617,7 +500,6 @@ body .not-found h1 {
     padding: var(--space-2) var(--space-3);
   }
 
-  body .atlas-page .term-list.term-list,
   body .case-shell .tradeoff-grid,
   body .case-shell .case-evidence-register,
   body .case-shell .case-navigation {
@@ -632,10 +514,6 @@ body .not-found h1 {
   body .case-shell .artifact-change > header {
     border-right: 0;
     border-bottom: 1px solid var(--color-line);
-  }
-
-  body .atlas-page .atlas-layout.atlas-layout {
-    gap: var(--space-3);
   }
 
   body .routes-page .chapter-preview li:nth-child(n + 3) {
@@ -703,8 +581,6 @@ body .not-found h1 {
 
 @media (max-width: 420px) {
   body .search-experience.search-experience,
-  body .atlas-page .atlas-controls.atlas-controls,
-  body .atlas-page .atlas-layout.atlas-layout,
   body .routes-page .route-register.route-register,
   body .route-detail-page .route-hero,
   body .route-detail-page .route-body,
