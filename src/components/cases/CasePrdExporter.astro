@@ -1,0 +1,432 @@
+---
+import type { CaseStudy } from '@/lib/cases/schema';
+import { generateCasePrd } from '@/lib/cases/prd-generator';
+
+interface Props {
+  caseStudy: CaseStudy;
+}
+
+const { caseStudy } = Astro.props;
+
+// 服务端预先生成默认推荐基准方案，确保无 JS 时也能拥有完整材料
+const baselinePrd = generateCasePrd({ caseStudy });
+---
+
+<dialog
+  class="prd-export-dialog"
+  data-prd-dialog
+  data-case-study={JSON.stringify(caseStudy)}
+  aria-labelledby="prd-dialog-title"
+>
+  <div class="prd-modal-sheet" data-prd-sheet>
+    <header class="prd-modal-header">
+      <div class="prd-title-group">
+        <span class="prd-eyebrow">Level 2/3 Capstone · 交付成果沉淀</span>
+        <h3 id="prd-dialog-title">《{caseStudy.title}》AI 产品立项 PRD</h3>
+      </div>
+      <div class="prd-header-aside">
+        <span class="prd-status-pill" data-prd-status>官方推荐基准</span>
+        <button type="button" class="prd-close-btn" data-close-prd aria-label="关闭导出面板">
+          <span aria-hidden="true">✕</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="prd-toolbar">
+      <div class="prd-toolbar-actions">
+        <button type="button" class="prd-action-btn prd-btn-primary" data-copy-prd>
+          <span class="btn-icon" data-copy-icon>📋</span>
+          <span class="btn-text" data-copy-text>一键复制 Markdown</span>
+        </button>
+        <button type="button" class="prd-action-btn" data-download-prd>
+          <span class="btn-icon">💾</span>
+          <span>下载 .md 文档</span>
+        </button>
+      </div>
+      <p class="prd-toolbar-hint">
+        包含立项背景、六阶段决策推演、成立条件核验、指标基线与故障应急 Runbook。
+      </p>
+    </div>
+
+    <div class="prd-preview-shell">
+      <div class="prd-preview-meta">
+        <span>MARKDOWN PREVIEW</span>
+        <span data-prd-stats
+          >{caseStudy.gates.length} 关推演 · {caseStudy.metrics.length} 项指标 · {
+            caseStudy.failureModes.length
+          } 个故障应急</span
+        >
+      </div>
+      <div class="prd-scroll-area">
+        <pre class="prd-pre"><code data-prd-code>{baselinePrd.markdown}</code></pre>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<!-- 客户端动态装配脚本 -->
+<script>
+  import type { CaseStudy } from '@/lib/cases/schema';
+  import { generateCasePrd, type SavedGateDecision } from '@/lib/cases/prd-generator';
+
+  const DECISIONS_KEY = 'ai-native.case-decisions';
+  const CHECKS_KEY = 'ai-native.condition-checks';
+
+  const dialog = document.querySelector<HTMLDialogElement>('[data-prd-dialog]');
+  if (dialog && dialog.dataset.caseStudy) {
+    const caseStudy: CaseStudy = JSON.parse(dialog.dataset.caseStudy);
+
+    const closeBtn = dialog.querySelector<HTMLButtonElement>('[data-close-prd]');
+    const copyBtn = dialog.querySelector<HTMLButtonElement>('[data-copy-prd]');
+    const copyText = dialog.querySelector<HTMLElement>('[data-copy-text]');
+    const copyIcon = dialog.querySelector<HTMLElement>('[data-copy-icon]');
+    const downloadBtn = dialog.querySelector<HTMLButtonElement>('[data-download-prd]');
+    const codeEl = dialog.querySelector<HTMLElement>('[data-prd-code]');
+    const statusEl = dialog.querySelector<HTMLElement>('[data-prd-status]');
+    const statsEl = dialog.querySelector<HTMLElement>('[data-prd-stats]');
+
+    let currentMarkdown = codeEl?.textContent || '';
+
+    function readStoredDecisions(): Record<string, SavedGateDecision> {
+      try {
+        return JSON.parse(localStorage.getItem(DECISIONS_KEY) || '{}');
+      } catch {
+        return {};
+      }
+    }
+
+    function readStoredChecks(): Record<string, boolean> {
+      try {
+        return JSON.parse(localStorage.getItem(CHECKS_KEY) || '{}');
+      } catch {
+        return {};
+      }
+    }
+
+    function refreshPrdContent() {
+      const decisions = readStoredDecisions();
+      const conditionChecks = readStoredChecks();
+      const result = generateCasePrd({ caseStudy, decisions, conditionChecks });
+
+      currentMarkdown = result.markdown;
+      if (codeEl) codeEl.textContent = currentMarkdown;
+
+      if (statusEl) {
+        if (result.isCustomized) {
+          statusEl.textContent = `已融合 ${result.customizedGateCount}/6 关决策 · ${result.conditionChecksCount} 项核验`;
+          statusEl.dataset.customized = 'true';
+        } else {
+          statusEl.textContent = '官方推荐基准';
+          delete statusEl.dataset.customized;
+        }
+      }
+
+      if (statsEl) {
+        statsEl.textContent = `共 ${caseStudy.gates.length} 关 · ${caseStudy.metrics.length} 项指标 · ${caseStudy.failureModes.length} 个故障应急`;
+      }
+    }
+
+    function openModal() {
+      refreshPrdContent();
+      if (dialog && typeof dialog.showModal === 'function') {
+        dialog.showModal();
+      }
+    }
+
+    function closeModal() {
+      if (dialog && typeof dialog.close === 'function') {
+        dialog.close();
+      }
+    }
+
+    // 绑定全局打开按钮
+    document.querySelectorAll('[data-open-prd-modal]').forEach((trigger) => {
+      trigger.addEventListener('click', (e) => {
+        e.preventDefault();
+        openModal();
+      });
+    });
+
+    closeBtn?.addEventListener('click', closeModal);
+
+    dialog?.addEventListener('click', (e) => {
+      if (e.target === dialog) {
+        closeModal();
+      }
+    });
+
+    // 复制功能
+    copyBtn?.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(currentMarkdown);
+        if (copyText) copyText.textContent = '✓ 已复制到剪贴板';
+        if (copyIcon) copyIcon.textContent = '✓';
+        copyBtn.classList.add('is-copied');
+        setTimeout(() => {
+          if (copyText) copyText.textContent = '一键复制 Markdown';
+          if (copyIcon) copyIcon.textContent = '📋';
+          copyBtn.classList.remove('is-copied');
+        }, 2000);
+      } catch {
+        if (copyText) copyText.textContent = '复制失败，请手动选取';
+      }
+    });
+
+    // 下载 .md 文件
+    downloadBtn?.addEventListener('click', () => {
+      const blob = new Blob([currentMarkdown], { type: 'text/markdown;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${caseStudy.id}-ai-product-prd.md`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    });
+  }
+</script>
+
+<style>
+  .prd-export-dialog {
+    border: 0;
+    padding: 0;
+    background: transparent;
+    max-width: 90vw;
+    width: 58rem;
+    margin: auto;
+  }
+
+  .prd-export-dialog::backdrop {
+    background: rgba(15, 23, 42, 0.55);
+    backdrop-filter: blur(4px);
+    animation: fadeIn var(--duration-fast) var(--ease-smooth-out);
+  }
+
+  .prd-modal-sheet {
+    background: var(--color-panel);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-hover);
+    display: flex;
+    flex-direction: column;
+    max-height: 88vh;
+    overflow: hidden;
+  }
+
+  .prd-modal-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding: var(--space-4) var(--space-5);
+    border-bottom: 1px solid var(--color-line);
+    background: var(--color-canvas);
+  }
+
+  .prd-title-group h3 {
+    margin: var(--space-1) 0 0;
+    font-size: var(--text-lg);
+    font-weight: var(--weight-display);
+    color: var(--color-ink);
+    letter-spacing: var(--tracking-display);
+  }
+
+  .prd-eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-accent-strong);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+  }
+
+  .prd-header-aside {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .prd-status-pill {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-body);
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius-pill);
+    background: var(--color-panel-raised);
+    color: var(--color-muted);
+    border: 1px solid var(--color-line);
+    white-space: nowrap;
+  }
+
+  .prd-status-pill[data-customized='true'] {
+    background: var(--color-accent-wash);
+    color: var(--color-accent-strong);
+    border-color: var(--color-accent);
+  }
+
+  .prd-close-btn {
+    border: 1px solid var(--color-line);
+    background: var(--color-panel);
+    color: var(--color-quiet);
+    width: 2rem;
+    height: 2rem;
+    border-radius: var(--radius-pill);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: var(--text-sm);
+    transition:
+      color var(--duration-quick) var(--ease-smooth-out),
+      border-color var(--duration-quick) var(--ease-smooth-out),
+      background-color var(--duration-quick) var(--ease-smooth-out);
+  }
+
+  .prd-close-btn:hover {
+    color: var(--color-ink);
+    border-color: var(--color-control-border);
+    background: var(--color-panel-raised);
+  }
+
+  .prd-close-btn:active {
+    transform: scale(var(--scale-large));
+  }
+
+  .prd-toolbar {
+    padding: var(--space-3) var(--space-5);
+    background: var(--color-panel-raised);
+    border-bottom: 1px solid var(--color-line);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+  }
+
+  .prd-toolbar-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .prd-action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    padding: 0.45rem 1rem;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--color-control-border);
+    background: var(--color-panel);
+    color: var(--color-ink);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-display);
+    cursor: pointer;
+    transition:
+      background var(--duration-quick) var(--ease-smooth-out),
+      border-color var(--duration-quick) var(--ease-smooth-out),
+      color var(--duration-quick) var(--ease-smooth-out);
+  }
+
+  .prd-action-btn:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent-strong);
+  }
+
+  .prd-action-btn:active {
+    transform: scale(var(--scale-large));
+  }
+
+  .prd-action-btn.prd-btn-primary {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: var(--color-black);
+  }
+
+  .prd-action-btn.prd-btn-primary:hover {
+    background: var(--color-accent-strong);
+    border-color: var(--color-accent-strong);
+  }
+
+  .prd-action-btn.is-copied {
+    background: #059669;
+    border-color: #059669;
+    color: #ffffff;
+  }
+
+  .prd-toolbar-hint {
+    margin: 0;
+    font-size: var(--text-xs);
+    color: var(--color-quiet);
+  }
+
+  .prd-preview-shell {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    background: var(--color-panel);
+  }
+
+  .prd-preview-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-2) var(--space-5);
+    background: var(--color-canvas);
+    border-bottom: 1px solid var(--color-line);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-quiet);
+  }
+
+  .prd-scroll-area {
+    padding: var(--space-4) var(--space-5);
+    overflow-y: auto;
+    flex: 1;
+    max-height: 58vh;
+  }
+
+  .prd-pre {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    line-height: 1.65;
+    color: var(--color-muted);
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  .prd-code {
+    display: block;
+    font-family: inherit;
+    color: inherit;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .prd-export-dialog {
+      width: 95vw;
+      max-width: 95vw;
+    }
+
+    .prd-modal-header {
+      padding: var(--space-3);
+    }
+
+    .prd-toolbar {
+      padding: var(--space-3);
+    }
+
+    .prd-scroll-area {
+      padding: var(--space-3);
+    }
+  }
+</style>

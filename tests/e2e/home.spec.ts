@@ -1129,6 +1129,73 @@ test('renders the designed 404 state', async ({ page }) => {
   await expect(page.getByRole('heading', { level: 1 })).toContainText('路径还没有连接');
 });
 
+test('renders the 30-second target triage on the homepage and routes learners to their optimal start', async ({
+  page,
+}) => {
+  await page.goto('/');
+  const triageSection = page.locator('.target-triage');
+  await expect(triageSection).toBeVisible();
+  await expect(
+    page.getByRole('heading', { name: '你在哪一站？30 秒定位专属学习起点' }),
+  ).toBeVisible();
+
+  const cards = triageSection.locator('.triage-card');
+  await expect(cards).toHaveCount(3);
+
+  // 1. 新手入门破局
+  const beginnerCard = cards.nth(0);
+  await expect(beginnerCard).toContainText('0 经验产品 / 应届生');
+  await expect(beginnerCard).toContainText('新手快速破局');
+  await expect(beginnerCard.locator('a.triage-btn')).toHaveAttribute(
+    'href',
+    '/learn/questions/q01-rules-or-ai/',
+  );
+
+  // 2. 传统 PM 转型
+  const proCard = cards.nth(1);
+  await expect(proCard).toContainText('传统 PM 转岗 AI-Native');
+  await expect(proCard).toContainText('实战能力跃迁');
+  await expect(proCard.locator('a.triage-btn')).toHaveAttribute(
+    'href',
+    '/learn/cases/customer-support-knowledge-base/decide-ai-boundary/',
+  );
+
+  // 3. 业务排雷
+  const troubleshootCard = cards.nth(2);
+  await expect(troubleshootCard).toContainText('在职 PM / 带着业务痛点找方案');
+  await expect(troubleshootCard).toContainText('方案对照排雷');
+  await expect(troubleshootCard.locator('a.triage-btn')).toHaveAttribute('href', '/map/');
+});
+
+test('provides instant term popover preview on hovering or focusing term references without leaving the context', async ({
+  page,
+}) => {
+  await page.goto('/learn/questions/q01-rules-or-ai/');
+
+  // 找到题目页面中的术语链接
+  const termLink = page.locator('main a[href*="/terms/"]').first();
+  await expect(termLink).toBeVisible();
+
+  const popover = page.locator('#global-term-popover');
+  await expect(popover).toBeHidden();
+
+  // 聚焦术语链接触发 Popover
+  await termLink.focus();
+  await expect(popover).toBeVisible();
+
+  // 验证 Popover 内部数据完整呈现
+  const popoverName = popover.locator('[data-popover-name]');
+  await expect(popoverName).not.toBeEmpty();
+  const popoverSummary = popover.locator('[data-popover-summary]');
+  await expect(popoverSummary).not.toBeEmpty();
+  const popoverLink = popover.locator('[data-popover-link]');
+  await expect(popoverLink).toHaveAttribute('href', /^\/terms\/[a-z0-9-]+\/$/);
+
+  // 按 Escape 键平滑收起
+  await page.keyboard.press('Escape');
+  await expect(popover).toBeHidden();
+});
+
 test('has no serious or critical automated accessibility violations', async ({ page }) => {
   test.setTimeout(90_000);
   for (const url of [

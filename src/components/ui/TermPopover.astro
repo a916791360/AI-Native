@@ -1,0 +1,369 @@
+---
+// 术语即时悬浮气泡 (Term Popover - F-02)
+// 为全站学习关卡、案例推演与文章中的术语链接提供 0 跳出的沉浸式微卡片查阅
+---
+
+<aside
+  id="global-term-popover"
+  class="term-popover-card"
+  role="tooltip"
+  aria-hidden="true"
+  data-term-popover-panel
+  hidden
+>
+  <div class="popover-inner">
+    <div class="popover-header">
+      <div class="popover-title-row">
+        <strong class="popover-name" data-popover-name></strong>
+        <span class="popover-abbr" data-popover-abbr></span>
+      </div>
+      <span class="popover-domain" data-popover-domain></span>
+    </div>
+    <p class="popover-summary" data-popover-summary></p>
+    <div class="popover-footer">
+      <span class="popover-difficulty" data-popover-diff></span>
+      <a href="#" class="popover-link" data-popover-link>
+        <span>查看完整词条详解</span>
+        <span aria-hidden="true">→</span>
+      </a>
+    </div>
+  </div>
+</aside>
+
+<script>
+  import registry from '@/generated/term-registry.json';
+
+  type RegistryTerm = (typeof registry.terms)[number];
+
+  const popover = document.getElementById('global-term-popover');
+  if (popover) {
+    const nameEl = popover.querySelector<HTMLElement>('[data-popover-name]');
+    const abbrEl = popover.querySelector<HTMLElement>('[data-popover-abbr]');
+    const domainEl = popover.querySelector<HTMLElement>('[data-popover-domain]');
+    const summaryEl = popover.querySelector<HTMLElement>('[data-popover-summary]');
+    const diffEl = popover.querySelector<HTMLElement>('[data-popover-diff]');
+    const linkEl = popover.querySelector<HTMLAnchorElement>('[data-popover-link]');
+
+    // 建立快速检索 Map
+    const termMap = new Map<string, RegistryTerm>();
+    for (const term of registry.terms) {
+      termMap.set(term.id, term);
+      // 支持按标准路径匹配
+      termMap.set(term.url, term);
+      termMap.set(term.url.replace(/\/$/, ''), term);
+    }
+
+    const diffLabels: Record<string, string> = {
+      beginner: '入门基础',
+      intermediate: '核心进阶',
+      advanced: '深入精通',
+    };
+
+    let activeTrigger: HTMLElement | null = null;
+    let showTimeout: number | undefined;
+    let hideTimeout: number | undefined;
+
+    const clearTimers = () => {
+      if (showTimeout) window.clearTimeout(showTimeout);
+      if (hideTimeout) window.clearTimeout(hideTimeout);
+    };
+
+    const extractTermIdFromHref = (href: string): string | null => {
+      try {
+        const url = new URL(href, window.location.origin);
+        const match = url.pathname.match(/^\/terms\/([^/]+)/);
+        return match && match[1] ? match[1] : null;
+      } catch {
+        return null;
+      }
+    };
+
+    const positionPopover = (trigger: HTMLElement) => {
+      const rect = trigger.getBoundingClientRect();
+      const popoverWidth = 320;
+      const margin = 12;
+
+      // 水平居中并限制在屏幕内
+      let left = rect.left + rect.width / 2 - popoverWidth / 2;
+      left = Math.max(margin, Math.min(window.innerWidth - popoverWidth - margin, left));
+
+      // 默认优先放在触发词上方；若上方空间不足则放在下方
+      popover.style.display = 'block';
+      popover.style.visibility = 'hidden';
+      const popoverHeight = popover.offsetHeight || 140;
+
+      let top = rect.top - popoverHeight - 8;
+      let placement = 'top';
+
+      if (top < 64) {
+        top = rect.bottom + 8;
+        placement = 'bottom';
+      }
+
+      popover.style.visibility = '';
+      popover.style.top = `${Math.round(top)}px`;
+      popover.style.left = `${Math.round(left)}px`;
+      popover.dataset.placement = placement;
+    };
+
+    const showPopover = (trigger: HTMLElement, term: RegistryTerm) => {
+      clearTimers();
+      activeTrigger = trigger;
+
+      if (nameEl) nameEl.textContent = term.nameZh;
+      if (abbrEl) {
+        const enOrAbbr = term.abbreviations?.length ? term.abbreviations.join(', ') : term.nameEn;
+        abbrEl.textContent = enOrAbbr ? `(${enOrAbbr})` : '';
+      }
+      if (domainEl) domainEl.textContent = term.domainNameZh || '';
+      if (summaryEl) summaryEl.textContent = term.summary || '';
+      if (diffEl) {
+        diffEl.textContent = diffLabels[term.difficulty] || '核心词条';
+        diffEl.dataset.difficulty = term.difficulty;
+      }
+      if (linkEl) {
+        linkEl.href = term.url;
+      }
+
+      positionPopover(trigger);
+      popover.hidden = false;
+      popover.setAttribute('aria-hidden', 'false');
+      requestAnimationFrame(() => {
+        popover.classList.add('is-visible');
+      });
+    };
+
+    const hidePopover = (immediate = false) => {
+      clearTimers();
+      if (immediate) {
+        popover.classList.remove('is-visible');
+        popover.hidden = true;
+        popover.setAttribute('aria-hidden', 'true');
+        activeTrigger = null;
+        return;
+      }
+
+      hideTimeout = window.setTimeout(() => {
+        popover.classList.remove('is-visible');
+        window.setTimeout(() => {
+          if (!popover.classList.contains('is-visible')) {
+            popover.hidden = true;
+            popover.setAttribute('aria-hidden', 'true');
+            activeTrigger = null;
+          }
+        }, 150);
+      }, 150);
+    };
+
+    // 绑定术语链接监听
+    const bindTriggers = () => {
+      // 匹配所有 href 包含 /terms/ 的链接，但排除全站顶栏和词条索引等主导航链接
+      const links = document.querySelectorAll<HTMLAnchorElement>(
+        'main a[href*="/terms/"]:not([data-no-popover]), [data-term-popover]',
+      );
+
+      links.forEach((link) => {
+        if (link.dataset.hasPopoverBound) return;
+        link.dataset.hasPopoverBound = 'true';
+
+        const termId = link.dataset.termId || extractTermIdFromHref(link.href);
+        if (!termId) return;
+
+        const term = termMap.get(termId);
+        if (!term) return;
+
+        // 鼠标进入
+        link.addEventListener('mouseenter', () => {
+          clearTimers();
+          showTimeout = window.setTimeout(() => {
+            showPopover(link, term);
+          }, 160);
+        });
+
+        // 鼠标离开
+        link.addEventListener('mouseleave', () => {
+          hidePopover(false);
+        });
+
+        // 键盘聚焦
+        link.addEventListener('focus', () => {
+          clearTimers();
+          showPopover(link, term);
+        });
+
+        link.addEventListener('blur', () => {
+          hidePopover(false);
+        });
+      });
+    };
+
+    // 鼠标在 Popover 本身移动时保持展示
+    popover.addEventListener('mouseenter', () => {
+      clearTimers();
+    });
+
+    popover.addEventListener('mouseleave', () => {
+      hidePopover(false);
+    });
+
+    // ESC 键关闭
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !popover.hidden) {
+        hidePopover(true);
+      }
+    });
+
+    // 点击其他空白区域关闭
+    window.addEventListener('click', (e) => {
+      if (
+        !popover.hidden &&
+        !popover.contains(e.target as Node) &&
+        activeTrigger &&
+        !activeTrigger.contains(e.target as Node)
+      ) {
+        hidePopover(true);
+      }
+    });
+
+    // 页面滚动或窗口尺寸变化时调整或隐藏
+    window.addEventListener(
+      'scroll',
+      () => {
+        if (!popover.hidden && activeTrigger) {
+          positionPopover(activeTrigger);
+        }
+      },
+      { passive: true },
+    );
+
+    // 初始化运行
+    bindTriggers();
+
+    // 观察动态加载的内容
+    const observer = new MutationObserver(() => {
+      bindTriggers();
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+  }
+</script>
+
+<style>
+  .term-popover-card {
+    position: fixed;
+    z-index: 90;
+    width: 20rem;
+    max-width: calc(100vw - 24px);
+    background: var(--color-panel);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-hover);
+    padding: var(--space-4);
+    opacity: 0;
+    transform: translateY(4px);
+    transition:
+      opacity var(--duration-quick) var(--ease-smooth-out),
+      transform var(--duration-quick) var(--ease-smooth-out);
+    pointer-events: auto;
+  }
+
+  .term-popover-card.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .popover-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--space-2);
+    margin-bottom: var(--space-2);
+    border-bottom: 1px solid var(--color-line-soft);
+    padding-bottom: var(--space-2);
+  }
+
+  .popover-title-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-1);
+  }
+
+  .popover-name {
+    font-size: var(--text-base);
+    font-weight: var(--weight-display);
+    color: var(--color-ink);
+    letter-spacing: var(--tracking-display);
+  }
+
+  .popover-abbr {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-body);
+    color: var(--color-quiet);
+  }
+
+  .popover-domain {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-body);
+    color: var(--color-accent-strong);
+    background: var(--color-accent-wash);
+    padding: 0.1rem 0.4rem;
+    border-radius: var(--radius-pill);
+    white-space: nowrap;
+  }
+
+  .popover-summary {
+    margin: 0 0 var(--space-3);
+    font-size: var(--text-sm);
+    color: var(--color-muted);
+    line-height: 1.55;
+  }
+
+  .popover-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px dashed var(--color-line);
+    padding-top: var(--space-2);
+  }
+
+  .popover-difficulty {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-body);
+    color: var(--color-quiet);
+  }
+
+  .popover-difficulty[data-difficulty='beginner'] {
+    color: var(--color-application);
+  }
+
+  .popover-difficulty[data-difficulty='intermediate'] {
+    color: var(--color-accent-strong);
+  }
+
+  .popover-difficulty[data-difficulty='advanced'] {
+    color: var(--color-component);
+  }
+
+  .popover-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-display);
+    color: var(--color-accent-strong);
+    text-decoration: none;
+    transition: color var(--duration-micro) var(--ease-smooth-out);
+  }
+
+  .popover-link:hover {
+    color: var(--color-accent);
+    text-decoration: underline;
+  }
+
+  .popover-link:active {
+    transform: scale(var(--scale-large));
+  }
+</style>

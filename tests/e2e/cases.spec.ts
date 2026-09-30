@@ -177,3 +177,39 @@ test('displays competency radar in learning center and scenario matrix in case l
   await expect(matrix.locator('.case-matrix-table')).toBeVisible();
   await expect(matrix.locator('[data-matrix-cell]').first()).toBeVisible();
 });
+
+test('assembles and exports AI product PRD modal from case overview and gate 06', async ({
+  page,
+}) => {
+  // 1. 从案例主页打开 PRD 组装导出弹窗
+  await page.goto(caseUrl);
+  const openPrdBtn = page.locator('[data-open-prd-modal]').first();
+  await expect(openPrdBtn).toBeVisible();
+  await openPrdBtn.click();
+
+  const dialog = page.locator('[data-prd-dialog]');
+  await expect(dialog).toBeVisible();
+  await expect(page.getByRole('heading', { name: /AI 产品立项 PRD/ })).toBeVisible();
+
+  const codePreview = dialog.locator('[data-prd-code]');
+  await expect(codePreview).toBeVisible();
+  await expect(codePreview).toContainText('【AI 产品立项 PRD / 方案评审材料】');
+  await expect(codePreview).toContainText('一、 项目背景与立项核心目标');
+  await expect(codePreview).toContainText('二、 六阶段方案选型与决策推演');
+  await expect(codePreview).toContainText('四、 核心评估指标与真实基线');
+  await expect(codePreview).toContainText('五、 故障模式与应急恢复手册');
+
+  // 关闭弹窗
+  const closeBtn = dialog.locator('[data-close-prd]');
+  await closeBtn.click();
+  await expect(dialog).not.toBeVisible();
+
+  // 2. 从 Gate 06 访问，检查六阶段推演成果闭环卡片
+  const gate6Url = `${caseUrl}govern-launch-and-iteration/`;
+  await page.goto(gate6Url);
+  const capstoneExport = page.locator('.gate-capstone-export');
+  await expect(capstoneExport).toBeVisible();
+  await expect(capstoneExport).toContainText('已完成全部 6 关！组装你的《AI 产品立项 PRD》');
+  await capstoneExport.locator('[data-open-prd-modal]').click();
+  await expect(dialog).toBeVisible();
+});

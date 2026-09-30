@@ -1,6 +1,7 @@
 ---
 import type { GetStaticPaths } from 'astro';
 
+import CasePrdExporter from '@/components/cases/CasePrdExporter.astro';
 import CaseStageDirectory from '@/components/cases/CaseStageDirectory.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { loadCaseStudies } from '@/lib/cases/io';
@@ -32,6 +33,9 @@ const firstGate = caseStudy.gates[0]!;
           <a class="case-primary" href={gateHref(caseStudy.id, firstGate.id)}>
             从 Gate 01 开始案例 <span aria-hidden="true">→</span>
           </a>
+          <button type="button" class="case-secondary case-export-trigger" data-open-prd-modal>
+            📑 组装导出立项 PRD
+          </button>
           <a class="case-secondary" href={`${caseHref(caseStudy.id)}#project-archive`}>
             查看完整档案概览
           </a>
@@ -105,6 +109,16 @@ const firstGate = caseStudy.gates[0]!;
           })
         }
       </ol>
+      <div class="archive-export-banner">
+        <p>
+          <strong>完整成果沉淀：</strong>将本案例中 6
+          个阶段的推演决策、成立条件核验与指标基线一键导出为标准的《AI 产品立项 PRD》。
+        </p>
+        <button type="button" class="archive-export-btn" data-open-prd-modal>
+          <span>📑 一键组装并导出 PRD →</span>
+        </button>
+      </div>
     </section>
   </main>
+  <CasePrdExporter caseStudy={caseStudy} />
 </BaseLayout>

@@ -1270,3 +1270,166 @@
     text-align: left;
   }
 }
+
+/* ==========================================================================
+   PRD Exporter Trigger Cards & Banners (F-05)
+   ========================================================================== */
+.gate-capstone-export {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin: var(--space-5) var(--page-gutter);
+  padding: var(--space-5);
+  background: var(--color-panel);
+  border: 1px solid var(--color-accent);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+}
+
+.capstone-export-body {
+  max-width: 48rem;
+}
+
+.capstone-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 0.15rem 0.6rem;
+  border-radius: var(--radius-pill);
+  background: var(--color-accent-wash);
+  color: var(--color-accent-strong);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  margin-bottom: var(--space-2);
+}
+
+.gate-capstone-export h3 {
+  margin: 0 0 var(--space-2);
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-display);
+  color: var(--color-ink);
+  letter-spacing: var(--tracking-display);
+}
+
+.gate-capstone-export p {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+  line-height: 1.6;
+}
+
+.capstone-export-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 3rem;
+  padding: 0 var(--space-5);
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-accent);
+  background: var(--color-accent);
+  color: var(--color-black);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-display);
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.2);
+  transition:
+    background var(--duration-quick) var(--ease-smooth-out),
+    border-color var(--duration-quick) var(--ease-smooth-out),
+    box-shadow var(--duration-quick) var(--ease-smooth-out);
+}
+
+.capstone-export-btn:hover {
+  background: var(--color-accent-strong);
+  border-color: var(--color-accent-strong);
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
+}
+
+.capstone-export-btn:active {
+  transform: scale(var(--scale-large));
+}
+
+.capstone-export-btn:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.case-secondary.case-export-trigger {
+  cursor: pointer;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-pill);
+  background: var(--color-panel);
+  color: var(--color-ink);
+  padding: 0 var(--space-4);
+  transition:
+    border-color var(--duration-quick) var(--ease-smooth-out),
+    color var(--duration-quick) var(--ease-smooth-out),
+    background var(--duration-quick) var(--ease-smooth-out);
+}
+
+.case-secondary.case-export-trigger:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent-strong);
+  background: var(--color-panel-raised);
+}
+
+.case-secondary.case-export-trigger:active {
+  transform: scale(var(--scale-large));
+}
+
+.archive-export-banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+  padding: var(--space-4) var(--space-5);
+  background: var(--color-panel-raised);
+  border: 1px dashed var(--color-line);
+  border-radius: var(--radius-md);
+}
+
+.archive-export-banner p {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+}
+
+.archive-export-banner strong {
+  color: var(--color-ink);
+  font-weight: var(--weight-display);
+}
+
+.archive-export-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 2.5rem;
+  padding: 0 var(--space-4);
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-accent);
+  background: var(--color-panel);
+  color: var(--color-accent-strong);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-display);
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background var(--duration-quick) var(--ease-smooth-out),
+    color var(--duration-quick) var(--ease-smooth-out),
+    border-color var(--duration-quick) var(--ease-smooth-out);
+}
+
+.archive-export-btn:hover {
+  background: var(--color-accent);
+  color: var(--color-black);
+}
+
+.archive-export-btn:active {
+  transform: scale(var(--scale-large));
+}

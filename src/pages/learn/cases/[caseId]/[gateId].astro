@@ -2,6 +2,7 @@
 import type { GetStaticPaths } from 'astro';
 
 import CaseGateDesk from '@/components/cases/CaseGateDesk.astro';
+import CasePrdExporter from '@/components/cases/CasePrdExporter.astro';
 import CaseStageDirectory from '@/components/cases/CaseStageDirectory.astro';
 import Breadcrumbs from '@/components/layout/Breadcrumbs.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
@@ -75,6 +76,37 @@ const breadcrumbTrail = [
 
     <CaseGateDesk caseStudy={caseStudy} gate={gate} resources={resources} />
 
+    {
+      gate.order === 6 ? (
+        <section class="gate-capstone-export" aria-labelledby="capstone-export-heading">
+          <div class="capstone-export-body">
+            <div class="capstone-badge">
+              <span class="badge-icon">🎯</span>
+              <span>六阶段推演成果闭环</span>
+            </div>
+            <h3 id="capstone-export-heading">已完成全部 6 关！组装你的《AI 产品立项 PRD》</h3>
+            <p>
+              将你在各关卡中确定的决策方案、前置成立条件核验以及风险规避动作，一键组装为大厂评审级专业
+              Markdown 文档。
+            </p>
+          </div>
+          <button type="button" class="capstone-export-btn" data-open-prd-modal>
+            <span>📑 组装并导出我的 PRD →</span>
+          </button>
+        </section>
+      ) : (
+        <div class="archive-export-banner" style="margin: var(--space-4) var(--page-gutter) 0;">
+          <p>
+            <strong>PRD 随阶段生成中：</strong>当前处于 Gate 0{gate.order}
+            。你可以随时预览或导出当前已沉淀的立项 PRD（未做选择的关卡自动按推荐基准填充）。
+          </p>
+          <button type="button" class="archive-export-btn" data-open-prd-modal>
+            <span>📑 预览立项 PRD 草稿</span>
+          </button>
+        </div>
+      )
+    }
+
     <nav class="case-navigation" aria-label="案例关卡导航">
       <a href={previous ? gateHref(caseStudy.id, previous.id) : caseHref(caseStudy.id)}>
         <span>{previous ? `上一关 · Gate ${String(previous.order).padStart(2, '0')}` : '返回'}</span
@@ -91,4 +123,5 @@ const breadcrumbTrail = [
 
     <CaseStageDirectory caseStudy={caseStudy} currentGateId={gate.id} />
   </main>
+  <CasePrdExporter caseStudy={caseStudy} />
 </BaseLayout>

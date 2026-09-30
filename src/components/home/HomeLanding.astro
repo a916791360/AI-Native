@@ -123,6 +123,104 @@ const entrySections = SECTIONS.filter(({ surface }) => surface === 'primary');
     </div>
   </section>
 
+  <!-- Section 00: 30-Second Target Triage (F-01) -->
+  <section class="target-triage" aria-labelledby="triage-heading" data-reveal>
+    <div class="shell">
+      <header class="sec-head">
+        <span class="sec-kicker">00 · 目标分流</span>
+        <h2 id="triage-heading">你在哪一站？30 秒定位专属学习起点</h2>
+        <p>
+          无需从头硬啃全部内容。根据你当下的经验背景与业务痛点，直接切入最能产生杠杆效应的关卡：
+        </p>
+      </header>
+
+      <div class="triage-grid">
+        <!-- Card 1: 0 经验产品 / 应届生 -->
+        <article class="triage-card">
+          <div class="triage-top">
+            <span class="triage-tag">新手快速破局</span>
+            <span class="triage-time">⏱ 约 30 分钟</span>
+          </div>
+          <h3>0 经验产品 / 应届生</h3>
+          <p class="triage-desc">
+            建立 AI 产品的底层常识与边界感，分清「何时用规则、何时用大模型」，不再被营销黑话唬住。
+          </p>
+          <div class="triage-meta-list">
+            <div class="triage-meta-item">
+              <span class="meta-name">核心收获</span>
+              <strong>掌握 AI 适用性基本功，具备第一份 AI 项目立项直觉</strong>
+            </div>
+            <div class="triage-meta-item">
+              <span class="meta-name">推荐起点</span>
+              <span>Level 1 概念辨识 · 第 01 题</span>
+            </div>
+          </div>
+          <div class="triage-action">
+            <a href="/learn/questions/q01-rules-or-ai/" class="triage-btn">
+              进入新手起步关卡 (Q01) →
+            </a>
+          </div>
+        </article>
+
+        <!-- Card 2: 传统 PM 转岗 AI-Native (Highlight) -->
+        <article class="triage-card is-highlight">
+          <div class="triage-top">
+            <span class="triage-tag tag-pro">实战能力跃迁</span>
+            <span class="triage-time">⏱ 约 2 小时</span>
+          </div>
+          <h3>传统 PM 转岗 AI-Native</h3>
+          <p class="triage-desc">
+            跳出「写 Prompt、调
+            API」的浅层陷阱，掌握真实商业场景下的指标基线、错误恢复机制与架构取舍。
+          </p>
+          <div class="triage-meta-list">
+            <div class="triage-meta-item">
+              <span class="meta-name">核心收获</span>
+              <strong>掌握六阶段评审全流程，可直接沉淀可上线的立项 PRD</strong>
+            </div>
+            <div class="triage-meta-item">
+              <span class="meta-name">推荐起点</span>
+              <span>智能客服知识库端到端案例 · Gate 01</span>
+            </div>
+          </div>
+          <div class="triage-action">
+            <a
+              href="/learn/cases/customer-support-knowledge-base/decide-ai-boundary/"
+              class="triage-btn btn-primary"
+            >
+              进入实战案例演练 →
+            </a>
+          </div>
+        </article>
+
+        <!-- Card 3: 带着业务痛点找方案 -->
+        <article class="triage-card">
+          <div class="triage-top">
+            <span class="triage-tag">方案对照排雷</span>
+            <span class="triage-time">⏱ 按需 5-15 分钟</span>
+          </div>
+          <h3>在职 PM / 带着业务痛点找方案</h3>
+          <p class="triage-desc">
+            业务卡在召回率瓶颈、幻觉泛滥、延迟成本高或责任归属不清？对照全链路方案地图，快速排查卡点。
+          </p>
+          <div class="triage-meta-list">
+            <div class="triage-meta-item">
+              <span class="meta-name">核心收获</span>
+              <strong>对齐行业标杆架构、故障模式 Runbook 与指标容忍度基准</strong>
+            </div>
+            <div class="triage-meta-item">
+              <span class="meta-name">推荐起点</span>
+              <span>方案选型地图 · 六大认知全景</span>
+            </div>
+          </div>
+          <div class="triage-action">
+            <a href="/map/" class="triage-btn"> 查看方案选型地图 → </a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
   <!-- Section 01: Three-Tier Progression Ladder -->
   <section id="learning-structure" class="structure" aria-labelledby="structure-heading">
     <div class="shell">
@@ -705,6 +803,7 @@ const entrySections = SECTIONS.filter(({ surface }) => surface === 'primary');
   /* ==========================================================================
      Section Headers (Consistent Better-Interface Hierarchy)
      ========================================================================== */
+  .target-triage,
   .structure,
   .outcomes,
   .support,
@@ -712,6 +811,171 @@ const entrySections = SECTIONS.filter(({ surface }) => surface === 'primary');
   .home-bottom-cta {
     padding-block: clamp(3rem, 5vw, 4.5rem);
     border-bottom: 1px solid var(--color-line);
+  }
+
+  /* ==========================================================================
+     30-Second Target Triage (F-01)
+     ========================================================================== */
+  .target-triage {
+    background: var(--color-canvas);
+  }
+
+  .triage-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-4);
+  }
+
+  .triage-card {
+    background: var(--color-panel);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-card);
+    padding: var(--space-5);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition:
+      border-color var(--duration-quick) var(--ease-smooth-out),
+      box-shadow var(--duration-quick) var(--ease-smooth-out),
+      transform var(--duration-quick) var(--ease-smooth-out);
+  }
+
+  .triage-card:hover {
+    border-color: var(--color-control-border);
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-2px);
+  }
+
+  .triage-card.is-highlight {
+    border-top: 3px solid var(--color-accent);
+  }
+
+  .triage-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-3);
+  }
+
+  .triage-tag {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-body);
+    padding: 0.15rem 0.5rem;
+    border-radius: var(--radius-pill);
+    background: var(--color-panel-raised);
+    color: var(--color-muted);
+    border: 1px solid var(--color-line);
+  }
+
+  .triage-tag.tag-pro {
+    background: var(--color-accent-wash);
+    color: var(--color-accent-strong);
+    border-color: var(--color-accent);
+  }
+
+  .triage-time {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-quiet);
+  }
+
+  .triage-card h3 {
+    margin: 0 0 var(--space-2);
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: var(--weight-display);
+    color: var(--color-ink);
+    letter-spacing: var(--tracking-display);
+  }
+
+  .triage-desc {
+    margin: 0 0 var(--space-4);
+    font-size: var(--text-sm);
+    color: var(--color-muted);
+    line-height: 1.6;
+    flex: 1;
+  }
+
+  .triage-meta-list {
+    display: grid;
+    gap: var(--space-2);
+    margin-bottom: var(--space-5);
+    border-top: 1px dashed var(--color-line);
+    padding-top: var(--space-3);
+  }
+
+  .triage-meta-item {
+    font-size: var(--text-xs);
+    line-height: 1.5;
+  }
+
+  .meta-name {
+    display: block;
+    color: var(--color-quiet);
+    font-family: var(--font-mono);
+    margin-bottom: 2px;
+  }
+
+  .triage-meta-item strong {
+    color: var(--color-ink);
+    font-weight: var(--weight-display);
+  }
+
+  .triage-meta-item span {
+    color: var(--color-muted);
+  }
+
+  .triage-action {
+    margin-top: auto;
+  }
+
+  .triage-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    min-height: var(--control-height);
+    padding: 0 var(--space-4);
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--color-control-border);
+    background: var(--color-panel-raised);
+    color: var(--color-ink);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-display);
+    text-decoration: none;
+    transition:
+      background var(--duration-quick) var(--ease-smooth-out),
+      border-color var(--duration-quick) var(--ease-smooth-out),
+      color var(--duration-quick) var(--ease-smooth-out);
+  }
+
+  .triage-btn:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent-strong);
+    background: var(--color-panel);
+  }
+
+  .triage-btn:active {
+    transform: scale(var(--scale-large));
+  }
+
+  .triage-btn.btn-primary {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: var(--color-black);
+  }
+
+  .triage-btn.btn-primary:hover {
+    background: var(--color-accent-strong);
+    border-color: var(--color-accent-strong);
+  }
+
+  @media (max-width: 840px) {
+    .triage-grid {
+      grid-template-columns: 1fr;
+    }
   }
 
   .sec-head {
