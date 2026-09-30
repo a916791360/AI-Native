@@ -1,3 +1,4 @@
+import process from 'node:process';
 import mdx from '@astrojs/mdx';
 import { defineConfig } from 'astro/config';
 
