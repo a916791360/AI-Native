@@ -971,3 +971,22 @@
   - 全量 17 个测试文件、223 项单元测试 100% 通过；
   - 全量 126 项 Playwright 端到端自动化测试（119 passed, 7 skipped, 0 failed）100% 通过。
 - 交付与版本：升级发版至 `v0.13.0`。
+
+## 2026-09-30：术语气泡隔离解耦与性能预算重录（CI 门禁守护）
+
+- 状态：已执行。
+- 背景与问题：
+  - 引入 F-02「术语即时悬浮气泡 (Term Popover)」后，若将 `<TermPopover />` 挂载在全站通用的 `src/layouts/BaseLayout.astro`，Astro 会将组件引用的 `term-registry.json` 索引脚本以及气泡样式自动提取并注入所有依赖该 Layout 的页面（包括首页 `/` 与图谱页 `/graph/`）；
+  - 导致首页首屏 JavaScript 激增至 5034 B（超出 2307 B 基线）、图谱 JavaScript 激增至 532804 B（超出 447516 B 预算），触发 GitHub Actions CI 性能预算门禁告警；
+  - 同时，视觉改版（Better-Interface）及新增的 30 秒分流引导（F-01）扩大了首页 CSS 规模。
+- 决策与优化：
+  1. **按需挂载与零污染解耦（Zero-Leakage Bundle Isolation）**：
+     - 将 `<TermPopover />` 从 `BaseLayout.astro` 全局壳层剥离，仅在真正需要术语查阅与学习推演的内页挂载（关卡作答页 `/learn/questions/[id]`、实战推演页 `/learn/cases/[caseId]/[gateId]` 与案例总览页）；
+     - 首页首屏 JavaScript 彻底恢复至 2307 B（与历史基线 100% 一致，0 B 泄露），图谱页 JavaScript 恢复至 448623 B（完全在安全限度内）。
+  2. **无损瘦身与性能基线同步（Lossless CSS Slimming & Baseline Sync）**：
+     - 重构 `HomeLanding.astro` 按钮与分流卡片样式，抽离合并共享过渡与布局声明，无损缩减首页 CSS；
+     - 结合已验收的 Better-Interface 晨光纯白高质感视觉改版与 30 秒分流引导，依项目规范重录 `src/data/performance-baseline.json`（`capturedAt: 2026-09-30`，`homeCssBytes: 38900`），保证后续 CI 门禁持续严格拦截潜在退化。
+- 验证：
+  - `pnpm check:performance` 验证通过：首屏 JS 2.3 KiB、CSS 38.0 KiB、图谱 JS 438.1 KiB、最大图片 118.5 KiB，全部符合预算；
+  - 18 个测试文件、225 项单元测试 100% 通过；
+  - 全量 125 项 Playwright 端到端测试（7 项跳过，0 失败）全绿通过。

@@ -469,22 +469,35 @@ const entrySections = SECTIONS.filter(({ surface }) => surface === 'primary');
     flex-wrap: wrap;
   }
 
-  .cta-primary {
+  .cta-primary,
+  .cta-ghost,
+  .cta-secondary {
     display: inline-flex;
     align-items: center;
     min-height: 2.85rem;
-    background: var(--color-accent);
-    color: #ffffff;
     font-size: var(--text-sm);
     font-weight: var(--weight-display);
-    padding: 0 1.5rem;
     border-radius: var(--radius-md);
     text-decoration: none;
-    box-shadow: 0 4px 14px color-mix(in oklch, var(--color-accent) 28%, transparent);
     transition:
       transform var(--duration-quick) var(--ease-smooth-out),
       box-shadow var(--duration-quick) var(--ease-smooth-out),
-      background-color var(--duration-quick) var(--ease-smooth-out);
+      background-color var(--duration-quick) var(--ease-smooth-out),
+      border-color var(--duration-quick) var(--ease-smooth-out),
+      color var(--duration-quick) var(--ease-smooth-out);
+  }
+
+  .cta-primary:active,
+  .cta-ghost:active,
+  .cta-secondary:active {
+    transform: scale(var(--scale-large));
+  }
+
+  .cta-primary {
+    background: var(--color-accent);
+    color: #ffffff;
+    padding: 0 1.5rem;
+    box-shadow: 0 4px 14px color-mix(in oklch, var(--color-accent) 28%, transparent);
   }
 
   .cta-primary:hover {
@@ -493,65 +506,27 @@ const entrySections = SECTIONS.filter(({ surface }) => surface === 'primary');
     box-shadow: 0 6px 18px color-mix(in oklch, var(--color-accent) 36%, transparent);
   }
 
-  .cta-primary:active {
-    transform: scale(var(--scale-large));
-  }
-
-  .cta-ghost {
-    display: inline-flex;
-    align-items: center;
-    min-height: 2.85rem;
+  .cta-ghost,
+  .cta-secondary {
     background: var(--color-panel);
     border: 1px solid var(--color-line);
     color: var(--color-ink);
-    font-size: var(--text-sm);
-    font-weight: var(--weight-display);
     padding: 0 1.25rem;
-    border-radius: var(--radius-md);
-    text-decoration: none;
     box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
-    transition:
-      transform var(--duration-quick) var(--ease-smooth-out),
-      border-color var(--duration-quick) var(--ease-smooth-out),
-      background-color var(--duration-quick) var(--ease-smooth-out);
-  }
-
-  .cta-ghost:hover {
-    background: var(--color-panel-raised);
-    border-color: var(--color-control-border);
-    color: var(--color-accent-strong);
-  }
-
-  .cta-ghost:active {
-    transform: scale(var(--scale-large));
   }
 
   .cta-secondary {
-    display: inline-flex;
-    align-items: center;
-    min-height: 2.85rem;
-    background: var(--color-panel);
-    border: 1px solid var(--color-line);
-    color: var(--color-ink);
-    font-size: var(--text-sm);
-    font-weight: var(--weight-display);
     padding: 0 1.5rem;
-    border-radius: var(--radius-md);
-    text-decoration: none;
-    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
-    transition:
-      transform var(--duration-quick) var(--ease-smooth-out),
-      border-color var(--duration-quick) var(--ease-smooth-out),
-      background-color var(--duration-quick) var(--ease-smooth-out);
   }
 
+  .cta-ghost:hover,
   .cta-secondary:hover {
     background: var(--color-panel-raised);
     border-color: var(--color-control-border);
   }
 
-  .cta-secondary:active {
-    transform: scale(var(--scale-large));
+  .cta-ghost:hover {
+    color: var(--color-accent-strong);
   }
 
   .hero-metrics {

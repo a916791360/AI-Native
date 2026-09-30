@@ -2,7 +2,6 @@
 import { SITE } from '@/config/site';
 import SiteFooter from '@/components/layout/SiteFooter.astro';
 import SiteHeader from '@/components/layout/SiteHeader.astro';
-import TermPopover from '@/components/ui/TermPopover.astro';
 import '@/styles/global.css';
 import unifiedPagesStylesheet from '@/styles/unified-pages.css?url';
 
@@ -113,7 +112,6 @@ const structuredData =
     <SiteHeader currentPath={currentPath} />
     <slot />
     <SiteFooter />
-    <TermPopover />
     <script>
       const root = document.documentElement;
       root.classList.add('js');

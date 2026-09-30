@@ -6,6 +6,7 @@ import CasePrdExporter from '@/components/cases/CasePrdExporter.astro';
 import CaseStageDirectory from '@/components/cases/CaseStageDirectory.astro';
 import Breadcrumbs from '@/components/layout/Breadcrumbs.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import TermPopover from '@/components/ui/TermPopover.astro';
 import { loadCaseStudies } from '@/lib/cases/io';
 import type { CaseStudy } from '@/lib/cases/schema';
 import { CASE_STAGE_LABELS, caseHref, gateHref, getGateContext } from '@/lib/cases/presentation';
@@ -124,4 +125,5 @@ const breadcrumbTrail = [
     <CaseStageDirectory caseStudy={caseStudy} currentGateId={gate.id} />
   </main>
   <CasePrdExporter caseStudy={caseStudy} />
+  <TermPopover />
 </BaseLayout>

@@ -192,6 +192,10 @@ test('completes search, filtering and graph selection with a keyboard', async ({
   await page.keyboard.press('Enter');
   await expect(page).toHaveURL(/\/search\/\?q=RAG$/);
   await expect(page.locator('[data-search-output]')).toHaveAttribute('aria-busy', 'false');
+  await expect(page.locator('[data-search-results] li').first()).toHaveAttribute(
+    'data-result-id',
+    'retrieval-augmented-generation',
+  );
   const firstResult = page.locator('[data-search-results] a').first();
   await tabTo(page, firstResult);
   await page.keyboard.press('Enter');

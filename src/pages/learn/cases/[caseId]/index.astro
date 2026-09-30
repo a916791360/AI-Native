@@ -4,6 +4,7 @@ import type { GetStaticPaths } from 'astro';
 import CasePrdExporter from '@/components/cases/CasePrdExporter.astro';
 import CaseStageDirectory from '@/components/cases/CaseStageDirectory.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import TermPopover from '@/components/ui/TermPopover.astro';
 import { loadCaseStudies } from '@/lib/cases/io';
 import type { CaseStudy } from '@/lib/cases/schema';
 import { CASE_STATUS_LABELS, caseHref, gateHref } from '@/lib/cases/presentation';
@@ -121,4 +122,5 @@ const firstGate = caseStudy.gates[0]!;
     </section>
   </main>
   <CasePrdExporter caseStudy={caseStudy} />
+  <TermPopover />
 </BaseLayout>

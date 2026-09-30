@@ -4,6 +4,7 @@ import { getCollection } from 'astro:content';
 
 import Breadcrumbs from '@/components/layout/Breadcrumbs.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import TermPopover from '@/components/ui/TermPopover.astro';
 import { resolveTermChainPosition } from '@/lib/content/chain';
 import { loadProjectContent } from '@/lib/content/io';
 import {
@@ -307,6 +308,7 @@ const breadcrumbTrail = [
       </nav>
     </article>
   </main>
+  <TermPopover />
 </BaseLayout>
 
 <script>
